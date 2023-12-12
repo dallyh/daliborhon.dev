@@ -1,0 +1,228 @@
+:root {
+    --accent: 152, 75, 245; /*136, 58, 234*/
+    --accent-rgba: rgba(152, 75, 245, 1);
+    --accent-gradient: linear-gradient(85deg, rgba(var(--accent), 1) 0%, rgb(162, 85, 255) 100%);
+    --secondary: 30, 41, 59;
+    --accent-resume: 74, 144, 226;
+    --body-color: white;
+    --button-color: white;
+    --button-hover-color: black;
+    --bg-color: rgba(15, 23, 42, 1);
+    --card-color: rgba(23, 23, 23, 0.4);
+    --card-hover-color: rgba(30, 41, 59, 1);
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --resume-card-bg: rgb(30, 41, 59);
+    --card-bg-rgb: 255, 255, 255;
+    --dropdown-bg: #161b22;
+    --dropdown-border-color: rgba(255, 255, 255, 0.3);
+    --header-size: 95px;
+    --resume-page-width: 1350px;
+    --page-width: 1024px;
+    --a-visited: 197, 138, 249;
+    --a-color: 167, 91, 255;
+    --burger-menu-bg: #dddddd;
+    --nav-background: rgb(30, 41, 59);
+    color-scheme: dark;
+}
+
+html {
+    font-size: 1rem;
+    line-height: 1;
+    font-family: "Twemoji Country Flags", "Quicksand", muli, ubuntu, "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+html.no-scroll {
+    overflow-y: hidden;
+
+    @media (width > 768px) {
+        width: 100vw;
+        margin-right: calc(100vw - 100%);
+        padding-right: 16px;
+    }
+}
+
+body {
+    color: white;
+    background-color: var(--bg-color);
+    overflow-x: clip;
+}
+
+code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    background-color: var(--card-bg);
+    color: var(--button-color);
+    text-transform: uppercase;
+    font-weight: 900;
+    border-radius: 10px;
+    padding: 15px 25px;
+    text-align: center;
+    border: 2px solid rgba(var(--accent), 1);
+    font-size: 1rem;
+    transition: 300ms;
+    min-width: 120px;
+    height: min-content;
+}
+
+.button a {
+    color: inherit;
+}
+
+.button a:hover {
+    text-decoration: none;
+    color: #0000;
+}
+
+.button:hover {
+    background-color: rgba(var(--accent), 1);
+    color: var(--button-hover-color);
+    cursor: pointer;
+}
+
+a {
+    color: rgba(var(--a-color), 1);
+
+    &:visited {
+        color: rgba(var(--a-visited), 1);
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--dropdown-bg);
+    color: var(--body-color);
+    width: min-content;
+    box-shadow: 0px 0px 5px 0.1px rgba(0, 0, 0, 0.3);
+    z-index: 2020;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+    animation: fade-in;
+    animation-duration: 0.4s;
+    border-radius: 0.375rem;
+    border: 1px solid var(--dropdown-border-color);
+    background-clip: padding-box;
+}
+
+.dropdown-content.active {
+    display: block;
+}
+
+.dropdown-content hr {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.dropdown-content li {
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+}
+
+.dropdown-content li:first-child:hover {
+    border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.dropdown-content li:last-child:hover {
+    border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.dropdown-content li:hover {
+    background-color: rgba(163, 163, 163, 0.5);
+    text-decoration: none;
+}
+
+.dropdown-content a {
+    color: inherit;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+a.dropdown-link:after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+a.dropdown-link:after {
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+/* Thanks! https://codepen.io/nzbin/pen/GGrXbp */
+.dot-flashing {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+
+.dot-flashing::before,
+.dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.dot-flashing::before {
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+}
+
+.dot-flashing::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #9880ff;
+    color: #9880ff;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+}

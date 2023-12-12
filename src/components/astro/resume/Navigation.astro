@@ -1,0 +1,597 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadNamespaces, t } from "../../../i18n/i18n";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["navigation", "shared"];
+await loadNamespaces(locale, namespaces);
+---
+
+<div class="header-container noprint">
+    <header class="header">
+        <div class="header-burger-menu">
+            <div class="header-burger-menu-button" id="resumeMenuButton">
+                <span></span>
+            </div>
+        </div>
+        <p>{t("navigation:DaliborsResume")}</p>
+        <div class="header-menu">
+            <a href="#hero" class="header-menu-item menu-hover-effect">
+                <span>00</span>TOP
+            </a>
+            <a href="#intro" class="header-menu-item menu-hover-effect">
+                <span>01</span>{t("navigation:Nav_Intro")}
+            </a>
+            <a href="#skills" class="header-menu-item menu-hover-effect">
+                <span>02</span>{t("navigation:Nav_Skills")}
+            </a>
+            <a href="#certifications" class="header-menu-item menu-hover-effect">
+                <span>03</span>{t("navigation:Nav_Certifications")}
+            </a>
+            <a href="#experience" class="header-menu-item menu-hover-effect">
+                <span>04</span>{t("navigation:Nav_Experience")}
+            </a>
+        </div>
+    </header>
+</div>
+
+<div class="nav-container noprint">
+    <aside class="aside" id="resumeAsideMenu">
+        <div class="contact-info">
+            <p>Dalibor Hon</p>
+            <a href="https://www.linkedin.com/in/dalibor-hon/" target="_blank">
+                <i class="devicon-linkedin-plain"></i>
+                 LinkedIn
+            </a>
+        </div>
+        <div class="aside-menu">
+            <a href="#hero" class="aside-menu-item menu-hover-effect">
+                <span>00</span>TOP
+            </a>
+            <a href="#intro" class="aside-menu-item menu-hover-effect">
+                <span>01</span>{t("navigation:Nav_Intro")}
+            </a>
+            <a href="#skills" class="aside-menu-item menu-hover-effect">
+                <span>02</span>{t("navigation:Nav_Skills")}
+            </a>
+            <a href="#certifications" class="aside-menu-item menu-hover-effect">
+                <span>03</span>{t("navigation:Nav_Certifications")}
+            </a>
+            <a href="#experience" class="aside-menu-item menu-hover-effect">
+                <span>04</span>{t("navigation:Nav_Experience")}
+            </a>
+        </div>
+    </aside>
+</div>
+
+<style>
+    .nav-container {
+        display: none;
+    }
+
+    .header-container {
+        position: fixed;
+        top: 0px;
+        display: flex;
+        justify-content: center;
+        z-index: 1000;
+        height: var(--header-size);
+        width: 100vw;
+        background-color: var(--nav-background);
+        transition:
+            transform 400ms ease,
+            height 400ms ease;
+        box-shadow: 0px 0.5px 6px 0px rgba(0, 0, 0, 0.2);
+        transform: translateY(-100%);
+        animation: slideInFromTop 300ms ease-in-out forwards;
+    }
+
+    .header-container.small {
+        height: 60px;
+    }
+
+    header {
+        --border: 1px;
+        width: var(--resume-page-width);
+        height: inherit;
+        display: flex;
+        justify-content: space-between;
+        gap: 1em;
+        align-items: center;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    .header-burger-menu {
+        display: none;
+    }
+
+    .header-container.hidden header::before {
+        opacity: 0;
+    }
+
+    .aside-close-button {
+        display: none;
+    }
+
+    header p {
+        color: rgba(var(--accent-resume), 1);
+        font-size: 1.2rem;
+        font-weight: 600;
+        display: block;
+    }
+
+    .header-menu {
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: 55%;
+        gap: 1rem;
+        justify-content: space-evenly;
+        margin-right: 35px;
+    }
+
+    .header-menu::before {
+        content: " ";
+        width: 110%;
+        height: 100%;
+        border-radius: 10px;
+        position: absolute;
+        left: -5%;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(var(--accent-resume), 0.07);
+        z-index: -1;
+        border: 1px solid rgba(var(--accent-resume), 0.1);
+        /* transform: skewX(-20deg) scaleX(1.2); */
+    }
+
+    .header-menu-item {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        white-space: nowrap;
+        font-weight: 600;
+        letter-spacing: 0px;
+        text-transform: uppercase;
+        text-decoration: none;
+        position: relative;
+        overflow: visible;
+    }
+
+    .header-menu-item:hover {
+        text-decoration: none;
+    }
+
+    .header-menu-item > span {
+        color: rgba(var(--accent-resume), 1);
+        font-weight: 400;
+    }
+
+    .header-menu .header-menu-item {
+        color: rgba(var(--accent-resume), 1);
+        color: white;
+    }
+
+    .menu-hover-effect:focus {
+        border: none;
+        outline: none;
+    }
+
+    .menu-hover-effect:hover::after,
+    .menu-hover-effect:focus::after {
+        transform: scale(1) !important;
+    }
+
+    .menu-hover-effect.active::after {
+        transform: scale(1) !important;
+    }
+
+    .menu-hover-effect::after {
+        content: "";
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: white;
+        bottom: 0%;
+        left: 0;
+        right: 0;
+        transform: scale(0);
+        transition: transform 200ms;
+    }
+
+    @media (max-width: 980px) {
+        :root {
+            --header-size: 60px;
+        }
+
+        body:not(.nav-active) .header-container.hidden {
+            transform: translateY(-100%);
+        }
+
+        html:has(body.nav-active) {
+            overflow: hidden;
+        }
+
+        header .header-menu {
+            display: none;
+        }
+
+        header p {
+            display: block !important;
+        }
+
+        .header-burger-menu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.125rem;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .header-burger-menu-button {
+            position: relative;
+            height: 26px;
+            width: 40px;
+            cursor: pointer;
+            background-color: transparent;
+        }
+
+        .header-burger-menu-button > span {
+            pointer-events: none;
+        }
+
+        .header-burger-menu-button.active span {
+            opacity: 0;
+        }
+
+        .header-burger-menu-button.active.header-burger-menu-button::before,
+        .header-burger-menu-button.active.header-burger-menu-button::after {
+            top: 40%;
+        }
+
+        .header-burger-menu-button.active.header-burger-menu-button::before {
+            transform: rotate(45deg);
+        }
+
+        .header-burger-menu-button.active.header-burger-menu-button::after {
+            transform: rotate(-45deg);
+        }
+
+        .header-burger-menu-button span,
+        .header-burger-menu-button::before,
+        .header-burger-menu-button::after {
+            display: block;
+            position: absolute;
+            height: 5px;
+            width: 100%;
+            background-color: var(--burger-menu-bg);
+            border-radius: 6px;
+            opacity: 1;
+        }
+
+        .header-burger-menu-button::before,
+        .header-burger-menu-button::after {
+            content: "";
+            transition:
+                top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .header-burger-menu-button span {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header-burger-menu-button::before {
+            top: 0;
+        }
+
+        .header-burger-menu-button::after {
+            bottom: 0;
+        }
+
+        .nav-container {
+            display: block;
+            position: fixed;
+            height: 100%;
+            width: 250px;
+            flex-direction: column;
+            z-index: 998;
+            top: 0;
+            background-color: var(--nav-background);
+            transition: transform 400ms ease;
+            transform: translateX(-100%);
+        }
+
+        body.nav-active .nav-container {
+            transform: translateX(0%);
+        }
+
+        body.nav-active .header-burger-menu {
+            transform: translateX(-60px);
+        }
+
+        :global(.resume-wrapper) {
+            transition: all 400ms ease;
+        }
+
+        :global(body.nav-active .resume-wrapper) {
+            transform: translateX(250px);
+            pointer-events: none;
+        }
+
+        body.nav-active .header-container {
+            box-shadow: none;
+            transform: translateX(240px);
+        }
+
+        aside {
+            display: flex;
+            height: inherit;
+            width: unset;
+            gap: 1rem;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        aside::before {
+            opacity: 0;
+            content: "";
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            top: 60px;
+            right: -40px;
+            background: radial-gradient(circle at bottom right, transparent 70%, var(--nav-background) 71%);
+            transition: opacity 400ms ease;
+        }
+
+        body.nav-active aside::before {
+            opacity: 1;
+        }
+
+        aside .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        aside .contact-info a {
+            margin-top: 1rem;
+            align-self: center;
+        }
+
+        aside p {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 400;
+            display: block;
+            padding-top: 5rem;
+        }
+
+        aside .aside-menu {
+            display: flex;
+            flex-direction: column;
+            height: unset;
+            padding: unset;
+            margin-left: 1rem;
+            gap: 1rem;
+            margin: auto;
+        }
+
+        aside .aside-menu-item {
+            height: 40px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            white-space: nowrap;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        aside .aside-menu-item {
+            text-decoration: none;
+            color: rgba(var(--accent-resume), 1);
+        }
+
+        aside .aside-menu-item > span {
+            color: white;
+        }
+
+        aside .aside-user-settings {
+            display: flex;
+            margin-left: 1rem;
+            padding-bottom: 5rem;
+            flex-direction: column-reverse;
+        }
+
+        aside .aside-close-button {
+            position: absolute;
+            display: block;
+            padding: 0.55rem;
+            line-height: 1px;
+            font-size: 3rem;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+
+        aside .menu-hover-effect::after {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 2px;
+            background-color: white;
+            bottom: 0px;
+            left: -15%;
+            right: 0;
+            transform: scale(0);
+            transition: transform 200ms;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header p {
+            width: min-content;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<script>
+    import { navigate } from "astro:transitions/client";
+    import Hammer from "hammerjs";
+
+    const initSideNav = () => {
+        // Sidebar navigation
+        const navButton = document.querySelector<HTMLDivElement>("#resumeMenuButton"),
+            navigation = document.querySelector<HTMLElement>("#resumeAsideMenu"),
+            navLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-container > a, .header-container > a ");
+
+        if (navButton === null) {
+            return;
+        }
+
+        /**
+         * Opens/closes navigation menu.
+         */
+        const openCloseNav = () => {
+            navButton.classList.toggle("active");
+            document.body.classList.toggle("nav-active");
+        };
+
+        /**
+         * Closes navigation menu
+         */
+        const closeNav = () => {
+            if (document.body.classList.contains("nav-active")) {
+                navButton.classList.remove("active");
+                document.body.classList.remove("nav-active");
+            }
+        };
+
+        /**
+         * Opens navigation menu
+         */
+        const openNav = () => {
+            if (document.body.classList.contains("nav-active") === false) {
+                navButton.classList.add("active");
+                document.body.classList.add("nav-active");
+            }
+        };
+
+        /**
+         * Handles header on scroll
+         */
+        const headerOnScroll = () => {
+            var prevScrollpos = window.scrollY;
+            var headerDiv = document.querySelector(".header-container") as HTMLElement;
+            window.onscroll = function () {
+                // Makes the header smaller
+                if (document.body.scrollTop >= 20 || document.documentElement.scrollTop >= 20) {
+                    headerDiv.classList.add("small");
+                } else {
+                    headerDiv.classList.remove("small");
+                }
+
+                // Hides header on scroll
+                var currentScrollPos = window.scrollY;
+
+                /* if scrolling down, let it scroll out of view as normal */
+                if (prevScrollpos <= currentScrollPos) {
+                    headerDiv.classList.add("hidden");
+                } else {
+                    /* otherwise if we're scrolling up, fix the nav to the top */
+                    headerDiv.classList.remove("hidden");
+                }
+
+                prevScrollpos = currentScrollPos;
+            };
+        };
+
+        // Hammertime (swipe gestures for nav menu)
+        const hammerTime = () => {
+            //@ts-ignore -- removes the default user-select:none from HammerJS init.
+            delete Hammer.defaults.cssProps.userSelect;
+            let hammertime = new Hammer(document.body);
+            hammertime.get("swipe").set({ direction: Hammer.DIRECTION_HORIZONTAL });
+            hammertime.on("swipe", function (ev) {
+                if (ev.direction === 4) {
+                    // Swipe right
+                    openNav();
+                }
+
+                if (ev.direction === 2) {
+                    // Swipe left
+                    closeNav();
+                }
+            });
+        };
+
+        // Collapse responsive navbar on click outside or on its child items
+        const collapseNav = () => {
+            document.onmouseup = (e) => {
+                let target = e.target as HTMLElement;
+
+                if (navigation === target || navButton === target) {
+                    return;
+                }
+
+                if (navigation?.contains(target)) {
+                    closeNav();
+                }
+
+                closeNav();
+            };
+        };
+
+        // Prevent back button to use hash links
+        const handleHashes = () => {
+            navLinks.forEach((e) => {
+                let link = e.href;
+                if (link.includes("#") === false) {
+                    return;
+                }
+
+                e.onclick = (e) => {
+                    e.preventDefault();
+                    window.location.replace(link);
+                }
+                
+            });
+        };
+
+        // Run everything
+        navButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            openCloseNav();
+        });
+
+        headerOnScroll();
+        hammerTime();
+        collapseNav();
+        handleHashes();
+
+        console.log("Navigation initialized.");
+    };
+
+    document.addEventListener(
+        "astro:page-load",
+        (e) => {
+            initSideNav();
+        },
+        { once: false },
+    );
+</script>

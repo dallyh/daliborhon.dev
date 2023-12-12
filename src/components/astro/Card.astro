@@ -1,0 +1,64 @@
+---
+interface Props {
+    color: string;
+    dotColor?: string;
+}
+
+const { color, dotColor = color } = Astro.props;
+---
+
+<div class="card">
+    <slot />
+    <svg style="display: none">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="1.8" numOctaves="6" stitchTiles="stitch"></feTurbulence>
+        </filter>
+    </svg>
+</div>
+
+<style define:vars={{ color, dotColor }}>
+    .card {
+        position: relative;
+        margin: 10px;
+        background: linear-gradient(rgba(25, 31, 50, 0.2), rgb(4 8 20 / 0.01)), rgb(4 8 20 / 0.8);
+        box-shadow:
+            inset 0 0 0 1px rgb(200 200 220 / 0.16),
+            inset 0 0 5px -3px var(--color),
+            inset 0 12px 48px 0 rgb(160 220 240 / 0.08),
+            inset 0 0 120px -100px var(--color);
+        width: 600px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 1rem;
+        position: relative;
+    }
+
+    .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(var(--dotColor) 8%, transparent 8%), radial-gradient(var(--dotColor) 8%, transparent 8%), radial-gradient(var(--dotColor) 8%, transparent 8%),
+            radial-gradient(var(--dotColor) 8%, transparent 8%);
+        background-position:
+            0% 0%,
+            0% 100%,
+            100% 0%,
+            100% 100%;
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        filter: drop-shadow(0 0 6px var(--color));
+        border-radius: inherit;
+    }
+
+    .card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--color);
+        opacity: 0.2;
+        mask-image: radial-gradient(90% 90% at 50% 50%, transparent, black);
+        filter: url(#noiseFilter);
+        z-index: 1;
+        border-radius: inherit;
+    }
+</style>

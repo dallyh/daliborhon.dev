@@ -1,0 +1,44 @@
+{
+  "name": "dallyh-website",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "dev-host": "astro dev --host",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "preview-host": "astro preview --host",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^3.0.7",
+    "@formkit/auto-animate": "^0.8.1",
+    "@formspree/react": "^2.5.1",
+    "@popperjs/core": "^2.11.8",
+    "astro": "^4.0.4",
+    "astro-i18n-aut": "^0.6.1",
+    "css.gg": "^2.1.1",
+    "hammerjs": "^2.0.8",
+    "i18next": "^23.7.8",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "i18next-http-backend": "^2.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^13.5.0",
+    "react-refresh": "^0.14.0",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.0.3",
+    "@types/hammerjs": "^2.0.45",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "autoprefixer": "^10.4.16",
+    "i18next-fs-backend": "^2.3.1",
+    "iso-639-1": "^3.1.0",
+    "postcss-preset-env": "^9.3.0",
+    "sass": "^1.69.5",
+    "typescript": "^5.3.3"
+  }
+}

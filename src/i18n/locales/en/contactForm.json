@@ -1,0 +1,20 @@
+{
+    "FullName": "Your name",
+    "EmailAddress": "Email address",
+    "NameAndSurname": "Name and surname",
+    "Message": "Message",
+    "MessagePlaceholder": "Please write your message.",
+    "Submit": "Submit",
+    "ContactMe": "To contact me you can use the contact form below, where you can fill in your name, email and a message that you wish to send me.",
+    "SubmitSuccess": "Thanks for your submission! I'll get back to you as soon as possible.",
+    "SubmitError": "Oops! There was and error while submitting the form. Please try again later, or use other means of contacting me.",
+    "SubmitErrorDetail": "Oops! There was and error while submitting the form: {{errorMessage}}. Please try again later, or use other means of contacting me.",
+    "ERROR_TYPE_EMAIL": "Wrong email format.",
+    "ERROR_TYPE_TEXT": "Field cannot be empty.",
+    "ContactMeAt": "Please contact me at my",
+    "Profile": "profile",
+    "ERROR_CORRECT_FIELDS": "Please correct all of the fields before sending.",
+    "CloseButton": "Close",
+    "Subject": "Subject",
+    "SubjectDefault": "New submisson from the web"
+}

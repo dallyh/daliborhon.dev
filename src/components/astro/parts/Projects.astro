@@ -1,0 +1,288 @@
+---
+import { Image } from "astro:assets";
+import { loadNamespaces, t } from "../../../i18n/i18n";
+import { getLocale } from "astro-i18n-aut";
+import Lemmy from "../../../assets/img/projects/lemmy.svg";
+import codeBgSm from "../../../assets/img/projects/code_bg_sm.svg";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["projects"];
+await loadNamespaces(locale, namespaces);
+---
+
+<div class="projects-cards-wrapper">
+    <Image class="code-bg" src={codeBgSm} alt="Code image background" />
+    <div class="cards">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-image">
+                    <i class="bi bi-globe"></i>
+                </div>
+                <div class="card-info-wrapper">
+                    <div class="card-info">
+                        <div class="card-info-title">
+                            <a href="https://github.com/dallyh/website" target="_blank"><i class="bi bi-link-45deg"></i>{t("projects:ThisWebsite")}</a>
+                            <div class="card-info-tags">
+                                <div class="rounded-tag astro">Astro.js</div>
+                                <div class="rounded-tag typescript">TypeScript</div>
+                                <div class="rounded-tag javascript">JavaScript</div>
+                                <div class="rounded-tag react">React</div>
+                                <div class="rounded-tag webdev">Web</div>
+                            </div>
+                        </div>
+                        <p>{t("projects:ThisWebsiteDescription")}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="card-image">
+                    <Image class="lemmy-logo" src={Lemmy} width={100} format="avif" alt="Profile picture" />
+                </div>
+                <div class="card-info-wrapper">
+                    <div class="card-info">
+                        <div class="card-info-title">
+                            <a href="https://github.com/dallyh/lemmy-kt-client" target="_blank"><i class="bi bi-link-45deg"></i>{t("projects:LemmyKtClient")}</a>
+                            <div class="card-info-tags">
+                                <div class="rounded-tag kmp">Kotlin Multiplatform</div>
+                            </div>
+                        </div>
+                        <p>{t("projects:LemmyKtClientDescription")}{" "}<a href="https://join-lemmy.org/" target="_blank">Lemmy</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="card-image">
+                    <i class="bi bi-file-person-fill"></i>
+                </div>
+                <div class="card-info-wrapper">
+                    <div class="card-info">
+                        <div class="card-info-title">
+                            <a href="https://github.com/dallyh/web-resume" target="_blank"><i class="bi bi-link-45deg"></i>{t("projects:OldWebsite")}</a>
+                            <div class="card-info-tags">
+                                <div class="rounded-tag astro">Astro.js</div>
+                                <div class="rounded-tag typescript">TypeScript</div>
+                                <div class="rounded-tag javascript">JavaScript</div>
+                                <div class="rounded-tag react">React</div>
+                                <div class="rounded-tag webdev">Web</div>
+                            </div>
+                        </div>
+                        <p>{t("projects:OldWebisteDescription")}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .projects-cards-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 450px;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(transparent 0%, var(--bg-color) 90%);
+
+        .code-bg {
+            z-index: -1;
+            position: absolute;
+            object-position: 0 0;
+            object-fit: cover;
+            min-width: 1222px;
+            left: -15px;
+            height: 100%;
+            top: -15px;
+            opacity: 0.2;
+        }
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 1.5rem;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        background-color: var(--card-bg);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        transition: background-color 300ms ease-in-out;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+    }
+
+    .card-content {
+        display: flex;
+        gap: 1rem;
+
+        @media (max-width: 468px) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .card:hover {
+        background-color: var(--card-hover-color);
+    }
+
+    i {
+        color: rgb(240, 240, 240, 1);
+    }
+
+    .card-image {
+        align-items: center;
+        display: flex;
+        height: 120px;
+        width: 100px;
+        justify-content: center;
+        overflow: hidden;
+
+        @media (max-width: 468px) {
+            height: 90px;
+            width: 100%;
+        }
+    }
+
+    .card-image > i {
+        font-size: 4rem;
+        opacity: 0.45;
+    }
+
+    .card-info-wrapper {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-start;
+        padding: 0px 20px;
+    }
+
+    .card-info {
+        align-items: flex-start;
+        display: flex;
+        gap: 10px;
+    }
+
+    .card-info-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.725rem;
+        margin-top: 0.5rem;
+        color: black;
+        font-weight: 600;
+
+        .rounded-tag {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            border-radius: 8px;
+
+            &.astro {
+                background-color: rgb(232 121 249);
+            }
+
+            &.typescript {
+                background-color: rgb(251 113 133);
+            }
+
+            &.webdev {
+                background-color: rgb(163 230 53);
+            }
+
+            &.javascript {
+                background-color: rgb(250 204 21);
+            }
+
+            &.kmp {
+                background: #7f52ff linear-gradient(to right, #ef4857 0, #de4970 20%, #b44db0 50%, #7f52ff 100%);
+            }
+
+            &.react {
+                background-color: rgb(20 158 202);
+            }
+        }
+    }
+
+    .card-info {
+        display: flex;
+        flex-direction: column;
+        > p {
+            color: var(--body-color);
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+    }
+
+    .card-info-title {
+        > a {
+            font-weight: 600;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .lemmy-logo {
+        opacity: 0.45;
+    }
+</style>
+
+<script>
+    const setupCards = () => {
+        const cards = document.querySelector(".cards") as HTMLDivElement;
+        if (cards === null) {
+            return;
+        }
+        const items = cards?.getElementsByClassName("card") as HTMLCollectionOf<HTMLAnchorElement>;
+
+        cards.onmousemove = (e) => {
+            for (const navitem of items) {
+                const rect = navitem.getBoundingClientRect(),
+                    x = e.clientX - rect.left,
+                    y = e.clientY - rect.top;
+
+                navitem.style.setProperty("--hover-opacity", "0");
+                navitem.style.setProperty("--mouse-x", `${x}px`);
+                navitem.style.setProperty("--mouse-y", `${y}px`);
+            }
+        };
+
+        const initialLoad = () => {
+            items[0].style.setProperty("--mouse-x", `left`);
+            items[0].style.setProperty("--mouse-y", `top`);
+            items[0].style.setProperty("--hover-opacity", "1");
+        };
+
+        cards.onmouseleave = (e) => {
+            setTimeout(() => {
+                initialLoad();
+            }, 500);
+        };
+
+        initialLoad();
+    };
+
+    document.addEventListener(
+        "astro:page-load",
+        (e) => {
+            setupCards();
+        },
+        { once: false },
+    );
+</script>

@@ -1,0 +1,15 @@
+---
+import { getLocaleUrl, localeKeys } from "astro-i18n-aut";
+
+const site = import.meta.env.SITE;
+const base = import.meta.env.BASE_URL;
+---
+
+<Fragment>
+    <link rel="alternate" hreflang="x-default" href={site + base} />
+    {
+      localeKeys.map((supportedLocale) => (
+          <link rel="alternate" hreflang={supportedLocale} href={site + getLocaleUrl(Astro.url, supportedLocale)}/>
+        ))
+    }
+</Fragment>

@@ -1,0 +1,122 @@
+---
+// Thanks! https://codepen.io/robooneus/pen/noEKNr
+
+interface Props {
+    href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<a class="arrow-wrap" href={href} id="indicator">
+    <span class="arrow"></span>
+</a>
+
+<style>
+    .arrow-wrap {
+        z-index: 1;
+        background: rgba(var(--secondary), 1);
+        width: 8em;
+        height: 8em;
+        padding: 3em 1em;
+        border-radius: 50%;
+        font-size: 0.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        @media (max-width: 468px) {
+            transform: scale(0.6);
+            
+        }
+    }
+
+    .arrow {
+        float: left;
+        position: relative;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        border-width: 2em 2em 0 2em;
+        border-color: #ffffff transparent transparent transparent;
+        transform: rotate(360deg);
+        margin-top: 1em;
+    }
+
+    .arrow:after {
+        content: "";
+        position: absolute;
+        top: -2.4em;
+        left: -2em;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        border-width: 2em 2em 0 2em;
+        border-color: rgba(var(--secondary), 1) transparent transparent transparent;
+        transform: rotate(360deg);
+    }
+
+    .arrow-wrap .arrow {
+        animation: arrows 2.8s 0.4s;
+        animation-delay: 1s;
+        animation-timing-function: ease-in-out;
+    }
+
+    @keyframes arrows {
+        0% {
+            transform: translateY(0);
+        }
+        10% {
+            transform: translateY(10%);
+        }
+        20% {
+            transform: translateY(0);
+        }
+        30% {
+            transform: translateY(10%);
+        }
+        40% {
+            transform: translateY(-10%);
+        }
+        50% {
+            transform: translateY(10%);
+        }
+        60% {
+            transform: translateY(0);
+        }
+        70% {
+            transform: translateY(10%);
+        }
+        80% {
+            transform: translateY(-10%);
+        }
+        90% {
+            transform: translateY(10%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<script>
+    const hideIndicator = () => {
+        const mouseElem = document.getElementById("indicator") as HTMLElement;
+        const maxScroll = 250;
+        const initialOpacity = Number(window.getComputedStyle(mouseElem).opacity) ?? 1;
+
+        document.addEventListener("scroll", (e) => {
+            console.log(initialOpacity);
+            let opacity = initialOpacity - window.scrollY / maxScroll;
+            mouseElem.style.opacity = opacity.toString();
+        });
+    };
+    document.addEventListener(
+        "astro:page-load",
+        (e) => {
+            hideIndicator();
+        },
+        { once: false },
+    );
+</script>

@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Dalibor Hon" showBrowserWarning={false}>
+    <div class="dot-flashing"></div>
+</Layout>
+
+<style>
+    body {
+        width: 100vw;
+        height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .body::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: red;
+        opacity: 0.2;
+        mask-image: radial-gradient(90% 90% at 50% 50%, transparent, black);
+        filter: url(#noiseFilter);
+        z-index: 1;
+        border-radius: inherit;
+    }
+    
+</style>
+
+<script>
+    import { navigate } from "astro:transitions/client";
+    import { getLocaleUrl, defaultLocale, localeKeys } from "astro-i18n-aut";
+    import { prefetch } from "astro:prefetch";
+
+    let redirectUrl = getLocaleUrl("/home", defaultLocale); // Default URL by default locale
+
+    const checkDebug = (): boolean => {
+        const queryString = window.location.search;
+        if (queryString) {
+            const urlParams = new URLSearchParams(queryString);
+            if (urlParams.has("debug")) {
+                console.log("Page running in debug mode...");
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    const prefetchEvent = new Event("prefetchEvent");
+    const prefetchWithEvent = (url: string) => {
+        prefetch(url, { with: "fetch" });
+        document.dispatchEvent(prefetchEvent);
+        console.log("dispatched");
+    };
+
+    const getRedirectUrlAndPrefetch = (lang: string) => {
+        console.debug("Redirect URL by language: '" + lang + "'");
+        switch (lang) {
+            case "en":
+                redirectUrl = getLocaleUrl("/home/", "en");
+                break;
+            default:
+                break;
+        }
+
+        console.log("Final URL: " + redirectUrl);
+        prefetchWithEvent(redirectUrl);
+    };
+
+    const getLanguagePreferences = () => {
+        if (checkDebug()) return;
+
+        let languagePreference = window.localStorage.getItem("language");
+        if (languagePreference) {
+            console.log("Found local storage preference: " + languagePreference);
+            getRedirectUrlAndPrefetch(languagePreference);
+            return;
+        }
+
+        let navigatorLanguages = navigator.languages;
+        for (let lang of navigatorLanguages) {
+            if (lang.includes("-")) {
+                lang = lang.split("-")[0];
+            }
+
+            if (localeKeys.includes(lang)) {
+                console.log("Found browser preference matching locales: " + lang);
+                getRedirectUrlAndPrefetch(lang);
+                break;
+            }
+        }
+    };
+
+    const addLoadCompleteListeners = () => {
+        const loader = document.querySelector<HTMLDivElement>("#loading");
+        loader?.addEventListener("animationend", () => {});
+        document.addEventListener("prefetchEvent", (e) => {
+            loader?.classList.add("fade-out");
+        });
+    };
+
+    document.addEventListener("prefetchEvent", (e) => {
+        navigate(redirectUrl, { history: "replace" });
+    });
+
+    document.addEventListener(
+        "astro:page-load",
+        () => {
+            //addLoadCompleteListeners();
+            getLanguagePreferences();
+        },
+        { once: true },
+    );
+</script>

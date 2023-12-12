@@ -1,0 +1,193 @@
+---
+import { getLocale } from "astro-i18n-aut";
+import { loadNamespaces, t } from "../../i18n/i18n";
+interface Props {
+    style: CardStyle;
+    accentColor: string;
+}
+
+export type CardStyle = "landing" | "resume" | "projects" | "contact";
+
+const { style, accentColor } = Astro.props;
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["landing"];
+await loadNamespaces(locale, namespaces);
+---
+
+{
+    style === "landing" && (
+        <div class="banner landing">
+            <h1 class="hello">
+                <div class="top-bar">
+                    <p>hello, my name is</p>
+                </div>
+                <p>dalibor</p>
+            </h1>
+        </div>
+    )
+}
+
+{
+    style === "projects" && (
+        <div class="banner-wrapper" transition:name="banner">
+            <div class="banner ">
+                <div class="icon-wrapper">
+                    <i class="bi bi-git" />
+                </div>
+                <h1 class="hello">
+                    <p>{t("landing:projects_title_page")}</p>
+                </h1>
+            </div>
+        </div>
+    )
+}
+
+{
+    style === "contact" && (
+        <div class="banner-wrapper" transition:name="banner">
+            <div class="banner">
+                <div class="icon-wrapper">
+                    <i class="bi bi-envelope-fill" />
+                </div>
+                <h1 class="hello">
+                    <p>{t("landing:contact_title_page")}</p>
+                </h1>
+            </div>
+        </div>
+    )
+}
+<style define:vars={{ accentColor }}>
+    .banner-wrapper {
+        display: flex;
+        background: linear-gradient(to right, var(--nav-background) 20px, rgba(var(--accentColor), 1) 95px);
+        border-top-right-radius: inherit;
+        border-top-left-radius: inherit;
+        width: 100%;
+        height: 70px;
+        /* flex: 0 1 0px; */
+    }
+
+    .banner {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        color: black;
+        gap: 1rem;
+        position: relative;
+        border-top-left-radius: inherit;
+    }
+
+    .banner .icon-wrapper {
+        margin-left: -15px;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        position: relative;
+        overflow: hidden;
+
+        & i {
+            font-size: 2.5rem;
+            color: black;
+            opacity: 0.85;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            background-color: rgba(var(--accentColor), 1);
+            width: 85%;
+            height: 85%;
+            border-radius: inherit;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            background-color: var(--nav-background);
+            width: 100%;
+            height: 100%;
+            left: 20px;
+            top: 14px;
+            z-index: -1;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .banner-wrapper {
+            border-radius: unset;
+            height: 115px;
+            flex: unset;
+            margin-bottom: 30px;
+            background: rgba(var(--accentColor), 1);
+        }
+
+        .banner {
+            align-items: flex-start;
+            position: relative;
+            justify-content: center;
+        }
+
+        .banner .icon-wrapper {
+            position: absolute;
+            bottom: -50%;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 50%;
+            background-color: var(--nav-background);
+            width: 110px;
+            height: 110px;
+            box-shadow: 0px -8px 12px 0px rgba(0, 0, 0, 0.2);
+
+            & i {
+                font-size: 3rem;
+            }
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .hello {
+        font-family: "Major Mono Display";
+        background-color: black;
+        background-clip: text;
+    }
+
+    .top-bar p {
+        margin-left: 2px;
+        margin-bottom: -5px;
+        font-size: min(5vw, 0.875rem);
+        /* font-style: italic; */
+        letter-spacing: -1px;
+        word-spacing: -5px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    .hello > p {
+        font-size: min(15vw, 3rem);
+        font-style: normal;
+    }
+
+    .banner.landing .hello > p {
+        color: white;
+        font-weight: bold;
+    }
+
+    .banner.landing .hello {
+    }
+</style>

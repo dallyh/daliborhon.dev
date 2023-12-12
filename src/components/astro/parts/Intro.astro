@@ -1,0 +1,268 @@
+---
+import { Image } from "astro:assets";
+import { getLocaleUrl, getLocale } from "astro-i18n-aut";
+import { loadNamespaces, t } from "../../../i18n/i18n";
+
+// Images
+import profilePicture from "../../../assets/img/profile.png";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["landing", "shared"];
+await loadNamespaces(locale, namespaces);
+---
+
+<div class="intro-container">
+    <div class="profile-container">
+        <div class="profile-info-container">
+            <h1 class="hi-there">{t("landing:hi_there")} <strong>Dalibor</strong><span class="shake">👋</span></h1>
+            <div class="profile-description">
+                <div class="icon-text">
+                    <i class="bi bi-briefcase"></i>
+                    <p>Business Consultant</p>
+                </div>
+                <div class="icon-text">
+                    <i class="bi bi-geo-alt"></i>
+                    <p>Ostrava, {t("shared:CzechRepublic")}</p>
+                </div>
+            </div>
+        </div>
+        <div class="profile-social-container">
+            <div>
+                <a href="https://github.com/dallyh" target="_blank" class="github-link">
+                    <i class="bi bi-github"></i>
+                    <p>GitHub</p>
+                </a>
+                <a href="https://www.linkedin.com/in/dalibor-hon/" target="_blank" class="linkedin-link">
+                    <i class="bi bi-linkedin"></i>
+                    <p>LinkedIn</p>
+                </a>
+            </div>
+            <div>
+                <a href="#contact" class="contact-link">
+                    <i class="bi bi-envelope-fill"></i>
+                    <p>{t("landing:contact_title")}</p>
+                </a>
+                <a href={getLocaleUrl("/resume", locale)} class="resume-link" data-astro-prefetch="viewport">
+                    <i class="bi bi-file-person-fill"></i>
+                    <p>{t("landing:resume_title")}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="profile-picture-wrapper">
+        <Image class="profile-picture" src={profilePicture} width={220} height={220} format="avif" alt="Profile picture" />
+        <div class="circle"></div>
+    </div>
+</div>
+
+<style>
+    strong {
+        font-weight: 600;
+        color: transparent;
+        background: var(--accent-gradient);
+        background-clip: text;
+    }
+
+    .shake {
+        animation: shake 2s infinite;
+    }
+
+    .location {
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    .intro-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+
+        @media (max-width: 1024px) {
+            flex-direction: column-reverse;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .circle {
+        display: block;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(var(--accent), 1);
+        border-radius: 50%;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0px 0px 10px 2px rgba(var(--accent), 0.6);
+        top: 50%;
+        transform: translateY(-50%);
+        animation: droplet 1s ease-in-out both;
+        animation-iteration-count: 2;
+    }
+
+    .profile-picture-wrapper {
+        margin-left: auto;
+        position: relative;
+        display: flex;
+        width: clamp(100px, 60vw, 180px);
+        height: clamp(100px, 60vw, 180px);
+
+        @media (max-width: 1024px) {
+            margin-left: unset;
+            grid-row: 1;
+        }
+
+        .profile-picture {
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow:
+                0px 5px 30px 0px rgba(var(--accent), 1),
+                0px 0px 0px 7px rgba(var(--accent), 0.5);
+            animation: scaleImage 500ms 1450ms ease-out both;
+        }
+    }
+
+    .profile-info-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        font-size: clamp(0.65rem, 5vw, 1rem);
+
+        .profile-description {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            .icon-text {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                @media (max-width: 1024px) {
+                    justify-content: center;
+                }
+            }
+        }
+
+        .hi-there {
+            font-size: clamp(1rem, 7vw, 1.725rem);
+
+            span {
+                display: inline-block;
+            }
+
+            @media (max-width: 468px) {
+                display: block;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            align-items: center;
+        }
+    }
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .profile-social-container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        margin-top: auto;
+
+        > div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 600px;
+
+            @media (max-width: 1024px) {
+                width: unset;
+            }
+        }
+
+        a {
+            --padding: 0.725rem;
+            font-size: 1.2rem;
+            color: var(--body-color);
+            min-width: 180px;
+            height: min-content;
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+
+            @media (max-width: 1024px) {
+                width: 100%;
+                justify-content: center;
+            }
+
+            p {
+                padding: var(--padding);
+                z-index: 1;
+                transition: color 300ms ease-in-out;
+            }
+
+            i {
+                padding: var(--padding);
+                z-index: 1;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 42px;
+                height: 100%;
+                transition: width 300ms ease-in-out;
+
+                @media (max-width: 1024px) {
+                    width: 100%;
+                    border-radius: 10px;
+                }
+            }
+
+            &.github-link::after {
+                background: linear-gradient(45deg, #324e63, #414447);
+                box-shadow: 0px 0px 12px rgba(55, 75, 90, 0.6);
+            }
+
+            &.linkedin-link::after {
+                background: linear-gradient(45deg, #3468b1, #4875b4);
+                box-shadow: 0px 0px 12px rgba(71, 116, 179, 0.6);
+            }
+
+            &.contact-link::after {
+                background: linear-gradient(45deg, #d5135a, #f05924);
+                box-shadow: 0px 0px 12px rgba(223, 45, 70, 0.6);
+            }
+
+            &.resume-link::after {
+                background: linear-gradient(45deg, rgba(var(--accent-resume), 1), rgba(var(--accent-resume), 1));
+                box-shadow: 0px 0px 12px rgba(var(--accent-resume), 0.6);
+            }
+
+            &:hover {
+                text-decoration: none;
+
+                @media (width > 768px) {
+                    p {
+                        color: black;
+                    }
+                    &::after {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+</style>

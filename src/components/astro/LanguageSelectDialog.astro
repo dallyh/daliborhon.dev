@@ -1,0 +1,152 @@
+---
+import ModalDialog from "./ModalDialog.astro";
+import i18next, { loadNamespaces, t } from "../../i18n/i18n";
+import ISO6991 from "iso-639-1";
+import { getLocaleUrl, getLocale, localeKeys, defaultLocale } from "astro-i18n-aut";
+
+const accentColor = "var(--accent)";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["languagePopup"];
+await loadNamespaces(locale, namespaces);
+
+const { pathname } = Astro.url;
+const modalTitle = t("languagePopup:PopupTitle");
+const closeButtonText = t("shared:PopupClose");
+const currentnativeLanguage = ISO6991.getNativeName(i18next.language);
+
+const capitalizeFirstLetter = (str: string) => {
+    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+    return capitalized;
+};
+---
+
+<ModalDialog accentColor={accentColor} dialogId="languageSelectDialog" modalTitle={modalTitle} closeButtonText={closeButtonText}>
+    <div class="lang-select-dialog-body" slot="body">
+        <p>{t("languagePopup:PopupBody")}<span style="text-transform: capitalize; font-weight: 600;"> {currentnativeLanguage} <span class={`flag mg-left ${locale}`}></span></span>.</p>
+        <div class="dialog-languages" data-js-current-language={locale}>
+            {
+                localeKeys.map((supportedLanguage: string) => {
+                    let value = getLocaleUrl(pathname, supportedLanguage);
+                    const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(supportedLanguage));
+
+                    return (
+                        <a href={value} data-js-language={supportedLanguage}>
+                            <span class={`flag mg-right ${supportedLanguage}`} />
+                            <span>{nativeName}</span>
+                        </a>
+                    );
+                })
+            }
+        </div>
+        <input type="hidden" id="defaultLocale" value={defaultLocale} />
+    </div>
+</ModalDialog>
+
+<style>
+    .flag {
+        background-size: contain;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        display: inline-block;
+        width: 15px;
+        height: 10px;
+
+        &.mg-right {
+            margin-right: 0.5rem;
+        }
+
+        &.mg-left {
+            margin-left: 0.5rem;
+        }
+
+        &.cs {
+            background-image: url(/website-concept/assets/img/flags/cz.svg);
+        }
+        &.en {
+            background-image: url(/website-concept/assets/img/flags/us.svg);
+        }
+    }
+
+    .lang-select-dialog-body p {
+        margin-bottom: 1rem;
+    }
+
+    .dialog-languages {
+        display: flex;
+        justify-content: center;
+    }
+
+    .dialog-languages a {
+        height: 25px;
+        width: max-content;
+        position: relative;
+        margin-right: 10px;
+    }
+
+    .dialog-languages span {
+        pointer-events: none;
+    }
+</style>
+
+<script>
+    const languageSelect = document.querySelector(".dialog-languages") as HTMLElement;
+
+    // Check for changes on links
+    const setupLinks = () => {
+        const languageSelectorLinks = languageSelect.querySelectorAll("[data-js-language]");
+        languageSelectorLinks.forEach((selector) => {
+            selector.addEventListener("click", function (e) {
+                let currectSelector = e.target as HTMLAnchorElement;
+                let selectedLanguage = currectSelector.getAttribute("data-js-language");
+                if (selectedLanguage === null) {
+                    console.error("Could not find 'data-js-language' attribute.");
+                    return;
+                }
+                window.localStorage.setItem("language", selectedLanguage);
+            });
+        });
+    };
+
+    const assignCancelButton = () => {
+        // Check for cancel button
+        languageDialog.addEventListener("close", () => {
+            let currentLanguage = languageSelect.getAttribute("data-js-current-language");
+
+            if (currentLanguage === null) {
+                console.error("Could not find 'data-js-current-language' attribute.");
+                return;
+            }
+
+            if (languageDialog.returnValue === "cancel") {
+                window.localStorage.setItem("language", currentLanguage);
+            }
+
+            if (document.documentElement.classList.contains("no-scroll")) {
+                document.documentElement.classList.remove("no-scroll");
+            }
+        });
+    };
+
+    // Open dialog if there is no selected language
+    // TODO: Redirect if there is already a language
+    const languageDialog = document.querySelector("#languageSelectDialog") as HTMLDialogElement;
+    document.addEventListener(
+        "astro:page-load",
+        () => {
+            setupLinks();
+            assignCancelButton();
+            if (window.localStorage.getItem("language") === null) {
+                languageDialog.showModal();
+
+                if (document.documentElement.classList.contains("no-scroll") === false) {
+                    document.documentElement.classList.add("no-scroll");
+                }
+            } else {
+                //redirectUser();
+            }
+        },
+        { once: true },
+    );
+</script>

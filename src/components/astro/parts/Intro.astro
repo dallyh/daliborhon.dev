@@ -4,7 +4,7 @@ import { getLocaleUrl, getLocale } from "astro-i18n-aut";
 import { loadNamespaces, t } from "../../../i18n/i18n";
 
 // Images
-import profilePicture from "../../../assets/img/profile.png";
+import avatar from "../../../assets/img/profile.png";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -51,8 +51,8 @@ await loadNamespaces(locale, namespaces);
         </div>
     </div>
     <div class="profile-picture-wrapper">
-        <Image class="profile-picture" src={profilePicture} width={220} height={220} format="avif" alt="Profile picture" />
-        <div class="circle"></div>
+        <Image class="profile-picture" src={avatar} width={220} height={220} format="avif" alt="Profile picture" />
+        <!-- <div class="circle"></div> -->
     </div>
 </div>
 
@@ -124,7 +124,7 @@ await loadNamespaces(locale, namespaces);
             box-shadow:
                 0px 5px 30px 0px rgba(var(--accent), 1),
                 0px 0px 0px 7px rgba(var(--accent), 0.5);
-            animation: scaleImage 500ms 1450ms ease-out both;
+            /* animation: scaleImage 500ms 1450ms ease-out both; */
         }
     }
 

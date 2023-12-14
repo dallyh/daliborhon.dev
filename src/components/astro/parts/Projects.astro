@@ -39,7 +39,7 @@ await loadNamespaces(locale, namespaces);
         <div class="card">
             <div class="card-content">
                 <div class="card-image">
-                    <Image class="lemmy-logo" src={Lemmy} width={100} format="webp" alt="Lemmy software logo" loading="eager" />
+                    <Image class="lemmy-logo" src={Lemmy} width={85} format="webp" alt="Lemmy software logo" loading="eager" />
                 </div>
                 <div class="card-info-wrapper">
                     <div class="card-info">
@@ -99,7 +99,7 @@ await loadNamespaces(locale, namespaces);
             left: -15px;
             height: 100%;
             top: -15px;
-            opacity: 0.2;
+            opacity: 0.3;
         }
     }
 
@@ -242,47 +242,3 @@ await loadNamespaces(locale, namespaces);
         opacity: 0.45;
     }
 </style>
-
-<script>
-    const setupCards = () => {
-        const cards = document.querySelector(".cards") as HTMLDivElement;
-        if (cards === null) {
-            return;
-        }
-        const items = cards?.getElementsByClassName("card") as HTMLCollectionOf<HTMLAnchorElement>;
-
-        cards.onmousemove = (e) => {
-            for (const navitem of items) {
-                const rect = navitem.getBoundingClientRect(),
-                    x = e.clientX - rect.left,
-                    y = e.clientY - rect.top;
-
-                navitem.style.setProperty("--hover-opacity", "0");
-                navitem.style.setProperty("--mouse-x", `${x}px`);
-                navitem.style.setProperty("--mouse-y", `${y}px`);
-            }
-        };
-
-        const initialLoad = () => {
-            items[0].style.setProperty("--mouse-x", `left`);
-            items[0].style.setProperty("--mouse-y", `top`);
-            items[0].style.setProperty("--hover-opacity", "1");
-        };
-
-        cards.onmouseleave = (e) => {
-            setTimeout(() => {
-                initialLoad();
-            }, 500);
-        };
-
-        initialLoad();
-    };
-
-    document.addEventListener(
-        "astro:page-load",
-        (e) => {
-            setupCards();
-        },
-        { once: false },
-    );
-</script>

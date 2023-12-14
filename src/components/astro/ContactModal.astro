@@ -15,7 +15,7 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
 <div class="contact-form-dialog-wrapper" id="contactModal">
     <div class="contact-form-dialog-container">
         <div class="header">
-            <p data-text={t("shared:LeaveMeAMessage")}>{t("shared:LeaveMeAMessage")}</p>
+            <p class="gradient-text-accent">{t("shared:LeaveMeAMessage")}</p>
         </div>
         <ContactForm resources={res} showCloseButton={true} client:load/>
     </div>
@@ -28,8 +28,8 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
         min-width: 100vw;
         height: 100vh;
         z-index: 9999;
-        background: linear-gradient(to bottom, var(--bg-color) 40%, transparent 100%);
-        backdrop-filter: blur(2px);
+        background: linear-gradient(to bottom, var(--bg-color) 50%, transparent 100%);
+        backdrop-filter: blur(3px);
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -68,28 +68,6 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
             position: relative;
             z-index: 1;
             margin-bottom: 1rem;
-
-            &::before {
-                content: "";
-                width: 100%;
-                height: 2px;
-                position: absolute;
-                background-color: rgba(var(--accent), 1);
-                bottom: -2px;
-                z-index: -1;
-            }
-        }
-
-        [data-text]::after {
-            content: attr(data-text);
-            width: 100%;
-            height: 100%;
-            color: rgba(var(--accent), 0.8);
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            font-size: 2rem;
-            z-index: -1;
         }
     }
 </style>

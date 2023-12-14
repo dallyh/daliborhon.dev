@@ -1,17 +1,18 @@
 :root {
     --accent: 152, 75, 245; /*136, 58, 234*/
     --accent-rgba: rgba(152, 75, 245, 1);
-    --accent-gradient: linear-gradient(85deg, rgba(var(--accent), 1) 0%, rgb(162, 85, 255) 100%);
+    --accent-gradient: linear-gradient(to bottom right, rgba(var(--accent), 1) 0%, rgb(181, 135, 233) 100%);
     --secondary: 30, 41, 59;
-    --accent-resume: 74, 144, 226;
+    --accent-resume: 14, 165, 233;
+    --accent-resume-gradient: linear-gradient(to bottom right, rgba(var(--accent-resume), 1), rgb(34, 211, 238));
     --body-color: white;
     --button-color: white;
     --button-hover-color: black;
     --bg-color: rgba(15, 23, 42, 1);
     --card-color: rgba(23, 23, 23, 0.4);
-    --card-hover-color: rgba(30, 41, 59, 1);
-    --card-bg: rgba(30, 41, 59, 0.4);
-    --resume-card-bg: rgb(30, 41, 59);
+    --card-hover-color: rgba(var(--secondary), 1);
+    --card-bg: rgba(var(--secondary), 0.4);
+    --resume-card-bg: rgb(var(--secondary));
     --card-bg-rgb: 255, 255, 255;
     --dropdown-bg: #161b22;
     --dropdown-border-color: rgba(255, 255, 255, 0.3);
@@ -22,7 +23,7 @@
     --a-color: rgb(208, 174, 247);
     --home-footer-color: 208, 174, 247;
     --burger-menu-bg: #dddddd;
-    --nav-background: rgb(30, 41, 59);
+    --nav-background: rgba(var(--secondary), 1);
     color-scheme: dark;
 }
 
@@ -52,6 +53,12 @@ body {
 
 code {
     font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.gradient-text-accent {
+    color: transparent;
+    background-image: var(--accent-gradient);
+    background-clip: text;
 }
 
 p {
@@ -227,17 +234,4 @@ a.dropdown-link:after {
     color: #9880ff;
     animation: dot-flashing 1s infinite alternate;
     animation-delay: 1s;
-}
-
-[data-text]::after {
-    content: attr(data-text);
-    width: 100%;
-    height: 100%;
-    color: rgba(var(--accent), 0.8);
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    font-size: inherit;
-    font-weight: inherit;
-    z-index: -1;
 }

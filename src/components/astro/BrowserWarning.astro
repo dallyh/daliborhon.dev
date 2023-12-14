@@ -67,6 +67,12 @@ await loadNamespaces(locale, namespaces);
             return;
         }
 
+        let languagePreference = window.localStorage.getItem("language");
+        if (languagePreference) {
+            // Do not show, if the user 
+            return;
+        }
+
         const topPanel = document.querySelector<HTMLDivElement>(".top-panel");
         const topPanelButton = topPanel?.querySelector("#panelCloseButton");
         const warningShown = window.localStorage.getItem("warningShown");

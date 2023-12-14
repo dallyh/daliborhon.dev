@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
 import { loadNamespaces, t } from "../../i18n/i18n";
 import { getLocale } from "astro-i18n-aut";
 import Footer from "../../components/astro/footer/Footer.astro";
@@ -14,7 +14,7 @@ const namespaces = ["contactForm", "shared", "landing"];
 await loadNamespaces(locale, namespaces);
 ---
 
-<Layout title="Dalibor Hon">
+<MainLayout title="Dalibor Hon">
     <main>
         <section class="intro">
             <div class="section-content-container">
@@ -27,7 +27,7 @@ await loadNamespaces(locale, namespaces);
         <section class="projects" id="projects">
             <div class="section-content-container">
                 <div class="section-header">
-                    <h2 data-text={t("landing:projects_title") + " </>"}>{t("landing:projects_title")} {" </>"}</h2>
+                    <h2 class="gradient-text-accent">{t("landing:projects_title")} {" </>"}</h2>
                 </div>
                 <div class="section-info">
                     <p>{t("landing:projects_description")}</p>
@@ -40,7 +40,7 @@ await loadNamespaces(locale, namespaces);
         <section class="contact" id="contact">
             <div class="section-content-container">
                 <div class="section-header">
-                    <h2 data-text={t("shared:LeaveMeAMessage")}>{t("shared:LeaveMeAMessage")}</h2>
+                    <h2 class="gradient-text-accent">{t("shared:LeaveMeAMessage")}</h2>
                 </div>
                 <div class="section-info">
                     <p>{t("contactForm:ContactMe")}</p>
@@ -52,7 +52,7 @@ await loadNamespaces(locale, namespaces);
         </section>
     </main>
     <Footer showContact={false} showHomePage={false} accentColor="var(--home-footer-color)" />
-</Layout>
+</MainLayout>
 
 <style>
     main {
@@ -100,12 +100,10 @@ await loadNamespaces(locale, namespaces);
         .section-header {
             font-size: 2rem;
             font-weight: 600;
-            position: relative;
-            z-index: 1;
-            text-decoration: underline;
-            text-decoration-color: rgba(var(--accent), 1);
-            text-underline-offset: 4px;
-            text-decoration-thickness: 2px;
+
+            h2 {
+                padding-bottom: 0.25rem;
+            }
         }
 
         .section-subheader {

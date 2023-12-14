@@ -8,7 +8,7 @@ const namespaces = ["navigation", "shared"];
 await loadNamespaces(locale, namespaces);
 ---
 
-<div class="header-container noprint">
+<div class="header-container">
     <header class="header">
         <div class="header-burger-menu">
             <div class="header-burger-menu-button" id="resumeMenuButton">
@@ -36,7 +36,7 @@ await loadNamespaces(locale, namespaces);
     </header>
 </div>
 
-<div class="nav-container noprint">
+<div class="nav-container">
     <aside class="aside" id="resumeAsideMenu">
         <div class="contact-info">
             <p>Dalibor Hon</p>
@@ -82,9 +82,6 @@ await loadNamespaces(locale, namespaces);
         transition:
             transform 400ms ease,
             height 400ms ease;
-        box-shadow: 0px 0.5px 6px 0px rgba(0, 0, 0, 0.2);
-        transform: translateY(-100%);
-        animation: slideInFromTop 300ms ease-in-out forwards;
     }
 
     .header-container.small {
@@ -143,10 +140,6 @@ await loadNamespaces(locale, namespaces);
         left: -5%;
         top: 50%;
         transform: translateY(-50%);
-        background-color: rgba(var(--accent-resume), 0.07);
-        z-index: -1;
-        border: 1px solid rgba(var(--accent-resume), 0.1);
-        /* transform: skewX(-20deg) scaleX(1.2); */
     }
 
     .header-menu-item {
@@ -171,12 +164,13 @@ await loadNamespaces(locale, namespaces);
 
     .header-menu-item > span {
         color: rgba(var(--accent-resume), 1);
-        font-weight: 400;
+        font-weight: 100;
+        letter-spacing: normal;
     }
 
-    .header-menu .header-menu-item {
-        color: rgba(var(--accent-resume), 1);
-        color: white;
+    .header-menu-item {
+        color: var(--body-color);
+        letter-spacing: 1px;
     }
 
     .menu-hover-effect:focus {
@@ -311,11 +305,11 @@ await loadNamespaces(locale, namespaces);
             transform: translateX(-100%);
         }
 
-        body.nav-active .nav-container {
+        :global(body.nav-active .nav-container) {
             transform: translateX(0%);
         }
 
-        body.nav-active .header-burger-menu {
+        :global(body.nav-active .header-burger-menu) {
             transform: translateX(-60px);
         }
 
@@ -328,7 +322,7 @@ await loadNamespaces(locale, namespaces);
             pointer-events: none;
         }
 
-        body.nav-active .header-container {
+        :global(body.nav-active .header-container) {
             box-shadow: none;
             transform: translateX(240px);
         }

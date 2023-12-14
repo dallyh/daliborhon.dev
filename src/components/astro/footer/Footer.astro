@@ -65,7 +65,6 @@ await loadNamespaces(locale, namespaces);
         text-align: center;
         font-size: 0.8rem;
         color: var(--footer-color);
-        font-weight: 300;
         margin-top: 1rem;
     }
 
@@ -78,25 +77,25 @@ await loadNamespaces(locale, namespaces);
         background-size: contain;
         background-repeat: no-repeat;
         filter: invert(100%) grayscale(100%);
-        opacity: 50%;
+        opacity: 75%;
     }
 
     .links {
         display: flex;
         justify-content: center;
         gap: 0.25em;
-    }
 
-    a {
-        color: rgba(var(--accentColor), 1);
+        a {
+            color: rgba(var(--accentColor), 1);
 
-        &:visited {
-            color: rgba(var(--a-visited), 1);
-        }
+            &:visited {
+                color: rgba(var(--accentColor), 1);
+            }
 
-        i {
-            margin-right: 0.25rem;
-            color: var(--footer-color);
+            i {
+                margin-right: 0.25rem;
+                color: var(--footer-color);
+            }
         }
     }
 </style>

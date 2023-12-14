@@ -51,7 +51,7 @@ await loadNamespaces(locale, namespaces);
         </div>
     </div>
     <div class="profile-picture-wrapper">
-        <Image class="profile-picture" src={avatar} width={220} height={220} format="webp" alt="Profile picture" loading="eager"/>
+        <Image class="profile-picture" src={avatar} width={220} height={220} format="webp" alt="Profile picture" loading="eager" />
         <!-- <div class="circle"></div> -->
     </div>
 </div>
@@ -123,7 +123,7 @@ await loadNamespaces(locale, namespaces);
             border-radius: 50%;
             box-shadow:
                 0px 5px 30px 0px rgba(var(--accent), 1),
-                0px 0px 0px 7px rgba(var(--accent), 0.5);
+                0px 0px 0px 5px rgba(var(--accent), 0.5);
             /* animation: scaleImage 500ms 1450ms ease-out both; */
         }
     }
@@ -188,6 +188,8 @@ await loadNamespaces(locale, namespaces);
 
             @media (max-width: 1024px) {
                 width: unset;
+                align-items: center;
+                justify-content: center;
             }
         }
 
@@ -202,8 +204,11 @@ await loadNamespaces(locale, namespaces);
             position: relative;
 
             @media (max-width: 1024px) {
-                width: 100%;
                 justify-content: center;
+            }
+
+            @media (max-width: 468px) {
+                width: 100%;
             }
 
             p {
@@ -233,31 +238,24 @@ await loadNamespaces(locale, namespaces);
 
             &.github-link::after {
                 background: linear-gradient(45deg, #324e63, #414447);
-                box-shadow: 0px 0px 12px rgba(55, 75, 90, 0.6);
             }
 
             &.linkedin-link::after {
                 background: linear-gradient(45deg, #3468b1, #4875b4);
-                box-shadow: 0px 0px 12px rgba(71, 116, 179, 0.6);
             }
 
             &.contact-link::after {
-                background: linear-gradient(45deg, #d5135a, #f05924);
-                box-shadow: 0px 0px 12px rgba(223, 45, 70, 0.6);
+                background: linear-gradient(45deg, rgb(78, 151, 149), rgb(84, 179, 175));
             }
 
             &.resume-link::after {
                 background: linear-gradient(45deg, rgba(var(--accent-resume), 1), rgba(var(--accent-resume), 1));
-                box-shadow: 0px 0px 12px rgba(var(--accent-resume), 0.6);
             }
 
             &:hover {
                 text-decoration: none;
 
                 @media (width > 768px) {
-                    p {
-                        color: black;
-                    }
                     &::after {
                         width: 100%;
                     }

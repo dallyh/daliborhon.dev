@@ -16,9 +16,8 @@ const { href } = Astro.props;
     .arrow-wrap {
         z-index: 1;
         background: rgba(var(--secondary), 1);
-        width: 8em;
-        height: 8em;
-        padding: 3em 1em;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         font-size: 0.5em;
         display: flex;
@@ -27,7 +26,7 @@ const { href } = Astro.props;
         border: 1px solid rgba(255, 255, 255, 0.1);
 
         @media (max-width: 468px) {
-            transform: scale(0.6);
+            transform: scale(0.85);
             
         }
     }
@@ -38,21 +37,21 @@ const { href } = Astro.props;
         width: 0px;
         height: 0px;
         border-style: solid;
-        border-width: 2em 2em 0 2em;
+        border-width: 1.5em 1.5em 0 1.5em;
         border-color: #ffffff transparent transparent transparent;
         transform: rotate(360deg);
-        margin-top: 1em;
+        margin-top: 0.5em;
     }
 
     .arrow:after {
         content: "";
         position: absolute;
-        top: -2.4em;
-        left: -2em;
+        top: -1.8em;
+        left: -1.5em;
         width: 0px;
         height: 0px;
         border-style: solid;
-        border-width: 2em 2em 0 2em;
+        border-width: 1.5em 1.5em 0 1.5em;
         border-color: rgba(var(--secondary), 1) transparent transparent transparent;
         transform: rotate(360deg);
     }

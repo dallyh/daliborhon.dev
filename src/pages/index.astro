@@ -1,8 +1,17 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import { loadNamespaces, t } from "../i18n/i18n";
+import { getLocale } from "astro-i18n-aut";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["landing"];
+await loadNamespaces(locale, namespaces);
 ---
 
-<MainLayout title="Dalibor Hon" showBrowserWarning={false}>
+
+
+<MainLayout title="Dalibor Hon" showBrowserWarning={false} description={t("landing:description")}>
     <div class="dot-flashing"></div>
 </MainLayout>
 

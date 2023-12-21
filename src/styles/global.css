@@ -1,10 +1,10 @@
 :root {
     --accent: 152, 75, 245; /*136, 58, 234*/
     --accent-rgba: rgba(152, 75, 245, 1);
-    --accent-gradient: linear-gradient(to bottom right, rgba(var(--accent), 1) 0%, rgb(181, 135, 233) 100%);
+    --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1) 0%, rgb(181, 135, 233) 100%);
     --secondary: 30, 41, 59;
     --accent-resume: 14, 165, 233;
-    --accent-resume-gradient: linear-gradient(to bottom right, rgba(var(--accent-resume), 1), rgb(34, 211, 238));
+    --accent-resume-gradient: linear-gradient(to bottom, rgba(var(--accent-resume), 1), rgb(34, 211, 238));
     --body-color: white;
     --button-color: white;
     --button-hover-color: black;

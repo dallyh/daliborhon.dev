@@ -15,7 +15,7 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
 <div class="contact-form-dialog-wrapper" id="contactModal">
     <div class="contact-form-dialog-container">
         <div class="header">
-            <p class="gradient-text-accent">{t("shared:LeaveMeAMessage")}</p>
+            <p>{t("shared:LeaveMeAMessage")}</p>
         </div>
         <ContactForm resources={res} showCloseButton={true} client:load/>
     </div>
@@ -43,6 +43,7 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
         @media (max-width: 480px) {
             overflow-y: scroll;
         }
+
         &.show {
             transform: translateY(0);
             opacity: 1;
@@ -52,6 +53,10 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
         .contact-form-dialog-container {
             margin-top: 5rem;
             width: 70%;
+
+            p {
+                color: rgba(var(--accent), 1);
+            }
 
             @media (max-width: 1200px) {
                 width: 90%;

@@ -16,6 +16,7 @@ import mfilesLogo from "../../assets/img/company-logos/m-files.png";
 import msftLogo from "../../assets/img/company-logos/MSFT_BIG.png";
 import nintextLogo from "../../assets/img/company-logos/nintex-logo-white.png";
 
+
 // i18next
 const locale = getLocale(Astro.url);
 const namespaces = ["resume", "shared"];
@@ -513,8 +514,12 @@ await loadNamespaces(locale, namespaces);
             flex-direction: column;
             flex: 1 1 0px;
 
+            h3 {
+                padding: 0;
+            }
+
             .fill {
-                height: 2px;
+                height: 3px;
                 background: rgba(255, 255, 255, 0.5);
                 position: relative;
 
@@ -564,6 +569,7 @@ await loadNamespaces(locale, namespaces);
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         flex-wrap: wrap;
+        row-gap: 1rem;
     }
 
     .dev-list-inline .dev-list-inline-item {
@@ -693,7 +699,7 @@ await loadNamespaces(locale, namespaces);
     .timeline-content::before {
         content: "";
         position: absolute;
-        width: 2px;
+        width: 3px;
         height: calc(100% + 30px);
         left: 1px;
         top: 0;
@@ -703,8 +709,8 @@ await loadNamespaces(locale, namespaces);
     .timeline-content:after {
         content: "";
         position: absolute;
-        width: 6px;
-        height: 6px;
+        width: 7px;
+        height: 7px;
         left: -1px;
         top: calc(100% + 30px);
         background-color: rgba(var(--accent-resume), 1);
@@ -725,7 +731,7 @@ await loadNamespaces(locale, namespaces);
     .timeline-content .meta::before {
         content: "";
         position: absolute;
-        width: 2px;
+        width: 3px;
         height: 100%;
         left: 1px;
         top: 0;

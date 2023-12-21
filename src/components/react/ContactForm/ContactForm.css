@@ -8,6 +8,15 @@
     margin: 8px 0;
     box-sizing: border-box;
     border: 1px solid rgba(255, 255, 255, 0.1);
+
+    &::placeholder {
+        opacity: 0.2; /* Firefox */
+    }
+}
+
+* *::-ms-input-placeholder {
+    /* Edge 12 -18 */
+    color: red;
 }
 
 #fs-frm .textarea-container {
@@ -67,7 +76,7 @@
 #fs-frm input:focus,
 #fs-frm select:focus,
 #fs-frm textarea:focus {
-    background-color: transparent;
+    /* background-color: transparent; */
     outline-style: solid;
     outline-width: thin;
     outline-color: rgba(var(--accent), 0.5);

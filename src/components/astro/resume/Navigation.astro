@@ -1,6 +1,8 @@
 ---
 import { getLocale } from "astro-i18n-aut";
 import { loadNamespaces, t } from "../../../i18n/i18n";
+import { Image } from "astro:assets";
+import profilePicture from "../../../assets/img/profile.png";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -15,7 +17,10 @@ await loadNamespaces(locale, namespaces);
                 <span></span>
             </div>
         </div>
-        <p>{t("navigation:DaliborsResume")}</p>
+        <div class="header-title">
+            <p>{t("navigation:DaliborsResume")}</p>
+        </div>
+
         <div class="header-menu">
             <a href="#hero" class="header-menu-item menu-hover-effect">
                 <span>00</span>TOP
@@ -70,6 +75,31 @@ await loadNamespaces(locale, namespaces);
         display: none;
     }
 
+    .header-title {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        align-items: center;
+
+        i {
+            font-size: 2rem;
+            color: rgba(var(--accent-resume), 1);
+            margin-right: 0.25rem;
+        }
+
+        p {
+            color: rgba(var(--accent-resume), 1);
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+
+            @media (max-width: 480px) {
+                width: min-content;
+                font-size: 1rem;
+            }
+        }
+    }
+
     .header-container {
         position: fixed;
         top: 0px;
@@ -110,13 +140,6 @@ await loadNamespaces(locale, namespaces);
 
     .aside-close-button {
         display: none;
-    }
-
-    header p {
-        color: rgba(var(--accent-resume), 1);
-        font-size: 1.2rem;
-        font-weight: 600;
-        display: block;
     }
 
     .header-menu {
@@ -216,11 +239,7 @@ await loadNamespaces(locale, namespaces);
         header .header-menu {
             display: none;
         }
-
-        header p {
-            display: block !important;
-        }
-
+        
         .header-burger-menu {
             display: flex;
             align-items: center;
@@ -435,13 +454,6 @@ await loadNamespaces(locale, namespaces);
             transition: transform 200ms;
         }
     }
-
-    @media (max-width: 480px) {
-        .header p {
-            width: min-content;
-            font-size: 1rem;
-        }
-    }
 </style>
 
 <script>
@@ -562,8 +574,7 @@ await loadNamespaces(locale, namespaces);
                 e.onclick = (e) => {
                     e.preventDefault();
                     window.location.replace(link);
-                }
-                
+                };
             });
         };
 

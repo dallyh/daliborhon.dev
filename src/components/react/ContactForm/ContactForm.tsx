@@ -115,7 +115,7 @@ const contactForm = (props: ContactFormProps) => {
                             {errorState.some((key) => key.type === "EMAIL") && <p className="error">{errorState.find((item) => item.type === "EMAIL")?.message}</p>}
                             <input id="email" autoComplete="email" type="email" name="email" placeholder="@" required onFocus={selectText} />
                             <label htmlFor="email-subject">{props.resources.Subject}</label>
-                            <input type="text" name="_subject" id="email-subject" placeholder={props.resources.Subject} defaultValue={props.resources.SubjectDefault} required onFocus={selectText} />
+                            <input type="text" name="_subject" id="email-subject" placeholder={props.resources.Subject} required onFocus={selectText} />
                         </div>
                         <div className="message-container">
                             <label htmlFor="message">{props.resources.Message}</label>

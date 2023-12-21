@@ -1,8 +1,6 @@
 ---
 import { getLocale } from "astro-i18n-aut";
 import { loadNamespaces, t } from "../../../i18n/i18n";
-import { Image } from "astro:assets";
-import profilePicture from "../../../assets/img/profile.png";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -112,10 +110,10 @@ await loadNamespaces(locale, namespaces);
         transition:
             transform 400ms ease,
             height 400ms ease;
-    }
 
-    .header-container.small {
-        height: 60px;
+        &.small {
+            height: 60px;
+        }
     }
 
     header {
@@ -239,7 +237,7 @@ await loadNamespaces(locale, namespaces);
         header .header-menu {
             display: none;
         }
-        
+
         .header-burger-menu {
             display: flex;
             align-items: center;

@@ -1,0 +1,144 @@
+---
+import { loadNamespaces, t } from "../../../i18n/i18n";
+import { getLocale } from "astro-i18n-aut";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["resume", "shared"];
+await loadNamespaces(locale, namespaces);
+---
+
+<div class="timeline">
+    <div class="timeline-cards">
+        <div class="timeline-card">
+            <h3>{t("resume:SectionExperience")}</h3>
+            <div class="timeline-content">
+                <div class="meta">
+                    <p class="date">{t("resume:ECMBusinessConsultantDate")}</p>
+                    <p class="title">ECM Business Consultant</p>
+                    <p>Konica Minolta IT Solutions Czech s.r.o</p>
+                    <p class="description">{t("resume:ECMBusinessConsultantDescription")}</p>
+                </div>
+                <div class="meta">
+                    <p class="date">{t("resume:MonetaAnalystDate")}</p>
+                    <p class="title">Analyst, Shared Services</p>
+                    <p>MONETA Money Bank a.s.</p>
+                    <p class="description">{t("resume:MonetaAnalystDescription")}</p>
+                </div>
+                <div class="meta">
+                    <p class="date">{t("resume:MonetaEndUserServicesDate")}</p>
+                    <p class="title">Administrator End User Services, IT</p>
+                    <p>MONETA Money Bank a.s.</p>
+                    <p class="description">{t("resume:MonetaEndUserServicesDescription")}</p>
+                </div>
+                <div class="meta">
+                    <p class="date">{t("resume:AsusTechnicianDate")}</p>
+                    <p class="title">Motherboard Technician</p>
+                    <p>ASUS Czech Service s.r.o.</p>
+                    <p class="description">{t("resume:AsusTechnicianDescription")}</p>
+                </div>
+            </div>
+        </div>
+        <div class="timeline-card pagebreak">
+            <h3>{t("resume:SectionEducation")}</h3>
+            <div class="timeline-content">
+                <div class="meta">
+                    <p class="date">2010 - 2014</p>
+                    <p class="title">{t("resume:HighSchoolNaJizdarne")}</p>
+                    <p>{t("resume:MaturityDiploma")}</p>
+                    <p class="description">{t("resume:HighSchoolNaJizdarneDescription")}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    h3 {
+        line-height: 1;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: rgba(var(--accent-resume), 1);
+        padding-bottom: 1rem;
+    }
+
+    .timeline {
+        position: relative;
+        display: grid;
+        grid-template-rows: min-content 1fr;
+    }
+
+    .timeline-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+
+        @media (max-width: 800px) {
+            grid-template-columns: unset;
+        }
+    }
+
+    .timeline-cards > .timeline-card {
+        padding: 0;
+    }
+
+    .timeline-content {
+        position: relative;
+        margin-left: 5px; /* Just so the dots align with headings */
+    }
+
+    .timeline-content::before {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        left: 1px;
+        top: 0;
+        background: linear-gradient(to bottom, rgba(var(--accent-resume), 0.75) 65%, transparent);
+    }
+
+    .timeline-content .meta {
+        position: relative;
+        margin-left: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-content > .meta > .title {
+        line-height: 1.5;
+        margin-top: 0.2rem;
+        position: relative;
+        font-weight: normal;
+        max-width: 95%;
+        font-size: 1.2rem;
+        color: rgba(var(--accent-resume), 1);
+    }
+
+    .timeline-content > .meta > .date {
+        font-size: 0.835rem;
+        font-weight: 300;
+        position: relative;
+        margin-bottom: 0.5rem;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            left: -30px;
+            top: 0;
+            border: 3px solid rgba(var(--accent-resume), 1);
+            background-color: rgba(var(--secondary), 1);
+        }
+    }
+
+    .timeline-content > .meta > .description {
+        font-size: 0.9rem;
+        font-weight: 400;
+        margin-top: 1rem;
+        border-radius: 10px;
+        background-color: rgba(var(--secondary), 1);
+        padding: 0.725rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+</style>

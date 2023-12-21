@@ -15,7 +15,7 @@ import abbyyLogo from "../../assets/img/company-logos/ABBYY.png";
 import mfilesLogo from "../../assets/img/company-logos/m-files.png";
 import msftLogo from "../../assets/img/company-logos/MSFT_BIG.png";
 import nintextLogo from "../../assets/img/company-logos/nintex-logo-white.png";
-
+import Timeline from "../../components/astro/resume/Timeline.astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -251,56 +251,7 @@ await loadNamespaces(locale, namespaces);
             <section class="resume-setion" id="experience">
                 <div class="section-content timeline">
                     <h2 class="gradient-text">{t("resume:TimelineTitle")}</h2>
-                    <div class="timeline-cards">
-                        <div class="timeline-card">
-                            <h3>{t("resume:SectionExperience")}</h3>
-                            <div class="timeline-content">
-                                <div class="meta">
-                                    <p class="title">ECM Business Consultant</p>
-                                    <p>Konica Minolta IT Solutions Czech s.r.o</p>
-                                    <span class="date">{t("resume:ECMBusinessConsultantDate")}</span>
-                                    <p class="description">
-                                        {t("resume:ECMBusinessConsultantDescription")}
-                                    </p>
-                                </div>
-                                <div class="meta">
-                                    <p class="title">Analyst, Shared Services</p>
-                                    <p>MONETA Money Bank a.s.</p>
-                                    <span class="date">{t("resume:MonetaAnalystDate")}</span>
-                                    <p class="description">
-                                        {t("resume:MonetaAnalystDescription")}
-                                    </p>
-                                </div>
-                                <div class="meta">
-                                    <p class="title">Administrator End User Services, IT</p>
-                                    <p>MONETA Money Bank a.s.</p>
-                                    <span class="date">{t("resume:MonetaEndUserServicesDate")}</span>
-                                    <p class="description">
-                                        {t("resume:MonetaEndUserServicesDescription")}
-                                    </p>
-                                </div>
-                                <div class="meta">
-                                    <p class="title">Motherboard technician</p>
-                                    <p>ASUS Czech Service s.r.o.</p>
-                                    <span class="date">{t("resume:AsusTechnicianDate")}</span>
-                                    <p class="description">
-                                        {t("resume:AsusTechnicianDescription")}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="timeline-card pagebreak">
-                            <h3>{t("resume:SectionEducation")}</h3>
-                            <div class="timeline-content">
-                                <div class="meta">
-                                    <p class="title">{t("resume:HighSchoolNaJizdarne")}</p>
-                                    <p>{t("resume:MaturityDiploma")}</p>
-                                    <span class="date">2010 - 2014</span>
-                                    <p class="description">{t("resume:HighSchoolNaJizdarneDescription")}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Timeline />
                 </div>
             </section>
         </main>
@@ -670,115 +621,5 @@ await loadNamespaces(locale, namespaces);
             width: 120px;
             height: unset;
         }
-    }
-
-    .timeline {
-        position: relative;
-        display: grid;
-        grid-template-rows: min-content 1fr;
-    }
-
-    .timeline-cards {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-
-        @media (max-width: 800px) {
-            grid-template-columns: unset;
-        }
-    }
-
-    .timeline-cards > .timeline-card {
-        padding: 0;
-    }
-
-    .timeline-content {
-        position: relative;
-    }
-
-    .timeline-content::before {
-        content: "";
-        position: absolute;
-        width: 3px;
-        height: calc(100% + 30px);
-        left: 1px;
-        top: 0;
-        background-color: #4f4f4f;
-    }
-
-    .timeline-content:after {
-        content: "";
-        position: absolute;
-        width: 7px;
-        height: 7px;
-        left: -1px;
-        top: calc(100% + 30px);
-        background-color: rgba(var(--accent-resume), 1);
-    }
-
-    .timeline-content > .header {
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-bottom: 15px;
-    }
-
-    .timeline-content .meta {
-        position: relative;
-        padding-left: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .timeline-content .meta::before {
-        content: "";
-        position: absolute;
-        width: 3px;
-        height: 100%;
-        left: 1px;
-        top: 0;
-        background-color: rgba(var(--accent-resume), 1);
-        transform: scaleY(0);
-    }
-
-    .timeline-content > .meta > .title {
-        padding: 10px 0;
-        margin-top: 20px;
-        position: relative;
-        font-weight: normal;
-        max-width: 95%;
-        font-size: 1.1rem;
-        color: rgba(var(--accent-resume), 1);
-    }
-
-    .timeline-content > .meta:first-of-type > .title {
-        margin-top: 0;
-        padding-top: 0;
-    }
-
-    .timeline-content > .meta > .date {
-        font-size: 0.9rem;
-        font-weight: 300;
-    }
-
-    .timeline-content > .meta > .description {
-        font-size: 0.9rem;
-        font-weight: 400;
-        margin-top: 1rem;
-    }
-
-    .timeline-content.animate .meta::before {
-        transform-origin: top;
-        animation: 1s ease-in both scaleUp;
-    }
-
-    .timeline-content.animate .meta:nth-of-type(2)::before {
-        animation-delay: 1s;
-    }
-
-    .timeline-content.animate .meta:nth-of-type(3)::before {
-        animation-delay: 2s;
-    }
-
-    .timeline-content.animate .meta:nth-of-type(4)::before {
-        animation-delay: 3s;
     }
 </style>

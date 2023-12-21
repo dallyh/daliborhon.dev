@@ -57,8 +57,12 @@ code {
 
 .gradient-text-accent {
     color: transparent;
-    background-image: var(--accent-gradient);
+    background: var(--accent-gradient) fixed;
     background-clip: text;
+}
+
+.text-accent {
+    color: rgba(var(--accent), 1);
 }
 
 p {

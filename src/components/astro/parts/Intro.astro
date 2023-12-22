@@ -4,7 +4,8 @@ import { getLocaleUrl, getLocale } from "astro-i18n-aut";
 import { loadNamespaces, t } from "../../../i18n/i18n";
 
 // Images
-import avatar from "../../../assets/img/profile.png";
+import profilePicture from "../../../assets/img/profile/me.png";
+import avatar from "../../../assets/img/profile/avatar_casual.svg?raw";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -50,15 +51,31 @@ await loadNamespaces(locale, namespaces);
             </div>
         </div>
     </div>
-    <div class="profile-picture-wrapper">
-        <Image class="profile-picture" src={avatar} width={220} height={220} format="webp" alt="Profile picture" loading="eager" />
-        <!-- <div class="circle"></div> -->
+    <div class="profile-avatar-wrapper">
+        <Fragment set:html={avatar} />
     </div>
 </div>
 
 <style>
     strong {
         font-weight: 600;
+    }
+
+    :global(.profile-avatar-wrapper) {
+        display: block;
+
+        :global(svg) {
+            width: clamp(170px, 60vw, 220px);
+            height: auto;
+        }
+
+        :global(#🖍Color) {
+            display: none;
+        }
+
+        :global(#Hoodie) {
+            fill: rgba(var(--accent), 1);
+        }
     }
 
     .shake {
@@ -101,28 +118,6 @@ await loadNamespaces(locale, namespaces);
         transform: translateY(-50%);
         animation: droplet 1s ease-in-out both;
         animation-iteration-count: 2;
-    }
-
-    .profile-picture-wrapper {
-        margin-left: auto;
-        position: relative;
-        display: flex;
-        width: clamp(100px, 60vw, 180px);
-        height: clamp(100px, 60vw, 180px);
-
-        @media (max-width: 1024px) {
-            margin-left: unset;
-            grid-row: 1;
-        }
-
-        .profile-picture {
-            object-fit: cover;
-            border-radius: 50%;
-            box-shadow:
-                0px 5px 30px 0px rgba(var(--accent), 0.8),
-                0px 0px 0px 5px rgba(var(--accent), 0.5);
-            /* animation: scaleImage 500ms 1450ms ease-out both; */
-        }
     }
 
     .profile-info-container {

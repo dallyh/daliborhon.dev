@@ -29,26 +29,48 @@ await loadNamespaces(locale, namespaces);
             </div>
         </div>
         <div class="profile-social-container">
-            <div>
-                <a href="https://github.com/dallyh" target="_blank" class="github-link">
-                    <i class="bi bi-github"></i>
-                    <p>GitHub</p>
-                </a>
-                <a href="https://www.linkedin.com/in/dalibor-hon/" target="_blank" class="linkedin-link">
-                    <i class="bi bi-linkedin"></i>
-                    <p>LinkedIn</p>
-                </a>
-            </div>
-            <div>
-                <a href="#contact" class="contact-link">
-                    <i class="bi bi-envelope-fill"></i>
-                    <p>{t("landing:contact_title")}</p>
-                </a>
-                <a href={getLocaleUrl("/resume", locale)} class="resume-link" data-astro-prefetch="viewport">
-                    <i class="bi bi-file-person-fill"></i>
-                    <p>{t("landing:resume_title")}</p>
-                </a>
-            </div>
+            <ul>
+                <div>
+                    <li>
+                        <a href="https://github.com/dallyh" target="_blank">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <i class="bi bi-github">GitHub</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/dalibor-hon/" target="_blank">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <i class="bi bi-linkedin">LinkedIn</i>
+                        </a>
+                    </li>
+                </div>
+                <div>
+                    <li>
+                        <a href="#contact">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <i class="bi bi-envelope-fill">Contact</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={getLocaleUrl("/resume", locale)} class="resume-link" data-astro-prefetch="viewport">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <i class="bi bi-person-fill">Resume</i>
+                        </a>
+                    </li>
+                </div>
+            </ul>
         </div>
     </div>
     <div class="profile-avatar-wrapper">
@@ -93,10 +115,11 @@ await loadNamespaces(locale, namespaces);
         flex-direction: row;
         align-items: center;
         position: relative;
+        gap: 10rem;
 
         @media (max-width: 1024px) {
             flex-direction: column-reverse;
-            gap: 2rem;
+            gap: 0.5rem;
             justify-content: center;
             align-items: center;
         }
@@ -172,87 +195,146 @@ await loadNamespaces(locale, namespaces);
         flex-direction: column;
         margin-top: auto;
 
-        > div {
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: row;
             gap: 1rem;
-            width: 600px;
+            flex-wrap: wrap;
 
-            @media (max-width: 1024px) {
-                width: unset;
-                align-items: center;
-                justify-content: center;
+            @media (max-width: 468px) {
+                flex-direction: column;
+            }
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                flex-wrap: wrap;
             }
         }
 
         a {
-            --padding: 0.725rem;
-            font-size: clamp(0.8rem, 6vw, 1.2rem);
-            color: var(--body-color);
-            min-width: 180px;
-            height: min-content;
-            display: inline-flex;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            position: relative;
-
-            @media (max-width: 1024px) {
-                justify-content: center;
-            }
-
-            @media (max-width: 468px) {
-                width: 100%;
-            }
-
-            p {
-                padding: var(--padding);
-                z-index: 1;
-                transition: color 300ms ease-in-out;
-            }
+            border-radius: 10px;
 
             i {
-                padding: var(--padding);
-                z-index: 1;
+                font-size: 1.2rem;
+                display: inline-flex;
+                gap: 1rem;
             }
+        }
 
-            &::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                width: 42px;
-                height: 100%;
-                transition: width 300ms ease-in-out;
+        ul li {
+            position: relative;
+            background-color: rgba(var(--secondary), 1);
+            border-radius: 10px;
+            min-width: 150px;
+        }
 
-                @media (max-width: 1024px) {
-                    width: 100%;
-                    border-radius: 10px;
-                }
-            }
+        ul li span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 1.2rem;
+            transition: 0.4s;
+            border-radius: inherit;
+        }
 
-            &.github-link::after {
-                background: linear-gradient(45deg, #324e63, #414447);
-            }
+        ul li i {
+            transition: 0.4s;
+            border-radius: inherit;
+        }
 
-            &.linkedin-link::after {
-                background: linear-gradient(45deg, #3468b1, #4875b4);
-            }
+        a:hover span,
+        a:hover i,
+        a:focus span,
+        a:focus i {
+            z-index: 1000;
+            transition: 0.5s;
+        }
 
-            &.contact-link::after {
-                background: linear-gradient(45deg, rgb(78, 151, 149), rgb(84, 179, 175));
-            }
+        a:hover span,
+        a:focus span {
+            box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.05);
+        }
 
-            &.resume-link::after {
-                background: linear-gradient(45deg, rgba(var(--accent-resume), 1), rgba(var(--accent-resume), 1));
-            }
+        a:hover span:nth-of-type(1),
+        a:focus span:nth-of-type(1) {
+            transform: translate(0px, -0px);
+        }
+        a:hover span:nth-of-type(2),
+        a:focus span:nth-of-type(2) {
+            transform: translate(1px, -1px);
+        }
+        a:hover span:nth-of-type(3),
+        a:focus span:nth-of-type(3) {
+            transform: translate(2px, -2px);
+        }
+        a:hover span:nth-of-type(4),
+        a:focus span:nth-of-type(4) {
+            transform: translate(3px, -3px);
+        }
+        a:hover i,
+        a:focus i {
+            transform: translate(4px, -4px);
+        }
 
-            &:hover {
-                text-decoration: none;
+        a span:nth-of-type(1) {
+            opacity: 0.2;
+        }
+        a span:nth-of-type(2) {
+            opacity: 0.4;
+        }
+        a span:nth-of-type(3) {
+            opacity: 0.6;
+        }
+        a span:nth-of-type(4) {
+            opacity: 0.8;
+        }
 
-                @media (width > 768px) {
-                    &::after {
-                        width: 100%;
-                    }
-                }
-            }
+        ul div:nth-of-type(1) li:nth-of-type(1) a:hover span,
+        ul div:nth-of-type(1) li:nth-of-type(1) a:focus span {
+            background-color: #3b5998;
+            background-image: linear-gradient(270deg, #3b5998, #383838);
+            background-size: 400% 400%;
+            animation: gradient 6s ease infinite;
+        }
+
+        ul div:nth-of-type(1) li:nth-of-type(2) a:hover span,
+        ul div:nth-of-type(1) li:nth-of-type(2) a:focus span {
+            background-color: #285aeb;
+            background-image: linear-gradient(270deg, #285aeb, #0077b5);
+            background-size: 800% 800%;
+            animation: gradient 10s ease infinite;
+        }
+
+        ul div:nth-of-type(2) li:nth-of-type(1) a:hover span,
+        ul div:nth-of-type(2) li:nth-of-type(1) a:focus span {
+            background-color: #6441a5;
+            background-image: linear-gradient(270deg, #27c6b0, #6441a5);
+            background-size: 400% 400%;
+            animation: gradient 6s ease infinite alternate forwards;
+        }
+
+        ul div:nth-of-type(2) li:nth-of-type(2) a:hover span,
+        ul div:nth-of-type(2) li:nth-of-type(2) a:focus span  {
+            background-color: #0077f2;
+            background-image: linear-gradient(270deg, #4cbdff, #0077f2);
+            background-size: 400% 400%;
+            animation: gradient 6s ease infinite;
         }
     }
 </style>

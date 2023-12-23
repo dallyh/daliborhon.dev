@@ -74,7 +74,6 @@
 
     50% {
         opacity: 1;
-        
     }
 
     100% {
@@ -113,9 +112,22 @@
 
 @keyframes dot-flashing {
     0% {
-      background-color: #9880ff;
+        background-color: #9880ff;
     }
-    50%, 100% {
-      background-color: rgba(152, 128, 255, 0.2);
+    50%,
+    100% {
+        background-color: rgba(152, 128, 255, 0.2);
     }
-  }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

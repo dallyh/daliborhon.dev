@@ -15,7 +15,7 @@ await loadNamespaces(locale, namespaces);
         <div class="card">
             <div class="card-content">
                 <div class="card-image">
-                    <i class="bi bi-globe"></i>
+                    <i class="bi bi-file-earmark-code-fill"></i>
                 </div>
                 <div class="card-info-wrapper">
                     <div class="card-info">
@@ -55,7 +55,7 @@ await loadNamespaces(locale, namespaces);
         <div class="card">
             <div class="card-content">
                 <div class="card-image">
-                    <i class="bi bi-person-fill"></i>
+                    <i class="bi bi-person-lines-fill"></i>
                 </div>
                 <div class="card-info-wrapper">
                     <div class="card-info">
@@ -84,7 +84,6 @@ await loadNamespaces(locale, namespaces);
         align-items: center;
         width: 100%;
         position: relative;
-
     }
 
     .cards {
@@ -104,7 +103,7 @@ await loadNamespaces(locale, namespaces);
         display: flex;
         flex-direction: column;
         position: relative;
-        box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
         border-radius: 6px;
         padding: 1rem;
         overflow: hidden;
@@ -120,10 +119,6 @@ await loadNamespaces(locale, namespaces);
         }
     }
 
-    i {
-        color: rgba(240, 240, 240, 1);
-    }
-
     .card-image {
         align-items: center;
         display: flex;
@@ -132,15 +127,19 @@ await loadNamespaces(locale, namespaces);
         justify-content: center;
         overflow: hidden;
 
+        > i {
+            color: rgba(240, 240, 240, 1);
+            font-size: 4rem;
+        }
+
+        .lemmy-logo {
+            opacity: 1;
+        }
+
         @media (max-width: 468px) {
             height: 90px;
             width: 100%;
         }
-    }
-
-    .card-image > i {
-        font-size: 4rem;
-        opacity: 0.45;
     }
 
     .card-info-wrapper {
@@ -221,9 +220,5 @@ await loadNamespaces(locale, namespaces);
                 margin-right: 5px;
             }
         }
-    }
-
-    .lemmy-logo {
-        opacity: 0.45;
     }
 </style>

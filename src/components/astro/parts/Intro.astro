@@ -115,7 +115,9 @@ await loadNamespaces(locale, namespaces);
         flex-direction: row;
         align-items: center;
         position: relative;
-        gap: 10rem;
+        justify-content: space-around;
+        width: 100%;
+        height: 100%;
 
         @media (max-width: 1024px) {
             flex-direction: column-reverse;
@@ -123,24 +125,6 @@ await loadNamespaces(locale, namespaces);
             justify-content: center;
             align-items: center;
         }
-    }
-
-    .circle {
-        display: block;
-        position: absolute;
-        width: 40px;
-        height: 40px;
-        background-color: rgba(var(--accent), 1);
-        border-radius: 50%;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        box-shadow: 0px 0px 10px 2px rgba(var(--accent), 0.6);
-        top: 50%;
-        transform: translateY(-50%);
-        animation: droplet 1s ease-in-out both;
-        animation-iteration-count: 2;
     }
 
     .profile-info-container {
@@ -187,6 +171,10 @@ await loadNamespaces(locale, namespaces);
         display: flex;
         flex-direction: column;
         gap: 1rem;
+
+        @media (max-width: 468px) {
+            width: 100%;
+        }
     }
 
     .profile-social-container {

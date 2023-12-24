@@ -83,22 +83,8 @@ await loadNamespaces(locale, namespaces);
         justify-content: center;
         align-items: center;
         width: 100%;
-        min-height: 450px;
         position: relative;
-        overflow: hidden;
-        background: radial-gradient(transparent 0%, var(--bg-color) 90%);
 
-        .code-bg {
-            z-index: -1;
-            position: absolute;
-            object-position: 0 0;
-            object-fit: cover;
-            min-width: 1222px;
-            left: -15px;
-            height: 100%;
-            top: -15px;
-            opacity: 0.3;
-        }
     }
 
     .cards {
@@ -115,12 +101,11 @@ await loadNamespaces(locale, namespaces);
     .card {
         background-color: var(--card-bg);
         backdrop-filter: blur(2px);
-        border-radius: 10px;
         display: flex;
         flex-direction: column;
         position: relative;
-        transition: background-color 300ms ease-in-out;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+        border-radius: 6px;
         padding: 1rem;
         overflow: hidden;
     }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, type FocusEvent } from "react";
 import { useForm } from "@formspree/react";
 import "./ContactForm.css";
-import type { ContactForm } from "../../../i18n/locales";
+import type { ContactForm } from "../../../../i18n/locales/localeTypes";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 interface ContactFormProps {

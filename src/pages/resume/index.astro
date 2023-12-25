@@ -1,13 +1,11 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import { Image } from "astro:assets";
-import { loadNamespaces, t } from "../../i18n/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "astro-i18n-aut";
-import Footer from "../../components/astro/footer/Footer.astro";
-import ScrollIndicator from "../../components/astro/parts/ScrollIndicator.astro";
-import Navigation from "../../components/astro/resume/Navigation.astro";
+import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
+import Timeline from "@components/astro/resume/Timeline.astro";
 
-const accentColor = "var(--accent-resume)";
 
 // Images
 import profilePicture from "../../assets/img/profile/me.png";
@@ -15,7 +13,7 @@ import abbyyLogo from "../../assets/img/company-logos/ABBYY.png";
 import mfilesLogo from "../../assets/img/company-logos/m-files.png";
 import msftLogo from "../../assets/img/company-logos/MSFT_BIG.png";
 import nintextLogo from "../../assets/img/company-logos/nintex-logo-white.png";
-import Timeline from "../../components/astro/resume/Timeline.astro";
+
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -24,276 +22,236 @@ await loadNamespaces(locale, namespaces);
 ---
 
 <MainLayout title={t("shared:NamePossesive") + " " + t("shared:Resume")} description={t("shared:Description")}>
-    <Navigation />
-    <div class="resume-wrapper with-header">
-        <main class="resume-content">
-            <!-- Introduction -->
-            <section class="hero-container" id="hero">
-                <div class="hero">
-                    <div class="profile-picture-wrapper">
-                        <Image class="profile-picture" src={profilePicture} width={220} height={220} format="webp" alt="Profile picture" />
-                    </div>
-                    <div class="hero-title-wrapper">
-                        <h1 class="hero-title gradient-text">
-                            Dalibor<br />
-                             Hon
-                        </h1>
-                        <p>BUSINESS CONSULTANT</p>
-                    </div>
+    <main class="resume-content">
+        <!-- Introduction -->
+        <section class="hero-container" id="hero">
+            <div class="hero">
+                <div class="profile-picture-wrapper">
+                    <Image class="profile-picture" src={profilePicture} width={220} height={220} format="webp" alt="Profile picture" />
                 </div>
-                <div class="section-footer noprint">
-                    <ScrollIndicator href="#intro" />
+                <div class="hero-title-wrapper">
+                    <h1 class="hero-title gradient-text">
+                        Dalibor<br />
+                         Hon
+                    </h1>
+                    <p>BUSINESS CONSULTANT</p>
                 </div>
-            </section>
-            <section class="resume-section skills" id="intro">
-                <div class="section-content">
-                    <h2 class="gradient-text">{t("resume:SectionIntro")}</h2>
-                    <div class="intro-projects">
-                        <div>
-                            <div class="content">
-                                <div class="skill-level">
-                                    <span>+</span>
-                                    <h3>45 {t("resume:CardProjectTitle")}</h3>
-                                </div>
+            </div>
+            <div class="section-footer noprint">
+                <ScrollIndicator href="#intro" />
+            </div>
+        </section>
+        <section class="resume-section skills" id="intro">
+            <div class="section-content">
+                <h2 class="gradient-text">{t("resume:SectionIntro")}</h2>
+                <div class="intro-projects">
+                    <div>
+                        <div class="content">
+                            <div class="skill-level">
+                                <span>+</span>
+                                <h3>45 {t("resume:CardProjectTitle")}</h3>
                             </div>
                         </div>
-                        <p>{t("resume:CardProjectDetail")}</p>
                     </div>
-                    <div class="intro-summary">
-                        <div class="bars">
-                            <div class="bar">
-                                <h3>{t("resume:CardBATitle")}</h3>
-                                <div class="fill" style="--width: 80%"></div>
-                                <p>{t("resume:CardBADetail")}</p>
-                            </div>
-                            <div class="bar">
-                                <h3>{t("resume:CardImplementationTitle")}</h3>
-                                <div class="fill" style="--width: 60%"></div>
-                                <p>{t("resume:CardImplementationDetail")}</p>
-                            </div>
-                            <div class="bar">
-                                <h3>{t("resume:CardDevTitle")}</h3>
-                                <div class="fill" style="--width: 20%"></div>
-                                <p>{t("resume:CardDevDetail")}</p>
-                            </div>
+                    <p>{t("resume:CardProjectDetail")}</p>
+                </div>
+                <div class="intro-summary">
+                    <div class="bars">
+                        <div class="bar">
+                            <h3>{t("resume:CardBATitle")}</h3>
+                            <div class="fill" style="--width: 80%"></div>
+                            <p>{t("resume:CardBADetail")}</p>
+                        </div>
+                        <div class="bar">
+                            <h3>{t("resume:CardImplementationTitle")}</h3>
+                            <div class="fill" style="--width: 60%"></div>
+                            <p>{t("resume:CardImplementationDetail")}</p>
+                        </div>
+                        <div class="bar">
+                            <h3>{t("resume:CardDevTitle")}</h3>
+                            <div class="fill" style="--width: 20%"></div>
+                            <p>{t("resume:CardDevDetail")}</p>
                         </div>
                     </div>
                 </div>
-            </section>
-            <section class="resume-section" id="skills">
-                <div class="section-content">
-                    <h2 class="gradient-text">{t("resume:SectionSkills")}</h2>
-                    <p>
-                        {t("resume:SkillsIntroduction")}
-                    </p>
-                    <div class="list-card exp">
-                        <div class="exp-text">+ 2 {t("resume:SkillsYears")}</div>
-                        <div class="exp-description">
-                            <h3>{t("resume:SkillsBA")}</h3>
-                            <span>{t("resume:SkillsBADescription")}</span>
-                        </div>
+            </div>
+        </section>
+        <section class="resume-section" id="skills">
+            <div class="section-content">
+                <h2 class="gradient-text">{t("resume:SectionSkills")}</h2>
+                <p>
+                    {t("resume:SkillsIntroduction")}
+                </p>
+                <div class="list-card exp">
+                    <div class="exp-text">+ 2 {t("resume:SkillsYears")}</div>
+                    <div class="exp-description">
+                        <h3>{t("resume:SkillsBA")}</h3>
+                        <span>{t("resume:SkillsBADescription")}</span>
                     </div>
-                    <div class="list-card exp">
-                        <div class="exp-text">+ 2 {t("resume:SkillsYears")}</div>
-                        <div class="exp-description">
-                            <h3>{t("resume:SkillsWindowsServers")}</h3>
-                            <span>{t("resume:SkillsWindowsServersDescription")}</span>
-                        </div>
+                </div>
+                <div class="list-card exp">
+                    <div class="exp-text">+ 2 {t("resume:SkillsYears")}</div>
+                    <div class="exp-description">
+                        <h3>{t("resume:SkillsWindowsServers")}</h3>
+                        <span>{t("resume:SkillsWindowsServersDescription")}</span>
                     </div>
-                    <div class="list-card exp">
-                        <div class="exp-text">+ 4 {t("resume:SkillsYears")}</div>
-                        <div class="exp-description">
-                            <h3>{t("resume:SkillsDatabases")}</h3>
-                            <span>{t("resume:SkillsDatabasesDescription")}</span>
-                        </div>
+                </div>
+                <div class="list-card exp">
+                    <div class="exp-text">+ 4 {t("resume:SkillsYears")}</div>
+                    <div class="exp-description">
+                        <h3>{t("resume:SkillsDatabases")}</h3>
+                        <span>{t("resume:SkillsDatabasesDescription")}</span>
                     </div>
-                    <div class="list-card exp">
-                        <div class="exp-text">+ 1 {t("resume:SkillsYears")}</div>
-                        <div class="exp-description">
-                            <h3>{t("resume:SkillsOOP")}</h3>
-                            <span>{t("resume:SkillsOOPDescription")}</span>
-                        </div>
+                </div>
+                <div class="list-card exp">
+                    <div class="exp-text">+ 1 {t("resume:SkillsYears")}</div>
+                    <div class="exp-description">
+                        <h3>{t("resume:SkillsOOP")}</h3>
+                        <span>{t("resume:SkillsOOPDescription")}</span>
                     </div>
-                    <div class="list-card">
-                        <h3 class="dev-list-title">
-                            {t("resume:SkillsProgrammingLangAndTools")}
-                            <span><i class="bi bi-info-circle" data-tooltip="top" data-tooltip-text={t("resume:HoverIconsTooltip")}></i></span>
-                        </h3>
-                        <ul class="dev-list-inline">
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="HTML5">
-                                <i class="devicon-html5-plain"></i>
+                </div>
+                <div class="list-card">
+                    <h3 class="dev-list-title">
+                        {t("resume:SkillsProgrammingLangAndTools")}
+                        <span><i class="bi bi-info-circle" data-tooltip="top" data-tooltip-text={t("resume:HoverIconsTooltip")}></i></span>
+                    </h3>
+                    <ul class="dev-list-inline">
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="HTML5">
+                            <i class="devicon-html5-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="CSS3">
+                            <i class="devicon-css3-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="JavaScript">
+                            <i class="devicon-javascript-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Node JS">
+                            <i class="devicon-nodejs-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="SASS">
+                            <i class="devicon-sass-original"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="NPM">
+                            <i class="devicon-npm-original-wordmark"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Webpack">
+                            <i class="devicon-webpack-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="C#">
+                            <i class="devicon-csharp-line"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text=".NET Framework">
+                            <i class="devicon-dot-net-plain-wordmark"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text=".NET Core">
+                            <i class="devicon-dotnetcore-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Bootstrap">
+                            <i class="devicon-bootstrap-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="MSSQL">
+                            <i class="devicon-microsoftsqlserver-plain-wordmark"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="GIT">
+                            <i class="devicon-git-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="jQuery">
+                            <i class="devicon-jquery-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Adobe Photoshop">
+                            <i class="devicon-photoshop-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Azure">
+                            <i class="devicon-azure-plain"></i>
+                        </li>
+                        <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="TypeScript">
+                            <i class="devicon-typescript-plain"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list-card">
+                    <h3>{t("resume:SkillsSoftwareAndPlatforms")}</h3>
+                    <div class="software-experience-list">
+                        <ul>
+                            <li>
+                                <a href="https://www.abbyy.com/flexicapture/" target="_blank">ABBYY FlexiCapture</a>
                             </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="CSS3">
-                                <i class="devicon-css3-plain"></i>
+                            <li>
+                                <a href="https://www.abbyy.com/finereader-server/" target="_blank"> ABBYY FineReader Server</a>
                             </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="JavaScript">
-                                <i class="devicon-javascript-plain"></i>
+                            <li>
+                                <a href="https://www.abbyy.com/vantage/" target="_blank">ABBYY Vantage</a>
                             </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Node JS">
-                                <i class="devicon-nodejs-plain"></i>
+                            <li>
+                                <a href="https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration" target="_blank">Microsoft SharePoint</a>
                             </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="SASS">
-                                <i class="devicon-sass-original"></i>
+                            <li>
+                                <a href="https://powerplatform.microsoft.com/en-us/" target="_blank"> Microsoft PowerPlaftorm</a>
                             </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="NPM">
-                                <i class="devicon-npm-original-wordmark"></i>
+                            <li>
+                                <a href="https://www.m-files.com/" target="_blank">M-Files</a>
                             </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Webpack">
-                                <i class="devicon-webpack-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="C#">
-                                <i class="devicon-csharp-line"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text=".NET Framework">
-                                <i class="devicon-dot-net-plain-wordmark"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text=".NET Core">
-                                <i class="devicon-dotnetcore-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Bootstrap">
-                                <i class="devicon-bootstrap-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="MSSQL">
-                                <i class="devicon-microsoftsqlserver-plain-wordmark"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="GIT">
-                                <i class="devicon-git-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="jQuery">
-                                <i class="devicon-jquery-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Adobe Photoshop">
-                                <i class="devicon-photoshop-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Azure">
-                                <i class="devicon-azure-plain"></i>
-                            </li>
-                            <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="TypeScript">
-                                <i class="devicon-typescript-plain"></i>
+                            <li>
+                                <a href="https://www.nintex.com/process-automation/k2-software/" target="_blank"> K2 Five/K2 Cloud</a>
                             </li>
                         </ul>
                     </div>
-                    <div class="list-card">
-                        <h3>{t("resume:SkillsSoftwareAndPlatforms")}</h3>
-                        <div class="software-experience-list">
-                            <ul>
-                                <li>
-                                    <a href="https://www.abbyy.com/flexicapture/" target="_blank">ABBYY FlexiCapture</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.abbyy.com/finereader-server/" target="_blank"> ABBYY FineReader Server</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.abbyy.com/vantage/" target="_blank">ABBYY Vantage</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration" target="_blank">Microsoft SharePoint</a>
-                                </li>
-                                <li>
-                                    <a href="https://powerplatform.microsoft.com/en-us/" target="_blank"> Microsoft PowerPlaftorm</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.m-files.com/" target="_blank">M-Files</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.nintex.com/process-automation/k2-software/" target="_blank"> K2 Five/K2 Cloud</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <p>
-                            {t("resume:SkillsSoftwareAndPlatformsDescription")}
-                        </p>
-                    </div>
+                    <p>
+                        {t("resume:SkillsSoftwareAndPlatformsDescription")}
+                    </p>
                 </div>
-            </section>
-            <section class="resume-section" id="certifications">
-                <div class="section-content">
-                    <h2 class="gradient-text">{t("resume:SectionCertifications")}</h2>
-                    <div class="certifications-list">
-                        <p><Fragment set:html={t("resume:CertLinkedIn")} /></p>
-                        <div class="certifications-grid">
-                            <div class="cert-card">
-                                <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
-                                <p class="cer-card-description">Power Platform Fundamentals (PL-900)</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
-                                <p class="cer-card-description">Microsoft Dynamics 365 Fundamentals (PL-900)</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo abbyy" src={abbyyLogo} format="webp" width={110} alt="ABBYY logo" />
-                                <p class="cer-card-description">FlexiCapture 12 Basic</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo abbyy" src={abbyyLogo} format="webp" width={110} alt="ABBYY logo" />
-                                <p class="cer-card-description">Vantage Certified Business Analyst</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
-                                <p class="cer-card-description">K2 IT Developer</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
-                                <p class="cer-card-description">K2 Business Analyst</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
-                                <p class="cer-card-description">K2 Citizen Developer</p>
-                            </div>
-                            <div class="cert-card">
-                                <Image class="cert-card-logo" src={mfilesLogo} format="webp" width={150} alt="M-Files Corporation logo" />
-                                <p class="cer-card-description">M-Files Solution Engineer</p>
-                            </div>
+            </div>
+        </section>
+        <section class="resume-section" id="certifications">
+            <div class="section-content">
+                <h2 class="gradient-text">{t("resume:SectionCertifications")}</h2>
+                <div class="certifications-list">
+                    <p><Fragment set:html={t("resume:CertLinkedIn")} /></p>
+                    <div class="certifications-grid">
+                        <div class="cert-card">
+                            <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
+                            <p class="cer-card-description">Power Platform Fundamentals (PL-900)</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
+                            <p class="cer-card-description">Microsoft Dynamics 365 Fundamentals (PL-900)</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo abbyy" src={abbyyLogo} format="webp" width={110} alt="ABBYY logo" />
+                            <p class="cer-card-description">FlexiCapture 12 Basic</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo abbyy" src={abbyyLogo} format="webp" width={110} alt="ABBYY logo" />
+                            <p class="cer-card-description">Vantage Certified Business Analyst</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                            <p class="cer-card-description">K2 IT Developer</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                            <p class="cer-card-description">K2 Business Analyst</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                            <p class="cer-card-description">K2 Citizen Developer</p>
+                        </div>
+                        <div class="cert-card">
+                            <Image class="cert-card-logo" src={mfilesLogo} format="webp" width={150} alt="M-Files Corporation logo" />
+                            <p class="cer-card-description">M-Files Solution Engineer</p>
                         </div>
                     </div>
                 </div>
-            </section>
-            <section class="resume-setion" id="experience">
-                <div class="section-content timeline">
-                    <h2 class="gradient-text">{t("resume:TimelineTitle")}</h2>
-                    <Timeline />
-                </div>
-            </section>
-        </main>
-    </div>
-    <Footer accentColor={accentColor} />
+            </div>
+        </section>
+        <section class="resume-setion" id="experience">
+            <div class="section-content timeline">
+                <h2 class="gradient-text">{t("resume:TimelineTitle")}</h2>
+                <Timeline />
+            </div>
+        </section>
+    </main>
 </MainLayout>
-
-<script>
-    const timeline = () => {
-        const timelineCards = document.querySelectorAll<HTMLElement>(".timeline-content");
-
-        let observerOptions = {
-            root: document.querySelector("#scrollArea"),
-            rootMargin: "0px",
-            threshold: [0.85, 0.5],
-        };
-
-        let observer = new IntersectionObserver((entires, observer) => {
-            entires.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    let timelineCard = entry.target as HTMLElement;
-                    timelineCard.classList.add("animate");
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        if (timelineCards) {
-            timelineCards.forEach((element) => {
-                observer.observe(element);
-            });
-        }
-    };
-
-    document.addEventListener(
-        "astro:page-load",
-        (e) => {
-            timeline();
-        },
-        { once: false },
-    );
-</script>
 
 <style>
     .gradient-text {
@@ -303,19 +261,10 @@ await loadNamespaces(locale, namespaces);
     }
 
     h2 {
-        line-height: 1;
-        font-size: 2rem;
-        font-weight: bold;
         position: relative;
     }
 
     h3 {
-        line-height: 1;
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: rgba(var(--accent-resume), 1);
-        padding-bottom: 1rem;
-
         i {
             display: inline-block;
             color: white;
@@ -332,7 +281,7 @@ await loadNamespaces(locale, namespaces);
     }
 
     section {
-        scroll-margin-top: 70px;
+        scroll-margin-top: 3rem;
     }
 
     /* Hero section */
@@ -342,7 +291,7 @@ await loadNamespaces(locale, namespaces);
         padding-bottom: 1rem;
         scroll-margin-top: 200px;
         align-items: center;
-        min-height: calc(100svh - var(--header-size));
+        min-height: calc(100svh - 4rem); /* Header padding */
     }
 
     .hero-title-wrapper > p {
@@ -371,6 +320,7 @@ await loadNamespaces(locale, namespaces);
         position: relative;
         margin-bottom: 1rem;
         margin-left: -0.3rem;
+        font-weight: normal;
     }
 
     .hero-title::before {
@@ -388,18 +338,21 @@ await loadNamespaces(locale, namespaces);
 
     .profile-picture-wrapper {
         position: relative;
+        width: clamp(140px, 40vw, 220px);
+        height: clamp(140px, 40vw, 220px);
+        border-radius: 50%;
+        margin-bottom: 2rem;
+        margin-left: 0.2rem;
+        box-shadow:
+            0px 5px 30px 0px rgba(var(--accent-resume), 0.8),
+            0px 0px 0px 7px rgba(var(--accent-resume), 0.5);
     }
 
     .profile-picture {
         display: block;
-        width: clamp(140px, 40vw, 220px);
-        height: clamp(140px, 40vw, 220px);
         object-fit: cover;
-        border-radius: 50%;
-        margin-bottom: 2rem;
-        box-shadow:
-            0px 5px 30px 0px rgba(var(--accent-resume), 0.8),
-            0px 0px 0px 7px rgba(var(--accent-resume), 0.5);
+        border-radius: inherit;
+        
     }
 
     .section-footer {
@@ -408,18 +361,6 @@ await loadNamespaces(locale, namespaces);
         align-items: center;
         align-self: flex-end;
         padding-bottom: 0.5rem;
-    }
-
-    .resume-wrapper {
-        max-width: var(--resume-page-width);
-        margin: auto;
-        position: relative;
-        margin-top: calc(var(--header-size));
-    }
-
-    .resume-content {
-        position: relative;
-        padding: 1rem;
     }
 
     .section-content {
@@ -431,7 +372,6 @@ await loadNamespaces(locale, namespaces);
 
     .intro-projects .skill-level {
         display: flex;
-        font-size: 2rem;
         color: rgba(var(--accent-resume), 1);
     }
 
@@ -450,7 +390,7 @@ await loadNamespaces(locale, namespaces);
 
     .bars {
         display: grid;
-        grid-auto-flow: column;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1rem;
         width: 100%;
 

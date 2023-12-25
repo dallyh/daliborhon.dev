@@ -1,11 +1,6 @@
 {
-    "Nav_Intro": "Úvod",
-    "Nav_Certifications": "Certifikace",
-    "Nav_Education": "Vzdělání",
-    "Nav_Experience": "Zkušenosti",
-    "Nav_Interests": "Zájmy",
-    "Nav_Skills": "Dovednosti",
-    "Nav_Contact": "Kontakt",
-    "Nav_Facts": "Fakta",
-    "DaliborsResume": "Daliborův Životopis"
+    "home": "Domů",
+    "blog": "Blog",
+    "resume": "Životopis",
+    "contact": "Kontakt"
 }

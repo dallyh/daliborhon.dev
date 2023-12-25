@@ -1,13 +1,11 @@
 {
     "resume_title": "Resume",
-    "resume_title_page": "resuMe",
-    "resume_description": "My resume, on the web",
-    "projects_title": "Projects",
-    "projects_title_page": "pRojects",
-    "projects_description": "A list of my personal, hobby projects.",
+    "projects_title": "Recent projects",
+    "projects_description": "A list of my recent personal projects.",
     "contact_title": "Contact",
-    "contact_title_page": "coNtact",
     "contact_description": "Contact me here",
     "hi_there": "Hi there, I'm",
-    "description": "Dalibor's small corner on the internet."
+    "description": "Dalibor's small corner on the internet.",
+    "blog_title": "Recent posts",
+    "blog_description": "A list of my recent blog posts, which I create when I have some more spare time."
 }

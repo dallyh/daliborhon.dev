@@ -1,0 +1,122 @@
+---
+// Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
+// Edited for this project needs.
+
+import { getLocaleUrl, localeKeys, getLocale } from "astro-i18n-aut";
+import localeEmoji from "locale-emoji";
+import ISO6991 from "iso-639-1";
+
+export interface Props extends astroHTML.JSX.SelectHTMLAttributes {
+    showFlag?: boolean;
+    showTitle?: boolean;
+    placement?: string;
+    buttonId: string;
+    dropdownId: string;
+}
+
+const currentLanguage = getLocale(Astro.url);
+const { pathname } = Astro.url;
+const { showFlag = false, showTitle = true, placement = "bottom", dropdownId, buttonId, ...attributes } = Astro.props;
+const capitalizeFirstLetter = (str: string) => {
+    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+    return capitalized;
+};
+---
+
+<div class="language-selector">
+    <button class:list={["dropdown"]} data-dropdown-target={`#${dropdownId}`} data-dropdown-placement={placement} id={buttonId}>
+        <i class="bi bi-translate"></i> {(showFlag ? localeEmoji(currentLanguage) + " " : "") + (showTitle ? capitalizeFirstLetter(ISO6991.getNativeName(currentLanguage)) : "")}
+    </button>
+    <ul class="dropdown-content" id={dropdownId} data-js-current-language={currentLanguage}>
+        {
+            localeKeys.map((supportedLanguage: string) => {
+                let value = getLocaleUrl(pathname, supportedLanguage);
+                const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(supportedLanguage));
+                const flag = showFlag ? localeEmoji(supportedLanguage) + " " : "";
+                const label = flag + nativeName;
+
+                return (
+                    <li>
+                        <a href={value} data-js-language={supportedLanguage} class={supportedLanguage == currentLanguage ? "active" : ""}>
+                            <span>{label}</span>
+                            <i class={supportedLanguage == currentLanguage ? "bi bi-check" : ""} aria-hidden="true" />
+                        </a>
+                    </li>
+                );
+            })
+        }
+    </ul>
+</div>
+
+<script>
+    const languageSelector = document.querySelectorAll("[data-js-language]");
+    languageSelector.forEach((selector) => {
+        selector.addEventListener("click", function (e) {
+            let currectSelector = e.target as HTMLAnchorElement;
+            let selectedLanguage = currectSelector.getAttribute("data-js-language");
+            if (selectedLanguage === null) {
+                console.error("Could not find 'data-js-language' attribute.");
+                return;
+            }
+            window.localStorage.setItem("language", selectedLanguage);
+        });
+    });
+</script>
+
+<style>
+    span,
+    i {
+        pointer-events: none;
+    }
+
+    a.active {
+        font-weight: 700;
+    }
+
+    .language-selector {
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    button {
+        background-color: transparent;
+        color: var(--body-color);
+        font-family: inherit;
+        border: none;
+        transition: all 200ms;
+        cursor: pointer;
+        font-size: inherit;
+        position: relative;
+        padding: 0;
+        transition: color 300ms ease;
+        text-align: center;
+
+        i {
+            margin-right: 4px;
+        }
+
+        &:hover {
+            color: rgba(var(--accent), 1);
+        }
+
+        &:active {
+            color: rgba(var(--accent), 1);
+        }
+
+        &:focus {
+            color: rgba(var(--accent), 1);
+        }
+
+        &:after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+    }
+</style>

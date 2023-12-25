@@ -1,23 +1,27 @@
 ---
 import { ViewTransitions } from "astro:transitions";
-import HeadHrefLangs from "../components/astro/HeadHrefLangs.astro";
-import BrowserWarning from "../components/astro/BrowserWarning.astro";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
 import { getLocale } from "astro-i18n-aut";
-import ContactModal from "../components/astro/ContactModal.astro";
-import ogImage from "../assets/img/og/og-image.webp"
+import ContactModal from "@components/astro/global/ContactModal.astro";
+import ogImage from "@assets/img/og/og-image.webp";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Footer from "@components/astro/global/Footer.astro";
 
-// CSS
+// Global CSS
 import "../styles/reset.css";
 import "../styles/global.css";
 import "../styles/keyframes.css";
+
 
 interface Props {
     title: string;
     description?: string;
     showBrowserWarning?: boolean;
+    showFooterContact?: boolean;
 }
 
-const { title, showBrowserWarning = true } = Astro.props;
+const { title, showBrowserWarning = true, showFooterContact = true } = Astro.props;
 const { description = "Dalibor's webpage" } = Astro.props;
 const basePath = import.meta.env.BASE_URL;
 const locale = getLocale(Astro.url);
@@ -31,9 +35,9 @@ const locale = getLocale(Astro.url);
         <meta charset="UTF-8" />
         <meta name="description" content={description} />
         <title>{title}</title>
-        <meta name="og:image" content={ogImage.src}/>
-        <meta name="og:image:width" content="1024"/>
-        <meta name="og:image:height" content="1024"/>
+        <meta name="og:image" content={ogImage.src} />
+        <meta name="og:image:width" content="1024" />
+        <meta name="og:image:height" content="1024" />
         <meta name="og:type" content="website" />
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/x-icon" href={`${basePath}favicon.ico`} />
@@ -48,7 +52,10 @@ const locale = getLocale(Astro.url);
     <body>
         {showBrowserWarning && <BrowserWarning />}
         <ContactModal />
-        <slot />
+        <Navigation title={title} />
+        <div class="page-content">
+            <slot />
+        </div>
         <script>
             import DropdownHandler from "../scripts/dropdown";
             import { initializeTooltips } from "../scripts/tooltips";
@@ -62,5 +69,6 @@ const locale = getLocale(Astro.url);
                 { once: false },
             );
         </script>
+        <Footer showContact={showFooterContact} />
     </body>
 </html>

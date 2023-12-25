@@ -1,8 +1,8 @@
 ---
-import i18n, { loadNamespaces } from "../../../i18n/i18n";
-import type { ContactForm as ContactFormRes } from "../../../i18n/locales";
+import i18n, { loadNamespaces } from "@i18n/i18n";
+import type { ContactForm as ContactFormRes } from "@i18n/locales/localeTypes";
 import { getLocale } from "astro-i18n-aut";
-import ContactForm from "../../react/ContactForm/ContactForm";
+import ContactForm from "@components/react/global/contact-form/ContactForm";
 
 // i18next
 const locale = getLocale(Astro.url);

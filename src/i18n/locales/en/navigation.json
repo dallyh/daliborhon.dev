@@ -1,11 +1,6 @@
 {
-    "Nav_Intro": "Intro",
-    "Nav_Certifications": "Certifications",
-    "Nav_Education": "Education",
-    "Nav_Experience": "Experience",
-    "Nav_Interests": "Interests",
-    "Nav_Skills": "Skills",
-    "Nav_Contact": "Contact",
-    "Nav_Facts": "Facts",
-    "DaliborsResume": "Dalibor's Resume"
+    "home": "Home",
+    "blog": "Blog",
+    "resume": "Resume",
+    "contact": "Contact"
 }

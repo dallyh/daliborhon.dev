@@ -1,17 +1,16 @@
 ---
 import ISO6991 from "iso-639-1";
 import { getLocale, localeKeys, getLocaleUrl } from "astro-i18n-aut";
-import { loadNamespaces, t } from "../../../i18n/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 export interface Props {
     showFlag?: boolean;
     showTitle?: boolean;
-    accentColor: string;
 }
 
 const locale = getLocale(Astro.url);
 const { pathname } = Astro.url;
-const { accentColor, showFlag = false, showTitle = true } = Astro.props;
+const { showFlag = false, showTitle = true } = Astro.props;
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
     return capitalized;
@@ -74,7 +73,7 @@ await loadNamespaces(locale, namespaces);
     );
 </script>
 
-<style define:vars={{ accentColor }}>
+<style>
     .flag {
         background-size: contain;
         background-position: 50%;
@@ -111,10 +110,10 @@ await loadNamespaces(locale, namespaces);
     }
 
     a {
-        color: rgba(var(--accentColor), 1);
+        color: rgba(var(--accent), 1);
 
         &:visited {
-            color: rgba(var(--accentColor), 1);
+            color: rgba(var(--accent), 1);
         }
     }
 </style>

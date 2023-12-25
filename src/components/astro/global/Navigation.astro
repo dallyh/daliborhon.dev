@@ -1,0 +1,386 @@
+---
+import { getLocaleUrl, getLocale } from "astro-i18n-aut";
+import { loadNamespaces, t } from "@i18n/i18n";
+import LanguageSelector from "./LanguageSelector.astro";
+import SimpleLanguageSelector from "./SimpleLanguageSelector.astro";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["navigation"];
+await loadNamespaces(locale, namespaces);
+---
+
+<header id="header" transition:name="header" transition:animate="none">
+    <div class="header-burger-menu">
+        <div class="header-burger-menu-button" id="menuButton">
+            <span></span>
+        </div>
+    </div>
+    <div class="brand">
+        <i class="bi bi-code-slash"></i>
+        {title}
+    </div>
+    <ul class="nav">
+        <li>
+            <a href={getLocaleUrl("/home", locale)}>{t("navigation:home")}</a>
+        </li>
+        <li>
+            <a href={getLocaleUrl("/posts", locale)}>{t("navigation:blog")}</a>
+        </li>
+        <li>
+            <a href={getLocaleUrl("/resume", locale)}>{t("navigation:resume")}</a>
+        </li>
+        <li>
+            <a href="#contact">{t("navigation:contact")}</a>
+        </li>
+        <li>
+            <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" />
+        </li>
+    </ul>
+</header>
+
+<aside id="asideMenu">
+    <ul class="aside-nav">
+        <li>
+            <a href={getLocaleUrl("/home", locale)}>{t("navigation:home")}</a>
+        </li>
+        <li>
+            <a href={getLocaleUrl("/posts", locale)}>{t("navigation:blog")}</a>
+        </li>
+        <li>
+            <a href={getLocaleUrl("/resume", locale)}>{t("navigation:resume")}</a>
+        </li>
+        <li>
+            <a href="#contact">{t("navigation:contact")}</a>
+        </li>
+        <li>
+            <SimpleLanguageSelector showFlag={false} showTitle={false}/>
+        </li>
+    </ul>   
+</aside>
+
+<style>
+    header {
+        width: 100%;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        padding-left: var(--padding-x);
+        padding-right: var(--padding-x);
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+        row-gap: 1rem;
+        color: var(--body-color);
+        font-weight: 700;
+        position: sticky;
+        top: 0;
+        background: var(--header-bg);
+        backdrop-filter: blur(4px);
+        z-index: 1010;
+        transition:
+            background 200ms ease,
+            transform 400ms ease;
+        
+        &.hidden {
+            transform: translateY(-100%);
+        }
+
+        .brand {
+            color: rgba(var(--accent), 1);
+        }
+    }
+
+    :global(body.nav-active header.hidden) {
+        transform: none;
+    }
+
+    :global(body.nav-active header) {
+        background: transparent;
+    }
+
+    a {
+        color: var(--body-color);
+        transition: color 300ms ease;
+
+        &:visited {
+            color: var(--body-color);
+        }
+
+        &:hover {
+            color: rgba(var(--accent), 1);
+            text-decoration: none;
+        }
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        i {
+            font-size: 1.7rem;
+            margin-right: 6px;
+            margin-left: 2px;
+        }
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        align-items: center;
+
+        ul {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+
+        @media screen and (max-width: 468px) {
+            display: none;
+        }
+    }
+
+    .header-burger-menu {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 2.125rem;
+        margin-top: auto;
+        margin-bottom: auto;
+
+        @media screen and (max-width: 468px) {
+            display: flex;
+        }
+    }
+
+    .header-burger-menu-button {
+        position: relative;
+        height: 26px;
+        width: 40px;
+        cursor: pointer;
+        background-color: transparent;
+    }
+
+    .header-burger-menu-button > span {
+        pointer-events: none;
+    }
+
+    .header-burger-menu-button.active span {
+        opacity: 0;
+    }
+
+    .header-burger-menu-button.active.header-burger-menu-button::before,
+    .header-burger-menu-button.active.header-burger-menu-button::after {
+        top: 40%;
+    }
+
+    .header-burger-menu-button.active.header-burger-menu-button::before {
+        transform: rotate(45deg);
+    }
+
+    .header-burger-menu-button.active.header-burger-menu-button::after {
+        transform: rotate(-45deg);
+    }
+
+    .header-burger-menu-button span,
+    .header-burger-menu-button::before,
+    .header-burger-menu-button::after {
+        display: block;
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        background-color: var(--burger-menu-bg);
+        border-radius: 6px;
+        opacity: 1;
+    }
+
+    .header-burger-menu-button::before,
+    .header-burger-menu-button::after {
+        content: "";
+        transition:
+            top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+            transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .header-burger-menu-button span {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .header-burger-menu-button::before {
+        top: 0;
+    }
+
+    .header-burger-menu-button::after {
+        bottom: 0;
+    }
+</style>
+
+<style>
+    aside {
+        position: fixed;
+        left: 0;
+        top: 0;
+        background: rgba(var(--secondary), 1);
+        width: 100%;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 6rem 1.5rem 1.5rem 1.5rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: 300ms ease;
+    }
+
+    :global(body.nav-active aside) {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .aside-nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+        p {
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+    }
+</style>
+
+<script>
+    const initSideNav = () => {
+        // Sidebar navigation
+        const navButton = document.querySelector<HTMLDivElement>("#menuButton"),
+            navigation = document.querySelector<HTMLElement>("#asideMenu"),
+            navLinks = document.querySelectorAll<HTMLAnchorElement>(".aside-nav > a, .aside-nav > a ");
+
+        if (navButton === null) {
+            return;
+        }
+
+        /**
+         * Opens/closes navigation menu.
+         */
+        const openCloseNav = () => {
+            navButton.classList.toggle("active");
+            document.body.classList.toggle("nav-active");
+        };
+
+        /**
+         * Closes navigation menu
+         */
+        const closeNav = () => {
+            if (document.body.classList.contains("nav-active")) {
+                navButton.classList.remove("active");
+                document.body.classList.remove("nav-active");
+            }
+        };
+
+        /**
+         * Opens navigation menu
+         */
+        const openNav = () => {
+            if (document.body.classList.contains("nav-active") === false) {
+                navButton.classList.add("active");
+                document.body.classList.add("nav-active");
+            }
+        };
+
+        /**
+         * Handles header on scroll
+         */
+        const headerOnScroll = () => {
+            var prevScrollpos = window.scrollY;
+            var headerDiv = document.getElementById("header") as HTMLElement;
+            window.onscroll = function () {
+                // Hides header on scroll
+                var currentScrollPos = window.scrollY;
+
+                /* if scrolling down, let it scroll out of view as normal */
+                if (prevScrollpos <= currentScrollPos) {
+                    headerDiv.classList.add("hidden");
+                } else {
+                    /* otherwise if we're scrolling up, fix the nav to the top */
+                    headerDiv.classList.remove("hidden");
+                }
+
+                prevScrollpos = currentScrollPos;
+            };
+        };
+
+        // Collapse responsive navbar on click outside or on its child items
+        const collapseNav = () => {
+            document.onmouseup = (e) => {
+                let target = e.target as HTMLElement;
+
+                if (navigation === target || navButton === target) {
+                    return;
+                }
+
+                if (navigation?.contains(target)) {
+                    closeNav();
+                }
+
+                closeNav();
+            };
+        };
+
+        // Prevent back button to use hash links
+        const handleHashes = () => {
+            navLinks.forEach((e) => {
+                let link = e.href;
+                if (link.includes("#") === false) {
+                    return;
+                }
+
+                e.onclick = (e) => {
+                    e.preventDefault();
+                    window.location.replace(link);
+                };
+            });
+        };
+
+        // Run everything
+        navButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            openCloseNav();
+        });
+
+        headerOnScroll();
+        collapseNav();
+        handleHashes();
+
+        console.log("Navigation initialized.");
+    };
+
+    document.addEventListener(
+        "astro:page-load",
+        (e) => {
+            initSideNav();
+        },
+        { once: false },
+    );
+</script>

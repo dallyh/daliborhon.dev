@@ -1,19 +1,16 @@
 ---
 import { Image } from "astro:assets";
 import { getLocale, getLocaleUrl } from "astro-i18n-aut";
-import { loadNamespaces, t } from "../../../i18n/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
-    accentColor: string;
-    showHomePage?: boolean;
     showContact?: boolean;
 }
 
-const { accentColor, showHomePage = true, showContact = true } = Astro.props;
+const {showContact = true } = Astro.props;
 
 // Images
 import astroSvg from "../../../../public/assets/img/astro/simple-full-logo-light.svg";
-import LanguageSelector from "./LanguageSelector.astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -22,7 +19,6 @@ await loadNamespaces(locale, namespaces);
 ---
 
 <footer class="footer-container">
-    <LanguageSelector accentColor={accentColor} showFlag={true} />
     <p>
         {t("footer:PageCreatedBy")}
         {" "}
@@ -33,14 +29,6 @@ await loadNamespaces(locale, namespaces);
     <p>{t("footer:Host")}{" "}<a href="https://www.github.com" target="_blank"> {t("footer:Github")}</a>.</p>
     <div class="links">
         {
-            showHomePage && (
-                <a href={getLocaleUrl("/home", locale)} rel="prefetch">
-                    <i class="bi bi-house-fill" /> {t("footer:HomePage")}
-                </a>
-            )
-        }
-        {showHomePage && showContact && "|"}
-        {
             showContact && (
                 <a href="" id="contactLink">
                     <i class="bi bi-envelope-fill" /> {t("footer:ContactMe")}
@@ -50,7 +38,7 @@ await loadNamespaces(locale, namespaces);
     </div>
 </footer>
 
-<style define:vars={{ accentColor }}>
+<style>
     :root {
         --footer-color: rgba(255, 255, 255, 0.8);
     }
@@ -86,10 +74,10 @@ await loadNamespaces(locale, namespaces);
         gap: 0.25em;
 
         a {
-            color: rgba(var(--accentColor), 1);
+            color: rgba(var(--accent), 1);
 
             &:visited {
-                color: rgba(var(--accentColor), 1);
+                color: rgba(var(--accent), 1);
             }
 
             i {

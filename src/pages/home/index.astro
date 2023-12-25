@@ -1,12 +1,10 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import { loadNamespaces, t } from "../../i18n/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "astro-i18n-aut";
-import Footer from "../../components/astro/footer/Footer.astro";
-import Intro from "../../components/astro/parts/Intro.astro";
-import Projects from "../../components/astro/parts/Projects.astro";
-import Contact from "../../components/astro/parts/Contact.astro";
-import ScrollIndicator from "../../components/astro/parts/ScrollIndicator.astro";
+import Intro from "@components/astro/home/Intro.astro";
+import Projects from "@components/astro/home/Projects.astro";
+import Contact from "@components/astro/home/Contact.astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -14,35 +12,39 @@ const namespaces = ["contactForm", "shared", "landing"];
 await loadNamespaces(locale, namespaces);
 ---
 
-<MainLayout title="Dalibor Hon" description={t("landing:description")}>
+<MainLayout title="Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
     <main>
         <section class="intro">
             <div class="section-content-container">
                 <Intro />
             </div>
-            <div class="section-footer">
-                <ScrollIndicator href="#projects" />
-            </div>
         </section>
-        <section class="projects" id="projects">
+        <section id="projects">
             <div class="section-content-container">
                 <div class="section-header">
                     <h2 class="gradient-text-accent">{t("landing:projects_title")}</h2>
-                </div>
-                <div class="section-info">
-                    <p>{t("landing:projects_description")}</p>
                 </div>
                 <div class="section-content">
                     <Projects />
                 </div>
             </div>
         </section>
-        <section class="contact" id="contact">
+        <section id="blog">
+            <div class="section-content-container">
+                <div class="section-header">
+                    <h2 class="gradient-text-accent">{t("landing:blog_title")}</h2>
+                </div>
+                <div class="section-content">
+                    <Projects />
+                </div>
+            </div>
+        </section>
+        <section id="contact">
             <div class="section-content-container">
                 <div class="section-header">
                     <h2 class="gradient-text-accent">{t("shared:LeaveMeAMessage")}</h2>
                 </div>
-                <div class="section-info">
+                <div class="section-description">
                     <p>{t("contactForm:ContactMe")}</p>
                 </div>
                 <div class="section-content">
@@ -51,32 +53,15 @@ await loadNamespaces(locale, namespaces);
             </div>
         </section>
     </main>
-    <Footer showContact={false} showHomePage={false} accentColor="var(--home-footer-color)" />
 </MainLayout>
 
 <style>
-    main {
-        max-width: var(--page-width);
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-
-        @media screen and (min-width: 2240px) {
-            max-width: calc(var(--page-width) + 300px);
-        }
-    }
-
     section {
         display: grid;
+        width: 100%;
 
         @media (max-width: 768px) {
             height: unset;
-        }
-
-        &.intro {
-            height: 100svh;
-            grid-template-rows: 1fr min-content;
-            align-items: center;
         }
     }
 
@@ -88,23 +73,6 @@ await loadNamespaces(locale, namespaces);
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
 
-        @media (max-width: 1024px) {
-            padding: 1rem;
-        }
-
-        @media (max-width: 468px) {
-            padding: 0.7rem;
-        }
-
-        .section-header {
-            font-size: 2rem;
-            font-weight: 600;
-
-            h2 {
-                padding-bottom: 0.25rem;
-            }
-        }
-
         .section-subheader {
             font-size: 1.5rem;
             font-weight: 500;
@@ -114,7 +82,7 @@ await loadNamespaces(locale, namespaces);
             padding-top: 1rem;
         }
 
-        .section-info {
+        .section-description {
             margin-top: 10px;
         }
 

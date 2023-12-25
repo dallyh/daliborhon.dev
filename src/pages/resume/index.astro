@@ -6,7 +6,6 @@ import { getLocale } from "astro-i18n-aut";
 import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
 import Timeline from "@components/astro/resume/Timeline.astro";
 
-
 // Images
 import profilePicture from "../../assets/img/profile/me.png";
 import abbyyLogo from "../../assets/img/company-logos/ABBYY.png";
@@ -254,12 +253,6 @@ await loadNamespaces(locale, namespaces);
 </MainLayout>
 
 <style>
-    .gradient-text {
-        color: transparent;
-        background: var(--accent-resume-gradient) fixed;
-        background-clip: text;
-    }
-
     h2 {
         position: relative;
     }
@@ -272,19 +265,10 @@ await loadNamespaces(locale, namespaces);
         }
     }
 
-    a {
-        color: rgba(var(--accent-resume), 1);
-
-        &:visited {
-            color: var(--a-visited);
-        }
-    }
-
     section {
         scroll-margin-top: 3rem;
     }
 
-    /* Hero section */
     .hero-container {
         display: grid;
         gap: 0.5rem;

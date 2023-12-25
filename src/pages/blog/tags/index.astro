@@ -1,0 +1,79 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "astro-i18n-aut";
+import { getCollection } from "astro:content";
+
+//Blogs
+const allPosts = await getCollection("posts");
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())];
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["blog"];
+await loadNamespaces(locale, namespaces);
+---
+
+<MainLayout title="Blog tags" description={t("landing:description")} showFooterContact={false}>
+    <main>
+        <section id="blogs">
+            <div class="section-content-container">
+                <div class="section-header">
+                    <h2 class="gradient-text-accent">Blogs</h2>
+                </div>
+                <div class="section-content">
+                    {tags.map((tag) => <ul><a href={`/blog/tags/${tag}/`}>{tag}</a></ul>)}
+                </div>
+            </div>
+        </section>
+    </main>
+</MainLayout>
+
+<style>
+    section {
+        display: grid;
+        width: 100%;
+
+        @media (max-width: 768px) {
+            height: unset;
+        }
+    }
+
+    .section-content-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+
+        .section-subheader {
+            font-size: 1.5rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            color: rgba(var(--accent), 1);
+            padding-top: 1rem;
+        }
+
+        .section-description {
+            margin-top: 10px;
+        }
+
+        .section-content {
+            width: 100%;
+            height: 100%;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+    }
+
+    .section-footer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 0.5rem;
+    }
+</style>

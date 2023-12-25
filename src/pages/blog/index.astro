@@ -1,68 +1,35 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "astro-i18n-aut";
-import Intro from "@components/astro/home/Intro.astro";
-import Projects from "@components/astro/home/Projects.astro";
-import Contact from "@components/astro/home/Contact.astro";
+import { getCollectionParamsSlug, getLocale } from "astro-i18n-aut";
 import { getCollection } from "astro:content";
-import BlogPost from "@components/astro/blog/BlogPost.astro";
 
 //Blogs
 const allPosts = await getCollection("posts");
-const recentPostsSize = 4;
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["contactForm", "shared", "landing"];
+const namespaces = ["blog"];
 await loadNamespaces(locale, namespaces);
 ---
 
 <MainLayout title="Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
     <main>
-        <section class="intro">
-            <div class="section-content-container">
-                <Intro />
-            </div>
-        </section>
-        <section id="projects">
+        <section id="blogs">
             <div class="section-content-container">
                 <div class="section-header">
-                    <h2 class="gradient-text-accent">{t("landing:projects_title")}</h2>
-                </div>
-                <div class="section-content">
-                    <Projects />
-                </div>
-            </div>
-        </section>
-        <section id="blog">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text-accent">{t("landing:blog_title")}</h2>
+                    <h2 class="gradient-text-accent">Blogs</h2>
                 </div>
                 <div class="section-content">
                     <ul>
                         {
-                            allPosts.slice(0, recentPostsSize).map((post) => (
+                            allPosts.map((post) => (
                                 <li>
-                                    <BlogPost title={post.data.title} url={`/blog/posts/${post.slug}/`} date={post.data.pubDate} image={post.data.image}/>
+                                    <a href={`/blog/posts/${post.slug}/`}>{post.data.title}</a>
                                 </li>
                             ))
                         }
                     </ul>
-                </div>
-            </div>
-        </section>
-        <section id="contact">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text-accent">{t("shared:LeaveMeAMessage")}</h2>
-                </div>
-                <div class="section-description">
-                    <p>{t("contactForm:ContactMe")}</p>
-                </div>
-                <div class="section-content">
-                    <Contact />
                 </div>
             </div>
         </section>

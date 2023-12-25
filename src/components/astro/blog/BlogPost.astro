@@ -1,0 +1,12 @@
+---
+interface Props {
+    title: string;
+    url: string;
+    date: Date;
+    image: { url: string; alt: string };
+}
+
+const { title, url, date, image } = Astro.props;
+---
+
+<li><a href={url}>{title}</a></li>

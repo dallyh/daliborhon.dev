@@ -12,7 +12,7 @@ const locales = {
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://www.daliborhon.com",
+    site: "https://www.daliborhon.dev",
     base: "",
     trailingSlash: "always",
     build: {

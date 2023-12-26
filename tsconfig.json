@@ -11,7 +11,8 @@
             "@components/*": ["src/components/*"],
             "@assets/*": ["src/assets/*"],
             "@i18n/*": ["src/i18n/*"],
-            "@public/*": ["src/public/*"]
+            "@public/*": ["src/public/*"],
+            "@layouts/*": ["src/layouts/*"]
         }
     }
 }

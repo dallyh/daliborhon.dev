@@ -63,21 +63,21 @@ const locale = getLocale(Astro.url);
                 <div class="page-content">
                     <slot />
                 </div>
-                <script>
-                    import DropdownHandler from "../scripts/dropdown";
-                    import { initializeTooltips } from "../scripts/tooltips";
-
-                    document.addEventListener(
-                        "astro:page-load",
-                        (e) => {
-                            DropdownHandler.init();
-                            initializeTooltips();
-                        },
-                        { once: false },
-                    );
-                </script>
                 <Footer showContact={showFooterContact} />
             )
         }
+        <script>
+            import DropdownHandler from "../scripts/dropdown";
+            import { initializeTooltips } from "../scripts/tooltips";
+
+            document.addEventListener(
+                "astro:page-load",
+                (e) => {
+                    DropdownHandler.init();
+                    initializeTooltips();
+                },
+                { once: false },
+            );
+        </script>
     </body>
 </html>

@@ -7,13 +7,14 @@ import ContactModal from "@components/astro/global/ContactModal.astro";
 import ogImage from "@assets/img/og/og-image.webp";
 import Navigation from "@components/astro/global/Navigation.astro";
 import Footer from "@components/astro/global/Footer.astro";
+import MainLayout from "./MainLayout.astro";
+
 
 // Global CSS
 import "../styles/reset.css";
 import "../styles/global.css";
 import "../styles/keyframes.css";
-import type { MarkdownContent } from "astro";
-import MainLayout from "./MainLayout.astro";
+
 
 interface Props {
     frontmatter: any;
@@ -32,7 +33,7 @@ const { frontmatter } = Astro.props;
         {
             frontmatter.tags.map((tag: string) => (
                 <p class="tag">
-                    <a href={`/tags/${tag}`}>{tag}</a>
+                    <a href={`/blog/tags/${tag}/`}>{tag}</a>
                 </p>
             ))
         }

@@ -23,7 +23,8 @@ export default defineConfig({
         react(),
         i18n({
             locales,
-            defaultLocale
+            defaultLocale,
+            exclude: ["pages/[...lang]/**/*", "pages/api/**/*", "pages/rss.xml.ts", "pages/[locale]/rss.xml.ts"],
         }),
         sitemap({
             i18n: {

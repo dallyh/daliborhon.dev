@@ -1,0 +1,157 @@
+---
+import MainLayout from "@layouts/MainLayout.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getBlogPostSlug, getLocale } from "@i18n/utils";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import type { Page } from "astro";
+import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
+
+interface Props {
+    page: Page<CollectionEntry<"posts">>;
+}
+
+const { page } = Astro.props;
+
+page.data;
+
+// i18n
+const locale = getLocale(Astro.url);
+const namespaces = ["blog"];
+await loadNamespaces(locale, namespaces);
+
+const allPosts = await getCollection("posts", ({ data }) => {
+    return data.language === locale;
+});
+const allTags = allPosts.map((post) => {
+    return post.data.tags.flat();
+});
+const uniqueTags = [...new Set(allTags.flat())];
+---
+
+<MainLayout title="Blog - Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
+    <main>
+        <section id="blogs">
+            <div class="section-content-container">
+                <div class="section-header">
+                    <h2 class="gradient-text-accent">Blogs</h2>
+                </div>
+                <div class="section-content">
+                    <div class="paginated-posts">
+                        <ul class="post-list">
+                            {
+                                page.data.map((post) => (
+                                    <li>
+                                        <BlogPostPreview post={post} url={getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(post.slug)}/`)} />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                        <div class="page-selector">
+                            {page.url.prev && <a href={getRelativeLocaleUrl(locale, page.url.prev)}>Previous</a>}
+                            <p>{page.currentPage} / {page.lastPage}</p>
+                            {page.url.next && <a href={getRelativeLocaleUrl(locale, page.url.next)}>Next</a>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-content-container">
+                <div class="section-header">
+                    <h2 class="gradient-text-accent">Tags</h2>
+                </div>
+                <div class="section-content">
+                    <ul class="tag-list">
+                        {
+                            uniqueTags.map((tag) => (
+                                <li>
+                                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag}</a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        section {
+            display: grid;
+            width: 100%;
+
+            @media (max-width: 768px) {
+                height: unset;
+            }
+        }
+
+        .post-list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .page-selector {
+            display: flex;
+            gap: 0.2rem;
+            justify-content: center;
+            align-items: center;
+
+            p {
+                line-height: 1;
+            }
+        }
+
+        .tag-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+
+            a {
+                background: rgba(var(--secondary), 1);
+                padding: 0.4rem;
+                border-radius: 6px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .section-content-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+
+            .section-subheader {
+                font-size: 1.5rem;
+                font-weight: 500;
+                position: relative;
+                z-index: 1;
+                color: rgba(var(--accent), 1);
+                padding-top: 1rem;
+            }
+
+            .section-description {
+                margin-top: 10px;
+            }
+
+            .section-content {
+                width: 100%;
+                height: 100%;
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+        }
+
+        .section-footer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</MainLayout>

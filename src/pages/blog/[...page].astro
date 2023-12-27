@@ -1,0 +1,23 @@
+---
+import { getBlogPostSlug } from "@i18n/utils";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
+import type { GetStaticPathsOptions } from "astro";
+import { defaultLocale, pageSize } from "@i18n/consts";
+import BlogLayout from "@layouts/BlogLayout.astro";
+
+export const locale = defaultLocale;
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const posts = await getCollection("posts", ({ data }) => {
+        return data.language === locale;
+    });
+
+    return paginate(posts, { pageSize: pageSize });
+}
+
+const { page } = Astro.props;
+---
+
+<BlogLayout page={page} />

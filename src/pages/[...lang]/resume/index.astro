@@ -2,17 +2,19 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import { Image } from "astro:assets";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "astro-i18n-aut";
+import { getLocale } from "@i18n/utils";
 import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
 import Timeline from "@components/astro/resume/Timeline.astro";
+import { getStaticPaths } from "@i18n/utils";
+
+export { getStaticPaths };
 
 // Images
-import profilePicture from "../../assets/img/profile/me.png";
-import abbyyLogo from "../../assets/img/company-logos/ABBYY.png";
-import mfilesLogo from "../../assets/img/company-logos/m-files.png";
-import msftLogo from "../../assets/img/company-logos/MSFT_BIG.png";
-import nintextLogo from "../../assets/img/company-logos/nintex-logo-white.png";
-
+import profilePicture from "@assets/img/profile/me.png";
+import abbyyLogo from "@assets/img/company-logos/ABBYY.png";
+import mfilesLogo from "@assets/img/company-logos/m-files.png";
+import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
+import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -336,7 +338,6 @@ await loadNamespaces(locale, namespaces);
         display: block;
         object-fit: cover;
         border-radius: inherit;
-        
     }
 
     .section-footer {
@@ -502,7 +503,7 @@ await loadNamespaces(locale, namespaces);
         align-items: center;
         gap: 2rem;
         background-color: var(--resume-card-bg);
-        box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
         border-radius: 6px;
     }
 

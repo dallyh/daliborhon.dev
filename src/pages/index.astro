@@ -1,7 +1,7 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "astro-i18n-aut";
+import { getLocale } from "@i18n/utils";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -29,10 +29,11 @@ await loadNamespaces(locale, namespaces);
 
 <script>
     import { navigate } from "astro:transitions/client";
-    import { getLocaleUrl, defaultLocale, localeKeys } from "astro-i18n-aut";
+    import { locales,  defaultLocale} from "@i18n/consts";
+    import { getRelativeLocaleUrl } from "astro:i18n";
     import { prefetch } from "astro:prefetch";
 
-    let redirectUrl = getLocaleUrl("/home", defaultLocale); // Default URL by default locale
+    let redirectUrl = getRelativeLocaleUrl(defaultLocale, "/home"); // Default URL by default locale
 
     const checkDebug = (): boolean => {
         const queryString = window.location.search;
@@ -58,7 +59,7 @@ await loadNamespaces(locale, namespaces);
         console.debug("Redirect URL by language: '" + lang + "'");
         switch (lang) {
             case "en":
-                redirectUrl = getLocaleUrl("/home/", "en");
+                redirectUrl = getRelativeLocaleUrl(defaultLocale, "/home");
                 break;
             default:
                 break;
@@ -84,7 +85,7 @@ await loadNamespaces(locale, namespaces);
                 lang = lang.split("-")[0];
             }
 
-            if (localeKeys.includes(lang)) {
+            if (locales.includes(lang)) {
                 console.log("Found browser preference matching locales: " + lang);
                 getRedirectUrlAndPrefetch(lang);
                 break;

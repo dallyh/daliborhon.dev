@@ -1,15 +1,17 @@
 ---
 title: "Můj první blog post"
+slug: "prispevek-1"
+language: "cs"
 pubDate: 2022-07-01
 description: "This is the first post of my new Astro blog."
 author: "Astro Learner"
 image:
     url: "https://docs.astro.build/assets/full-logo-light.png"
     alt: "The full Astro logo."
-tags: ["astro", "blogging", "learning in public"]
+tags: ["astro ale česky", "blogging", "learning in public"]
 ---
 
-# My First Blog Post
+# Můj první blog post
 
 Published on: 2022-07-01
 

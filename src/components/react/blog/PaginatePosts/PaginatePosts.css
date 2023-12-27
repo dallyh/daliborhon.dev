@@ -1,0 +1,14 @@
+.paginated-posts {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: 600px) {
+        justify-content: center;
+    }
+}

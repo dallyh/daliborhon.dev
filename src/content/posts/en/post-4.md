@@ -1,5 +1,7 @@
 ---
 title: My Fourth Blog Post
+slug: "post-4"
+language: "en"
 author: Astro Learner
 description: "This post will show up on its own!"
 image:

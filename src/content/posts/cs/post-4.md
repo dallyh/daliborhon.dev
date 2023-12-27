@@ -1,5 +1,7 @@
 ---
 title: My Fourth Blog Post
+slug: "prispevek-4"
+language: "cs"
 author: Astro Learner
 description: "This post will show up on its own!"
 image:

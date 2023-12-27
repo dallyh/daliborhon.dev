@@ -1,22 +1,19 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getLocaleUrl } from "astro-i18n-aut";
+import { getLocale } from "@i18n/utils";
 import Intro from "@components/astro/home/Intro.astro";
 import Projects from "@components/astro/home/Projects.astro";
 import Contact from "@components/astro/home/Contact.astro";
-import { getCollection } from "astro:content";
-import BlogPost from "@components/astro/blog/BlogPost.astro";
+import { getStaticPaths } from "@i18n/utils";
+import RecentPosts from "@components/astro/home/RecentPosts.astro";
+
+export { getStaticPaths };
 
 // i18next
 const locale = getLocale(Astro.url);
 const namespaces = ["contactForm", "shared", "landing"];
 await loadNamespaces(locale, namespaces);
-
-//Blogs
-const recentPostsSize = 4;
-const allPosts = await getCollection("posts");
-const filteredPosts = allPosts.filter((post) => post.slug.split("/")[0] === locale).slice(0, recentPostsSize);
 ---
 
 <MainLayout title="Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
@@ -42,15 +39,7 @@ const filteredPosts = allPosts.filter((post) => post.slug.split("/")[0] === loca
                     <h2 class="gradient-text-accent">{t("landing:blog_title")}</h2>
                 </div>
                 <div class="section-content">
-                    <ul>
-                        {
-                            filteredPosts.map((post) => (
-                                <li>
-                                    <BlogPost title={post.data.title} url={getLocaleUrl(`/blog/posts/${post.slug.split("/")[1]}/`, locale)} date={post.data.pubDate} image={post.data.image} />
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <RecentPosts />
                 </div>
             </div>
         </section>

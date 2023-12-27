@@ -1,37 +1,25 @@
 ---
-import { ViewTransitions } from "astro:transitions";
-import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
-import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
-import { getLocale } from "astro-i18n-aut";
-import ContactModal from "@components/astro/global/ContactModal.astro";
-import ogImage from "@assets/img/og/og-image.webp";
-import Navigation from "@components/astro/global/Navigation.astro";
-import Footer from "@components/astro/global/Footer.astro";
+import FormattedDate from "@components/astro/global/FormattedDate.astro";
 import MainLayout from "./MainLayout.astro";
-
-
-// Global CSS
-import "../styles/reset.css";
-import "../styles/global.css";
-import "../styles/keyframes.css";
-
-
+import type { CollectionEntry } from "astro:content";
+import { getLocale } from "@i18n/utils";
 interface Props {
-    frontmatter: any;
+    post: CollectionEntry<"posts">;
 }
 
-const { frontmatter } = Astro.props;
+const { post } = Astro.props;
+const locale = getLocale(Astro.url);
 ---
 
-<MainLayout title={frontmatter.title}>
-    <h1>{frontmatter.title}</h1>
-    <p>Written by {frontmatter.author}</p>
-    <p>Published on: {frontmatter.pubDate}</p>
-    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+<MainLayout title={post.data.title}>
+    <h1>{post.data.title}</h1>
+    <p>Written by {post.data.author}</p>
+    <p>Published on: <FormattedDate date={post.data.pubDate} locale={locale}/></p>
+    <img src={post.data.image.url} width="300" alt={post.data.image.alt} />
     <slot />
     <div class="tags">
         {
-            frontmatter.tags.map((tag: string) => (
+            post.data.tags.map((tag: string) => (
                 <p class="tag">
                     <a href={`/blog/tags/${tag}/`}>{tag}</a>
                 </p>

@@ -1,8 +1,9 @@
 ---
-import { getLocaleUrl, getLocale } from "astro-i18n-aut";
+import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
 import LanguageSelector from "./LanguageSelector.astro";
 import SimpleLanguageSelector from "./SimpleLanguageSelector.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     title: string;
@@ -28,13 +29,13 @@ await loadNamespaces(locale, namespaces);
     </div>
     <ul class="nav">
         <li>
-            <a href={getLocaleUrl("/home", locale)}>{t("navigation:home")}</a>
+            <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
         </li>
         <li>
-            <a href={getLocaleUrl("/blog", locale)}>{t("navigation:blog")}</a>
+            <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
         </li>
         <li>
-            <a href={getLocaleUrl("/resume", locale)}>{t("navigation:resume")}</a>
+            <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
         </li>
         <li>
             <a href="#contact">{t("navigation:contact")}</a>
@@ -48,13 +49,13 @@ await loadNamespaces(locale, namespaces);
 <aside id="asideMenu">
     <ul class="aside-nav">
         <li>
-            <a href={getLocaleUrl("/home", locale)}>{t("navigation:home")}</a>
+            <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
         </li>
         <li>
-            <a href={getLocaleUrl("/blog", locale)}>{t("navigation:blog")}</a>
+            <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
         </li>
         <li>
-            <a href={getLocaleUrl("/resume", locale)}>{t("navigation:resume")}</a>
+            <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
         </li>
         <li>
             <a href="#contact">{t("navigation:contact")}</a>
@@ -369,7 +370,7 @@ await loadNamespaces(locale, namespaces);
             openCloseNav();
         });
 
-        headerOnScroll();
+        //headerOnScroll();
         collapseNav();
         handleHashes();
 

@@ -1,0 +1,50 @@
+---
+import type { MarkdownInstance } from "node_modules/astro/dist/@types/astro";
+import MainLayout from "@layouts/MainLayout.astro";
+import { getCollection } from "astro:content";
+import { defaultLocale } from "@i18n/consts";
+import { getBlogPostSlug, getLocale } from "@i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+// This is kinda complicated
+export async function getStaticPaths() {
+    const allPosts = await getCollection("posts");
+
+    const allTags = allPosts.map((post) => {
+        return post.data.tags.flat();
+    });
+    const uniqueTags = [...new Set(allTags.flat())];
+
+    const blogLocales = allPosts.map((post) => {
+        return post.data.language;
+    });
+    const uniqueLocales = [...new Set(blogLocales.flat())];
+
+    const paths = uniqueTags.flatMap((tag) => {
+        return uniqueLocales.map((locale) => {
+            return { params: { lang: locale === defaultLocale ? undefined : locale, tag: tag }, props: { posts: allPosts } };
+        })
+        
+    });
+
+    return paths;
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+const locale = getLocale(Astro.url);
+const filteredPosts = posts.filter((post) => post.data.tags?.includes(tag) && post.data.language === locale);
+---
+
+<MainLayout title={tag}>
+    <p>Posts tagged with {tag}</p>
+    <ul>
+        {
+            filteredPosts.map((post) => (
+                <li>
+                    <a href={getRelativeLocaleUrl(locale,`blog/posts/${getBlogPostSlug(post.slug)}/`)}>{post.data.title}</a>
+                </li>
+            ))
+        }
+    </ul>
+</MainLayout>

@@ -1,15 +1,16 @@
 ---
-import { getLocaleUrl, localeKeys } from "astro-i18n-aut";
+import { getRelativePathList } from "@i18n/utils";
 
 const site = import.meta.env.SITE;
 const base = import.meta.env.BASE_URL;
+const paths = await getRelativePathList(Astro.url);
 ---
 
 <Fragment>
     <link rel="alternate" hreflang="x-default" href={site + base} />
     {
-      localeKeys.map((supportedLocale) => (
-          <link rel="alternate" hreflang={supportedLocale} href={site + getLocaleUrl(Astro.url, supportedLocale)}/>
+      paths.map((path) => (
+          <link rel="alternate" hreflang={path.locale} href={site + path.relativeUrl}/>
         ))
     }
 </Fragment>

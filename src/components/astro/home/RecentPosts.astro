@@ -1,0 +1,35 @@
+---
+import { getLocale, getBlogPostSlug } from "@i18n/utils";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
+
+// i18next
+const locale = getLocale(Astro.url);
+
+//Blogs
+const allPosts = await getCollection("posts", ({ data }) => {
+    return data.language === locale;
+});
+
+const recentPostsSize = 4;
+const filteredPosts = allPosts.slice(0, recentPostsSize);
+---
+
+<ul>
+    {
+        filteredPosts.map((post) => (
+            <li>
+                <BlogPostPreview post={post} url={getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(post.slug)}/`)} />
+            </li>
+        ))
+    }
+</ul>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+</style>

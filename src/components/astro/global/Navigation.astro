@@ -18,32 +18,34 @@ await loadNamespaces(locale, namespaces);
 ---
 
 <header id="header" transition:name="header" transition:animate="none">
-    <div class="header-burger-menu">
-        <div class="header-burger-menu-button" id="menuButton">
-            <span></span>
+    <div class="header-items">
+        <div class="header-burger-menu">
+            <div class="header-burger-menu-button" id="menuButton">
+                <span></span>
+            </div>
         </div>
+        <div class="brand">
+            <i class="bi bi-code-slash"></i>
+            {title}
+        </div>
+        <ul class="nav">
+            <li>
+                <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
+            </li>
+            <li>
+                <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
+            </li>
+            <li>
+                <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
+            </li>
+            <li>
+                <a href="#contact">{t("navigation:contact")}</a>
+            </li>
+            <li>
+                <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" />
+            </li>
+        </ul>
     </div>
-    <div class="brand">
-        <i class="bi bi-code-slash"></i>
-        {title}
-    </div>
-    <ul class="nav">
-        <li>
-            <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
-        </li>
-        <li>
-            <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
-        </li>
-        <li>
-            <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
-        </li>
-        <li>
-            <a href="#contact">{t("navigation:contact")}</a>
-        </li>
-        <li>
-            <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" />
-        </li>
-    </ul>
 </header>
 
 <aside id="asideMenu">
@@ -61,23 +63,14 @@ await loadNamespaces(locale, namespaces);
             <a href="#contact">{t("navigation:contact")}</a>
         </li>
         <li>
-            <SimpleLanguageSelector showFlag={false} showTitle={false}/>
+            <SimpleLanguageSelector showFlag={false} showTitle={false} />
         </li>
-    </ul>   
+    </ul>
 </aside>
 
 <style>
     header {
         width: 100%;
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-        padding-left: var(--padding-x);
-        padding-right: var(--padding-x);
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: center;
-        row-gap: 1rem;
         color: var(--body-color);
         font-weight: 700;
         position: sticky;
@@ -88,7 +81,21 @@ await loadNamespaces(locale, namespaces);
         transition:
             background 200ms ease,
             transform 400ms ease;
-        
+
+        .header-items {
+            max-width: var(--page-width);
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            padding-left: var(--padding-x);
+            padding-right: var(--padding-x);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            row-gap: 1rem;
+            margin: auto;
+        }
+
         &.hidden {
             transform: translateY(-100%);
         }

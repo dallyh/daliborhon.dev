@@ -34,12 +34,12 @@ html {
     line-height: 1;
     font-family: "Twemoji Country Flags", "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Roboto, Helvetica, Arial, sans-serif;
     scroll-behavior: smooth;
-    /* overflow-x: hidden; */
+    scrollbar-gutter: stable;
+    overflow-x: hidden;
 }
 
 html.no-scroll {
     overflow-y: hidden;
-
     @media (width > 768px) {
         width: 100vw;
         margin-right: calc(100vw - 100%);
@@ -51,12 +51,12 @@ body {
     color: white;
     background-color: var(--bg-color);
     /* overflow-x: clip; */
-    max-width: var(--page-width);
-    margin: auto;
-    display: flex;
-    flex-direction: column;
 
     .page-content {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        max-width: var(--page-width);
         padding-left: var(--padding-x);
         padding-right: var(--padding-x);
     }

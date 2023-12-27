@@ -48,9 +48,25 @@ const uniqueTags = [...new Set(allTags.flat())];
                             }
                         </ul>
                         <div class="page-selector">
-                            {page.url.prev && <a href={getRelativeLocaleUrl(locale, page.url.prev)}>Previous</a>}
-                            <p>{page.currentPage} / {page.lastPage}</p>
-                            {page.url.next && <a href={getRelativeLocaleUrl(locale, page.url.next)}>Next</a>}
+                            <div>
+                                {
+                                    page.url.prev && (
+                                        <a href={page.url.prev}>
+                                            <i class="bi bi-arrow-left" />
+                                        </a>
+                                    )
+                                }
+                                {!page.url.prev && <i class="bi bi-arrow-left disabled" />}
+                                <p>{page.currentPage} / {page.lastPage}</p>
+                                {
+                                    page.url.next && (
+                                        <a href={page.url.next}>
+                                            <i class="bi bi-arrow-right" />
+                                        </a>
+                                    )
+                                }
+                                {!page.url.next && <i class="bi bi-arrow-right disabled" />}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,21 +101,49 @@ const uniqueTags = [...new Set(allTags.flat())];
         }
 
         .post-list {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 1rem;
             margin-bottom: 2rem;
+
+            @media (max-width: 468px) {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                
+            }
         }
 
         .page-selector {
             display: flex;
-            gap: 0.2rem;
             justify-content: center;
             align-items: center;
 
+            > div {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                align-items: center;
+                padding: 0.5rem;
+                background: rgba(var(--secondary), 1);
+                border-radius: 6px;
+                box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+
+                i.disabled {
+                    color: rgba(255, 255, 255, 0.2);
+                }
+            }
+
             p {
                 line-height: 1;
+                position: relative;
+
+                &:after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    height: 100%;
+                    width: 2px;
+                    color: red;
+                }
             }
         }
 
@@ -113,6 +157,7 @@ const uniqueTags = [...new Set(allTags.flat())];
                 padding: 0.4rem;
                 border-radius: 6px;
                 font-size: 0.8rem;
+                box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
             }
         }
 

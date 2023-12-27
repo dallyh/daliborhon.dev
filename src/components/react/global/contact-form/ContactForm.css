@@ -33,20 +33,6 @@
             min-height: 140px;
         }
     }
-
-    .textarea-bg {
-        z-index: -1;
-        margin: 8px 0;
-        padding: 0.5rem 0.8rem;
-        opacity: 0.5;
-        border-radius: 10px;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        background-image: url("../../../assets/img/contact/email.svg");
-        background-position: center;
-        filter: brightness(0.2);
-    }
 }
 
 #fs-frm {

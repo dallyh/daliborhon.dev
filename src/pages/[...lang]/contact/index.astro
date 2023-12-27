@@ -2,11 +2,8 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import Intro from "@components/astro/home/Intro.astro";
-import Projects from "@components/astro/home/Projects.astro";
 import Contact from "@components/astro/home/Contact.astro";
 import { getStaticPaths } from "@i18n/utils";
-import RecentPosts from "@components/astro/home/RecentPosts.astro";
 
 export { getStaticPaths };
 
@@ -18,38 +15,10 @@ await loadNamespaces(locale, namespaces);
 
 <MainLayout title="Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
     <main>
-        <section class="intro">
-            <div class="section-content-container">
-                <Intro />
-            </div>
-        </section>
-        <section id="projects">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text">{t("landing:projects_title")}</h2>
-                </div>
-                <div class="section-content">
-                    <Projects />
-                </div>
-            </div>
-        </section>
-        <section id="blog">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text">{t("landing:blog_title")}</h2>
-                </div>
-                <div class="section-content">
-                    <RecentPosts />
-                </div>
-            </div>
-        </section>
         <section id="contact">
             <div class="section-content-container">
                 <div class="section-header">
-                    <h2 class="gradient-text">{t("shared:LeaveMeAMessage")}</h2>
-                </div>
-                <div class="section-description">
-                    <p>{t("contactForm:ContactMe")}</p>
+                    <h2 class="gradient-text">{t("landing:projects_title")}</h2>
                 </div>
                 <div class="section-content">
                     <Contact />

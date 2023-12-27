@@ -11,6 +11,13 @@ export default defineConfig({
         format: "directory",
     },
     prefetch: true,
+    markdown: {
+        shikiConfig: {
+          // Choose from Shiki's built-in themes (or add your own)
+          // https://github.com/shikijs/shiki/blob/main/docs/themes.md
+          theme: 'material-theme-palenight',
+        },
+      },
     i18n: {
         defaultLocale: i18n.defaultLocale,
         locales: i18n.locales,

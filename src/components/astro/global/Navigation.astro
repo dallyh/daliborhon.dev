@@ -7,9 +7,10 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     title: string;
+    homePage?: boolean;
 }
 
-const { title } = Astro.props;
+const { homePage = false, title } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -39,7 +40,8 @@ await loadNamespaces(locale, namespaces);
                 <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
             </li>
             <li>
-                <a href="#contact">{t("navigation:contact")}</a>
+                {homePage && <a href="#contact">{t("navigation:contact")}</a>}
+                {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
             </li>
             <li>
                 <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" />
@@ -60,7 +62,8 @@ await loadNamespaces(locale, namespaces);
             <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
         </li>
         <li>
-            <a href="#contact">{t("navigation:contact")}</a>
+            {homePage && <a href="#contact">{t("navigation:contact")}</a>}
+            {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
         </li>
         <li>
             <SimpleLanguageSelector showFlag={false} showTitle={false} />

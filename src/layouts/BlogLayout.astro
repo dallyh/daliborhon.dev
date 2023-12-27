@@ -6,6 +6,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { Page } from "astro";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
+import TagList from "@components/astro/blog/TagList.astro";
 
 interface Props {
     page: Page<CollectionEntry<"posts">>;
@@ -13,13 +14,12 @@ interface Props {
 
 const { page } = Astro.props;
 
-page.data;
-
 // i18n
 const locale = getLocale(Astro.url);
 const namespaces = ["blog"];
 await loadNamespaces(locale, namespaces);
 
+// Blog
 const allPosts = await getCollection("posts", ({ data }) => {
     return data.language === locale;
 });
@@ -76,15 +76,7 @@ const uniqueTags = [...new Set(allTags.flat())];
                     <h2 class="gradient-text-accent">Tags</h2>
                 </div>
                 <div class="section-content">
-                    <ul class="tag-list">
-                        {
-                            uniqueTags.map((tag) => (
-                                <li>
-                                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag}</a>
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <TagList tags={uniqueTags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
                 </div>
             </div>
         </section>
@@ -108,7 +100,6 @@ const uniqueTags = [...new Set(allTags.flat())];
 
             @media (max-width: 468px) {
                 grid-template-columns: repeat(1, minmax(0, 1fr));
-                
             }
         }
 

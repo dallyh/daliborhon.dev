@@ -25,13 +25,5 @@ const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        /* 
-            This is here because of a bug i'm not able to figure out.
-            Without this on form submission the whole form shriks, when some error elements are displayed.
-        */
-        .contact-form {
-            width: 100%;
-        }
     }
 </style>

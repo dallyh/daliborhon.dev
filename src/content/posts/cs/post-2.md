@@ -1,5 +1,7 @@
 ---
 title: My Second Blog Post
+slug: "prispevek-2"
+language: "cs"
 author: Astro Learner
 description: "After learning some Astro, I couldn't stop!"
 image:

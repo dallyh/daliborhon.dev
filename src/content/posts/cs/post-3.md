@@ -1,5 +1,7 @@
 ---
 title: My Third Blog Post
+slug: "prispevek-3"
+language: "cs"
 author: Astro Learner
 description: "I had some challenges, but asking in the community really helped!"
 image:

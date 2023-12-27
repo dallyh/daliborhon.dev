@@ -2,9 +2,11 @@
 // Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
 // Edited for this project needs.
 
-import { getLocaleUrl, localeKeys, getLocale } from "astro-i18n-aut";
+import { getLocale, getRelativePathList } from "@i18n/utils";
 import localeEmoji from "locale-emoji";
 import ISO6991 from "iso-639-1";
+import { locales } from "@i18n/consts";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 export interface Props extends astroHTML.JSX.SelectHTMLAttributes {
     showFlag?: boolean;
@@ -14,8 +16,9 @@ export interface Props extends astroHTML.JSX.SelectHTMLAttributes {
     dropdownId: string;
 }
 
-const currentLanguage = getLocale(Astro.url);
-const { pathname } = Astro.url;
+const currentLocale = getLocale(Astro.url);
+const paths = await getRelativePathList(Astro.url);
+
 const { showFlag = false, showTitle = true, placement = "bottom", dropdownId, buttonId, ...attributes } = Astro.props;
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
@@ -25,21 +28,22 @@ const capitalizeFirstLetter = (str: string) => {
 
 <div class="language-selector">
     <button class:list={["dropdown"]} data-dropdown-target={`#${dropdownId}`} data-dropdown-placement={placement} id={buttonId}>
-        <i class="bi bi-translate"></i> {(showFlag ? localeEmoji(currentLanguage) + " " : "") + (showTitle ? capitalizeFirstLetter(ISO6991.getNativeName(currentLanguage)) : "")}
+        <i class="bi bi-translate"></i>
+        {(showFlag ? localeEmoji(currentLocale) + " " : "") + (showTitle ? capitalizeFirstLetter(ISO6991.getNativeName(currentLocale)) : "")}
     </button>
-    <ul class="dropdown-content" id={dropdownId} data-js-current-language={currentLanguage}>
+    <ul class="dropdown-content" id={dropdownId} data-js-current-language={currentLocale}>
         {
-            localeKeys.map((supportedLanguage: string) => {
-                let value = getLocaleUrl(pathname, supportedLanguage);
-                const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(supportedLanguage));
-                const flag = showFlag ? localeEmoji(supportedLanguage) + " " : "";
+            paths.map((path) => {
+                let value = path.relativeUrl;
+                const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(path.locale));
+                const flag = showFlag ? localeEmoji(path.locale) + " " : "";
                 const label = flag + nativeName;
 
                 return (
                     <li>
-                        <a href={value} data-js-language={supportedLanguage} class={supportedLanguage == currentLanguage ? "active" : ""}>
+                        <a href={value} data-js-language={path.locale} class={path.locale == currentLocale ? "active" : ""}>
                             <span>{label}</span>
-                            <i class={supportedLanguage == currentLanguage ? "bi bi-check" : ""} aria-hidden="true" />
+                            <i class={path.locale == currentLocale ? "bi bi-check" : ""} aria-hidden="true" />
                         </a>
                     </li>
                 );

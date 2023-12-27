@@ -1,13 +1,13 @@
 import i18next from "i18next";
-import FsBackend from "i18next-fs-backend";
-import { defaultLocale, localeKeys } from "astro-i18n-aut";
+import fsBackend from "i18next-fs-backend";
+import { defaultLocale, locales } from "./consts";
 
 const i18nConfig = {
     debug: false,
     ns: [],
     defaultNS: "",
     fallbackLng: defaultLocale,
-    supportedLngs: localeKeys,
+    supportedLngs: locales,
 };
 
 const i18n = i18next
@@ -17,7 +17,7 @@ const i18n = i18next
             loadPath: "./src/i18n/locales/{{lng}}/{{ns}}.json",
         },
     })
-    .use(FsBackend);
+    .use(fsBackend);
 
 export const t = i18n.t;
 
@@ -46,7 +46,7 @@ const initOnce = async () => {
             logMessage("initOnce", "i18n was initialized.");
         });
 
-        await i18n.loadLanguages(localeKeys).then(() => {
+        await i18n.loadLanguages(locales).then(() => {
             logMessage("initOnce", "i18n loaded languages.");
         });
     }

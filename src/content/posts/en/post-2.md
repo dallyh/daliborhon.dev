@@ -1,5 +1,7 @@
 ---
 title: My Second Blog Post
+slug: "post-2"
+language: "en"
 author: Astro Learner
 description: "After learning some Astro, I couldn't stop!"
 image:

@@ -1,24 +1,22 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, getEntry, getEntryBySlug } from "astro:content";
 import BlogPostLayout from "@layouts/BlogPostLayout.astro";
-import { defaultLocale, getLocale } from "astro-i18n-aut";
+import { getLocale } from "@i18n/utils";
+import { defaultLocale } from "@i18n/consts";
 
 export async function getStaticPaths() {
-    const pages = await getCollection("posts");
-    const paths = pages.map((page) => {
-        const [lang, slug] = page.slug.split("/");
-        return { params: { lang: lang === defaultLocale ? undefined : lang, slug: slug || undefined }, props: page };  
+    const allPosts = await getCollection("posts");
+    const paths = allPosts.map((post) => {
+        return { params: { lang: post.data.language === defaultLocale ? undefined : post.data.language, slug: post.slug || undefined } };  
     });
 
     return paths;
 }
 
-const locale = getLocale(Astro.url);
 const { slug } = Astro.params;
-
 const post = await getEntry({
     collection: "posts",
-    slug: locale + "/" + slug,
+    slug: slug,
 });
 if (!post) {
     return new Response(null, {
@@ -30,6 +28,6 @@ if (!post) {
 const { Content } = await post.render();
 ---
 
-<BlogPostLayout frontmatter={post.data}>
+<BlogPostLayout post={post}>
     <Content />
 </BlogPostLayout>

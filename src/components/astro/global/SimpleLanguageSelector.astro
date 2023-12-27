@@ -1,7 +1,9 @@
 ---
 import ISO6991 from "iso-639-1";
-import { getLocale, localeKeys, getLocaleUrl } from "astro-i18n-aut";
+import { locales } from "@i18n/consts";
 import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 export interface Props {
     showFlag?: boolean;
@@ -24,12 +26,12 @@ await loadNamespaces(locale, namespaces);
 <div class="language-selector">
     {showTitle && <p>{t("footer:Language")}: </p>}
     {
-        localeKeys.map((supportedLanguage: string) => {
-            let value = getLocaleUrl(pathname, supportedLanguage);
+        locales.map((supportedLanguage: string) => {
+            let value = getRelativeLocaleUrl(supportedLanguage, pathname);
             const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(supportedLanguage));
             let renderSeparator = true;
 
-            if (supportedLanguage === localeKeys[localeKeys.length - 1]) {
+            if (supportedLanguage === locales[locales.length - 1]) {
                 renderSeparator = false;
             }
 

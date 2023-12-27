@@ -50,10 +50,6 @@ class DropdownHandler {
                 showDropdown();
             });
 
-            document.addEventListener("mousemove", (e: MouseEvent) => {
-                console.log("X: " + e.clientX + " Y: " + e.clientY);
-            });
-
             // Closes active dropdowns on button click, which is not this button
             // and also closes active dropdowns on click outside or on it's children
             document.addEventListener("click", function (click) {

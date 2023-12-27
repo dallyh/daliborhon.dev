@@ -102,11 +102,14 @@ const { href } = Astro.props;
 <script>
     const hideIndicator = () => {
         const mouseElem = document.getElementById("indicator") as HTMLElement;
+        if (!mouseElem) {
+            return;
+        }
+        
         const maxScroll = 250;
         const initialOpacity = Number(window.getComputedStyle(mouseElem).opacity) ?? 1;
 
         document.addEventListener("scroll", (e) => {
-            console.log(initialOpacity);
             let opacity = initialOpacity - window.scrollY / maxScroll;
             mouseElem.style.opacity = opacity.toString();
         });

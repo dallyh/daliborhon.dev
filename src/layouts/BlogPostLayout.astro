@@ -3,6 +3,10 @@ import FormattedDate from "@components/astro/global/FormattedDate.astro";
 import MainLayout from "./MainLayout.astro";
 import type { CollectionEntry } from "astro:content";
 import { getLocale } from "@i18n/utils";
+import TagList from "@components/astro/blog/TagList.astro";
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 interface Props {
     post: CollectionEntry<"posts">;
 }
@@ -11,19 +15,58 @@ const { post } = Astro.props;
 const locale = getLocale(Astro.url);
 ---
 
-<MainLayout title={post.data.title}>
-    <h1>{post.data.title}</h1>
-    <p>Written by {post.data.author}</p>
-    <p>Published on: <FormattedDate date={post.data.pubDate} locale={locale}/></p>
-    <img src={post.data.image.url} width="300" alt={post.data.image.alt} />
-    <slot />
-    <div class="tags">
-        {
-            post.data.tags.map((tag: string) => (
-                <p class="tag">
-                    <a href={`/blog/tags/${tag}/`}>{tag}</a>
-                </p>
-            ))
-        }
+<MainLayout title={"Blog - " + post.data.title}>
+    <div class="post-header">
+        <div class="bread-crumbs">
+            <BreadCrumbs>
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label="Home" />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+                <BreadCrumbsItem currentPage={true} label={post.data.title} />
+            </BreadCrumbs>
+        </div>
+        <div class="post-description">
+            <h1>{post.data.title}</h1>
+            <p>By {post.data.author} on: <FormattedDate date={post.data.pubDate} locale={locale} /></p>
+            <div class="post-image">
+                <img src={post.data.image.url} title={post.data.image.alt} alt={post.data.image.alt} loading="eager" />
+            </div>
+        </div>
+        <div class="tags">
+            <TagList post={post} bgColor="rgba(var(--secondary), 1)" justify="center" />
+        </div>
+    </div>
+    <hr />
+    <div class="post-md">
+        <slot />
     </div>
 </MainLayout>
+
+<style>
+    .post-description {
+        text-align: center;
+
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-image {
+            padding: 2rem;
+            overflow: hidden;
+
+            img {
+                border-radius: 6px;
+                object-fit: cover;
+                object-position: 50% 50%;
+                box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+
+    .bread-crumbs {
+        margin-bottom: 2rem;
+    }
+
+    .tags {
+        margin-bottom: 2rem;
+    }
+</style>

@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getLocale } from "@i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+    post?: CollectionEntry<"posts">;
+    tags?: string[];
+    bgColor: string;
+    justify: string;
+}
+
+const { post, bgColor, justify, tags } = Astro.props;
+const locale = getLocale(Astro.url);
+---
+
+<ul class="tag-list">
+    {
+        tags !== undefined &&
+            tags.map((tag) => (
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag}</a>
+                </li>
+            ))
+    }
+    {
+        post !== undefined &&
+            post.data.tags.map((tag) => (
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag}</a>
+                </li>
+            ))
+    }
+</ul>
+
+<style define:vars={{ bgColor, justify }}>
+    .tag-list {
+        display: flex;
+        gap: 0.2rem;
+        flex-wrap: wrap;
+        justify-content: var(--justify);
+
+        li {
+            background: var(--bgColor);
+            padding: 0.4rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            height: min-content;
+        }
+    }
+</style>

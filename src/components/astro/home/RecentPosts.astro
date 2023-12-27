@@ -12,7 +12,7 @@ const allPosts = await getCollection("posts", ({ data }) => {
     return data.language === locale;
 });
 
-const recentPostsSize = 4;
+const recentPostsSize = 3;
 const filteredPosts = allPosts.slice(0, recentPostsSize);
 ---
 

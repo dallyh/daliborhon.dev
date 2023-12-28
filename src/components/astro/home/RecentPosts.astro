@@ -1,26 +1,26 @@
 ---
-import { getLocale, getBlogPostSlug } from "@i18n/utils";
+import { getLocale } from "@i18n/utils";
 import { getCollection } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
+import { getBlogPostUrl } from "@utils/getBlogPostUrl";
+import { SITE } from "@config"
 
 // i18next
 const locale = getLocale(Astro.url);
 
 //Blogs
 const allPosts = await getCollection("posts", ({ data }) => {
-    return data.language === locale;
+    return data.language === locale && !data.draft;
 });
 
-const recentPostsSize = 3;
-const filteredPosts = allPosts.slice(0, recentPostsSize);
+const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf()).slice(0, SITE.recentPostsSize);
 ---
 
 <ul>
     {
         filteredPosts.map((post) => (
             <li>
-                <BlogPostPreview post={post} url={getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(post.slug)}/`)} />
+                <BlogPostPreview post={post} url={getBlogPostUrl(locale, post.slug)} />
             </li>
         ))
     }

@@ -1,8 +1,8 @@
 ---
 title: "Typography example (en)"
-slug: "post-1"
+postId: "post-1"
 language: "en"
-pubDate: 2022-07-01
+pubDateTime: 2022-07-01
 description: "This is the first post of my new Astro blog."
 author: "Astro Learner"
 image:

@@ -92,5 +92,8 @@ await loadNamespaces(locale, namespaces);
             topPanel?.classList.add("hidden");
         }, 10000);
     };
-    showWarning();
+    
+    document.addEventListener("astro:load", (e) => {
+        showWarning();
+    })
 </script>

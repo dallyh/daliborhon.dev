@@ -1,12 +1,16 @@
 import type { APIContext } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { generateOgImageForPost } from "@utils/generateOgImage";
-import { defaultLocale } from "@i18n/consts";
+import { defaultLocale } from "@i18n/config";
+import { getRoutingLocale } from "@i18n/utils";
+import { getBlogPostSlug } from "@utils/getBlogPostSlug";
 
 export async function getStaticPaths() {
-    const allPosts = await getCollection("posts");
+    const allPosts = await getCollection("posts", ({ data }) => {
+        return !data.draft;
+    });
     const paths = allPosts.map((post) => {
-        return { params: { lang: post.data.language === defaultLocale ? undefined : post.data.language, slug: post.slug }, props: { post: post } };
+        return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.slug) }, props: { post: post } };
     });
 
     return paths;

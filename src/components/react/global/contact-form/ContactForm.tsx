@@ -10,7 +10,7 @@ interface ContactFormProps {
     isDialog?: boolean;
 }
 
-const contactForm = (props: ContactFormProps) => {
+const ContactForm = (props: ContactFormProps) => {
     const [state, handleSubmit] = useForm("mayzkojd");
     const [errorState, setErrorMessage] = useState([{ type: "", message: "" }]);
     const isFirstRender = useRef(true);
@@ -144,4 +144,4 @@ const contactForm = (props: ContactFormProps) => {
     );
 };
 
-export default contactForm;
+export default ContactForm;

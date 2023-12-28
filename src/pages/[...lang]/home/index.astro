@@ -1,5 +1,4 @@
 ---
-import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import Intro from "@components/astro/home/Intro.astro";
@@ -7,6 +6,9 @@ import Projects from "@components/astro/home/Projects.astro";
 import Contact from "@components/astro/home/Contact.astro";
 import { getStaticPaths } from "@i18n/utils";
 import RecentPosts from "@components/astro/home/RecentPosts.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import Section from "@components/astro/global/Section.astro";
+import FeaturedPosts from "@components/astro/home/FeaturedPosts.astro";
 
 export { getStaticPaths };
 
@@ -14,104 +16,28 @@ export { getStaticPaths };
 const locale = getLocale(Astro.url);
 const namespaces = ["contactForm", "shared", "landing"];
 await loadNamespaces(locale, namespaces);
+
+const layoutProps = {
+    title: "Dalibor Hon",
+    description: t("landing:description"),
+    homepage: true
+};
 ---
 
-<MainLayout title="Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
-    <main>
-        <section class="intro">
-            <div class="section-content-container">
-                <Intro />
-            </div>
-        </section>
-        <section id="projects">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text">{t("landing:projects_title")}</h2>
-                </div>
-                <div class="section-content">
-                    <Projects />
-                </div>
-            </div>
-        </section>
-        <section id="blog">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text">{t("landing:blog_title")}</h2>
-                </div>
-                <div class="section-content">
-                    <RecentPosts />
-                </div>
-            </div>
-        </section>
-        <section id="contact">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text">{t("shared:LeaveMeAMessage")}</h2>
-                </div>
-                <div class="section-description">
-                    <p>{t("contactForm:ContactMe")}</p>
-                </div>
-                <div class="section-content">
-                    <Contact />
-                </div>
-            </div>
-        </section>
-    </main>
-</MainLayout>
-
-<style>
-    section {
-        display: grid;
-        width: 100%;
-
-        @media (max-width: 768px) {
-            height: unset;
-        }
-    }
-
-    .section-content-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-
-        .section-subheader {
-            font-size: 1.5rem;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-            color: rgba(var(--accent), 1);
-            padding-top: 1rem;
-        }
-
-        .section-header {
-            h2 {
-                margin: 0;
-                padding-top: 0.2rem;
-                padding-bottom: 0.2rem;
-            }
-        }
-
-        .section-description {
-            margin-top: 0.5rem;
-        }
-
-        .section-content {
-            width: 100%;
-            height: 100%;
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-        }
-    }
-
-    .section-footer {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 0.5rem;
-    }
-</style>
+<PageLayout {...layoutProps}>
+    <Section id="hero">
+        <Intro />
+    </Section>
+    <Section id="projects" sectionTitle={t("landing:projects_title")}>
+        <Projects />
+    </Section>
+    <Section id="featuredPosts" sectionTitle="Featured posts">
+        <FeaturedPosts />
+    </Section>
+    <Section id="recentPosts" sectionTitle={t("landing:blog_title")}>
+        <RecentPosts />
+    </Section>
+    <Section id="contact" sectionTitle={t("shared:LeaveMeAMessage")} sectionDescription={t("contactForm:ContactMe")}>
+        <Contact />
+    </Section>
+</PageLayout>

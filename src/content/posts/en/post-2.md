@@ -1,13 +1,13 @@
 ---
 title: My Second Blog Post
-slug: "post-2"
+postId: "post-2"
 language: "en"
 author: Astro Learner
 description: "After learning some Astro, I couldn't stop!"
 image:
     url: "https://docs.astro.build/assets/arc.webp"
     alt: "Thumbnail of Astro arcs."
-pubDate: 2022-07-08
+pubDateTime: 2022-07-08
 tags: ["astro", "blogging", "learning in public", "successes"]
 ---
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

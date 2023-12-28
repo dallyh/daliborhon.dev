@@ -2,24 +2,27 @@
 // Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
 // Edited for this project needs.
 
-import { getLocale, getRelativePathList } from "@i18n/utils";
+import { getLocale, getPathFromUrl } from "@i18n/utils";
 import localeEmoji from "locale-emoji";
 import ISO6991 from "iso-639-1";
-import { locales } from "@i18n/consts";
+import { locales } from "@i18n/config";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { CollectionEntry } from "astro:content";
+import { getBlogPostByIdAndLocale } from "@utils/getBlogPostByIdAndLocale";
+import { getBlogPostUrl } from "@utils/getBlogPostUrl";
 
-export interface Props extends astroHTML.JSX.SelectHTMLAttributes {
+interface Props {
     showFlag?: boolean;
     showTitle?: boolean;
     placement?: string;
     buttonId: string;
     dropdownId: string;
+    post?: CollectionEntry<"posts">;
 }
 
-const currentLocale = getLocale(Astro.url);
-const paths = await getRelativePathList(Astro.url);
+const { showFlag = false, showTitle = true, placement = "bottom", dropdownId, buttonId, post } = Astro.props;
 
-const { showFlag = false, showTitle = true, placement = "bottom", dropdownId, buttonId, ...attributes } = Astro.props;
+const currentLocale = getLocale(Astro.url);
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
     return capitalized;
@@ -27,27 +30,48 @@ const capitalizeFirstLetter = (str: string) => {
 ---
 
 <div class="language-selector">
-    <button class:list={["dropdown"]} data-dropdown-target={`#${dropdownId}`} data-dropdown-placement={placement} id={buttonId}>
+    <button class:list={["dropdown dropdown-button"]} data-dropdown-target={`#${dropdownId}`} data-dropdown-placement={placement} id={buttonId}>
         <i class="bi bi-translate"></i>
         {(showFlag ? localeEmoji(currentLocale) + " " : "") + (showTitle ? capitalizeFirstLetter(ISO6991.getNativeName(currentLocale)) : "")}
     </button>
     <ul class="dropdown-content" id={dropdownId} data-js-current-language={currentLocale}>
         {
-            paths.map((path) => {
-                let value = path.relativeUrl;
-                const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(path.locale));
-                const flag = showFlag ? localeEmoji(path.locale) + " " : "";
-                const label = flag + nativeName;
+            !post &&
+                locales.map((locale) => {
+                    const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
+                    const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+                    const flag = showFlag ? localeEmoji(locale) + " " : "";
+                    const label = flag + nativeName;
 
-                return (
-                    <li>
-                        <a href={value} data-js-language={path.locale} class={path.locale == currentLocale ? "active" : ""}>
-                            <span>{label}</span>
-                            <i class={path.locale == currentLocale ? "bi bi-check" : ""} aria-hidden="true" />
-                        </a>
-                    </li>
-                );
-            })
+                    return (
+                        <li>
+                            <a href={value} data-js-language={locale} class={locale == currentLocale ? "active" : ""}>
+                                <span>{label}</span>
+                                <i class={locale == currentLocale ? "bi bi-check" : ""} aria-hidden="true" />
+                            </a>
+                        </li>
+                    );
+                })
+        }
+
+        {
+            post &&
+                locales.map(async (locale) => {
+                    const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
+                    const value = getBlogPostUrl(locale, currentPost.slug);
+                    const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+                    const flag = showFlag ? localeEmoji(locale) + " " : "";
+                    const label = flag + nativeName;
+
+                    return (
+                        <li>
+                            <a href={value} data-js-language={locale} class={locale == currentLocale ? "active" : ""}>
+                                <span>{label}</span>
+                                <i class={locale == currentLocale ? "bi bi-check" : ""} aria-hidden="true" />
+                            </a>
+                        </li>
+                    );
+                })
         }
     </ul>
 </div>
@@ -81,46 +105,5 @@ const capitalizeFirstLetter = (str: string) => {
         display: flex;
         justify-content: center;
         position: relative;
-    }
-
-    button {
-        background-color: transparent;
-        color: var(--body-color);
-        font-family: inherit;
-        border: none;
-        transition: all 200ms;
-        cursor: pointer;
-        font-size: inherit;
-        position: relative;
-        padding: 0;
-        transition: color 300ms ease;
-        text-align: center;
-
-        i {
-            margin-right: 4px;
-        }
-
-        &:hover {
-            color: rgba(var(--accent), 1);
-        }
-
-        &:active {
-            color: rgba(var(--accent), 1);
-        }
-
-        &:focus {
-            color: rgba(var(--accent), 1);
-        }
-
-        &:after {
-            display: inline-block;
-            margin-left: 0.255em;
-            vertical-align: 0.255em;
-            content: "";
-            border-top: 0.3em solid;
-            border-right: 0.3em solid transparent;
-            border-bottom: 0;
-            border-left: 0.3em solid transparent;
-        }
     }
 </style>

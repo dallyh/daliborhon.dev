@@ -1,16 +1,26 @@
 ---
-import { getRelativePathList } from "@i18n/utils";
+import { defaultLocale, locales } from "@i18n/config";
+import { getPathFromUrl } from "@i18n/utils";
+import { getBlogPostByIdAndLocale } from "@utils/getBlogPostByIdAndLocale";
+import type { CollectionEntry } from "astro:content";
+import { getAbsoluteLocaleUrl } from "astro:i18n";
 
-const site = import.meta.env.SITE;
-const base = import.meta.env.BASE_URL;
-const paths = await getRelativePathList(Astro.url);
+interface Props {
+    post?: CollectionEntry<"posts">;
+}
+const { post } = Astro.props;
 ---
 
 <Fragment>
-    <link rel="alternate" hreflang="x-default" href={site + base} />
+    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale, getPathFromUrl(Astro.url))}/>
+    {!post && locales.map((locale) => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, getPathFromUrl(Astro.url))} />)}
     {
-      paths.map((path) => (
-          <link rel="alternate" hreflang={path.locale} href={site + path.relativeUrl}/>
-        ))
+        post &&
+            locales.map(async (locale) => {
+                const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
+                const value = getAbsoluteLocaleUrl(locale, getPathFromUrl(Astro.url))
+
+                return <link rel="alternate" hreflang={locale} href={value} />;
+            })
     }
 </Fragment>

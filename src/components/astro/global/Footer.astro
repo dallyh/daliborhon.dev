@@ -3,12 +3,6 @@ import { Image } from "astro:assets";
 import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
 
-interface Props {
-    showContact?: boolean;
-}
-
-const {showContact = true } = Astro.props;
-
 // Images
 import astroSvg from "../../../../public/assets/img/astro/simple-full-logo-light.svg";
 
@@ -27,15 +21,6 @@ await loadNamespaces(locale, namespaces);
         </a>
     </p>
     <p>{t("footer:Host")}{" "}<a href="https://www.github.com" target="_blank"> {t("footer:Github")}</a>.</p>
-    <div class="links">
-        {
-            showContact && (
-                <a href="" id="contactLink">
-                    <i class="bi bi-envelope-fill" /> {t("footer:ContactMe")}
-                </a>
-            )
-        }
-    </div>
 </footer>
 
 <style>
@@ -62,25 +47,6 @@ await loadNamespaces(locale, namespaces);
         background-repeat: no-repeat;
         filter: invert(100%) grayscale(100%);
         opacity: 75%;
-    }
-
-    .links {
-        display: flex;
-        justify-content: center;
-        gap: 0.25em;
-
-        a {
-            color: rgba(var(--accent), 1);
-
-            &:visited {
-                color: rgba(var(--accent), 1);
-            }
-
-            i {
-                margin-right: 0.25rem;
-                color: var(--footer-color);
-            }
-        }
     }
 </style>
 

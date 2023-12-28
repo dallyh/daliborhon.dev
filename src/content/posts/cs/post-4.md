@@ -1,13 +1,13 @@
 ---
 title: "Muj pátý příspěvek"
-slug: "prispevek-4"
+postId: "post-4"
 language: "cs"
 author: Astro Learner
 description: "This post will show up on its own!"
 image:
     url: "https://docs.astro.build/default-og-image.png"
     alt: "The word astro against an illustration of planets and stars."
-pubDate: 2022-08-08
+pubDateTime: 2022-08-08
 tags: ["astro", "successes"]
 ---
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

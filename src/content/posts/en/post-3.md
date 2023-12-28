@@ -1,13 +1,13 @@
 ---
 title: My Third Blog Post
-slug: "post-3"
+postId: "post-3"
 language: "en"
 author: Astro Learner
 description: "I had some challenges, but asking in the community really helped!"
 image:
     url: "https://docs.astro.build/assets/rays.webp"
     alt: "Thumbnail of Astro rays."
-pubDate: 2022-07-15
+pubDateTime: 2022-07-15
 tags: ["astro", "learning in public", "setbacks", "community"]
 ---
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

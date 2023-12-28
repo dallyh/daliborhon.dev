@@ -1,12 +1,17 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getBlogPostSlug, getLocale } from "@i18n/utils";
-import { getCollection, type CollectionEntry } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { getLocale } from "@i18n/utils";
+import { type CollectionEntry } from "astro:content";
 import type { Page } from "astro";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import TagList from "@components/astro/blog/TagList.astro";
+import { getBlogPostUrl } from "@utils/getBlogPostUrl";
+import { getUniqueTags } from "@utils/getUniqueTags";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import Section from "@components/astro/global/Section.astro";
 
 interface Props {
     page: Page<CollectionEntry<"posts">>;
@@ -19,175 +24,116 @@ const locale = getLocale(Astro.url);
 const namespaces = ["blog"];
 await loadNamespaces(locale, namespaces);
 
-// Blog
-const allPosts = await getCollection("posts", ({ data }) => {
-    return data.language === locale;
-});
-const allTags = allPosts.map((post) => {
-    return post.data.tags.flat();
-});
-const uniqueTags = [...new Set(allTags.flat())];
+const layoutProps = {
+    title: "Blog - Dalibor Hon",
+    description: t("landing:description"),
+};
+const uniqueTags = await getUniqueTags(locale);
 ---
 
-<MainLayout title="Blog - Dalibor Hon" description={t("landing:description")} showFooterContact={false}>
+<MainLayout {...layoutProps}>
+    <HeadHrefLangs slot="hreflangs" />
+    <Navigation title={layoutProps.title} slot="header"/>
     <main>
-        <section id="blogs">
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text-accent">Blogs</h2>
-                </div>
-                <div class="section-content">
-                    <div class="paginated-posts">
-                        <ul class="post-list">
-                            {
-                                page.data.map((post) => (
-                                    <li>
-                                        <BlogPostPreview post={post} url={getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(post.slug)}/`)} />
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                        <div class="page-selector">
-                            <div>
-                                {
-                                    page.url.prev && (
-                                        <a href={page.url.prev}>
-                                            <i class="bi bi-arrow-left" />
-                                        </a>
-                                    )
-                                }
-                                {!page.url.prev && <i class="bi bi-arrow-left disabled" />}
-                                <p>{page.currentPage} / {page.lastPage}</p>
-                                {
-                                    page.url.next && (
-                                        <a href={page.url.next}>
-                                            <i class="bi bi-arrow-right" />
-                                        </a>
-                                    )
-                                }
-                                {!page.url.next && <i class="bi bi-arrow-right disabled" />}
-                            </div>
-                        </div>
+        <Section id="blogs" sectionTitle="All posts">
+            <div class="paginated-posts">
+                <ul class="post-list">
+                    {
+                        page.data.map((post) => (
+                            <li>
+                                <BlogPostPreview post={post} url={getBlogPostUrl(locale, post.slug)} />
+                            </li>
+                        ))
+                    }
+                </ul>
+                <div class="page-selector">
+                    <div>
+                        {
+                            page.url.prev && (
+                                <a href={page.url.prev}>
+                                    <i class="bi bi-arrow-left" />
+                                </a>
+                            )
+                        }
+                        {!page.url.prev && <i class="bi bi-arrow-left disabled" />}
+                        <p>{page.currentPage} / {page.lastPage}</p>
+                        {
+                            page.url.next && (
+                                <a href={page.url.next}>
+                                    <i class="bi bi-arrow-right" />
+                                </a>
+                            )
+                        }
+                        {!page.url.next && <i class="bi bi-arrow-right disabled" />}
                     </div>
                 </div>
             </div>
-            <div class="section-content-container">
-                <div class="section-header">
-                    <h2 class="gradient-text-accent">Tags</h2>
-                </div>
-                <div class="section-content">
-                    <TagList tags={uniqueTags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
-                </div>
-            </div>
-        </section>
+        </Section>
+        <Section id="tags" sectionTitle="Tags">
+            <TagList tags={uniqueTags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
+        </Section>
     </main>
-
-    <style>
-        section {
-            display: grid;
-            width: 100%;
-
-            @media (max-width: 768px) {
-                height: unset;
-            }
-        }
-
-        .post-list {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-
-            @media (max-width: 468px) {
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-            }
-        }
-
-        .page-selector {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            > div {
-                display: flex;
-                gap: 1rem;
-                justify-content: center;
-                align-items: center;
-                padding: 0.5rem;
-                background: rgba(var(--secondary), 1);
-                border-radius: 6px;
-                box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
-
-                i.disabled {
-                    color: rgba(255, 255, 255, 0.2);
-                }
-            }
-
-            p {
-                line-height: 1;
-                position: relative;
-
-                &:after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    height: 100%;
-                    width: 2px;
-                    color: red;
-                }
-            }
-        }
-
-        .tag-list {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-
-            a {
-                background: rgba(var(--secondary), 1);
-                padding: 0.4rem;
-                border-radius: 6px;
-                font-size: 0.8rem;
-                box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
-            }
-        }
-
-        .section-content-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
-
-            .section-subheader {
-                font-size: 1.5rem;
-                font-weight: 500;
-                position: relative;
-                z-index: 1;
-                color: rgba(var(--accent), 1);
-                padding-top: 1rem;
-            }
-
-            .section-description {
-                margin-top: 10px;
-            }
-
-            .section-content {
-                width: 100%;
-                height: 100%;
-                padding-top: 1.5rem;
-                padding-bottom: 1.5rem;
-            }
-        }
-
-        .section-footer {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-bottom: 0.5rem;
-        }
-    </style>
+    <Footer />
 </MainLayout>
+
+<style>
+    .post-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+    }
+
+    .page-selector {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(var(--secondary), 1);
+            border-radius: 6px;
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+
+            i.disabled {
+                color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        p {
+            line-height: 1;
+            position: relative;
+
+            &:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                height: 100%;
+                width: 2px;
+                color: red;
+            }
+        }
+    }
+
+    .tag-list {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        a {
+            background: rgba(var(--secondary), 1);
+            padding: 0.4rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+        }
+    }
+</style>

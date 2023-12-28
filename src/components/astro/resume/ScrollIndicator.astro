@@ -27,7 +27,6 @@ const { href } = Astro.props;
 
         @media (max-width: 468px) {
             transform: scale(0.85);
-            
         }
     }
 
@@ -105,7 +104,7 @@ const { href } = Astro.props;
         if (!mouseElem) {
             return;
         }
-        
+
         const maxScroll = 250;
         const initialOpacity = Number(window.getComputedStyle(mouseElem).opacity) ?? 1;
 

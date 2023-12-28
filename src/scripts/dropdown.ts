@@ -33,7 +33,7 @@ class DropdownHandler {
                         shift({
                             padding: 5,
                             rootBoundary: "viewport",
-                            boundary: document.body
+                            boundary: document.body,
                         }),
                     ],
                     strategy: "fixed",

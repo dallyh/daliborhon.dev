@@ -35,7 +35,7 @@ export function getPathFromUrl(url: URL) {
         locale = possibleLocale;
         pathname = pathname.substring(3, pathname.length);
     }
-    
+
     return pathname;
 }
 

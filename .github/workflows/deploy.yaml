@@ -19,12 +19,12 @@ jobs:
         environment: github-pages
         runs-on: ubuntu-latest
         env:
-            UNDER_CONSTRUCTION: ${{ vars.UNDER_CONSTRUCTION }}       
+            UNDER_CONSTRUCTION: ${{ vars.UNDER_CONSTRUCTION }}
         steps:
             - name: Print out under construction variables
               run: |
-                echo "Repository variable : ${{ vars.UNDER_CONSTRUCTION }}"
-                echo "Environment variable : ${{ env.UNDER_CONSTRUCTION }}"
+                  echo "Repository variable : ${{ vars.UNDER_CONSTRUCTION }}"
+                  echo "Environment variable : ${{ env.UNDER_CONSTRUCTION }}"
             - name: Checkout your repository using git
               uses: actions/checkout@v3
             - name: Install, build, and upload your site

@@ -8,6 +8,6 @@ export async function getUniqueTags(locale: string) {
     const allTags = allPosts.map((post) => {
         return post.data.tags.flat();
     });
-    
+
     return [...new Set(allTags.flat())];
 }

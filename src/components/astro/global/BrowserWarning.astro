@@ -20,7 +20,7 @@ await loadNamespaces(locale, namespaces);
         top: 0;
         width: 100%;
         min-height: 50px;
-        background-color: #DAD06F;
+        background-color: #dad06f;
         align-items: center;
         color: black;
         transition: transform 400ms ease-in-out;
@@ -69,7 +69,7 @@ await loadNamespaces(locale, namespaces);
 
         let languagePreference = window.localStorage.getItem("language");
         if (languagePreference) {
-            // Do not show, if the user 
+            // Do not show, if the user
             return;
         }
 
@@ -92,8 +92,8 @@ await loadNamespaces(locale, namespaces);
             topPanel?.classList.add("hidden");
         }, 10000);
     };
-    
+
     document.addEventListener("astro:load", (e) => {
         showWarning();
-    })
+    });
 </script>

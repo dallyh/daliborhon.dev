@@ -76,27 +76,27 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 1. List item 1
 2. List item 2
-   1. Nested list item A
-   2. Nested list item B
+    1. Nested list item A
+    2. Nested list item B
 3. List item 3
 
 ### Unordered list
 
-- List item
-- List item
-  - Nested list item
-  - Nested list item
-    - Double nested list item
-    - Double nested list item
-- List item
+-   List item
+-   List item
+    -   Nested list item
+    -   Nested list item
+        -   Double nested list item
+        -   Double nested list item
+-   List item
 
 ### Mixed list
 
 1. First ordered list item
 2. Another item
-   - Unordered sub-list.
+    - Unordered sub-list.
 3. Actual numbers don't matter, just that it's a number
-   1. Ordered sub-list
+    1. Ordered sub-list
 4. And another item.
 
 ## Links
@@ -122,7 +122,7 @@ Some text to show that the reference links can follow later.
 Images included in _\_posts_ folder are lazy loaded.
 
 Inline-style:
-![alt text](https://docs.astro.build/assets/arc.webp 'Logo Title Text 1')
+![alt text](https://docs.astro.build/assets/arc.webp "Logo Title Text 1")
 
 ## Table
 
@@ -140,7 +140,8 @@ Inline-style:
 ## Syntax highlight
 
 ```javascript
-var s = 'JavaScript syntax highlighting'; var s = 'JavaScript syntax highlighting';
+var s = "JavaScript syntax highlighting";
+var s = "JavaScript syntax highlighting";
 alert(s);
 ```
 

@@ -3,7 +3,7 @@ import { getLocale } from "@i18n/utils";
 import { getCollection } from "astro:content";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import { getBlogPostUrl } from "@utils/getBlogPostUrl";
-import { SITE } from "@config"
+import { SITE } from "@config";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -24,11 +24,7 @@ const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).value
             </li>
         ))
     }
-    {
-        filteredPosts.length === 0 && (
-            <p>There are currently no featured posts. 😞</p>
-        )
-    }
+    {filteredPosts.length === 0 && <p>There are currently no featured posts. 😞</p>}
 </ul>
 
 <style>

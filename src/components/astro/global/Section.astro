@@ -1,0 +1,88 @@
+---
+interface Props {
+    sectionTitle?: string;
+    sectionDescription?: string;
+    id: string;
+}
+
+const { sectionTitle, sectionDescription, id } = Astro.props;
+---
+
+<section id={id}>
+    <div class="section-content-container">
+        {
+            sectionTitle && (
+                <div class="section-header">
+                    <h2 class="gradient-text">{sectionTitle}</h2>
+                </div>
+            )
+        }
+        {
+            sectionDescription && (
+                <div class="section-description">
+                    <p>{sectionDescription}</p>
+                </div>
+            )
+        }
+        <div class="section-content">
+            <slot />
+        </div>
+    </div>
+</section>
+
+<style>
+    section {
+        display: grid;
+        width: 100%;
+
+        @media (max-width: 768px) {
+            height: unset;
+        }
+    }
+
+    .section-content-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+
+        .section-subheader {
+            font-size: 1.5rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            color: rgba(var(--accent), 1);
+            padding-top: 1rem;
+        }
+
+        .section-header {
+            h2 {
+                margin: 0;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
+        }
+
+        .section-description {
+            margin-top: 0.5rem;
+        }
+
+        .section-content {
+            width: 100%;
+            height: 100%;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+    }
+
+    .section-footer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 0.5rem;
+    }
+</style>

@@ -1,14 +1,17 @@
 ---
-import type { MarkdownInstance } from "node_modules/astro/dist/@types/astro";
 import MainLayout from "@layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
-import { defaultLocale } from "@i18n/consts";
-import { getBlogPostSlug, getLocale } from "@i18n/utils";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { getRoutingLocale, getLocale } from "@i18n/utils";
+import { getBlogPostUrl } from "@utils/getBlogPostUrl";
+import PageLayout from "@layouts/PageLayout.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import Section from "@components/astro/global/Section.astro";
 
 // This is kinda complicated
 export async function getStaticPaths() {
-    const allPosts = await getCollection("posts");
+    const allPosts = await getCollection("posts", ({ data }) => {
+        return !data.draft;
+    });
 
     const allTags = allPosts.map((post) => {
         return post.data.tags.flat();
@@ -22,9 +25,8 @@ export async function getStaticPaths() {
 
     const paths = uniqueTags.flatMap((tag) => {
         return uniqueLocales.map((locale) => {
-            return { params: { lang: locale === defaultLocale ? undefined : locale, tag: tag }, props: { posts: allPosts } };
-        })
-        
+            return { params: { lang: getRoutingLocale(locale), tag: tag }, props: { posts: allPosts } };
+        });
     });
 
     return paths;
@@ -34,17 +36,28 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 const locale = getLocale(Astro.url);
 const filteredPosts = posts.filter((post) => post.data.tags?.includes(tag) && post.data.language === locale);
+
+// i18next
+const namespaces = ["contactForm"];
+await loadNamespaces(locale, namespaces);
+
+const layoutProps = {
+    title: "Dalibor Hon",
+    description: t("landing:description"),
+};
+
 ---
 
-<MainLayout title={tag}>
-    <p>Posts tagged with {tag}</p>
-    <ul>
-        {
-            filteredPosts.map((post) => (
-                <li>
-                    <a href={getRelativeLocaleUrl(locale,`blog/posts/${getBlogPostSlug(post.slug)}/`)}>{post.data.title}</a>
-                </li>
-            ))
-        }
-    </ul>
-</MainLayout>
+<PageLayout {...layoutProps}>
+    <Section id="taggedPosts" sectionTitle={"Posts tagged with " + tag}>
+        <ul>
+            {
+                filteredPosts.map((post) => (
+                    <li>
+                        <a href={getBlogPostUrl(locale, post.slug)}>{post.data.title}</a>
+                    </li>
+                ))
+            }
+        </ul>
+    </Section>
+</PageLayout>

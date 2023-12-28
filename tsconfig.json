@@ -13,7 +13,8 @@
             "@i18n/*": ["src/i18n/*"],
             "@public/*": ["src/public/*"],
             "@layouts/*": ["src/layouts/*"],
-            "@utils/*": ["src/utils/*"]
+            "@utils/*": ["src/utils/*"],
+            "@config": ["src/config.ts"]
         }
     }
 }

@@ -1,30 +1,21 @@
 ---
-import { getCollection, getEntry, getEntryBySlug } from "astro:content";
+import { getCollection } from "astro:content";
 import BlogPostLayout from "@layouts/BlogPostLayout.astro";
-import { getLocale } from "@i18n/utils";
-import { defaultLocale } from "@i18n/consts";
+import { getRoutingLocale } from "@i18n/utils";
+import { getBlogPostSlug } from "@utils/getBlogPostSlug";
 
 export async function getStaticPaths() {
-    const allPosts = await getCollection("posts");
+    const allPosts = await getCollection("posts", ({ data }) => {
+        return !data.draft;
+    });
     const paths = allPosts.map((post) => {
-        return { params: { lang: post.data.language === defaultLocale ? undefined : post.data.language, slug: post.slug } };  
+        return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.slug) }, props: { post: post } };
     });
 
     return paths;
 }
 
-const { slug } = Astro.params;
-const post = await getEntry({
-    collection: "posts",
-    slug: slug,
-});
-if (!post) {
-    return new Response(null, {
-        status: 404,
-        statusText: "Not found",
-    });
-}
-
+const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 

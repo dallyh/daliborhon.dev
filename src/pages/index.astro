@@ -7,11 +7,15 @@ import { getLocale } from "@i18n/utils";
 const locale = getLocale(Astro.url);
 const namespaces = ["landing"];
 await loadNamespaces(locale, namespaces);
+
+const layoutProps = {
+    title: "Dalibor Hon",
+    description: t("landing:description"),
+    showBrowserWarning: true
+}
 ---
 
-
-
-<MainLayout title="Dalibor Hon" isRootPage={true} description={t("landing:description")}>
+<MainLayout {...layoutProps}>
     <div class="dot-flashing"></div>
 </MainLayout>
 
@@ -29,7 +33,7 @@ await loadNamespaces(locale, namespaces);
 
 <script>
     import { navigate } from "astro:transitions/client";
-    import { locales,  defaultLocale} from "@i18n/consts";
+    import { locales,  defaultLocale} from "@i18n/config";
     import { getRelativeLocaleUrl } from "astro:i18n";
     import { prefetch } from "astro:prefetch";
 

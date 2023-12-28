@@ -4,13 +4,15 @@ import { loadNamespaces, t } from "@i18n/i18n";
 import LanguageSelector from "./LanguageSelector.astro";
 import SimpleLanguageSelector from "./SimpleLanguageSelector.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { CollectionEntry } from "astro:content";
 
 interface Props {
     title: string;
     homePage?: boolean;
+    post?: CollectionEntry<"posts">;
 }
 
-const { homePage = false, title } = Astro.props;
+const { homePage = false, title, post } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -27,24 +29,24 @@ await loadNamespaces(locale, namespaces);
         </div>
         <div class="brand">
             <i class="bi bi-code-slash"></i>
-            {title}
+            <h1>{title}</h1>
         </div>
         <ul class="nav">
             <li>
                 <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
             </li>
             <li>
-                <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
+                <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
             </li>
             <li>
-                <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
+                <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
             </li>
             <li>
                 {homePage && <a href="#contact">{t("navigation:contact")}</a>}
                 {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
             </li>
             <li>
-                <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" />
+                <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" post={post} />
             </li>
         </ul>
     </div>
@@ -105,6 +107,16 @@ await loadNamespaces(locale, namespaces);
 
         .brand {
             color: rgba(var(--accent), 1);
+
+            h1 {
+                font-size: 1rem;
+                font-weight: inherit;
+                padding: 0;
+                margin: 0;
+                background: none;
+                background-clip: none;
+                color: inherit;
+            }
         }
     }
 
@@ -280,6 +292,7 @@ await loadNamespaces(locale, namespaces);
         }
     }
 </style>
+
 
 <script>
     const initSideNav = () => {

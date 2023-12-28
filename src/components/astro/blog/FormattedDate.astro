@@ -1,0 +1,44 @@
+---
+interface Props {
+    pubDateTime: string | Date;
+    modDatetime: string | Date | undefined;
+    locale: string;
+}
+
+const { pubDateTime, modDatetime, locale } = Astro.props;
+
+const formattedDatetime = () => {
+    const myDatetime = new Date(modDatetime ? modDatetime : pubDateTime);
+
+    const date = myDatetime.toLocaleDateString(locale, {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+
+    const time = myDatetime.toLocaleTimeString(locale, {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+
+    return {
+        iso: myDatetime.toISOString(),
+        date: date,
+        time: time
+    };
+};
+---
+
+<div>
+    <span>{modDatetime ? "Updated: " : "Published: "}</span>
+    <time datetime={formattedDatetime().iso}>{formattedDatetime().date}</time>
+    <span> | </span>
+    <span>{formattedDatetime().time}</span>
+</div>
+
+<style>
+    div {
+        font-size: inherit;
+        font-weight: inherit;
+    }
+</style>

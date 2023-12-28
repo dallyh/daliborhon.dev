@@ -1,0 +1,23 @@
+---
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import MainLayout from "./MainLayout.astro";
+
+interface Props {
+    title: string;
+    description: string;
+    homepage?: boolean;
+}
+
+const { title, description, homepage = false } = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+    <HeadHrefLangs slot="hreflangs" />
+    <Navigation title={title} homePage={homepage} slot="header" />
+    <main>
+        <slot />
+    </main>
+    <Footer />
+</MainLayout>

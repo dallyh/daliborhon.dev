@@ -6,6 +6,7 @@ import { getBlogPostUrl } from "@utils/getBlogPostUrl";
 import PageLayout from "@layouts/PageLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import Section from "@components/astro/global/Section.astro";
+import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.astro";
 
 // This is kinda complicated
 export async function getStaticPaths() {
@@ -53,10 +54,23 @@ const layoutProps = {
             {
                 filteredPosts.map((post) => (
                     <li>
-                        <a href={getBlogPostUrl(locale, post.slug)}>{post.data.title}</a>
+                        <SmallBlogPostPreview post={post} />
                     </li>
                 ))
             }
         </ul>
     </Section>
 </PageLayout>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

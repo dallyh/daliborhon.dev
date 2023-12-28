@@ -35,13 +35,16 @@ const uniqueTags = await getUniqueTags(locale);
     <HeadHrefLangs slot="hreflangs" />
     <Navigation title={layoutProps.title} slot="header" />
     <main>
+        <Section id="tags" sectionTitle="Tags">
+            <TagList tags={uniqueTags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
+        </Section>
         <Section id="blogs" sectionTitle="All posts">
             <div class="paginated-posts">
                 <ul class="post-list">
                     {
                         page.data.map((post) => (
                             <li>
-                                <BlogPostPreview post={post} url={getBlogPostUrl(locale, post.slug)} />
+                                <BlogPostPreview post={post} />
                             </li>
                         ))
                     }
@@ -69,9 +72,6 @@ const uniqueTags = await getUniqueTags(locale);
                 </div>
             </div>
         </Section>
-        <Section id="tags" sectionTitle="Tags">
-            <TagList tags={uniqueTags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
-        </Section>
     </main>
     <Footer />
 </MainLayout>
@@ -79,12 +79,12 @@ const uniqueTags = await getUniqueTags(locale);
 <style>
     .post-list {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1rem;
         margin-bottom: 2rem;
 
         @media (max-width: 468px) {
-            grid-template-columns: repeat(1, minmax(0, 1fr));
+            grid-template-columns: 1fr;
         }
     }
 

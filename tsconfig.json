@@ -12,7 +12,8 @@
             "@assets/*": ["src/assets/*"],
             "@i18n/*": ["src/i18n/*"],
             "@public/*": ["src/public/*"],
-            "@layouts/*": ["src/layouts/*"]
+            "@layouts/*": ["src/layouts/*"],
+            "@utils/*": ["src/utils/*"]
         }
     }
 }

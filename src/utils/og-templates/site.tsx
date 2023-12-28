@@ -1,7 +1,7 @@
 import { t, loadNamespaces } from "@i18n/i18n";
 
 export default async (locale: string) => {
-    await loadNamespaces(locale, ["landing", "shared"])
+    await loadNamespaces(locale, ["landing", "shared"]);
     return (
         <div
             style={{

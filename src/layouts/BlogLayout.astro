@@ -33,7 +33,7 @@ const uniqueTags = await getUniqueTags(locale);
 
 <MainLayout {...layoutProps}>
     <HeadHrefLangs slot="hreflangs" />
-    <Navigation title={layoutProps.title} slot="header"/>
+    <Navigation title={layoutProps.title} slot="header" />
     <main>
         <Section id="blogs" sectionTitle="All posts">
             <div class="paginated-posts">

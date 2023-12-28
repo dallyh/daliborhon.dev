@@ -11,8 +11,8 @@ await loadNamespaces(locale, namespaces);
 const layoutProps = {
     title: "Dalibor Hon",
     description: t("landing:description"),
-    showBrowserWarning: true
-}
+    showBrowserWarning: true,
+};
 ---
 
 <MainLayout {...layoutProps}>
@@ -28,12 +28,12 @@ const layoutProps = {
         justify-content: center;
         align-items: center;
         position: relative;
-    }   
+    }
 </style>
 
 <script>
     import { navigate } from "astro:transitions/client";
-    import { locales,  defaultLocale} from "@i18n/config";
+    import { locales, defaultLocale } from "@i18n/config";
     import { getRelativeLocaleUrl } from "astro:i18n";
     import { prefetch } from "astro:prefetch";
 

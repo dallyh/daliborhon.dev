@@ -24,7 +24,7 @@ const formattedDatetime = () => {
     return {
         iso: myDatetime.toISOString(),
         date: date,
-        time: time
+        time: time,
     };
 };
 ---
@@ -32,7 +32,7 @@ const formattedDatetime = () => {
 <div>
     <span>{modDatetime ? "Updated: " : "Published: "}</span>
     <time datetime={formattedDatetime().iso}>{formattedDatetime().date}</time>
-    <span> | </span>
+    <span> |</span>
     <span>{formattedDatetime().time}</span>
 </div>
 

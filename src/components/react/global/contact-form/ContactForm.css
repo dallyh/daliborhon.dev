@@ -56,7 +56,9 @@
 #fs-frm input:autofill {
     box-shadow: 0 0 0 1000px var(--card-bg) inset !important;
     -webkit-text-fill-color: white !important;
-    transition: background-color 600000s 0s, color 600000s 0s !important;
+    transition:
+        background-color 600000s 0s,
+        color 600000s 0s !important;
 }
 
 #fs-frm input:focus,

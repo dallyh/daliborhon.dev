@@ -17,32 +17,30 @@ const { accentColor, closeButtonText = "Cancel", openOnce = false, openDialog = 
             <span>{modalTitle}</span>
         </div>
         <div class="dialog-body">
-            <slot name="body"/>
+            <slot name="body" />
         </div>
         <div class="dialog-footer">
-            <slot name="footer"/>
+            <slot name="footer" />
             <button class="button" value="cancel">{closeButtonText}</button>
         </div>
     </form>
 </dialog>
 
-<script define:vars={{openDialog: openDialog, dialogId: dialogId, openOnce: openOnce}}>
+<script define:vars={{ openDialog: openDialog, dialogId: dialogId, openOnce: openOnce }}>
     let dialog = document.getElementById(dialogId);
-    if (openDialog)
-    {
-        if (openOnce)
-        {
+    if (openDialog) {
+        if (openOnce) {
             let openedOnce = window.localStorage.getItem(dialogId);
             if (openedOnce === "true") return;
-            window.localStorage.setItem(dialogId, "true")
+            window.localStorage.setItem(dialogId, "true");
         }
         dialog.showModal();
     }
 </script>
 
-<style define:vars={{accentColor}}>
+<style define:vars={{ accentColor }}>
     dialog {
-        margin-top: calc(100vh/4);
+        margin-top: calc(100vh / 4);
         line-height: 1.6;
         border: 1px solid rgba(255, 255, 255, 0.1);
         background-color: var(--bg-color);
@@ -108,10 +106,9 @@ const { accentColor, closeButtonText = "Cancel", openOnce = false, openDialog = 
         backdrop-filter: blur(2px);
     }
 
-    @media (max-width: 768px) { 
+    @media (max-width: 768px) {
         dialog {
             max-width: calc(100vw - 10%);
         }
-         
     }
 </style>

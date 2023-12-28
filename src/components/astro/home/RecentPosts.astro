@@ -20,7 +20,7 @@ const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).value
     {
         filteredPosts.map((post) => (
             <li>
-                <BlogPostPreview post={post} url={getBlogPostUrl(locale, post.slug)} />
+                <BlogPostPreview post={post} />
             </li>
         ))
     }

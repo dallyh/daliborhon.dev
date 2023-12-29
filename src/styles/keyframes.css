@@ -54,16 +54,6 @@
     }
 }
 
-@keyframes slideInFromTop {
-    from {
-        transform: translateY(-100%);
-    }
-
-    to {
-        transform: translateY(0);
-    }
-}
-
 @keyframes droplet {
     0% {
         width: 40px;

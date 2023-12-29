@@ -2,12 +2,10 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import type { Page } from "astro";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import TagList from "@components/astro/blog/TagList.astro";
-import { getBlogPostUrl } from "@utils/getBlogPostUrl";
-import { getUniqueTags } from "@utils/getUniqueTags";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import Footer from "@components/astro/global/Footer.astro";
@@ -28,7 +26,7 @@ const layoutProps = {
     title: "Blog - Dalibor Hon",
     description: t("landing:description"),
 };
-const uniqueTags = await getUniqueTags(locale);
+const tags = await getCollection("tags");
 ---
 
 <MainLayout {...layoutProps}>
@@ -36,7 +34,7 @@ const uniqueTags = await getUniqueTags(locale);
     <Navigation title={layoutProps.title} slot="header" />
     <main>
         <Section id="tags" sectionTitle="Tags">
-            <TagList tags={uniqueTags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
+            <TagList tags={tags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
         </Section>
         <Section id="blogs" sectionTitle="All posts">
             <div class="paginated-posts">

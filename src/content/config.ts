@@ -1,4 +1,4 @@
-import { z, defineCollection } from "astro:content";
+import { z, defineCollection, reference } from "astro:content";
 import { locales } from "@i18n/config";
 
 // Define a `type` and `schema` for each collection
@@ -25,11 +25,22 @@ const postsCollection = defineCollection({
                 })
                 .or(z.string())
                 .optional(),
-            tags: z.array(z.string()),
+            tags: z.array(reference("tags")),
             canonicalURL: z.string().optional(),
         }),
 });
+
+// TO-DO: Find a way to do this automatically with locales.map...
+const tagsCollection = defineCollection({
+    type: "data",
+    schema: z.object({
+        cs: z.string(),
+        en: z.string(),
+    }),
+});
+
 // Export a single `collections` object to register your collection(s)
 export const collections = {
     posts: postsCollection,
+    tags: tagsCollection,
 };

@@ -9,9 +9,9 @@ image:
     alt: "Thumbnail of Astro arcs."
 pubDateTime: 2022-07-08
 tags:
-- astro
-- community
-- successes
+    - astro
+    - community
+    - successes
 draft: false
 ---
 

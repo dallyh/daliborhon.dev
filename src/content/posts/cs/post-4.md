@@ -5,15 +5,16 @@ language: cs
 author: Astro Learner
 description: This post will show up on its own!
 image:
-  url: https://docs.astro.build/default-og-image.png
-  alt: The word astro against an illustration of planets and stars.
+    url: https://docs.astro.build/default-og-image.png
+    alt: The word astro against an illustration of planets and stars.
 pubDateTime: 2023-12-29T00:56:09.755+01:00
 tags:
-- astro
-- community
-- successes
+    - astro
+    - community
+    - successes
 draft: false
 ---
+
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
@@ -78,27 +79,27 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 1. List item 1
 1. List item 2
-   1. Nested list item A
-   1. Nested list item B
+    1. Nested list item A
+    1. Nested list item B
 1. List item 3
 
 ### Unordered list
 
-- List item
-- List item
-  - Nested list item
-  - Nested list item
-    - Double nested list item
-    - Double nested list item
-- List item
+-   List item
+-   List item
+    -   Nested list item
+    -   Nested list item
+        -   Double nested list item
+        -   Double nested list item
+-   List item
 
 ### Mixed list
 
 1. First ordered list item
 1. Another item
-   1. Unordered sub-list.
+    1. Unordered sub-list.
 1. Actual numbers don't matter, just that it's a number
-   1. Ordered sub-list
+    1. Ordered sub-list
 1. And another item.
 
 ## Links
@@ -109,20 +110,16 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 ## Images
 
-Images included in __posts_ folder are lazy loaded.
+Images included in \__posts_ folder are lazy loaded.
 
 Inline-style:
 ![alt text](https://docs.astro.build/assets/arc.webp)
 
 ## Table
 
-
-
-
-
-|1|2|
-|---|---|
-|3|4|
+| 1   | 2   |
+| --- | --- |
+| 3   | 4   |
 
 ## Syntax highlight
 
@@ -138,7 +135,3 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 s = "Python syntax highlighting"
 print s
 ```
-
-
-
-

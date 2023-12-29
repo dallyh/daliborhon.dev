@@ -9,9 +9,9 @@ image:
     alt: "Thumbnail of Astro rays."
 pubDateTime: 2022-07-15
 tags:
-- astro
-- community
-- successes
+    - astro
+    - community
+    - successes
 draft: false
 ---
 

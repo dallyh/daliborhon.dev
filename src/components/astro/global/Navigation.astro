@@ -29,7 +29,7 @@ await loadNamespaces(locale, namespaces);
         </div>
         <div class="brand">
             <i class="bi bi-code-slash"></i>
-            <h1>{title}</h1>
+            <h1 transition:name="header-title" transition:animate="slide">{title}</h1>
         </div>
         <ul class="nav">
             <li>
@@ -83,6 +83,7 @@ await loadNamespaces(locale, namespaces);
         background: var(--header-bg);
         backdrop-filter: blur(4px);
         z-index: 1010;
+        overflow: hidden;
         transition:
             background 200ms ease,
             transform 400ms ease;

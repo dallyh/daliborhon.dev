@@ -23,7 +23,7 @@ const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
 
 const layoutProps = {
-    title,
+    title: `Post - ${title}`,
     author,
     description,
     pubDateTime,

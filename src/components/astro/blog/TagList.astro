@@ -1,11 +1,12 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { getEntry, type CollectionEntry } from "astro:content";
 import { getLocale } from "@i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { getTagByLocale } from "@utils/getTagByLocale";
 
 interface Props {
     post?: CollectionEntry<"posts">;
-    tags?: string[];
+    tags?: CollectionEntry<"tags">[];
     bgColor: string;
     justify: string;
 }
@@ -16,20 +17,22 @@ const locale = getLocale(Astro.url);
 
 <ul class="tag-list">
     {
-        tags !== undefined &&
+        tags &&
             tags.map((tag) => (
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag}</a>
+                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
                 </li>
             ))
     }
     {
-        post !== undefined &&
-            post.data.tags.map((tag) => (
-                <li>
-                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag}</a>
-                </li>
-            ))
+        post  &&
+            post.data.tags.map(async (tag) => {
+                return (
+                    <li>
+                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                    </li>
+                );
+            })
     }
 </ul>
 

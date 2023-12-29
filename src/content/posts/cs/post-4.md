@@ -9,8 +9,9 @@ image:
   alt: The word astro against an illustration of planets and stars.
 pubDateTime: 2023-12-29T00:56:09.755+01:00
 tags:
-  - astro
-  - successes
+- astro
+- community
+- successes
 draft: false
 ---
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

@@ -14,19 +14,16 @@ export async function getStaticPaths() {
         return !data.draft;
     });
 
-    const allTags = allPosts.map((post) => {
-        return post.data.tags.flat();
-    });
-    const uniqueTags = [...new Set(allTags.flat())];
+    const tags = await getCollection("tags");
 
     const blogLocales = allPosts.map((post) => {
         return post.data.language;
     });
     const uniqueLocales = [...new Set(blogLocales.flat())];
 
-    const paths = uniqueTags.flatMap((tag) => {
+    const paths = tags.flatMap((tag) => {
         return uniqueLocales.map((locale) => {
-            return { params: { lang: getRoutingLocale(locale), tag: tag }, props: { posts: allPosts } };
+            return { params: { lang: getRoutingLocale(locale), tag: tag.id }, props: { posts: allPosts } };
         });
     });
 
@@ -36,7 +33,7 @@ export async function getStaticPaths() {
 const { tag } = Astro.params;
 const { posts } = Astro.props;
 const locale = getLocale(Astro.url);
-const filteredPosts = posts.filter((post) => post.data.tags?.includes(tag) && post.data.language === locale);
+const filteredPosts = posts.filter((post) => post.data.tags.some((t) => t.id === tag) && post.data.language === locale);
 
 // i18next
 const namespaces = ["contactForm"];

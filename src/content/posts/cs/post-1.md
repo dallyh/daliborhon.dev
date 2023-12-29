@@ -3,6 +3,7 @@ title: "Příklad typografie"
 postId: "post-1"
 language: "cs"
 pubDateTime: 2022-07-01
+modDatetime: 2022-07-01
 description: "This is the first post of my new Astro blog."
 author: "Astro Learner"
 image:

@@ -8,10 +8,14 @@
     </head>
     <body>
         <!-- Include the script that builds the page and powers Static CMS -->
-        <!--<script src="https://unpkg.com/@staticcms/app@^3.0.0/dist/static-cms-app.js"></script>-->
-        <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-        <script>
-            //window.CMS.init();
+        <script src="https://unpkg.com/@staticcms/app@^3.0.0/dist/static-cms-app.js"></script>
+        <script type="module">
+            import PostPreviewCard from "/admin/previews/PostPreviewCard.js";
+            import PostDraftFieldPreview from "/admin/previews/PostDraftFieldPreview.js";
+
+            window.CMS.init();
+            window.CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
+            CMS.registerFieldPreview("posts", "draft", PostDraftFieldPreview);
         </script>
     </body>
 </html>

@@ -9,9 +9,9 @@ image:
     alt: "The word astro against an illustration of planets and stars."
 pubDateTime: 2022-08-08
 tags:
-- astro
-- community
-- successes
+    - astro
+    - community
+    - successes
 draft: false
 ---
 

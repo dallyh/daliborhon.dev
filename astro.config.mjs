@@ -32,7 +32,7 @@ export default defineConfig({
             i18n: {
                 defaultLocale: i18n.defaultLocale, // All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
                 locales: {
-                    ...i18n.localeKeys
+                    ...i18n.localeKeys,
                 },
             },
         }),

@@ -51,4 +51,4 @@ const PostPreviewCard = ({ entry, widgetFor }) => {
     );
 };
 
-export default PostPreviewCard
+export default PostPreviewCard;

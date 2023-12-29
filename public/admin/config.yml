@@ -16,7 +16,7 @@ public_folder: /assets/uploads/
 #  folder_support: true
 site_url: "https://daliborhon.dev"
 slug:
-  clean_accents: true
+    clean_accents: true
 i18n:
     structure: multiple_folders
     locales:

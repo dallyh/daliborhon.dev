@@ -1,4 +1,7 @@
 {
-    "cs": "úspěchy",
-    "en": "successes"
+    "id": "successes",
+    "languages": {
+        "cs": "úspěchy",
+        "en": "successes"
+    }
 }

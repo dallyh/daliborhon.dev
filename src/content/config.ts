@@ -9,7 +9,7 @@ const postsCollection = defineCollection({
             title: z.string(),
             postId: z.string(),
             pubDateTime: z.date(),
-            modDatetime: z.date().optional(),
+            modDatetime: z.date().optional().or(z.string()),
             draft: z.boolean().optional(),
             description: z.string(),
             featured: z.boolean().default(false).optional(),
@@ -34,8 +34,11 @@ const postsCollection = defineCollection({
 const tagsCollection = defineCollection({
     type: "data",
     schema: z.object({
-        cs: z.string(),
-        en: z.string(),
+        id: z.string(),
+        languages: z.object({
+            cs: z.string(),
+            en: z.string(),
+        }),
     }),
 });
 

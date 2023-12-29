@@ -29,7 +29,7 @@ const locale = getLocale(Astro.url);
             post.data.tags.map(async (tag) => {
                 return (
                     <li>
-                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
                     </li>
                 );
             })

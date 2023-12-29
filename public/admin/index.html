@@ -17,5 +17,37 @@
             window.CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
             CMS.registerFieldPreview("posts", "draft", PostDraftFieldPreview);
         </script>
+        <!-- Include the script that builds the page and powers Decap CMS 
+        <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+        <script type="module">
+            import "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
+
+            function nanoid(t = 21) {
+                return crypto.getRandomValues(new Uint8Array(t)).reduce((t, e) => (t += (e &= 63) < 36 ? e.toString(36) : e < 62 ? (e - 26).toString(36).toUpperCase() : e > 62 ? "-" : "_"), "");
+            }
+
+            const UuidWidget = createClass({
+                componentDidMount() {
+                    const { value, onChange } = this.props;
+                    if (!value) {
+                        onChange(nanoid());
+                    }
+                },
+
+                render() {
+                    const { value, classNameWrapper, forID } = this.props;
+                    return h(
+                        "span",
+                        {
+                            id: forID,
+                            style: { fontFamily: "monospace", marginLeft: "1rem" },
+                            //className: classNameWrapper
+                        },
+                        value,
+                    );
+                },
+            });
+            window.CMS.registerWidget("uuid", UuidWidget);
+        </script>-->
     </body>
 </html>

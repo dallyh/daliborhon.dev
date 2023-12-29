@@ -7,7 +7,7 @@ export async function getTagByLocale(locale: string, tagId: string) {
         throw Error(`getTagByLocale: tag ${locale}/${tagId} was undefined.`);
     }
 
-    for (const [locale, value] of Object.entries(tag.data)) {
+    for (const [locale, value] of Object.entries(tag.data.languages)) {
         if (locale === locale) {
             return value;
         }

@@ -13,7 +13,7 @@ interface Props {
 const { post } = Astro.props;
 const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
-const postUrl = getBlogPostUrl(locale, post.slug);
+const postUrl = getBlogPostUrl(locale, post);
 ---
 
 <div class="post-preview">

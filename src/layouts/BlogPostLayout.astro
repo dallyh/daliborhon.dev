@@ -11,6 +11,7 @@ import { getOgImageUrl } from "@utils/getOgImageUrl";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
+import { string } from "astro/zod";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -27,7 +28,8 @@ const layoutProps = {
     author,
     description,
     pubDateTime,
-    modDatetime,
+    // This is here because of CMS shenanigans. It saves dates whcih are empty as strings ("").
+    modDatetime: typeof modDatetime === "string" ? undefined : modDatetime,
     canonicalURL,
     ogImage: ogUrl,
 };
@@ -40,7 +42,7 @@ const layoutProps = {
         <div class="post-header">
             <div class="bread-crumbs">
                 <BreadCrumbs>
-                    <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label="Home" />
+                    <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
                     <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
                     <BreadCrumbsItem currentPage={true} label={post.data.title} />
                 </BreadCrumbs>

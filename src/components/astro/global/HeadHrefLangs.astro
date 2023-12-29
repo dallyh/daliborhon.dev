@@ -19,7 +19,7 @@ const { post } = Astro.props;
         post &&
             locales.map(async (locale) => {
                 const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
-                const value = getAbsoluteBlogPostUrl(locale, currentPost.slug);
+                const value = getAbsoluteBlogPostUrl(locale, currentPost);
                 return <link rel="alternate" hreflang={locale} href={value} />;
             })
     }

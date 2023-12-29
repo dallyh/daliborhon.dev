@@ -58,7 +58,7 @@ const capitalizeFirstLetter = (str: string) => {
             post &&
                 locales.map(async (locale) => {
                     const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
-                    const value = getBlogPostUrl(locale, currentPost.slug);
+                    const value = getBlogPostUrl(locale, currentPost);
                     const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
                     const flag = showFlag ? localeEmoji(locale) + " " : "";
                     const label = flag + nativeName;

@@ -9,7 +9,7 @@ export async function getStaticPaths() {
         return !data.draft;
     });
     const paths = allPosts.map((post) => {
-        return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.slug) }, props: { post: post } };
+        return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.data.language, post) }, props: { post: post } };
     });
 
     return paths;

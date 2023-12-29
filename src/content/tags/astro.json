@@ -1,4 +1,7 @@
 {
-    "cs": "astro",
-    "en": "astro"
+    "id": "astro",
+    "languages": {
+        "cs": "astro",
+        "en": "astro"
+    }
 }

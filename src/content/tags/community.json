@@ -1,4 +1,7 @@
 {
-    "cs": "komunita",
-    "en": "community"
+    "id": "community",
+    "languages": {
+        "cs": "komunita",
+        "en": "community"
+    }
 }

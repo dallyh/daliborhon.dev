@@ -9,6 +9,7 @@ image:
     url: "https://docs.astro.build/assets/full-logo-light.png"
     alt: "The full Astro logo."
 tags: ["astro ale česky", "blogging", "learning in public"]
+draft: false
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

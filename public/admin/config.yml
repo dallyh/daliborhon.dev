@@ -1,6 +1,8 @@
+local_backend: true
+
 backend:
-    name: git-gateway
-    branch: main # Branch to update (optional; defaults to master)
+    name: github
+    branch: blog-test # Branch to update (optional; defaults to master)
     commit_messages:
         create: Create {{collection}} "{{slug}}"
         update: Update {{collection}} "{{slug}}"
@@ -12,7 +14,6 @@ publish_mode: editorial_workflow
 media_folder: "public/assets/img/uploads/" # Media files will be stored in the repo under images/uploads
 public_folder: "/assets/img/uploads/"
 site_url: https://daliborhon.dev
-local_backend: true
 
 i18n:
     # Required and can be one of multiple_folders, multiple_files or single_file
@@ -22,7 +23,7 @@ i18n:
     structure: multiple_folders
 
     # Required - a list of locales to show in the editor UI
-    locales: [en, cs]
+    locales: [cs, en]
 
     # Optional, defaults to the first item in locales.
     # The locale to be used for fields validation and as a baseline for the entry.
@@ -37,12 +38,12 @@ collections:
       delete: true
       i18n: true
       slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
-      #sortable_fields:
-      #    fields:
-      #        - title
-      #        - pubDateTime
-      #    default:
-      #        field: pubDateTime
+      sortable_fields:
+          fields:
+              - title
+              - pubDateTime
+          default:
+              field: pubDateTime
       summary_fields:
           - title
           - pubDateTime
@@ -61,20 +62,14 @@ collections:
           - label: Drafts
             field: draft
       fields:
-          - name: title
-            label: Title
-            widget: string
-            i18n: true
-          - name: draft
-            label: Draft
-            widget: boolean
-            default: true
-            i18n: duplicate
-          - name: pubDateTime
-            label: Publish Date
-            widget: datetime
-            i18n: duplicate
-          - name: body
-            label: Body
-            widget: "markdown"
-            i18n: true
+          - { name: "title", label: "Title", widget: "string", i18n: true }
+          - { name: "postId", label: "Post ID (UUID)", widget: "uuid", i18n: "duplicate" }
+          - { name: "author", label: "Author", widget: "string", default: "Dalibor Hon", i18n: "duplicate" }
+          - { name: "tags", label: "Tags", widget: "list", i18n: true }
+          - { name: "language", label: "Language", widget: "select", options: [{ label: "Čeština", value: "cs" }, { label: "English", value: "en" }], i18n: true }
+          - { name: "draft", label: "Draft", widget: "boolean", default: true, i18n: "duplicate", required: false }
+          - { name: "featured", label: "Featured", widget: "boolean", default: false, i18n: "duplicate", required: false }
+          - { name: "ogImage", label: "OG Image", widget: "image", i18n: "duplicate", choose_url: true }
+          - { name: "pubDateTime", label: "Publish Date", widget: "datetime", i18n: "duplicate", date_format: "dd.MM.yyyy", time_format: "HH:mm" }
+          - { name: "modDatetime", label: "Modified Date", widget: "datetime", i18n: "duplicate", required: false, date_format: "dd.MM.yyyy", time_format: "HH:mm" }
+          - { name: "body", label: "Body", widget: "markdown", show_raw: true, i18n: true }

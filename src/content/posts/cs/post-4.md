@@ -1,16 +1,18 @@
 ---
-title: "Muj pátý příspěvek"
-postId: "post-4"
-language: "cs"
+title: Muj pátý příspěvek
+postId: post-4
+language: cs
 author: Astro Learner
-description: "This post will show up on its own!"
+description: This post will show up on its own!
 image:
-    url: "https://docs.astro.build/default-og-image.png"
-    alt: "The word astro against an illustration of planets and stars."
-pubDateTime: 2022-08-08
-tags: ["astro", "successes"]
+  url: https://docs.astro.build/default-og-image.png
+  alt: The word astro against an illustration of planets and stars.
+pubDateTime: 2023-12-29T00:56:09.755+01:00
+tags:
+  - astro
+  - successes
+draft: false
 ---
-
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
@@ -53,12 +55,11 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 ## Blockquotes
 
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
+> Blockquotes are very handy in email to emulate reply text. This line is part of the same quote.
 
 Quote break.
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can put Markdown into a blockquote.
 
 ## Horizontal separator
 
@@ -75,67 +76,52 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 ### Ordered list
 
 1. List item 1
-2. List item 2
-    1. Nested list item A
-    2. Nested list item B
-3. List item 3
+1. List item 2
+   1. Nested list item A
+   1. Nested list item B
+1. List item 3
 
 ### Unordered list
 
--   List item
--   List item
-    -   Nested list item
-    -   Nested list item
-        -   Double nested list item
-        -   Double nested list item
--   List item
+- List item
+- List item
+  - Nested list item
+  - Nested list item
+    - Double nested list item
+    - Double nested list item
+- List item
 
 ### Mixed list
 
 1. First ordered list item
-2. Another item
-    - Unordered sub-list.
-3. Actual numbers don't matter, just that it's a number
-    1. Ordered sub-list
-4. And another item.
+1. Another item
+   1. Unordered sub-list.
+1. Actual numbers don't matter, just that it's a number
+   1. Ordered sub-list
+1. And another item.
 
 ## Links
 
 [Inline-style link](https://www.google.com)
 
-[Inline-style link with title](https://www.google.com "Google's Homepage")
-
-[Reference-style link][arbitrary case-insensitive reference text]
-
-[You can use numbers for reference-style link definitions][1]
-
-Or leave it empty and use the [link text itself].
-
-Some text to show that the reference links can follow later.
-
-[arbitrary case-insensitive reference text]: https://www.mozilla.org
-[1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
+[Inline-style link with title](https://www.google.com)
 
 ## Images
 
-Images included in _\_posts_ folder are lazy loaded.
+Images included in __posts_ folder are lazy loaded.
 
 Inline-style:
-![alt text](https://docs.astro.build/assets/arc.webp "Logo Title Text 1")
+![alt text](https://docs.astro.build/assets/arc.webp)
 
 ## Table
 
-| Tables        |      Are      | Cool |
-| ------------- | :-----------: | ---: |
-| col 3 is      | right-aligned | 1600 |
-| col 2 is      |   centered    |   12 |
-| zebra stripes |   are neat    |    1 |
 
-| Markdown | Less      | Pretty     |
-| -------- | --------- | ---------- |
-| _Still_  | `renders` | **nicely** |
-| 1        | 2         | 3          |
+
+
+
+|1|2|
+|---|---|
+|3|4|
 
 ## Syntax highlight
 
@@ -151,3 +137,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 s = "Python syntax highlighting"
 print s
 ```
+
+
+
+

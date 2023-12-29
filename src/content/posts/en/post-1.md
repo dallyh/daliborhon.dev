@@ -9,6 +9,7 @@ image:
     url: "https://docs.astro.build/assets/full-logo-light.png"
     alt: "The full Astro logo."
 tags: ["astro", "blogging", "learning in public"]
+draft: false
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
@@ -122,7 +123,7 @@ Some text to show that the reference links can follow later.
 Images included in _\_posts_ folder are lazy loaded.
 
 Inline-style:
-![alt text](/src/images/random.jpeg "Logo Title Text 1")
+![alt text](https://docs.astro.build/assets/arc.webp "Logo Title Text 1")
 
 ## Table
 

@@ -9,6 +9,7 @@ image:
     alt: "The word astro against an illustration of planets and stars."
 pubDateTime: 2022-08-08
 tags: ["astro", "successes"]
+draft: false
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

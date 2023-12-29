@@ -9,6 +9,7 @@ image:
     alt: "Thumbnail of Astro arcs."
 pubDateTime: 2022-07-08
 tags: ["astro", "blogging", "learning in public", "successes"]
+draft: false
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

@@ -2,11 +2,18 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import * as i18n from "./src/i18n/config";
 import sitemap from "@astrojs/sitemap";
+import { loadEnv } from "vite";
+const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
+const URL = SITE_URL ?? "https://www.daliborhon.dev"
+
+console.log(`Using SITE_URL: '${URL}'`);
+console.log(`Using SITE_BASE: '${SITE_BASE}'`)
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://www.daliborhon.dev",
-    base: "",
+    site: URL,
+    base: SITE_BASE,
     trailingSlash: "always",
     build: {
         format: "directory",

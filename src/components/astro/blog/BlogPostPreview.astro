@@ -5,6 +5,7 @@ import { getLocale } from "@i18n/utils";
 import TagList from "./TagList.astro";
 import { getOgImageUrl } from "@utils/getOgImageUrl";
 import { getBlogPostUrl } from "@utils/getBlogPostUrl";
+import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -14,10 +15,11 @@ const { post } = Astro.props;
 const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
 const postUrl = getBlogPostUrl(locale, post);
+const transitionName = getPostImgTransitionName(post);
 ---
 
 <div class="post-preview">
-    <img src={ogUrl} alt={post.data.title} transition:name={post.id} loading="lazy"/>
+    <img src={ogUrl} alt={post.data.title} transition:name={transitionName} loading="lazy"/>
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.data.title}</a>
         <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />

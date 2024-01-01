@@ -52,7 +52,7 @@ const layoutProps = {
                 <p>By {post.data.author}</p>
                 <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
                 <div class="post-image">
-                    <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" />
+                    <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" transition:name={post.id}/>
                 </div>
             </div>
             <div class="tags">

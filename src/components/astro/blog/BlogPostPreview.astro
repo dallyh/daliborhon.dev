@@ -17,7 +17,7 @@ const postUrl = getBlogPostUrl(locale, post);
 ---
 
 <div class="post-preview">
-    <img src={ogUrl} alt={post.data.title} />
+    <img src={ogUrl} alt={post.data.title} transition:name={post.id} loading="lazy"/>
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.data.title}</a>
         <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />

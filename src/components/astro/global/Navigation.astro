@@ -72,7 +72,7 @@ await loadNamespaces(locale, namespaces);
             {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
         </li>
         <li>
-            <SimpleLanguageSelector showFlag={false} showTitle={false} />
+            <SimpleLanguageSelector showFlag={false} showTitle={false} post={post} />
         </li>
     </ul>
 </aside>

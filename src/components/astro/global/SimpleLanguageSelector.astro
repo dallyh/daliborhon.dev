@@ -2,17 +2,20 @@
 import ISO6991 from "iso-639-1";
 import { locales } from "@i18n/config";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import { getLocale, getPathFromUrl } from "@i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { CollectionEntry } from "astro:content";
+import { getBlogPostByIdAndLocale } from "@utils/getBlogPostByIdAndLocale";
+import { getBlogPostUrl } from "@utils/getBlogPostUrl";
 
 export interface Props {
     showFlag?: boolean;
     showTitle?: boolean;
+    post?: CollectionEntry<"posts">;
 }
 
-const locale = getLocale(Astro.url);
-const { pathname } = Astro.url;
-const { showFlag = false, showTitle = true } = Astro.props;
+const currentLocale = getLocale(Astro.url);
+const { showFlag = false, showTitle = true, post } = Astro.props;
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
     return capitalized;
@@ -20,31 +23,55 @@ const capitalizeFirstLetter = (str: string) => {
 
 // i18next
 const namespaces = ["footer"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(currentLocale, namespaces);
 ---
 
 <div class="language-selector">
     {showTitle && <p>{t("footer:Language")}: </p>}
     {
-        locales.map((supportedLanguage: string) => {
-            let value = getRelativeLocaleUrl(supportedLanguage, pathname);
-            const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(supportedLanguage));
-            let renderSeparator = true;
+        !post &&
+            locales.map((locale) => {
+                const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
+                const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+                let renderSeparator = true;
 
-            if (supportedLanguage === locales[locales.length - 1]) {
-                renderSeparator = false;
-            }
+                if (locale === locales[locales.length - 1]) {
+                    renderSeparator = false;
+                }
 
-            return (
-                <>
-                    <a href={value} class="lang-link" rel="prefetch" data-js-language={supportedLanguage} title={`${t("footer:Language")}: ${nativeName}`}>
-                        {showFlag && <span class={`flag ${supportedLanguage}`} />}
-                        <span class={supportedLanguage === locale ? "active" : ""}>{nativeName}</span>
-                    </a>
-                    {renderSeparator && <span> | </span>}
-                </>
-            );
-        })
+                return (
+                    <>
+                        <a href={value} class="lang-link" rel="prefetch" data-js-language={locale} title={`${t("footer:Language")}: ${nativeName}`}>
+                            {showFlag && <span class={`flag ${locale}`} />}
+                            <span class={locale === locale ? "active" : ""}>{nativeName}</span>
+                        </a>
+                        {renderSeparator && <span> | </span>}
+                    </>
+                );
+            })
+    }
+    {
+        post &&
+            locales.map(async (locale) => {
+                const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
+                const value = getBlogPostUrl(locale, currentPost);
+                const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+                let renderSeparator = true;
+
+                if (locale === locales[locales.length - 1]) {
+                    renderSeparator = false;
+                }
+
+                return (
+                    <>
+                        <a href={value} class="lang-link" rel="prefetch" data-js-language={locale} title={`${t("footer:Language")}: ${nativeName}`}>
+                            {showFlag && <span class={`flag ${locale}`} />}
+                            <span class={locale === locale ? "active" : ""}>{nativeName}</span>
+                        </a>
+                        {renderSeparator && <span> | </span>}
+                    </>
+                );
+            })
     }
 </div>
 

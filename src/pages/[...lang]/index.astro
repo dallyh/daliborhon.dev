@@ -2,6 +2,9 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
+import { getStaticPaths } from "@i18n/utils";
+
+export { getStaticPaths };
 
 // i18next
 const locale = getLocale(Astro.url);

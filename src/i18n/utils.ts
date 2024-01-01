@@ -1,11 +1,14 @@
+import { removeTrailingSlash } from "@utils/removeTrailingSlash";
 import { locales, defaultLocale } from "./config";
 
 export function getLocale(url: URL) {
-    const [, lang] = url.pathname.split("/");
-    if (locales.includes(lang)) {
-        return lang;
-    }
-    return defaultLocale;
+    const pathSegments = url.pathname.split("/");
+
+    // Find the first valid language code in the path
+    const lang = pathSegments.find((segment) => locales.includes(segment));
+
+    // Return the found language or the default locale if none is found
+    return lang || defaultLocale;
 }
 
 export function getRoutingLocale(locale: string | undefined) {
@@ -25,18 +28,20 @@ export function getDefaultLocale(locale: string | undefined) {
 }
 
 export function getPathFromUrl(url: URL) {
-    let pathname = url.pathname;
-    let locale = defaultLocale;
-    const parts = pathname?.split("/");
-    const possibleLocale = parts[1];
+    const pathname = url.pathname;
+    const baseUrl = import.meta.env.BASE_URL;
+    const baseUrlWithoutTrailingSlash = removeTrailingSlash(baseUrl);
+    let pathNameWithoutBaseUrl = baseUrl === "/" ? pathname : pathname.replace(baseUrlWithoutTrailingSlash, "");
+
+    const segments = pathname?.split("/");
+    const possibleLocale = segments.find((segment) => locales.includes(segment));
 
     // First check if we are on default locale
-    if (locales.includes(possibleLocale)) {
-        locale = possibleLocale;
-        pathname = pathname.substring(3, pathname.length);
+    if (possibleLocale !== undefined && locales.includes(possibleLocale)) {
+        pathNameWithoutBaseUrl = pathNameWithoutBaseUrl.substring(3, pathname.length);
     }
 
-    return pathname;
+    return pathNameWithoutBaseUrl;
 }
 
 // i18n routing

@@ -5,6 +5,7 @@ export const config: Config = {
     backend: {
         name: "github",
         repo: "dallyh/daliborhon.dev",
+        site_domain: "fe45932a-7f17-4972-a91c-346bcf16134a", // Netlify Site ID sent do "site_id" URL query
         branch: "blog-test",
         commit_messages: {
             create: 'Create {{collection}} "{{slug}}"',
@@ -16,13 +17,13 @@ export const config: Config = {
     },
     media_folder: "public/assets/uploads/",
     public_folder: "/assets/uploads/",
-    site_url: "https://daliborhon.dev",
+    site_url: "https://daliborhon.dev", // TO-DO read this from config
     slug: {
         clean_accents: true,
     },
     i18n: {
         structure: "multiple_folders",
-        locales: ["en", "cs"],
+        locales: ["en", "cs"], // TO-DO read this from config
     },
     collections: [
         {
@@ -107,7 +108,7 @@ export const config: Config = {
                     multiple: true,
                     value_field: "id",
                     search_fields: ["id"],
-                    display_fields: ["languages.cs", "languages.en"],
+                    display_fields: ["languages.cs", "languages.en"], // TO-DO read this from config
                 },
                 {
                     name: "language",
@@ -116,11 +117,11 @@ export const config: Config = {
                     i18n: true,
                     options: [
                         {
-                            label: "Čeština",
+                            label: "Čeština", // TO-DO read this from config
                             value: "cs",
                         },
                         {
-                            label: "English",
+                            label: "English", // TO-DO read this from config
                             value: "en",
                         },
                     ],
@@ -200,13 +201,13 @@ export const config: Config = {
                     widget: "object",
                     fields: [
                         {
-                            name: "cs",
+                            name: "cs", // TO-DO read this from config
                             label: "Czech tag translation",
                             widget: "string",
                             i18n: false,
                         },
                         {
-                            name: "en",
+                            name: "en", // TO-DO read this from config
                             label: "English tag translation",
                             widget: "string",
                             i18n: false,

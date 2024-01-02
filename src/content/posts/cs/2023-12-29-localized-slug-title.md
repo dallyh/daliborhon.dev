@@ -9,7 +9,6 @@ language: cs
 draft: false
 featured: true
 pubDateTime: 2023-12-29T23:20:35.541
-modDatetime: ""
 ---
 
 Lokalizovaná část URL

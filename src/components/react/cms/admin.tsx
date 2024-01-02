@@ -1,7 +1,7 @@
 import CMS, { type FieldPreviewProps, type TemplatePreviewCardProps } from "@staticcms/core";
 import { useEffect, useMemo } from "react";
 import "@staticcms/core/dist/main.css";
-import { config } from "./config";
+import { getCmsConfig } from "./config";
 import type { FC } from "react";
 import React from "react";
 
@@ -81,13 +81,11 @@ const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> 
 
 const CmsAdmin: FC = () => {
     useEffect(() => {
-        if (import.meta.env.MODE === "development") {
-            config.local_backend = true;
-        }
+        const config = getCmsConfig();
 
         CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
         CMS.registerFieldPreview("posts", "draft", PostDraftFieldPreview);
-
+        
         CMS.init({ config });
     }, []);
 

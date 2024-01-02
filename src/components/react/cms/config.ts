@@ -4,6 +4,7 @@ export const config: Config = {
     local_backend: true,
     backend: {
         name: "github",
+        repo: "dallyh/daliborhon.dev",
         branch: "blog-test",
         commit_messages: {
             create: 'Create {{collection}} "{{slug}}"',

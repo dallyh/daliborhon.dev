@@ -3,9 +3,9 @@ import type { Config } from "@staticcms/core";
 export const config: Config = {
     local_backend: true,
     backend: {
-        name: "github",
-        repo: "dallyh/daliborhon.dev",
-        site_domain: "fe45932a-7f17-4972-a91c-346bcf16134a", // Netlify Site ID sent do "site_id" URL query
+        name: "git-gateway",
+        //repo: "dallyh/daliborhon.dev",
+        //site_domain: "fe45932a-7f17-4972-a91c-346bcf16134a", // Netlify Site ID sent do "site_id" URL query
         branch: "blog-test",
         commit_messages: {
             create: 'Create {{collection}} "{{slug}}"',

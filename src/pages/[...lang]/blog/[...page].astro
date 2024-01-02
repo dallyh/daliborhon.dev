@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPathsOptions } from "astro";
+import { defaultLocale, locales } from "@i18n/config";
+import BlogLayout from "@layouts/BlogLayout.astro";
+import { SITE } from "@config";
+import { getRoutingLocale } from "@i18n/utils";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const posts = await getCollection("posts", ({ data }) => {
+        return !data.draft;
+    });
+
+    console.log("Posts:" + posts.length);
+
+    return locales.flatMap((locale) => {
+        console.log("Locale: " + locale);
+        const filteredPosts = posts
+            .filter((post) => {
+                return post.data.language === locale;
+            })
+            .sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf());
+
+            console.log("Filtered: " + filteredPosts.length);
+
+        return paginate(filteredPosts, {
+            params: { lang: getRoutingLocale(locale) },
+            pageSize: SITE.pageSize,
+        });
+    });
+}
+
+const { page } = Astro.props;
+---
+
+<BlogLayout page={page} />

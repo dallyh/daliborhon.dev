@@ -4,7 +4,6 @@ import "@staticcms/core/dist/main.css";
 import { config } from "./config";
 import type { FC } from "react";
 import React from "react";
-import { createRoot } from "react-dom/client";
 
 const PostDraftFieldPreview: React.FC<FieldPreviewProps> = ({ value }) => {
     return (

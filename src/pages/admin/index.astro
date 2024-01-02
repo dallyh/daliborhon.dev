@@ -20,13 +20,13 @@ import Admin from "@components/react/cms/admin";
     <body id="root">
         <div id="identity"></div>
         <Admin client:only="react" />
-        <script is:inline>
+        <!-- <script is:inline>
             window.localStorage.setItem("netlifySiteURL", "https://daliborhon-dev.netlify.app/");
             const identityOptions = {
                 APIUrl: "https://daliborhon-dev.netlify.app/.netlify/identity/",
                 locale: "en",
             };
             window.netlifyIdentity.init(identityOptions);
-        </script>
+        </script> -->
     </body>
 </html>

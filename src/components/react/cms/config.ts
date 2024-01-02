@@ -6,6 +6,9 @@ export function getCmsConfig(): Config {
         console.warn("[getCmsConfig] CMS running in development mode!");
     }
 
+    const OAuthProvider = "https://dh-dev-static-cms-gh-oauth-provider.glitch.me";
+    console.log("[getCmsConfig] CMS config OAuthProvider: " + OAuthProvider);
+
     const siteUrl = import.meta.env.SITE;
     console.log("[getCmsConfig] CMS config SITE_URL: " + siteUrl);
 
@@ -30,7 +33,7 @@ export function getCmsConfig(): Config {
         local_backend: localBackend,
         backend: {
             name: "github",
-            site_domain: "daliborhon-dev.netlify.app",
+            base_url: OAuthProvider,
             repo: "dallyh/daliborhon.dev",
             branch: "blog-test",
             commit_messages: {

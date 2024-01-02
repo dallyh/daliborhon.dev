@@ -4,6 +4,8 @@ export const config: Config = {
     local_backend: true,
     backend: {
         name: "git-gateway",
+        site_domain: "https://daliborhon-dev.netlify.app",
+        auth_endpoint: "/.netlify/identity/",
         //repo: "dallyh/daliborhon.dev",
         //site_domain: "fe45932a-7f17-4972-a91c-346bcf16134a", // Netlify Site ID sent do "site_id" URL query
         branch: "blog-test",

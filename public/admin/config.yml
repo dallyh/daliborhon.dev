@@ -41,19 +41,19 @@ collections:
           - title
           - pubDateTime
           - draft
-      view_filters:
-          - label: Drafts
-            field: draft
-            pattern: true
-          - label: Not drafts
-            field: draft
-            pattern: false
-      view_groups:
-          - label: Year
-            field: pubDateTime
-            pattern: '\d{4}'
-          - label: Drafts
-            field: draft
+      #view_filters:
+      #    - label: Drafts
+      #      field: draft
+      #      pattern: true
+      #    - label: Not drafts
+      #      field: draft
+      #      pattern: false
+      #view_groups:
+      #    - label: Year
+      #      field: pubDateTime
+      #      pattern: '\d{4}'
+      #    - label: Drafts
+      #      field: draft
       fields:
           - name: title
             label: Title

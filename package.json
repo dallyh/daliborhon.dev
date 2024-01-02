@@ -21,6 +21,7 @@
         "@formkit/auto-animate": "^0.8.1",
         "@formspree/react": "^2.5.1",
         "@resvg/resvg-js": "^2.6.0",
+        "@staticcms/core": "^4.0.0-beta.16",
         "astro": "^4.0.8",
         "css.gg": "^2.1.1",
         "hammerjs": "^2.0.8",

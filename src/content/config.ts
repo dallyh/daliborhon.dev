@@ -9,7 +9,7 @@ const postsCollection = defineCollection({
             title: z.string(),
             postId: z.string(),
             pubDateTime: z.date(),
-            modDatetime: z.date().optional().or(z.string()),
+            modDatetime: z.date().or(z.string()).optional(),
             draft: z.boolean().optional(),
             description: z.string(),
             featured: z.boolean().default(false).optional(),

@@ -6,7 +6,7 @@ export function getCmsConfig(): Config {
         console.warn("[getCmsConfig] CMS running in development mode!");
     }
 
-    const OAuthProvider = "https://dh-dev-static-cms-gh-oauth-provider.glitch.me";
+    const OAuthProvider = "https://static-cms-gh-oauth-provider.netlify.app/api/";
     console.log("[getCmsConfig] CMS config OAuthProvider: " + OAuthProvider);
 
     const siteUrl = import.meta.env.SITE;

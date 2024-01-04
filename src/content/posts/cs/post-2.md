@@ -1,18 +1,19 @@
 ---
-title: "Můj druhý příspěvek"
-postId: "post-2"
-language: "cs"
+title: Můj druhý příspěvek
+postId: 3458b58b-7be5-4f6a-9a81-79da3b4c089c
+description: After learning some Astro, I couldn't stop!
 author: Astro Learner
-description: "After learning some Astro, I couldn't stop!"
+language: cs
 image:
-    url: "https://docs.astro.build/assets/arc.webp"
-    alt: "Thumbnail of Astro arcs."
-pubDateTime: 2022-07-08
+  url: https://docs.astro.build/assets/arc.webp
+  alt: Thumbnail of Astro arcs.
 tags:
-    - astro
-    - community
-    - successes
-draft: false
+  - astro
+  - community
+  - successes
+hidden: false
+featured: true
+pubDateTime: 2024-01-04T14:10:16+01:00
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

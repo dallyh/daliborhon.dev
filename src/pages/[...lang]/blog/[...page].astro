@@ -8,7 +8,7 @@ import { getRoutingLocale } from "@i18n/utils";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const posts = await getCollection("posts", ({ data }) => {
-        return !data.draft;
+        return !data.hidden;
     });
 
     console.log("Posts:" + posts.length);

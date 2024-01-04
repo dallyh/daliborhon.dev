@@ -6,7 +6,7 @@ import { getBlogPostSlug } from "@utils/getBlogPostSlug";
 
 export async function getStaticPaths() {
     const allPosts = await getCollection("posts", ({ data }) => {
-        return !data.draft;
+        return !data.hidden;
     });
     const paths = allPosts.map((post) => {
         return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.data.language, post) }, props: { post: post } };

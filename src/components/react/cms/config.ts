@@ -1,6 +1,10 @@
 import { localeSettings, locales } from "@i18n/config";
 import type { Config, Field, UnknownField } from "@staticcms/core";
 
+/**
+ * Builds a CMS config out of other configurations.
+ * @returns a CMS config.
+ */
 export function getCmsConfig(): Config {
     if (import.meta.env.MODE === "development") {
         console.warn("[getCmsConfig] CMS running in development mode!");
@@ -26,11 +30,29 @@ export function getCmsConfig(): Config {
     }));
     console.log("[getCmsConfig] CMS config tagTranslationsArray fields:\n\n" + JSON.stringify(tagTranslationsArray, null, 2));
 
-    const tagDisplayFields = Object.keys(localeSettings).flatMap((key) => [`languages.${localeSettings[key].locale}`]);
+    const tagDisplayFields = locales.flatMap((locale) => [`languages.${locale}`]);
     console.log("[getCmsConfig] CMS config tagDisplayFields:\n\n" + JSON.stringify(tagDisplayFields, null, 2));
 
-    return {
+    const sortedLocales = Object.keys(localeSettings).sort((a, b) => {
+        const isACmsDefault = localeSettings[a].cmsDefault || false;
+        const isBCmsDefault = localeSettings[b].cmsDefault || false;
+    
+        // Put the "cmsDefault" locale first in the result
+        if (isACmsDefault && !isBCmsDefault) {
+            return -1;
+        } else if (!isACmsDefault && isBCmsDefault) {
+            return 1;
+        }
+
+        // Sort based on other criteria if both are "cmsDefault" or not
+        return 0;
+    });
+    
+    console.log(`[getCmsConfig] CMS config locales:\n\n ${JSON.stringify(sortedLocales)}\n\n Default locale of: '${sortedLocales[0]}'`);
+
+    const config : Config = {
         local_backend: localBackend,
+        publish_mode: "editorial_workflow",
         backend: {
             name: "github",
             base_url: OAuthProvider,
@@ -52,7 +74,11 @@ export function getCmsConfig(): Config {
         },
         i18n: {
             structure: "multiple_folders",
-            locales: locales,
+            // Default locale is sorted on the first position
+            locales: sortedLocales,
+            // This is currently broken, so we have to rely on the sorted locales.
+            // I want "en" to be the default in the editor.
+            //default_locale: cmsDefaultLocale,
         },
         collections: [
             {
@@ -70,19 +96,19 @@ export function getCmsConfig(): Config {
                         field: "pubDateTime",
                     },
                 },
-                summary_fields: ["title", "pubDateTime", "draft"],
+                summary_fields: ["title", "pubDateTime", "hidden"],
                 view_filters: {
                     filters: [
                         {
-                            name: "Drafts",
-                            label: "Drafts",
-                            field: "draft",
+                            name: "hidden",
+                            label: "Hidden posts",
+                            field: "hidden",
                             pattern: true,
                         },
                         {
-                            name: "Not drafts",
-                            label: "Not drafts",
-                            field: "draft",
+                            name: "visible",
+                            label: "Visible posts",
+                            field: "hidden",
                             pattern: false,
                         },
                     ],
@@ -96,9 +122,9 @@ export function getCmsConfig(): Config {
                             pattern: "\\d{4}",
                         },
                         {
-                            name: "Drafts",
-                            label: "Drafts",
-                            field: "draft",
+                            name: "visibility",
+                            label: "Visibility",
+                            field: "hidden",
                         },
                     ],
                 },
@@ -147,10 +173,10 @@ export function getCmsConfig(): Config {
                         options: languageSelectorOptions,
                     },
                     {
-                        name: "draft",
-                        label: "Draft",
+                        name: "hidden",
+                        label: "Hide post on the website",
                         widget: "boolean",
-                        default: true,
+                        default: false,
                         i18n: "duplicate",
                         required: false,
                     },
@@ -159,7 +185,7 @@ export function getCmsConfig(): Config {
                         label: "Featured",
                         widget: "boolean",
                         default: false,
-                        i18n: "duplicate",
+                        i18n: true,
                         required: false,
                     },
                     {
@@ -225,4 +251,6 @@ export function getCmsConfig(): Config {
             },
         ],
     };
+
+    return config;
 }

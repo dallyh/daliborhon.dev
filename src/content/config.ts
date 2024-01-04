@@ -10,7 +10,7 @@ const postsCollection = defineCollection({
             postId: z.string(),
             pubDateTime: z.date(),
             modDatetime: z.date().or(z.string()).optional(),
-            draft: z.boolean().optional(),
+            hidden: z.boolean().optional(),
             description: z.string(),
             featured: z.boolean().default(false).optional(),
             language: z.enum(locales as [string, ...string[]], {

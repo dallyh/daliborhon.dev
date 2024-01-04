@@ -6,7 +6,7 @@ author: Dalibor Hon
 tags:
   - astro
 language: en
-draft: true
+hidden: true
 featured: false
 pubDateTime: 2024-01-02T13:34:43+01:00
 modDatetime: 2024-01-02T13:34:44+01:00

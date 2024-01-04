@@ -10,10 +10,11 @@ export function getCmsConfig(): Config {
         console.warn("[getCmsConfig] CMS running in development mode!");
     }
 
-    const OAuthProvider = "https://static-cms-gh-oauth-provider.netlify.app/api/";
+    // Locally run OAuth provider
+    const OAuthProvider = import.meta.env.MODE === "development" ? "http://localhost:3000/" : "https://static-cms-gh-oauth-provider.netlify.app/api/";
     console.log("[getCmsConfig] CMS config OAuthProvider: " + OAuthProvider);
 
-    const siteUrl = import.meta.env.SITE;
+    const siteUrl = import.meta.env.MODE === "development" ? "http://localhost:4321/" : `${import.meta.env.SITE}${import.meta.env.BASE_URL}`;
     console.log("[getCmsConfig] CMS config SITE_URL: " + siteUrl);
 
     const localBackend = import.meta.env.MODE === "development" ? true : false;

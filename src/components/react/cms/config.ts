@@ -6,18 +6,18 @@ import type { Config, Field, UnknownField } from "@staticcms/core";
  * @returns a CMS config.
  */
 export function getCmsConfig(): Config {
-    if (import.meta.env.MODE === "development") {
+    if (import.meta.env.DEV) {
         console.warn("[getCmsConfig] CMS running in development mode!");
     }
 
     // Locally run OAuth provider
-    const OAuthProvider = import.meta.env.MODE === "development" ? "http://localhost:3000/" : "https://static-cms-gh-oauth-provider.netlify.app/api/";
+    const OAuthProvider = import.meta.env.DEV ? "http://localhost:3000/api/" : "https://static-cms-gh-oauth-provider.netlify.app/api/";
     console.log("[getCmsConfig] CMS config OAuthProvider: " + OAuthProvider);
 
-    const siteUrl = import.meta.env.MODE === "development" ? "http://localhost:4321/" : `${import.meta.env.SITE}${import.meta.env.BASE_URL}`;
+    const siteUrl = import.meta.env.DEV ? "http://localhost:4321/" : `${import.meta.env.SITE}${import.meta.env.BASE_URL}`;
     console.log("[getCmsConfig] CMS config SITE_URL: " + siteUrl);
 
-    const localBackend = import.meta.env.MODE === "development" ? true : false;
+    const localBackend = import.meta.env.DEV ? true : false;
     console.log("[getCmsConfig] CMS config local_backend: " + localBackend);
 
     const languageSelectorOptions = Object.values(localeSettings).map(({ label, locale }) => ({ label, value: locale }));

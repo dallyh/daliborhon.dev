@@ -5,7 +5,7 @@ import { getCmsConfig } from "./config";
 import type { FC } from "react";
 import React from "react";
 
-const PostDraftFieldPreview: React.FC<FieldPreviewProps> = ({ value }) => {
+const PostHiddenFieldPreview: React.FC<FieldPreviewProps> = ({ value }) => {
     return (
         <div
             style={{
@@ -21,7 +21,7 @@ const PostDraftFieldPreview: React.FC<FieldPreviewProps> = ({ value }) => {
                 fontSize: "14px",
             }}
         >
-            {value === true ? "Draft" : "Published"}
+            {value === true ? "Hidden" : "Visible"}
         </div>
     );
 };
@@ -31,7 +31,7 @@ interface PostPreviewCardProps {
     title: string;
     body: string;
     date: string;
-    draft: boolean;
+    hidden: boolean;
 }
 
 const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> = ({ entry, widgetFor }) => {
@@ -60,7 +60,7 @@ const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> 
                     </div>
                     <div
                         style={{
-                            backgroundColor: entry.data?.draft === true ? "blue" : "green",
+                            backgroundColor: entry.data?.hidden === true ? "blue" : "green",
                             color: "white",
                             border: "none",
                             padding: "4px 8px",
@@ -71,7 +71,7 @@ const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> 
                             borderRadius: "4px",
                         }}
                     >
-                        {entry.data?.draft === true ? "Draft" : "Published"}
+                        {entry.data?.hidden === true ? "Hidden" : "Visible"}
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@ const CmsAdmin: FC = () => {
         const config = getCmsConfig();
 
         CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
-        CMS.registerFieldPreview("posts", "draft", PostDraftFieldPreview);
+        CMS.registerFieldPreview("posts", "hidden", PostHiddenFieldPreview);
         
         CMS.init({ config });
     }, []);

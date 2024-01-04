@@ -2,6 +2,7 @@
 title: "Typography example (en)"
 postId: "post-1"
 language: "en"
+featured: true
 pubDateTime: 2022-07-01
 modDatetime: 2022-07-01
 description: "This is the first post of my new Astro blog."
@@ -12,7 +13,7 @@ image:
 tags:
     - astro
     - community
-draft: false
+hidden: false
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

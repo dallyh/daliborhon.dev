@@ -11,7 +11,7 @@ import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.as
 // This is kinda complicated
 export async function getStaticPaths() {
     const allPosts = await getCollection("posts", ({ data }) => {
-        return !data.draft;
+        return !data.hidden;
     });
 
     const tags = await getCollection("tags");

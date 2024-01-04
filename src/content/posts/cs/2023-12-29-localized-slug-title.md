@@ -6,7 +6,7 @@ author: Dalibor Hon
 tags:
     - successes
 language: cs
-draft: false
+hidden: false
 featured: true
 pubDateTime: 2023-12-29T23:20:35.541
 ---

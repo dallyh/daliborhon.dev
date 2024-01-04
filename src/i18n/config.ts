@@ -1,14 +1,4 @@
-// i18n
-
-export type LocaleSettingsType = Record<
-    string,
-    {
-        label: string;
-        locale: string;
-        default?: boolean;
-    }
->;
-
+// i18n settings
 export const localeSettings: LocaleSettingsType = {
     cs: {
         label: "Čeština",
@@ -17,12 +7,28 @@ export const localeSettings: LocaleSettingsType = {
     },
     en: {
         label: "English",
-        locale: "cs",
+        locale: "en",
+        cmsDefault: true,
     },
 };
 
-export const defaultLocale = Object.keys(localeSettings).find((key) => localeSettings[key].default) || null;
+// Defaults
+export const defaultLocale = Object.keys(localeSettings).find((key) => localeSettings[key].default)!;
+
+// Locales
 export const locales = Object.keys(localeSettings);
 export const localeKeys = Object.fromEntries(Object.entries(localeSettings).map(([key, value]) => [key, value.locale]));
+
+
+// The type backing the settings
+export type LocaleSettingsType = Record<
+    string,
+    {
+        label: string;
+        locale: string;
+        default?: boolean;
+        cmsDefault?: boolean;
+    }
+>;
 
 export default {};

@@ -85,7 +85,7 @@ const CmsAdmin: FC = () => {
 
         CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
         CMS.registerFieldPreview("posts", "hidden", PostHiddenFieldPreview);
-        
+
         CMS.init({ config });
     }, []);
 

@@ -11,7 +11,7 @@ import { getOgImageUrl } from "@utils/getOgImageUrl";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
-import "../styles/markdown.css"
+import "../styles/markdown.css";
 import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
 
 interface Props {
@@ -54,7 +54,7 @@ const layoutProps = {
                 <p>By {post.data.author}</p>
                 <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
                 <div class="post-image">
-                    <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" transition:name={transitionName}/>
+                    <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" transition:name={transitionName} />
                 </div>
             </div>
             <div class="tags">

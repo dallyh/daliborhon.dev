@@ -5,10 +5,10 @@ import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
-const URL = SITE_URL ?? "https://www.daliborhon.dev/"
+const URL = SITE_URL ?? "https://www.daliborhon.dev/";
 
 console.log(`Using SITE_URL: '${URL}'`);
-console.log(`Using SITE_BASE: '${SITE_BASE}'`)
+console.log(`Using SITE_BASE: '${SITE_BASE}'`);
 
 // https://astro.build/config
 export default defineConfig({

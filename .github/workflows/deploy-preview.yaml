@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
 
 permissions:
-  pull-requests: write # GitHub Actions bot permissions
+    pull-requests: write # GitHub Actions bot permissions
 
 jobs:
     build:

@@ -5,12 +5,12 @@ description: After learning some Astro, I couldn't stop!
 author: Astro Learner
 language: en
 image:
-  url: https://docs.astro.build/assets/arc.webp
-  alt: Thumbnail of Astro arcs.
+    url: https://docs.astro.build/assets/arc.webp
+    alt: Thumbnail of Astro arcs.
 tags:
-  - astro
-  - community
-  - successes
+    - astro
+    - community
+    - successes
 hidden: false
 featured: true
 pubDateTime: 2024-01-04T14:10:16+01:00

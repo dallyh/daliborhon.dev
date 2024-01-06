@@ -19,7 +19,6 @@ export const defaultLocale = Object.keys(localeSettings).find((key) => localeSet
 export const locales = Object.keys(localeSettings);
 export const localeKeys = Object.fromEntries(Object.entries(localeSettings).map(([key, value]) => [key, value.locale]));
 
-
 // The type backing the settings
 export type LocaleSettingsType = Record<
     string,

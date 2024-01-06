@@ -19,7 +19,7 @@ const transitionName = getPostImgTransitionName(post);
 ---
 
 <div class="post-preview">
-    <img src={ogUrl} alt={post.data.title} transition:name={transitionName} loading="lazy"/>
+    <img src={ogUrl} alt={post.data.title} transition:name={transitionName} loading="lazy" />
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.data.title}</a>
         <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />

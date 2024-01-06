@@ -1,5 +1,6 @@
 export const BLOG = {
     pageSize: 6,
-    recentPostsSize: 3,
-    featuredPostsSize: 3,
+    recentPostsSize: 6,
+    featuredPostsSize: 6,
+    previewPostsSize: 6
 };

@@ -1,5 +1,5 @@
 import { localeSettings, locales } from "@config/i18n";
-import type { Config, Field, UnknownField } from "@staticcms/core";
+import type { Config, Field, ObjectField, UnknownField } from "@staticcms/core";
 
 /**
  * Builds a CMS config out of other configurations.
@@ -33,6 +33,30 @@ export function createCmsConfig(): Config {
 
     const tagDisplayFields = locales.flatMap((locale) => [`languages.${locale}`]);
     console.log("[getCmsConfig] CMS config tagDisplayFields:\n\n" + JSON.stringify(tagDisplayFields, null, 2));
+
+    const categoriesTranslationsArray: Field<UnknownField>[] = Object.keys(localeSettings).map((key) => ({
+        name: key,
+        label: `${localeSettings[key].label} - category translation`,
+        widget: "object",
+        fields: [
+            {
+                name: "title",
+                label: "Title",
+                widget: "string",
+                i18n: true,
+            },
+            {
+                name: "description",
+                label: "Description",
+                widget: "string",
+                i18n: true,
+            },
+        ],
+    }));
+    console.log("[getCmsConfig] CMS config categoriesTranslationsArray fields:\n\n" + JSON.stringify(categoriesTranslationsArray, null, 2));
+
+    const categoryDisplayFields = locales.flatMap((locale) => [`languages.${locale}.title`]);
+    console.log("[getCmsConfig] CMS config categoryDisplayFields:\n\n" + JSON.stringify(categoryDisplayFields, null, 2));
 
     const sortedLocales = Object.keys(localeSettings).sort((a, b) => {
         const isACmsDefault = localeSettings[a].cmsDefault || false;
@@ -167,6 +191,17 @@ export function createCmsConfig(): Config {
                         display_fields: tagDisplayFields,
                     },
                     {
+                        name: "category",
+                        label: "Category",
+                        widget: "relation",
+                        i18n: "duplicate",
+                        collection: "categories",
+                        multiple: false,
+                        value_field: "id",
+                        search_fields: ["id"],
+                        display_fields: categoryDisplayFields,
+                    },
+                    {
                         name: "language",
                         label: "Language",
                         widget: "select",
@@ -247,6 +282,32 @@ export function createCmsConfig(): Config {
                         label: "Translations",
                         widget: "object",
                         fields: tagTranslationsArray,
+                    },
+                ],
+            },
+            {
+                name: "categories",
+                label: "Categories",
+                label_singular: "Category",
+                folder: "src/content/categories",
+                identifier_field: "id",
+                create: true,
+                delete: true,
+                i18n: false,
+                slug: "{{id}}",
+                extension: "json",
+                fields: [
+                    {
+                        name: "id",
+                        label: "Tag dentifier",
+                        widget: "string",
+                        i18n: "duplicate",
+                    },
+                    {
+                        name: "languages",
+                        label: "Translations",
+                        widget: "object",
+                        fields: categoriesTranslationsArray,
                     },
                 ],
             },

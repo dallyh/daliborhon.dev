@@ -26,7 +26,7 @@ const postsCollection = defineCollection({
                 .or(z.string())
                 .optional(),
             tags: z.array(reference("tags")),
-            category: z.array(reference("categories")).optional(),
+            category: reference("categories").optional(),
             canonicalURL: z.string().optional(),
         }),
 });
@@ -49,8 +49,8 @@ const categoryCollection = defineCollection({
     schema: z.object({
         id: z.string(),
         languages: z.object({
-            cs: z.string(),
-            en: z.string(),
+            cs: z.object({ title: z.string(), description: z.string() }),
+            en: z.object({ title: z.string(), description: z.string() }),
         }),
     }),
 });
@@ -59,5 +59,5 @@ const categoryCollection = defineCollection({
 export const collections = {
     posts: postsCollection,
     tags: tagsCollection,
-    categories: categoryCollection
+    categories: categoryCollection,
 };

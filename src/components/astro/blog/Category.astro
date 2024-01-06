@@ -1,0 +1,45 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { getLocale } from "@i18n/utils";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+
+interface Props {
+    category: CollectionEntry<"categories">;
+}
+
+const { category } = Astro.props;
+const locale = getLocale(Astro.url);
+
+const title = await getCategoryTitleByLocale(locale, category.id);
+const description = await getCategoryDescriptionByLocale(locale, category.id);
+---
+
+<li>
+    <a class="title" href={getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`)}>
+        {title}
+    </a>
+    <div class="description">
+        <i class="bi bi-arrow-return-right"></i>
+        <span>{description}</span>
+    </div>
+    
+</li>
+
+<style>
+    li {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .title {
+            font-size: 1.2rem;
+        }
+
+        .description {
+            font-size: 1rem;
+            display: inline-block;
+            margin-left: 2px;
+        }
+    }
+</style>

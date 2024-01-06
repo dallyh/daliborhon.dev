@@ -104,6 +104,11 @@ p {
     color: rgba(var(--accent), 1);
 }
 
+.all-posts {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
 .button {
     display: flex;
     justify-content: center;
@@ -148,7 +153,10 @@ a {
 
     &:hover {
         text-decoration: underline;
+        text-decoration-style: dashed;
         text-decoration-color: inherit;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
     }
 }
 

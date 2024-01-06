@@ -8,7 +8,7 @@ import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.as
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { getTagByLocale } from "@utils/getTagByLocale";
+import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 
 // This is kinda complicated
 export async function getStaticPaths() {
@@ -16,28 +16,28 @@ export async function getStaticPaths() {
         return !data.hidden;
     });
 
-    const tags = await getCollection("tags");
+    const categories = await getCollection("categories");
 
     const blogLocales = allPosts.map((post) => {
         return post.data.language;
     });
     const uniqueLocales = [...new Set(blogLocales.flat())];
 
-    const paths = tags.flatMap((tag) => {
+    const paths = categories.flatMap((cat) => {
         return uniqueLocales.map((locale) => {
-            return { params: { lang: getRoutingLocale(locale), tag: tag.id }, props: { posts: allPosts } };
+            return { params: { lang: getRoutingLocale(locale), category: cat.id }, props: { posts: allPosts } };
         });
     });
 
     return paths;
 }
 
-const { tag } = Astro.params;
+const { category } = Astro.params;
 const { posts } = Astro.props;
 const locale = getLocale(Astro.url);
 const filteredPosts = posts
     .filter((post) => {
-        return post.data.tags.some((t) => t.id === tag) && post.data.language === locale;
+        return post.data.category?.id == category && post.data.language === locale;
     })
     .sort((a, b) => {
         return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
@@ -52,7 +52,7 @@ const layoutProps = {
     description: t("landing:description"),
 };
 
-const title = await getTagByLocale(locale, tag);
+const title = await getCategoryTitleByLocale(locale, category);
 ---
 
 <PageLayout {...layoutProps}>
@@ -60,10 +60,10 @@ const title = await getTagByLocale(locale, tag);
         <BreadCrumbs>
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label="Tags" />
+            <BreadCrumbsItem currentPage={true} label="Categories" />
             <BreadCrumbsItem currentPage={true} label={title} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={`Posts tagged with #${title}`}>
+        <Section id="taggedPosts" sectionTitle={`Posts with category ${title.toLowerCase()}`}>
             <ul>
                 {
                     filteredPosts.map((post) => (

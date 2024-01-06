@@ -2,14 +2,16 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import type { Page } from "astro";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
-import TagList from "@components/astro/blog/TagList.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import Footer from "@components/astro/global/Footer.astro";
 import Section from "@components/astro/global/Section.astro";
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     page: Page<CollectionEntry<"posts">>;
@@ -23,19 +25,20 @@ const namespaces = ["blog"];
 await loadNamespaces(locale, namespaces);
 
 const layoutProps = {
-    title: "Blog - Dalibor Hon",
+    title: "All Posts - Dalibor Hon",
     description: t("landing:description"),
 };
-const tags = await getCollection("tags");
 ---
 
 <MainLayout {...layoutProps}>
     <HeadHrefLangs slot="hreflangs" />
     <Navigation title={layoutProps.title} slot="header" />
     <main>
-        <Section id="tags" sectionTitle="Tags">
-            <TagList tags={tags} bgColor="rgba(var(--secondary), 1)" justify="flex-start" />
-        </Section>
+        <BreadCrumbs>
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+            <BreadCrumbsItem currentPage={true} label="Posts" />
+        </BreadCrumbs>
         <Section id="blogs" sectionTitle="All posts">
             <div class="paginated-posts">
                 <ul class="post-list">
@@ -118,20 +121,6 @@ const tags = await getCollection("tags");
                 width: 2px;
                 color: red;
             }
-        }
-    }
-
-    .tag-list {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-
-        a {
-            background: rgba(var(--secondary), 1);
-            padding: 0.4rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
         }
     }
 </style>

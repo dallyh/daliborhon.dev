@@ -1,5 +1,5 @@
 ---
-import Admin from "@components/react/cms/admin";
+import Admin from "@components/react/CmsAdmin/CmsAdmin";
 ---
 
 <!doctype html>
@@ -9,15 +9,8 @@ import Admin from "@components/react/cms/admin";
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Content Manager - Static CMS</title>
-        <style>
-            html,
-            body {
-                height: 100%;
-            }
-        </style>
     </head>
     <body id="root">
-        <div id="identity"></div>
         <Admin client:only="react" />
     </body>
 </html>

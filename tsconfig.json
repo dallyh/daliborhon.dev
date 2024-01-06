@@ -14,7 +14,7 @@
             "@public/*": ["src/public/*"],
             "@layouts/*": ["src/layouts/*"],
             "@utils/*": ["src/utils/*"],
-            "@config": ["src/config.ts"]
+            "@config/*": ["src/config/*"],
         }
     }
 }

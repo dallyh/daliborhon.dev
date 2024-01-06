@@ -1,11 +1,11 @@
-import { localeSettings, locales } from "@i18n/config";
+import { localeSettings, locales } from "@config/i18n";
 import type { Config, Field, UnknownField } from "@staticcms/core";
 
 /**
  * Builds a CMS config out of other configurations.
  * @returns a CMS config.
  */
-export function getCmsConfig(): Config {
+export function createCmsConfig(): Config {
     if (import.meta.env.DEV) {
         console.warn("[getCmsConfig] CMS running in development mode!");
     }

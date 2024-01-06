@@ -2,7 +2,7 @@
 import { getLocale } from "@i18n/utils";
 import { getCollection } from "astro:content";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
-import { SITE } from "@config";
+import { BLOG } from "src/config/blog";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -12,7 +12,7 @@ const allPosts = await getCollection("posts", ({ data }) => {
     return data.language === locale && !data.hidden && !data.featured;
 });
 
-const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf()).slice(0, SITE.recentPostsSize);
+const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf()).slice(0, BLOG.recentPostsSize);
 ---
 
 <ul>

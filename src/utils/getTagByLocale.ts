@@ -1,4 +1,4 @@
-import { getCollection, getEntry } from "astro:content";
+import { getEntry } from "astro:content";
 
 export async function getTagByLocale(locale: string, tagId: string) {
     const tag = await getEntry("tags", tagId);

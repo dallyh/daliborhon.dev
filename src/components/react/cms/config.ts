@@ -11,7 +11,7 @@ export function getCmsConfig(): Config {
     }
 
     // Locally run OAuth provider
-    const OAuthProvider = import.meta.env.DEV ? "http://localhost:3000/api/" : "https://static-cms-gh-oauth-provider.netlify.app/api/";
+    const OAuthProvider = import.meta.env.DEV ? "http://localhost:3010/api" : "https://static-cms-gh-oauth-provider.netlify.app/api";
     console.log("[getCmsConfig] CMS config OAuthProvider: " + OAuthProvider);
 
     const siteUrl = import.meta.env.DEV ? "http://localhost:4321/" : `${import.meta.env.SITE}${import.meta.env.BASE_URL}`;

@@ -26,6 +26,7 @@ const postsCollection = defineCollection({
                 .or(z.string())
                 .optional(),
             tags: z.array(reference("tags")),
+            category: z.array(reference("categories")).optional(),
             canonicalURL: z.string().optional(),
         }),
 });
@@ -42,8 +43,21 @@ const tagsCollection = defineCollection({
     }),
 });
 
+// TO-DO: Find a way to do this automatically with locales.map...
+const categoryCollection = defineCollection({
+    type: "data",
+    schema: z.object({
+        id: z.string(),
+        languages: z.object({
+            cs: z.string(),
+            en: z.string(),
+        }),
+    }),
+});
+
 // Export a single `collections` object to register your collection(s)
 export const collections = {
     posts: postsCollection,
     tags: tagsCollection,
+    categories: categoryCollection
 };

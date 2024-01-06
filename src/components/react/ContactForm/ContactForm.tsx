@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, type FocusEvent } from "react";
 import { useForm } from "@formspree/react";
 import "./ContactForm.css";
-import type { ContactForm } from "../../../../i18n/locales/localeTypes";
+import type { ContactForm as ContactFromRes } from "@i18n/locales/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 interface ContactFormProps {
-    resources: ContactForm;
+    resources: ContactFromRes;
     showCloseButton?: boolean;
     isDialog?: boolean;
 }

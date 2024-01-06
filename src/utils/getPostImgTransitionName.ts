@@ -5,5 +5,3 @@ export function getPostImgTransitionName(post: CollectionEntry<"posts">, transit
 
     return transitionName;
 }
-
-//const transitionName = `${post.id}-${post.data.featured ?? "false"}`

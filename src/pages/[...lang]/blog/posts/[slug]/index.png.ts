@@ -1,7 +1,7 @@
 import type { APIContext } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { generateOgImageForPost } from "@utils/generateOgImage";
-import { defaultLocale } from "@i18n/config";
+import { defaultLocale } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import { getBlogPostSlug } from "@utils/getBlogPostSlug";
 
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 export async function GET({ params, props }: APIContext) {
-    return new Response(await await generateOgImageForPost(props.post as CollectionEntry<"posts">, params.lang ?? defaultLocale), {
+    return new Response(await generateOgImageForPost(props.post as CollectionEntry<"posts">, params.lang ?? defaultLocale), {
         headers: { "Content-Type": "image/png" },
     });
 }

@@ -1,7 +1,7 @@
 import CMS, { type FieldPreviewProps, type TemplatePreviewCardProps } from "@staticcms/core";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import "@staticcms/core/dist/main.css";
-import { getCmsConfig } from "./config";
+import { createCmsConfig } from "@config/cms";
 import type { FC } from "react";
 import React from "react";
 
@@ -81,7 +81,7 @@ const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> 
 
 const CmsAdmin: FC = () => {
     useEffect(() => {
-        const config = getCmsConfig();
+        const config = createCmsConfig();
 
         CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
         CMS.registerFieldPreview("posts", "hidden", PostHiddenFieldPreview);
@@ -96,8 +96,4 @@ const CmsAdmin: FC = () => {
     );
 };
 
-const Admin: FC = () => {
-    return useMemo(() => <CmsAdmin key="admin" />, [CmsAdmin]);
-};
-
-export default Admin;
+export default CmsAdmin;

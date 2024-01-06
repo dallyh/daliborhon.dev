@@ -1,6 +1,6 @@
 import i18next from "i18next";
 import fsBackend from "i18next-fs-backend";
-import { defaultLocale, locales } from "./config";
+import { defaultLocale, locales } from "@config/i18n";
 
 const i18nConfig = {
     debug: false,

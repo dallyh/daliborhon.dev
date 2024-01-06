@@ -1,5 +1,5 @@
 import { z, defineCollection, reference } from "astro:content";
-import { locales } from "@i18n/config";
+import { locales } from "@config/i18n";
 
 // Define a `type` and `schema` for each collection
 const postsCollection = defineCollection({

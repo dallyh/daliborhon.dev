@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import * as i18n from "./src/i18n/config";
+import * as i18n from "./src/config/i18n";
 import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");

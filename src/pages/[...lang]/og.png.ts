@@ -1,7 +1,7 @@
 import type { APIContext, APIRoute } from "astro";
 import { generateOgImageForSite } from "@utils/generateOgImage";
 import { getStaticPaths } from "@i18n/utils";
-import { defaultLocale } from "@i18n/config";
+import { defaultLocale } from "@config/i18n";
 
 export { getStaticPaths };
 

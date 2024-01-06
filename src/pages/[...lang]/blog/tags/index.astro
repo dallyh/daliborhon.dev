@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import { getLocale } from "@i18n/utils";
+import PageLayout from "@layouts/PageLayout.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import Section from "@components/astro/global/Section.astro";
+import { getStaticPaths } from "@i18n/utils";
+import { getTagByLocale } from "@utils/getTagByLocale";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+export  { getStaticPaths };
+
+const locale = getLocale(Astro.url);
+const posts = await getCollection("posts", ({data}) => {
+    return data.language === locale && !data.hidden
+})
+const tags = posts.flatMap((post) => {
+    return post.data.tags;
+});
+const uniqueTags = tags.filter((obj, index, self) =>
+  index === self.findIndex((o) => o.id === obj.id)
+);
+
+// i18next
+const namespaces = ["contactForm"];
+await loadNamespaces(locale, namespaces);
+
+const layoutProps = {
+    title: "Dalibor Hon",
+    description: t("landing:description"),
+};
+
+---
+
+<PageLayout {...layoutProps}>
+    <Section id="tags" sectionTitle="All tags">
+        <ul>
+            {
+                uniqueTags.map((tag) => (
+                    <li>
+                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                    </li>
+                ))
+            }
+        </ul>
+    </Section>
+</PageLayout>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

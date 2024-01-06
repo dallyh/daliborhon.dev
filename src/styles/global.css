@@ -104,7 +104,6 @@ p {
     color: rgba(var(--accent), 1);
 }
 
-
 .button {
     display: flex;
     justify-content: center;

@@ -21,7 +21,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
             })
             .sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf());
 
-            console.log("Filtered: " + filteredPosts.length);
+        console.log("Filtered: " + filteredPosts.length);
 
         return paginate(filteredPosts, {
             params: { lang: getRoutingLocale(locale) },

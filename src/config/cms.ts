@@ -37,7 +37,7 @@ export function createCmsConfig(): Config {
     const sortedLocales = Object.keys(localeSettings).sort((a, b) => {
         const isACmsDefault = localeSettings[a].cmsDefault || false;
         const isBCmsDefault = localeSettings[b].cmsDefault || false;
-    
+
         // Put the "cmsDefault" locale first in the result
         if (isACmsDefault && !isBCmsDefault) {
             return -1;
@@ -48,10 +48,10 @@ export function createCmsConfig(): Config {
         // Sort based on other criteria if both are "cmsDefault" or not
         return 0;
     });
-    
+
     console.log(`[getCmsConfig] CMS config locales:\n\n ${JSON.stringify(sortedLocales)}\n\n Default locale of: '${sortedLocales[0]}'`);
 
-    const config : Config = {
+    const config: Config = {
         local_backend: localBackend,
         publish_mode: "editorial_workflow",
         backend: {

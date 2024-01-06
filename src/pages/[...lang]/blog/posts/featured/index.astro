@@ -1,0 +1,114 @@
+---
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getCollection } from "astro:content";
+import Section from "@components/astro/global/Section.astro";
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getStaticPaths } from "@i18n/utils";
+import PageLayout from "@layouts/PageLayout.astro";
+import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.astro";
+
+export { getStaticPaths };
+
+// i18n
+const locale = getLocale(Astro.url);
+const namespaces = ["blog"];
+await loadNamespaces(locale, namespaces);
+
+const posts = await getCollection("posts", ({ data }) => {
+    return data.language === locale && !data.hidden && data.featured;
+});
+const sortedPosts = posts.sort((a, b) => {
+    return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+});
+
+const layoutProps = {
+    title: "Featured Posts - Dalibor Hon",
+    description: t("landing:description"),
+};
+---
+
+<PageLayout {...layoutProps}>
+    <main>
+        <BreadCrumbs>
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label="Posts" />
+            <BreadCrumbsItem currentPage={true} label="Featured" />
+        </BreadCrumbs>
+        <Section id="taggedPosts" sectionTitle={`Featured posts`}>
+            <ul>
+                {
+                    sortedPosts.map((post) => (
+                        <li>
+                            <SmallBlogPostPreview post={post} />
+                        </li>
+                    ))
+                }
+            </ul>
+        </Section>
+    </main>
+</PageLayout>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<style>
+    .post-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .page-selector {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(var(--secondary), 1);
+            border-radius: 6px;
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+
+            i.disabled {
+                color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        p {
+            line-height: 1;
+            position: relative;
+
+            &:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                height: 100%;
+                width: 2px;
+                color: red;
+            }
+        }
+    }
+</style>

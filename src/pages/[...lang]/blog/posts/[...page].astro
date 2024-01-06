@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import type { GetStaticPathsOptions } from "astro";
 import { defaultLocale, locales } from "@config/i18n";
-import BlogLayout from "@layouts/BlogLayout.astro";
+import PostsLayout from "@layouts/PostsLayout.astro";
 import { BLOG } from "src/config/blog";
 import { getRoutingLocale } from "@i18n/utils";
 
@@ -11,17 +11,12 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
         return !data.hidden;
     });
 
-    console.log("Posts:" + posts.length);
-
     return locales.flatMap((locale) => {
-        console.log("Locale: " + locale);
         const filteredPosts = posts
             .filter((post) => {
                 return post.data.language === locale;
             })
             .sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf());
-
-        console.log("Filtered: " + filteredPosts.length);
 
         return paginate(filteredPosts, {
             params: { lang: getRoutingLocale(locale) },
@@ -33,4 +28,4 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props;
 ---
 
-<BlogLayout page={page} />
+<PostsLayout page={page} />

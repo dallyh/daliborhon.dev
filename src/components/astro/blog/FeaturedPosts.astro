@@ -3,6 +3,13 @@ import { getLocale } from "@i18n/utils";
 import { getCollection } from "astro:content";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import { BLOG } from "@config/blog";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+    postSize?: number;
+}
+
+const { postSize = BLOG.featuredPostsSize } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -12,7 +19,9 @@ const allPosts = await getCollection("posts", ({ data }) => {
     return data.language === locale && !data.hidden && data.featured;
 });
 
-const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf()).slice(0, BLOG.featuredPostsSize);
+const filteredPosts = allPosts.sort((a, b) => {
+    return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+});
 ---
 
 <ul>
@@ -25,12 +34,17 @@ const filteredPosts = allPosts.sort((a, b) => new Date(b.data.pubDateTime).value
     }
     {filteredPosts.length === 0 && <p>There are currently no featured posts. 😞</p>}
 </ul>
+<div class="all-posts">
+    <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>See all featured posts</a>
+    <i class="bi bi-arrow-right"></i>
+</div>
 
 <style>
     ul {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1rem;
+        margin-bottom: 2rem;
     }
 
     p {

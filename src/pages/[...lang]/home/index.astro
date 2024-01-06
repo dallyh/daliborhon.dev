@@ -5,10 +5,10 @@ import Intro from "@components/astro/home/Intro.astro";
 import Projects from "@components/astro/home/Projects.astro";
 import Contact from "@components/astro/home/Contact.astro";
 import { getStaticPaths } from "@i18n/utils";
-import RecentPosts from "@components/astro/home/RecentPosts.astro";
+import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import Section from "@components/astro/global/Section.astro";
-import FeaturedPosts from "@components/astro/home/FeaturedPosts.astro";
+import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 export { getStaticPaths };
@@ -33,10 +33,10 @@ const layoutProps = {
         <Projects />
     </Section>
     <Section id="featuredPosts" sectionTitle="Featured posts">
-        <FeaturedPosts />
+        <FeaturedPosts postSize={3}/>
     </Section>
     <Section id="recentPosts" sectionTitle={t("landing:blog_title")}>
-        <RecentPosts />
+        <RecentPosts postSize={3} filterFeatured={true}/>
     </Section>
     <Section id="contact" sectionTitle={t("shared:LeaveMeAMessage")} sectionDescription={t("contactForm:ContactMe")}>
         <Contact />

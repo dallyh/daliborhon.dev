@@ -42,13 +42,12 @@ const layoutProps = {
     <Navigation post={post} title={layoutProps.title} slot="header" />
     <main>
         <div class="post-header">
-            <div class="bread-crumbs">
-                <BreadCrumbs>
-                    <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
-                    <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-                    <BreadCrumbsItem currentPage={true} label={post.data.title} />
-                </BreadCrumbs>
-            </div>
+            <BreadCrumbs>
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label="Posts" />
+                <BreadCrumbsItem currentPage={true} label={post.data.title} />
+            </BreadCrumbs>
             <div class="post-description">
                 <p>{post.data.title}</p>
                 <p>By {post.data.author}</p>
@@ -96,11 +95,6 @@ const layoutProps = {
             }
         }
     }
-
-    .bread-crumbs {
-        margin-bottom: 2rem;
-    }
-
     .tags {
         margin-bottom: 2rem;
     }

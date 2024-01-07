@@ -268,6 +268,34 @@ export function createCmsConfig(): Config {
                         widget: "markdown",
                         show_raw: true,
                         i18n: true,
+                        toolbar_buttons: {
+                            main: [
+                                "bold",
+                                "italic",
+                                "strikethrough",
+                                "code",
+                                "font",
+                                "unordered-list",
+                                "ordered-list",
+                                "decrease-indent",
+                                "increase-indent",
+                                "shortcode",
+                                {
+                                    label: "Insert",
+                                    groups: [
+                                        {
+                                            items: ["blockquote", "code-block"],
+                                        },
+                                        {
+                                            items: ["insert-table"],
+                                        },
+                                        {
+                                            items: ["image", "file-link"],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
                     },
                 ],
             },

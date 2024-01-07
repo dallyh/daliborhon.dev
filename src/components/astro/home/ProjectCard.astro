@@ -1,0 +1,133 @@
+---
+interface Props {
+    href: string;
+    hrefTitle: string;
+    description: string;
+}
+
+const { href, hrefTitle, description } = Astro.props;
+---
+
+<div class="card">
+    <div class="card-content">
+        <div class="card-image">
+            <slot name="image" />
+        </div>
+        <div class="card-info-wrapper">
+            <div class="card-info">
+                <div class="card-info-title">
+                    <a href={href} target="_blank"><i class="bi bi-link-45deg"></i>{hrefTitle}</a>
+                    <div class="card-info-tags">
+                        <slot name="tags" />
+                    </div>
+                </div>
+                <p><Fragment set:html={description} /></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style is:global>
+    .card-image {
+        align-items: center;
+        display: flex;
+        height: 120px;
+        width: 100px;
+        justify-content: center;
+        overflow: hidden;
+
+        > i {
+            color: rgba(240, 240, 240, 1);
+            font-size: 4rem;
+        }
+
+        @media (max-width: 468px) {
+            height: 90px;
+            width: 100%;
+        }
+    }
+</style>
+
+<style>
+    .card {
+        background-color: var(--card-bg);
+        backdrop-filter: blur(2px);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        padding: 1rem;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-content {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+        height: 100%;
+
+        @media (max-width: 468px) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .card-info-wrapper {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-start;
+        padding: 0px 20px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-info {
+        align-items: flex-start;
+        display: flex;
+        gap: 10px;
+    }
+
+    .card-info-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.725rem;
+        margin-top: 0.5rem;
+        color: black;
+        font-weight: 600;
+
+        :global(.rounded-tag) {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            border-radius: 8px;
+        }
+    }
+
+    .card-info {
+        display: flex;
+        flex-direction: column;
+        > p {
+            color: var(--body-color);
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+    }
+
+    .card-info-title {
+        > a {
+            font-weight: 600;
+            position: relative;
+            display: inline-flex;
+            min-height: 25px;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+</style>

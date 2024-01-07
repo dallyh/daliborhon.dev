@@ -5,7 +5,7 @@ description: Testovací post z CMS
 author: Dalibor Hon
 tags:
   - successes
-category: Software
+category: software
 language: cs
 hidden: false
 featured: false

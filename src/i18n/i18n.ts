@@ -14,7 +14,7 @@ const i18n = i18next
     .createInstance({
         ...i18nConfig,
         backend: {
-            loadPath: "./src/i18n/locales/{{lng}}/{{ns}}.json",
+            loadPath: "./src/i18n/locales/{{lng}}/{{ns}}.yaml",
         },
     })
     .use(fsBackend);

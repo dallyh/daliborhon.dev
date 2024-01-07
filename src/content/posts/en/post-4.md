@@ -1,5 +1,5 @@
 ---
-title: My Fourth Blog Post
+title: Post in Category
 postId: "post-4"
 language: "en"
 author: Astro Learner

@@ -115,6 +115,7 @@ export function createCmsConfig(): Config {
                 delete: true,
                 i18n: true,
                 slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+                format: "yaml-frontmatter",
                 sortable_fields: {
                     fields: ["title", "pubDateTime"],
                     default: {
@@ -134,7 +135,7 @@ export function createCmsConfig(): Config {
                             name: "visible",
                             label: "Visible posts",
                             field: "hidden",
-                            pattern: false,
+                            pattern: "false|''",
                         },
                     ],
                 },
@@ -148,8 +149,19 @@ export function createCmsConfig(): Config {
                         },
                         {
                             name: "visibility",
-                            label: "Visibility",
+                            label: "Hidden posts",
                             field: "hidden",
+                            pattern: "true|(false|'')",
+                        },
+                        {
+                            name: "tags",
+                            label: "Tags",
+                            field: "tags",
+                        },
+                        {
+                            name: "categories",
+                            label: "Categories",
+                            field: "category",
                         },
                     ],
                 },
@@ -263,13 +275,15 @@ export function createCmsConfig(): Config {
                 name: "tags",
                 label: "Tags",
                 label_singular: "Tag",
+                icon: "tags",
                 folder: "src/content/tags",
                 identifier_field: "id",
                 create: true,
                 delete: true,
                 i18n: false,
                 slug: "{{id}}",
-                extension: "json",
+                extension: "yaml",
+                format: "yaml",
                 fields: [
                     {
                         name: "id",
@@ -289,13 +303,15 @@ export function createCmsConfig(): Config {
                 name: "categories",
                 label: "Categories",
                 label_singular: "Category",
+                icon: "categories",
                 folder: "src/content/categories",
                 identifier_field: "id",
                 create: true,
                 delete: true,
                 i18n: false,
                 slug: "{{id}}",
-                extension: "json",
+                extension: "yaml",
+                format: "yaml",
                 fields: [
                     {
                         name: "id",

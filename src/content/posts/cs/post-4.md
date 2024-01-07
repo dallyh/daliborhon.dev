@@ -1,5 +1,5 @@
 ---
-title: Muj pátý příspěvek
+title: Příspěvek v kategorii
 postId: post-4
 language: cs
 author: Astro Learner

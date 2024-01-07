@@ -3,6 +3,9 @@ import { Image } from "astro:assets";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import Lemmy from "@assets/img/projects/lemmy.svg";
+import ProjectCard from "./ProjectCard.astro";
+
+// TO-DO Create a collection for Projects and Project tags, and automate this page
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -12,68 +15,25 @@ await loadNamespaces(locale, namespaces);
 
 <div class="projects-cards-wrapper">
     <div class="cards">
-        <div class="card">
-            <div class="card-content">
-                <div class="card-image">
-                    <i class="bi bi-file-earmark-code-fill"></i>
-                </div>
-                <div class="card-info-wrapper">
-                    <div class="card-info">
-                        <div class="card-info-title">
-                            <a href="https://github.com/dallyh/website" target="_blank"><i class="bi bi-link-45deg"></i>{t("projects:ThisWebsite")}</a>
-                            <div class="card-info-tags">
-                                <div class="rounded-tag astro">Astro.js</div>
-                                <div class="rounded-tag typescript">TypeScript</div>
-                                <div class="rounded-tag javascript">JavaScript</div>
-                                <div class="rounded-tag react">React</div>
-                                <div class="rounded-tag webdev">Web</div>
-                            </div>
-                        </div>
-                        <p>{t("projects:ThisWebsiteDescription")}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-content">
-                <div class="card-image">
-                    <Image class="lemmy-logo" src={Lemmy} width={85} format="webp" alt="Lemmy software logo" loading="eager" />
-                </div>
-                <div class="card-info-wrapper">
-                    <div class="card-info">
-                        <div class="card-info-title">
-                            <a href="https://github.com/dallyh/lemmy-kt-client" target="_blank"><i class="bi bi-link-45deg"></i>{t("projects:LemmyKtClient")}</a>
-                            <div class="card-info-tags">
-                                <div class="rounded-tag kmp">Kotlin Multiplatform</div>
-                            </div>
-                        </div>
-                        <p>{t("projects:LemmyKtClientDescription")}{" "}<a href="https://join-lemmy.org/" target="_blank">Lemmy</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-content">
-                <div class="card-image">
-                    <i class="bi bi-person-lines-fill"></i>
-                </div>
-                <div class="card-info-wrapper">
-                    <div class="card-info">
-                        <div class="card-info-title">
-                            <a href="https://github.com/dallyh/web-resume" target="_blank"><i class="bi bi-link-45deg"></i>{t("projects:OldWebsite")}</a>
-                            <div class="card-info-tags">
-                                <div class="rounded-tag astro">Astro.js</div>
-                                <div class="rounded-tag typescript">TypeScript</div>
-                                <div class="rounded-tag javascript">JavaScript</div>
-                                <div class="rounded-tag react">React</div>
-                                <div class="rounded-tag webdev">Web</div>
-                            </div>
-                        </div>
-                        <p>{t("projects:OldWebisteDescription")}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ProjectCard href="https://github.com/dallyh/daliborhon.dev" hrefTitle={t("projects:ThisWebsite")} description={t("projects:ThisWebsiteDescription")}>
+            <i class="bi bi-file-earmark-code-fill" slot="image"></i>
+            <div class="rounded-tag astro" slot="tags">Astro.js</div>
+            <div class="rounded-tag typescript" slot="tags">TypeScript</div>
+            <div class="rounded-tag javascript" slot="tags">JavaScript</div>
+            <div class="rounded-tag react" slot="tags">React</div>
+            <div class="rounded-tag webdev" slot="tags">Web</div>
+        </ProjectCard>
+        <ProjectCard href="https://github.com/dallyh/static-cms-gh-oauth-provider" hrefTitle="Static CMS GitHub OAuth provider" description="This is an Astro project which faciliates OAuth flow to use with Static CMS/Decap CMS.">
+            <i class="bi bi-person-fill-lock" slot="image"></i>
+            <div class="rounded-tag astro" slot="tags">Astro.js</div>
+            <div class="rounded-tag typescript" slot="tags">TypeScript</div>
+            <div class="rounded-tag webdev" slot="tags">Web</div>
+        </ProjectCard>
+        <!-- <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects:LemmyKtClient")} description={t("projects:LemmyKtClientDescription") + " " + "<a href='https://join-lemmy.org/' target='_blank'>Lemmy</a></p>"}/> -->
+        <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects:LemmyKtClient")} description={t("projects:LemmyKtClientDescription")}>
+            <Image class="lemmy-logo" slot="image" src={Lemmy} width={85} format="webp" alt="Lemmy software logo" loading="eager" />
+            <div class="rounded-tag kmp" slot="tags">Kotlin Multiplatform</div>
+        </ProjectCard>
     </div>
 </div>
 
@@ -97,128 +57,27 @@ await loadNamespaces(locale, namespaces);
         align-items: center;
     }
 
-    .card {
-        background-color: var(--card-bg);
-        backdrop-filter: blur(2px);
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
-        border-radius: 6px;
-        padding: 1rem;
-        overflow: hidden;
+    .astro {
+        background-color: rgb(232 121 249);
     }
 
-    .card-content {
-        display: flex;
-        gap: 1rem;
-
-        @media (max-width: 468px) {
-            flex-direction: column;
-            align-items: center;
-        }
+    .typescript {
+        background-color: rgb(251 113 133);
     }
 
-    .card-image {
-        align-items: center;
-        display: flex;
-        height: 120px;
-        width: 100px;
-        justify-content: center;
-        overflow: hidden;
-
-        > i {
-            color: rgba(240, 240, 240, 1);
-            font-size: 4rem;
-        }
-
-        .lemmy-logo {
-            opacity: 1;
-        }
-
-        @media (max-width: 468px) {
-            height: 90px;
-            width: 100%;
-        }
+    .webdev {
+        background-color: rgb(163 230 53);
     }
 
-    .card-info-wrapper {
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-start;
-        padding: 0px 20px;
-        width: 100%;
-        height: 100%;
+    .javascript {
+        background-color: rgb(250 204 21);
     }
 
-    .card-info {
-        align-items: flex-start;
-        display: flex;
-        gap: 10px;
+    .kmp {
+        background: #7f52ff linear-gradient(to right, #ef4857 0, #de4970 20%, #b44db0 50%, #7f52ff 100%);
     }
 
-    .card-info-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        font-size: 0.725rem;
-        margin-top: 0.5rem;
-        color: black;
-        font-weight: 600;
-
-        .rounded-tag {
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            border-radius: 8px;
-
-            &.astro {
-                background-color: rgb(232 121 249);
-            }
-
-            &.typescript {
-                background-color: rgb(251 113 133);
-            }
-
-            &.webdev {
-                background-color: rgb(163 230 53);
-            }
-
-            &.javascript {
-                background-color: rgb(250 204 21);
-            }
-
-            &.kmp {
-                background: #7f52ff linear-gradient(to right, #ef4857 0, #de4970 20%, #b44db0 50%, #7f52ff 100%);
-            }
-
-            &.react {
-                background-color: rgb(20 158 202);
-            }
-        }
-    }
-
-    .card-info {
-        display: flex;
-        flex-direction: column;
-        > p {
-            color: var(--body-color);
-            font-size: 0.85em;
-            margin-top: 8px;
-        }
-    }
-
-    .card-info-title {
-        > a {
-            font-weight: 600;
-            position: relative;
-            display: inline-flex;
-            min-height: 25px;
-
-            i {
-                margin-right: 5px;
-            }
-        }
+    .react {
+        background-color: rgb(20 158 202);
     }
 </style>

@@ -1,19 +1,44 @@
-# Welcome to my [Website!](https://daliborhon.com)
+# Welcome to my [Website!](https://daliborhon.dev)
+<p align="center">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/dallyh/daliborhon.dev/deploy.yaml">
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/dallyh/daliborhon.dev">
+</p>
 
-This page was created as a fun project of mine, trying to learn something more about web development, and get better with my coding skills. In the beginning I decided to use ASP.NET Core Razor Pages (because I have experience with C#) with combination of Blazor components. Later on I found out that ASP.NET is a little bit overkill for such a simple website, so I switched to static site generator called Astro. Of cource plain JavaScript (later on TypeScript) and other standard tools and languages had to be used as well. When I initially started, I did not have much experience with web development, so this project tool longer than I expected. Anyways it was a great journey, and now I can say that I know a lot more than before. And what's better? I enjoyed it!
+## Info
+This is an [Astro](https://astro.build) project for my personal website, which I play to use as a blog.
+The project is continually in development, as I also take it as an opportunity to learn something new.
 
-Initially I started with a template called Start Bootstrap (Licensed under MIT), because as I mentioned I did not have any previous experience on writing plain HTML and using CSS. Using Bootstrap seemed like a good decision. In the process I figured out that I wasn’t really learning on how to create a website, I was learning on how to use Bootstrap. That is why I decided to not use it anymore, and focus more on learning the "basics" first.
+This is a fully static website hosted on GitHub pages, using a fully static CMS for content management.
 
-## 🧞 Commands
+I guess for experienced developers a lot of things in this repo will not make any sense, however, everybody has to start somewhere.
 
+## Stack
+- Frameworks: 
+  - [Astro](https://astro.build)
+  - Some of the UI: [React](https://react.dev/)
+  - Internationalization [i18next](https://www.i18next.com/)
+- Content Management System: [Static CMS](https://staticcms.org)
+  - User authorization: [Static CMS GitHub OAuth provider](https://github.com/dallyh/static-cms-gh-oauth-provider)
+
+## Deployment
+Deployments are done either on a new commit to the `main` branch (production), or on a new pull request for `main` branch.
+
+Pull request creates a new build just for that particular pull request, which is used to preview the site. 
+Previews are hosted [here](https://github.com/dallyh/deploy-previews).
+
+## Commands
 All commands are run from the root of the project, from a terminal:
 
-| Command                | Action                                             |
-| :--------------------- | :------------------------------------------------- |
-| `npm install`          | Installs dependencies                              |
-| `npm run dev`          | Starts local dev server at `localhost:3000`        |
-| `npm run host`         | Starts local dev server hosted at network          |
-| `npm run build`        | Build production site to `./dist/`                 |
-| `npm run preview`      | Preview the build locally                          |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro preview` |
-| `npm run astro --help` | Get help using the Astro CLI                       |
+| Command                   | Action                                                                 |
+| :------------------------ | :--------------------------------------------------------------------- |
+| `npm install`             | Installs dependencies                                                  |
+| `npm run dev`             | Starts local dev server at `localhost:4321`                            |
+| `npm run dev-host`        | Starts local dev server hosted at a network                            |
+| `npm run build`           | Build production site to `./dist/`                                     |
+| `npm run preview`         | Preview the build locally                                              |
+| `npm run preview-host`    | Preview the build hosted at a network                                  |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro preview`                     |
+| `npm run sync`            | Runs the `astro sync` command to generate content collection types     |
+| `npm run prettier-check`  | Runs the `prettier . --check` command to check for formatting problems |
+| `npm run prettier-format` | Runs the `prettier . --write` command to fix formatting problems       |
+| `npm run astro --help`    | Get help using the Astro CLI                                           |

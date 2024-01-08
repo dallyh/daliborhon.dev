@@ -1,6 +1,16 @@
 :root {
+    --page-width: 1024px;
+    --padding-x: 0.75rem;
+
+    @media screen and (min-width: 2240px) {
+        --page-width: 1324px;
+    }
+}
+
+/* Dark theme */
+:root {
+    color-scheme: dark;
     --accent: 14, 165, 233; /*136, 58, 234*/
-    --accent-rgba: rgba(152, 75, 245, 1);
     --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(34, 211, 238));
     --secondary: 30, 41, 59;
     --body-color: white;
@@ -9,16 +19,9 @@
     --bg-color: rgba(15, 23, 42, 1);
     --header-bg: rgba(15, 23, 42, 0.8);
     --card-bg: rgba(var(--secondary), 1);
-    --page-width: 1024px;
     --a-visited: rgb(197, 138, 249);
     --a-color: rgb(34 211 238);
     --footer-color: rgba(255, 255, 255, 0.6);
     --burger-menu-bg: #dddddd;
-    --padding-x: 0.75rem;
-    color-scheme: dark;
     --global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
-
-    @media screen and (min-width: 2240px) {
-        --page-width: 1324px;
-    }
 }

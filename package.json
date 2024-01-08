@@ -6,7 +6,6 @@
         "dev": "astro dev",
         "dev-cms": "npx @staticcms/proxy-server",
         "dev-host": "astro dev --host",
-        "start": "astro dev",
         "build": "astro build",
         "preview": "astro preview",
         "preview-host": "astro preview --host",

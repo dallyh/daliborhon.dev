@@ -7,87 +7,101 @@ export default async (post: CollectionEntry<"posts">, locale: string) => {
     return (
         <div
             style={{
-                background: "#fefbfb",
-                width: "100%",
-                height: "100%",
                 display: "flex",
+                height: "100%",
+                width: "100%",
                 alignItems: "center",
                 justifyContent: "center",
+                fontWeight: 700,
+                color: "white",
+                background: "rgba(30, 41, 59, 1)",
+                backgroundSize: "30px 30px",
+                backgroundImage: "linear-gradient(to right, rgba(14, 165, 233, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(14, 165, 233, 0.06) 1px, transparent 1px)",
             }}
         >
             <div
                 style={{
+                    left: 32,
+                    top: 42,
                     position: "absolute",
-                    top: "-1px",
-                    right: "-1px",
-                    border: "4px solid #000",
-                    background: "#ecebeb",
-                    opacity: "0.9",
-                    borderRadius: "4px",
                     display: "flex",
+                    alignItems: "center",
                     justifyContent: "center",
-                    margin: "2.5rem",
-                    width: "88%",
-                    height: "80%",
-                }}
-            />
-
-            <div
-                style={{
-                    border: "4px solid #000",
-                    background: "#fefbfb",
-                    borderRadius: "4px",
-                    display: "flex",
-                    justifyContent: "center",
-                    margin: "2rem",
-                    width: "88%",
-                    height: "80%",
+                    background: "linear-gradient(to right, rgba(14, 165, 233, 1), rgb(34, 211, 238, 1))",
+                    backgroundClip: "text",
+                    color: "transparent",
                 }}
             >
-                <div
+                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="rgba(14, 165, 233, 1)" viewBox="0 0 16 16" style={{marginTop: 8}}>
+                    <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0" />
+                </svg>
+                <span
                     style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                        margin: "20px",
-                        width: "90%",
-                        height: "90%",
+                        marginLeft: 8,
+                        fontSize: 30,
                     }}
                 >
-                    <p
-                        style={{
-                            fontSize: 72,
-                            fontWeight: "bold",
-                            maxHeight: "84%",
-                            overflow: "hidden",
-                        }}
-                    >
-                        {post.data.title}
-                    </p>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            width: "100%",
-                            marginBottom: "8px",
-                            fontSize: 28,
-                        }}
-                    >
-                        <span>
-                            by{" "}
-                            <span
-                                style={{
-                                    color: "transparent",
-                                }}
-                            >
-                                "
-                            </span>
-                            <span style={{ overflow: "hidden", fontWeight: "bold" }}>{post.data.author}</span>
-                        </span>
-
-                        <span style={{ overflow: "hidden", fontWeight: "bold" }}>{t("shared:NameSurname")}</span>
-                    </div>
-                </div>
+                    daliborhon.dev
+                </span>
+            </div>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "20px 50px",
+                    margin: "0 42px",
+                    fontSize: 60,
+                    width: "95%",
+                    height: "400px",
+                    textAlign: "center",
+                    backgroundColor: "rgba(15, 23, 42, 1)",
+                    color: "white",
+                    lineHeight: 1.4,
+                    borderRadius: "10px",
+                    boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.4)",
+                }}
+            >
+                <p
+                    style={{
+                        margin: 0,
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                    }}
+                >
+                    {post.data.title}
+                </p>
+                <p
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "20px",
+                        marginBottom: 0,
+                        fontSize: 35,
+                    }}
+                >
+                    {post.data.description}
+                </p>
+            </div>
+            <div
+                style={{
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    bottom: 42,
+                    position: "absolute",
+                    display: "flex",
+                    alignItems: "center",
+                    fontSize: 30,
+                }}
+            >
+                Written by {post.data.author}
             </div>
         </div>
     );

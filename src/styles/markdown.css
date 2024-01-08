@@ -89,7 +89,7 @@
         height: auto;
         object-fit: scale-down;
         border-radius: 6px;
-        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--global-box-shadow);
         overflow: hidden;
     }
 

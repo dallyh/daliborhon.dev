@@ -2,10 +2,8 @@ import CMS, { type FieldPreviewProps, type TemplatePreviewCardProps } from "@sta
 import { useEffect } from "react";
 import "@staticcms/core/dist/main.css";
 import { createCmsConfig } from "@config/cms";
-import type { FC } from "react";
-import React from "react";
 
-const PostHiddenFieldPreview: React.FC<FieldPreviewProps> = ({ value }) => {
+const PostHiddenFieldPreview = ({ value }: FieldPreviewProps<boolean>) => {
     return (
         <div
             style={{
@@ -27,17 +25,18 @@ const PostHiddenFieldPreview: React.FC<FieldPreviewProps> = ({ value }) => {
 };
 
 interface PostPreviewCardProps {
-    image: string;
+    ogImage: string;
     title: string;
     body: string;
-    date: string;
+    pubDateTime: string;
+    modDateTime: string;
     hidden: boolean;
 }
 
-const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> = ({ entry, widgetFor }) => {
+const PostPreviewCard = ({ entry, widgetFor }: TemplatePreviewCardProps<PostPreviewCardProps>) => {
     return (
         <div style={{ width: "100%" }}>
-            {widgetFor("image")}
+            {entry.data?.ogImage && widgetFor("ogImage")}
             <div style={{ padding: "16px", width: "100%" }}>
                 <div
                     style={{
@@ -55,20 +54,28 @@ const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> 
                             gap: "8px",
                         }}
                     >
-                        <strong style={{ fontSize: "24px" }}>{entry.data?.title}</strong>
-                        <span style={{ fontSize: "16px" }}>{entry.data?.date}</span>
+                        <strong style={{ fontSize: "1.2rem" }}>{entry.data?.title}</strong>
+                        <span style={{ fontSize: "0.8rem" }}>
+                            Published: <br />
+                            {entry.data?.pubDateTime}
+                        </span>
+                        <span style={{ fontSize: "0.8rem" }}>
+                                Modified: <br />
+                                {entry.data?.modDateTime !== undefined ? entry.data?.modDateTime: "Post was not modified."}
+                            </span>
                     </div>
                     <div
                         style={{
                             backgroundColor: entry.data?.hidden === true ? "blue" : "green",
                             color: "white",
                             border: "none",
-                            padding: "4px 8px",
+                            padding: "2px 4px",
                             textAlign: "center",
                             textDecoration: "none",
                             display: "inline-block",
                             cursor: "pointer",
                             borderRadius: "4px",
+                            fontSize: "0.8rem"
                         }}
                     >
                         {entry.data?.hidden === true ? "Hidden" : "Visible"}
@@ -79,7 +86,7 @@ const PostPreviewCard: React.FC<TemplatePreviewCardProps<PostPreviewCardProps>> 
     );
 };
 
-const TagIcon: FC = () => {
+const TagIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
             <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
@@ -88,7 +95,7 @@ const TagIcon: FC = () => {
     );
 };
 
-const CategoryIcon: FC = () => {
+const CategoryIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
             <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z" />
@@ -96,11 +103,11 @@ const CategoryIcon: FC = () => {
     );
 };
 
-const CmsAdmin: FC = () => {
+const CmsAdmin = () => {
     useEffect(() => {
         const config = createCmsConfig();
 
-        CMS.registerPreviewCard("posts", PostPreviewCard, () => 240);
+        CMS.registerPreviewCard("posts", PostPreviewCard, () => 340);
         CMS.registerFieldPreview("posts", "hidden", PostHiddenFieldPreview);
         CMS.registerIcon("tags", TagIcon);
         CMS.registerIcon("categories", CategoryIcon);

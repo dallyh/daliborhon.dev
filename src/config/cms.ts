@@ -93,6 +93,10 @@ export function createCmsConfig(): Config {
         },
         media_folder: "public/assets/uploads/",
         public_folder: "/assets/uploads/",
+        media_library: {
+            folder_support: true,
+            max_file_size: 25000000,
+        },
         site_url: siteUrl,
         slug: {
             clean_accents: true,
@@ -122,7 +126,7 @@ export function createCmsConfig(): Config {
                         field: "pubDateTime",
                     },
                 },
-                summary_fields: ["title", "pubDateTime", "hidden"],
+                summary_fields: ["title", "pubDateTime", "modDatetime", "hidden"],
                 view_filters: {
                     filters: [
                         {
@@ -312,6 +316,7 @@ export function createCmsConfig(): Config {
                 slug: "{{id}}",
                 extension: "yaml",
                 format: "yaml",
+                summary_fields: ["id", ...tagDisplayFields],
                 fields: [
                     {
                         name: "id",
@@ -340,6 +345,7 @@ export function createCmsConfig(): Config {
                 slug: "{{id}}",
                 extension: "yaml",
                 format: "yaml",
+                summary_fields: ["id", ...categoryDisplayFields],
                 fields: [
                     {
                         name: "id",

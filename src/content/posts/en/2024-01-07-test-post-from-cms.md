@@ -9,6 +9,7 @@ category: software
 language: en
 hidden: false
 featured: false
+ogImage: /assets/uploads/img/astro.jpg
 pubDateTime: 2024-01-07T21:37:39+01:00
 modDatetime: ""
 ---

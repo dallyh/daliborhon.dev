@@ -2,7 +2,6 @@
 import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
 import LanguageSelector from "./LanguageSelector.astro";
-import SimpleLanguageSelector from "./SimpleLanguageSelector.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { CollectionEntry } from "astro:content";
 
@@ -20,81 +19,238 @@ const namespaces = ["navigation"];
 await loadNamespaces(locale, namespaces);
 ---
 
-<header id="header" transition:name="header" transition:animate="initial">
+<header>
     <div class="header-items">
-        <div class="header-burger-menu">
-            <div class="header-burger-menu-button" id="menuButton">
-                <span></span>
+        <div class="control">
+            <button class="header-burger-menu">
+                <div class="header-burger-menu-button" id="menuButton">
+                    <span></span>
+                </div>
+            </button>
+            <div class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
+                    <path
+                        d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"
+                    ></path>
+                </svg>
+                <h1>{title}</h1>
             </div>
         </div>
-        <div class="brand">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
-                <path
-                    d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"
-                ></path>
-            </svg>
-            <h1>{title}</h1>
-        </div>
-        <ul class="nav">
-            <li>
-                <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
-            </li>
-            <li>
-                <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
-            </li>
-            <li>
-                <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
-            </li>
-            <li>
-                {homePage && <a href="#contact">{t("navigation:contact")}</a>}
-                {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
-            </li>
-            <li>
+        <nav class="nav-dropdown" id="siteNav">
+            <ul>
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
+                </li>
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
+                </li>
+                <li>
+                    {homePage && <a href="#contact">{t("navigation:contact")}</a>}
+                    {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
+                </li>
+                <li>
+                    <button class="submenu-button" aria-haspopup="true">{t("navigation:blog")}</button>
+                    <ul class="submenu" aria-label="submenu">
+                        <li>
+                            <a href={getRelativeLocaleUrl(locale, "/blog")}>Posts</a>
+                        </li>
+                        <li>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>Categories</a>
+                        </li>
+                        <li>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>Featured posts</a>
+                        </li>
+                        <li>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>All posts</a>
+                        </li>
+                    </ul>
+                </li>
                 <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" post={post} />
-            </li>
-        </ul>
+            </ul>
+        </nav>
     </div>
 </header>
 
-<aside id="asideMenu">
-    <ul class="aside-nav">
-        <li>
-            <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
-        </li>
-        <li>
-            <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("navigation:blog")}</a>
-        </li>
-        <li>
-            <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
-        </li>
-        <li>
-            {homePage && <a href="#contact">{t("navigation:contact")}</a>}
-            {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
-        </li>
-        <li>
-            <SimpleLanguageSelector showFlag={false} showTitle={false} post={post} />
-        </li>
-    </ul>
-</aside>
+<style is:global>
+    /* Currently has to be global, because of LanguageSelector */
+
+    .nav-dropdown {
+        height: var(--header-height);
+        transition: 0.4s;
+
+        @media (max-width: 468px) {
+            height: auto;
+            width: 100%;
+            max-height: 0;
+            visibility: hidden;
+            overflow: hidden;
+        }
+    }
+
+    body.nav-active .nav-dropdown {
+        max-height: 100vh;
+        visibility: visible;
+    }
+
+    .nav-dropdown > ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: 100%;
+
+        @media (max-width: 468px) {
+            width: 100%;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(var(--secondary), 1);
+            border-radius: 6px;
+        }
+    }
+
+    .nav-dropdown > ul > li {
+        list-style: none;
+        position: relative;
+        transition: 0.4s;
+        box-sizing: border-box;
+        height: 100%;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+
+        @media (max-width: 468px) {
+            width: 100%;
+            padding: 1rem 0rem 1rem 0rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .nav-dropdown ul li {
+        a,
+        button {
+            transition: 0.4s;
+            text-decoration: none;
+            color: var(--body-color);
+            height: 100%;
+            width: 100%;
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+
+            @media (max-width: 468px) {
+                justify-content: center;
+            }
+        }
+
+        &:hover,
+        &:focus-within {
+            cursor: pointer;
+
+            > a,
+            > button {
+                color: rgba(var(--accent), 1);
+            }
+
+            .submenu {
+                opacity: 1;
+                visibility: visible;
+                max-height: 100vh;
+
+                @media (max-width: 468px) {
+                    margin-top: 1rem;
+                }
+            }
+        }
+    }
+
+    .submenu-button {
+        cursor: pointer;
+        &:after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+    }
+
+    .nav-dropdown ul li .submenu {
+        position: absolute;
+        top: 85%;
+        left: 0;
+        display: block;
+        background: rgba(var(--secondary), 1);
+        box-shadow: var(--global-box-shadow);
+        border-radius: 6px;
+        width: max-content;
+        transition: 0.2s ease;
+        opacity: 0;
+        visibility: hidden;
+
+        @media (max-width: 468px) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            background-color: transparent;
+            max-height: 0;
+            box-shadow: none;
+        }
+    }
+
+    .nav-dropdown ul li .submenu li {
+        padding: 0.85rem;
+
+        &:hover,
+        &:focus-within {
+            background: rgba(var(--accent), 1);
+
+            > a,
+            > button {
+                color: var(--body-color);
+            }
+        }
+
+        &:first-child:hover,
+        &:first-child:focus-within {
+            border-radius: 6px 6px 0 0;
+        }
+
+        &:last-child:hover,
+        &:last-child:focus-within {
+            border-radius: 0 0 6px 6px;
+        }
+
+        @media (max-width: 468px) {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+</style>
 
 <style>
     header {
         width: 100%;
         color: var(--body-color);
         font-weight: 700;
-        position: sticky;
+        position: fixed;
         top: 0;
         background: var(--header-bg);
         backdrop-filter: blur(4px);
         z-index: 1010;
-        height: 75px;
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: center;
-        transition:
-            background 200ms ease,
-            transform 400ms ease;
 
         .header-items {
             max-width: var(--page-width);
@@ -104,13 +260,23 @@ await loadNamespaces(locale, namespaces);
             justify-content: space-between;
             flex-wrap: wrap;
             align-items: center;
-            row-gap: 1rem;
-            margin: auto;
             width: 100%;
+            margin: auto;
+
+            @media (max-width: 468px) {
+                flex-direction: column;
+            }
         }
 
-        &.hidden {
-            transform: translateY(-100%);
+        .control {
+            display: flex;
+            align-items: center;
+            height: var(--header-height);
+
+            @media (max-width: 468px) {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
 
         .brand {
@@ -133,45 +299,6 @@ await loadNamespaces(locale, namespaces);
                 background-clip: none;
                 color: inherit;
             }
-        }
-    }
-
-    :global(body.nav-active header.hidden) {
-        transform: none;
-    }
-
-    :global(body.nav-active header) {
-        background: transparent;
-    }
-
-    a {
-        color: var(--body-color);
-        transition: color 300ms ease;
-
-        &:visited {
-            color: var(--body-color);
-        }
-
-        &:hover {
-            color: rgba(var(--accent), 1);
-            text-decoration: none;
-        }
-    }
-
-    .nav {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        align-items: center;
-
-        ul {
-            display: flex;
-            flex-direction: row;
-            gap: 1rem;
-        }
-
-        @media screen and (max-width: 468px) {
-            display: none;
         }
     }
 
@@ -251,64 +378,49 @@ await loadNamespaces(locale, namespaces);
     }
 </style>
 
-<style>
-    aside {
-        position: fixed;
-        left: 0;
-        top: 0;
-        background: rgba(var(--secondary), 1);
-        width: 100%;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 6rem 1.5rem 1.5rem 1.5rem;
-        transform: translateY(-100%);
-        opacity: 0;
-        pointer-events: none;
-        transition: 300ms ease;
-    }
-
-    :global(body.nav-active aside) {
-        transform: translateY(0);
-        opacity: 1;
-        pointer-events: all;
-    }
-
-    .aside-nav {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 3rem;
-        font-size: 1.2rem;
-        font-weight: 700;
-    }
-
-    .contact-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
-
-        p {
-            font-size: 1.2em;
-            font-weight: 700;
-        }
-    }
-</style>
-
 <script>
-    const initSideNav = () => {
-        // Sidebar navigation
+    const initNav = () => {
         const navButton = document.querySelector<HTMLDivElement>("#menuButton"),
-            navigation = document.querySelector<HTMLElement>("#asideMenu"),
-            navLinks = document.querySelectorAll<HTMLAnchorElement>(".aside-nav > a, .aside-nav > a ");
+            navigation = document.querySelector<HTMLElement>("#siteNav"),
+            submenus = document.querySelectorAll(".submenu");
 
         if (navButton === null) {
             return;
         }
+
+        const closeDropdowns = (current: HTMLElement | null) => {
+            const openDropdowns = document.querySelectorAll(".nav-dropdown li.active");
+            openDropdowns.forEach((d) => {
+                if (d === current) {
+                    return;
+                }
+                d.classList.remove("active");
+            });
+        };
+
+        const collapseDropdowns = (e: MouseEvent) => {
+            let target = e.target as HTMLElement;
+            const openDropdowns = document.querySelectorAll(".nav-dropdown li.active");
+
+            openDropdowns.forEach((d) => {
+                if (d === target) {
+                    return;
+                }
+                d.classList.remove("active");
+            });
+        };
+
+        const handleSubmenus = () => {
+            submenus.forEach((sub) => {
+                // Toggle the parent li element
+                const submenu = sub.parentElement;
+                submenu?.addEventListener("click", (e) => {
+                    submenu.classList.toggle("active");
+                });
+
+                closeDropdowns(submenu);
+            });
+        };
 
         /**
          * Opens/closes navigation menu.
@@ -328,68 +440,24 @@ await loadNamespaces(locale, namespaces);
             }
         };
 
-        /**
-         * Opens navigation menu
-         */
-        const openNav = () => {
-            if (document.body.classList.contains("nav-active") === false) {
-                navButton.classList.add("active");
-                document.body.classList.add("nav-active");
-            }
-        };
-
-        /**
-         * Handles header on scroll
-         */
-        const headerOnScroll = () => {
-            var prevScrollpos = window.scrollY;
-            var headerDiv = document.getElementById("header") as HTMLElement;
-            window.onscroll = function () {
-                // Hides header on scroll
-                var currentScrollPos = window.scrollY;
-
-                /* if scrolling down, let it scroll out of view as normal */
-                if (prevScrollpos <= currentScrollPos) {
-                    headerDiv.classList.add("hidden");
-                } else {
-                    /* otherwise if we're scrolling up, fix the nav to the top */
-                    headerDiv.classList.remove("hidden");
-                }
-
-                prevScrollpos = currentScrollPos;
-            };
-        };
-
         // Collapse responsive navbar on click outside or on its child items
-        const collapseNav = () => {
-            document.onmouseup = (e) => {
-                let target = e.target as HTMLElement;
+        const collapseNav = (e: MouseEvent) => {
+            let target = e.target as HTMLElement;
 
-                if (navigation === target || navButton === target) {
-                    return;
-                }
+            if (target === navButton) {
+                return;
+            }
 
-                if (navigation?.contains(target)) {
-                    closeNav();
-                }
+            if (navigation?.contains(target)) {
+                return;
+            }
 
-                closeNav();
-            };
+            closeNav();
         };
 
-        // Prevent back button to use hash links
-        const handleHashes = () => {
-            navLinks.forEach((e) => {
-                let link = e.href;
-                if (link.includes("#") === false) {
-                    return;
-                }
-
-                e.onclick = (e) => {
-                    e.preventDefault();
-                    window.location.replace(link);
-                };
-            });
+        document.onmouseup = (e) => {
+            collapseNav(e);
+            collapseDropdowns(e);
         };
 
         // Run everything
@@ -397,10 +465,7 @@ await loadNamespaces(locale, namespaces);
             e.preventDefault();
             openCloseNav();
         });
-
-        //headerOnScroll();
-        collapseNav();
-        handleHashes();
+        //handleSubmenus();
 
         console.log("Navigation initialized.");
     };
@@ -408,7 +473,7 @@ await loadNamespaces(locale, namespaces);
     document.addEventListener(
         "astro:page-load",
         (e) => {
-            initSideNav();
+            initNav();
         },
         { once: false },
     );

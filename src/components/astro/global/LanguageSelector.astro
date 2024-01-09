@@ -29,8 +29,8 @@ const capitalizeFirstLetter = (str: string) => {
 };
 ---
 
-<div class="language-selector">
-    <button class:list={["dropdown dropdown-button"]} data-dropdown-target={`#${dropdownId}`} data-dropdown-placement={placement} id={buttonId}>
+<li>
+    <button class="submenu-button" aria-haspopup="true">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-translate" viewBox="0 0 16 16">
             <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022H6.18z"></path>
             <path
@@ -39,7 +39,8 @@ const capitalizeFirstLetter = (str: string) => {
         </svg>
         {(showFlag ? localeEmoji(currentLocale) + " " : "") + (showTitle ? capitalizeFirstLetter(ISO6991.getNativeName(currentLocale)) : "")}
     </button>
-    <ul class="dropdown-content" id={dropdownId} data-js-current-language={currentLocale}>
+
+    <ul class="submenu" aria-label="submenu">
         {
             !post &&
                 locales.map((locale) => {
@@ -79,7 +80,7 @@ const capitalizeFirstLetter = (str: string) => {
                 })
         }
     </ul>
-</div>
+</li>
 
 <script>
     const languageSelector = document.querySelectorAll("[data-js-language]");
@@ -104,11 +105,5 @@ const capitalizeFirstLetter = (str: string) => {
 
     a.active {
         font-weight: 700;
-    }
-
-    .language-selector {
-        display: flex;
-        justify-content: center;
-        position: relative;
     }
 </style>

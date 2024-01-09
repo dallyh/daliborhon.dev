@@ -1,6 +1,7 @@
 :root {
     --page-width: 1024px;
     --padding-x: 0.75rem;
+    --header-height: 75px;
 
     @media screen and (min-width: 2240px) {
         --page-width: 1324px;

@@ -179,28 +179,14 @@ a {
     color: var(--body-color);
     font-family: inherit;
     border: none;
-    transition: all 200ms;
     cursor: pointer;
     font-size: inherit;
     position: relative;
-    padding: 0;
-    transition: color 300ms ease;
+    transition: color 400ms ease;
     text-align: center;
 
     i {
         margin-right: 4px;
-    }
-
-    &:hover {
-        color: rgba(var(--accent), 1);
-    }
-
-    &:active {
-        color: rgba(var(--accent), 1);
-    }
-
-    &:focus {
-        color: rgba(var(--accent), 1);
     }
 
     &:after {

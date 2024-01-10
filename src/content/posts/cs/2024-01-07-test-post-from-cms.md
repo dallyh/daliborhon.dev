@@ -11,6 +11,6 @@ hidden: false
 featured: false
 ogImage: /assets/uploads/img/astro.jpg
 pubDateTime: 2024-01-07T21:37:39+01:00
-modDatetime: ""
+modDatetime: 2024-01-10T21:37:39+01:00
 ---
 Testovací post z CMS

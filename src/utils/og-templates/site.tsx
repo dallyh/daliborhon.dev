@@ -76,7 +76,7 @@ export default async (locale: string) => {
                         fontSize: 35,
                     }}
                 >
-                    {t("landing:description")}
+                    {t("landing.description")}
                 </p>
             </div>
         </div>

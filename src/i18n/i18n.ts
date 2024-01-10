@@ -1,11 +1,13 @@
-import i18next from "i18next";
+import i18next, { type InitOptions } from "i18next";
 import fsBackend from "i18next-fs-backend";
 import { defaultLocale, locales } from "@config/i18n";
 
-const i18nConfig = {
-    debug: false,
+const i18nConfig: InitOptions = {
+    debug: import.meta.env.DEV,
     ns: [],
     defaultNS: "",
+    nsSeparator: ".",
+    keySeparator: false,
     fallbackLng: defaultLocale,
     supportedLngs: locales,
 };

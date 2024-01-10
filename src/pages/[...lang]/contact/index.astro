@@ -15,12 +15,12 @@ await loadNamespaces(locale, namespaces);
 
 const layoutProps = {
     title: "Contact - Dalibor Hon",
-    description: t("landing:description"),
+    description: t("landing.description"),
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <Section sectionTitle={t("shared:LeaveMeAMessage")} sectionDescription={t("contactForm:ContactMe")} id="contact">
+    <Section sectionTitle={t("shared.LeaveMeAMessage")} sectionDescription={t("contactForm.ContactMe")} id="contact">
         <Contact />
     </Section>
 </PageLayout>

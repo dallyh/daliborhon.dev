@@ -15,7 +15,7 @@ await loadNamespaces(locale, namespaces);
 
 <div class="projects-cards-wrapper">
     <div class="cards">
-        <ProjectCard href="https://github.com/dallyh/daliborhon.dev" hrefTitle={t("projects:ThisWebsite")} description={t("projects:ThisWebsiteDescription")}>
+        <ProjectCard href="https://github.com/dallyh/daliborhon.dev" hrefTitle={t("projects.ThisWebsite")} description={t("projects.ThisWebsiteDescription")}>
             <i class="bi bi-file-earmark-code-fill" slot="image"></i>
             <div class="rounded-tag astro" slot="tags">Astro.js</div>
             <div class="rounded-tag typescript" slot="tags">TypeScript</div>
@@ -29,8 +29,8 @@ await loadNamespaces(locale, namespaces);
             <div class="rounded-tag typescript" slot="tags">TypeScript</div>
             <div class="rounded-tag webdev" slot="tags">Web</div>
         </ProjectCard>
-        <!-- <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects:LemmyKtClient")} description={t("projects:LemmyKtClientDescription") + " " + "<a href='https://join-lemmy.org/' target='_blank'>Lemmy</a></p>"}/> -->
-        <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects:LemmyKtClient")} description={t("projects:LemmyKtClientDescription")}>
+        <!-- <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects.LemmyKtClient")} description={t("projects.LemmyKtClientDescription") + " " + "<a href='https://join-lemmy.org/' target='_blank'>Lemmy</a></p>"}/> -->
+        <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects.LemmyKtClient")} description={t("projects.LemmyKtClientDescription")}>
             <Image class="lemmy-logo" slot="image" src={Lemmy} width={85} format="webp" alt="Lemmy software logo" loading="eager" />
             <div class="rounded-tag kmp" slot="tags">Kotlin Multiplatform</div>
         </ProjectCard>

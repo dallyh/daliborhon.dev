@@ -39,17 +39,17 @@ await loadNamespaces(locale, namespaces);
         <nav class="nav-dropdown" id="siteNav">
             <ul>
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation:home")}</a>
+                    <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation.home")}</a>
                 </li>
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation:resume")}</a>
+                    <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation.resume")}</a>
                 </li>
                 <li>
-                    {homePage && <a href="#contact">{t("navigation:contact")}</a>}
-                    {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
+                    {homePage && <a href="#contact">{t("navigation.contact")}</a>}
+                    {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation.contact")}</a>}
                 </li>
                 <li data-submenu="true">
-                    <button class="submenu-button" aria-haspopup="true" aria-expanded="false" aria-controls="blogSubmenu">{t("navigation:blog")}</button>
+                    <button class="submenu-button" aria-haspopup="true" aria-expanded="false" aria-controls="blogSubmenu">{t("navigation.blog")}</button>
                     <ul class="submenu" aria-label="submenu" id="blogSubmenu">
                         <li>
                             <a href={getRelativeLocaleUrl(locale, "/blog")}>Posts</a>

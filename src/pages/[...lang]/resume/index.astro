@@ -22,8 +22,8 @@ const namespaces = ["resume", "shared"];
 await loadNamespaces(locale, namespaces);
 
 const layoutProps = {
-    title: t("shared:NamePossesive") + " " + t("shared:Resume"),
-    description: t("shared:Description"),
+    title: t("shared.NamePossesive") + " " + t("shared.Resume"),
+    description: t("shared.Description"),
 };
 ---
 
@@ -48,34 +48,34 @@ const layoutProps = {
     </section>
     <section class="resume-section skills" id="intro">
         <div class="section-content">
-            <h2 class="gradient-text">{t("resume:SectionIntro")}</h2>
+            <h2 class="gradient-text">{t("resume.SectionIntro")}</h2>
             <div class="intro-projects">
                 <div>
                     <div class="content">
                         <div class="skill-level">
                             <span>+</span>
-                            <h3>45 {t("resume:CardProjectTitle")}</h3>
+                            <h3>45 {t("resume.CardProjectTitle")}</h3>
                         </div>
                     </div>
                 </div>
-                <p>{t("resume:CardProjectDetail")}</p>
+                <p>{t("resume.CardProjectDetail")}</p>
             </div>
             <div class="intro-summary">
                 <div class="bars">
                     <div class="bar">
-                        <h3>{t("resume:CardBATitle")}</h3>
+                        <h3>{t("resume.CardBATitle")}</h3>
                         <div class="fill" style="--width: 80%"></div>
-                        <p>{t("resume:CardBADetail")}</p>
+                        <p>{t("resume.CardBADetail")}</p>
                     </div>
                     <div class="bar">
-                        <h3>{t("resume:CardImplementationTitle")}</h3>
+                        <h3>{t("resume.CardImplementationTitle")}</h3>
                         <div class="fill" style="--width: 60%"></div>
-                        <p>{t("resume:CardImplementationDetail")}</p>
+                        <p>{t("resume.CardImplementationDetail")}</p>
                     </div>
                     <div class="bar">
-                        <h3>{t("resume:CardDevTitle")}</h3>
+                        <h3>{t("resume.CardDevTitle")}</h3>
                         <div class="fill" style="--width: 20%"></div>
-                        <p>{t("resume:CardDevDetail")}</p>
+                        <p>{t("resume.CardDevDetail")}</p>
                     </div>
                 </div>
             </div>
@@ -83,42 +83,42 @@ const layoutProps = {
     </section>
     <section class="resume-section" id="skills">
         <div class="section-content">
-            <h2 class="gradient-text">{t("resume:SectionSkills")}</h2>
+            <h2 class="gradient-text">{t("resume.SectionSkills")}</h2>
             <p>
-                {t("resume:SkillsIntroduction")}
+                {t("resume.SkillsIntroduction")}
             </p>
             <div class="list-card exp">
-                <div class="exp-text">+ 2 {t("resume:SkillsYears")}</div>
+                <div class="exp-text">+ 2 {t("resume.SkillsYears")}</div>
                 <div class="exp-description">
-                    <h3>{t("resume:SkillsBA")}</h3>
-                    <span>{t("resume:SkillsBADescription")}</span>
+                    <h3>{t("resume.SkillsBA")}</h3>
+                    <span>{t("resume.SkillsBADescription")}</span>
                 </div>
             </div>
             <div class="list-card exp">
-                <div class="exp-text">+ 2 {t("resume:SkillsYears")}</div>
+                <div class="exp-text">+ 2 {t("resume.SkillsYears")}</div>
                 <div class="exp-description">
-                    <h3>{t("resume:SkillsWindowsServers")}</h3>
-                    <span>{t("resume:SkillsWindowsServersDescription")}</span>
+                    <h3>{t("resume.SkillsWindowsServers")}</h3>
+                    <span>{t("resume.SkillsWindowsServersDescription")}</span>
                 </div>
             </div>
             <div class="list-card exp">
-                <div class="exp-text">+ 4 {t("resume:SkillsYears")}</div>
+                <div class="exp-text">+ 4 {t("resume.SkillsYears")}</div>
                 <div class="exp-description">
-                    <h3>{t("resume:SkillsDatabases")}</h3>
-                    <span>{t("resume:SkillsDatabasesDescription")}</span>
+                    <h3>{t("resume.SkillsDatabases")}</h3>
+                    <span>{t("resume.SkillsDatabasesDescription")}</span>
                 </div>
             </div>
             <div class="list-card exp">
-                <div class="exp-text">+ 1 {t("resume:SkillsYears")}</div>
+                <div class="exp-text">+ 1 {t("resume.SkillsYears")}</div>
                 <div class="exp-description">
-                    <h3>{t("resume:SkillsOOP")}</h3>
-                    <span>{t("resume:SkillsOOPDescription")}</span>
+                    <h3>{t("resume.SkillsOOP")}</h3>
+                    <span>{t("resume.SkillsOOPDescription")}</span>
                 </div>
             </div>
             <div class="list-card">
                 <h3 class="dev-list-title">
-                    {t("resume:SkillsProgrammingLangAndTools")}
-                    <span><i class="bi bi-info-circle" data-tooltip="top" data-tooltip-text={t("resume:HoverIconsTooltip")}></i></span>
+                    {t("resume.SkillsProgrammingLangAndTools")}
+                    <span><i class="bi bi-info-circle" data-tooltip="top" data-tooltip-text={t("resume.HoverIconsTooltip")}></i></span>
                 </h3>
                 <ul class="dev-list-inline">
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="HTML5">
@@ -175,7 +175,7 @@ const layoutProps = {
                 </ul>
             </div>
             <div class="list-card">
-                <h3>{t("resume:SkillsSoftwareAndPlatforms")}</h3>
+                <h3>{t("resume.SkillsSoftwareAndPlatforms")}</h3>
                 <div class="software-experience-list">
                     <ul>
                         <li>
@@ -202,16 +202,16 @@ const layoutProps = {
                     </ul>
                 </div>
                 <p>
-                    {t("resume:SkillsSoftwareAndPlatformsDescription")}
+                    {t("resume.SkillsSoftwareAndPlatformsDescription")}
                 </p>
             </div>
         </div>
     </section>
     <section class="resume-section" id="certifications">
         <div class="section-content">
-            <h2 class="gradient-text">{t("resume:SectionCertifications")}</h2>
+            <h2 class="gradient-text">{t("resume.SectionCertifications")}</h2>
             <div class="certifications-list">
-                <p><Fragment set:html={t("resume:CertLinkedIn")} /></p>
+                <p><Fragment set:html={t("resume.CertLinkedIn")} /></p>
                 <div class="certifications-grid">
                     <div class="cert-card">
                         <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
@@ -251,7 +251,7 @@ const layoutProps = {
     </section>
     <section class="resume-setion" id="experience">
         <div class="section-content timeline">
-            <h2 class="gradient-text">{t("resume:TimelineTitle")}</h2>
+            <h2 class="gradient-text">{t("resume.TimelineTitle")}</h2>
             <Timeline />
         </div>
     </section>

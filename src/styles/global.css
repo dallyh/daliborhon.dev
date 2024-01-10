@@ -92,21 +92,13 @@ p {
     transition: 300ms;
     min-width: 120px;
     height: min-content;
-}
 
-.button a {
-    color: inherit;
-}
-
-.button a:hover {
-    text-decoration: none;
-    color: #0000;
-}
-
-.button:hover {
-    background-color: rgba(var(--accent), 1);
-    color: var(--button-hover-color);
-    cursor: pointer;
+    &:hover,
+    &:focus-visible {
+        background-color: rgba(var(--accent), 1);
+        color: var(--button-hover-color);
+        cursor: pointer;
+    }
 }
 
 a {

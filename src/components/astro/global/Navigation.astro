@@ -22,8 +22,8 @@ await loadNamespaces(locale, namespaces);
 <header>
     <div class="header-items">
         <div class="control">
-            <button class="header-burger-menu">
-                <div class="header-burger-menu-button" id="menuButton">
+            <button class="header-burger-menu" aria-haspopup="true" aria-role="menu" id="menuButton">
+                <div class="header-burger-menu-button">
                     <span></span>
                 </div>
             </button>
@@ -48,9 +48,9 @@ await loadNamespaces(locale, namespaces);
                     {homePage && <a href="#contact">{t("navigation:contact")}</a>}
                     {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation:contact")}</a>}
                 </li>
-                <li>
-                    <button class="submenu-button" aria-haspopup="true">{t("navigation:blog")}</button>
-                    <ul class="submenu" aria-label="submenu">
+                <li data-submenu="true">
+                    <button class="submenu-button" aria-haspopup="true" aria-expanded="false" aria-controls="blogSubmenu">{t("navigation:blog")}</button>
+                    <ul class="submenu" aria-label="submenu" id="blogSubmenu">
                         <li>
                             <a href={getRelativeLocaleUrl(locale, "/blog")}>Posts</a>
                         </li>
@@ -80,86 +80,104 @@ await loadNamespaces(locale, namespaces);
 
         @media (max-width: 468px) {
             height: auto;
-            width: 100%;
             max-height: 0;
+            width: 100%;
             visibility: hidden;
             overflow: hidden;
         }
     }
 
     body.nav-active .nav-dropdown {
-        max-height: 100vh;
+        max-height: 70vh;
         visibility: visible;
     }
 
-    .nav-dropdown > ul {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        height: 100%;
-
-        @media (max-width: 468px) {
-            width: 100%;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
-            background: rgba(var(--secondary), 1);
-            border-radius: 6px;
-        }
+    body.nav-active header {
+        background: rgba(var(--secondary), 1);
+        box-shadow: var(--global-box-shadow);
     }
 
-    .nav-dropdown > ul > li {
-        list-style: none;
-        position: relative;
-        transition: 0.4s;
-        box-sizing: border-box;
-        height: 100%;
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-
-        @media (max-width: 468px) {
-            width: 100%;
-            padding: 1rem 0rem 1rem 0rem;
+    .nav-dropdown {
+        > ul {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-
-    .nav-dropdown ul li {
-        a,
-        button {
-            transition: 0.4s;
-            text-decoration: none;
-            color: var(--body-color);
+            flex-direction: row;
+            flex-wrap: wrap;
             height: 100%;
-            width: 100%;
-            display: flex;
-            gap: 0.3rem;
-            align-items: center;
 
             @media (max-width: 468px) {
-                justify-content: center;
-            }
-        }
-
-        &:hover,
-        &:focus-within {
-            cursor: pointer;
-
-            > a,
-            > button {
-                color: rgba(var(--accent), 1);
+                width: 100%;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                margin-bottom: 0.5rem;
+                border-radius: 6px;
             }
 
-            .submenu {
-                opacity: 1;
-                visibility: visible;
-                max-height: 100vh;
+            > li {
+                list-style: none;
+                position: relative;
+                transition: 0.4s;
+                box-sizing: border-box;
+                height: 100%;
+                padding-right: 0.5rem;
+                padding-left: 0.5rem;
+                border-radius: 6px;
 
                 @media (max-width: 468px) {
-                    margin-top: 1rem;
+                    width: 100%;
+                    padding: 1rem 0rem 1rem 0rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                a,
+                button {
+                    transition: 0.4s;
+                    text-decoration: none;
+                    color: var(--body-color);
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    gap: 0.3rem;
+                    align-items: center;
+
+                    @media (max-width: 468px) {
+                        justify-content: center;
+                    }
+                }
+
+                &:hover,
+                &:focus-within,
+                &.opened {
+                    cursor: pointer;
+
+                    > a,
+                    > button {
+
+                        color: rgba(var(--accent), 1);
+                    }
+
+                    @media (max-width: 468px) {
+                        background: rgba(var(--accent), 0.6);
+
+                        > a,
+                        > button {
+                            color: rgba(var(--body-color), 1);
+                        }
+                    }
+                }
+
+                &.opened {
+                    .submenu {
+                        opacity: 1;
+                        visibility: visible;
+                        max-height: 100vh;
+
+                        @media (max-width: 468px) {
+                            margin-top: 1rem;
+                        }
+                    }
                 }
             }
         }
@@ -167,6 +185,7 @@ await loadNamespaces(locale, namespaces);
 
     .submenu-button {
         cursor: pointer;
+
         &:after {
             display: inline-block;
             margin-left: 0.255em;
@@ -179,7 +198,7 @@ await loadNamespaces(locale, namespaces);
         }
     }
 
-    .nav-dropdown ul li .submenu {
+    .submenu {
         position: absolute;
         top: 85%;
         left: 0;
@@ -191,48 +210,51 @@ await loadNamespaces(locale, namespaces);
         transition: 0.2s ease;
         opacity: 0;
         visibility: hidden;
+        color: red;
 
         @media (max-width: 468px) {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             position: relative;
             width: 100%;
             background-color: transparent;
             max-height: 0;
             box-shadow: none;
         }
-    }
 
-    .nav-dropdown ul li .submenu li {
-        padding: 0.85rem;
+        > li {
+            padding: 0.85rem;
 
-        &:hover,
-        &:focus-within {
-            background: rgba(var(--accent), 1);
+            @media (min-width: 468px) {
+                &:first-child:hover,
+                &:first-child:focus-within {
+                    border-radius: 6px 6px 0 0;
+                }
 
-            > a,
-            > button {
-                color: var(--body-color);
+                &:last-child:hover,
+                &:last-child:focus-within {
+                    border-radius: 0 0 6px 6px;
+                }
             }
-        }
 
-        &:first-child:hover,
-        &:first-child:focus-within {
-            border-radius: 6px 6px 0 0;
-        }
+            &:hover,
+            &:focus-within {
+                background: rgba(var(--accent), 0.6);
 
-        &:last-child:hover,
-        &:last-child:focus-within {
-            border-radius: 0 0 6px 6px;
-        }
+                > a,
+                > button {
+                    color: var(--body-color);
+                }
 
-        @media (max-width: 468px) {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+                @media (max-width: 468px) {
+                    background: rgba(var(--secondary), 0.6);
+
+                    > a,
+                    > button {
+                        color: var(--body-color);
+                    }
+                }
+            }
         }
     }
 </style>
@@ -241,9 +263,9 @@ await loadNamespaces(locale, namespaces);
     header {
         width: 100%;
         color: var(--body-color);
-        font-weight: 700;
-        position: fixed;
-        top: 0;
+        font-weight: 500;
+        position: sticky;
+        top: -1px;
         background: var(--header-bg);
         backdrop-filter: blur(4px);
         z-index: 1010;
@@ -251,6 +273,7 @@ await loadNamespaces(locale, namespaces);
         justify-content: space-between;
         flex-wrap: wrap;
         align-items: center;
+        transition: background 0.4s ease;
 
         .header-items {
             max-width: var(--page-width);
@@ -283,6 +306,7 @@ await loadNamespaces(locale, namespaces);
             color: rgba(var(--accent), 1);
             display: flex;
             align-items: center;
+            font-weight: 700;
 
             svg {
                 margin-right: 6px;
@@ -307,8 +331,12 @@ await loadNamespaces(locale, namespaces);
         align-items: center;
         justify-content: center;
         width: 2.125rem;
-        margin-top: auto;
-        margin-bottom: auto;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:focus-visible {
+            box-shadow: 0 0 0 0.5rem rgba(var(--accent), 0.5);
+        }
 
         @media screen and (max-width: 468px) {
             display: flex;
@@ -319,62 +347,60 @@ await loadNamespaces(locale, namespaces);
         position: relative;
         height: 26px;
         width: 40px;
-        cursor: pointer;
         background-color: transparent;
-    }
-
-    .header-burger-menu-button > span {
         pointer-events: none;
-    }
 
-    .header-burger-menu-button.active span {
-        opacity: 0;
-    }
+        > span {
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-    .header-burger-menu-button.active.header-burger-menu-button::before,
-    .header-burger-menu-button.active.header-burger-menu-button::after {
-        top: 40%;
-    }
+        span,
+        &::before,
+        &::after {
+            display: block;
+            position: absolute;
+            height: 5px;
+            width: 100%;
+            background-color: var(--burger-menu-bg);
+            border-radius: 6px;
+            opacity: 1;
+        }
 
-    .header-burger-menu-button.active.header-burger-menu-button::before {
-        transform: rotate(45deg);
-    }
+        &::before,
+        &::after {
+            content: "";
+            transition:
+                top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+        }
 
-    .header-burger-menu-button.active.header-burger-menu-button::after {
-        transform: rotate(-45deg);
-    }
+        &::before {
+            top: 0;
+        }
 
-    .header-burger-menu-button span,
-    .header-burger-menu-button::before,
-    .header-burger-menu-button::after {
-        display: block;
-        position: absolute;
-        height: 5px;
-        width: 100%;
-        background-color: var(--burger-menu-bg);
-        border-radius: 6px;
-        opacity: 1;
-    }
+        &::after {
+            bottom: 0;
+        }
 
-    .header-burger-menu-button::before,
-    .header-burger-menu-button::after {
-        content: "";
-        transition:
-            top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-            transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-    }
+        &.active {
+            span {
+                opacity: 0;
+            }
 
-    .header-burger-menu-button span {
-        top: 50%;
-        transform: translateY(-50%);
-    }
+            &::before,
+            &::after {
+                top: 40%;
+            }
 
-    .header-burger-menu-button::before {
-        top: 0;
-    }
+            &::before {
+                transform: rotate(45deg);
+            }
 
-    .header-burger-menu-button::after {
-        bottom: 0;
+            &::after {
+                transform: rotate(-45deg);
+            }
+        }
     }
 </style>
 
@@ -382,43 +408,45 @@ await loadNamespaces(locale, namespaces);
     const initNav = () => {
         const navButton = document.querySelector<HTMLDivElement>("#menuButton"),
             navigation = document.querySelector<HTMLElement>("#siteNav"),
-            submenus = document.querySelectorAll(".submenu");
+            submenuItems = document.querySelectorAll("[data-submenu]");
 
         if (navButton === null) {
             return;
         }
 
-        const closeDropdowns = (current: HTMLElement | null) => {
-            const openDropdowns = document.querySelectorAll(".nav-dropdown li.active");
-            openDropdowns.forEach((d) => {
-                if (d === current) {
-                    return;
-                }
-                d.classList.remove("active");
+        const collapseDropdowns = (e: MouseEvent | KeyboardEvent | null = null) => {     
+            const openedDropdowns = document.querySelectorAll("[data-submenu].opened");
+
+            if (e === null) {
+                openedDropdowns.forEach((d) => {
+                d.classList.remove("opened");
             });
-        };
+                return;
+            }
 
-        const collapseDropdowns = (e: MouseEvent) => {
-            let target = e.target as HTMLElement;
-            const openDropdowns = document.querySelectorAll(".nav-dropdown li.active");
 
-            openDropdowns.forEach((d) => {
-                if (d === target) {
+            const target = e.target;
+            openedDropdowns.forEach((d) => {
+                const button = d.children[0];
+                if (button === target) {
                     return;
                 }
-                d.classList.remove("active");
+                d.classList.remove("opened");
             });
         };
 
         const handleSubmenus = () => {
-            submenus.forEach((sub) => {
-                // Toggle the parent li element
-                const submenu = sub.parentElement;
-                submenu?.addEventListener("click", (e) => {
-                    submenu.classList.toggle("active");
-                });
+            submenuItems.forEach((sub) => {
+                sub?.addEventListener("click", (e) => {
+                    sub.classList.toggle("opened");
+                    const button = sub.children[0];
 
-                closeDropdowns(submenu);
+                    if (button.ariaExpanded === "false") {
+                        button.ariaExpanded = "true";
+                    } else {
+                        button.ariaExpanded = "false";
+                    }
+                });
             });
         };
 
@@ -426,7 +454,7 @@ await loadNamespaces(locale, namespaces);
          * Opens/closes navigation menu.
          */
         const openCloseNav = () => {
-            navButton.classList.toggle("active");
+            navButton.children[0].classList.toggle("active");
             document.body.classList.toggle("nav-active");
         };
 
@@ -435,13 +463,18 @@ await loadNamespaces(locale, namespaces);
          */
         const closeNav = () => {
             if (document.body.classList.contains("nav-active")) {
-                navButton.classList.remove("active");
+                navButton.children[0].classList.toggle("active");
                 document.body.classList.remove("nav-active");
             }
         };
 
         // Collapse responsive navbar on click outside or on its child items
-        const collapseNav = (e: MouseEvent) => {
+        const collapseNav = (e: MouseEvent | KeyboardEvent | null = null) => {
+            if (e === null) {
+                closeNav();
+                return;
+            }
+
             let target = e.target as HTMLElement;
 
             if (target === navButton) {
@@ -460,12 +493,25 @@ await loadNamespaces(locale, namespaces);
             collapseDropdowns(e);
         };
 
+        document.onkeydown = (e) => {
+            if (e.key === "Enter") {
+                collapseNav(e);
+                collapseDropdowns(e);
+            }
+
+            if (e.key === "Escape") {    
+                collapseNav();
+                collapseDropdowns();
+            }
+        };
+
         // Run everything
         navButton.addEventListener("click", (e) => {
             e.preventDefault();
             openCloseNav();
         });
-        //handleSubmenus();
+
+        handleSubmenus();
 
         console.log("Navigation initialized.");
     };

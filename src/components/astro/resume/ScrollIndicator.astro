@@ -8,7 +8,7 @@ interface Props {
 const { href } = Astro.props;
 ---
 
-<a class="arrow-wrap" href={href} id="indicator">
+<a class="arrow-wrap" href={href} id="indicator" aria-label="Continue to first chapter" title="First chapter">
     <span class="arrow"></span>
 </a>
 
@@ -53,6 +53,10 @@ const { href } = Astro.props;
         border-width: 1.5em 1.5em 0 1.5em;
         border-color: rgba(var(--secondary), 1) transparent transparent transparent;
         transform: rotate(360deg);
+    }
+
+    .arrow-wrap:focus-visible {
+        box-shadow: 0 0 0 0.2rem rgba(var(--accent), 1);
     }
 
     .arrow-wrap .arrow {

@@ -6,6 +6,8 @@ import TagList from "./TagList.astro";
 import { getOgImageUrl } from "@utils/getOgImageUrl";
 import { getBlogPostUrl } from "@utils/getBlogPostUrl";
 import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
+import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -22,6 +24,13 @@ const transitionName = getPostImgTransitionName(post);
     <img src={ogUrl} alt={post.data.title} transition:name={transitionName} loading="lazy" />
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.data.title}</a>
+        {
+            post.data.category && (
+                <p>
+                    Posted in: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                </p>
+            )
+        }
         <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
     </div>
     <div class="tags">
@@ -52,6 +61,14 @@ const transitionName = getPostImgTransitionName(post);
             padding: 0.5rem;
             font-size: 0.825rem;
             line-height: 2;
+
+            p {
+                font-size: inherit;
+
+                a {
+                    font-size: inherit;
+                }
+            }
         }
 
         img {

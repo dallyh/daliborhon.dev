@@ -112,6 +112,10 @@ a {
         text-decoration-color: inherit;
         text-decoration: underline;
     }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 0.2rem rgba(var(--accent), 1);
+    }
 }
 
 .dropdown-content {

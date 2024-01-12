@@ -8,12 +8,10 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 interface ContactFormProps {
     resources: ContactRes;
     commonResources: CommonRes;
-    showCloseButton?: boolean;
-    isDialog?: boolean;
 }
 
 const ACCESS_KEY = "7d81d4b3-a54e-4341-9544-2553a5aa4daf";
-const HCAPTCHA_KEY = import.meta.env.DEV ? "10000000-ffff-ffff-ffff-000000000001" : "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
+const HCAPTCHA_KEY = import.meta.env.DEV ? "error-10000000-ffff-ffff-ffff-000000000001" : "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 const API_URL = "https://api.web3forms.com/submit";
 
 export default function ContactForm(props: ContactFormProps) {
@@ -31,8 +29,6 @@ export default function ContactForm(props: ContactFormProps) {
     const [Message, setMessage] = useState("");
     const [animate] = useAutoAnimate();
     const captchaRef = useRef<HCaptcha>(null);
-    const [token, setToken] = useState("");
-    const [data, setData] = useState("");
 
     const userName = useWatch({
         control,
@@ -44,23 +40,16 @@ export default function ContactForm(props: ContactFormProps) {
         setValue("subject", `${userName} sent a message from Website`);
     }, []);
 
-    useEffect(() => {
-        console.log("Token set")
-        setValue("h-captcha-response", token);
-    }, [token]);
-
-    const onSubmit = async (data: FieldValues, e: any) => {
-        const captchaRes = await captchaRef.current?.execute({async: true});
-        if (captchaRes !== undefined) {
-            setToken(captchaRes.response);
+    const onSubmit = async (formData: FieldValues, e: any) => {
+        const token = await captchaRef.current?.execute({ async: true });
+        if (token?.response === undefined) {
+            setMessage("Could not get captcha token.");
+            return;
         }
-        
-        await postData(data, e);
 
-    };
-
-    const postData = async (data: FieldValues, e: any) => {
+        const data = { ...formData, "h-captcha-response": token.response };
         console.log(data);
+
         await fetch(API_URL, {
             method: "POST",
             headers: {
@@ -110,7 +99,7 @@ export default function ContactForm(props: ContactFormProps) {
                         <input type="hidden" {...register("subject")} />
                         <input type="hidden" value="Website submission" {...register("from_name")} />
                         <input type="checkbox" style={{ display: "none" }} {...register("botcheck")}></input>
-                        <HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" onError={onHCaptchaError} onExpire={onHCaptchaExpire} ref={captchaRef} />
+                        <HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" onExpire={onHCaptchaExpire} ref={captchaRef} />
 
                         <div ref={animate}>
                             <label htmlFor="full_name">Full Name</label>

@@ -8,6 +8,7 @@ import { getBlogPostUrl } from "@utils/getBlogPostUrl";
 import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
 import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -18,6 +19,8 @@ const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
 const postUrl = getBlogPostUrl(locale, post);
 const transitionName = getPostImgTransitionName(post);
+
+await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
@@ -27,7 +30,7 @@ const transitionName = getPostImgTransitionName(post);
         {
             post.data.category && (
                 <p>
-                    Posted in: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                    {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
                 </p>
             )
         }

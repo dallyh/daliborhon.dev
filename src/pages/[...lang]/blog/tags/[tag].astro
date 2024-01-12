@@ -44,26 +44,27 @@ const filteredPosts = posts
     });
 
 // i18next
-const namespaces = ["contactForm"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["blog", "common"]);
 
+const tagTitle = await getTagByLocale(locale, tag);
+const tagDescription = `${t("blog.posts_tagged")} #${tagTitle}`
 const layoutProps = {
-    title: "Dalibor Hon",
-    description: t("landing.description"),
+    title: `${t("blog.tag")}: ${tagTitle}`,
+    description: tagDescription,
 };
 
-const title = await getTagByLocale(locale, tag);
+
 ---
 
 <PageLayout {...layoutProps}>
     <main>
         <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label="Tags" />
-            <BreadCrumbsItem currentPage={true} label={title} />
+            <BreadCrumbsItem currentPage={true} label={t("blog.tags")}/>
+            <BreadCrumbsItem currentPage={true} label={tagTitle} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={`Posts tagged with #${title}`}>
+        <Section id="taggedPosts" sectionTitle={tagDescription}>
             <ul>
                 {
                     filteredPosts.map((post) => (

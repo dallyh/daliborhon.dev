@@ -10,6 +10,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import type { CollectionEntry } from "astro:content";
 import { getBlogPostByIdAndLocale } from "@utils/getBlogPostByIdAndLocale";
 import { getBlogPostUrl } from "@utils/getBlogPostUrl";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     showFlag?: boolean;
@@ -20,13 +21,15 @@ interface Props {
     post?: CollectionEntry<"posts">;
 }
 
-const { showFlag = false, showTitle = true, placement = "bottom", dropdownId, buttonId, post } = Astro.props;
+const { showFlag = false, showTitle = true, post } = Astro.props;
 
 const currentLocale = getLocale(Astro.url);
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
     return capitalized;
 };
+
+await loadNamespaces(currentLocale, ["common"]);
 ---
 
 <li data-submenu="true">
@@ -40,7 +43,7 @@ const capitalizeFirstLetter = (str: string) => {
         {(showFlag ? localeEmoji(currentLocale) + " " : "") + (showTitle ? capitalizeFirstLetter(ISO6991.getNativeName(currentLocale)) : "")}
     </button>
 
-    <ul class="submenu" aria-label="submenu" id="languageSubmenu">
+    <ul class="submenu" aria-label={t("common.language_submenu_a_label")} id="languageSubmenu">
         {
             !post &&
                 locales.map((locale) => {

@@ -14,8 +14,7 @@ export { getStaticPaths };
 
 // i18n
 const locale = getLocale(Astro.url);
-const namespaces = ["blog"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["blog", "common"]);
 
 const posts = await getCollection("posts", ({ data }) => {
     return data.language === locale && !data.hidden && data.featured;
@@ -25,20 +24,20 @@ const sortedPosts = posts.sort((a, b) => {
 });
 
 const layoutProps = {
-    title: "Featured Posts - Dalibor Hon",
-    description: t("landing.description"),
+    title: t("blog.featured_posts_title"),
+    description: t("blog.featured_posts_description"),
 };
 ---
 
 <PageLayout {...layoutProps}>
     <main>
         <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label="Posts" />
-            <BreadCrumbsItem currentPage={true} label="Featured" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
+            <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={`Featured posts`}>
+        <Section id="taggedPosts" sectionTitle={t("blog.featured_posts_title")}>
             <ul>
                 {
                     sortedPosts.map((post) => (
@@ -63,9 +62,7 @@ const layoutProps = {
             grid-template-columns: 1fr;
         }
     }
-</style>
 
-<style>
     .post-list {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

@@ -1,6 +1,9 @@
-ThisWebsite: Tento web
-ThisWebsiteDescription: Zdrojový kód této webové stránky
-LemmyKtClient: Lemmy Kotlin klient
-LemmyKtClientDescription: Multiplatformní klient pro platformu
-OldWebsite: Online životopis
-OldWebisteDescription: Zdrojový kód mé starší webové stránky
+cms_oauth_description: >-
+    Rozhraní API, které poskytuje autentizaci pro systém Static CMS
+    prostřednictvím služby GitHub OAuth.
+cms_oauth_title: Zprostředkovatel GitHub OAuth pro Static CMS
+lemmy_kt_client_description: Multiplatformní klient pro platformu
+lemmy_kt_client_title: Lemmy Kotlin klient
+projects_title: Nedávné projekty
+this_website_description: Zdrojový kód této webové stránky
+this_website_title: Tento web

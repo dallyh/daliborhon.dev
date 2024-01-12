@@ -7,8 +7,7 @@ import avatar from "@assets/img/profile/avatar_casual.svg?raw";
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["landing", "shared"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["common", "landing"]);
 ---
 
 <div class="intro-container">
@@ -22,7 +21,7 @@ await loadNamespaces(locale, namespaces);
                 </div>
                 <div class="icon-text">
                     <i class="bi bi-geo-alt"></i>
-                    <p>Ostrava, {t("shared.CzechRepublic")}</p>
+                    <p>Ostrava, {t("common.country_czech_republic")}</p>
                 </div>
             </div>
         </div>

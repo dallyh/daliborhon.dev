@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import { BLOG } from "@config/blog";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     postSize?: number;
@@ -13,6 +14,7 @@ const { postSize = BLOG.featuredPostsSize } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog"]);
 
 //Blogs
 const allPosts = await getCollection("posts", ({ data }) => {
@@ -21,7 +23,7 @@ const allPosts = await getCollection("posts", ({ data }) => {
 
 const filteredPosts = allPosts.sort((a, b) => {
     return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-});
+}).slice(0, postSize);
 ---
 
 <ul>
@@ -32,10 +34,10 @@ const filteredPosts = allPosts.sort((a, b) => {
             </li>
         ))
     }
-    {filteredPosts.length === 0 && <p>There are currently no featured posts. 😞</p>}
+    {filteredPosts.length === 0 && <p>{t("blog.no_featured_posts")} 😞</p>}
 </ul>
 <div class="all-posts">
-    <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>See all featured posts</a>
+    <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.see_all_featured")}</a>
     <i class="bi bi-arrow-right"></i>
 </div>
 

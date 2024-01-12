@@ -13,6 +13,7 @@ import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import "../styles/markdown.css";
 import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -25,8 +26,10 @@ const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
 const transitionName = getPostImgTransitionName(post);
 
+await loadNamespaces(locale, ["common", "blog"]);
+
 const layoutProps = {
-    title: `Post - ${title}`,
+    title: `${t("blog.post")}: ${title}`,
     author,
     description,
     pubDateTime,
@@ -43,9 +46,9 @@ const layoutProps = {
     <main>
         <div class="post-header">
             <BreadCrumbs>
-                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label="Posts" />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
                 <BreadCrumbsItem currentPage={true} label={post.data.title} />
             </BreadCrumbs>
             <div class="post-description">

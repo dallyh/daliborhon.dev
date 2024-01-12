@@ -3,7 +3,7 @@ import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import Intro from "@components/astro/home/Intro.astro";
 import Projects from "@components/astro/home/Projects.astro";
-import Contact from "@components/astro/home/Contact.astro";
+import Contact from "@components/astro/global/Contact.astro";
 import { getStaticPaths } from "@i18n/utils";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import PageLayout from "@layouts/PageLayout.astro";
@@ -15,12 +15,11 @@ export { getStaticPaths };
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["contactForm", "shared", "landing"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["contact", "common", "blog", "projects"]);
 
 const layoutProps = {
-    title: "Dalibor Hon",
-    description: t("landing.description"),
+    title: t("common.home_page"),
+    description: t("common.site_description"),
     homepage: true,
 };
 ---
@@ -29,16 +28,16 @@ const layoutProps = {
     <Section id="hero">
         <Intro />
     </Section>
-    <Section id="projects" sectionTitle={t("landing.projects_title")}>
+    <Section id="projects" sectionTitle={t("projects.projects_title")}>
         <Projects />
     </Section>
     <Section id="featuredPosts" sectionTitle="Featured posts">
         <FeaturedPosts postSize={3} />
     </Section>
-    <Section id="recentPosts" sectionTitle={t("landing.blog_title")}>
+    <Section id="recentPosts" sectionTitle={t("blog.recent_posts_title")}>
         <RecentPosts postSize={3} filterFeatured={true} />
     </Section>
-    <Section id="contact" sectionTitle={t("shared.LeaveMeAMessage")} sectionDescription={t("contactForm.ContactMe")}>
+    <Section id="contact" sectionTitle={t("contact.leave_message_title")} sectionDescription={t("contact.contact_me_form")}>
         <Contact />
     </Section>
 </PageLayout>

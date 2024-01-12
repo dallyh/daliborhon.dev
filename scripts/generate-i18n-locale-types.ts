@@ -10,8 +10,8 @@ import jsyaml from "js-yaml";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Only generate types from EN folder
-const folderName = path.resolve(__dirname, "./src/i18n/locales/en/");
-const typeFile = path.resolve(__dirname, "./src/i18n/locales/types.ts");
+const folderName = path.resolve(__dirname, "../src/i18n/locales/en/");
+const typeFile = path.resolve(__dirname, "../src/i18n/locales/types.ts");
 console.log("Working on folder: " + folderName);
 
 async function processFiles() {
@@ -51,7 +51,7 @@ async function processFiles() {
 async function quicktypeJSON(typeName: string, json: string) {
     const jsonInput = jsonInputForTargetLanguage(new TypeScriptTargetLanguage());
     jsonInput.addSourceSync({
-        name: typeName,
+        name: `${typeName}Res`,
         samples: [json],
     });
 

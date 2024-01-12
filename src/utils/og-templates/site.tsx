@@ -1,7 +1,7 @@
 import { t, loadNamespaces } from "@i18n/i18n";
 
 export default async (locale: string) => {
-    await loadNamespaces(locale, ["landing", "shared"]);
+    await loadNamespaces(locale, ["common"]);
     return (
         <div
             style={{
@@ -76,7 +76,7 @@ export default async (locale: string) => {
                         fontSize: 35,
                     }}
                 >
-                    {t("landing.description")}
+                    {t("common.site_description")}
                 </p>
             </div>
         </div>

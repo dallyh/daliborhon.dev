@@ -8,12 +8,10 @@ export { getStaticPaths };
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["landing"];
+const namespaces = ["common"];
 await loadNamespaces(locale, namespaces);
 
 const layoutProps = {
-    title: "Dalibor Hon",
-    description: t("landing.description"),
     showBrowserWarning: true,
 };
 ---

@@ -44,26 +44,27 @@ const filteredPosts = posts
     });
 
 // i18next
-const namespaces = ["contactForm"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["blog", "common"]);
 
+const categoryTitle = await getCategoryTitleByLocale(locale, category);
+const categoryDescription = `${t("blog.posts_with_category")} ${categoryTitle.toLowerCase()}`
 const layoutProps = {
-    title: "Dalibor Hon",
-    description: t("landing.description"),
+    title: `${t("blog.category")}: ${categoryTitle}`,
+    description: categoryDescription,
 };
 
-const title = await getCategoryTitleByLocale(locale, category);
+
 ---
 
 <PageLayout {...layoutProps}>
     <main>
         <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label="Categories" />
-            <BreadCrumbsItem currentPage={true} label={title} />
+            <BreadCrumbsItem currentPage={true} label={t("blog.categories")} />
+            <BreadCrumbsItem currentPage={true} label={categoryTitle} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={`Posts with category ${title.toLowerCase()}`}>
+        <Section id="taggedPosts" sectionTitle={categoryDescription}>
             <ul>
                 {
                     filteredPosts.map((post) => (

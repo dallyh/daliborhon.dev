@@ -21,12 +21,11 @@ const { page } = Astro.props;
 
 // i18n
 const locale = getLocale(Astro.url);
-const namespaces = ["blog"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["blog"]);
 
 const layoutProps = {
-    title: "All Posts - Dalibor Hon",
-    description: t("landing.description"),
+    title: `${t("blog.all_posts_title")}`,
+    description: t("blog.blog_site_description"),
 };
 ---
 
@@ -35,11 +34,11 @@ const layoutProps = {
     <Navigation title={layoutProps.title} slot="header" />
     <main>
         <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label="Posts" />
+            <BreadCrumbsItem currentPage={true} label={t("blog.posts")} />
         </BreadCrumbs>
-        <Section id="blogs" sectionTitle="All posts">
+        <Section id="blogs" sectionTitle={t("blog.all_posts_title")}>
             <div class="paginated-posts">
                 <ul class="post-list">
                     {
@@ -54,21 +53,21 @@ const layoutProps = {
                     <div>
                         {
                             page.url.prev && (
-                                <a href={page.url.prev}>
+                                <a href={page.url.prev} title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
                                     <i class="bi bi-arrow-left" />
                                 </a>
                             )
                         }
-                        {!page.url.prev && <i class="bi bi-arrow-left disabled" />}
-                        <p>{page.currentPage} / {page.lastPage}</p>
+                        {!page.url.prev && <i class="bi bi-arrow-left disabled" title={t("blog.prev_page")} aria-label={t("blog.prev_page")} />}
+                        <p aria-label={t("blog.page_count_title", { current: page.currentPage, total: page.lastPage })}>{page.currentPage} / {page.lastPage}</p>
                         {
                             page.url.next && (
-                                <a href={page.url.next}>
+                                <a href={page.url.next} title={t("blog.next_page")} aria-label={t("blog.next_page")}>
                                     <i class="bi bi-arrow-right" />
                                 </a>
                             )
                         }
-                        {!page.url.next && <i class="bi bi-arrow-right disabled" />}
+                        {!page.url.next && <i class="bi bi-arrow-right disabled" title={t("blog.next_page")} aria-label={t("blog.next_page")} />}
                     </div>
                 </div>
             </div>

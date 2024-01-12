@@ -1,4 +1,6 @@
 ---
+import { loadNamespaces, t } from '@i18n/i18n';
+
 interface Props {
     pubDateTime: string | Date;
     modDatetime: string | Date | undefined;
@@ -27,10 +29,13 @@ const formattedDatetime = () => {
         time: time,
     };
 };
+
+await loadNamespaces(locale, ["blog"]);
+
 ---
 
 <div>
-    <span>{modDatetime ? "Updated: " : "Published: "}</span>
+    <span>{modDatetime ? t("blog.updated_date_title") : t("blog.published_date_title")}:</span>
     <time datetime={formattedDatetime().iso}>{formattedDatetime().date}</time>
     <span> |</span>
     <span>{formattedDatetime().time}</span>

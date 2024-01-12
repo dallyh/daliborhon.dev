@@ -5,7 +5,7 @@ import { defaultLocale, locales } from "@config/i18n";
 const i18nConfig: InitOptions = {
     debug: import.meta.env.DEV,
     ns: [],
-    defaultNS: "",
+    defaultNS: "common",
     nsSeparator: ".",
     keySeparator: false,
     fallbackLng: defaultLocale,

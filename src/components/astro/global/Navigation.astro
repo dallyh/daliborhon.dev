@@ -15,8 +15,7 @@ const { homePage = false, title, post } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["navigation"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["common", "blog"]);
 ---
 
 <header>
@@ -39,29 +38,29 @@ await loadNamespaces(locale, namespaces);
         <nav class="nav-dropdown" id="siteNav">
             <ul>
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, "/home")}>{t("navigation.home")}</a>
+                    <a href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a>
                 </li>
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("navigation.resume")}</a>
+                    <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a>
                 </li>
                 <li>
-                    {homePage && <a href="#contact">{t("navigation.contact")}</a>}
-                    {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("navigation.contact")}</a>}
+                    {homePage && <a href="#contact">{t("common.contact")}</a>}
+                    {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("common.contact")}</a>}
                 </li>
                 <li data-submenu="true">
-                    <button class="submenu-button" aria-haspopup="true" aria-expanded="false" aria-controls="blogSubmenu">{t("navigation.blog")}</button>
-                    <ul class="submenu" aria-label="submenu" id="blogSubmenu">
+                    <button class="submenu-button" aria-haspopup="true" aria-expanded="false" aria-controls="blogSubmenu">{t("common.blog")}</button>
+                    <ul class="submenu" aria-label={t("common.blog_submenu_a_label")} id="blogSubmenu">
                         <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog")}>Posts</a>
+                            <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
                         </li>
                         <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>Categories</a>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{(t("blog.categories"))}</a>
                         </li>
                         <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>Featured posts</a>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
                         </li>
                         <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>All posts</a>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
                         </li>
                     </ul>
                 </li>

@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import { BLOG } from "src/config/blog";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     postSize?: number;
@@ -14,6 +15,7 @@ const { postSize = BLOG.recentPostsSize, filterFeatured = false } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog"]);
 
 //Blogs
 const allPosts = await getCollection("posts", ({ data }) => {
@@ -22,7 +24,7 @@ const allPosts = await getCollection("posts", ({ data }) => {
 
 const filteredPosts = allPosts.sort((a, b) => {
     return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-});
+}).slice(0, postSize);
 ---
 
 <ul>
@@ -36,7 +38,7 @@ const filteredPosts = allPosts.sort((a, b) => {
 </ul>
 
 <div class="all-posts">
-    <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>See all posts</a>
+    <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.see_all_posts")}</a>
     <i class="bi bi-arrow-right"></i>
 </div>
 

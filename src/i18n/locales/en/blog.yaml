@@ -1,0 +1,31 @@
+all_posts_title: All posts
+blog_site_description: >-
+    Dalibor's blog about various topics, mainly oriented about software and
+    software development.
+categories: Categories
+categories_description: Posts filtered by category.
+category: Category
+featured: Featured
+featured_posts_description: Newest featured posts.
+featured_posts_title: Featured posts
+next_page: Next page
+no_featured_posts: There are currently no featured posts.
+page_count_title: Current page {{current}} out of {{total}} pages.
+post: Post
+posted_category: Posted in
+posts: Posts
+posts_tagged: Posts tagged with
+posts_with_category: Posts marked with category
+prev_page: Previous page
+published_date_title: Published
+recent_posts_description: >-
+    A list of my recent blog posts, which I create when I have some more spare
+    time.
+recent_posts_title: Recent posts
+see_all_featured: See all featured posts
+see_all_posts: See all posts
+tag: Tag
+tags: Tags
+tags_desctiption: All the tags used in posts.
+updated_date_title: Updated
+written_by: Written by

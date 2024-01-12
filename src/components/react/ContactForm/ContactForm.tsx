@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef, type FocusEvent } from "react";
 import { useForm } from "@formspree/react";
 import "./ContactForm.css";
-import type { ContactForm as ContactFromRes } from "@i18n/locales/types";
+import type { ContactRes, CommonRes } from "@i18n/locales/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 interface ContactFormProps {
-    resources: ContactFromRes;
+    resources: ContactRes;
+    commonResources: CommonRes;
     showCloseButton?: boolean;
     isDialog?: boolean;
 }
@@ -64,7 +65,7 @@ const ContactForm = (props: ContactFormProps) => {
                 ...prevState,
                 {
                     type: "UNDEFINED",
-                    message: props.resources.SubmitError,
+                    message: props.resources.form_submit_error,
                 },
             ]);
             return;
@@ -101,7 +102,7 @@ const ContactForm = (props: ContactFormProps) => {
         <div ref={formWrapperRef}>
             {state.succeeded && (
                 <div id="submit-success">
-                    <p>{props.resources.SubmitSuccess}</p>
+                    <p>{props.resources.submit_btn_success}</p>
                 </div>
             )}
             {!state.succeeded && (
@@ -109,18 +110,18 @@ const ContactForm = (props: ContactFormProps) => {
                     <fieldset id="fs-frm-inputs" disabled={state.submitting}>
                         <input type="hidden" name="_language" value="cs" />
                         <div className="contact-info-container">
-                            <label htmlFor="full-name">{props.resources.FullName}</label>
-                            <input type="text" autoComplete="name" name="name" id="full-name" placeholder={props.resources.NameAndSurname} required onFocus={selectText} />
-                            <label htmlFor="email">{props.resources.EmailAddress}</label>
+                            <label htmlFor="full-name">{props.resources.full_name_title}</label>
+                            <input type="text" autoComplete="name" name="name" id="full-name" placeholder={props.resources.full_name_placeholder} required onFocus={selectText} />
+                            <label htmlFor="email">{props.resources.email_title}</label>
                             {errorState.some((key) => key.type === "EMAIL") && <p className="error">{errorState.find((item) => item.type === "EMAIL")?.message}</p>}
                             <input id="email" autoComplete="email" type="email" name="email" placeholder="@" required onFocus={selectText} />
-                            <label htmlFor="email-subject">{props.resources.Subject}</label>
-                            <input type="text" name="_subject" id="email-subject" placeholder={props.resources.Subject} required onFocus={selectText} />
+                            <label htmlFor="email-subject">{props.resources.subject_title}</label>
+                            <input type="text" name="_subject" id="email-subject" placeholder={props.resources.subject_default} required onFocus={selectText} />
                         </div>
                         <div className="message-container">
-                            <label htmlFor="message">{props.resources.Message}</label>
+                            <label htmlFor="message">{props.resources.msg_title}</label>
                             <div className="textarea-container">
-                                <textarea name="message" id="message" placeholder={props.resources.MessagePlaceholder} required onFocus={selectText} />
+                                <textarea name="message" id="message" placeholder={props.resources.msg_placeholder} required onFocus={selectText} />
                             </div>
                             {errorState.some((key) => key.type === "TEXT") && <p className="error">{errorState.find((item) => item.type === "TEXT")?.message}</p>}
                         </div>
@@ -130,11 +131,11 @@ const ContactForm = (props: ContactFormProps) => {
                     <div className="buttons-container">
                         {props.showCloseButton && (
                             <button type="button" id="fs-frm-close-button" className="button" disabled={state.submitting}>
-                                {props.resources.CloseButton}
+                                {props.commonResources.close_btn}
                             </button>
                         )}
                         <button type="submit" id="fs-frm-submit-button" className="button" disabled={state.submitting}>
-                            {!state.submitting && props.resources.Submit}
+                            {!state.submitting && props.commonResources.submit_btn}
                             {state.submitting && <div className="dot-flashing"></div>}
                         </button>
                     </div>

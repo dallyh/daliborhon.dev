@@ -1,6 +1,7 @@
-ThisWebsite: This website
-ThisWebsiteDescription: Source code for this website
-LemmyKtClient: Lemmy Kotlin client
-LemmyKtClientDescription: A multiplatform client for
-OldWebsite: Old online resume
-OldWebisteDescription: Source code for my older website
+cms_oauth_description: An API that provides authentification for Static CMS through GitHub's OAuth.
+cms_oauth_title: GitHub OAuth provider for Static CMS
+lemmy_kt_client_description: A multiplatform client for
+lemmy_kt_client_title: Lemmy Kotlin client
+projects_title: Recent projects
+this_website_description: Source code for this website.
+this_website_title: This website

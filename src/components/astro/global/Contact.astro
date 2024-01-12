@@ -1,19 +1,20 @@
 ---
 import i18n, { loadNamespaces } from "@i18n/i18n";
-import type { ContactForm as ContactFormRes } from "@i18n/locales/types";
+import type { ContactRes, CommonRes } from "@i18n/locales/types";
 import { getLocale } from "@i18n/utils";
 import ContactForm from "@components/react/ContactForm/ContactForm";
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["contactForm"];
-await loadNamespaces(locale, namespaces);
-const res: ContactFormRes = i18n?.getResourceBundle(locale, "contactForm");
+await loadNamespaces(locale, ["contact, common"]);
+const res: ContactRes = i18n?.getResourceBundle(locale, "contact");
+const common: CommonRes = i18n?.getResourceBundle(locale, "common");
+
 ---
 
 <div class="contact-form-wrapper">
     <div class="contact-form">
-        <ContactForm resources={res} client:load />
+        <ContactForm resources={res} commonResources={common} client:load />
     </div>
 </div>
 

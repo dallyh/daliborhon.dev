@@ -25,12 +25,11 @@ export { getStaticPaths };
 
 // i18n
 const locale = getLocale(Astro.url);
-const namespaces = ["blog"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["blog", "common"]);
 
 const layoutProps = {
-    title: "Blog - Dalibor Hon",
-    description: t("landing.description"),
+    title: "Blog",
+    description: t("blog.blog_site_description"),
 };
 // Tags
 const tags = await getCollection("tags");
@@ -39,12 +38,6 @@ const tags = await getCollection("tags");
 const posts = await getCollection("posts", ({ data }) => {
     return data.language === locale && !data.hidden;
 });
-const sortedPosts = posts
-    .sort((a, b) => {
-        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-    })
-    .slice(0, BLOG.previewPostsSize);
-
 // Categories
 const categories = await getCollection("categories");
 ---
@@ -54,21 +47,21 @@ const categories = await getCollection("categories");
     <Navigation title={layoutProps.title} slot="header" />
     <main>
         <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label="Home" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem currentPage={true} label="Blog" />
         </BreadCrumbs>
-        <Section id="featuredPosts" sectionTitle="Featured posts" sectionDescription="Most recent posts">
+        <Section id="featuredPosts" sectionTitle={t("blog.featured_posts_title")} sectionDescription={t("blog.featured_posts_description")}>
             <FeaturedPosts />
         </Section>
-        <Section id="recentPosts" sectionTitle="Recent posts" sectionDescription="Most recent posts">
+        <Section id="recentPosts" sectionTitle={t("blog.recent_posts_title")} sectionDescription={t("blog.recent_posts_description")}>
             <RecentPosts filterFeatured={true} />
         </Section>
-        <Section id="categories" sectionTitle="Categories" sectionDescription="Posts filtered by category.">
+        <Section id="categories" sectionTitle={t("blog.categories")} sectionDescription={t("blog.categories_description")}>
             <ul class="category-list">
                 {categories.map((cat) => <Category category={cat} />)}
             </ul>
         </Section>
-        <Section id="tags" sectionTitle="Tags" sectionDescription="All the tags used in post.">
+        <Section id="tags" sectionTitle={t("blog.tags")}sectionDescription={t("blog.tags_desctiption")}>
             <ul class="tag-list">
                 {
                     tags.map((tag) => (

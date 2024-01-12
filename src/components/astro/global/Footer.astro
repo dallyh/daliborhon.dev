@@ -8,20 +8,21 @@ import astroSvg from "@assets/img/astro/simple-full-logo-light.svg";
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["footer"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["footer"]);
 ---
 
 <footer class="footer-container">
     <p>
-        {t("footer.PageCreatedBy")}
-        {" "}
-        <a href="https://astro.build/" aria-label="Astro Framework web page." title="Astro Framework web page.">
+        {t("footer.page_created_by")}
+    </p>
+    <p>
+        {t("footer.created_with")}
+        <a href="https://astro.build/" aria-label={t("footer.astro_a_label")} title={t("footer.astro_a_label")}>
             <Image src={astroSvg} alt="Astro framework logo" class="svg-astro" />
         </a>
     </p>
-    <p>{t("footer.Host")}{" "}<a href="https://www.github.com" aria-label="GitHub page link"  target="_blank"> {t("footer.Github")}</a>.</p>
-    <a href="/admin/" aria-label="Site administration login" title="Site administration login"> CMS Admin</a>
+    <p>{t("footer.hosted_by")}{" "}<a href="https://www.github.com" aria-label={t("footer.github_a_label")} target="_blank"> {t("footer.github_name")}</a>.</p>
+    <a href="/admin/" aria-label={t("footer.site_admin_a_label")} title={t("footer.site_admin_a_label")}>Admin</a>
 </footer>
 
 <style>

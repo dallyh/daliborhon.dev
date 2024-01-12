@@ -59,6 +59,14 @@ p {
     line-height: 1.2;
 }
 
+strong {
+    font-weight: 600;
+}
+
+small {
+    font-size: 0.8rem;
+}
+
 .gradient-text {
     color: transparent;
     background: var(--accent-gradient) fixed;

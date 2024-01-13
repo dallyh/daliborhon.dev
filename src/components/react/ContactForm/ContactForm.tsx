@@ -11,7 +11,7 @@ interface ContactFormProps {
 }
 
 const ACCESS_KEY = "7d81d4b3-a54e-4341-9544-2553a5aa4daf";
-const HCAPTCHA_KEY = import.meta.env.DEV ? "error-10000000-ffff-ffff-ffff-000000000001" : "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
+const HCAPTCHA_KEY = import.meta.env.DEV ? "10000000-ffff-ffff-ffff-000000000001" : "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 const API_URL = "https://api.web3forms.com/submit";
 
 export default function ContactForm(props: ContactFormProps) {
@@ -41,13 +41,20 @@ export default function ContactForm(props: ContactFormProps) {
     }, []);
 
     const onSubmit = async (formData: FieldValues, e: any) => {
-        const token = await captchaRef.current?.execute({ async: true });
-        if (token?.response === undefined) {
-            setMessage("Could not get captcha token.");
+        const token = await captchaRef.current
+            ?.execute({ async: true })
+            .then((res) => res.response)
+            .catch((e) => {
+                setMessage("Could not get captcha: " + e);
+                return undefined;
+            });
+
+        if (token === undefined) {
+            //setMessage("Could not get captcha token.");
             return;
         }
 
-        const data = { ...formData, "h-captcha-response": token.response };
+        const data = { ...formData, "h-captcha-response": token };
         console.log(data);
 
         await fetch(API_URL, {
@@ -77,17 +84,9 @@ export default function ContactForm(props: ContactFormProps) {
             });
     };
 
-    const resetForm = () => {
-        reset();
+    const resetForm = (preserveValues: boolean = false) => {
+        reset(undefined, { keepDirtyValues: preserveValues }); // reset other form state but keep defaultValues and form values
         captchaRef.current?.resetCaptcha();
-    };
-
-    const onHCaptchaExpire = () => {
-        setMessage("hCaptcha Token Expired");
-    };
-
-    const onHCaptchaError = (err: string) => {
-        setMessage(`hCaptcha Error: ${err}`);
     };
 
     return (
@@ -99,7 +98,7 @@ export default function ContactForm(props: ContactFormProps) {
                         <input type="hidden" {...register("subject")} />
                         <input type="hidden" value="Website submission" {...register("from_name")} />
                         <input type="checkbox" style={{ display: "none" }} {...register("botcheck")}></input>
-                        <HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" onExpire={onHCaptchaExpire} ref={captchaRef} />
+                        <HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" ref={captchaRef} />
 
                         <div ref={animate}>
                             <label htmlFor="full_name">Full Name</label>
@@ -190,7 +189,7 @@ export default function ContactForm(props: ContactFormProps) {
                         </svg>
                         <h3>Oops, Something went wrong!</h3>
                         <p>{Message}</p>
-                        <button onClick={() => resetForm()}>Try Again</button>
+                        <button onClick={() => resetForm(true)}>Try Again</button>
                     </div>
                 )}
             </div>

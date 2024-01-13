@@ -210,6 +210,7 @@ await loadNamespaces(locale, ["common", "blog"]);
         opacity: 0;
         visibility: hidden;
         color: red;
+        z-index: 1000;
 
         @media (max-width: 468px) {
             display: flex;
@@ -222,7 +223,11 @@ await loadNamespaces(locale, ["common", "blog"]);
         }
 
         > li {
-            padding: 0.85rem;
+            padding: 0rem;
+
+            a {
+                padding: 0.85rem;
+            }
 
             @media (min-width: 468px) {
                 &:first-child:hover,

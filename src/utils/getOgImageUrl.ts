@@ -4,15 +4,16 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getBlogPostSlug } from "./getBlogPostSlug";
 
 export function getOgImageUrl(locale: string, post: CollectionEntry<"posts">, url: URL) {
-    const ogImageUrl = typeof post.data.ogImage === "string" ? post.data.ogImage : post.data.ogImage?.src;
+    const base = removeTrailingSlash(import.meta.env.BASE_URL);
+    const ogImageUrl = typeof post.data.ogImage === "string" ? `${base}${post.data.ogImage}` : post.data.ogImage?.src;
 
     if (ogImageUrl) {
         return new URL(ogImageUrl, url.origin).href;
     }
 
-    // In dev mode, the trailing slash has to be present
+    // In dev mode, the trailing slash has to be present when it is set in the config
     if (import.meta.env.DEV) {
-        return new URL(getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}.png`), url.origin).href;
+        return getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}.png`);
     }
 
     return removeTrailingSlash(getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}.png`));

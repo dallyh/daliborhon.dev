@@ -29,14 +29,14 @@ const {
     author = "Dalibor Hon",
     description = t("common.site_description"),
     ogImage = "og.png",
-    canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+    canonicalURL = new URL(Astro.url.pathname, Astro.site),
     pubDatetime,
     modDatetime,
     showBrowserWarning = true,
 } = Astro.props;
 
 const siteTitle = title == undefined ? "Dalibor Hon" : `${title} - Dalibor Hon`
-const socialImageURL = new URL(ogImage, Astro.url.origin).href;
+const socialImageURL = new URL(ogImage, Astro.url);
 const basePath = import.meta.env.BASE_URL;
 ---
 
@@ -56,13 +56,13 @@ const basePath = import.meta.env.BASE_URL;
 
         <!-- General Meta Tags -->
         <title>{title}</title>
-        <meta name="title" content={title} />
+        <meta name="title" content={siteTitle} />
         <meta name="description" content={description} />
         <meta name="author" content={author} />
         <link rel="sitemap" href="/sitemap-index.xml" />
 
         <!-- Open Graph / Facebook -->
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content={siteTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonicalURL} />
         <meta property="og:image" content={socialImageURL} />
@@ -74,7 +74,7 @@ const basePath = import.meta.env.BASE_URL;
         <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={canonicalURL} />
-        <meta property="twitter:title" content={title} />
+        <meta property="twitter:title" content={siteTitle} />
         <meta property="twitter:description" content={description} />
         <meta property="twitter:image" content={socialImageURL} />
 

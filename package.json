@@ -13,7 +13,8 @@
         "sync": "astro sync",
         "prettier-check": "prettier . --check",
         "prettier-format": "prettier . --write",
-        "generate-locale-types": "tsx ./scripts/generate-i18n-locale-types.ts"
+        "generate-locale-types": "tsx ./scripts/generate-i18n-locale-types.ts",
+        "build-index": "pagefind --site dist"
     },
     "dependencies": {
         "@astrojs/react": "^3.0.9",
@@ -21,14 +22,17 @@
         "@formkit/auto-animate": "^0.8.1",
         "@formspree/react": "^2.5.1",
         "@hcaptcha/react-hcaptcha": "^1.9.3",
+        "@pagefind/default-ui": "^1.0.4",
         "@resvg/resvg-js": "^2.6.0",
         "@staticcms/core": "^4.0.1",
         "astro": "^4.1.1",
+        "astro-pagefind": "^1.4.0",
         "css.gg": "^2.1.1",
         "hammerjs": "^2.0.8",
         "i18next": "^23.7.16",
         "i18next-browser-languagedetector": "^7.2.0",
         "i18next-http-backend": "^2.4.2",
+        "pagefind": "^1.0.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.49.3",

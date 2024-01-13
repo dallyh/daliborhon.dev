@@ -3,6 +3,8 @@ import react from "@astrojs/react";
 import * as i18n from "./src/config/i18n";
 import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
+import pagefind from "astro-pagefind";
+
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
 const URL = SITE_URL ?? "https://www.daliborhon.dev/";
@@ -44,6 +46,7 @@ export default defineConfig({
             },
             filter: (page) => page !== `'${URL}admin'`,
         }),
+        pagefind(),
     ],
     vite: {
         optimizeDeps: {

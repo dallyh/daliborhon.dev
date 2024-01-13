@@ -47,11 +47,7 @@ export function getPathFromUrl(url: URL) {
 // i18n routing
 export async function getStaticPaths() {
     const paths = locales.map((locale) => {
-        if (locale == defaultLocale) {
-            return { params: { lang: undefined } };
-        } else {
-            return { params: { lang: locale } };
-        }
+        return { params: { lang: getRoutingLocale(locale) } };
     });
 
     return paths;

@@ -43,7 +43,7 @@ const layoutProps = {
 <MainLayout {...layoutProps}>
     <HeadHrefLangs post={post} slot="hreflangs" />
     <Navigation post={post} title={layoutProps.title} slot="header" />
-    <main>
+    <main data-pagefind-body>
         <div class="post-header">
             <BreadCrumbs>
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />

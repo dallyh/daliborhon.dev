@@ -54,17 +54,20 @@ await loadNamespaces(locale, ["common", "blog"]);
                             <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
                         </li>
                         <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{(t("blog.categories"))}</a>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{t("blog.categories")}</a>
                         </li>
                         <li>
                             <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
                         </li>
                         <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
+                            <a href={getRelativeLocaleUrl(locale, "/blog/posts")}>{t("blog.all_posts_title")}</a>
                         </li>
                     </ul>
                 </li>
                 <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" post={post} />
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, "/blog/search")}><i class="bi bi-search"></i></a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -138,7 +141,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                     height: 100%;
                     width: 100%;
                     display: flex;
-                    gap: 0.3rem;
+                    gap: 0.8rem;
                     align-items: center;
 
                     @media (max-width: 468px) {
@@ -153,7 +156,6 @@ await loadNamespaces(locale, ["common", "blog"]);
 
                     > a,
                     > button {
-
                         color: rgba(var(--accent), 1);
                     }
 
@@ -209,7 +211,6 @@ await loadNamespaces(locale, ["common", "blog"]);
         transition: 0.2s ease;
         opacity: 0;
         visibility: hidden;
-        color: red;
         z-index: 1000;
 
         @media (max-width: 468px) {
@@ -418,16 +419,15 @@ await loadNamespaces(locale, ["common", "blog"]);
             return;
         }
 
-        const collapseDropdowns = (e: MouseEvent | KeyboardEvent | null = null) => {     
+        const collapseDropdowns = (e: MouseEvent | KeyboardEvent | null = null) => {
             const openedDropdowns = document.querySelectorAll("[data-submenu].opened");
 
             if (e === null) {
                 openedDropdowns.forEach((d) => {
-                d.classList.remove("opened");
-            });
+                    d.classList.remove("opened");
+                });
                 return;
             }
-
 
             const target = e.target;
             openedDropdowns.forEach((d) => {
@@ -503,7 +503,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                 collapseDropdowns(e);
             }
 
-            if (e.key === "Escape") {    
+            if (e.key === "Escape") {
                 collapseNav();
                 collapseDropdowns();
             }

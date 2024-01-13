@@ -41,6 +41,10 @@ export const loadNamespaces = async (locale: string, namespaces: string[]) => {
     }
 };
 
+export const interpolate = (stringToInterpolate: string, replacements: { [key: string]: string }): string => {
+    return Object.keys(replacements).reduce((acc, key) => acc.replace(new RegExp(`{{${key}}}`, "g"), replacements[key]), stringToInterpolate);
+};
+
 const initOnce = async () => {
     if (!i18n.isInitialized) {
         logMessage("initOnce", "i18n start init.");

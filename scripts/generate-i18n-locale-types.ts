@@ -6,6 +6,7 @@ import path from "node:path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import jsyaml from "js-yaml";
+import { Console } from "node:console";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -20,7 +21,7 @@ async function processFiles() {
 
     const files = fs.readdirSync(folderName);
     for (const file of files) {
-        const filePath = `${folderName}\\${file}`;
+        const filePath = path.resolve(folderName, file);
         const fileName = path.parse(filePath).name;
 
         console.log("Working on file: " + filePath);
@@ -46,6 +47,8 @@ async function processFiles() {
 
         console.log("File processing finished!");
     }
+
+    console.log("All files processed.");
 }
 
 async function quicktypeJSON(typeName: string, json: string) {

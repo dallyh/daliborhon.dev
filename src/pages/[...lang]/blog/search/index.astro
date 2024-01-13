@@ -35,9 +35,10 @@ const layoutProps = {
     import { PagefindUI } from "@pagefind/default-ui";
 
     let pageFindInstance: any = null;
+    const uiId = "pagefind";
+    const bundlePath = `${import.meta.env.BASE_URL}pagefind/`;
 
     function initPagefind() {
-        const uiId = "pagefind";
         const ui = document.getElementById(`${uiId}`);
         console.log(ui);
 
@@ -51,6 +52,7 @@ const layoutProps = {
             element: `#${uiId}`,
             showSubResults: true,
             showImages: true,
+            bundlePath,
             processResult: function (result: any) {
                 if (result?.meta?.image) {
                     let resultBase = new URL(result.url, String(window.location));

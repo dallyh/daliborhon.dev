@@ -13,7 +13,7 @@
         "sync": "astro sync",
         "prettier-check": "prettier . --check",
         "prettier-format": "prettier . --write",
-        "generate-locale-types": "ts-node --esm ./scripts/generate-i18n-locale-types.ts"
+        "generate-locale-types": "tsx ./scripts/generate-i18n-locale-types.ts"
     },
     "dependencies": {
         "@astrojs/react": "^3.0.9",
@@ -58,7 +58,6 @@
         "sass": "^1.69.7",
         "satori": "^0.10.11",
         "slug": "^9.0.0-beta.1",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.3.3"
+        "tsx": "^4.7.0"
     }
 }

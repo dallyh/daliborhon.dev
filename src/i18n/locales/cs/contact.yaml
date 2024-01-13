@@ -7,29 +7,25 @@ contact_me_at: Veškeré kontakty jsou k dostání na mém
 contact_me_form: >-
     Pro kontakt můžete využít tento forumlář nacházející se níže, kde vyplňte
     své jméno, emailovou adresu a zprávu, kterou mi chcete zanechat.
+email_placeholder: Vaše emailová adresa
 email_title: Emailová adresa
-ERROR_CORRECT_FIELDS: Před odesláním prosím opravte všechna pole.
-ERROR_TYPE_EMAIL: Nesprávný formát emailu.
-ERROR_TYPE_TEXT: Pole nesmí být prázdné.
-form_submit_error: >-
-    Ups! Při odesílání formuláře došlo k chybě: {{zpráva o chybě}}. Zkuste to
-    prosím později nebo použijte jiný způsob kontaktu.
+error: Ups, něco se pokazilo!
+error_correct_fields: Před odesláním prosím opravte všechna pole.
+error_empty_field: Pole nemůže být prázdné.
+error_format_email: Nesprávný formát emailové adresy.
 full_name_placeholder: Jméno a příjmení
 full_name_title: Vaše jméno
+go_back: Zpět
 leave_message_title: Zanechte mi zprávu
 msg_placeholder: Prosím napište svou zprávu.
 msg_title: Zpráva
 profile: profilu
 subject_default: Nová zpráva z webu
 subject_title: Předmět
-submit_btn_error: >-
-    Ups! Při odesílání formuláře došlo k chybě. Zkuste to prosím později nebo
-    použijte jiný způsob kontaktu.
-submit_btn_success: Děkuji za Vaší zprávu! Ozvu se vám hned, jakmile to bude možné.
-submit_error: >-
-    Při odeslání formuláře nastala chyba. Zkuste to prosím později, nebo
-    použijte jinou formu kontaktu.
+submit_error: Při odeslání formuláře nastala chyba. 
 submit_error_formatted: >-
-    Při odeslání formuláře nastala chyba: {{errorMessage}}. Zkuste to prosím
-    později, nebo použijte jinou formu kontaktu.
+    Při odeslání formuláře nastala chyba: {{message}}.
+submit_error_try_again: Zkuste to prosím později, nebo použijte jinou formu kontaktu.
 submit_success: Děkuji za Vaši zprávu! Ozvu se hned, jakmile to bude možné.
+success: Úspěch!
+try_again: Zkusit znovu

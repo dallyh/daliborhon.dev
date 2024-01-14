@@ -4,6 +4,7 @@ import { loadNamespaces, t } from "@i18n/i18n";
 import LanguageSelector from "./LanguageSelector.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { CollectionEntry } from "astro:content";
+import Search from "./Search.astro";
 
 interface Props {
     title: string;
@@ -65,22 +66,21 @@ await loadNamespaces(locale, ["common", "blog"]);
                     </ul>
                 </li>
                 <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" post={post} />
-                <li>
-                    <a href={getRelativeLocaleUrl(locale, "/blog/search")}><i class="bi bi-search"></i></a>
-                </li>
+                <Search />
             </ul>
         </nav>
     </div>
 </header>
 
 <style is:global>
-    /* Currently has to be global, because of LanguageSelector */
+    /* Currently has to be global, because of other components  */
+    /* I would like to refactor this, so the styles are really scoped */
 
     .nav-dropdown {
         height: var(--header-height);
         transition: 0.4s;
 
-        @media (max-width: 468px) {
+        @media (max-width: 768px) {
             height: auto;
             max-height: 0;
             width: 100%;
@@ -105,8 +105,9 @@ await loadNamespaces(locale, ["common", "blog"]);
             flex-direction: row;
             flex-wrap: wrap;
             height: 100%;
+            gap: 0.8rem;
 
-            @media (max-width: 468px) {
+            @media (max-width: 768px) {
                 width: 100%;
                 padding-top: 0.5rem;
                 padding-bottom: 0.5rem;
@@ -120,32 +121,42 @@ await loadNamespaces(locale, ["common", "blog"]);
                 transition: 0.4s;
                 box-sizing: border-box;
                 height: 100%;
-                padding-right: 0.5rem;
-                padding-left: 0.5rem;
-                border-radius: 6px;
 
-                @media (max-width: 468px) {
+                @media (max-width: 768px) {
+                    border-radius: 6px;
                     width: 100%;
-                    padding: 1rem 0rem 1rem 0rem;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
                 }
 
+                > a,
+                > button {
+                    color: var(--body-color);
+                }
+
                 a,
                 button {
                     transition: 0.4s;
                     text-decoration: none;
-                    color: var(--body-color);
                     height: 100%;
                     width: 100%;
                     display: flex;
                     gap: 0.8rem;
                     align-items: center;
+                    padding-right: 0.5rem;
+                    padding-left: 0.5rem;
+                    border-radius: 6px;
 
-                    @media (max-width: 468px) {
+                    @media (max-width: 768px) {
+                        padding: 1rem 0rem 1rem 0rem;
                         justify-content: center;
+                    }
+
+                    &:hover,
+                    &:focus-within {
+                        box-shadow: none;
                     }
                 }
 
@@ -159,7 +170,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                         color: rgba(var(--accent), 1);
                     }
 
-                    @media (max-width: 468px) {
+                    @media (max-width: 768px) {
                         background: rgba(var(--accent), 0.6);
 
                         > a,
@@ -174,10 +185,6 @@ await loadNamespaces(locale, ["common", "blog"]);
                         opacity: 1;
                         visibility: visible;
                         max-height: 100vh;
-
-                        @media (max-width: 468px) {
-                            margin-top: 1rem;
-                        }
                     }
                 }
             }
@@ -199,9 +206,9 @@ await loadNamespaces(locale, ["common", "blog"]);
         }
     }
 
-    .submenu {
+    .nav-dropdown .submenu {
         position: absolute;
-        top: 85%;
+        top: 90%;
         left: 0;
         display: block;
         background: rgba(var(--secondary), 1);
@@ -213,7 +220,7 @@ await loadNamespaces(locale, ["common", "blog"]);
         visibility: hidden;
         z-index: 1000;
 
-        @media (max-width: 468px) {
+        @media (max-width: 768px) {
             display: flex;
             flex-direction: column;
             position: relative;
@@ -226,36 +233,50 @@ await loadNamespaces(locale, ["common", "blog"]);
         > li {
             padding: 0rem;
 
-            a {
+            > a {
+                color: var(--body-color);
                 padding: 0.85rem;
+                border-radius: 0;
             }
 
-            @media (min-width: 468px) {
-                &:first-child:hover,
-                &:first-child:focus-within {
+            &:first-child:hover,
+            &:first-child:focus-within {
+                > a,
+                > button {
                     border-radius: 6px 6px 0 0;
                 }
+            }
 
-                &:last-child:hover,
-                &:last-child:focus-within {
+            &:last-child:hover,
+            &:last-child:focus-within {
+                > a,
+                > button {
                     border-radius: 0 0 6px 6px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                &:first-child:hover,
+                &:first-child:focus-within {
+                    > a,
+                    > button {
+                        border-radius: 0;
+                    }
                 }
             }
 
             &:hover,
             &:focus-within {
-                background: rgba(var(--accent), 0.6);
-
                 > a,
                 > button {
+                    background: rgba(var(--accent), 0.6);
                     color: var(--body-color);
                 }
 
-                @media (max-width: 468px) {
-                    background: rgba(var(--secondary), 0.6);
-
+                @media (max-width: 768px) {
                     > a,
                     > button {
+                        background: rgba(var(--secondary), 0.6);
                         color: var(--body-color);
                     }
                 }
@@ -291,7 +312,7 @@ await loadNamespaces(locale, ["common", "blog"]);
             width: 100%;
             margin: auto;
 
-            @media (max-width: 468px) {
+            @media (max-width: 768px) {
                 flex-direction: column;
             }
         }
@@ -301,7 +322,7 @@ await loadNamespaces(locale, ["common", "blog"]);
             align-items: center;
             height: var(--header-height);
 
-            @media (max-width: 468px) {
+            @media (max-width: 768px) {
                 width: 100%;
                 justify-content: space-between;
             }
@@ -343,7 +364,7 @@ await loadNamespaces(locale, ["common", "blog"]);
             box-shadow: 0 0 0 0.5rem rgba(var(--accent), 0.5);
         }
 
-        @media screen and (max-width: 468px) {
+        @media screen and (max-width: 768px) {
             display: flex;
         }
     }

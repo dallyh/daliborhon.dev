@@ -14,6 +14,7 @@ import Navigation from "@components/astro/global/Navigation.astro";
 import "../styles/markdown.css";
 import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
 import { loadNamespaces, t } from "@i18n/i18n";
+import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -33,7 +34,7 @@ const layoutProps = {
     author,
     description,
     pubDateTime,
-    // This is here because of CMS shenanigans. It saves dates whcih are empty as strings ("").
+    // This is here because of CMS shenanigans. It saves dates which are empty as empty strings ("").
     modDatetime: typeof modDatetime === "string" ? undefined : modDatetime,
     canonicalURL,
     ogImage: ogUrl,
@@ -43,7 +44,7 @@ const layoutProps = {
 <MainLayout {...layoutProps}>
     <HeadHrefLangs post={post} slot="hreflangs" />
     <Navigation post={post} title={layoutProps.title} slot="header" />
-    <main data-pagefind-body>
+    <main>
         <div class="post-header">
             <BreadCrumbs>
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
@@ -51,15 +52,22 @@ const layoutProps = {
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
                 <BreadCrumbsItem currentPage={true} label={post.data.title} />
             </BreadCrumbs>
-            <div class="post-description">
+            <div class="post-description" data-pagefind-body>
                 <p>{post.data.title}</p>
                 <p>By {post.data.author}</p>
                 <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+                {
+                    post.data.category && (
+                        <p>
+                            {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                        </p>
+                    )
+                }
                 <div class="post-image">
                     <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" transition:name={transitionName} />
                 </div>
             </div>
-            <div class="tags">
+            <div class="tags" data-pagefind-body>
                 <TagList post={post} bgColor="rgba(var(--secondary), 1)" justify="center" />
             </div>
         </div>

@@ -25,7 +25,7 @@ const layoutProps = {
             <BreadCrumbsItem currentPage={true} label="Search blog" />
         </BreadCrumbs>
         <Section id="search" sectionTitle="Search through all posts">
-            <div id="pagefind"></div>
+            <div data-locale={locale} id="pagefind"></div>
         </Section>
     </main>
 </PageLayout>
@@ -33,6 +33,7 @@ const layoutProps = {
 <script>
     // There are curently no types for this package
     import { PagefindUI } from "@pagefind/default-ui";
+    import cs from "./_cs.json";
 
     let pageFindInstance: any = null;
     const uiId = "pagefind";
@@ -40,10 +41,17 @@ const layoutProps = {
 
     function initPagefind() {
         const ui = document.getElementById(`${uiId}`);
+        const locale = ui?.dataset.locale;
+
         console.log(ui);
 
         if (ui === null) {
             return;
+        }
+
+        let translations = {};
+        if (locale === "cs") {
+            translations = cs;
         }
 
         const trailingSlash = import.meta.env.DEV ? "/" : "";
@@ -51,8 +59,9 @@ const layoutProps = {
         pageFindInstance = new PagefindUI({
             element: `#${uiId}`,
             showSubResults: true,
-            showImages: true,
+            showImages: false,
             bundlePath,
+            translations: {...translations},
             processResult: function (result: any) {
                 if (result?.meta?.image) {
                     let resultBase = new URL(result.url, String(window.location));

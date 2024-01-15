@@ -18,6 +18,7 @@ html {
 body {
     color: white;
     background-color: var(--bg-color);
+    margin-top: calc(var(--header-height) + 0.5rem);
 
     .page-content {
         margin: auto;

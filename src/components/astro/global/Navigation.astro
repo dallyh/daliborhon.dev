@@ -19,14 +19,9 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["common", "blog"]);
 ---
 
-<header>
-    <div class="header-items">
-        <div class="control">
-            <button class="header-burger-menu" aria-haspopup="true" aria-role="menu" id="menuButton">
-                <div class="header-burger-menu-button">
-                    <span></span>
-                </div>
-            </button>
+<header id="nav-menu" aria-label="navigation bar">
+    <div class="container">
+        <div class="nav-start">
             <div class="brand">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
                     <path
@@ -36,265 +31,450 @@ await loadNamespaces(locale, ["common", "blog"]);
                 <h1>{title}</h1>
             </div>
         </div>
-        <nav class="nav-dropdown" id="siteNav">
-            <ul>
+
+        <nav class="menu">
+            <ul class="menu-bar">
+                <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a></li>
+                <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a></li>
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a>
+                    {
+                        homePage && (
+                            <a class="nav-link" href="#contact">
+                                {t("common.contact")}
+                            </a>
+                        )
+                    }
+                    {
+                        !homePage && (
+                            <a class="nav-link" href={getRelativeLocaleUrl(locale, "/contact")}>
+                                {t("common.contact")}
+                            </a>
+                        )
+                    }
                 </li>
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a>
+                    <button class="nav-link dropdown-btn" data-dropdown="dropdown2" aria-haspopup="true" aria-expanded="false" aria-label={t("common.blog")}>
+                        {t("common.blog")}
+                    </button>
+                    <div id="dropdown2" class="dropdown">
+                        <ul role="menu">
+                            <li>
+                                <span class="dropdown-link-title">Browse Categories</span>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{t("blog.categories")}</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
+                            </li>
+                        </ul>
+                        <ul role="menu">
+                            <li>
+                                <span class="dropdown-link-title">Test menu</span>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href="#mac-windows">Item 1</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href="#linux">Item 2</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href="#linux">Item 2</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href="#linux">Item 2</a>
+                            </li>
+                            <li role="menuitem">
+                                <a class="dropdown-link" href="#linux">Item 2</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li>
-                    {homePage && <a href="#contact">{t("common.contact")}</a>}
-                    {!homePage && <a href={getRelativeLocaleUrl(locale, "/contact")}>{t("common.contact")}</a>}
-                </li>
-                <li data-submenu="true">
-                    <button class="submenu-button" aria-haspopup="true" aria-expanded="false" aria-controls="blogSubmenu">{t("common.blog")}</button>
-                    <ul class="submenu" aria-label={t("common.blog_submenu_a_label")} id="blogSubmenu">
-                        <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
-                        </li>
-                        <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{t("blog.categories")}</a>
-                        </li>
-                        <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
-                        </li>
-                        <li>
-                            <a href={getRelativeLocaleUrl(locale, "/blog/posts")}>{t("blog.all_posts_title")}</a>
-                        </li>
-                    </ul>
-                </li>
-                <LanguageSelector buttonId="languageSelector" dropdownId="languageSelectorDropdown" post={post} />
-                <Search />
             </ul>
         </nav>
+
+        <div class="nav-end">
+            <div class="right-container">
+                <div class="search" role="search">
+                    <Search />
+                </div>
+                <div class="lang-select" role="search">
+                    <LanguageSelector post={post} />
+                </div>
+            </div>
+            <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
+                <i class="bi bi-list" aria-hidden="true"></i>
+            </button>
+        </div>
     </div>
 </header>
 
-<style is:global>
-    /* Currently has to be global, because of other components  */
-    /* I would like to refactor this, so the styles are really scoped */
+<style>
+    :root {
+        --border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-    .nav-dropdown {
+    .brand {
+        color: rgba(var(--accent), 1);
+        display: flex;
+        align-items: center;
+        font-weight: 700;
         height: var(--header-height);
-        transition: 0.4s;
 
-        @media (max-width: 768px) {
-            height: auto;
-            max-height: 0;
-            width: 100%;
-            visibility: hidden;
-            overflow: hidden;
+        svg {
+            margin-right: 6px;
+            margin-left: 2px;
+            height: 32px;
+        }
+
+        h1 {
+            font-size: 1rem;
+            font-weight: inherit;
+            padding: 0;
+            margin: 0;
+            background: none;
+            background-clip: none;
+            color: inherit;
         }
     }
 
-    body.nav-active .nav-dropdown {
-        max-height: 70vh;
-        visibility: visible;
+    header {
+        width: 100%;
+        color: var(--body-color);
+        font-weight: 500;
+        position: fixed;
+        top: 0;
+        background: var(--header-bg);
+        backdrop-filter: blur(4px);
+        z-index: 1010;
+        transition: background 0.4s ease;
+        height: var(--header-height);
     }
 
-    body.nav-active header {
-        background: rgba(var(--secondary), 1);
-        box-shadow: var(--global-box-shadow);
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 2rem;
+        max-width: var(--page-width);
+        padding-left: var(--padding-x);
+        padding-right: var(--padding-x);
+        margin: auto;
+        width: 100%;
+        height: 100%;
     }
 
-    .nav-dropdown {
-        > ul {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            height: 100%;
-            gap: 0.8rem;
-
-            @media (max-width: 768px) {
-                width: 100%;
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                margin-bottom: 0.5rem;
-                border-radius: 6px;
-            }
-
-            > li {
-                list-style: none;
-                position: relative;
-                transition: 0.4s;
-                box-sizing: border-box;
-                height: 100%;
-
-                @media (max-width: 768px) {
-                    border-radius: 6px;
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                > a,
-                > button {
-                    color: var(--body-color);
-                }
-
-                a,
-                button {
-                    transition: 0.4s;
-                    text-decoration: none;
-                    height: 100%;
-                    width: 100%;
-                    display: flex;
-                    gap: 0.8rem;
-                    align-items: center;
-                    padding-right: 0.5rem;
-                    padding-left: 0.5rem;
-                    border-radius: 6px;
-
-                    @media (max-width: 768px) {
-                        padding: 1rem 0rem 1rem 0rem;
-                        justify-content: center;
-                    }
-
-                    &:hover,
-                    &:focus-within {
-                        box-shadow: none;
-                    }
-                }
-
-                &:hover,
-                &:focus-within,
-                &.opened {
-                    cursor: pointer;
-
-                    > a,
-                    > button {
-                        color: rgba(var(--accent), 1);
-                    }
-
-                    @media (max-width: 768px) {
-                        background: rgba(var(--accent), 0.6);
-
-                        > a,
-                        > button {
-                            color: rgba(var(--body-color), 1);
-                        }
-                    }
-                }
-
-                &.opened {
-                    .submenu {
-                        opacity: 1;
-                        visibility: visible;
-                        max-height: 100vh;
-                    }
-                }
-            }
-        }
+    .menu {
+        position: relative;
+        margin: auto;
     }
 
-    .submenu-button {
+    .menu-bar li:first-child .dropdown {
+        flex-direction: initial;
+        min-width: 480px;
+    }
+
+    .menu-bar li:first-child ul:nth-child(1) {
+        border-right: var(--border);
+    }
+
+    .menu-bar li:nth-child(n + 2) ul:nth-child(1) {
+        border-bottom: var(--border);
+    }
+
+    .menu-bar .dropdown-link-title {
+        font-weight: 600;
+    }
+
+    .menu-bar .nav-link {
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: -0.6px;
+        padding: 0.3rem;
+        min-width: 60px;
+        margin: 0 0.6rem;
+        color: var(--body-color);
+    }
+
+    .menu-bar .nav-link:hover,
+    .dropdown-link:hover {
+        color: rgba(var(--accent), 1);
+        text-decoration: none;
         cursor: pointer;
 
-        &:after {
-            display: inline-block;
-            margin-left: 0.255em;
-            vertical-align: 0.255em;
-            content: "";
-            border-top: 0.3em solid;
-            border-right: 0.3em solid transparent;
-            border-bottom: 0;
-            border-left: 0.3em solid transparent;
+        &::after {
+            border-bottom: 2px solid rgba(var(--accent), 1);
+            border-right: 2px solid rgba(var(--accent), 1);
         }
     }
 
-    .nav-dropdown .submenu {
+    .nav-start,
+    .nav-end,
+    .menu-bar,
+    .right-container,
+    .right-container .search,
+    .right-container .lang-select {
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown {
+        display: flex;
+        flex-direction: column;
+        min-width: 230px;
+        background-color: rgba(var(--secondary), 1);
+        border-radius: 10px;
         position: absolute;
-        top: 90%;
-        left: 0;
-        display: block;
-        background: rgba(var(--secondary), 1);
-        box-shadow: var(--global-box-shadow);
-        border-radius: 6px;
-        width: max-content;
-        transition: 0.2s ease;
-        opacity: 0;
+        top: 36px;
+        z-index: 1020;
         visibility: hidden;
-        z-index: 1000;
+        opacity: 0;
+        transform: scale(0.97) translateX(-5px);
+        transition: 0.1s ease-in-out;
+        box-shadow: var(--global-box-shadow);
+    }
+
+    .dropdown.active {
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1) translateX(5px);
+    }
+
+    .dropdown ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .dropdown-btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+
+        &::after {
+            content: "";
+            display: inline-block;
+            border-bottom: 2px solid var(--body-color);
+            border-right: 2px solid var(--body-color);
+            height: 8px;
+            width: 8px;
+            transform: rotate(45deg);
+            margin-left: 0.2rem;
+        }
+    }
+
+    .dropdown-link {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.5rem 0;
+        border-radius: 7px;
+        transition: 0.1s ease-in-out;
+    }
+
+    .dropdown-link p {
+        font-size: 0.8rem;
+    }
+
+    .right-container {
+        display: flex;
+        align-items: center;
+        column-gap: 1rem;
+    }
+
+    .right-container .search {
+        position: relative;
+    }
+
+    .right-container img {
+        border-radius: 50%;
+    }
+
+    #hamburger {
+        display: none;
+        min-width: 15rem;
+        min-height: 2.2rem;
+        padding-inline-start: 0.75rem;
+        padding-inline-end: 0.75rem;
+        margin-left: 1rem;
+        font-size: 1.4rem;
+        background-color: var(--bg-color);
+        border-radius: 6px;
 
         @media (max-width: 768px) {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            width: 100%;
-            background-color: transparent;
-            max-height: 0;
-            box-shadow: none;
+            min-width: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        :global(body.nav-active) {
+            header {
+                background: rgba(var(--secondary), 1);
+            }
+        }
+        #hamburger {
+            display: block;
         }
 
-        > li {
-            padding: 0rem;
+        .menu {
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            height: calc(100vh - var(--header-height));
+            width: 100vw;
+            background: rgba(var(--secondary), 1);
+            backdrop-filter: blur(4px);
+            transform: translateX(-100%);
+            transition: 0.4s ease-in-out;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
 
-            > a {
-                color: var(--body-color);
-                padding: 0.85rem;
-                border-radius: 0;
+        .menu-bar li:first-child ul:nth-child(1) {
+            border-right: none;
+            border-bottom: var(--border);
+        }
+
+        .dropdown {
+            display: none;
+            min-width: 100%;
+            border: none !important;
+            border-radius: 5px;
+            position: static;
+            top: 0;
+            left: 0;
+            visibility: visible;
+            opacity: 1;
+            transform: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        :global(body.nav-active) {
+            .menu {
+                transform: translateX(0);
             }
+        }
 
-            &:first-child:hover,
-            &:first-child:focus-within {
-                > a,
-                > button {
-                    border-radius: 6px 6px 0 0;
-                }
-            }
+        .dropdown.active {
+            display: block;
+        }
 
-            &:last-child:hover,
-            &:last-child:focus-within {
-                > a,
-                > button {
-                    border-radius: 0 0 6px 6px;
-                }
-            }
+        .dropdown ul {
+            padding-left: 0.3rem;
+        }
 
-            @media (max-width: 768px) {
-                &:first-child:hover,
-                &:first-child:focus-within {
-                    > a,
-                    > button {
-                        border-radius: 0;
-                    }
-                }
-            }
+        .menu-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            row-gap: 1rem;
+            padding: 1rem;
+        }
 
-            &:hover,
-            &:focus-within {
-                > a,
-                > button {
-                    background: rgba(var(--accent), 0.6);
-                    color: var(--body-color);
-                }
+        .menu-bar .nav-link {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 0;
+        }
 
-                @media (max-width: 768px) {
-                    > a,
-                    > button {
-                        background: rgba(var(--secondary), 0.6);
-                        color: var(--body-color);
-                    }
-                }
-            }
+        .menu-bar li:first-child .dropdown {
+            min-width: 100%;
+        }
+
+        .menu-bar > li:not(:last-child) {
+            padding-bottom: 0.5rem;
+            border-bottom: var(--border);
         }
     }
 </style>
 
+<script is:inline>
+    const dropdownBtn = document.querySelectorAll(".dropdown-btn");
+    const dropdown = document.querySelectorAll(".dropdown");
+    const hamburgerBtn = document.getElementById("hamburger");
+    const navMenu = document.querySelector(".menu");
+    const links = document.querySelectorAll(".dropdown a");
+
+    function setAriaExpandedFalse() {
+        dropdownBtn.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
+    }
+
+    function closeDropdownMenu() {
+        dropdown.forEach((drop) => {
+            drop.classList.remove("active");
+            drop.addEventListener("click", (e) => e.stopPropagation());
+        });
+    }
+
+    function toggleHamburger() {
+        document.body.classList.toggle("nav-active");
+    }
+
+    dropdownBtn.forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+            const dropdownIndex = e.currentTarget.dataset.dropdown;
+            const dropdownElement = document.getElementById(dropdownIndex);
+
+            dropdownElement.classList.toggle("active");
+            dropdown.forEach((drop) => {
+                if (drop.id !== btn.dataset["dropdown"]) {
+                    drop.classList.remove("active");
+                }
+            });
+            e.stopPropagation();
+            btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") === "false" ? "true" : "false");
+        });
+    });
+
+    // close dropdown menu when the dropdown links are clicked
+    links.forEach((link) =>
+        link.addEventListener("click", () => {
+            closeDropdownMenu();
+            setAriaExpandedFalse();
+            toggleHamburger();
+        }),
+    );
+
+    // close dropdown menu when you click on the document body
+    document.documentElement.addEventListener("click", () => {
+        closeDropdownMenu();
+        setAriaExpandedFalse();
+    });
+
+    // close dropdown when the escape key is pressed
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeDropdownMenu();
+            setAriaExpandedFalse();
+        }
+    });
+
+    // toggle hamburger menu
+    hamburgerBtn.addEventListener("click", toggleHamburger);
+</script>
+<!--
 <style>
     header {
         width: 100%;
         color: var(--body-color);
         font-weight: 500;
-        position: sticky;
+        position: fixed;
         top: 0;
         background: var(--header-bg);
         backdrop-filter: blur(4px);
-        z-index: 1010;
+        z-index: 2000;
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -308,24 +488,9 @@ await loadNamespaces(locale, ["common", "blog"]);
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            align-items: center;
             width: 100%;
             margin: auto;
-
-            @media (max-width: 768px) {
-                flex-direction: column;
-            }
-        }
-
-        .control {
-            display: flex;
-            align-items: center;
-            height: var(--header-height);
-
-            @media (max-width: 768px) {
-                width: 100%;
-                justify-content: space-between;
-            }
+            position: relative;
         }
 
         .brand {
@@ -333,6 +498,7 @@ await loadNamespaces(locale, ["common", "blog"]);
             display: flex;
             align-items: center;
             font-weight: 700;
+            height: var(--header-height);
 
             svg {
                 margin-right: 6px;
@@ -351,88 +517,11 @@ await loadNamespaces(locale, ["common", "blog"]);
             }
         }
     }
-
-    .header-burger-menu {
-        display: none;
-        align-items: center;
-        justify-content: center;
-        width: 2.125rem;
-        border-radius: 6px;
-        cursor: pointer;
-
-        &:focus-visible {
-            box-shadow: 0 0 0 0.5rem rgba(var(--accent), 0.5);
-        }
-
-        @media screen and (max-width: 768px) {
-            display: flex;
-        }
-    }
-
-    .header-burger-menu-button {
-        position: relative;
-        height: 26px;
-        width: 40px;
-        background-color: transparent;
-        pointer-events: none;
-
-        > span {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        span,
-        &::before,
-        &::after {
-            display: block;
-            position: absolute;
-            height: 5px;
-            width: 100%;
-            background-color: var(--burger-menu-bg);
-            border-radius: 6px;
-            opacity: 1;
-        }
-
-        &::before,
-        &::after {
-            content: "";
-            transition:
-                top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-                transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        &::before {
-            top: 0;
-        }
-
-        &::after {
-            bottom: 0;
-        }
-
-        &.active {
-            span {
-                opacity: 0;
-            }
-
-            &::before,
-            &::after {
-                top: 40%;
-            }
-
-            &::before {
-                transform: rotate(45deg);
-            }
-
-            &::after {
-                transform: rotate(-45deg);
-            }
-        }
-    }
 </style>
 
 <script>
     const initNav = () => {
-        const navButton = document.querySelector<HTMLDivElement>("#menuButton"),
+        const navButton = document.querySelector<HTMLDivElement>("#nav-toggle"),
             navigation = document.querySelector<HTMLElement>("#siteNav"),
             submenuItems = document.querySelectorAll("[data-submenu]");
 
@@ -462,10 +551,15 @@ await loadNamespaces(locale, ["common", "blog"]);
 
         const handleSubmenus = () => {
             submenuItems.forEach((sub) => {
-                sub?.addEventListener("click", (e) => {
-                    sub.classList.toggle("opened");
-                    const button = sub.children[0];
+                const submenuButton = sub.querySelector<HTMLButtonElement>("[data-submenu-button]")!;
 
+                submenuButton?.addEventListener("click", (e) => {
+                    const submenuId = submenuButton.dataset.submenuButton!;
+                    console.log(submenuId);
+                    const menu = document.getElementById(submenuId);
+                    menu?.classList.toggle("opened");
+
+                    const button = sub.children[0];
                     if (button.ariaExpanded === "false") {
                         button.ariaExpanded = "true";
                     } else {
@@ -479,7 +573,6 @@ await loadNamespaces(locale, ["common", "blog"]);
          * Opens/closes navigation menu.
          */
         const openCloseNav = () => {
-            navButton.children[0].classList.toggle("active");
             document.body.classList.toggle("nav-active");
         };
 
@@ -488,7 +581,6 @@ await loadNamespaces(locale, ["common", "blog"]);
          */
         const closeNav = () => {
             if (document.body.classList.contains("nav-active")) {
-                navButton.children[0].classList.toggle("active");
                 document.body.classList.remove("nav-active");
             }
         };
@@ -514,19 +606,19 @@ await loadNamespaces(locale, ["common", "blog"]);
         };
 
         document.onmouseup = (e) => {
-            collapseNav(e);
+            //collapseNav(e);
             collapseDropdowns(e);
         };
 
         document.onkeydown = (e) => {
             if (e.key === "Enter") {
-                collapseNav(e);
-                collapseDropdowns(e);
+                //collapseNav(e);
+                //collapseDropdowns(e);
             }
 
             if (e.key === "Escape") {
-                collapseNav();
-                collapseDropdowns();
+                //collapseNav();
+                //collapseDropdowns();
             }
         };
 
@@ -549,3 +641,4 @@ await loadNamespaces(locale, ["common", "blog"]);
         { once: false },
     );
 </script>
+ -->

@@ -9,9 +9,10 @@ interface Props {
     tags?: CollectionEntry<"tags">[];
     bgColor: string;
     justify: string;
+    padding?: string;
 }
 
-const { post, bgColor, justify, tags } = Astro.props;
+const { post, bgColor, justify, tags, padding="0.5rem" } = Astro.props;
 const locale = getLocale(Astro.url);
 ---
 
@@ -36,10 +37,10 @@ const locale = getLocale(Astro.url);
     }
 </ul>
 
-<style define:vars={{ bgColor, justify }}>
+<style define:vars={{ bgColor, justify, padding }}>
     .tag-list {
         display: flex;
-        gap: 0.2rem;
+        gap: 0.3rem;
         flex-wrap: wrap;
         justify-content: var(--justify);
         text-align: center;
@@ -50,7 +51,7 @@ const locale = getLocale(Astro.url);
                 background: var(--bgColor);
                 border-radius: 6px;
                 font-size: 0.8rem;
-                padding: 0.5rem;
+                padding: var(--padding);
                 position: relative;
 
                 i {

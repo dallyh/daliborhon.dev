@@ -50,44 +50,50 @@ const categories = await getCollection("categories");
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem currentPage={true} label="Blog" />
         </BreadCrumbs>
+        <Section id="blogIntro" sectionTitle="Blog">
+            <p>Welcome to my blog!</p>
+        </Section>
         <Section id="featuredPosts" sectionTitle={t("blog.featured_posts_title")} sectionDescription={t("blog.featured_posts_description")}>
             <FeaturedPosts />
         </Section>
         <Section id="recentPosts" sectionTitle={t("blog.recent_posts_title")} sectionDescription={t("blog.recent_posts_description")}>
             <RecentPosts filterFeatured={true} />
         </Section>
-        <Section id="categories" sectionTitle={t("blog.categories")} sectionDescription={t("blog.categories_description")}>
-            <ul class="category-list">
-                {categories.map((cat) => <Category category={cat} />)}
-            </ul>
-        </Section>
-        <Section id="tags" sectionTitle={t("blog.tags")}sectionDescription={t("blog.tags_desctiption")}>
-            <ul class="tag-list">
-                {
-                    tags.map((tag) => (
-                        <li>
-                            <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
-                                <i class="bi bi-tag" />
-                                {getTagByLocale(locale, tag.id)}
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
-        </Section>
+        <div class="category-tags">
+            <Section id="categories" sectionTitle={t("blog.categories")} sectionDescription={t("blog.categories_description")}>
+                <ul class="category-list">
+                    {categories.map((cat) => <Category category={cat} />)}
+                </ul>
+            </Section>
+            <Section id="tags" sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
+                <ul class="tag-list">
+                    {
+                        tags.map((tag) => (
+                            <li>
+                                <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
+                                    <i class="bi bi-tag" />
+                                    {getTagByLocale(locale, tag.id)}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </Section>
+        </div>
     </main>
     <Footer />
 </MainLayout>
 
 <style>
-    .post-list {
+
+    .category-tags {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
         margin-bottom: 2rem;
 
         @media (max-width: 468px) {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
         }
     }
 

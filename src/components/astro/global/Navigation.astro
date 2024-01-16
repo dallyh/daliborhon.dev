@@ -5,6 +5,8 @@ import LanguageSelector from "./LanguageSelector.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { CollectionEntry } from "astro:content";
 import Search from "./Search.astro";
+import LogoAccent from "@assets/img/profile/logo-accent.svg";
+import { Image } from "astro:assets";
 
 interface Props {
     title: string;
@@ -19,107 +21,100 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["common", "blog"]);
 ---
 
-<header id="nav-menu" aria-label="navigation bar">
-    <div class="container">
-        <div class="nav-start">
-            <div class="brand">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
-                    <path
-                        d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"
-                    ></path>
-                </svg>
-                <h1>{title}</h1>
-            </div>
-        </div>
-
-        <nav class="menu">
-            <ul class="menu-bar">
-                <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a></li>
-                <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a></li>
-                <li>
-                    {
-                        homePage && (
-                            <a class="nav-link" href="#contact">
-                                {t("common.contact")}
-                            </a>
-                        )
-                    }
-                    {
-                        !homePage && (
-                            <a class="nav-link" href={getRelativeLocaleUrl(locale, "/contact")}>
-                                {t("common.contact")}
-                            </a>
-                        )
-                    }
-                </li>
-                <li>
-                    <button class="nav-link dropdown-btn" data-dropdown="dropdown2" aria-haspopup="true" aria-expanded="false" aria-label={t("common.blog")}>
-                        {t("common.blog")}
-                    </button>
-                    <div id="dropdown2" class="dropdown">
-                        <ul role="menu">
-                            <li>
-                                <span class="dropdown-link-title">Browse Categories</span>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{t("blog.categories")}</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
-                            </li>
-                        </ul>
-                        <ul role="menu">
-                            <li>
-                                <span class="dropdown-link-title">Test menu</span>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href="#mac-windows">Item 1</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href="#linux">Item 2</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href="#linux">Item 2</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href="#linux">Item 2</a>
-                            </li>
-                            <li role="menuitem">
-                                <a class="dropdown-link" href="#linux">Item 2</a>
-                            </li>
-                        </ul>
+<site-nav>
+    <header id="nav-menu" aria-label="navigation bar">
+        <div class="container">
+            <div class="nav-start">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <Image src={LogoAccent} alt="Site logo" format="webp" />
                     </div>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="nav-end">
-            <div class="right-container">
-                <div class="search" role="search">
-                    <Search />
                 </div>
-                <div class="lang-select" role="search">
-                    <LanguageSelector post={post} />
-                </div>
+                <nav class="menu">
+                    <ul class="menu-bar">
+                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a></li>
+                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a></li>
+                        <li>
+                            {
+                                homePage && (
+                                    <a class="nav-link" href="#contact">
+                                        {t("common.contact")}
+                                    </a>
+                                )
+                            }
+                            {
+                                !homePage && (
+                                    <a class="nav-link" href={getRelativeLocaleUrl(locale, "/contact")}>
+                                        {t("common.contact")}
+                                    </a>
+                                )
+                            }
+                        </li>
+                        <li>
+                            <button class="nav-link dropdown-btn" data-dropdown="blogDropdown" aria-haspopup="true" aria-expanded="false" aria-label={t("common.blog")}>
+                                {t("common.blog")}
+                            </button>
+                            <div id="blogDropdown" class="dropdown">
+                                <ul role="menu">
+                                    <li>
+                                        <span class="dropdown-link-title">Browse Categories</span>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{t("blog.categories")}</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
+                                    </li>
+                                </ul>
+                                <ul role="menu">
+                                    <li>
+                                        <span class="dropdown-link-title">Test menu</span>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href="#mac-windows">Item 1</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href="#linux">Item 2</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href="#linux">Item 2</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href="#linux">Item 2</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href="#linux">Item 2</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
-                <i class="bi bi-list" aria-hidden="true"></i>
-            </button>
+            <div class="nav-end">
+                <div class="right-container">
+                    <div class="search" role="search">
+                        <Search />
+                    </div>
+                    <div class="lang-select" role="search">
+                        <LanguageSelector post={post} />
+                    </div>
+                </div>
+                <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-list" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
+</site-nav>
 
 <style>
-    :root {
-        --border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
     .brand {
         color: rgba(var(--accent), 1);
         display: flex;
@@ -127,10 +122,17 @@ await loadNamespaces(locale, ["common", "blog"]);
         font-weight: 700;
         height: var(--header-height);
 
-        svg {
+        .brand-logo {
             margin-right: 6px;
             margin-left: 2px;
-            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                height: auto;
+                width: 48px;
+            }
         }
 
         h1 {
@@ -150,8 +152,8 @@ await loadNamespaces(locale, ["common", "blog"]);
         font-weight: 500;
         position: fixed;
         top: 0;
-        background: var(--header-bg);
-        backdrop-filter: blur(4px);
+        background: transparent;
+        backdrop-filter: blur(16px);
         z-index: 1010;
         transition: background 0.4s ease;
         height: var(--header-height);
@@ -203,7 +205,10 @@ await loadNamespaces(locale, ["common", "blog"]);
     }
 
     .menu-bar .nav-link:hover,
-    .dropdown-link:hover {
+    .menu-bar .nav-link:focus-visible,
+    .dropdown-link:hover,
+    .dropdown-link:focus-visible,
+    .menu-bar .nav-link[aria-expanded="true"] {
         color: rgba(var(--accent), 1);
         text-decoration: none;
         cursor: pointer;
@@ -302,12 +307,15 @@ await loadNamespaces(locale, ["common", "blog"]);
         display: none;
         min-width: 15rem;
         min-height: 2.2rem;
-        padding-inline-start: 0.75rem;
-        padding-inline-end: 0.75rem;
-        margin-left: 1rem;
-        font-size: 1.4rem;
-        background-color: var(--bg-color);
+        margin-left: 1.4rem;
+        font-size: 1.6rem;
         border-radius: 6px;
+        cursor: pointer;
+
+        &:hover,
+        &:focus-visible {
+            color: rgba(var(--accent), 1);
+        }
 
         @media (max-width: 768px) {
             min-width: 2rem;
@@ -320,6 +328,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                 background: rgba(var(--secondary), 1);
             }
         }
+
         #hamburger {
             display: block;
         }
@@ -362,6 +371,12 @@ await loadNamespaces(locale, ["common", "blog"]);
             .menu {
                 transform: translateX(0);
             }
+
+            .nav-end {
+                transition: 0.4s ease;
+                background-color: var(--header-bg);
+                border-radius: 6px;
+            }
         }
 
         .dropdown.active {
@@ -400,124 +415,76 @@ await loadNamespaces(locale, ["common", "blog"]);
     }
 </style>
 
-<script is:inline>
-    const dropdownBtn = document.querySelectorAll(".dropdown-btn");
-    const dropdown = document.querySelectorAll(".dropdown");
-    const hamburgerBtn = document.getElementById("hamburger");
-    const navMenu = document.querySelector(".menu");
-    const links = document.querySelectorAll(".dropdown a");
+<script>
+    class Navigation extends HTMLElement {
+        constructor() {
+            super();
+            const dropdownBtn = this.querySelectorAll<HTMLButtonElement>(".dropdown-btn");
+            const dropdown = this.querySelectorAll(".dropdown");
+            const hamburgerBtn = this.querySelector<HTMLButtonElement>("#hamburger")!;
+            const navMenu = this.querySelector<HTMLUListElement>(".menu");
+            const links = this.querySelectorAll(".dropdown a") as NodeListOf<HTMLAnchorElement>;
 
-    function setAriaExpandedFalse() {
-        dropdownBtn.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
-    }
+            function setAriaExpandedFalse() {
+                dropdownBtn.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
+            }
 
-    function closeDropdownMenu() {
-        dropdown.forEach((drop) => {
-            drop.classList.remove("active");
-            drop.addEventListener("click", (e) => e.stopPropagation());
-        });
-    }
-
-    function toggleHamburger() {
-        document.body.classList.toggle("nav-active");
-    }
-
-    dropdownBtn.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
-            const dropdownIndex = e.currentTarget.dataset.dropdown;
-            const dropdownElement = document.getElementById(dropdownIndex);
-
-            dropdownElement.classList.toggle("active");
-            dropdown.forEach((drop) => {
-                if (drop.id !== btn.dataset["dropdown"]) {
+            function closeDropdownMenu() {
+                dropdown.forEach((drop) => {
                     drop.classList.remove("active");
+                    drop.addEventListener("click", (e) => e.stopPropagation());
+                });
+            }
+
+            function toggleHamburger() {
+                document.body.classList.toggle("nav-active");
+            }
+
+            dropdownBtn.forEach((btn) => {
+                btn.addEventListener("click", function (e) {
+                    const dropdownIndex = (e.target as HTMLButtonElement).dataset.dropdown!;
+                    const dropdownElement = document.getElementById(dropdownIndex)!;
+
+                    dropdownElement.classList.toggle("active");
+                    dropdown.forEach((drop) => {
+                        if (drop.id !== btn.dataset["dropdown"]) {
+                            drop.classList.remove("active");
+                        }
+                    });
+                    e.stopPropagation();
+                    btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") === "false" ? "true" : "false");
+                });
+            });
+
+            // close dropdown menu when the dropdown links are clicked
+            links.forEach((link) =>
+                link.addEventListener("click", () => {
+                    closeDropdownMenu();
+                    setAriaExpandedFalse();
+                    toggleHamburger();
+                }),
+            );
+
+            // close dropdown menu when you click on the document body
+            document.documentElement.addEventListener("click", () => {
+                closeDropdownMenu();
+                setAriaExpandedFalse();
+            });
+
+            // close dropdown when the escape key is pressed
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    closeDropdownMenu();
+                    setAriaExpandedFalse();
                 }
             });
-            e.stopPropagation();
-            btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") === "false" ? "true" : "false");
-        });
-    });
 
-    // close dropdown menu when the dropdown links are clicked
-    links.forEach((link) =>
-        link.addEventListener("click", () => {
-            closeDropdownMenu();
-            setAriaExpandedFalse();
-            toggleHamburger();
-        }),
-    );
-
-    // close dropdown menu when you click on the document body
-    document.documentElement.addEventListener("click", () => {
-        closeDropdownMenu();
-        setAriaExpandedFalse();
-    });
-
-    // close dropdown when the escape key is pressed
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-            closeDropdownMenu();
-            setAriaExpandedFalse();
-        }
-    });
-
-    // toggle hamburger menu
-    hamburgerBtn.addEventListener("click", toggleHamburger);
-</script>
-<!--
-<style>
-    header {
-        width: 100%;
-        color: var(--body-color);
-        font-weight: 500;
-        position: fixed;
-        top: 0;
-        background: var(--header-bg);
-        backdrop-filter: blur(4px);
-        z-index: 2000;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-items: center;
-        transition: background 0.4s ease;
-
-        .header-items {
-            max-width: var(--page-width);
-            padding-left: var(--padding-x);
-            padding-right: var(--padding-x);
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            width: 100%;
-            margin: auto;
-            position: relative;
-        }
-
-        .brand {
-            color: rgba(var(--accent), 1);
-            display: flex;
-            align-items: center;
-            font-weight: 700;
-            height: var(--header-height);
-
-            svg {
-                margin-right: 6px;
-                margin-left: 2px;
-                height: 32px;
-            }
-
-            h1 {
-                font-size: 1rem;
-                font-weight: inherit;
-                padding: 0;
-                margin: 0;
-                background: none;
-                background-clip: none;
-                color: inherit;
-            }
+            // toggle hamburger menu
+            hamburgerBtn.addEventListener("click", toggleHamburger);
         }
     }
-</style>
+    customElements.define("site-nav", Navigation);
+</script>
 
 <script>
     const initNav = () => {
@@ -641,4 +608,3 @@ await loadNamespaces(locale, ["common", "blog"]);
         { once: false },
     );
 </script>
- -->

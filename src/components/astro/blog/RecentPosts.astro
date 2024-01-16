@@ -27,7 +27,7 @@ const filteredPosts = allPosts.sort((a, b) => {
 }).slice(0, postSize);
 ---
 
-<ul>
+<ul class="post-list">
     {
         filteredPosts.map((post) => (
             <li>
@@ -41,12 +41,3 @@ const filteredPosts = allPosts.sort((a, b) => {
     <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.see_all_posts")}</a>
     <i class="bi bi-arrow-right"></i>
 </div>
-
-<style>
-    ul {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-</style>

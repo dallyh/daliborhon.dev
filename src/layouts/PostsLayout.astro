@@ -38,7 +38,7 @@ const layoutProps = {
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
             <BreadCrumbsItem currentPage={true} label={t("blog.posts")} />
         </BreadCrumbs>
-        <Section id="blogs" sectionTitle={t("blog.all_posts_title")}>
+        <Section isFirstSection id="blogs" sectionTitle={t("blog.all_posts_title")}>
             <div class="paginated-posts">
                 <ul class="post-list">
                     {
@@ -77,17 +77,6 @@ const layoutProps = {
 </MainLayout>
 
 <style>
-    .post-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-
-        @media (max-width: 468px) {
-            grid-template-columns: 1fr;
-        }
-    }
-
     .page-selector {
         display: flex;
         justify-content: center;
@@ -105,20 +94,6 @@ const layoutProps = {
 
             i.disabled {
                 color: rgba(255, 255, 255, 0.2);
-            }
-        }
-
-        p {
-            line-height: 1;
-            position: relative;
-
-            &:after {
-                content: "";
-                position: absolute;
-                left: 0;
-                height: 100%;
-                width: 2px;
-                color: red;
             }
         }
     }

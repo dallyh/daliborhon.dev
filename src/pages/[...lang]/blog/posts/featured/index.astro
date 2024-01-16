@@ -37,7 +37,7 @@ const layoutProps = {
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
             <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={t("blog.featured_posts_title")}>
+        <Section isFirstSection id="taggedPosts" sectionTitle={t("blog.featured_posts_title")}>
             <ul>
                 {
                     sortedPosts.map((post) => (

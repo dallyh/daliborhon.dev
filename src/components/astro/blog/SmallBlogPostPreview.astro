@@ -34,7 +34,9 @@ await loadNamespaces(locale, ["blog"]);
                 </p>
             )
         }
-        <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+        <div>
+            <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+        </div>
     </div>
 </div>
 

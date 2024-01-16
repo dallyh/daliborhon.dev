@@ -13,7 +13,7 @@ await loadNamespaces(locale, ["common", "landing"]);
 <div class="intro-container">
     <div class="profile-container">
         <div class="profile-info-container">
-            <p class="hi-there">{t("landing.hi_there")} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></p>
+            <h1 class="hi-there">{t("landing.hi_there")} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></h1>
             <div class="profile-description">
                 <div class="icon-text">
                     <i class="bi bi-briefcase"></i>
@@ -126,6 +126,8 @@ await loadNamespaces(locale, ["common", "landing"]);
         }
 
         .hi-there {
+            color: var(--body-color);
+            font-weight: 400;
             font-size: clamp(1rem, 7vw, 1.725rem);
 
             span {

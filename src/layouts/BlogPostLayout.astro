@@ -53,26 +53,31 @@ const layoutProps = {
                 <BreadCrumbsItem currentPage={true} label={post.data.title} />
             </BreadCrumbs>
             <div class="post-description" data-pagefind-body>
-                <p>{post.data.title}</p>
-                <p>By {post.data.author}</p>
-                <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
-                {
-                    post.data.category && (
-                        <p>
-                            {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
-                        </p>
-                    )
-                }
+                <div class="post-meta">
+                    <h1 class="gradient-text">{post.data.title}</h1>
+                    <div class="meta-author">
+                        <p>By {post.data.author}. <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} /></p>
+
+                        {
+                            post.data.category && (
+                                <p>
+                                    {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                                </p>
+                            )
+                        }
+                    </div>
+                    <div class="tags" data-pagefind-body>
+                        <TagList post={post} bgColor="rgba(var(--bg-color), 1)" justify="flex-start" padding="0" />
+                    </div>
+                </div>
                 <div class="post-image">
                     <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" transition:name={transitionName} />
                 </div>
             </div>
-            <div class="tags" data-pagefind-body>
-                <TagList post={post} bgColor="rgba(var(--secondary), 1)" justify="center" />
-            </div>
         </div>
         <hr />
         <article class="post-md">
+            <hr />
             <slot />
         </article>
     </main>
@@ -81,22 +86,53 @@ const layoutProps = {
 
 <style>
     .post-description {
-        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
 
-        p:first-child {
-            font-size: 1.7rem;
-            font-weight: 700;
-            background: var(--accent-gradient) fixed;
-            background-clip: text;
-            color: transparent;
-            padding-bottom: 0.2rem;
-            padding-top: 0.2rem;
-            margin-top: 1rem;
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        h1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .post-meta {
+            @media (max-width: 768px) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        .meta-author {
+            font-size: 0.85rem;
         }
 
         .post-image {
-            padding: 2rem;
             overflow: hidden;
+            max-width: 200px;
+            transition: 0.3s ease;
+            transform-origin: top;
+
+            @media (max-width: 768px) {
+                align-self: center;
+                max-width: calc(100vw - 20%);
+            }
+
+            @media (min-width: 768px) {
+                &:hover {
+                    transform: scale(2);
+
+                    img {
+                        border: 1px solid rgba(var(--accent), 0.6);
+                    }
+                }
+            }
 
             img {
                 border-radius: 6px;
@@ -107,6 +143,6 @@ const layoutProps = {
         }
     }
     .tags {
-        margin-bottom: 2rem;
+        margin-top: 0.5rem;
     }
 </style>

@@ -21,12 +21,14 @@ const allPosts = await getCollection("posts", ({ data }) => {
     return data.language === locale && !data.hidden && data.featured;
 });
 
-const filteredPosts = allPosts.sort((a, b) => {
-    return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-}).slice(0, postSize);
+const filteredPosts = allPosts
+    .sort((a, b) => {
+        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+    })
+    .slice(0, postSize);
 ---
 
-<ul>
+<ul class="post-list">
     {
         filteredPosts.map((post) => (
             <li>
@@ -40,17 +42,3 @@ const filteredPosts = allPosts.sort((a, b) => {
     <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.see_all_featured")}</a>
     <i class="bi bi-arrow-right"></i>
 </div>
-
-<style>
-    ul {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    p {
-        display: flex;
-        justify-content: center;
-    }
-</style>

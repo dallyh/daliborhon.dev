@@ -2,10 +2,11 @@
 interface Props {
     sectionTitle?: string;
     sectionDescription?: string;
+    isFirstSection?: boolean;
     id: string;
 }
 
-const { sectionTitle, sectionDescription, id } = Astro.props;
+const { sectionTitle, sectionDescription, id, isFirstSection = false } = Astro.props;
 ---
 
 <section id={id}>
@@ -13,7 +14,8 @@ const { sectionTitle, sectionDescription, id } = Astro.props;
         {
             sectionTitle && (
                 <div class="section-header">
-                    <h2 class="gradient-text">{sectionTitle}</h2>
+                    {isFirstSection && <h1 class="gradient-text">{sectionTitle}</h1>}
+                    {!isFirstSection && <h2 class="gradient-text">{sectionTitle}</h2>}
                 </div>
             )
         }
@@ -24,7 +26,7 @@ const { sectionTitle, sectionDescription, id } = Astro.props;
                 </div>
             )
         }
-        <div class="section-content">
+        <div class={`section-content ${sectionDescription && "with-description"}`}>
             <slot />
         </div>
     </div>
@@ -71,7 +73,10 @@ const { sectionTitle, sectionDescription, id } = Astro.props;
         .section-content {
             width: 100%;
             height: 100%;
-            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+            &.with-description {
+                margin-top: 1.5rem;
+            }
         }
     }
 

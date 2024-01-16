@@ -64,7 +64,7 @@ const layoutProps = {
             <BreadCrumbsItem currentPage={true} label={t("blog.tags")}/>
             <BreadCrumbsItem currentPage={true} label={tagTitle} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={tagDescription}>
+        <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
             <ul>
                 {
                     filteredPosts.map((post) => (

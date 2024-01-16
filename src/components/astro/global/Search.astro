@@ -4,14 +4,25 @@
 
 import { getLocale } from "@i18n/utils";
 import "@pagefind/default-ui/css/ui.css";
-import cs from "./_cs.json";
 
 const locale = getLocale(Astro.url);
 
 // Temporary, until https://github.com/CloudCannon/pagefind/pull/543 gets merged
 let translations = {};
 if (locale === "cs") {
-    translations = cs;
+    translations = {
+        placeholder: "Hledat",
+        clear_search: "Smazat",
+        load_more: "Načíst další výsledky",
+        search_label: "Prohledat tuto stránku",
+        filters_label: "Filtry",
+        zero_results: "Žádné výsledky pro [SEARCH_TERM]",
+        many_results: "[COUNT] výsledků pro [SEARCH_TERM]",
+        one_result: "[COUNT] výsledek pro [SEARCH_TERM]",
+        alt_search: "Žádné výsledky pro [SEARCH_TERM]. Zobrazují se výsledky pro [DIFFERENT_TERM]",
+        search_suggestion: "Žádné výsledky pro [SEARCH_TERM]. Související výsledky hledání:",
+        searching: "Hledám [SEARCH_TERM]...",
+    };
 }
 ---
 
@@ -28,7 +39,7 @@ if (locale === "cs") {
 
     <dialog aria-label="Search">
         <div class="dialog-frame">
-            <button data-close-modal class="sl-flex md:sl-hidden">Close</button>
+            <button data-close-modal>Close</button>
             <div class="search-container">
                 <div id="pagefind"></div>
             </div>
@@ -97,26 +108,29 @@ if (locale === "cs") {
                 const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
                 onIdle(async () => {
                     const { PagefindUI } = await import("@pagefind/default-ui");
-                    pageFindInstance = new PagefindUI({
-                        element: "#pagefind",
-                        baseUrl: import.meta.env.BASE_URL,
-                        bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
-                        showImages: false,
-                        translations,
-                        showSubResults: true,
-                        processResult: function (result: any) {
-                            if (result?.meta?.image) {
-                                let resultBase = new URL(result.url, String(window.location));
-                                let remappedImage = new URL(result.meta.image, resultBase);
 
-                                if (remappedImage.hostname !== window.location.hostname) {
-                                    result.meta.image = remappedImage.toString();
-                                } else {
-                                    result.meta.image = remappedImage.pathname + trailingSlash;
+                    if (pageFindInstance === null) {
+                        pageFindInstance = new PagefindUI({
+                            element: "#pagefind",
+                            baseUrl: import.meta.env.BASE_URL,
+                            bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
+                            showImages: false,
+                            translations,
+                            showSubResults: true,
+                            processResult: function (result: any) {
+                                if (result?.meta?.image) {
+                                    let resultBase = new URL(result.url, String(window.location));
+                                    let remappedImage = new URL(result.meta.image, resultBase);
+
+                                    if (remappedImage.hostname !== window.location.hostname) {
+                                        result.meta.image = remappedImage.toString();
+                                    } else {
+                                        result.meta.image = remappedImage.pathname + trailingSlash;
+                                    }
                                 }
-                            }
-                        },
-                    });
+                            },
+                        });
+                    }
                 });
             };
 
@@ -139,22 +153,6 @@ if (locale === "cs") {
 </script>
 
 <style>
-    li[data-nav-item-search] {
-        &:hover,
-        &:focus-within {
-            background: transparent;
-
-            button[data-open-modal] {
-                .inner {
-                    @media (max-width: 768px) {
-                        border: 1px solid rgba(var(--accent), 1);
-                        color: rgba(var(--accent), 1);
-                    }
-                }
-            }
-        }
-    }
-
     site-search {
         display: contents;
     }
@@ -170,7 +168,6 @@ if (locale === "cs") {
             border-radius: 6px;
             padding-inline-start: 0.75rem;
             padding-inline-end: 1rem;
-            background-color: var(--bg-color);
             width: 100%;
             min-width: 11rem;
             min-height: 2.2rem;
@@ -182,6 +179,17 @@ if (locale === "cs") {
 
                 svg {
                     display: none;
+                }
+            }
+        }
+
+        &:hover,
+        &:focus-visible {
+            .inner {
+                border: 1px solid rgba(var(--accent), 1);
+                @media (max-width: 768px) {
+                    border: none;
+                    color: rgba(var(--accent), 1);
                 }
             }
         }
@@ -250,6 +258,7 @@ if (locale === "cs") {
             background: transparent;
             cursor: pointer;
             color: rgba(var(--accent), 1);
+            z-index: 1;
         }
     }
 </style>

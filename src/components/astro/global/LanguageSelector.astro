@@ -75,6 +75,10 @@ await loadNamespaces(currentLocale, ["common"]);
 </lang-select>
 
 <style>
+    lang-select {
+        display: contents;
+    }
+
     label {
         display: flex;
         justify-content: center;
@@ -95,28 +99,35 @@ await loadNamespaces(currentLocale, ["common"]);
         select {
             border: 0;
             padding-block: 1rem;
-            padding-inline: 1.8rem 0.9rem;
+            padding-inline: 1.5rem 1rem;
             width: var(--sl-select-width);
             background-color: transparent;
             text-overflow: ellipsis;
             color: inherit;
             appearance: none;
+
+            @media (max-width: 768px) {
+                width: 0;
+            }
         }
 
         &::after {
             content: "";
             position: absolute;
             top: 50%;
-            right: 0;
+            right: 0.2rem;
             display: inline-block;
             border-bottom: 2px solid var(--body-color);
             border-right: 2px solid var(--body-color);
-            height: 8px;
-            width: 8px;
+            height: 6px;
+            width: 6px;
             transform: rotate(45deg) translateY(-70%);
+            pointer-events: none;
         }
 
-        &:hover {
+        &:hover,
+        &:focus-visible,
+        &:focus-within {
             color: rgba(var(--accent), 1);
 
             &::after {
@@ -135,7 +146,7 @@ await loadNamespaces(currentLocale, ["common"]);
 
 <script>
     import { navigate } from "astro:transitions/client";
-    class StarlightLanguageSelect extends HTMLElement {
+    class LanguageSelect extends HTMLElement {
         constructor() {
             super();
             const select = this.querySelector("select");
@@ -148,5 +159,5 @@ await loadNamespaces(currentLocale, ["common"]);
             }
         }
     }
-    customElements.define("lang-select", StarlightLanguageSelect);
+    customElements.define("lang-select", LanguageSelect);
 </script>

@@ -3,7 +3,6 @@
 // Edited for this project needs.
 
 import { getLocale, getPathFromUrl } from "@i18n/utils";
-import localeEmoji from "locale-emoji";
 import ISO6991 from "iso-639-1";
 import { locales } from "@config/i18n";
 import { getRelativeLocaleUrl } from "astro:i18n";
@@ -29,9 +28,9 @@ await loadNamespaces(currentLocale, ["common"]);
 ---
 
 <lang-select>
-    <label class="">
+    <label>
         <Icon name="bi:translate" />
-        <select class="">
+        <select>
             {
                 !post &&
                     locales.map((locale) => {
@@ -96,7 +95,6 @@ await loadNamespaces(currentLocale, ["common"]);
             border: 0;
             padding-block: 1rem;
             padding-inline: 1.5rem 1rem;
-            width: var(--sl-select-width);
             background-color: transparent;
             text-overflow: ellipsis;
             color: inherit;
@@ -104,6 +102,7 @@ await loadNamespaces(currentLocale, ["common"]);
 
             @media (max-width: 768px) {
                 width: 0;
+                padding: 1rem;
             }
         }
 

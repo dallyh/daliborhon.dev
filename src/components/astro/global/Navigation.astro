@@ -56,39 +56,27 @@ await loadNamespaces(locale, ["common", "blog"]);
                             <div id="blogDropdown" class="dropdown">
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">Browse Categories</span>
+                                        <span class="dropdown-link-title">Browse Posts</span>
                                     </li>
                                     <li role="menuitem">
                                         <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/categories")}>{t("blog.categories")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
                                     </li>
                                     <li role="menuitem">
                                         <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
                                     </li>
-                                    <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
-                                    </li>
                                 </ul>
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">Test menu</span>
+                                        <span class="dropdown-link-title">Explore</span>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href="#mac-windows">Item 1</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/categories")}>{t("blog.categories")}</a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href="#linux">Item 2</a>
-                                    </li>
-                                    <li role="menuitem">
-                                        <a class="dropdown-link" href="#linux">Item 2</a>
-                                    </li>
-                                    <li role="menuitem">
-                                        <a class="dropdown-link" href="#linux">Item 2</a>
-                                    </li>
-                                    <li role="menuitem">
-                                        <a class="dropdown-link" href="#linux">Item 2</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/tags")}>{t("blog.tags")}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -104,10 +92,10 @@ await loadNamespaces(locale, ["common", "blog"]);
                     <div class="lang-select" role="search">
                         <LanguageSelector post={post} />
                     </div>
+                    <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
+                        <Icon name="bi:list" size={28} />
+                    </button>
                 </div>
-                <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
-                    <Icon name="bi:list" />
-                </button>
             </div>
         </div>
     </header>
@@ -299,20 +287,13 @@ await loadNamespaces(locale, ["common", "blog"]);
 
     #hamburger {
         display: none;
-        min-width: 15rem;
-        min-height: 2.2rem;
-        margin-left: 1.4rem;
-        font-size: 1.6rem;
         border-radius: 6px;
         cursor: pointer;
+        padding-right: 1rem;
 
         &:hover,
         &:focus-visible {
             color: rgba(var(--accent), 1);
-        }
-
-        @media (max-width: 768px) {
-            min-width: 2rem;
         }
     }
 
@@ -324,14 +305,16 @@ await loadNamespaces(locale, ["common", "blog"]);
         }
 
         #hamburger {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .menu {
             position: fixed;
             top: var(--header-height);
             left: 0;
-            height: calc(100vh - var(--header-height));
+            height: calc(100svh - var(--header-height));
             width: 100vw;
             background: rgba(var(--secondary), 1);
             backdrop-filter: blur(4px);

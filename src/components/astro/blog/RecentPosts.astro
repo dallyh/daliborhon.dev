@@ -6,6 +6,7 @@ import { BLOG } from "src/config/blog";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { Icon } from "astro-icon/components";
+import Section from "../global/Section.astro";
 
 interface Props {
     postSize?: number;
@@ -28,15 +29,18 @@ const filteredPosts = allPosts.sort((a, b) => {
 }).slice(0, postSize);
 ---
 
-<ul class="post-list">
-    {
-        filteredPosts.map((post) => (
-            <li>
-                <BlogPostPreview post={post} />
-            </li>
-        ))
-    }
-</ul>
+<Section id="recentPosts" sectionTitle={t("blog.recent_posts_title")} sectionDescription={t("blog.recent_posts_description")}>
+    <ul class="post-list">
+        {
+            filteredPosts.map((post) => (
+                <li>
+                    <BlogPostPreview post={post} />
+                </li>
+            ))
+        }
+    </ul>
+</Section>
+
 
 <div class="all-posts">
     <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.see_all_posts")}<i><Icon name="bi:arrow-right" /></i></a>

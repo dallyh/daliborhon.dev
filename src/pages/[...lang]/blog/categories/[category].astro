@@ -61,10 +61,10 @@ const layoutProps = {
         <BreadCrumbs>
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label={t("blog.categories")} />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={t("blog.categories")} />
             <BreadCrumbsItem currentPage={true} label={categoryTitle} />
         </BreadCrumbs>
-        <Section id="taggedPosts" sectionTitle={categoryDescription}>
+        <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
             <ul>
                 {
                     filteredPosts.map((post) => (

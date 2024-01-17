@@ -31,7 +31,7 @@ if (locale === "cs") {
     <button data-open-modal disabled>
         <div class="inner">
             <i class="search-icon"><Icon name="bi:search" title="Search" /></i>
-            <i class="slash-icon"><Icon name="forward-slash" title="Press to search"/></i>
+            <i class="slash-icon"><Icon name="forward-slash" title="Press to search" /></i>
         </div>
     </button>
 
@@ -164,8 +164,7 @@ if (locale === "cs") {
             justify-content: space-between;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 6px;
-            padding-inline-start: 0.75rem;
-            padding-inline-end: 1rem;
+            padding-inline: 0.75rem 1rem;
             width: 100%;
             min-width: 11rem;
             min-height: 2.2rem;
@@ -174,6 +173,7 @@ if (locale === "cs") {
             @media (max-width: 768px) {
                 border: 0;
                 min-width: 2rem;
+                padding: 1rem;
 
                 .slash-icon {
                     display: none;

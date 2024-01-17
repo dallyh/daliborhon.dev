@@ -85,6 +85,15 @@
     }
 }
 
+.error,
+.success {
+
+    svg {
+        width: 75px;
+        height: 75px;
+    }
+}
+
 .error {
     color: #ff0303;
     font-weight: 700;

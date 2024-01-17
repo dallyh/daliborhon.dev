@@ -12,6 +12,10 @@ export const localeSettings: LocaleSettingsType = {
     },
 };
 
+// Type backing allowed locales
+// TODO - can this be dynamic, like the rest of the settings?
+export type AllowedLocales = "cs" | "en";
+
 // Defaults
 export const defaultLocale = Object.keys(localeSettings).find((key) => localeSettings[key].default)!;
 
@@ -21,7 +25,7 @@ export const localeKeys = Object.fromEntries(Object.entries(localeSettings).map(
 
 // The type backing the settings
 export type LocaleSettingsType = Record<
-    string,
+string,
     {
         label: string;
         locale: string;

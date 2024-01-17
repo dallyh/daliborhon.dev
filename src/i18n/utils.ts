@@ -1,14 +1,16 @@
 import { removeTrailingSlash } from "@utils/removeTrailingSlash";
 import { locales, defaultLocale } from "@config/i18n";
+import { type AllowedLocales } from "@config/i18n";
 
-export function getLocale(url: URL) {
+export function getLocale(url: URL): AllowedLocales {
     const pathSegments = url.pathname.split("/");
 
     // Find the first valid language code in the path
     const lang = pathSegments.find((segment) => locales.includes(segment));
 
     // Return the found language or the default locale if none is found
-    return lang || defaultLocale;
+    const locale = lang || defaultLocale;
+    return locale as AllowedLocales;
 }
 
 export function getRoutingLocale(locale: string | undefined) {

@@ -1,8 +1,7 @@
 ---
 import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
-
-// Images
+import { Icon } from "astro-icon/components";
 import avatar from "@assets/img/profile/avatar_casual.svg?raw";
 
 // i18next
@@ -16,11 +15,11 @@ await loadNamespaces(locale, ["common", "landing"]);
             <h1 class="hi-there">{t("landing.hi_there")} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></h1>
             <div class="profile-description">
                 <div class="icon-text">
-                    <i class="bi bi-briefcase"></i>
+                    <i><Icon name="bi:briefcase" /></i>
                     <p>Business Consultant</p>
                 </div>
                 <div class="icon-text">
-                    <i class="bi bi-geo-alt"></i>
+                    <i><Icon name="bi:geo-alt" /></i>
                     <p>Ostrava, {t("common.country_czech_republic")}</p>
                 </div>
             </div>
@@ -33,7 +32,7 @@ await loadNamespaces(locale, ["common", "landing"]);
                         <span></span>
                         <span></span>
                         <span></span>
-                        <i class="bi bi-github">GitHub</i>
+                        <i><Icon name="bi:github" />GitHub</i>
                     </a>
                 </li>
                 <li>
@@ -42,7 +41,7 @@ await loadNamespaces(locale, ["common", "landing"]);
                         <span></span>
                         <span></span>
                         <span></span>
-                        <i class="bi bi-linkedin">LinkedIn</i>
+                        <i><Icon name="bi:linkedin" />LinkedIn</i>
                     </a>
                 </li>
             </ul>

@@ -16,7 +16,7 @@ const { href, hrefTitle, description } = Astro.props;
         <div class="card-info-wrapper">
             <div class="card-info">
                 <div class="card-info-title">
-                    <a href={href} target="_blank"><i class="bi bi-link-45deg"></i>{hrefTitle}</a>
+                    <a href={href} target="_blank">{hrefTitle}</a>
                     <div class="card-info-tags">
                         <slot name="tags" />
                     </div>
@@ -31,19 +31,19 @@ const { href, hrefTitle, description } = Astro.props;
     .card-image {
         align-items: center;
         display: flex;
-        height: 120px;
-        width: 100px;
         justify-content: center;
         overflow: hidden;
+        height: 120px;
+        width: 100px;
 
-        > i {
-            color: rgba(240, 240, 240, 1);
-            font-size: 4rem;
+        > svg {
+            padding: 0.2rem;
+            height: 100%;
+            width: 100%;
         }
 
-        @media (max-width: 468px) {
-            height: 90px;
-            width: 100%;
+        [data-icon="lemmy-icon"] {
+            color: black;
         }
     }
 </style>

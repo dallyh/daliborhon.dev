@@ -3,25 +3,15 @@ import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import { getCollection } from "astro:content";
-import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
-import TagList from "@components/astro/blog/TagList.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import Footer from "@components/astro/global/Footer.astro";
 import Section from "@components/astro/global/Section.astro";
-import { BLOG } from "@config/blog";
 import { getStaticPaths } from "@i18n/utils";
-import CategoryList from "@components/astro/blog/Category.astro";
-import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
-import { getTagByLocale } from "@utils/getTagByLocale";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Category from "@components/astro/blog/Category.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import RecentPosts from "@components/astro/blog/RecentPosts.astro";
-import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
-import { Icon } from "astro-icon/components";
-
 export { getStaticPaths };
 
 // i18n
@@ -29,18 +19,12 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog", "common"]);
 
 const layoutProps = {
-    title: "Blog",
+    title: `${t("blog.categories")} - Blog`,
     description: t("blog.blog_site_description"),
 };
-// Tags
-const tags = await getCollection("tags");
-
-// Posts
-const posts = await getCollection("posts", ({ data }) => {
-    return data.language === locale && !data.hidden;
-});
 // Categories
 const categories = await getCollection("categories");
+const sorted = categories.sort((a, b) => a.data.languages[locale].title.localeCompare(b.data.languages[locale].title));
 ---
 
 <MainLayout {...layoutProps}>
@@ -49,21 +33,20 @@ const categories = await getCollection("categories");
     <main>
         <BreadCrumbs>
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
-            <BreadCrumbsItem currentPage={true} label="Blog" />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+            <BreadCrumbsItem currentPage={true} label={t("blog.categories")} />
         </BreadCrumbs>
-        <Section id="blogIntro" sectionTitle="Blog">
-            <p>Welcome to my blog!</p>
+        <Section id="categories" isFirstSection sectionTitle={t("blog.categories")} sectionDescription={t("blog.categories_description")}>
+            <ul class="category-list">
+                {sorted.map((category) => <Category {category} />)}
+            </ul>
         </Section>
-        <FeaturedPosts />
-        <RecentPosts filterFeatured />
-
     </main>
     <Footer />
 </MainLayout>
 
 <style>
     .category-list {
-        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -78,35 +61,6 @@ const categories = await getCollection("categories");
 
             &:hover {
                 color: rgba(var(--accent), 1);
-            }
-        }
-    }
-
-    .tag-list {
-        width: 100%;
-        display: block;
-
-        li {
-            display: inline-block;
-            margin-top: 0.75rem;
-            margin-bottom: 0.75rem;
-            margin-left: 0.25rem;
-            margin-right: 0.25rem;
-            padding-right: 0.5rem;
-
-            a {
-                display: inline-flex;
-                gap: 0.35rem;
-                justify-content: center;
-                align-items: center;
-
-                i {
-                    margin-top: 0.2rem;
-                }
-
-                &:visited {
-                    color: var(--a-color);
-                }
             }
         }
     }

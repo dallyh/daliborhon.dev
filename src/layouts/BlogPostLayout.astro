@@ -52,8 +52,8 @@ const layoutProps = {
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
                 <BreadCrumbsItem currentPage={true} label={post.data.title} />
             </BreadCrumbs>
-            <div class="post-description" data-pagefind-body>
-                <div class="post-meta">
+            <div class="post-description">
+                <div class="post-meta" data-pagefind-body>
                     <h1 class="gradient-text">{post.data.title}</h1>
                     <div class="meta-author">
                         <p>By {post.data.author}. <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} /></p>
@@ -66,7 +66,7 @@ const layoutProps = {
                             )
                         }
                     </div>
-                    <div class="tags" data-pagefind-body>
+                    <div class="tags">
                         <TagList post={post} bgColor="rgba(var(--bg-color), 1)" justify="flex-start" padding="0" />
                     </div>
                 </div>

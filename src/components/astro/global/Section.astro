@@ -26,7 +26,7 @@ const { sectionTitle, sectionDescription, id, isFirstSection = false } = Astro.p
                 </div>
             )
         }
-        <div class={`section-content ${sectionDescription && "with-description"}`}>
+        <div class={`section-content ${sectionDescription !== undefined ? "with-description" : ""}`}>
             <slot />
         </div>
     </div>
@@ -74,6 +74,7 @@ const { sectionTitle, sectionDescription, id, isFirstSection = false } = Astro.p
             width: 100%;
             height: 100%;
             margin-top: 0.5rem;
+
             &.with-description {
                 margin-top: 1.5rem;
             }

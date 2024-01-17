@@ -4,11 +4,9 @@ import * as i18n from "./src/config/i18n";
 import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
-
+import icon from "astro-icon";
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
-
 const URL = SITE_URL ?? "https://www.daliborhon.dev/";
-
 console.log(`Using SITE_URL: '${URL}'`);
 console.log(`Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`);
 
@@ -39,7 +37,8 @@ export default defineConfig({
         react(),
         sitemap({
             i18n: {
-                defaultLocale: i18n.defaultLocale, // All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
+                defaultLocale: i18n.defaultLocale,
+                // All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
                 locales: {
                     ...i18n.localeKeys,
                 },
@@ -47,6 +46,13 @@ export default defineConfig({
             filter: (page) => page !== `'${URL}admin'`,
         }),
         pagefind(),
+        icon({
+            iconDir: "src/assets/icons",
+            include: {
+                bi: ["*"],
+                devicon: ["*"],
+            },
+        }),
     ],
     vite: {
         optimizeDeps: {

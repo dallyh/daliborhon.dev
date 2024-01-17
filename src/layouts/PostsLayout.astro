@@ -12,6 +12,7 @@ import Section from "@components/astro/global/Section.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
 
 interface Props {
     page: Page<CollectionEntry<"posts">>;
@@ -54,20 +55,36 @@ const layoutProps = {
                         {
                             page.url.prev && (
                                 <a href={page.url.prev} title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
-                                    <i class="bi bi-arrow-left" />
+                                    <i>
+                                        <Icon name="bi:arrow-left" />
+                                    </i>
                                 </a>
                             )
                         }
-                        {!page.url.prev && <i class="bi bi-arrow-left disabled" title={t("blog.prev_page")} aria-label={t("blog.prev_page")} />}
+                        {
+                            !page.url.prev && (
+                                <i class="disabled" title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
+                                    <Icon name="bi:arrow-left" />
+                                </i>
+                            )
+                        }
                         <p aria-label={t("blog.page_count_title", { current: page.currentPage, total: page.lastPage })}>{page.currentPage} / {page.lastPage}</p>
                         {
                             page.url.next && (
                                 <a href={page.url.next} title={t("blog.next_page")} aria-label={t("blog.next_page")}>
-                                    <i class="bi bi-arrow-right" />
+                                    <i>
+                                        <Icon name="bi:arrow-right" />
+                                    </i>
                                 </a>
                             )
                         }
-                        {!page.url.next && <i class="bi bi-arrow-right disabled" title={t("blog.next_page")} aria-label={t("blog.next_page")} />}
+                        {
+                            !page.url.next && (
+                                <i class="disabled" title={t("blog.next_page")} aria-label={t("blog.next_page")}>
+                                    <Icon name="bi:arrow-right" />
+                                </i>
+                            )
+                        }
                     </div>
                 </div>
             </div>
@@ -91,6 +108,23 @@ const layoutProps = {
             background: rgba(var(--secondary), 1);
             border-radius: 6px;
             box-shadow: var(--global-box-shadow);
+
+            i {
+                padding: 0.2rem;
+            }
+
+            a {
+                color: var(--body-color);
+
+                &:hover {
+                    color: rgba(var(--accent), 1);
+                }
+            }
+
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
 
             i.disabled {
                 color: rgba(255, 255, 255, 0.2);

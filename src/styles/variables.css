@@ -18,7 +18,7 @@
     --body-color: white;
     --button-color: white;
     --button-hover-color: black;
-    --bg-color: rgba(15, 23, 42, 1);
+    --bg-color: rgb(13, 19, 32); /* rgba(15, 23, 42, 1) */
     --header-bg: rgba(15, 23, 42, 0.8);
     --card-bg: rgba(var(--secondary), 1);
     --a-visited: rgb(197, 138, 249);

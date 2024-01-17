@@ -4,6 +4,7 @@ import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import Lemmy from "@assets/img/projects/lemmy.svg";
 import ProjectCard from "./ProjectCard.astro";
+import { Icon } from "astro-icon/components";
 
 // TO-DO Create a collection for Projects and Project tags, and automate this page
 
@@ -15,7 +16,7 @@ await loadNamespaces(locale, ["projects"]);
 <div class="projects-cards-wrapper">
     <div class="cards">
         <ProjectCard href="https://github.com/dallyh/daliborhon.dev" hrefTitle={t("projects.this_website_title")} description={t("projects.this_website_description")}>
-            <i class="bi bi-file-earmark-code-fill" slot="image"></i>
+            <Icon name="bi:file-earmark-code-fill" slot="image"/>
             <div class="rounded-tag astro" slot="tags">Astro.js</div>
             <div class="rounded-tag typescript" slot="tags">TypeScript</div>
             <div class="rounded-tag javascript" slot="tags">JavaScript</div>
@@ -27,13 +28,13 @@ await loadNamespaces(locale, ["projects"]);
             hrefTitle={t("projects.cms_oauth_title")}
             description={t("projects.cms_oauth_description")}
         >
-            <i class="bi bi-person-fill-lock" slot="image"></i>
+        <Icon name="bi:person-fill-lock" slot="image"/>
             <div class="rounded-tag astro" slot="tags">Astro.js</div>
             <div class="rounded-tag typescript" slot="tags">TypeScript</div>
             <div class="rounded-tag webdev" slot="tags">Web</div>
         </ProjectCard>
         <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects.lemmy_kt_client_title")} description={t("projects.lemmy_kt_client_description")}>
-            <Image class="lemmy-logo" slot="image" src={Lemmy} width={85} format="webp" alt="Lemmy software logo" loading="eager" />
+            <Icon name="lemmy-icon" slot="image" title="Lemmy software logo"/>
             <div class="rounded-tag kmp" slot="tags">Kotlin Multiplatform</div>
         </ProjectCard>
     </div>

@@ -5,6 +5,7 @@ import { loadNamespaces, t } from "@i18n/i18n";
 
 // Images
 import astroSvg from "@assets/img/astro/simple-full-logo-light.svg";
+import { Icon } from "astro-icon/components";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -13,16 +14,15 @@ await loadNamespaces(locale, ["footer"]);
 
 <footer class="footer-container">
     <p>
-        {t("footer.page_created_by")}
+        {t("footer.page_created_by")} - <a href="/admin/" aria-label={t("footer.site_admin_a_label")} title={t("footer.site_admin_a_label")}>admin</a>
     </p>
     <p>
         {t("footer.created_with")}
         <a href="https://astro.build/" aria-label={t("footer.astro_a_label")} title={t("footer.astro_a_label")}>
-            <Image src={astroSvg} alt="Astro framework logo" class="svg-astro" />
+            <Icon name="astro-icon" size={45} />
         </a>
     </p>
     <p>{t("footer.hosted_by")}{" "}<a href="https://www.github.com" aria-label={t("footer.github_a_label")} target="_blank"> {t("footer.github_name")}</a>.</p>
-    <a href="/admin/" aria-label={t("footer.site_admin_a_label")} title={t("footer.site_admin_a_label")}>Admin</a>
 </footer>
 
 <style>
@@ -39,16 +39,16 @@ await loadNamespaces(locale, ["footer"]);
         margin-top: 1rem;
     }
 
-    :global(.svg-astro) {
+    [data-icon="astro-icon"] {
         display: inline-block;
         vertical-align: middle;
-        margin-left: 2px;
+        margin-left: 3px;
         width: 45px;
         height: 15px;
         background-size: contain;
         background-repeat: no-repeat;
-        filter: invert(100%) grayscale(100%);
-        opacity: 75%;
+        color: var(--body-color);
+        opacity: 0.6;
     }
 </style>
 

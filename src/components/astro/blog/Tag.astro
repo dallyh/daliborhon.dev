@@ -5,44 +5,42 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 import { Icon } from "astro-icon/components";
 import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
-import BlogPostPreview from "./BlogPostPreview.astro";
+import { getTagByLocale } from "@utils/getTagByLocale";
 
 interface Props {
-    category: CollectionEntry<"categories">;
+    tag: CollectionEntry<"tags">;
 }
 
-const { category } = Astro.props;
+const { tag } = Astro.props;
 const locale = getLocale(Astro.url);
 
-const title = await getCategoryTitleByLocale(locale, category.id);
-const description = await getCategoryDescriptionByLocale(locale, category.id);
-const url = getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`);
+const title = await getTagByLocale(locale, tag.id);
+const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`);
 
-const categoryPosts = await getCollection("posts", ({ data }) => {
-    return data.hidden == false && data.language === locale && data.category?.id === category.id;
+const tagPosts = await getCollection("posts", ({ data }) => {
+    return data.hidden == false && data.language === locale && data.tags.find((tag) => tag.id === tag.id);
 });
 
 // Only last 3 recent
-const filteredPosts = categoryPosts
+const filteredPosts = tagPosts
     .sort((a, b) => {
         return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
     })
     .slice(0, 3);
 ---
 
-<li class="category">
+<li class="tag">
     <h2 class="title">
         <a href={url}>
+            <i>
+                <Icon name="bi:tag" />
+            </i>
             {title}
         </a>
     </h2>
-    <p class="description">
-        <i><Icon name="bi:arrow-return-right" /></i>
-        <span>{description}</span>
-    </p>
     {
         filteredPosts.length !== 0 && (
-            <ul class="category-post-list">
+            <ul class="tag-post-list">
                 {filteredPosts.map((post) => (
                     <li>
                         <SmallBlogPostPreview post={post} />
@@ -51,35 +49,32 @@ const filteredPosts = categoryPosts
             </ul>
         )
     }
-    {filteredPosts.length === 0 && <p class="category-post-list">There are currently no posts in this category.</p>}
+    {filteredPosts.length === 0 && <p class="category-post-list">There are currently no posts tagged with {title}</p>}
 </li>
 
 <style>
-    .category {
+    .tag {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         width: 100%;
 
         h2 {
+            a {
+                display: flex;
+                gap: 0.3rem;
+            }
+
+            svg {
+                margin-top: 0.2rem;
+            }
+            
             a:visited {
-                color: rgba(var(--accent), 1)
+                color: rgba(var(--accent), 1);
             }
         }
 
-        .title {
-            display: flex;
-            align-items: center;
-        }
-
-        .description {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: 0.4rem;
-        }
-
-        .category-post-list {
+        .tag-post-list {
             display: grid;
             gap: 1rem;
             margin-top: 0.8rem;

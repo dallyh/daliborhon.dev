@@ -5,8 +5,7 @@ import LanguageSelector from "./LanguageSelector.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { CollectionEntry } from "astro:content";
 import Search from "./Search.astro";
-import LogoAccent from "@assets/img/profile/logo-accent.svg";
-import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
 interface Props {
     title: string;
@@ -26,8 +25,8 @@ await loadNamespaces(locale, ["common", "blog"]);
         <div class="container">
             <div class="nav-start">
                 <div class="brand">
-                    <div class="brand-logo">
-                        <Image src={LogoAccent} alt="Site logo" format="webp" />
+                    <div class="brand-logo text-gradient">
+                        <Icon name="dh-logo" size={40} />
                     </div>
                 </div>
                 <nav class="menu">
@@ -107,7 +106,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                     </div>
                 </div>
                 <button id="hamburger" aria-label="hamburger" aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-list" aria-hidden="true"></i>
+                    <Icon name="bi:list" />
                 </button>
             </div>
         </div>
@@ -128,11 +127,6 @@ await loadNamespaces(locale, ["common", "blog"]);
             display: flex;
             justify-content: center;
             align-items: center;
-
-            img {
-                height: auto;
-                width: 48px;
-            }
         }
 
         h1 {

@@ -20,6 +20,7 @@ import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
+import { Icon } from "astro-icon/components";
 
 export { getStaticPaths };
 
@@ -71,7 +72,9 @@ const categories = await getCollection("categories");
                         tags.map((tag) => (
                             <li>
                                 <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
-                                    <i class="bi bi-tag" />
+                                    <i>
+                                        <Icon name="bi:tag" />
+                                    </i>
                                     {getTagByLocale(locale, tag.id)}
                                 </a>
                             </li>
@@ -85,7 +88,6 @@ const categories = await getCollection("categories");
 </MainLayout>
 
 <style>
-
     .category-tags {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -130,7 +132,14 @@ const categories = await getCollection("categories");
             padding-right: 0.5rem;
 
             a {
-                display: inline-block;
+                display: inline-flex;
+                gap: 0.35rem;
+                justify-content: center;
+                align-items: center;
+
+                i {
+                    margin-top: 0.2rem;
+                }
 
                 &:visited {
                     color: var(--a-color);

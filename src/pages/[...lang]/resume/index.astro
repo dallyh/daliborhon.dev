@@ -15,6 +15,7 @@ import mfilesLogo from "@assets/img/company-logos/m-files.png";
 import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
 import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
 import PageLayout from "@layouts/PageLayout.astro";
+import { Icon } from "astro-icon/components";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -117,20 +118,20 @@ const layoutProps = {
             <div class="list-card">
                 <h3 class="dev-list-title">
                     {t("resume.skills_prg_title")}
-                    <span><i class="bi bi-info-circle" data-tooltip="top" data-tooltip-text={t("resume.hover_icons_tooltip")}></i></span>
+                    <span><i data-tooltip="top" data-tooltip-text={t("resume.hover_icons_tooltip")}><Icon name="bi:info-circle" /></i></span>
                 </h3>
                 <ul class="dev-list-inline">
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="HTML5">
-                        <i class="devicon-html5-plain"></i>
+                        <i><Icon name="devicon:html5"/></i>
                     </li>
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="CSS3">
-                        <i class="devicon-css3-plain"></i>
+                        <i><Icon name="devicon:css3"/></i>
                     </li>
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="JavaScript">
-                        <i class="devicon-javascript-plain"></i>
+                        <i><Icon name="devicon:javascript"/></i>
                     </li>
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Node JS">
-                        <i class="devicon-nodejs-plain"></i>
+                        <i><Icon name="devicon:nodejs"/></i>
                     </li>
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="SASS">
                         <i class="devicon-sass-original"></i>
@@ -452,7 +453,6 @@ const layoutProps = {
     .dev-list-inline .dev-list-inline-item {
         font-size: 3rem;
         transition: all 300ms;
-        color: var(--dev-icon-color);
     }
 
     .dev-list-inline .dev-list-inline-item:hover,

@@ -3,6 +3,7 @@ import { type CollectionEntry } from "astro:content";
 import { getLocale } from "@i18n/utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { Icon } from "astro-icon/components";
 
 interface Props {
     category: CollectionEntry<"categories">;
@@ -23,7 +24,7 @@ const description = await getCategoryDescriptionByLocale(locale, category.id);
         </a>
     </div>
     <div class="description">
-        <i class="bi bi-arrow-return-right"></i>
+        <i><Icon name="bi:arrow-return-right"/></i>
         <span>{description}</span>
     </div>
 </li>

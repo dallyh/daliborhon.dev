@@ -90,11 +90,6 @@ small {
     color: rgba(var(--accent), 1);
 }
 
-.all-posts {
-    font-size: 1.2rem;
-    text-align: center;
-}
-
 .button {
     display: flex;
     justify-content: center;
@@ -136,6 +131,23 @@ a {
 
     &:focus-visible {
         box-shadow: 0 0 0 0.2rem rgba(var(--accent), 1);
+    }
+}
+
+.all-posts {
+    font-size: 1.1rem;
+    text-align: center;
+
+    a {
+        display: inline-flex;
+        gap: 0.5rem;
+    }
+
+    svg {
+        margin-top: 0.15rem;
+        width: 1rem;
+        height: 1rem;
+        color: var(--body-color);
     }
 }
 

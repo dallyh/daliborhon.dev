@@ -5,6 +5,7 @@ import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import { BLOG } from "@config/blog";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { loadNamespaces, t } from "@i18n/i18n";
+import { Icon } from "astro-icon/components";
 
 interface Props {
     postSize?: number;
@@ -39,6 +40,5 @@ const filteredPosts = allPosts
     {filteredPosts.length === 0 && <p>{t("blog.no_featured_posts")} 😞</p>}
 </ul>
 <div class="all-posts">
-    <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.see_all_featured")}</a>
-    <i class="bi bi-arrow-right"></i>
+    <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.see_all_featured")}<i><Icon name="bi:arrow-right" /></i></a>
 </div>

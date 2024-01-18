@@ -25,7 +25,7 @@ export const localeKeys = Object.fromEntries(Object.entries(localeSettings).map(
 
 // The type backing the settings
 export type LocaleSettingsType = Record<
-string,
+    string,
     {
         label: string;
         locale: string;

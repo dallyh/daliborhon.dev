@@ -47,13 +47,11 @@ const filteredPosts = posts
 await loadNamespaces(locale, ["blog", "common"]);
 
 const categoryTitle = await getCategoryTitleByLocale(locale, category);
-const categoryDescription = `${t("blog.posts_with_category")} ${categoryTitle.toLowerCase()}`
+const categoryDescription = `${t("blog.posts_with_category")} ${categoryTitle.toLowerCase()}`;
 const layoutProps = {
     title: `${t("blog.category")}: ${categoryTitle}`,
     description: categoryDescription,
 };
-
-
 ---
 
 <PageLayout {...layoutProps}>

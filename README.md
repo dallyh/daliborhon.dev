@@ -1,10 +1,12 @@
 # Welcome to my [Website!](https://daliborhon.dev)
+
 <p align="center">
   <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/dallyh/daliborhon.dev/deploy.yaml">
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/dallyh/daliborhon.dev">
 </p>
 
 ## Info
+
 This is an [Astro](https://astro.build) project for my personal website, which I play to use as a blog.
 The project is continually in development, as I also take it as an opportunity to learn something new.
 
@@ -13,20 +15,23 @@ This is a fully static website hosted on GitHub pages, using a fully static CMS 
 I guess for experienced developers a lot of things in this repo will not make any sense, however, everybody has to start somewhere.
 
 ## Stack
-- Frameworks: 
-  - [Astro](https://astro.build)
-  - Some of the UI: [React](https://react.dev/)
-  - Internationalization [i18next](https://www.i18next.com/)
-- Content Management System: [Static CMS](https://staticcms.org)
-  - User authorization: [Static CMS GitHub OAuth provider](https://github.com/dallyh/static-cms-gh-oauth-provider)
+
+-   Frameworks:
+    -   [Astro](https://astro.build)
+    -   Some of the UI: [React](https://react.dev/)
+    -   Internationalization [i18next](https://www.i18next.com/)
+-   Content Management System: [Static CMS](https://staticcms.org)
+    -   User authorization: [Static CMS GitHub OAuth provider](https://github.com/dallyh/static-cms-gh-oauth-provider)
 
 ## Deployment
+
 Deployments are done either on a new commit to the `main` branch (production), or on a new pull request for `main` branch.
 
-Pull request creates a new build just for that particular pull request, which is used to preview the site. 
+Pull request creates a new build just for that particular pull request, which is used to preview the site.
 Previews are hosted [here](https://github.com/dallyh/deploy-previews).
 
 ## Commands
+
 All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                                                 |

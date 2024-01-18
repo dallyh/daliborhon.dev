@@ -16,25 +16,21 @@ await loadNamespaces(locale, ["projects"]);
 <div class="projects-cards-wrapper">
     <div class="cards">
         <ProjectCard href="https://github.com/dallyh/daliborhon.dev" hrefTitle={t("projects.this_website_title")} description={t("projects.this_website_description")}>
-            <Icon name="bi:file-earmark-code-fill" slot="image"/>
+            <Icon name="bi:file-earmark-code-fill" slot="image" />
             <div class="rounded-tag astro" slot="tags">Astro.js</div>
             <div class="rounded-tag typescript" slot="tags">TypeScript</div>
             <div class="rounded-tag javascript" slot="tags">JavaScript</div>
             <div class="rounded-tag react" slot="tags">React</div>
             <div class="rounded-tag webdev" slot="tags">Web</div>
         </ProjectCard>
-        <ProjectCard
-            href="https://github.com/dallyh/static-cms-gh-oauth-provider"
-            hrefTitle={t("projects.cms_oauth_title")}
-            description={t("projects.cms_oauth_description")}
-        >
-        <Icon name="bi:person-fill-lock" slot="image"/>
+        <ProjectCard href="https://github.com/dallyh/static-cms-gh-oauth-provider" hrefTitle={t("projects.cms_oauth_title")} description={t("projects.cms_oauth_description")}>
+            <Icon name="bi:person-fill-lock" slot="image" />
             <div class="rounded-tag astro" slot="tags">Astro.js</div>
             <div class="rounded-tag typescript" slot="tags">TypeScript</div>
             <div class="rounded-tag webdev" slot="tags">Web</div>
         </ProjectCard>
         <ProjectCard href="https://github.com/dallyh/lemmy-kt-client" hrefTitle={t("projects.lemmy_kt_client_title")} description={t("projects.lemmy_kt_client_description")}>
-            <Icon name="lemmy-icon" slot="image" title="Lemmy software logo"/>
+            <Icon name="lemmy-icon" slot="image" title="Lemmy software logo" />
             <div class="rounded-tag kmp" slot="tags">Kotlin Multiplatform</div>
         </ProjectCard>
     </div>

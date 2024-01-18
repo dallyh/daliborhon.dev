@@ -29,7 +29,7 @@ await loadNamespaces(currentLocale, ["common"]);
 
 <lang-select>
     <label>
-        <Icon name="bi:translate" />
+        <Icon name="bi:translate" size={18} />
         <select>
             {
                 !post &&
@@ -78,7 +78,6 @@ await loadNamespaces(currentLocale, ["common"]);
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 0.5rem;
         cursor: pointer;
         pointer-events: all;
         position: relative;
@@ -87,22 +86,29 @@ await loadNamespaces(currentLocale, ["common"]);
             position: absolute;
             left: 0;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-60%);
             pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            svg {
+                left: 50%;
+                transform: translateY(-60%) translateX(-50%);
+            }
         }
 
         select {
             border: 0;
-            padding-block: 1rem;
-            padding-inline: 1.5rem 1rem;
+            padding-inline: 1.7rem 0.8rem;
             background-color: transparent;
             text-overflow: ellipsis;
             color: inherit;
             appearance: none;
+            line-height: 1.2;
 
             @media (max-width: 768px) {
                 width: 0;
-                padding: 1rem;
+                padding: 0.5rem;
             }
         }
 
@@ -116,8 +122,12 @@ await loadNamespaces(currentLocale, ["common"]);
             border-right: 2px solid var(--body-color);
             height: 6px;
             width: 6px;
-            transform: rotate(45deg) translateY(-70%);
+            transform: rotate(45deg) translateY(-85%);
             pointer-events: none;
+
+            @media (max-width: 768px) {
+                display: none;
+            }
         }
 
         &:hover,
@@ -135,6 +145,7 @@ await loadNamespaces(currentLocale, ["common"]);
             background-color: rgba(var(--secondary), 1);
             color: var(--body-color);
             padding: 1rem;
+            text-overflow: ellipsis;
         }
     }
 </style>

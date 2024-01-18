@@ -12,6 +12,7 @@ html {
         Helvetica,
         Arial;
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
     /* scrollbar-gutter: stable; */
 }
 

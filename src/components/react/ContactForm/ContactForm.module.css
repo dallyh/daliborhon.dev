@@ -23,6 +23,7 @@
             box-shadow: var(--global-box-shadow);
             border-radius: 6px;
             position: relative;
+            border: var(--border);
 
             &::placeholder {
                 opacity: 0.2; /* Firefox */

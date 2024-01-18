@@ -60,9 +60,9 @@ const PostPreviewCard = ({ entry, widgetFor }: TemplatePreviewCardProps<PostPrev
                             {entry.data?.pubDateTime}
                         </span>
                         <span style={{ fontSize: "0.8rem" }}>
-                                Modified: <br />
-                                {entry.data?.modDateTime !== undefined ? entry.data?.modDateTime: "Post was not modified."}
-                            </span>
+                            Modified: <br />
+                            {entry.data?.modDateTime !== undefined ? entry.data?.modDateTime : "Post was not modified."}
+                        </span>
                     </div>
                     <div
                         style={{
@@ -75,7 +75,7 @@ const PostPreviewCard = ({ entry, widgetFor }: TemplatePreviewCardProps<PostPrev
                             display: "inline-block",
                             cursor: "pointer",
                             borderRadius: "4px",
-                            fontSize: "0.8rem"
+                            fontSize: "0.8rem",
                         }}
                     >
                         {entry.data?.hidden === true ? "Hidden" : "Visible"}

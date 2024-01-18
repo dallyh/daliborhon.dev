@@ -47,13 +47,11 @@ const filteredPosts = posts
 await loadNamespaces(locale, ["blog", "common"]);
 
 const tagTitle = await getTagByLocale(locale, tag);
-const tagDescription = `${t("blog.posts_tagged")} #${tagTitle}`
+const tagDescription = `${t("blog.posts_tagged")} #${tagTitle}`;
 const layoutProps = {
     title: `${t("blog.tag")}: ${tagTitle}`,
     description: tagDescription,
 };
-
-
 ---
 
 <PageLayout {...layoutProps}>
@@ -61,7 +59,7 @@ const layoutProps = {
         <BreadCrumbs>
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label={t("blog.tags")}/>
+            <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
             <BreadCrumbsItem currentPage={true} label={tagTitle} />
         </BreadCrumbs>
         <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>

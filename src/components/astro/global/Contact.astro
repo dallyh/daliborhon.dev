@@ -9,7 +9,6 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["contact", "common"]);
 const res: ContactRes = i18n?.getResourceBundle(locale, "contact");
 const common: CommonRes = i18n?.getResourceBundle(locale, "common");
-
 ---
 
 <ContactForm resources={res} commonResources={common} client:load />

@@ -12,7 +12,7 @@ interface Props {
     padding?: string;
 }
 
-const { post, bgColor, justify, tags, padding="0.5rem" } = Astro.props;
+const { post, bgColor, justify, tags, padding = "0.5rem" } = Astro.props;
 const locale = getLocale(Astro.url);
 ---
 

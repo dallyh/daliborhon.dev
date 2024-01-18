@@ -18,7 +18,6 @@ files.forEach((file) => {
     if (path.parse(filePath).ext === ".yaml") {
         console.log("Skipping file...");
         return;
-        
     }
 
     console.log("Loading and parsing file...");
@@ -30,5 +29,4 @@ files.forEach((file) => {
     const outputFilePath = `${output.dir}\\${output.name}.yaml`;
     console.log("Saving file to: " + outputFilePath);
     fs.writeFileSync(outputFilePath, yamlData, "utf8");
-
 });

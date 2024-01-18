@@ -1,8 +1,8 @@
 id: software
 languages:
-  cs:
-    title: Software
-    description: Vše kolem software.
-  en:
-    title: Software
-    description: Topics about software.
+    cs:
+        title: Software
+        description: Vše kolem software.
+    en:
+        title: Software
+        description: Topics about software.

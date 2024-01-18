@@ -6,7 +6,7 @@ import ContactForm from "@components/react/ContactForm/ContactForm";
 
 // i18next
 const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["contact, common"]);
+await loadNamespaces(locale, ["contact", "common"]);
 const res: ContactRes = i18n?.getResourceBundle(locale, "contact");
 const common: CommonRes = i18n?.getResourceBundle(locale, "common");
 

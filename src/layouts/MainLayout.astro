@@ -3,6 +3,7 @@ import { ViewTransitions } from "astro:transitions";
 import { getLocale } from "@i18n/utils";
 import { t, loadNamespaces } from "@i18n/i18n";
 import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
+import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
 
 // Global CSS
 import "../styles/reset.css";
@@ -50,6 +51,7 @@ const basePath = import.meta.env.BASE_URL;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/x-icon" href={`${basePath}favicon.ico`} />
         <link rel="icon" type="image/svg+xml" href={`${basePath}favicon.svg`} />
+        <ThemeProvider />
 
         <!-- hreflang from other pages -->
         <slot name="hreflangs" />

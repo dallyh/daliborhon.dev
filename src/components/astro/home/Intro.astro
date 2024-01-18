@@ -78,12 +78,6 @@ await loadNamespaces(locale, ["common", "landing"]);
         animation: shake 2s infinite;
     }
 
-    .location {
-        i {
-            margin-right: 5px;
-        }
-    }
-
     .intro-container {
         display: flex;
         flex-direction: row;
@@ -106,6 +100,7 @@ await loadNamespaces(locale, ["common", "landing"]);
         flex-direction: column;
         gap: 1rem;
         font-size: clamp(0.65rem, 5vw, 1rem);
+        color: var(--body-color);
 
         .profile-description {
             display: flex;
@@ -125,7 +120,6 @@ await loadNamespaces(locale, ["common", "landing"]);
         }
 
         .hi-there {
-            color: var(--body-color);
             font-weight: 400;
             font-size: clamp(1rem, 7vw, 1.725rem);
 
@@ -158,6 +152,7 @@ await loadNamespaces(locale, ["common", "landing"]);
         gap: 1rem;
         flex-direction: column;
         margin-top: auto;
+        color: var(--body-color);
 
         ul {
             list-style: none;
@@ -177,13 +172,13 @@ await loadNamespaces(locale, ["common", "landing"]);
 
         a {
             text-decoration: none;
-            color: #fff;
+            color: var(--body-color);
             display: block;
             padding: 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
+            border-radius: 10px;  
 
             i {
                 font-size: 1.2rem;

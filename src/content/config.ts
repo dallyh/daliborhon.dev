@@ -68,7 +68,7 @@ const projectsCollection = defineCollection({
             href: z.string(),
             projectStartDate: z.date(),
             image: z.string(),
-            project_tags: z.array(reference("project-tags")),
+            projectTags: z.array(reference("project-tags")),
         }),
 });
 

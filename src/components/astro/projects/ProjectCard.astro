@@ -11,7 +11,7 @@ interface Props {
 
 const { project } = Astro.props;
 
-const { href, title, image, projectStartDate, project_tags } = project.data;
+const { href, title, image, projectStartDate, projectTags } = project.data;
 const { Content } = await project.render();
 
 const file = extractFileNameAndExtension(image);
@@ -56,7 +56,7 @@ function getImage(name: string, ext: string): ImageMetadata {
                     <a href={href} target="_blank">{title}</a>
                     <div class="card-info-tags">
                         {
-                            project_tags.map(async (tag) => {
+                            projectTags.map(async (tag) => {
                                 const curr = await getEntry("project-tags", tag.id);
 
                                 return (

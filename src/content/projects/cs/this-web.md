@@ -1,14 +1,14 @@
 ---
 title: Tento web
-language: cs
 href: https://github.com/dallyh/daliborhon.dev
+projectTags:
+  - astrojs
+  - typescript
+  - javascript
+  - react
+  - web
+language: cs
 image: /assets/uploads/img/projects/this-web.svg
-projectStartDate: 2024-01-04
-project_tags:
-    - astrojs
-    - typescript
-    - javascript
-    - react
-    - web
+projectStartDate: 2099-12-31
 ---
 Zdrojový kód této webové stránky

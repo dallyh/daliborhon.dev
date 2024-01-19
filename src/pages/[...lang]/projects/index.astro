@@ -1,0 +1,42 @@
+---
+import Section from "@components/astro/global/Section.astro";
+import ProjectCard from "@components/astro/projects/ProjectCard.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getCollection } from "astro:content";
+import { getStaticPaths } from "@i18n/utils";
+
+export { getStaticPaths };
+
+// i18next
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["projects"]);
+
+const projects = await getCollection("projects", ({ data }) => {
+    return data.language === locale;
+});
+
+const sortedProjects = projects.sort((a, b) => {
+    return new Date(b.data.projectStartDate).valueOf() - new Date(a.data.projectStartDate).valueOf();
+});
+
+const layoutProps = {
+    title: "Dalibor Hon - " + t("projects.projects"),
+    description: t("projects.description"),
+};
+---
+
+<PageLayout {...layoutProps}>
+    <Section id="projects" isFirstSection sectionTitle={t("projects.projects")} sectionDescription={t("projects.description")}>
+        <div class="projects-cards-wrapper">
+            <div class="cards">
+                {
+                    sortedProjects.map((project) => {
+                        return <ProjectCard {project} />;
+                    })
+                }
+            </div>
+        </div>
+    </Section>
+</PageLayout>

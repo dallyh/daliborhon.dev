@@ -178,7 +178,8 @@ await loadNamespaces(locale, ["common", "landing"]);
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
+            border-radius: 6px;
+            border: var(--border);
 
             i {
                 font-size: 1.2rem;
@@ -243,6 +244,7 @@ await loadNamespaces(locale, ["common", "landing"]);
         a:hover i,
         a:focus i {
             transform: translate(4px, -4px);
+            color: white;
         }
 
         a span:nth-of-type(1) {

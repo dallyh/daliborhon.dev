@@ -1,27 +1,49 @@
 ---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
 interface Props {
-    href: string;
-    hrefTitle: string;
-    description: string;
+    project: CollectionEntry<"projects">;
 }
 
-const { href, hrefTitle, description } = Astro.props;
+const { project } = Astro.props;
+
+const { href, title, image, projectStartDate, project_tags } = project.data;
+const { Content } = await project.render();
+
+const file = await import(`../../../../public${image}`); // Image path is /assets/...¨
+const img = file.default;
+const imgRaw = await import(`${img.src}?raw`);
 ---
 
 <div class="card">
     <div class="card-content">
         <div class="card-image">
-            <slot name="image" />
+            {img.format === "svg" && <Fragment set:html={imgRaw.default} />}
+            {img.format !== "svg" && <Image src={img} alt={title} format="webp" />}
         </div>
         <div class="card-info-wrapper">
             <div class="card-info">
                 <div class="card-info-title">
-                    <a href={href} target="_blank">{hrefTitle}</a>
+                    <a href={href} target="_blank">{title}</a>
                     <div class="card-info-tags">
-                        <slot name="tags" />
+                        {
+                            project_tags.map(async (tag) => {
+                                const curr = await getEntry("project-tags", tag.id);
+
+                                return (
+                                    <div class="rounded-tag" style={`background: ${curr.data.bgColor};`}>
+                                        {curr.data.title}
+                                    </div>
+                                );
+                            })
+                        }
                     </div>
                 </div>
-                <p><Fragment set:html={description} /></p>
+                <div class="card-body">
+                    <Content />
+                </div>
             </div>
         </div>
     </div>
@@ -36,8 +58,9 @@ const { href, hrefTitle, description } = Astro.props;
         height: 120px;
         width: 100px;
         color: var(--body-color);
-        opacity: 0.8;
+        opacity: 0.6;
 
+        > img,
         > svg {
             padding: 0.2rem;
             height: 100%;
@@ -62,15 +85,13 @@ const { href, hrefTitle, description } = Astro.props;
         padding: 1rem;
         overflow: hidden;
         width: 100%;
-        height: 100%;
+        height: max-content;
         border: var(--border);
     }
 
     .card-content {
         display: flex;
         gap: 1rem;
-        width: 100%;
-        height: 100%;
 
         @media (max-width: 468px) {
             flex-direction: column;
@@ -82,7 +103,7 @@ const { href, hrefTitle, description } = Astro.props;
         display: flex;
         flex-grow: 1;
         justify-content: flex-start;
-        padding: 0px 20px;
+        padding: 0px 1rem;
         width: 100%;
         height: 100%;
     }
@@ -114,7 +135,8 @@ const { href, hrefTitle, description } = Astro.props;
     .card-info {
         display: flex;
         flex-direction: column;
-        > p {
+
+        .card-body {
             color: var(--body-color);
             font-size: 0.85em;
             margin-top: 8px;

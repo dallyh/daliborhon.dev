@@ -2,14 +2,13 @@
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import Intro from "@components/astro/home/Intro.astro";
-import Projects from "@components/astro/home/Projects.astro";
+import Projects from "@components/astro/projects/Projects.astro";
 import Contact from "@components/astro/global/Contact.astro";
 import { getStaticPaths } from "@i18n/utils";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import Section from "@components/astro/global/Section.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 export { getStaticPaths };
 

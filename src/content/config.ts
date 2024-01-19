@@ -55,9 +55,37 @@ const categoryCollection = defineCollection({
     }),
 });
 
+const projectsCollection = defineCollection({
+    type: "content",
+    schema: () =>
+        z.object({
+            title: z.string(),
+            language: z.enum(locales as [string, ...string[]], {
+                errorMap: () => ({
+                    message: "Please select the correct locale!",
+                }),
+            }),
+            href: z.string(),
+            projectStartDate: z.date(),
+            image: z.string(),
+            project_tags: z.array(reference("project-tags")),
+        }),
+});
+
+const projectTagsCollection = defineCollection({
+    type: "data",
+    schema: z.object({
+        id: z.string(),
+        title: z.string(),
+        bgColor: z.string(),
+    }),
+});
+
 // Export a single `collections` object to register your collection(s)
 export const collections = {
     posts: postsCollection,
     tags: tagsCollection,
     categories: categoryCollection,
+    projects: projectsCollection,
+    "project-tags": projectTagsCollection
 };

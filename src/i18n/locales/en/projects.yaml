@@ -1,7 +1,10 @@
 cms_oauth_description: An API that provides authentification for Static CMS through GitHub's OAuth.
 cms_oauth_title: GitHub OAuth provider for Static CMS
+description: A list of all my projects, which are a little bit bigger.
 lemmy_kt_client_description: A multiplatform client for
 lemmy_kt_client_title: Lemmy Kotlin client
+projects: Projects
 projects_title: Recent projects
+see_all: See all projects
 this_website_description: Source code for this website.
 this_website_title: This website

@@ -50,6 +50,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                                 )
                             }
                         </li>
+                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/projects")}>{t("projects.projects")}</a></li>
                         <li>
                             <button class="nav-link dropdown-btn" data-dropdown="blogDropdown" aria-haspopup="true" aria-expanded="false" aria-label={t("common.blog")}>
                                 {t("common.blog")}

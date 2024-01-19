@@ -1,14 +1,14 @@
 ---
 title: This web
-language: en
 href: https://github.com/dallyh/daliborhon.dev
+projectTags:
+  - astrojs
+  - typescript
+  - javascript
+  - react
+  - web
+language: en
 image: /assets/uploads/img/projects/this-web.svg
-projectStartDate: 2024-01-04
-project_tags:
-    - astrojs
-    - typescript
-    - javascript
-    - react
-    - web
+projectStartDate: 2099-12-31
 ---
 Source code for this website

@@ -361,6 +361,154 @@ export function createCmsConfig(): Config {
                     },
                 ],
             },
+            {
+                name: "projects",
+                label: "Projects",
+                label_singular: "Project",
+                folder: "src/content/projects",
+                create: true,
+                delete: true,
+                i18n: true,
+                slug: "{{slug}}",
+                format: "yaml-frontmatter",
+                sortable_fields: {
+                    fields: ["title", "projectStartDate"],
+                    default: {
+                        field: "projectStartDate",
+                    },
+                },
+                summary_fields: ["title", "projectStartDate"],
+                view_groups: {
+                    groups: [
+                        {
+                            name: "Year",
+                            label: "Year",
+                            field: "projectStartDate",
+                            pattern: "\\d{4}",
+                        },
+                        {
+                            name: "projectTags",
+                            label: "Tags",
+                            field: "tags",
+                        },
+                    ],
+                },
+                fields: [
+                    {
+                        name: "title",
+                        label: "Title",
+                        widget: "string",
+                        i18n: true,
+                    },
+                    {
+                        name: "href",
+                        label: "Link",
+                        widget: "string",
+                        i18n: false,
+                    },
+                    {
+                        name: "projectTags",
+                        label: "Project tags",
+                        widget: "relation",
+                        i18n: false,
+                        collection: "projectTags",
+                        multiple: true,
+                        value_field: "id",
+                        search_fields: ["title"],
+                        display_fields: ["title"],
+                    },
+                    {
+                        name: "language",
+                        label: "Language",
+                        widget: "select",
+                        i18n: true,
+                        options: languageSelectorOptions,
+                    },
+                    {
+                        name: "image",
+                        label: "Image",
+                        widget: "image",
+                        i18n: "duplicate",
+                        choose_url: true,
+                    },
+                    {
+                        name: "projectStartDate",
+                        label: "Project start date",
+                        widget: "datetime",
+                        i18n: "duplicate",
+                        date_format: "yyyy-MM-dd",
+                        time_format: false,
+                    },
+                    {
+                        name: "body",
+                        label: "Body",
+                        widget: "markdown",
+                        show_raw: true,
+                        i18n: true,
+                        toolbar_buttons: {
+                            main: [
+                                "bold",
+                                "italic",
+                                "strikethrough",
+                                "code",
+                                "font",
+                                "unordered-list",
+                                "ordered-list",
+                                "decrease-indent",
+                                "increase-indent",
+                                "shortcode",
+                                {
+                                    label: "Insert",
+                                    groups: [
+                                        {
+                                            items: ["blockquote", "code-block"],
+                                        },
+                                        {
+                                            items: ["insert-table"],
+                                        },
+                                        {
+                                            items: ["image", "file-link"],
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                    
+                ],
+            },
+            {
+                name: "projectTags",
+                label: "Project tags",
+                label_singular: "Project tag",
+                icon: "tags",
+                folder: "src/content/project-tags",
+                identifier_field: "id",
+                create: true,
+                delete: true,
+                i18n: false,
+                slug: "{{id}}",
+                extension: "json",
+                format: "json",
+                summary_fields: ["id"],
+                fields: [
+                    {
+                        name: "id",
+                        label: "Tag dentifier",
+                        widget: "string",
+                    },
+                    {
+                        name: "title",
+                        label: "Title",
+                        widget: "string",
+                    },
+                    {
+                        name: "bgColor",
+                        label: "Tag background color",
+                        widget: "color",
+                    },
+                ],
+            },
         ],
     };
 

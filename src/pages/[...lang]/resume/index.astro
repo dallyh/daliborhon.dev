@@ -14,6 +14,7 @@ import abbyyLogo from "@assets/img/company-logos/ABBYY.png";
 import mfilesLogo from "@assets/img/company-logos/m-files.png";
 import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
 import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
+import nintextLogoBlack from "@assets/img/company-logos/nintex-black.svg";
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
 import Section from "@components/astro/global/Section.astro";
@@ -23,7 +24,7 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["resume", "common"]);
 
 const layoutProps = {
-    title: t("common.resume"),
+    title: "Dalibor Hon - " + t("common.resume"),
     description: t("resume.resume_page_description"),
 };
 ---
@@ -219,15 +220,18 @@ const layoutProps = {
                         <p class="cer-card-description">Vantage Certified Business Analyst</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex dark" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
                         <p class="cer-card-description">K2 IT Developer</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex dark" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
                         <p class="cer-card-description">K2 Business Analyst</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo nintex" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex dark" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
                         <p class="cer-card-description">K2 Citizen Developer</p>
                     </div>
                     <div class="cert-card">
@@ -238,7 +242,8 @@ const layoutProps = {
             </div>
         </div>
     </Section>
-    <Section id="skills" sectionTitle={t("resume.section_timeline_title")}>,
+    <Section id="skills" sectionTitle={t("resume.section_timeline_title")}>
+        ,
         <div class="resume-setion" id="experience">
             <Timeline />
         </div>
@@ -519,6 +524,20 @@ const layoutProps = {
         .cert-card-logo.abbyy {
             width: 120px;
             height: unset;
+        }
+    }
+</style>
+
+<style is:global>
+    :root[data-theme="light"] {
+        .cert-card-logo.dark {
+            display: none;
+        }
+    }
+
+    :root[data-theme="dark"] {
+        .cert-card-logo.light {
+            display: none;
         }
     }
 </style>

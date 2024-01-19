@@ -17,18 +17,41 @@ const layoutProps = {
 ---
 
 <MainLayout {...layoutProps}>
-    <div class="dot-flashing"></div>
+    <!-- Prevent FOUS -->
+    <script is:inline>
+        // This is known in advance from ThemeProvider component in head
+        const theme = document.documentElement.dataset.theme;
+        function setDarkMode(document) {
+            document.documentElement.dataset.theme = theme;
+        }
+
+        document.addEventListener("astro:before-swap", (ev) => {
+            // Pass the incoming document to set the theme on it
+            setDarkMode(ev.newDocument);
+        });
+    </script>
+    <div id="pageLoad" class="dot-flashing" aria-label={t("common.loading")} title={t("common.loading")}></div>
 </MainLayout>
 
-<style>
-    body {
+<style is:global>
+    body:has(#pageLoad) {
         width: 100svw;
         height: 100svh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: relative;
+        margin: 0;
+        padding: 0;
+
+        > .page-content {
+            width: auto;
+            height: auto;
+            min-height: 0;
+            min-width: 0;
+            margin: 0;
+            padding: 0;
+        }
     }
 </style>
 
@@ -64,7 +87,7 @@ const layoutProps = {
         console.debug("Redirect URL by language: '" + lang + "'");
         switch (lang) {
             case "en":
-                redirectUrl = getRelativeLocaleUrl(defaultLocale, "/home");
+                redirectUrl = getRelativeLocaleUrl("en", "/home");
                 break;
             default:
                 break;

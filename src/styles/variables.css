@@ -10,12 +10,12 @@
 
 :root {
     color-scheme: light;
-    --border: 1px solid rgba(0, 0, 0, 0.1);
+    --border: 1px solid rgba(0, 0, 0, 0.2);
     --border-search: var(--border);
     --accent: 0, 173, 239; /* Soft blue color */
     --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(0, 120, 180));
     --secondary: 240, 240, 240; /* Light gray */
-    --body-color: rgb(51, 51, 51);
+    --body-color: rgb(0, 0, 0); /* rgb(51, 51, 51) */
     --button-color: rgb(51, 51, 51);
     --button-hover-color: #fff;
     --bg-color: rgb(245, 245, 245); /* Light gray background */

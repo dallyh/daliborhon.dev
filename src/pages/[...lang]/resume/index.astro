@@ -16,6 +16,7 @@ import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
 import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
+import Section from "@components/astro/global/Section.astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -46,9 +47,8 @@ const layoutProps = {
             <ScrollIndicator href="#intro" />
         </div>
     </section>
-    <section class="resume-section skills" id="intro">
-        <div class="section-content">
-            <h2 class="gradient-text">{t("resume.section_intro_title")}</h2>
+    <Section id="intro" sectionTitle={t("resume.section_intro_title")}>
+        <div class="resume-section skills">
             <div class="intro-projects">
                 <div>
                     <div class="content">
@@ -80,10 +80,9 @@ const layoutProps = {
                 </div>
             </div>
         </div>
-    </section>
-    <section class="resume-section" id="skills">
-        <div class="section-content">
-            <h2 class="gradient-text">{t("resume.section_skills_title")}</h2>
+    </Section>
+    <Section id="skills" sectionTitle={t("resume.section_skills_title")}>
+        <div class="resume-section">
             <p>
                 {t("resume.skills_introduction")}
             </p>
@@ -197,10 +196,9 @@ const layoutProps = {
                 </p>
             </div>
         </div>
-    </section>
-    <section class="resume-section" id="certifications">
-        <div class="section-content">
-            <h2 class="gradient-text">{t("resume.section_cert_title")}</h2>
+    </Section>
+    <Section id="skills" sectionTitle={t("resume.section_cert_title")}>
+        <div class="resume-section" id="certifications">
             <div class="certifications-list">
                 <p><Fragment set:html={t("resume.linkedin_certs")} /></p>
                 <div class="certifications-grid">
@@ -239,13 +237,12 @@ const layoutProps = {
                 </div>
             </div>
         </div>
-    </section>
-    <section class="resume-setion" id="experience">
-        <div class="section-content timeline">
-            <h2 class="gradient-text">{t("resume.section_timeline_title")}</h2>
+    </Section>
+    <Section id="skills" sectionTitle={t("resume.section_timeline_title")}>,
+        <div class="resume-setion" id="experience">
             <Timeline />
         </div>
-    </section>
+    </Section>
 </PageLayout>
 
 <style>
@@ -258,16 +255,12 @@ const layoutProps = {
         font-weight: 600;
         color: rgba(var(--accent), 1);
         padding-bottom: 1rem;
+
         i {
             display: inline-block;
-            color: white;
+            color: var(--body-color);
             margin-left: 10px;
         }
-    }
-
-    section {
-        scroll-margin-top: 3rem;
-        color: var(--body-color);
     }
 
     .hero-container {
@@ -286,6 +279,7 @@ const layoutProps = {
         position: relative;
         font-size: min(3vw, 1rem);
         width: max-content;
+        color: var(--body-color);
     }
 
     .hero-title-wrapper > p::after {
@@ -347,13 +341,6 @@ const layoutProps = {
         padding-bottom: 0.5rem;
     }
 
-    .section-content {
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 3rem;
-        gap: 1rem;
-    }
-
     .intro-projects .skill-level {
         display: flex;
         color: rgba(var(--accent), 1);
@@ -370,6 +357,7 @@ const layoutProps = {
 
     .intro-summary {
         width: 100%;
+        margin-top: 1rem;
     }
 
     .bars {
@@ -469,17 +457,11 @@ const layoutProps = {
 
     .certifications-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 0.5fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 2rem;
     }
 
     @media (max-width: 768px) {
-        .certifications-grid {
-            gap: 1rem;
-        }
-    }
-
-    @media (max-width: 480px) {
         .certifications-grid {
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
@@ -488,7 +470,7 @@ const layoutProps = {
 
     .cert-card {
         height: 150px;
-        padding: 1rem;
+        padding: 0.5rem;
         display: flex;
         flex-direction: column;
         justify-content: center;

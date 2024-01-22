@@ -18,7 +18,7 @@ const title = await getTagByLocale(locale, tag.id);
 const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`);
 
 const tagPosts = await getCollection("posts", ({ data }) => {
-    return data.hidden == false && data.language === locale && data.tags.find((tag) => tag.id === tag.id);
+    return !data.hidden && data.language === locale && data.tags.find((tag) => tag.id === tag.id);
 });
 
 // Only last 3 recent

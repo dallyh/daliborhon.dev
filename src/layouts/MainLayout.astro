@@ -10,6 +10,7 @@ import "../styles/reset.css";
 import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/keyframes.css";
+import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from "astro:i18n";
 
 export interface Props {
     title?: string;
@@ -37,7 +38,7 @@ const {
 } = Astro.props;
 
 const siteTitle = title == undefined ? "Dalibor Hon" : `${title} - Dalibor Hon`;
-const socialImageURL = new URL(ogImage, Astro.url);
+const socialImageURL = getAbsoluteLocaleUrl(locale, "og.png");
 const basePath = import.meta.env.BASE_URL;
 ---
 

@@ -19,7 +19,7 @@ const description = await getCategoryDescriptionByLocale(locale, category.id);
 const url = getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`);
 
 const categoryPosts = await getCollection("posts", ({ data }) => {
-    return data.hidden == false && data.language === locale && data.category?.id === category.id;
+    return !data.hidden && data.language === locale && data.category?.id === category.id;
 });
 
 // Only last 3 recent

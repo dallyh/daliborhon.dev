@@ -5,8 +5,10 @@ import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
 import icon from "astro-icon";
+
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
-const URL = SITE_URL ?? "https://www.daliborhon.dev/";
+const PORT = 4321;
+const URL = import.meta.env.DEV ? `http://localhost:${PORT}` : SITE_URL ?? "https://www.daliborhon.dev/";
 console.log(`Using SITE_URL: '${URL}'`);
 console.log(`Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`);
 
@@ -55,6 +57,9 @@ export default defineConfig({
         }),
     ],
     vite: {
+        server: {
+            port: PORT,
+        },
         optimizeDeps: {
             exclude: ["@resvg/resvg-js"],
         },

@@ -1,83 +1,89 @@
 import { t, loadNamespaces } from "@i18n/i18n";
+import { getCollection } from "astro:content";
 
 export default async (locale: string) => {
     await loadNamespaces(locale, ["common"]);
+    const posts = await getCollection("posts", ({ data }) => {
+        return !data.hidden && data.language === locale;
+    });
+
+    const projects = await getCollection("projects", ({ data }) => {
+        return data.language === locale;
+    });
+
     return (
         <div
             style={{
                 display: "flex",
+                flexDirection: "column",
                 height: "100%",
                 width: "100%",
                 alignItems: "center",
+                background: "transparent",
                 justifyContent: "center",
-                fontWeight: 700,
+                fontFamily: 'Inter, "Material Icons"',
                 color: "white",
-                background: "rgba(30, 41, 59, 1)",
-                backgroundSize: "30px 30px",
-                backgroundImage: "linear-gradient(to right, rgba(14, 165, 233, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(14, 165, 233, 0.06) 1px, transparent 1px)",
+                padding: "0px",
             }}
         >
             <div
                 style={{
-                    left: 32,
-                    top: 42,
-                    position: "absolute",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "linear-gradient(to right, rgba(14, 165, 233, 1), rgb(34, 211, 238, 1))",
-                    backgroundClip: "text",
-                    color: "transparent",
-                }}
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="rgba(14, 165, 233, 1)" viewBox="0 0 16 16" style={{ marginTop: 8 }}>
-                    <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0" />
-                </svg>
-                <span
-                    style={{
-                        marginLeft: 8,
-                        fontSize: 30,
-                    }}
-                >
-                    daliborhon.dev
-                </span>
-            </div>
-            <div
-                style={{
+                    background: "#1d1e22",
+                    height: "100%",
+                    width: "100%",
+                    borderRadius: "6px",
                     display: "flex",
                     flexDirection: "column",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "20px 50px",
-                    margin: "0 42px",
-                    fontSize: 60,
-                    width: "auto",
-                    maxWidth: 1000,
-                    textAlign: "center",
-                    backgroundColor: "rgba(15, 23, 42, 1)",
-                    color: "white",
-                    lineHeight: 1.4,
-                    borderRadius: "10px",
-                    boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.4)",
+                    boxShadow: "0px 3px 30px 1px rgba(0,0,0,0.6)",
                 }}
             >
-                <p
+                <div
                     style={{
-                        margin: 0,
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        borderBottom: "1px solid rgba(255, 255, 255, 0.4)",
+                        padding: "19px",
+                        position: "relative",
                     }}
                 >
-                    Dalibor Hon
-                </p>
-                <p
+                    <div style={{ display: "flex" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0" />
+                        </svg>
+                    </div>
+                    <div style={{ position: "absolute", textAlign: "center", left: "600px", top: "50%", transform: "translateX(-50%)", fontSize: 28, fontWeight: 700, letterSpacing: "1px" }}>
+                        https://daliborhon.dev
+                    </div>
+                    <div style={{ display: "flex" }}>
+                        <div style={{ borderRadius: "50%", width: 24, height: 24, background: "rgb(90,220,90) ", marginRight: 10 }}></div>
+                        <div style={{ borderRadius: "50%", width: 24, height: 24, background: "rgb(255,200,90)", marginRight: 10 }}></div>
+                        <div style={{ borderRadius: "50%", width: 24, height: 24, background: "rgb(255,90,90)" }}></div>
+                    </div>
+                </div>
+                <div
                     style={{
-                        marginTop: "20px",
-                        marginBottom: 0,
-                        fontSize: 35,
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                        height: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        padding: "0 20px 0 20px",
+                        flexShrink: "1",
+                        overflow: "hidden",
                     }}
                 >
-                    {t("common.site_description")}
-                </p>
+                    <p style={{ fontSize: "60px", fontWeight: "700" }}>Dalibor Hon</p>
+                    <p style={{ fontSize: "40px" }}>{t("common.site_description")}</p>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
+                    <div style={{ display: "flex", fontSize: 24, fontWeight: "700" }}>
+                        {t("blog.posts")}: {posts.length === 0 ? "None :(" : posts.length} | {t("projects.projects")}: {projects.length === 0 ? "None :(" : projects.length}
+                    </div>
+                </div>
             </div>
         </div>
     );

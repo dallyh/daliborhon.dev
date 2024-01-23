@@ -2,14 +2,17 @@ all_posts_title: Všechny příspěvky
 blog_site_description: >-
     Daliborův blog o různých tématech, primárně zaměřen na software a vývoj
     softwaru.
+browse_posts: Procházet příspěvky
 categories: Kategorie
 categories_description: Příspěvky řazené dle kategorie.
 category: Kategorie
+explore_posts: Prozkoumat
 featured: Vybrané
 featured_posts_description: Nejnovější vybrané příspěvky.
 featured_posts_title: Vybrané příspěvky
 next_page: Další stránka
 no_featured_posts: Momentálně zde nejsou žádné vybrané příspěvky.
+open_toc: Rozbalit obsah
 page_count_title: Aktuální stránka {{current}} z celkového počtu {{total}} stránek.
 post: Příspěvek
 posted_category: Publikováno v
@@ -27,5 +30,6 @@ see_all_posts: Všechny příspěvky
 tag: Štítek
 tags: Štítky
 tags_desctiption: Všechny štítky použité v příspěvcích.
+toc: Obsah
 updated_date_title: Aktualizováno
 written_by: Napsal

@@ -5,16 +5,15 @@ import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
 import icon from "astro-icon";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeToc from "rehype-toc";
 
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 const URL = import.meta.env.DEV ? `http://localhost:${PORT}` : SITE_URL ?? "https://www.daliborhon.dev/";
 console.log(`Using SITE_URL: '${URL}'`);
 console.log(`Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`);
-
-function defuseTimeBomb(str) {
-    return "Tick... Tock... Tick... Tock...⏱" + str;
-}
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,7 +25,7 @@ export default defineConfig({
     },
     prefetch: true,
     markdown: {
-        rehypePlugins: ["rehype-slug", ["rehype-autolink-headings", { behavior: "append" }], ["rehype-toc", { headings: ["h1", "h2", "h3"] }]],
+        rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "append" }], [rehypeToc, { headings: ["h1", "h2", "h3"] }]],
         shikiConfig: {
             // Choose from Shiki's built-in themes (or add your own)
             // https://github.com/shikijs/shiki/blob/main/docs/themes.md

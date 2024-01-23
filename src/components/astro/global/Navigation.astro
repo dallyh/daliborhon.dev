@@ -58,7 +58,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                             <div id="blogDropdown" class="dropdown">
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">Browse Posts</span>
+                                        <span class="dropdown-link-title">{t("blog.browse_posts")}</span>
                                     </li>
                                     <li role="menuitem">
                                         <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
@@ -72,7 +72,7 @@ await loadNamespaces(locale, ["common", "blog"]);
                                 </ul>
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">Explore</span>
+                                        <span class="dropdown-link-title">{t("blog.explore_posts")}</span>
                                     </li>
                                     <li role="menuitem">
                                         <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/categories")}>{t("blog.categories")}</a>
@@ -397,8 +397,6 @@ await loadNamespaces(locale, ["common", "blog"]);
             const dropdownBtn = this.querySelectorAll<HTMLButtonElement>(".dropdown-btn");
             const dropdown = this.querySelectorAll(".dropdown");
             const hamburgerBtn = this.querySelector<HTMLButtonElement>("#hamburger")!;
-            const navMenu = this.querySelector<HTMLUListElement>(".menu");
-            const links = this.querySelectorAll(".dropdown a") as NodeListOf<HTMLAnchorElement>;
 
             function setAriaExpandedFalse() {
                 dropdownBtn.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
@@ -430,15 +428,6 @@ await loadNamespaces(locale, ["common", "blog"]);
                     btn.setAttribute("aria-expanded", btn.getAttribute("aria-expanded") === "false" ? "true" : "false");
                 });
             });
-
-            // close dropdown menu when the dropdown links are clicked
-            links.forEach((link) =>
-                link.addEventListener("click", () => {
-                    closeDropdownMenu();
-                    setAriaExpandedFalse();
-                    toggleHamburger();
-                }),
-            );
 
             // close dropdown menu when you click on the document body
             document.documentElement.addEventListener("click", () => {

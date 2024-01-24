@@ -52,7 +52,7 @@ const categories = await getCollection("categories");
             <BreadCrumbsItem currentPage={true} label="Blog" />
         </BreadCrumbs>
         <Section id="blogIntro" sectionTitle="Blog">
-            <p>Welcome to my blog!</p>
+            <p>{t("blog.blog_description")}</p>
         </Section>
         <FeaturedPosts />
         <RecentPosts filterFeatured />

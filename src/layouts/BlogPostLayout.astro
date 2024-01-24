@@ -154,7 +154,7 @@ const { Content, headings } = await post.render();
             overflow: hidden;
             max-width: 200px;
             transition: 0.3s ease;
-            transform-origin: top;
+            transform-origin: top right;
 
             @media (max-width: 768px) {
                 align-self: center;
@@ -163,10 +163,10 @@ const { Content, headings } = await post.render();
 
             @media (min-width: 768px) {
                 &:hover {
-                    transform: scale(2);
+                    transform: scale(2.5);
 
                     img {
-                        border: 1px solid rgba(var(--accent), 0.6);
+                        border: 1px solid rgba(var(--accent), 1);
                     }
                 }
             }
@@ -176,6 +176,7 @@ const { Content, headings } = await post.render();
                 object-fit: cover;
                 object-position: 50% 50%;
                 box-shadow: var(--global-box-shadow);
+                border: 1px solid transparent;
             }
         }
     }

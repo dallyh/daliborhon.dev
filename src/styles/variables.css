@@ -2,6 +2,7 @@
     --page-width: 1024px;
     --padding-x: 0.75rem;
     --header-height: 75px;
+    --header-margin: calc(var(--header-height) + 0.5rem);
 
     @media screen and (min-width: 2240px) {
         --page-width: 1324px;

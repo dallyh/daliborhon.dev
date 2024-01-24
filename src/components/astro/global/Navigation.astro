@@ -26,31 +26,15 @@ await loadNamespaces(locale, ["common", "blog"]);
         <div class="container">
             <div class="nav-start">
                 <div class="brand">
-                    <div class="brand-logo text-gradient">
-                        <Icon name="dh-logo" size={40} />
+                    <div class="brand-logo">
+                        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/home")} title={t("common.home")} aria-label={t("common.home")}>
+                            <Icon name="dh-logo" size={40} />
+                        </a>
                     </div>
                 </div>
                 <nav class="menu">
                     <ul class="menu-bar">
                         <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a></li>
-                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a></li>
-                        <li>
-                            {
-                                homePage && (
-                                    <a class="nav-link" href="#contact">
-                                        {t("common.contact")}
-                                    </a>
-                                )
-                            }
-                            {
-                                !homePage && (
-                                    <a class="nav-link" href={getRelativeLocaleUrl(locale, "/contact")}>
-                                        {t("common.contact")}
-                                    </a>
-                                )
-                            }
-                        </li>
-                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/projects")}>{t("projects.projects")}</a></li>
                         <li>
                             <button class="nav-link dropdown-btn" data-dropdown="blogDropdown" aria-haspopup="true" aria-expanded="false" aria-label={t("common.blog")}>
                                 {t("common.blog")}
@@ -79,6 +63,24 @@ await loadNamespaces(locale, ["common", "blog"]);
                                     </li>
                                     <li role="menuitem">
                                         <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/tags")}>{t("blog.tags")}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/projects")}>{t("projects.projects")}</a></li>
+                        <li>
+                            <button class="nav-link dropdown-btn" data-dropdown="aboutDropdown" aria-haspopup="true" aria-expanded="false" aria-label={t("common.about")}>
+                                {t("common.about")}
+                            </button>
+                            <div id="aboutDropdown" class="dropdown">
+                                <ul role="menu">
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a>
+                                    </li>
+                                    <li role="menuitem">
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/contact")}>
+                                            {t("common.contact")}
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -184,6 +186,7 @@ await loadNamespaces(locale, ["common", "blog"]);
         min-width: 60px;
         margin: 0 0.6rem;
         color: var(--body-color);
+        white-space: nowrap;
     }
 
     .menu-bar .nav-link:hover,
@@ -212,7 +215,6 @@ await loadNamespaces(locale, ["common", "blog"]);
     .dropdown {
         display: flex;
         flex-direction: column;
-        min-width: 230px;
         background-color: rgba(var(--secondary), 1);
         border-radius: 10px;
         position: absolute;
@@ -264,6 +266,7 @@ await loadNamespaces(locale, ["common", "blog"]);
         padding: 0.5rem 0;
         border-radius: 7px;
         transition: 0.1s ease-in-out;
+        white-space: nowrap;
     }
 
     .dropdown-link p {

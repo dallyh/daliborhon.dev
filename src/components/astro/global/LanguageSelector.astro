@@ -40,7 +40,7 @@ await loadNamespaces(currentLocale, ["common"]);
 
                         return (
                             <>
-                                <option selected={current} data-js-language={locale} value={value}>
+                                <option selected={current} data-language={locale} value={value}>
                                     {nativeName}
                                 </option>
                             </>
@@ -58,7 +58,7 @@ await loadNamespaces(currentLocale, ["common"]);
 
                         return (
                             <>
-                                <option selected={current} data-js-language={locale} value={value}>
+                                <option selected={current} data-language={locale} value={value}>
                                     {nativeName}
                                 </option>
                             </>
@@ -159,6 +159,9 @@ await loadNamespaces(currentLocale, ["common"]);
             if (select) {
                 select.addEventListener("change", (e) => {
                     if (e.currentTarget instanceof HTMLSelectElement) {
+                        const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
+                        window.localStorage.setItem("language", lang);
+
                         navigate(e.currentTarget.value);
                     }
                 });

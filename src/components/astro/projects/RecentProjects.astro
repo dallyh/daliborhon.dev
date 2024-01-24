@@ -2,14 +2,10 @@
 import { Image } from "astro:assets";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import Lemmy from "@assets/img/projects/lemmy.svg";
 import ProjectCard from "./ProjectCard.astro";
 import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-
-// TO-DO Add this collection to CMS
-// TO-DO Create "Recent" and "All projects"
 
 // i18next
 const locale = getLocale(Astro.url);

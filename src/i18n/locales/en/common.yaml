@@ -1,3 +1,4 @@
+about: About me
 back_btn: Back
 blog: Blog
 blog_submenu_a_label: Blog submenu dropdown
@@ -6,7 +7,7 @@ browser_warning_text: >-
     site. Viewing experience may not be optimal.
 close_btn: Close
 contact: Contact
-country_czech_republic: Czech republic
+country_czech_republic: Czech Republic
 cz_ms_region: Moravian-Silesian region
 from_czech_republic: Czech republic
 home: Home

@@ -2,7 +2,8 @@
 import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { Icon } from "astro-icon/components";
-import avatar from "@assets/img/profile/avatar_casual.svg?raw";
+import avatar from "@assets/img/profile/avatar-casual.svg?raw";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -27,7 +28,7 @@ await loadNamespaces(locale, ["common", "landing"]);
         <div class="profile-social-container">
             <ul>
                 <li>
-                    <a href="https://github.com/dallyh" target="_blank">
+                    <a href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -36,12 +37,21 @@ await loadNamespaces(locale, ["common", "landing"]);
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.linkedin.com/in/dalibor-hon/" target="_blank">
+                    <a href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
                         <i><Icon name="bi:linkedin" />LinkedIn</i>
+                    </a>
+                </li>
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, "/contact")} aria-label={t("common.contact")} title={t("common.contact")}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <i><Icon name="bi:envelope-at-fill" />{t("common.contact")}</i>
                     </a>
                 </li>
             </ul>
@@ -92,6 +102,11 @@ await loadNamespaces(locale, ["common", "landing"]);
             gap: 0.5rem;
             justify-content: center;
             align-items: center;
+        }
+
+        @media (max-width: 468px) {
+            min-height: calc(100vh - var(--header-margin));
+            margin-top: -0.5rem; /* Account for section margin */
         }
     }
 
@@ -272,6 +287,14 @@ await loadNamespaces(locale, ["common", "landing"]);
         ul li:nth-of-type(2) a:focus span {
             background-color: #285aeb;
             background-image: linear-gradient(270deg, #285aeb, #0077b5);
+            background-size: 800% 800%;
+            animation: gradient 10s ease infinite;
+        }
+
+        ul li:nth-of-type(3) a:hover span,
+        ul li:nth-of-type(3) a:focus span {
+            background-color: #285aeb;
+            background-image: linear-gradient(270deg, #6ec229, #00b5ac);
             background-size: 800% 800%;
             animation: gradient 10s ease infinite;
         }

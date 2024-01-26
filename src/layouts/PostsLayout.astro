@@ -28,6 +28,8 @@ const layoutProps = {
     title: `${t("blog.all_posts_title")}`,
     description: t("blog.blog_site_description"),
 };
+
+console.log(page);
 ---
 
 <MainLayout {...layoutProps}>
@@ -40,54 +42,51 @@ const layoutProps = {
             <BreadCrumbsItem currentPage={true} label={t("blog.posts")} />
         </BreadCrumbs>
         <Section isFirstSection id="blogs" sectionTitle={t("blog.all_posts_title")}>
-            <div class="paginated-posts">
-                <ul class="post-list">
-                    {
-                        page.data.map((post) => (
-                            <li>
-                                <BlogPostPreview post={post} />
-                            </li>
-                        ))
-                    }
-                </ul>
-                <div class="page-selector">
-                    <div>
-                        {
-                            page.url.prev && (
-                                <a href={page.url.prev} title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
-                                    <i>
+            {page.end === -1 && <p>{t("blog.no_posts")}</p>}
+            {
+                page.end !== -1 && (
+                    <div class="paginated-posts">
+                        <ul class="post-list">
+                            {page.data.map((post) => (
+                                <li>
+                                    <BlogPostPreview post={post} />
+                                </li>
+                            ))}
+                        </ul>
+                        <div class="page-selector">
+                            <div>
+                                {page.url.prev && (
+                                    <a href={page.url.prev} title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
+                                        <i>
+                                            <Icon name="bi:arrow-left" />
+                                        </i>
+                                    </a>
+                                )}
+                                {!page.url.prev && (
+                                    <i class="disabled" title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
                                         <Icon name="bi:arrow-left" />
                                     </i>
-                                </a>
-                            )
-                        }
-                        {
-                            !page.url.prev && (
-                                <i class="disabled" title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
-                                    <Icon name="bi:arrow-left" />
-                                </i>
-                            )
-                        }
-                        <p aria-label={t("blog.page_count_title", { current: page.currentPage, total: page.lastPage })}>{page.currentPage} / {page.lastPage}</p>
-                        {
-                            page.url.next && (
-                                <a href={page.url.next} title={t("blog.next_page")} aria-label={t("blog.next_page")}>
-                                    <i>
+                                )}
+                                <p aria-label={t("blog.page_count_title", { current: page.currentPage, total: page.lastPage })}>
+                                    {page.currentPage} / {page.lastPage}
+                                </p>
+                                {page.url.next && (
+                                    <a href={page.url.next} title={t("blog.next_page")} aria-label={t("blog.next_page")}>
+                                        <i>
+                                            <Icon name="bi:arrow-right" />
+                                        </i>
+                                    </a>
+                                )}
+                                {!page.url.next && (
+                                    <i class="disabled" title={t("blog.next_page")} aria-label={t("blog.next_page")}>
                                         <Icon name="bi:arrow-right" />
                                     </i>
-                                </a>
-                            )
-                        }
-                        {
-                            !page.url.next && (
-                                <i class="disabled" title={t("blog.next_page")} aria-label={t("blog.next_page")}>
-                                    <Icon name="bi:arrow-right" />
-                                </i>
-                            )
-                        }
+                                )}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                )
+            }
         </Section>
     </main>
     <Footer />

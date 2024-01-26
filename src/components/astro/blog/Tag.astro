@@ -6,6 +6,7 @@ import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils
 import { Icon } from "astro-icon/components";
 import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
 import { getTagByLocale } from "@utils/getTagByLocale";
+import { t } from "@i18n/i18n";
 
 interface Props {
     tag: CollectionEntry<"tags">;
@@ -22,11 +23,14 @@ const tagPosts = await getCollection("posts", ({ data }) => {
 });
 
 // Only last 3 recent
-const filteredPosts = tagPosts
-    .sort((a, b) => {
-        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-    })
-    .slice(0, 3);
+const filteredPosts =
+    tagPosts === undefined
+        ? undefined
+        : tagPosts
+              .sort((a, b) => {
+                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+              })
+              .slice(0, 3);
 ---
 
 <li class="tag">
@@ -38,8 +42,10 @@ const filteredPosts = tagPosts
             {title}
         </a>
     </h2>
+    {!filteredPosts && <p class="category-post-list">{t("blog.no_tagged_posts")} {title}</p>}
+    {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_tagged_posts")}{title}</p>}
     {
-        filteredPosts.length !== 0 && (
+        filteredPosts && filteredPosts.length !== 0 && (
             <ul class="tag-post-list">
                 {filteredPosts.map((post) => (
                     <li>
@@ -49,7 +55,6 @@ const filteredPosts = tagPosts
             </ul>
         )
     }
-    {filteredPosts.length === 0 && <p class="category-post-list">There are currently no posts tagged with {title}</p>}
 </li>
 
 <style>

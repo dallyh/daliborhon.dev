@@ -8,9 +8,12 @@ export async function getStaticPaths() {
     const allPosts = await getCollection("posts", ({ data }) => {
         return !data.hidden;
     });
-    const paths = allPosts.map((post) => {
-        return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.data.language, post) }, props: { post: post } };
-    });
+    const paths =
+        allPosts === undefined
+            ? []
+            : allPosts.map((post) => {
+                  return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.data.language, post) }, props: { post: post } };
+              });
 
     return paths;
 }

@@ -9,6 +9,7 @@ import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getTagByLocale } from "@utils/getTagByLocale";
+import { locales } from "@config/i18n";
 
 // This is kinda complicated
 export async function getStaticPaths() {
@@ -17,6 +18,24 @@ export async function getStaticPaths() {
     });
 
     const tags = await getCollection("tags");
+
+    if (tags === undefined) {
+        const paths = locales.map((locale) => {
+            return { params: { lang: getRoutingLocale(locale), tag: undefined }, props: { posts: allPosts } };
+        });
+
+        return paths;
+    }
+
+    if (allPosts === undefined) {
+        const paths = tags.flatMap((tag) => {
+            return locales.map((locale) => {
+                return { params: { lang: getRoutingLocale(locale), tag: tag.id }, props: { posts: allPosts } };
+            });
+        });
+
+        return paths;
+    }
 
     const blogLocales = allPosts.map((post) => {
         return post.data.language;
@@ -35,13 +54,16 @@ export async function getStaticPaths() {
 const { tag } = Astro.params;
 const { posts } = Astro.props;
 const locale = getLocale(Astro.url);
-const filteredPosts = posts
-    .filter((post) => {
-        return post.data.tags.some((t) => t.id === tag) && post.data.language === locale;
-    })
-    .sort((a, b) => {
-        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-    });
+const filteredPosts =
+    posts === undefined
+        ? undefined
+        : posts
+              .filter((post) => {
+                  return post.data.tags.some((t) => t.id === tag) && post.data.language === locale;
+              })
+              .sort((a, b) => {
+                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+              });
 
 // i18next
 await loadNamespaces(locale, ["blog", "common"]);
@@ -63,15 +85,19 @@ const layoutProps = {
             <BreadCrumbsItem currentPage={true} label={tagTitle} />
         </BreadCrumbs>
         <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
-            <ul>
-                {
-                    filteredPosts.map((post) => (
-                        <li>
-                            <SmallBlogPostPreview post={post} />
-                        </li>
-                    ))
-                }
-            </ul>
+            {!filteredPosts && <p>{t("blog.no_tagged_posts")}</p>}
+            {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
+            {
+                filteredPosts && filteredPosts.length !== 0 && (
+                    <ul>
+                        {filteredPosts.map((post) => (
+                            <li>
+                                <SmallBlogPostPreview post={post} />
+                            </li>
+                        ))}
+                    </ul>
+                )
+            }
         </Section>
     </main>
 </PageLayout>

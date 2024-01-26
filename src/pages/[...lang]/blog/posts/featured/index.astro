@@ -8,20 +8,13 @@ import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getStaticPaths } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.astro";
+import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 
 export { getStaticPaths };
 
 // i18n
 const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog", "common"]);
-
-const posts = await getCollection("posts", ({ data }) => {
-    return data.language === locale && !data.hidden && data.featured;
-});
-const sortedPosts = posts.sort((a, b) => {
-    return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-});
 
 const layoutProps = {
     title: t("blog.featured_posts_title"),
@@ -37,17 +30,7 @@ const layoutProps = {
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
             <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
         </BreadCrumbs>
-        <Section isFirstSection id="taggedPosts" sectionTitle={t("blog.featured_posts_title")}>
-            <ul>
-                {
-                    sortedPosts.map((post) => (
-                        <li>
-                            <SmallBlogPostPreview post={post} />
-                        </li>
-                    ))
-                }
-            </ul>
-        </Section>
+        <FeaturedPosts postSize={-1} isFirstSection/>
     </main>
 </PageLayout>
 

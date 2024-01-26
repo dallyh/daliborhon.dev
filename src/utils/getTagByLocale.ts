@@ -1,6 +1,11 @@
 import { getEntry } from "astro:content";
 
-export async function getTagByLocale(locale: string, tagId: string) {
+export async function getTagByLocale(locale: string, tagId: string | undefined) {
+
+    if (tagId === undefined) {
+        return "undefined";
+    }
+
     const tag = await getEntry("tags", tagId);
 
     if (tag === undefined) {
@@ -14,5 +19,5 @@ export async function getTagByLocale(locale: string, tagId: string) {
     }
 
     console.warn(`getTagByLocale: tag ${locale}/${tagId} had no localized entry.`);
-    return "";
+    return "undefined";
 }

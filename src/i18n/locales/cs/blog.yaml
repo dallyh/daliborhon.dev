@@ -14,7 +14,12 @@ featured: Vybrané
 featured_posts_description: Nejnovější vybrané příspěvky.
 featured_posts_title: Vybrané příspěvky
 next_page: Další stránka
+no_categories: Momentálně zde nejsou žádné kategorie.
+no_category_posts: V této kategorii nejsou momentálně žádné příspěvky.
 no_featured_posts: Momentálně zde nejsou žádné vybrané příspěvky.
+no_posts: Momentálně zde nejsou žádné příspěvky.
+no_tagged_posts: Momentálně zde nejsou příspěvky označené
+no_tags: Momentálně zde nejsou žádné značky.
 open_toc: Rozbalit obsah
 page_count_title: Aktuální stránka {{current}} z celkového počtu {{total}} stránek.
 post: Příspěvek

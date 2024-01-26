@@ -25,7 +25,7 @@ const layoutProps = {
 };
 // Categories
 const tags = await getCollection("tags");
-const sorted = tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data.languages[locale]));
+const sorted = tags === undefined ? undefined : tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data.languages[locale]));
 ---
 
 <MainLayout {...layoutProps}>
@@ -38,9 +38,16 @@ const sorted = tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data
             <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
         </BreadCrumbs>
         <Section id="categories" isFirstSection sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
-            <ul class="category-list">
-                {sorted.map((tag) => <Tag {tag} />)}
-            </ul>
+            {!sorted && <p>{t("blog.no_tags")}</p>}
+            {
+                sorted && (
+                    <ul class="category-list">
+                        {sorted.map((tag) => (
+                            <Tag {tag} />
+                        ))}
+                    </ul>
+                )
+            }
         </Section>
     </main>
     <Footer />

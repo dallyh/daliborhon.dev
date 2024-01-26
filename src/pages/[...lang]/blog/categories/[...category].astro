@@ -9,6 +9,7 @@ import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { locales } from "@config/i18n";
 
 // This is kinda complicated
 export async function getStaticPaths() {
@@ -17,6 +18,24 @@ export async function getStaticPaths() {
     });
 
     const categories = await getCollection("categories");
+
+    if (categories === undefined) {
+        const paths = locales.map((locale) => {
+                return { params: { lang: getRoutingLocale(locale), category: undefined }, props: { posts: allPosts } };
+            });
+
+        return paths;
+    }
+
+    if (allPosts === undefined) {
+        const paths = categories.flatMap((cat) => {
+            return locales.map((locale) => {
+                return { params: { lang: getRoutingLocale(locale), category: cat.id }, props: { posts: allPosts } };
+            });
+        });
+
+        return paths;
+    }
 
     const blogLocales = allPosts.map((post) => {
         return post.data.language;
@@ -35,13 +54,17 @@ export async function getStaticPaths() {
 const { category } = Astro.params;
 const { posts } = Astro.props;
 const locale = getLocale(Astro.url);
-const filteredPosts = posts
-    .filter((post) => {
-        return post.data.category?.id == category && post.data.language === locale;
-    })
-    .sort((a, b) => {
-        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-    });
+
+const filteredPosts =
+    posts === undefined
+        ? undefined
+        : posts
+              .filter((post) => {
+                  return post.data.category?.id == category && post.data.language === locale;
+              })
+              .sort((a, b) => {
+                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+              });
 
 // i18next
 await loadNamespaces(locale, ["blog", "common"]);
@@ -63,15 +86,19 @@ const layoutProps = {
             <BreadCrumbsItem currentPage={true} label={categoryTitle} />
         </BreadCrumbs>
         <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
-            <ul>
-                {
-                    filteredPosts.map((post) => (
-                        <li>
-                            <SmallBlogPostPreview post={post} />
-                        </li>
-                    ))
-                }
-            </ul>
+            {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+            {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+            {
+                filteredPosts && filteredPosts.length !== 0 && (
+                    <ul>
+                        {filteredPosts?.map((post) => (
+                            <li>
+                                <SmallBlogPostPreview post={post} />
+                            </li>
+                        ))}
+                    </ul>
+                )
+            }
         </Section>
     </main>
 </PageLayout>

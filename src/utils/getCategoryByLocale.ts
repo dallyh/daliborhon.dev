@@ -1,6 +1,11 @@
 import { getEntry } from "astro:content";
 
-export async function getCategoryTitleByLocale(locale: string, categoryId: string) {
+export async function getCategoryTitleByLocale(locale: string, categoryId: string | undefined) {
+
+    if (categoryId === undefined) {
+        return "undefined";
+    }
+
     const tag = await getEntry("categories", categoryId);
 
     if (tag === undefined) {
@@ -31,5 +36,5 @@ export async function getCategoryDescriptionByLocale(locale: string, categoryId:
     }
 
     console.warn(`getCategoryDescriptionByLocale: category ${locale}/${categoryId} had no localized entry.`);
-    return "";
+    return "undefined";
 }

@@ -5,7 +5,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 import { Icon } from "astro-icon/components";
 import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
-import BlogPostPreview from "./BlogPostPreview.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     category: CollectionEntry<"categories">;
@@ -13,6 +13,7 @@ interface Props {
 
 const { category } = Astro.props;
 const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog"]);
 
 const title = await getCategoryTitleByLocale(locale, category.id);
 const description = await getCategoryDescriptionByLocale(locale, category.id);
@@ -23,11 +24,14 @@ const categoryPosts = await getCollection("posts", ({ data }) => {
 });
 
 // Only last 3 recent
-const filteredPosts = categoryPosts
-    .sort((a, b) => {
-        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-    })
-    .slice(0, 3);
+const filteredPosts =
+    categoryPosts === undefined
+        ? undefined
+        : categoryPosts
+              .sort((a, b) => {
+                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+              })
+              .slice(0, 3);
 ---
 
 <li class="category">
@@ -40,8 +44,10 @@ const filteredPosts = categoryPosts
         <i><Icon name="bi:arrow-return-right" /></i>
         <span>{description}</span>
     </p>
+    {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+    {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
     {
-        filteredPosts.length !== 0 && (
+        filteredPosts && filteredPosts.length !== 0 && (
             <ul class="category-post-list">
                 {filteredPosts.map((post) => (
                     <li>
@@ -51,7 +57,6 @@ const filteredPosts = categoryPosts
             </ul>
         )
     }
-    {filteredPosts.length === 0 && <p class="category-post-list">There are currently no posts in this category.</p>}
 </li>
 
 <style>

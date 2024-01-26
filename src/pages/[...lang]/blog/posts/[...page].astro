@@ -12,11 +12,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     });
 
     return locales.flatMap((locale) => {
-        const filteredPosts = posts
-            .filter((post) => {
-                return post.data.language === locale;
-            })
-            .sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf());
+        const filteredPosts = posts === undefined ? [] : posts.filter((post) => post.data.language === locale).sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf());
 
         return paginate(filteredPosts, {
             params: { lang: getRoutingLocale(locale) },

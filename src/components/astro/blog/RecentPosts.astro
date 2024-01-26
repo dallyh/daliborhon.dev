@@ -24,24 +24,46 @@ const allPosts = await getCollection("posts", ({ data }) => {
     return data.language === locale && !data.hidden && (filterFeatured ? !data.featured : true);
 });
 
-const filteredPosts = allPosts
-    .sort((a, b) => {
-        return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-    })
-    .slice(0, postSize);
+const filteredPosts =
+    allPosts === undefined
+        ? undefined
+        : allPosts
+              .sort((a, b) => {
+                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
+              })
+              .slice(0, postSize);
+
+const sectionProps = {
+    id: "recentPosts",
+    sectionTitle: t("blog.recent_posts_title"),
+    sectionDescription: t("blog.recent_posts_description"),
+};
+
+console.log(filteredPosts?.length);
 ---
 
-<Section id="recentPosts" sectionTitle={t("blog.recent_posts_title")} sectionDescription={t("blog.recent_posts_description")}>
-    <ul class="post-list">
-        {
-            filteredPosts.map((post) => (
-                <li>
-                    <BlogPostPreview post={post} />
-                </li>
-            ))
-        }
-    </ul>
-    <div class="arrow-link">
-        <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.see_all_posts")}<i><Icon name="bi:arrow-right" /></i></a>
-    </div>
+<Section {...sectionProps}>
+    {!filteredPosts && <p>{t("blog.no_posts")} 😞</p>}
+    {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_posts")} 😞</p>}
+    {
+        filteredPosts && filteredPosts.length !== 0 && (
+            <>
+                <ul class="post-list">
+                    {filteredPosts.map((post) => (
+                        <li>
+                            <BlogPostPreview post={post} />
+                        </li>
+                    ))}
+                </ul>
+                <div class="arrow-link">
+                    <a href={getRelativeLocaleUrl(locale, "/blog/posts/")}>
+                        {t("blog.see_all_posts")}
+                        <i>
+                            <Icon name="bi:arrow-right" />
+                        </i>
+                    </a>
+                </div>
+            </>
+        )
+    }
 </Section>

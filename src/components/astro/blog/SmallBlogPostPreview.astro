@@ -18,13 +18,12 @@ const { post } = Astro.props;
 const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
 const postUrl = getBlogPostUrl(locale, post);
-const transitionName = getPostImgTransitionName(post);
 
 await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
-    <img src={ogUrl} alt={post.data.title} transition:name={transitionName} />
+    <img src={ogUrl} alt={post.data.title}/>
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.data.title}</a>
         {

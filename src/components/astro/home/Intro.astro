@@ -45,15 +45,6 @@ await loadNamespaces(locale, ["common", "landing"]);
                         <i><Icon name="bi:linkedin" />LinkedIn</i>
                     </a>
                 </li>
-                <li>
-                    <a href={getRelativeLocaleUrl(locale, "/contact")} aria-label={t("common.contact")} title={t("common.contact")}>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <i><Icon name="bi:envelope-at-fill" />{t("common.contact")}</i>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
@@ -105,8 +96,8 @@ await loadNamespaces(locale, ["common", "landing"]);
         }
 
         @media (max-width: 468px) {
-            min-height: calc(100vh - var(--header-margin));
-            margin-top: -0.5rem; /* Account for section margin */
+            min-height: calc(100svh - var(--header-margin));
+            margin-top: -1rem; /* Account for sections margin */
         }
     }
 
@@ -287,14 +278,6 @@ await loadNamespaces(locale, ["common", "landing"]);
         ul li:nth-of-type(2) a:focus span {
             background-color: #285aeb;
             background-image: linear-gradient(270deg, #285aeb, #0077b5);
-            background-size: 800% 800%;
-            animation: gradient 10s ease infinite;
-        }
-
-        ul li:nth-of-type(3) a:hover span,
-        ul li:nth-of-type(3) a:focus span {
-            background-color: #285aeb;
-            background-image: linear-gradient(270deg, #6ec229, #00b5ac);
             background-size: 800% 800%;
             animation: gradient 10s ease infinite;
         }

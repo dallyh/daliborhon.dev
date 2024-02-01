@@ -10,6 +10,7 @@ import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getTagByLocale } from "@utils/getTagByLocale";
 import { locales } from "@config/i18n";
+import PostsList from "@components/astro/blog/PostsList.astro";
 
 // This is kinda complicated
 export async function getStaticPaths() {
@@ -81,23 +82,13 @@ const layoutProps = {
         <BreadCrumbs>
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={t("blog.tags")} />
             <BreadCrumbsItem currentPage={true} label={tagTitle} />
         </BreadCrumbs>
         <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
             {!filteredPosts && <p>{t("blog.no_tagged_posts")}</p>}
             {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
-            {
-                filteredPosts && filteredPosts.length !== 0 && (
-                    <ul>
-                        {filteredPosts.map((post) => (
-                            <li>
-                                <SmallBlogPostPreview post={post} />
-                            </li>
-                        ))}
-                    </ul>
-                )
-            }
+            {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
         </Section>
     </main>
 </PageLayout>

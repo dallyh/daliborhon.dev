@@ -2,11 +2,13 @@
 // https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
 // Really thanks folks!
 
+import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import "@pagefind/default-ui/css/ui.css";
 import { Icon } from "astro-icon/components";
 
 const locale = getLocale(Astro.url);
+loadNamespaces(locale, ["common"]);
 
 // Temporary, until https://github.com/CloudCannon/pagefind/pull/543 gets merged
 let translations = {};
@@ -30,14 +32,14 @@ if (locale === "cs") {
 <site-search data-translations={JSON.stringify(translations)}>
     <button data-open-modal disabled>
         <div class="inner">
-            <i class="search-icon"><Icon name="bi:search" size={18} title="Search" /></i>
-            <i class="slash-icon"><Icon name="forward-slash" size={18} title="Press to search" /></i>
+            <i class="search-icon"><Icon name="bi:search" size={18} title={t("common.search")}  /></i>
+            <i class="slash-icon"><Icon name="forward-slash" size={18} title={t("common.search_label")}/></i>
         </div>
     </button>
 
-    <dialog aria-label="Search">
+    <dialog aria-label={t("common.search")}>
         <div class="dialog-frame">
-            <button data-close-modal>Close</button>
+            <button data-close-modal>{t("common.close_btn")}</button>
             <div class="search-container">
                 <div id="pagefind"></div>
             </div>
@@ -290,9 +292,7 @@ if (locale === "cs") {
         }
 
         &:focus-visible {
-            outline-color: rgba(var(--accent), 1);
-            outline-style: solid;
-            outline-width: 1px;
+            box-shadow: var(--focus-visible-shadow);
         }
     }
 

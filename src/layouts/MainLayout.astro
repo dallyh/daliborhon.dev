@@ -91,7 +91,7 @@ const basePath = import.meta.env.BASE_URL;
     <body>
         {showBrowserWarning && <BrowserWarning />}
         <slot name="header" />
-        <div class="page-content">
+        <div class="page-content" id="#pageContent" aria-hidden="false">
             <slot />
         </div>
         <script>

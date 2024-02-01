@@ -34,7 +34,8 @@ await loadNamespaces(locale, ["footer"]);
         gap: 0.25rem;
         display: flex;
         flex-direction: column;
-        text-align: center;
+        justify-content: center;
+        align-items: center;
         font-size: 0.8rem;
         color: var(--footer-color);
         margin-top: 1rem;
@@ -47,7 +48,6 @@ await loadNamespaces(locale, ["footer"]);
         width: 45px;
         height: 15px;
         background-size: contain;
-        background-repeat: no-repeat;
         color: var(--body-color);
         opacity: 0.6;
     }
@@ -57,6 +57,7 @@ await loadNamespaces(locale, ["footer"]);
         justify-content: center;
         align-items: center;
         gap: 0.2rem;
+        width: max-content;
     }
 </style>
 

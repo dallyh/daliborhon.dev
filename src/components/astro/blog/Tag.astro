@@ -7,6 +7,7 @@ import { Icon } from "astro-icon/components";
 import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
 import { getTagByLocale } from "@utils/getTagByLocale";
 import { t } from "@i18n/i18n";
+import PostsList from "./PostsList.astro";
 
 interface Props {
     tag: CollectionEntry<"tags">;
@@ -46,13 +47,9 @@ const filteredPosts =
     {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_tagged_posts")}{title}</p>}
     {
         filteredPosts && filteredPosts.length !== 0 && (
-            <ul class="tag-post-list">
-                {filteredPosts.map((post) => (
-                    <li>
-                        <SmallBlogPostPreview post={post} />
-                    </li>
-                ))}
-            </ul>
+            <>
+                <PostsList posts={filteredPosts} />
+            </>
         )
     }
 </li>
@@ -77,13 +74,6 @@ const filteredPosts =
             a:visited {
                 color: rgba(var(--accent), 1);
             }
-        }
-
-        .tag-post-list {
-            display: grid;
-            gap: 1rem;
-            margin-top: 0.8rem;
-            margin-bottom: 0.8rem;
         }
     }
 </style>

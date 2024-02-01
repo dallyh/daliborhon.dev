@@ -243,12 +243,26 @@ const layoutProps = {
         </div>
     </Section>
     <Section id="skills" sectionTitle={t("resume.section_timeline_title")}>
-        ,
         <div class="resume-setion" id="experience">
             <Timeline />
         </div>
     </Section>
 </PageLayout>
+
+
+<style is:global>
+    :root[data-theme="light"] {
+        .cert-card-logo.dark {
+            display: none;
+        }
+    }
+
+    :root[data-theme="dark"] {
+        .cert-card-logo.light {
+            display: none;
+        }
+    }
+</style>
 
 <style>
     h2 {
@@ -524,20 +538,6 @@ const layoutProps = {
         .cert-card-logo.abbyy {
             width: 120px;
             height: unset;
-        }
-    }
-</style>
-
-<style is:global>
-    :root[data-theme="light"] {
-        .cert-card-logo.dark {
-            display: none;
-        }
-    }
-
-    :root[data-theme="dark"] {
-        .cert-card-logo.light {
-            display: none;
         }
     }
 </style>

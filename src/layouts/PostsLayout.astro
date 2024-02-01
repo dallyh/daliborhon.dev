@@ -13,6 +13,7 @@ import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 
 interface Props {
     page: Page<CollectionEntry<"posts">>;
@@ -46,13 +47,7 @@ console.log(page);
             {
                 page.end !== -1 && (
                     <div class="paginated-posts">
-                        <ul class="post-list">
-                            {page.data.map((post) => (
-                                <li>
-                                    <BlogPostPreview post={post} />
-                                </li>
-                            ))}
-                        </ul>
+                        <PostsGrid posts={page.data} />
                         <div class="page-selector">
                             <div>
                                 {page.url.prev && (

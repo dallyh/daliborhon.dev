@@ -9,6 +9,7 @@ import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import Section from "@components/astro/global/Section.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
+import ProjectCardList from "@components/astro/projects/ProjectCardList.astro";
 
 export { getStaticPaths };
 
@@ -21,6 +22,8 @@ const layoutProps = {
     description: t("common.site_description"),
     homepage: true,
 };
+
+const postSize = 3;
 ---
 
 <PageLayout {...layoutProps}>
@@ -28,8 +31,8 @@ const layoutProps = {
         <Intro />
     </Section>
     <Section id="projects" sectionTitle={t("projects.projects_title")}>
-        <Projects />
+        <ProjectCardList />
     </Section>
-    <FeaturedPosts postSize={3} />
-    <RecentPosts postSize={3} filterFeatured={true} />
+    <FeaturedPosts {postSize} />
+    <RecentPosts {postSize} filterFeatured />
 </PageLayout>

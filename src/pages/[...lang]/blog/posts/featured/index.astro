@@ -30,7 +30,7 @@ const layoutProps = {
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
             <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
         </BreadCrumbs>
-        <FeaturedPosts postSize={-1} isFirstSection/>
+        <FeaturedPosts postSize={-1} isFirstSection showSeeAllUrl={false} />
     </main>
 </PageLayout>
 

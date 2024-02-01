@@ -4,3 +4,7 @@ export const BLOG = {
     featuredPostsSize: 6,
     previewPostsSize: 6,
 };
+
+export const PROJECTS = {
+    recentProjectsSize: 3
+}

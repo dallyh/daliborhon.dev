@@ -1,0 +1,54 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getRoutingLocale, getLocale } from "@i18n/utils";
+import PageLayout from "@layouts/PageLayout.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import Section from "@components/astro/global/Section.astro";
+import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.astro";
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getTagByLocale } from "@utils/getTagByLocale";
+import { locales } from "@config/i18n";
+import type { Page } from "astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    url: string;
+    urlDescription: string;
+}
+
+const { url, urlDescription } = Astro.props;
+
+// i18next
+const locale = getLocale(Astro.url);
+
+---
+
+<div class="arrow-link">
+    <a href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}>
+        {urlDescription}
+        <i>
+            <Icon name="bi:arrow-right" />
+        </i>
+    </a>
+</div>
+
+<style>
+    .arrow-link {
+        font-size: 1.1rem;
+        text-align: center;
+
+        a {
+            display: inline-flex;
+            gap: 0.5rem;
+        }
+
+        svg {
+            margin-top: 0.15rem;
+            width: 1rem;
+            height: 1rem;
+            color: var(--body-color);
+        }
+    }
+</style>

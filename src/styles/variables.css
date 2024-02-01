@@ -27,6 +27,7 @@
     --footer-color: rgba(0, 0, 0, 0.8);
     --global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
     --light-gray: rgba(44, 44, 44, 0.2);
+    --focus-visible-shadow: 0 0 0 0.15rem rgba(var(--accent), 0.5);
 }
 
 /* Dark theme */

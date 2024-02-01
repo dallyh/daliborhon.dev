@@ -99,16 +99,24 @@ await loadNamespaces(currentLocale, ["common"]);
 
         select {
             border: 0;
-            padding-inline: 1.7rem 0.8rem;
+            padding-left: 1.7rem;
+            padding-right: 0.8rem;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
             background-color: transparent;
             text-overflow: ellipsis;
             color: inherit;
             appearance: none;
             line-height: 1.2;
+            border-radius: 6px;
 
             @media (max-width: 768px) {
                 width: 0;
                 padding: 0.5rem;
+            }
+
+            &:focus-visible {
+                box-shadow: var(--focus-visible-shadow);
             }
         }
 
@@ -131,7 +139,6 @@ await loadNamespaces(currentLocale, ["common"]);
         }
 
         &:hover,
-        &:focus-visible,
         &:focus-within {
             color: rgba(var(--accent), 1);
 

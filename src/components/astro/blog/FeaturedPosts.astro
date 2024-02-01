@@ -7,13 +7,15 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { Icon } from "astro-icon/components";
 import Section from "../global/Section.astro";
+import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
     postSize?: number;
     isFirstSection?: boolean;
+    showSeeAllUrl?: boolean;
 }
 
-const { postSize = BLOG.featuredPostsSize, isFirstSection = false } = Astro.props;
+const { postSize = BLOG.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -47,21 +49,8 @@ const sectionProps = {
     {
         filteredPosts && filteredPosts.length !== 0 && (
             <>
-                <ul class="post-list">
-                    {filteredPosts.map((post) => (
-                        <li>
-                            <BlogPostPreview post={post} />
-                        </li>
-                    ))}
-                </ul>
-                <div class="arrow-link">
-                    <a href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>
-                        {t("blog.see_all_featured")}
-                        <i>
-                            <Icon name="bi:arrow-right" />
-                        </i>
-                    </a>
-                </div>
+                {showSeeAllUrl && <PostsGrid posts={filteredPosts} url="/blog/posts/featured" urlDescription={t("blog.see_all_featured")} />}
+                {!showSeeAllUrl && <PostsGrid posts={filteredPosts} />}
             </>
         )
     }

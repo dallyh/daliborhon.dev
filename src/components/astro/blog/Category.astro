@@ -6,6 +6,8 @@ import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils
 import { Icon } from "astro-icon/components";
 import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
+import PostsList from "./PostsList.astro";
+import { getLocaleRelativeUrl } from "astro/virtual-modules/i18n.js";
 
 interface Props {
     category: CollectionEntry<"categories">;
@@ -48,13 +50,9 @@ const filteredPosts =
     {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
     {
         filteredPosts && filteredPosts.length !== 0 && (
-            <ul class="category-post-list">
-                {filteredPosts.map((post) => (
-                    <li>
-                        <SmallBlogPostPreview post={post} />
-                    </li>
-                ))}
-            </ul>
+            <>
+                <PostsList posts={filteredPosts} />
+            </>
         )
     }
 </li>
@@ -82,13 +80,6 @@ const filteredPosts =
             align-items: center;
             gap: 0.5rem;
             margin-left: 0.4rem;
-        }
-
-        .category-post-list {
-            display: grid;
-            gap: 1rem;
-            margin-top: 0.8rem;
-            margin-bottom: 0.8rem;
         }
     }
 </style>

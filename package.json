@@ -42,6 +42,7 @@
         "react-hook-form": "^7.49.3",
         "react-i18next": "^14.0.0",
         "react-refresh": "^0.14.0",
+        "sharp": "^0.33.2",
         "tippy.js": "^6.3.7"
     },
     "devDependencies": {

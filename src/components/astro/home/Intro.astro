@@ -3,7 +3,6 @@ import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { Icon } from "astro-icon/components";
 import avatar from "@assets/img/profile/avatar-casual.svg?raw";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -66,7 +65,7 @@ await loadNamespaces(locale, ["common", "landing"]);
             height: auto;
         }
 
-        :global(#🖍Color) {
+        :global(#hoodie-color) {
             display: none;
         }
 

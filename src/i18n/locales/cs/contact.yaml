@@ -7,6 +7,7 @@ contact_me_at: Veškeré kontakty jsou k dostání na mém
 contact_me_form: >-
     Pro kontakt můžete využít tento forumlář nacházející se níže, kde vyplňte
     své jméno, emailovou adresu a zprávu, kterou mi chcete zanechat.
+contact_me_social: Pro kontakt můžete také využít některou z níže zmíněných sociálních sítí.
 email_placeholder: Vaše emailová adresa
 email_title: Emailová adresa
 error: Ups, něco se pokazilo!
@@ -23,8 +24,7 @@ profile: profilu
 subject_default: Nová zpráva z webu
 subject_title: Předmět
 submit_error: Při odeslání formuláře nastala chyba.
-submit_error_formatted: >-
-    Při odeslání formuláře nastala chyba: {{message}}.
+submit_error_formatted: 'Při odeslání formuláře nastala chyba: {{message}}.'
 submit_error_try_again: Zkuste to prosím později, nebo použijte jinou formu kontaktu.
 submit_success: Děkuji za Vaši zprávu! Ozvu se hned, jakmile to bude možné.
 success: Úspěch!

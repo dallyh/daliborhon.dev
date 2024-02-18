@@ -18,7 +18,7 @@ const { homePage = false, title, post } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["common", "blog"]);
+await loadNamespaces(locale, ["common", "blog", "projects"]);
 ---
 
 <site-nav>

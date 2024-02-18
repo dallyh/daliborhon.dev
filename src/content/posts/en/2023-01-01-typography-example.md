@@ -2,17 +2,13 @@
 title: "Typography example (en)"
 postId: "post-1"
 language: "en"
-featured: true
+featured: false
 pubDateTime: 2022-07-01
 modDatetime: 2022-07-01
-description: "This is the first post of my new Astro blog."
-author: "Astro Learner"
-image:
-    url: "https://docs.astro.build/assets/full-logo-light.png"
-    alt: "The full Astro logo."
+description: "This post serves as a typography test."
+author: "Dalibor Hon"
 tags:
     - astro
-    - community
 hidden: false
 ---
 

@@ -12,7 +12,6 @@ import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import "../styles/markdown.css";
-import { getPostImgTransitionName } from "@utils";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getCategoryTitleByLocale } from "@utils";
 
@@ -25,7 +24,6 @@ const { title, author, description, canonicalURL, pubDateTime, modDatetime } = p
 
 const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
-const transitionName = getPostImgTransitionName(post);
 
 await loadNamespaces(locale, ["common", "blog"]);
 

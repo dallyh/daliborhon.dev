@@ -55,7 +55,6 @@ export default function ContactForm({ resources, commonResources }: ContactFormP
         }
 
         const data = { ...formData, "h-captcha-response": token };
-        console.log(data);
 
         await fetch(API_URL, {
             method: "POST",

@@ -80,7 +80,6 @@ const layoutProps = {
     const prefetchWithEvent = (url: string) => {
         prefetch(url, { with: "fetch" });
         document.dispatchEvent(prefetchEvent);
-        console.log("dispatched");
     };
 
     const getRedirectUrlAndPrefetch = (lang: string) => {

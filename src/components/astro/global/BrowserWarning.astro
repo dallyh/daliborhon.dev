@@ -75,7 +75,6 @@ await loadNamespaces(locale, ["common"]);
         const topPanel = document.querySelector<HTMLDivElement>(".top-panel");
         const topPanelButton = topPanel?.querySelector("#panelCloseButton");
         const warningShown = window.localStorage.getItem("warningShown");
-        console.log(topPanel);
 
         if (warningShown === "true") {
             return;

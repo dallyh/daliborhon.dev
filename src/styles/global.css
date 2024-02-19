@@ -69,7 +69,8 @@ small {
 }
 
 .gradient-text {
-    background: var(--accent-gradient) fixed;
+    /* background: var(--accent-gradient) fixed; Broken in firefox */
+    background: var(--accent-gradient);
     background-clip: text;
     color: transparent;
 }

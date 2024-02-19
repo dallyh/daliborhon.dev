@@ -2,23 +2,22 @@
 import { locales } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import PostsLayout from "@layouts/PostsLayout.astro";
+import { getFilteredPostsCollection } from "@utils";
 import type { GetStaticPathsOptions } from "astro";
-import { getCollection } from "astro:content";
 import { BLOG } from "src/config/blog";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const posts = await getCollection("posts", ({ data }) => {
-        return !data.hidden;
-    });
-
-    return locales.flatMap((locale) => {
-        const filteredPosts = posts === undefined ? [] : posts.filter((post) => post.data.language === locale).sort((a, b) => new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf());
-
-        return paginate(filteredPosts, {
-            params: { lang: getRoutingLocale(locale) },
-            pageSize: BLOG.pageSize,
-        });
-    });
+    const paths = await Promise.all(
+        locales.flatMap(async (locale) => {
+            const filteredPosts = await getFilteredPostsCollection({locale: locale, sort: true}) ?? [];
+            
+            return paginate(filteredPosts, {
+                params: { lang: getRoutingLocale(locale) },
+                pageSize: BLOG.pageSize,
+            });
+        }),
+    );
+    return paths[0];
 }
 
 const { page } = Astro.props;

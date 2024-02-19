@@ -1,5 +1,5 @@
 import { defaultLocale, locales, type AllowedLocales } from "@config/i18n";
-import { removeTrailingSlash } from "@utils/removeTrailingSlash";
+import { removeTrailingSlash } from "@utils";
 
 export function getLocale(url: URL): AllowedLocales {
     const pathSegments = url.pathname.split("/");

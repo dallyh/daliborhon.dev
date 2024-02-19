@@ -21,7 +21,7 @@ const layoutProps = {
     title: `${t("blog.categories")} - Blog`,
     description: t("blog.blog_site_description"),
 };
-// Categories
+
 const tags = await getCollection("tags");
 const sorted = tags === undefined ? undefined : tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data.languages[locale]));
 ---

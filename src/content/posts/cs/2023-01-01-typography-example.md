@@ -2,13 +2,17 @@
 title: "Příklad typografie"
 postId: "post-1"
 language: "cs"
-featured: false
+featured: true
 pubDateTime: 2022-07-01
 modDatetime: 2022-07-01
-description: "Tento příspěvěk slouží pro testování typografie."
-author: "Dalibor Hon"
+description: "This is the first post of my new Astro blog."
+author: "Astro Learner"
+image:
+    url: "https://docs.astro.build/assets/full-logo-light.png"
+    alt: "The full Astro logo."
 tags:
     - astro
+    - community
 hidden: false
 ---
 

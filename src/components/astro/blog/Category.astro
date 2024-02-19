@@ -1,7 +1,7 @@
 ---
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { getCategoryDescriptionByLocale, getCategoryTitleByLocale, getFilteredPostsCollection } from "@utils";
 import { Icon } from "astro-icon/components";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
@@ -19,19 +19,7 @@ const title = await getCategoryTitleByLocale(locale, category.id);
 const description = await getCategoryDescriptionByLocale(locale, category.id);
 const url = getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`);
 
-const categoryPosts = await getCollection("posts", ({ data }) => {
-    return !data.hidden && data.language === locale && data.category?.id === category.id;
-});
-
-// Only last 3 recent
-const filteredPosts =
-    categoryPosts === undefined
-        ? undefined
-        : categoryPosts
-              .sort((a, b) => {
-                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-              })
-              .slice(0, 3);
+const filteredPosts = await getFilteredPostsCollection({sort: true, locale: locale, categoryId: category.id});
 ---
 
 <li class="category">

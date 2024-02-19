@@ -1,19 +1,19 @@
 ---
-title: "Typography example (en)"
-postId: "post-1"
+title: Post in Category
+postId: "post-4"
 language: "en"
-featured: true
-pubDateTime: 2022-07-01
-modDatetime: 2022-07-01
-description: "This is the first post of my new Astro blog."
-author: "Astro Learner"
+author: Astro Learner
+description: "This post will show up on its own!"
 image:
-    url: "https://docs.astro.build/assets/full-logo-light.png"
-    alt: "The full Astro logo."
+    url: "https://docs.astro.build/default-og-image.png"
+    alt: "The word astro against an illustration of planets and stars."
+pubDateTime: 2022-08-08
 tags:
     - astro
     - community
+    - successes
 hidden: false
+category: guides
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

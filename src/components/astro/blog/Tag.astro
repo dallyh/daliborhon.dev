@@ -1,7 +1,7 @@
 ---
 import { t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getTagByLocale } from "@utils/getTagByLocale";
+import { getFilteredPostsCollection, getTagByLocale } from "@utils";
 import { Icon } from "astro-icon/components";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
@@ -16,20 +16,7 @@ const locale = getLocale(Astro.url);
 
 const title = await getTagByLocale(locale, tag.id);
 const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`);
-
-const tagPosts = await getCollection("posts", ({ data }) => {
-    return !data.hidden && data.language === locale && data.tags.find((tag) => tag.id === tag.id);
-});
-
-// Only last 3 recent
-const filteredPosts =
-    tagPosts === undefined
-        ? undefined
-        : tagPosts
-              .sort((a, b) => {
-                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-              })
-              .slice(0, 3);
+const filteredPosts = await getFilteredPostsCollection({sort: true, locale: locale, tagId: tag.id});
 ---
 
 <li class="tag">

@@ -7,44 +7,23 @@ import { locales } from "@config/i18n";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { getCategoryTitleByLocale, getFilteredPostsCollection } from "@utils";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-// This is kinda complicated
 export async function getStaticPaths() {
-    const allPosts = await getCollection("posts", ({ data }) => {
-        return !data.hidden;
-    });
-
     const categories = await getCollection("categories");
 
     if (categories === undefined) {
-        const paths = locales.map((locale) => {
-            return { params: { lang: getRoutingLocale(locale), category: undefined }, props: { posts: allPosts } };
+        const paths = locales.flatMap((locale) => {
+            return { params: { lang: getRoutingLocale(locale), category: undefined } };
         });
-
         return paths;
     }
-
-    if (allPosts === undefined) {
-        const paths = categories.flatMap((cat) => {
-            return locales.map((locale) => {
-                return { params: { lang: getRoutingLocale(locale), category: cat.id }, props: { posts: allPosts } };
-            });
-        });
-
-        return paths;
-    }
-
-    const blogLocales = allPosts.map((post) => {
-        return post.data.language;
-    });
-    const uniqueLocales = [...new Set(blogLocales.flat())];
 
     const paths = categories.flatMap((cat) => {
-        return uniqueLocales.map((locale) => {
-            return { params: { lang: getRoutingLocale(locale), category: cat.id }, props: { posts: allPosts } };
+        return locales.map((locale) => {
+            return { params: { lang: getRoutingLocale(locale), category: cat.id } };
         });
     });
 
@@ -52,19 +31,9 @@ export async function getStaticPaths() {
 }
 
 const { category } = Astro.params;
-const { posts } = Astro.props;
 const locale = getLocale(Astro.url);
 
-const filteredPosts =
-    posts === undefined
-        ? undefined
-        : posts
-              .filter((post) => {
-                  return post.data.category?.id == category && post.data.language === locale;
-              })
-              .sort((a, b) => {
-                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-              });
+const filteredPosts = await getFilteredPostsCollection({ locale: locale, sort: true, categoryId: category });
 
 // i18next
 await loadNamespaces(locale, ["blog", "common"]);

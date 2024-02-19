@@ -1,6 +1,6 @@
 import { defaultLocale } from "@config/i18n";
 import { getStaticPaths } from "@i18n/utils";
-import { generateOgImageForSite } from "@utils/generateOgImage";
+import { generateOgImageForSite } from "@utils";
 import type { APIContext } from "astro";
 
 export { getStaticPaths };

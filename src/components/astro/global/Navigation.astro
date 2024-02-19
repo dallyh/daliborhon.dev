@@ -1,11 +1,11 @@
 ---
-import { getLocale } from "@i18n/utils";
 import { loadNamespaces, t } from "@i18n/i18n";
-import LanguageSelector from "./LanguageSelector.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import type { CollectionEntry } from "astro:content";
-import Search from "./Search.astro";
+import { getLocale } from "@i18n/utils";
 import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import LanguageSelector from "./LanguageSelector.astro";
+import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 
 interface Props {

@@ -1,13 +1,12 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
-import { getLocale } from "@i18n/utils";
-import { getOgImageUrl } from "@utils/getOgImageUrl";
-import { getBlogPostUrl } from "@utils/getBlogPostUrl";
-import { getPostImgTransitionName } from "@utils/getPostImgTransitionName";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getBlogPostUrl } from "@utils/getBlogPostUrl";
+import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { getOgImageUrl } from "@utils/getOgImageUrl";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     post: CollectionEntry<"posts">;
@@ -23,7 +22,7 @@ await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
-    <img src={ogUrl} alt={post.data.title}/>
+    <img src={ogUrl} alt={post.data.title} />
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.data.title}</a>
         {

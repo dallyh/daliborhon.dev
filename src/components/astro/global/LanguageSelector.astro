@@ -2,15 +2,15 @@
 // Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
 // Edited for this project needs.
 
-import { getLocale, getPathFromUrl } from "@i18n/utils";
-import ISO6991 from "iso-639-1";
 import { locales } from "@config/i18n";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import type { CollectionEntry } from "astro:content";
+import { loadNamespaces } from "@i18n/i18n";
+import { getLocale, getPathFromUrl } from "@i18n/utils";
 import { getBlogPostByIdAndLocale } from "@utils/getBlogPostByIdAndLocale";
 import { getBlogPostUrl } from "@utils/getBlogPostUrl";
-import { loadNamespaces, t } from "@i18n/i18n";
 import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import ISO6991 from "iso-639-1";
 
 interface Props {
     post?: CollectionEntry<"posts">;

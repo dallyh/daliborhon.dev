@@ -1,7 +1,6 @@
 import { getEntry } from "astro:content";
 
 export async function getTagByLocale(locale: string, tagId: string | undefined) {
-
     if (tagId === undefined) {
         return "undefined";
     }

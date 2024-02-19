@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { useForm, useWatch, type FieldValues, type Field } from "react-hook-form";
-import styles from "./ContactForm.module.css";
-import type { ContactRes, CommonRes } from "@i18n/locales/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { interpolate } from "@i18n/i18n";
+import type { CommonRes, ContactRes } from "@i18n/locales/types";
+import { useEffect, useRef, useState } from "react";
+import { useForm, useWatch, type FieldValues } from "react-hook-form";
+import styles from "./ContactForm.module.css";
 
 interface ContactFormProps {
     resources: ContactRes;

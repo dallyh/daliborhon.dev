@@ -1,12 +1,10 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import { getLocale } from "@i18n/utils";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
-import { Icon } from "astro-icon/components";
-import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
-import { getTagByLocale } from "@utils/getTagByLocale";
 import { t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getTagByLocale } from "@utils/getTagByLocale";
+import { Icon } from "astro-icon/components";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsList from "./PostsList.astro";
 
 interface Props {
@@ -43,8 +41,21 @@ const filteredPosts =
             {title}
         </a>
     </h2>
-    {!filteredPosts && <p class="category-post-list">{t("blog.no_tagged_posts")} {title}</p>}
-    {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_tagged_posts")}{title}</p>}
+    {
+        !filteredPosts && (
+            <p class="category-post-list">
+                {t("blog.no_tagged_posts")} {title}
+            </p>
+        )
+    }
+    {
+        filteredPosts && filteredPosts.length === 0 && (
+            <p class="category-post-list">
+                {t("blog.no_tagged_posts")}
+                {title}
+            </p>
+        )
+    }
     {
         filteredPosts && filteredPosts.length !== 0 && (
             <>

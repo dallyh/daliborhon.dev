@@ -6,5 +6,5 @@ export const BLOG = {
 };
 
 export const PROJECTS = {
-    recentProjectsSize: 3
-}
+    recentProjectsSize: 3,
+};

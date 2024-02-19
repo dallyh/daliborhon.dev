@@ -1,4 +1,4 @@
-import { t, loadNamespaces } from "@i18n/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 import { getCollection } from "astro:content";
 
 export default async (locale: string) => {

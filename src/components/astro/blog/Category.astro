@@ -1,13 +1,11 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCategoryDescriptionByLocale, getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
 import { Icon } from "astro-icon/components";
-import SmallBlogPostPreview from "./SmallBlogPostPreview.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsList from "./PostsList.astro";
-import { getLocaleRelativeUrl } from "astro/virtual-modules/i18n.js";
 
 interface Props {
     category: CollectionEntry<"categories">;

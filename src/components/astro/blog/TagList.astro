@@ -1,8 +1,8 @@
 ---
-import { getEntry, type CollectionEntry } from "astro:content";
 import { getLocale } from "@i18n/utils";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { getTagByLocale } from "@utils/getTagByLocale";
+import { type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     post?: CollectionEntry<"posts">;

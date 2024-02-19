@@ -1,7 +1,6 @@
 import { getEntry } from "astro:content";
 
 export async function getCategoryTitleByLocale(locale: string, categoryId: string | undefined) {
-
     if (categoryId === undefined) {
         return "undefined";
     }

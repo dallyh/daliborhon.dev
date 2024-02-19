@@ -1,23 +1,22 @@
 ---
-import { Image } from "astro:assets";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
 import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
 import Timeline from "@components/astro/resume/Timeline.astro";
-import { getStaticPaths } from "@i18n/utils";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale, getStaticPaths } from "@i18n/utils";
+import { Image } from "astro:assets";
 
 export { getStaticPaths };
 
 // Images
-import profilePicture from "@assets/img/profile/me.png";
 import abbyyLogo from "@assets/img/company-logos/ABBYY.png";
-import mfilesLogo from "@assets/img/company-logos/m-files.png";
 import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
-import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
+import mfilesLogo from "@assets/img/company-logos/m-files.png";
 import nintextLogoBlack from "@assets/img/company-logos/nintex-black.svg";
+import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
+import profilePicture from "@assets/img/profile/me.png";
+import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
-import Section from "@components/astro/global/Section.astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -248,7 +247,6 @@ const layoutProps = {
         </div>
     </Section>
 </PageLayout>
-
 
 <style is:global>
     :root[data-theme="light"] {

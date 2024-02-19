@@ -1,16 +1,15 @@
 ---
-import { getCollection } from "astro:content";
-import { getRoutingLocale, getLocale } from "@i18n/utils";
-import PageLayout from "@layouts/PageLayout.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import Section from "@components/astro/global/Section.astro";
-import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
-import { locales } from "@config/i18n";
 import PostsList from "@components/astro/blog/PostsList.astro";
+import Section from "@components/astro/global/Section.astro";
+import { locales } from "@config/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale, getRoutingLocale } from "@i18n/utils";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 // This is kinda complicated
 export async function getStaticPaths() {

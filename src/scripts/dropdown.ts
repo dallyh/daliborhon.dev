@@ -2,7 +2,7 @@
 // Handler for dropdown menus
 //
 
-import { computePosition, type Placement, offset, shift } from "@floating-ui/dom";
+import { computePosition, offset, shift, type Placement } from "@floating-ui/dom";
 
 class DropdownHandler {
     init() {

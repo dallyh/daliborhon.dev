@@ -1,12 +1,11 @@
 // npx ts-node --esm file.ts
 
-import { quicktype, InputData, jsonInputForTargetLanguage, TypeScriptTargetLanguage } from "quicktype-core";
+import jsyaml from "js-yaml";
 import fs from "node:fs";
 import path from "node:path";
 import { dirname } from "path";
+import { InputData, TypeScriptTargetLanguage, jsonInputForTargetLanguage, quicktype } from "quicktype-core";
 import { fileURLToPath } from "url";
-import jsyaml from "js-yaml";
-import { Console } from "node:console";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

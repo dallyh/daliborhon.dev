@@ -1,26 +1,16 @@
 ---
-import MainLayout from "@layouts/MainLayout.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
-import { getCollection } from "astro:content";
-import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
-import TagList from "@components/astro/blog/TagList.astro";
-import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
-import Navigation from "@components/astro/global/Navigation.astro";
-import Footer from "@components/astro/global/Footer.astro";
-import Section from "@components/astro/global/Section.astro";
-import { BLOG } from "@config/blog";
-import { getStaticPaths } from "@i18n/utils";
-import CategoryList from "@components/astro/blog/Category.astro";
-import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
-import { getTagByLocale } from "@utils/getTagByLocale";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import Category from "@components/astro/blog/Category.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
-import { Icon } from "astro-icon/components";
+import RecentPosts from "@components/astro/blog/RecentPosts.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Section from "@components/astro/global/Section.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale, getStaticPaths } from "@i18n/utils";
+import MainLayout from "@layouts/MainLayout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 export { getStaticPaths };
 

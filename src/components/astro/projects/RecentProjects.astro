@@ -1,11 +1,10 @@
 ---
-import { Image } from "astro:assets";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import ProjectCard from "./ProjectCard.astro";
 import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import ProjectCard from "./ProjectCard.astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -15,9 +14,11 @@ const projects = await getCollection("projects", ({ data }) => {
     return data.language === locale;
 });
 
-const sortedProjects = projects.sort((a, b) => {
-    return new Date(b.data.projectStartDate).valueOf() - new Date(a.data.projectStartDate).valueOf();
-}).slice(0, 3);
+const sortedProjects = projects
+    .sort((a, b) => {
+        return new Date(b.data.projectStartDate).valueOf() - new Date(a.data.projectStartDate).valueOf();
+    })
+    .slice(0, 3);
 ---
 
 <div class="projects">

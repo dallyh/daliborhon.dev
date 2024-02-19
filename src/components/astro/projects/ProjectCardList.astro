@@ -1,9 +1,9 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import ProjectCard from "./ProjectCard.astro";
-import { getLocale } from "@i18n/utils";
-import { loadNamespaces } from "@i18n/i18n";
 import { PROJECTS } from "@config/blog";
+import { loadNamespaces } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getCollection } from "astro:content";
+import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
     listSize?: number;

@@ -1,10 +1,10 @@
 // npx ts-node --esm file.ts
 
+import yaml from "js-yaml";
 import fs from "node:fs";
 import path from "node:path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import yaml from "js-yaml";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const folderName = path.resolve(__dirname, "./src/content/categories/");

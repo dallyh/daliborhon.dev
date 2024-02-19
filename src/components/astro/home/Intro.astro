@@ -1,8 +1,8 @@
 ---
-import { getLocale } from "@i18n/utils";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { Icon } from "astro-icon/components";
 import avatar from "@assets/img/profile/avatar-casual.svg";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 
 // i18next
@@ -62,7 +62,6 @@ await loadNamespaces(locale, ["common", "landing"]);
         img {
             max-height: 240px;
         }
-
     }
 
     .shake {

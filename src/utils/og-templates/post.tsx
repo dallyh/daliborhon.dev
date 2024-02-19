@@ -1,4 +1,4 @@
-import { t, loadNamespaces } from "@i18n/i18n";
+import { loadNamespaces, t } from "@i18n/i18n";
 import type { CollectionEntry } from "astro:content";
 
 export default async (post: CollectionEntry<"posts">, locale: string) => {
@@ -78,7 +78,7 @@ export default async (post: CollectionEntry<"posts">, locale: string) => {
                         </p>
                         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                             {post.data.tags.map((tag) => (
-                                <p style={{ padding: 0, margin: 0 }}>
+                                <p key={tag.id} style={{ padding: 0, margin: 0 }}>
                                     <strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
                                     {tag.id}
                                 </p>

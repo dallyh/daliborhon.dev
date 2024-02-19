@@ -1,7 +1,7 @@
-import CMS, { type FieldPreviewProps, type TemplatePreviewCardProps } from "@staticcms/core";
-import { useEffect } from "react";
-import "@staticcms/core/dist/main.css";
 import { createCmsConfig } from "@config/cms";
+import CMS, { type FieldPreviewProps, type TemplatePreviewCardProps } from "@staticcms/core";
+import "@staticcms/core/dist/main.css";
+import { useEffect } from "react";
 
 const PostHiddenFieldPreview = ({ value }: FieldPreviewProps<boolean>) => {
     return (

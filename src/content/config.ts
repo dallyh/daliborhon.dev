@@ -1,5 +1,5 @@
-import { z, defineCollection, reference } from "astro:content";
 import { locales } from "@config/i18n";
+import { defineCollection, reference, z } from "astro:content";
 
 // Define a `type` and `schema` for each collection
 const postsCollection = defineCollection({
@@ -87,5 +87,5 @@ export const collections = {
     tags: tagsCollection,
     categories: categoryCollection,
     projects: projectsCollection,
-    "project-tags": projectTagsCollection
+    "project-tags": projectTagsCollection,
 };

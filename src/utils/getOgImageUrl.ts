@@ -1,7 +1,7 @@
 import type { CollectionEntry } from "astro:content";
-import { removeTrailingSlash } from "./removeTrailingSlash";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getBlogPostSlug } from "./getBlogPostSlug";
+import { removeTrailingSlash } from "./removeTrailingSlash";
 
 export function getOgImageUrl(locale: string, post: CollectionEntry<"posts">, url: URL) {
     const base = removeTrailingSlash(import.meta.env.BASE_URL);

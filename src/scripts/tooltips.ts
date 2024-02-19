@@ -1,7 +1,7 @@
-import tippy from "tippy.js";
-import "tippy.js/dist/tippy.css";
-import "tippy.js/animations/shift-away-subtle.css";
 import type { Placement } from "tippy.js";
+import tippy from "tippy.js";
+import "tippy.js/animations/shift-away-subtle.css";
+import "tippy.js/dist/tippy.css";
 
 export const initializeTooltips = () => {
     console.info("Initializing tooltips.");

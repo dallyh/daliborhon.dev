@@ -1,9 +1,9 @@
 ---
+import { extractFileNameAndExtension } from "@utils/extractFilenameAndExtension";
+import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntry } from "astro:content";
-import type { ImageMetadata } from "astro";
-import { extractFileNameAndExtension } from "@utils/extractFilenameAndExtension";
 
 interface Props {
     project: CollectionEntry<"projects">;
@@ -40,7 +40,7 @@ function getImage(name: string, ext: string): ImageMetadata {
         throw new Error(`${filepath} not found`);
     }
 
-    return files[filepath];           
+    return files[filepath];
 }
 ---
 

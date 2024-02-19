@@ -79,13 +79,11 @@ small {
     color: var(--accent-gradient) !important;
 }
 
-
 .text-accent {
     color: rgba(var(--accent), 1);
 }
 
 button {
-
     &:focus-visible {
         box-shadow: var(--focus-visible-shadow);
         border-radius: 6px;

@@ -1,5 +1,5 @@
 import { localeSettings, locales } from "@config/i18n";
-import type { Config, Field, ObjectField, UnknownField } from "@staticcms/core";
+import type { Config, Field, UnknownField } from "@staticcms/core";
 
 /**
  * Builds a CMS config out of other configurations.
@@ -474,7 +474,6 @@ export function createCmsConfig(): Config {
                             ],
                         },
                     },
-                    
                 ],
             },
             {

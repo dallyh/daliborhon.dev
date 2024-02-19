@@ -1,9 +1,9 @@
-import type { APIContext } from "astro";
-import { getCollection, type CollectionEntry } from "astro:content";
-import { generateOgImageForPost } from "@utils/generateOgImage";
 import { defaultLocale } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
+import { generateOgImageForPost } from "@utils/generateOgImage";
 import { getBlogPostSlug } from "@utils/getBlogPostSlug";
+import type { APIContext } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
     const allPosts = await getCollection("posts", ({ data }) => {

@@ -1,18 +1,17 @@
 ---
-title: "Typography example (en)"
-postId: "post-1"
-language: "en"
-featured: true
-pubDateTime: 2022-07-01
-modDatetime: 2022-07-01
-description: "This is the first post of my new Astro blog."
-author: "Astro Learner"
+title: "Můj třetí příspěvek"
+postId: "post-3"
+language: "cs"
+author: Astro Learner
+description: "I had some challenges, but asking in the community really helped!"
 image:
-    url: "https://docs.astro.build/assets/full-logo-light.png"
-    alt: "The full Astro logo."
+    url: "https://docs.astro.build/assets/rays.webp"
+    alt: "Thumbnail of Astro rays."
+pubDateTime: 2022-07-15
 tags:
     - astro
     - community
+    - successes
 hidden: false
 ---
 

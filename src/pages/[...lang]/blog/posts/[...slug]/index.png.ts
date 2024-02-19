@@ -1,7 +1,6 @@
 import { defaultLocale } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
-import { generateOgImageForPost } from "@utils/generateOgImage";
-import { getBlogPostSlug } from "@utils/getBlogPostSlug";
+import { generateOgImageForPost, getBlogPostSlug } from "@utils";
 import type { APIContext } from "astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 

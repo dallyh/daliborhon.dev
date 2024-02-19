@@ -1,30 +1,25 @@
 ---
-title: "Typography example (en)"
-postId: "post-1"
-language: "en"
-featured: true
-pubDateTime: 2022-07-01
-modDatetime: 2022-07-01
-description: "This is the first post of my new Astro blog."
-author: "Astro Learner"
+title: Můj druhý příspěvek
+postId: 3458b58b-7be5-4f6a-9a81-79da3b4c089c
+description: After learning some Astro, I couldn't stop!
+author: Astro Learner
+language: cs
 image:
-    url: "https://docs.astro.build/assets/full-logo-light.png"
-    alt: "The full Astro logo."
+    url: https://docs.astro.build/assets/arc.webp
+    alt: Thumbnail of Astro arcs.
 tags:
     - astro
     - community
+    - successes
 hidden: false
+featured: true
+pubDateTime: 2024-01-04T14:10:16+01:00
+modDatetime: ""
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
-
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
-
-## Headings
-
-# H1 For example
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 

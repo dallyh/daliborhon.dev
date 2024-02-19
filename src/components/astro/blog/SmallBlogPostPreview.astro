@@ -2,9 +2,7 @@
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getBlogPostUrl } from "@utils/getBlogPostUrl";
-import { getCategoryTitleByLocale } from "@utils/getCategoryByLocale";
-import { getOgImageUrl } from "@utils/getOgImageUrl";
+import { getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils";
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 

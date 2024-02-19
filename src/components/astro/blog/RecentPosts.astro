@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import { BLOG } from "src/config/blog";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
+import { getFilteredPostsCollection } from "@utils";
 
 interface Props {
     postSize?: number;
@@ -19,18 +20,7 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog"]);
 
 //Blogs
-const allPosts = await getCollection("posts", ({ data }) => {
-    return data.language === locale && !data.hidden && (filterFeatured ? !data.featured : true);
-});
-
-const filteredPosts =
-    allPosts === undefined
-        ? undefined
-        : allPosts
-              .sort((a, b) => {
-                  return new Date(b.data.pubDateTime).valueOf() - new Date(a.data.pubDateTime).valueOf();
-              })
-              .slice(0, postSize);
+const filteredPosts = await getFilteredPostsCollection({sort: true, locale: locale, featured: filterFeatured, slice: postSize});
 
 const sectionProps = {
     id: "recentPosts",

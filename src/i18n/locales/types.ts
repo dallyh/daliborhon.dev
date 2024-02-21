@@ -61,6 +61,7 @@ export type CommonRes = {
     my_surname: string;
     resume: string;
     search: string;
+    search_label: string;
     site_description: string;
     social_links_title: string;
     submit_btn: string;
@@ -72,6 +73,7 @@ export type ContactRes = {
     contact_info: string;
     contact_me_at: string;
     contact_me_form: string;
+    contact_me_social: string;
     email_placeholder: string;
     email_title: string;
     error: string;

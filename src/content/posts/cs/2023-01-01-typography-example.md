@@ -12,7 +12,7 @@ image:
     alt: "The full Astro logo."
 tags:
     - astro
-    - community
+    - development
 hidden: false
 ---
 

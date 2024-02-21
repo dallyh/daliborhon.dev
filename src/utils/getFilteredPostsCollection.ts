@@ -5,7 +5,7 @@ interface FilteredPostsOptions {
     sort?: boolean;
     locale?: string;
     slice?: number;
-    categoryId?: string;
+    categoryId?: string | "none";
     tagId?: string;
 }
 
@@ -13,7 +13,7 @@ export async function getFilteredPostsCollection(options: FilteredPostsOptions) 
     const { featured, sort, locale, slice, categoryId, tagId } = options;
 
     let posts = await getCollection("posts", ({ data }) => {
-        return buildCondition(data, {featured, locale, categoryId, tagId});
+        return buildCondition(data, { featured, locale, categoryId, tagId });
     });
 
     if (posts === undefined) return undefined;
@@ -57,7 +57,11 @@ function buildCondition(data: any, options: BuildConditionOptions = {}) {
     }
 
     if (categoryId) {
-        condition = condition && data.category?.id === categoryId;
+        if (categoryId === "none") {
+            condition = condition && data.category === undefined
+        } else {
+            condition = condition && data.category?.id === categoryId;
+        }
     }
 
     if (tagId) {

@@ -47,19 +47,17 @@ const layoutProps = {
 ---
 
 <PageLayout {...layoutProps}>
-    <main>
-        <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={t("blog.categories")} />
-            <BreadCrumbsItem currentPage={true} label={categoryTitle} />
-        </BreadCrumbs>
-        <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
-            {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-            {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-            {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
-        </Section>
-    </main>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={t("blog.categories")} />
+        <BreadCrumbsItem currentPage={true} label={categoryTitle} />
+    </BreadCrumbs>
+    <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
+        {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+        {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+        {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
+    </Section>
 </PageLayout>
 
 <style>

@@ -20,7 +20,7 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog"]);
 
 //Blogs
-const filteredPosts = await getFilteredPostsCollection({sort: true, locale: locale, featured: true, slice: postSize});
+const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, featured: true, slice: postSize });
 
 const sectionProps = {
     id: "featuredPosts",

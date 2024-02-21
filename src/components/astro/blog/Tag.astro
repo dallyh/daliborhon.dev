@@ -16,12 +16,12 @@ const locale = getLocale(Astro.url);
 
 const title = await getTagByLocale(locale, tag.id);
 const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`);
-const filteredPosts = await getFilteredPostsCollection({sort: true, locale: locale, tagId: tag.id});
+const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, tagId: tag.id });
 ---
 
 <li class="tag">
     <h2 class="title">
-        <a href={url}>
+        <a href={url} aria-label={{title} + t("blog.tag")}>
             <i>
                 <Icon name="bi:tag" />
             </i>
@@ -63,14 +63,15 @@ const filteredPosts = await getFilteredPostsCollection({sort: true, locale: loca
             a {
                 display: flex;
                 gap: 0.3rem;
+                color: rgba(var(--accent), 1);
+
+                &:visited {
+                    color: rgba(var(--accent), 1);
+                }
             }
 
             svg {
                 margin-top: 0.2rem;
-            }
-
-            a:visited {
-                color: rgba(var(--accent), 1);
             }
         }
     }

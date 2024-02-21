@@ -10,8 +10,8 @@ image:
 pubDateTime: 2022-07-15
 tags:
     - astro
-    - community
-    - successes
+    - development
+    - flexicapture
 hidden: false
 ---
 

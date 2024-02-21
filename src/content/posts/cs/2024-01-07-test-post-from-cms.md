@@ -4,7 +4,7 @@ postId: ec0b8590-3327-44e1-b8a6-e44388b55ec6
 description: Testovací post z CMS
 author: Dalibor Hon
 tags:
-    - successes
+    - flexicapture
 category: software
 language: cs
 hidden: false

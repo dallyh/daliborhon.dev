@@ -9,6 +9,7 @@ import Section from "@components/astro/global/Section.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getStaticPaths } from "@i18n/utils";
 import MainLayout from "@layouts/MainLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 export { getStaticPaths };
@@ -26,30 +27,25 @@ const tags = await getCollection("tags");
 const sorted = tags === undefined ? undefined : tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data.languages[locale]));
 ---
 
-<MainLayout {...layoutProps}>
-    <HeadHrefLangs slot="hreflangs" />
-    <Navigation title={layoutProps.title} slot="header" />
-    <main>
-        <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
-        </BreadCrumbs>
-        <Section id="categories" isFirstSection sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
-            {!sorted && <p>{t("blog.no_tags")}</p>}
-            {
-                sorted && (
-                    <ul class="category-list">
-                        {sorted.map((tag) => (
-                            <Tag {tag} />
-                        ))}
-                    </ul>
-                )
-            }
-        </Section>
-    </main>
-    <Footer />
-</MainLayout>
+<PageLayout {...layoutProps}>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+        <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
+    </BreadCrumbs>
+    <Section id="categories" isFirstSection sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
+        {!sorted && <p>{t("blog.no_tags")}</p>}
+        {
+            sorted && (
+                <ul class="category-list">
+                    {sorted.map((tag) => (
+                        <Tag {tag} />
+                    ))}
+                </ul>
+            )
+        }
+    </Section>
+</PageLayout>
 
 <style>
     .category-list {

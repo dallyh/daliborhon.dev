@@ -32,7 +32,7 @@ const layoutProps = {
 
 <MainLayout {...layoutProps}>
     <HeadHrefLangs slot="hreflangs" />
-    <Navigation title={layoutProps.title} slot="header" />
+    <Navigation slot="header" />
     <main>
         <BreadCrumbs>
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />

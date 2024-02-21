@@ -4,7 +4,7 @@ postId: 66db8404-5409-4ff0-8d07-1003b3619fbe
 description: Test post with external image
 author: Dalibor Hon
 tags:
-    - community
+    - development
 category: software
 language: en
 hidden: false

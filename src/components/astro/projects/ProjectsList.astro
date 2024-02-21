@@ -1,10 +1,19 @@
 ---
+import { PROJECTS } from "@config/blog";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import ProjectCard from "./ProjectCard.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
+
+interface Props {
+    recentSize?: number;
+    listAll?: boolean;
+}
+
+const { recentSize = PROJECTS.recentProjectsSize, listAll = false } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -14,26 +23,35 @@ const projects = await getCollection("projects", ({ data }) => {
     return data.language === locale;
 });
 
-const sortedProjects = projects
-    .sort((a, b) => {
-        return new Date(b.data.projectStartDate).valueOf() - new Date(a.data.projectStartDate).valueOf();
-    })
-    .slice(0, 3);
+const sortedProjects = projects.sort((a, b) => {
+    return new Date(b.data.projectStartDate).valueOf() - new Date(a.data.projectStartDate).valueOf();
+});
+
+if (!listAll) {
+    sortedProjects.slice(0, recentSize);
+}
+
+const allEntriesProps = {
+    url: getRelativeLocaleUrl(locale, "/projects"),
+    urlDescription: t("projects.see_all"),
+};
 ---
 
 <div class="projects">
     <div class="projects-cards-wrapper">
-        <div class="cards">
+        <ul class="cards">
             {
                 sortedProjects.map((project) => {
-                    return <ProjectCard {project} />;
+                    return (
+                        <li>
+                            <ProjectCard {project} />
+                        </li>
+                    );
                 })
             }
-        </div>
+        </ul>
     </div>
-    <div class="arrow-link">
-        <a href={getRelativeLocaleUrl(locale, "/projects")}>{t("projects.see_all")} <i><Icon name="bi:arrow-right" /></i></a>
-    </div>
+    {!listAll && <AllEntriesUrl {...allEntriesProps} />}
 </div>
 
 <style>

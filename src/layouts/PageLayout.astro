@@ -15,7 +15,7 @@ const { title, description, homepage = false } = Astro.props;
 
 <MainLayout title={title} description={description}>
     <HeadHrefLangs slot="hreflangs" />
-    <Navigation title={title} homePage={homepage} slot="header" />
+    <Navigation slot="header" />
     <main>
         <slot />
     </main>

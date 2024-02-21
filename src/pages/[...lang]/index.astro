@@ -17,7 +17,7 @@ const layoutProps = {
 ---
 
 <MainLayout {...layoutProps}>
-    <!-- Prevent FOUS -->
+    <!-- Prevent FOUC -->
     <script is:inline>
         // This is known in advance from ThemeProvider component in head
         const theme = document.documentElement.dataset.theme;

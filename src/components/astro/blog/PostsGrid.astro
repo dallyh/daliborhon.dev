@@ -3,7 +3,7 @@ import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import { getLocale } from "@i18n/utils";
 import type { Page } from "astro";
 import { type CollectionEntry } from "astro:content";
-import AllPostsUrl from "./AllPostsUrl.astro";
+import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
 
 interface Props {
     posts: CollectionEntry<"posts">[] | Page<CollectionEntry<"posts">>;
@@ -40,7 +40,7 @@ function isPage<T>(value: any): value is Page<T> {
                 ))
         }
     </ul>
-    {url && urlDescription && <AllPostsUrl {url} {urlDescription} />}
+    {url && urlDescription && <AllEntriesUrl {url} {urlDescription} />}
 </div>
 
 <style>

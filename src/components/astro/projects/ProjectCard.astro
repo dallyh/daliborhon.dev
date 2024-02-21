@@ -1,4 +1,5 @@
 ---
+import { getLocale } from "@i18n/utils";
 import { extractFileNameAndExtension } from "@utils";
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
@@ -9,18 +10,18 @@ interface Props {
     project: CollectionEntry<"projects">;
 }
 
+const locale = getLocale(Astro.url);
 const { project } = Astro.props;
-
 const { href, title, image, projectStartDate, projectTags } = project.data;
 const { Content } = await project.render();
 
 const file = extractFileNameAndExtension(image);
-
 function getSVG(name: string) {
     const filepath = `/public/assets/uploads/img/projects/${name}.svg`;
     const files = import.meta.glob<string>("/public/assets/uploads/img/projects/**/*.svg", {
-        as: "raw",
+        query: "?raw",
         eager: true,
+        import: "default",
     });
 
     if (!(filepath in files)) {
@@ -32,7 +33,7 @@ function getSVG(name: string) {
 
 function getImage(name: string, ext: string): ImageMetadata {
     const filepath = `/public/assets/uploads/img/projects/${name}.${ext}`;
-    const files = import.meta.glob<ImageMetadata>("/public/assets/uploads/img/projects/**/*.{svg,jpg,jpeg,png,webp,avif", {
+    const files = import.meta.glob<ImageMetadata>("/public/assets/uploads/img/projects/**/*.{svg,jpg,jpeg,png,webp,avif}", {
         eager: true,
     });
 
@@ -42,6 +43,19 @@ function getImage(name: string, ext: string): ImageMetadata {
 
     return files[filepath];
 }
+
+const formatDateTime = () => {
+    const date = projectStartDate.toLocaleDateString(locale, {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+
+    return {
+        iso: projectStartDate.toISOString(),
+        date: date,
+    };
+};
 ---
 
 <div class="card">
@@ -53,7 +67,17 @@ function getImage(name: string, ext: string): ImageMetadata {
         <div class="card-info-wrapper">
             <div class="card-info">
                 <div class="card-info-title">
-                    <a href={href} target="_blank">{title}</a>
+                    <div class="title-meta">
+                        <a href={href} target="_blank" title={title} aria-label={title}>{title}</a>
+                        {
+                            /*
+                                <div class="project-date">
+                                    <span>Project started:</span>
+                                    <time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
+                                </div>
+                            */
+                        }
+                    </div>
                     <div class="card-info-tags">
                         {
                             projectTags.map(async (tag) => {
@@ -171,6 +195,18 @@ function getImage(name: string, ext: string): ImageMetadata {
     }
 
     .card-info-title {
+        .title-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .project-date {
+                color: var(--body-color);
+                font-size: 0.8rem;
+                opacity: 0.8;
+            }
+        }
+
         > a {
             font-weight: 600;
             position: relative;

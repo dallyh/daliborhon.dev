@@ -9,8 +9,8 @@ image:
     alt: Thumbnail of Astro arcs.
 tags:
     - astro
-    - community
-    - successes
+    - development
+    - flexicapture
 hidden: false
 featured: true
 pubDateTime: 2024-01-04T14:10:16+01:00

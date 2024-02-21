@@ -9,12 +9,10 @@ import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 
 interface Props {
-    title: string;
-    homePage?: boolean;
     post?: CollectionEntry<"posts">;
 }
 
-const { homePage = false, title, post } = Astro.props;
+const { post } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);

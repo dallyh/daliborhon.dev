@@ -20,15 +20,13 @@ const layoutProps = {
 ---
 
 <PageLayout {...layoutProps}>
-    <main>
-        <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
-            <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
-        </BreadCrumbs>
-        <FeaturedPosts isFirstSection showSeeAllUrl={false} />
-    </main>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
+        <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
+    </BreadCrumbs>
+    <FeaturedPosts isFirstSection showSeeAllUrl={false} />
 </PageLayout>
 
 <style>

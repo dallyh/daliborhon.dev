@@ -4,7 +4,7 @@ postId: 0636fd5a-2786-4501-b1bb-634844ff32f1
 description: Lokalizovaná část URL
 author: Dalibor Hon
 tags:
-    - successes
+    - flexicapture
 language: cs
 hidden: false
 featured: true

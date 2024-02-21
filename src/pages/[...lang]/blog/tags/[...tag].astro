@@ -17,21 +17,21 @@ export async function getStaticPaths() {
 
     if (tags === undefined) {
         const paths = locales.map((locale) => ({
-            params: { lang: getRoutingLocale(locale), tag: undefined}
+            params: { lang: getRoutingLocale(locale), tag: undefined },
         }));
         return paths;
     }
 
     return tags.flatMap((tag) =>
         locales.map((locale) => ({
-            params: { lang: getRoutingLocale(locale), tag: tag.id }
-        }))
+            params: { lang: getRoutingLocale(locale), tag: tag.id },
+        })),
     );
 }
 
 const { tag } = Astro.params;
 const locale = getLocale(Astro.url);
-const filteredPosts = await getFilteredPostsCollection({sort: true, locale: locale, tagId: tag });
+const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, tagId: tag });
 
 // i18next
 await loadNamespaces(locale, ["blog", "common"]);
@@ -45,19 +45,17 @@ const layoutProps = {
 ---
 
 <PageLayout {...layoutProps}>
-    <main>
-        <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={t("blog.tags")} />
-            <BreadCrumbsItem currentPage={true} label={tagTitle} />
-        </BreadCrumbs>
-        <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
-            {!filteredPosts && <p>{t("blog.no_tagged_posts")}</p>}
-            {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
-            {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
-        </Section>
-    </main>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={t("blog.tags")} />
+        <BreadCrumbsItem currentPage={true} label={tagTitle} />
+    </BreadCrumbs>
+    <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
+        {!filteredPosts && <p>{t("blog.no_tagged_posts")}</p>}
+        {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
+        {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
+    </Section>
 </PageLayout>
 
 <style>

@@ -1,0 +1,89 @@
+---
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
+import RecentPosts from "@components/astro/blog/RecentPosts.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Section from "@components/astro/global/Section.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale, getStaticPaths } from "@i18n/utils";
+import MainLayout from "@layouts/MainLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+export { getStaticPaths };
+
+// i18n
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog", "common"]);
+
+const layoutProps = {
+    title: "Blog",
+    description: t("blog.blog_site_description"),
+};
+---
+
+<PageLayout {...layoutProps}>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem currentPage={true} label="Blog" />
+    </BreadCrumbs>
+    <Section id="blogIntro" sectionTitle="Blog">
+        <p>{t("blog.blog_description")}</p>
+    </Section>
+    <FeaturedPosts />
+    <RecentPosts />
+</PageLayout>
+
+<style>
+    .category-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        a {
+            color: var(--body-color);
+            display: inline-block;
+
+            &:visited {
+                color: var(--body-color);
+            }
+
+            &:hover {
+                color: rgba(var(--accent), 1);
+            }
+        }
+    }
+
+    .tag-list {
+        width: 100%;
+        display: block;
+
+        li {
+            display: inline-block;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+            margin-left: 0.25rem;
+            margin-right: 0.25rem;
+            padding-right: 0.5rem;
+
+            a {
+                display: inline-flex;
+                gap: 0.35rem;
+                justify-content: center;
+                align-items: center;
+
+                i {
+                    margin-top: 0.2rem;
+                }
+
+                &:visited {
+                    color: var(--a-color);
+                }
+            }
+        }
+    }
+</style>

@@ -1,0 +1,110 @@
+---
+import FormattedDate from "@components/astro/blog/FormattedDate.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+    post: CollectionEntry<"posts">;
+    transitionId?: string;
+}
+
+const { post } = Astro.props;
+const locale = getLocale(Astro.url);
+const ogUrl = getOgImageUrl(locale, post, Astro.url);
+const postUrl = getBlogPostUrl(locale, post);
+
+await loadNamespaces(locale, ["blog"]);
+---
+
+<div class="post-preview">
+    {post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>}
+    <img src={ogUrl} alt={post.data.title} />
+    <div class="post-description">
+        <a href={postUrl} class="post-title">{post.data.title}</a>
+        {
+            post.data.category && (
+                <p>
+                    {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                </p>
+            )
+        }
+        <div>
+            <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+        </div>
+    </div>
+</div>
+
+<style>
+    .hidden-post {
+        color: red;
+        position: absolute;
+        font-weight: 600;
+        font-size: 3rem;
+        opacity: 0.2;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .post-preview {
+        display: flex;
+        flex-direction: row;
+        background: rgba(var(--secondary), 1);
+        border-radius: 6px;
+        box-shadow: var(--global-box-shadow);
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        color: var(--body-color);
+        border: var(--border);
+        position: relative;
+
+        @media (max-width: 468px) {
+            flex-direction: column;
+        }
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.2rem;
+        }
+
+        .post-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 0.825rem;
+            line-height: 2;
+            margin-left: 1rem;
+
+            p {
+                font-size: inherit;
+
+                a {
+                    font-size: inherit;
+                }
+            }
+        }
+
+        img {
+            display: block;
+            max-height: 100px;
+            width: auto;
+            object-fit: cover;
+
+            @media (max-width: 468px) {
+                max-height: 200px;
+                width: 100%;
+            }
+        }
+
+        a {
+            font-size: 1.2rem;
+            line-height: 2;
+        }
+    }
+</style>

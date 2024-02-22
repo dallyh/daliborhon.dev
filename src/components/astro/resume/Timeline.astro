@@ -1,52 +1,51 @@
 ---
-import { loadNamespaces, t } from "../../../i18n/i18n";
-import { getLocale } from "astro-i18n-aut";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
 
 // i18next
 const locale = getLocale(Astro.url);
-const namespaces = ["resume", "shared"];
-await loadNamespaces(locale, namespaces);
+await loadNamespaces(locale, ["resume", "common"]);
 ---
 
 <div class="timeline">
     <div class="timeline-cards">
         <div class="timeline-card">
-            <h3>{t("resume:SectionExperience")}</h3>
+            <h3>{t("resume.section_exp_title")}</h3>
             <div class="timeline-content">
                 <div class="meta">
-                    <p class="date">{t("resume:ECMBusinessConsultantDate")}</p>
+                    <p class="date">{t("resume.km_ecm_date")}</p>
                     <p class="title">ECM Business Consultant</p>
                     <p>Konica Minolta IT Solutions Czech s.r.o</p>
-                    <p class="description">{t("resume:ECMBusinessConsultantDescription")}</p>
+                    <p class="description">{t("resume.km_ecm_description")}</p>
                 </div>
                 <div class="meta">
-                    <p class="date">{t("resume:MonetaAnalystDate")}</p>
+                    <p class="date">{t("resume.moneta_analyst_date")}</p>
                     <p class="title">Analyst, Shared Services</p>
                     <p>MONETA Money Bank a.s.</p>
-                    <p class="description">{t("resume:MonetaAnalystDescription")}</p>
+                    <p class="description">{t("resume.moneta_analyst_description")}</p>
                 </div>
                 <div class="meta">
-                    <p class="date">{t("resume:MonetaEndUserServicesDate")}</p>
+                    <p class="date">{t("resume.moneta_end_user_date")}</p>
                     <p class="title">Administrator End User Services, IT</p>
                     <p>MONETA Money Bank a.s.</p>
-                    <p class="description">{t("resume:MonetaEndUserServicesDescription")}</p>
+                    <p class="description">{t("resume.moneta_end_user_description")}</p>
                 </div>
                 <div class="meta">
-                    <p class="date">{t("resume:AsusTechnicianDate")}</p>
+                    <p class="date">{t("resume.asus_technician_date")}</p>
                     <p class="title">Motherboard Technician</p>
                     <p>ASUS Czech Service s.r.o.</p>
-                    <p class="description">{t("resume:AsusTechnicianDescription")}</p>
+                    <p class="description">{t("resume.asus_tech_description")}</p>
                 </div>
             </div>
         </div>
         <div class="timeline-card pagebreak">
-            <h3>{t("resume:SectionEducation")}</h3>
+            <h3>{t("resume.section_edu_title")}</h3>
             <div class="timeline-content">
                 <div class="meta">
                     <p class="date">2010 - 2014</p>
-                    <p class="title">{t("resume:HighSchoolNaJizdarne")}</p>
-                    <p>{t("resume:MaturityDiploma")}</p>
-                    <p class="description">{t("resume:HighSchoolNaJizdarneDescription")}</p>
+                    <p class="title">{t("resume.high_school_name")}</p>
+                    <p>{t("resume.maturity_diploma")}</p>
+                    <p class="description">{t("resume.high_school_description")}</p>
                 </div>
             </div>
         </div>
@@ -54,14 +53,6 @@ await loadNamespaces(locale, namespaces);
 </div>
 
 <style>
-    h3 {
-        line-height: 1;
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: rgba(var(--accent-resume), 1);
-        padding-bottom: 1rem;
-    }
-
     .timeline {
         position: relative;
         display: grid;
@@ -78,8 +69,11 @@ await loadNamespaces(locale, namespaces);
         }
     }
 
-    .timeline-cards > .timeline-card {
-        padding: 0;
+    .timeline-card {
+        h3 {
+            color: rgba(var(--accent), 1);
+            margin-bottom: 1rem;
+        }
     }
 
     .timeline-content {
@@ -94,7 +88,7 @@ await loadNamespaces(locale, namespaces);
         height: 100%;
         left: 1px;
         top: 0;
-        background: linear-gradient(to bottom, rgba(var(--accent-resume), 0.75) 65%, transparent);
+        background: linear-gradient(to bottom, rgba(var(--accent), 0.75) 65%, transparent);
     }
 
     .timeline-content .meta {
@@ -110,7 +104,7 @@ await loadNamespaces(locale, namespaces);
         font-weight: normal;
         max-width: 95%;
         font-size: 1.2rem;
-        color: rgba(var(--accent-resume), 1);
+        color: rgba(var(--accent), 1);
     }
 
     .timeline-content > .meta > .date {
@@ -127,7 +121,7 @@ await loadNamespaces(locale, namespaces);
             border-radius: 50%;
             left: -30px;
             top: 0;
-            border: 3px solid rgba(var(--accent-resume), 1);
+            border: 3px solid rgba(var(--accent), 1);
             background-color: rgba(var(--secondary), 1);
         }
     }
@@ -138,7 +132,8 @@ await loadNamespaces(locale, namespaces);
         margin-top: 1rem;
         background-color: rgba(var(--secondary), 1);
         padding: 0.725rem;
-        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--global-box-shadow);
         border-radius: 6px;
+        border: var(--border);
     }
 </style>

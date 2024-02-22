@@ -1,0 +1,69 @@
+---
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import Tag from "@components/astro/blog/Tag.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Section from "@components/astro/global/Section.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale, getStaticPaths } from "@i18n/utils";
+import MainLayout from "@layouts/MainLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+export { getStaticPaths };
+
+// i18n
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog", "common"]);
+
+const layoutProps = {
+    title: `${t("blog.categories")} - Blog`,
+    description: t("blog.blog_site_description"),
+};
+
+const tags = await getCollection("tags");
+const sorted = tags === undefined ? undefined : tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data.languages[locale]));
+---
+
+<PageLayout {...layoutProps}>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+        <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
+    </BreadCrumbs>
+    <Section id="categories" isFirstSection sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
+        {!sorted && <p>{t("blog.no_tags")}</p>}
+        {
+            sorted && (
+                <ul class="category-list">
+                    {sorted.map((tag) => (
+                        <Tag {tag} />
+                    ))}
+                </ul>
+            )
+        }
+    </Section>
+</PageLayout>
+
+<style>
+    .category-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        a {
+            color: var(--body-color);
+            display: inline-block;
+
+            &:visited {
+                color: var(--body-color);
+            }
+
+            &:hover {
+                color: rgba(var(--accent), 1);
+            }
+        }
+    }
+</style>

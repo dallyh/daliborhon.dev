@@ -1,0 +1,221 @@
+---
+import { getLocale } from "@i18n/utils";
+import { extractFileNameAndExtension } from "@utils";
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+interface Props {
+    project: CollectionEntry<"projects">;
+}
+
+const locale = getLocale(Astro.url);
+const { project } = Astro.props;
+const { href, title, image, projectStartDate, projectTags } = project.data;
+const { Content } = await project.render();
+
+const file = extractFileNameAndExtension(image);
+function getSVG(name: string) {
+    const filepath = `/public/assets/uploads/img/projects/${name}.svg`;
+    const files = import.meta.glob<string>("/public/assets/uploads/img/projects/**/*.svg", {
+        query: "?raw",
+        eager: true,
+        import: "default",
+    });
+
+    if (!(filepath in files)) {
+        throw new Error(`${filepath} not found`);
+    }
+
+    return files[filepath];
+}
+
+function getImage(name: string, ext: string): ImageMetadata {
+    const filepath = `/public/assets/uploads/img/projects/${name}.${ext}`;
+    const files = import.meta.glob<ImageMetadata>("/public/assets/uploads/img/projects/**/*.{svg,jpg,jpeg,png,webp,avif}", {
+        eager: true,
+    });
+
+    if (!(filepath in files)) {
+        throw new Error(`${filepath} not found`);
+    }
+
+    return files[filepath];
+}
+
+const formatDateTime = () => {
+    const date = projectStartDate.toLocaleDateString(locale, {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+
+    return {
+        iso: projectStartDate.toISOString(),
+        date: date,
+    };
+};
+---
+
+<div class="card">
+    <div class="card-content">
+        <i class="card-image" title={title} aria-label={title}>
+            {file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
+            {file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} title={title} loading="lazy" format="webp" />}
+        </i>
+        <div class="card-info-wrapper">
+            <div class="card-info">
+                <div class="card-info-title">
+                    <div class="title-meta">
+                        <a href={href} target="_blank" title={title} aria-label={title}>{title}</a>
+                        {
+                            /*
+                                <div class="project-date">
+                                    <span>Project started:</span>
+                                    <time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
+                                </div>
+                            */
+                        }
+                    </div>
+                    <div class="card-info-tags">
+                        {
+                            projectTags.map(async (tag) => {
+                                const curr = await getEntry("project-tags", tag.id);
+
+                                return (
+                                    <div class="rounded-tag" style={`background: ${curr.data.bgColor};`}>
+                                        {curr.data.title}
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <Content />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style is:global>
+    .card-image {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        height: 120px;
+        width: 100px;
+        color: var(--body-color);
+        opacity: 0.6;
+
+        > img,
+        > svg {
+            padding: 0.2rem;
+            height: 100%;
+            width: 100%;
+        }
+
+        [data-icon="lemmy-icon"] {
+            color: black;
+        }
+    }
+</style>
+
+<style>
+    .card {
+        background-color: var(--card-bg);
+        backdrop-filter: blur(2px);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-shadow: var(--global-box-shadow);
+        border-radius: 6px;
+        padding: 1rem;
+        overflow: hidden;
+        width: 100%;
+        height: max-content;
+        border: var(--border);
+    }
+
+    .card-content {
+        display: flex;
+        gap: 1rem;
+
+        @media (max-width: 468px) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .card-info-wrapper {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-start;
+        padding: 0px 1rem;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-info {
+        align-items: flex-start;
+        display: flex;
+        gap: 10px;
+    }
+
+    .card-info-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        font-size: 0.725rem;
+        margin-top: 0.5rem;
+        color: black;
+        font-weight: 600;
+
+        :global(.rounded-tag) {
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            border-radius: 8px;
+        }
+    }
+
+    .card-info {
+        display: flex;
+        flex-direction: column;
+
+        .card-body {
+            color: var(--body-color);
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+    }
+
+    .card-info-title {
+        .title-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .project-date {
+                color: var(--body-color);
+                font-size: 0.8rem;
+                opacity: 0.8;
+            }
+        }
+
+        > a {
+            font-weight: 600;
+            position: relative;
+            display: inline-flex;
+            min-height: 25px;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+</style>

@@ -1,0 +1,125 @@
+---
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Navigation from "@components/astro/global/Navigation.astro";
+import Section from "@components/astro/global/Section.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import MainLayout from "@layouts/MainLayout.astro";
+import type { Page } from "astro";
+import { Icon } from "astro-icon/components";
+import { type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+    page: Page<CollectionEntry<"posts">>;
+}
+
+const { page } = Astro.props;
+
+// i18n
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog"]);
+
+const layoutProps = {
+    title: `${t("blog.all_posts_title")}`,
+    description: t("blog.blog_site_description"),
+};
+---
+
+<MainLayout {...layoutProps}>
+    <HeadHrefLangs slot="hreflangs" />
+    <Navigation slot="header" />
+    <main>
+        <BreadCrumbs>
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+            <BreadCrumbsItem currentPage={true} label={t("blog.posts")} />
+        </BreadCrumbs>
+        <Section isFirstSection id="blogs" sectionTitle={t("blog.all_posts_title")}>
+            {page.end === -1 && <p>{t("blog.no_posts")}</p>}
+            {
+                page.end !== -1 && (
+                    <div class="paginated-posts">
+                        <PostsGrid posts={page.data} />
+                        <div class="page-selector">
+                            <div>
+                                {page.url.prev && (
+                                    <a href={page.url.prev} title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
+                                        <i>
+                                            <Icon name="bi:arrow-left" />
+                                        </i>
+                                    </a>
+                                )}
+                                {!page.url.prev && (
+                                    <i class="disabled" title={t("blog.prev_page")} aria-label={t("blog.prev_page")}>
+                                        <Icon name="bi:arrow-left" />
+                                    </i>
+                                )}
+                                <p aria-label={t("blog.page_count_title", { current: page.currentPage, total: page.lastPage })}>
+                                    {page.currentPage} / {page.lastPage}
+                                </p>
+                                {page.url.next && (
+                                    <a href={page.url.next} title={t("blog.next_page")} aria-label={t("blog.next_page")}>
+                                        <i>
+                                            <Icon name="bi:arrow-right" />
+                                        </i>
+                                    </a>
+                                )}
+                                {!page.url.next && (
+                                    <i class="disabled" title={t("blog.next_page")} aria-label={t("blog.next_page")}>
+                                        <Icon name="bi:arrow-right" />
+                                    </i>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+        </Section>
+    </main>
+    <Footer />
+</MainLayout>
+
+<style>
+    .page-selector {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(var(--secondary), 1);
+            border-radius: 6px;
+            box-shadow: var(--global-box-shadow);
+
+            i {
+                padding: 0.2rem;
+            }
+
+            a {
+                color: var(--body-color);
+
+                &:hover {
+                    color: rgba(var(--accent), 1);
+                }
+            }
+
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+
+            i.disabled {
+                color: var(--light-gray);
+            }
+        }
+    }
+</style>

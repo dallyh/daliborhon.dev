@@ -1,0 +1,44 @@
+---
+import { BLOG } from "@config/blog";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getCollection } from "astro:content";
+import Section from "../global/Section.astro";
+import PostsGrid from "./PostsGrid.astro";
+import { getFilteredPostsCollection } from "@utils";
+
+interface Props {
+    postSize?: number;
+    isFirstSection?: boolean;
+    showSeeAllUrl?: boolean;
+}
+
+const { postSize = BLOG.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
+
+// i18next
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog"]);
+
+//Blogs
+const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, featured: true, slice: postSize });
+
+const sectionProps = {
+    id: "featuredPosts",
+    isFirstSection,
+    sectionTitle: t("blog.featured_posts_title"),
+    sectionDescription: t("blog.featured_posts_description"),
+};
+---
+
+<Section {...sectionProps}>
+    {!filteredPosts && <p>{t("blog.no_featured_posts")} 😞</p>}
+    {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_featured_posts")} 😞</p>}
+    {
+        filteredPosts && filteredPosts.length !== 0 && (
+            <>
+                {showSeeAllUrl && <PostsGrid posts={filteredPosts} url="/blog/posts/featured" urlDescription={t("blog.see_all_featured")} />}
+                {!showSeeAllUrl && <PostsGrid posts={filteredPosts} />}
+            </>
+        )
+    }
+</Section>

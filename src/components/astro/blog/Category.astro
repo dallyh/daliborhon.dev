@@ -1,0 +1,67 @@
+---
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getCategoryDescriptionByLocale, getCategoryTitleByLocale, getFilteredPostsCollection } from "@utils";
+import { Icon } from "astro-icon/components";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import PostsList from "./PostsList.astro";
+
+interface Props {
+    category: CollectionEntry<"categories">;
+}
+
+const { category } = Astro.props;
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog"]);
+
+const title = await getCategoryTitleByLocale(locale, category.id);
+const description = await getCategoryDescriptionByLocale(locale, category.id);
+const url = getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`);
+
+const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, categoryId: category.id });
+---
+
+{
+    filteredPosts && filteredPosts.length !== 0 && (
+        <li class="category">
+            <h2 class="title">
+                <a href={url}>{title}</a>
+            </h2>
+            <p class="description">
+                <i>
+                    <Icon name="bi:arrow-return-right" />
+                </i>
+                <span>{description}</span>
+            </p>
+            <PostsList posts={filteredPosts} />
+        </li>
+    )
+}
+
+<style>
+    .category {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+
+        h2 {
+            a:visited {
+                color: rgba(var(--accent), 1);
+            }
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+        }
+
+        .description {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 0.4rem;
+        }
+    }
+</style>

@@ -2,11 +2,7 @@
 // Handler for dropdown menus
 //
 
-import { createPopper } from "@popperjs/core/lib/popper-lite";
-import preventOverflow from "@popperjs/core/lib/modifiers/preventOverflow";
-import offsetModifier from "@popperjs/core/lib/modifiers/offset";
-import type { Placement } from "@popperjs/core";
-import type { Rect } from "@popperjs/core/lib/popper-lite";
+import { computePosition, offset, shift, type Placement } from "@floating-ui/dom";
 
 class DropdownHandler {
     init() {
@@ -21,7 +17,7 @@ class DropdownHandler {
             var button = e as HTMLButtonElement;
             var target = e.getAttribute("data-dropdown-target") as string;
             var dropdown = document.querySelector(target) as HTMLElement;
-            var placement = button.dataset.dropdownPlacement === undefined ? "bottom" : button.dataset.dropdownPlacement;
+            var placement = (button.dataset.dropdownPlacement === undefined ? "bottom" : button.dataset.dropdownPlacement) as Placement;
 
             if (!dropdown) {
                 console.log("Dropdown for target: " + target + " was not found.");
@@ -29,34 +25,29 @@ class DropdownHandler {
             }
             console.log("Found dropdown target" + target);
 
-            var popperInstance = createPopper(button, dropdown, {
-                placement: placement as Placement,
-                strategy: "fixed",
-                modifiers: [
-                    offsetModifier,
-                    preventOverflow,
-                    {
-                        name: "offset",
-                        options: {
-                            offset: ({ reference, popper }: { reference: Rect; popper: Rect }) => {
-                                return [(popper.width - reference.width) / 2 - 2, 2];
-                            },
-                        },
-                    },
-                    {
-                        name: "preventOverflow",
-                        options: {
+            const showDropdown = () => {
+                computePosition(button, dropdown, {
+                    placement: placement,
+                    middleware: [
+                        offset(15),
+                        shift({
                             padding: 5,
+                            rootBoundary: "viewport",
                             boundary: document.body,
-                            rootBoundary: "document",
-                        },
-                    },
-                ],
-            });
+                        }),
+                    ],
+                    strategy: "fixed",
+                }).then(({ x, y }) => {
+                    Object.assign(dropdown.style, {
+                        left: `${x}px`,
+                        top: `${y}px`,
+                    });
+                });
+            };
 
             e.addEventListener("click", () => {
                 dropdown.classList.toggle("active");
-                popperInstance.update();
+                showDropdown();
             });
 
             // Closes active dropdowns on button click, which is not this button

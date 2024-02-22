@@ -1,0 +1,43 @@
+all_posts_title: Všechny příspěvky
+blog_description: >-
+    Vítejte na mém blogu o různých tématech, primárně zaměřen na software, vývoj
+    software a také střípky z pracovního světa.
+blog_site_description: >-
+    Daliborův blog o různých tématech, primárně zaměřen na software a vývoj
+    softwaru.
+browse_posts: Procházet příspěvky
+categories: Kategorie
+categories_description: Příspěvky řazené dle kategorie.
+category: Kategorie
+explore_posts: Prozkoumat
+featured: Vybrané
+featured_posts_description: Nejnovější vybrané příspěvky.
+featured_posts_title: Vybrané příspěvky
+next_page: Další stránka
+no_categories: Momentálně zde nejsou žádné kategorie.
+no_category_posts: V této kategorii nejsou momentálně žádné příspěvky.
+no_featured_posts: Momentálně zde nejsou žádné vybrané příspěvky.
+no_posts: Momentálně zde nejsou žádné příspěvky.
+no_tagged_posts: Momentálně zde nejsou příspěvky označené
+no_tags: Momentálně zde nejsou žádné značky.
+open_toc: Rozbalit obsah
+page_count_title: Aktuální stránka {{current}} z celkového počtu {{total}} stránek.
+post: Příspěvek
+posted_category: Publikováno v
+posts: Příspěvky
+posts_tagged: Příspěvky označené
+posts_with_category: Příspěvky označené kategorií
+prev_page: Předchozí stránka
+published_date_title: Publikováno
+recent_posts_description: >-
+    Seznam mých nedávných blogových příspěvků, které vytvářím ve chvílích
+    volného času.
+recent_posts_title: Nedávné příspěvky
+see_all_featured: Všechny doporučené příspěvky
+see_all_posts: Všechny příspěvky
+tag: Štítek
+tags: Štítky
+tags_desctiption: Všechny štítky použité v příspěvcích.
+toc: Obsah
+updated_date_title: Aktualizováno
+written_by: Napsal

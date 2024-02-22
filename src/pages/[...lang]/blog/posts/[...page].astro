@@ -1,0 +1,26 @@
+---
+import { locales } from "@config/i18n";
+import { getRoutingLocale } from "@i18n/utils";
+import BlogPostsLayout from "@layouts/BlogPostsLayout.astro";
+import { getFilteredPostsCollection } from "@utils";
+import type { GetStaticPathsOptions } from "astro";
+import { BLOG } from "src/config/blog";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const paths = await Promise.all(
+        locales.flatMap(async (locale) => {
+            const filteredPosts = (await getFilteredPostsCollection({ locale: locale, sort: true })) ?? [];
+
+            return paginate(filteredPosts, {
+                params: { lang: getRoutingLocale(locale) },
+                pageSize: BLOG.pageSize,
+            });
+        }),
+    );
+    return paths[0];
+}
+
+const { page } = Astro.props;
+---
+
+<BlogPostsLayout page={page} />

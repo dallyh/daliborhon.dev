@@ -18,7 +18,7 @@ jobs:
               run: mkdir dist
 
             - name: Save changes to preview repository
-              uses: cpina/github-action-push-to-another-repository@v1.4.2
+              uses: cpina/github-action-push-to-another-repository@v1.7.2
               env:
                   API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
               with:
@@ -30,7 +30,7 @@ jobs:
                   target-directory: "${{ github.event.repository.name }}/${{ github.event.pull_request.number }}"
 
             - name: Comment on PR
-              uses: hasura/comment-progress@v2.2.0
+              uses: hasura/comment-progress@v2.3.0
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   repository: ${{ github.repository }}

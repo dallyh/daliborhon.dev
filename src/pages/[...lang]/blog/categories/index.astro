@@ -27,7 +27,7 @@ const layoutProps = {
 // Categories
 const categories = await getCollection("categories");
 const sorted = categories === undefined ? undefined : categories.sort((a, b) => a.data.languages[locale].title.localeCompare(b.data.languages[locale].title));
-const postsWithoutCategory = await getFilteredPostsCollection({ sort: true, categoryId: "none", locale: locale });
+//const postsWithoutCategory = await getFilteredPostsCollection({ sort: true, categoryId: "none", locale: locale });
 ---
 
 <PageLayout {...layoutProps}>

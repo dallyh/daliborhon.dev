@@ -21,18 +21,23 @@ export async function getStaticPaths() {
         return paths;
     }
 
-    const paths = categories.flatMap((cat) => {
-        return locales.map((locale) => {
+    const paths = await Promise.all(categories.flatMap((cat) => {
+        return locales.map(async (locale) => {
+            const filteredPosts = await getFilteredPostsCollection({ locale: locale, categoryId: category });
+
+            if (filteredPosts?.length === 0) {
+                return { params: { lang: getRoutingLocale(locale), category: undefined } }
+            }
+
             return { params: { lang: getRoutingLocale(locale), category: cat.id } };
         });
-    });
+    }));
 
     return paths;
 }
 
 const { category } = Astro.params;
 const locale = getLocale(Astro.url);
-
 const filteredPosts = await getFilteredPostsCollection({ locale: locale, sort: true, categoryId: category });
 
 // i18next

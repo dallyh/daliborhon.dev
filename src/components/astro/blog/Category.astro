@@ -22,26 +22,22 @@ const url = getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`);
 const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, categoryId: category.id });
 ---
 
-<li class="category">
-    <h2 class="title">
-        <a href={url}>
-            {title}
-        </a>
-    </h2>
-    <p class="description">
-        <i><Icon name="bi:arrow-return-right" /></i>
-        <span>{description}</span>
-    </p>
-    {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-    {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-    {
-        filteredPosts && filteredPosts.length !== 0 && (
-            <>
-                <PostsList posts={filteredPosts} />
-            </>
-        )
-    }
-</li>
+{
+    filteredPosts && filteredPosts.length !== 0 && (
+        <li class="category">
+            <h2 class="title">
+                <a href={url}>{title}</a>
+            </h2>
+            <p class="description">
+                <i>
+                    <Icon name="bi:arrow-return-right" />
+                </i>
+                <span>{description}</span>
+            </p>
+            <PostsList posts={filteredPosts} />
+        </li>
+    )
+}
 
 <style>
     .category {

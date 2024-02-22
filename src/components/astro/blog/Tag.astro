@@ -19,38 +19,21 @@ const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`);
 const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, tagId: tag.id });
 ---
 
-<li class="tag">
-    <h2 class="title">
-        <a href={url} aria-label={{title} + t("blog.tag")}>
-            <i>
-                <Icon name="bi:tag" />
-            </i>
-            {title}
-        </a>
-    </h2>
-    {
-        !filteredPosts && (
-            <p class="category-post-list">
-                {t("blog.no_tagged_posts")} {title}
-            </p>
-        )
-    }
-    {
-        filteredPosts && filteredPosts.length === 0 && (
-            <p class="category-post-list">
-                {t("blog.no_tagged_posts")}
-                {title}
-            </p>
-        )
-    }
-    {
-        filteredPosts && filteredPosts.length !== 0 && (
-            <>
-                <PostsList posts={filteredPosts} />
-            </>
-        )
-    }
-</li>
+{
+    filteredPosts && filteredPosts.length !== 0 && (
+        <li class="tag">
+            <h2 class="title">
+                <a href={url} aria-label={{ title } + t("blog.tag")}>
+                    <i>
+                        <Icon name="bi:tag" />
+                    </i>
+                    {title}
+                </a>
+            </h2>
+            <PostsList posts={filteredPosts} />
+        </li>
+    )
+}
 
 <style>
     .tag {

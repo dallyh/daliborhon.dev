@@ -33,11 +33,11 @@ jobs:
                   API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
               with:
                   source-directory: "./dist/"
-                  commit-message: "Deleted preview at ${{ PR_PATH }}"
+                  commit-message: "Deleted preview at ${{ env.PR_PATH }}"
                   destination-github-username: ${{ github.actor }}
                   destination-repository-name: "deploy-previews"
                   target-branch: main
-                  target-directory: ${{ PR_PATH }}
+                  target-directory: ${{ env.PR_PATH }}
 
             - name: Comment on PR
               uses: hasura/comment-progress@v2.3.0
@@ -46,4 +46,4 @@ jobs:
                   repository: ${{ github.repository }}
                   number: ${{ github.event.number }}
                   id: deploy-preview
-                  message: "🪓 PR closed, deleted preview at https://dallyh.github.io/deploy-previews/${{ PR_PATH }}/"
+                  message: "🪓 PR closed, deleted preview at https://dallyh.github.io/deploy-previews/${{ env.PR_PATH }}/"

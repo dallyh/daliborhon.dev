@@ -4,10 +4,15 @@ name: Delete preview on PR close
 on:
     pull_request:
         types: [closed]
+        branches: [main]
+permissions:
+    pull-requests: write # GitHub Actions bot permissions
 
 jobs:
     delete_preview:
         runs-on: ubuntu-latest
+        env:
+            PR_PATH: "${{ github.event.repository.name }}/${{ github.event.pull_request.number }}"
         steps:
             - name: Make empty dir
               run: mkdir dist
@@ -16,7 +21,6 @@ jobs:
               uses: cpina/github-action-push-to-another-repository@v1.4.2
               env:
                   API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-                  PR_PATH: "${{ github.event.repository.name }}/${{ github.event.pull_request.number }}"
               with:
                   source-directory: "./dist/"
                   commit-message: "Deleted preview at ${{ PR_PATH }}"

@@ -1,0 +1,52 @@
+:root {
+    --page-width: 1024px;
+    --padding-x: 0.75rem;
+    --header-height: 75px;
+    --header-margin: calc(var(--header-height) + 0.5rem);
+
+    @media screen and (min-width: 2240px) {
+        --page-width: 1324px;
+    }
+}
+
+:root {
+    color-scheme: light;
+    --border: 1px solid rgba(0, 0, 0, 0.2);
+    --border-search: var(--border);
+    --accent: 0, 173, 239; /* Soft blue color */
+    --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(0, 120, 180));
+    --secondary: 240, 240, 240; /* Light gray */
+    --body-color: rgb(0, 0, 0); /* rgb(51, 51, 51) */
+    --button-color: rgb(51, 51, 51);
+    --button-hover-color: #fff;
+    --bg-color: rgb(245, 245, 245); /* Light gray background */
+    --header-bg: rgba(235, 235, 235, 0.7);
+    --card-bg: rgba(var(--secondary), 1);
+    --a-visited: rgb(149, 125, 173); /* Soft purple for visited links */
+    --a-color: rgb(0, 120, 180); /* Blue for links */
+    --footer-color: rgba(0, 0, 0, 0.8);
+    --global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+    --light-gray: rgba(44, 44, 44, 0.2);
+    --focus-visible-shadow: 0 0 0 0.15rem rgba(var(--accent), 0.5);
+}
+
+/* Dark theme */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --border: none;
+    --border-search: 1px solid rgba(255, 255, 255, 0.2);
+    --accent: 14, 165, 233; /*136, 58, 234*/
+    --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(34, 211, 238));
+    --secondary: 30, 41, 59;
+    --body-color: white;
+    --button-color: white;
+    --button-hover-color: black;
+    --bg-color: rgb(13, 19, 32); /* rgba(15, 23, 42, 1) */
+    --header-bg: rgba(15, 23, 42, 0.8);
+    --card-bg: rgba(var(--secondary), 1);
+    --a-visited: rgb(197, 138, 249);
+    --a-color: rgb(34 211 238);
+    --footer-color: rgba(255, 255, 255, 0.6);
+    --global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+    --light-gray: rgba(255, 255, 255, 0.2);
+}

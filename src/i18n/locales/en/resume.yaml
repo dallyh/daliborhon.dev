@@ -1,0 +1,71 @@
+asus_tech_description: >-
+    Repairing motherboards of all kinds on micro level. Soldering, measuring
+    (with oscilloscope), and of course reading in motherboard schematics.
+asus_technician_date: October 2014 – April 2017
+card_ba_detail: >-
+    Business analysis is not an unfamiliar concept to me. This involves close
+    cooperation with the customer, the development department, project managers
+    and the like. Analytical documents, process analyses, use-case diagrams and
+    infrastructure designs are all part of my daily routine.
+card_ba_title: Business Analysis
+card_dev_detail: >-
+    I consider development as icing on the cake, as i enjoy writing code. Over
+    time, I have learned in my work positions to understand code, how things
+    work in it and how everything fits together. From the beginning, I mainly
+    used the scripting interfaces of the implemented software, primarily in C#
+    and also VBScript language. Over time I also started to get involved in
+    internal development, and I started helping with development of internal
+    extension modules as well as various tools.
+card_dev_title: Programming
+card_implementation_detail: >-
+    I also have experience in the actual implementation and installation of
+    various software, primarily intended for the Windows Server OS. As for
+    example this software includes FlexiCapture and also MSSQL Server. This also
+    includes configuration of such software and installation/configuration of
+    other necessary components such as IIS.
+card_implementation_title: Implementation
+card_project_detail: >-
+    During my years as a business consultant, I have already completed more than
+    45 projects. These include smaller projects, but also projects that take
+    months or years to complete. Most of these projects mainly include the
+    implementation of software for the extraction of data from documents and
+    document management systems ( primarily M-Files or tailor-made solutions in
+    MS SharePoint).
+card_project_title: Completed Projects
+high_school_description: Mechanical and electrical engineering - computer and security systems
+high_school_name: High School of Electrical Engineering Ostrava, Na Jízdárně
+hover_icons_tooltip: Hover over the icons to see the name.
+km_ecm_date: April 2020 – Present
+km_ecm_description: "Consulting in the scope of office digitization and getting rid of paper processes in companies. Digitization includes automatic extraction of data from documents, integration with internal systems\r\ncustomer and possibly also the introduction of new systems, such as the document management systems (DMS. Use of agile methodologies, but also of waterfall.\r\nClose cooperation with the customer and internal teams, such as the development department, when creating development assignments and business analyses. \r\nConsulting also includes customer training for working with new implemented systems."
+linkedin_certs: >-
+    You can find current certifications on my <a
+    href="https://www.linkedin.com/in/dalibor-hon/" target="_blank">LinkedIn
+    profile</a>.
+maturity_diploma: GCE Advanced Level
+moneta_analyst_date: September 2018 – March 2020
+moneta_analyst_description: "Creating reports using tools such as Microsoft Excel, SQL (Oracle), Microsoft Access, PowerBI and SAS BI. Part of the job also was creating process analysis\r\nfor commercial (SMB) backoffice, with a focus on the RWA (risk-weighted asset) commercial process."
+moneta_end_user_date: July 2017 – August 2018
+moneta_end_user_description: "Support of internal end users by phone, email and other channels. Working with the ticketing system, escalating important issues and also a bit of programming.\r\nHere I gradually started to learn mainly VBScript with macros in Microsoft Excel."
+resume_page_description: My personal website used as an online resume.
+scroll_next: Go to to next chapter
+section_cert_title: Certifications
+section_edu_title: Education
+section_exp_title: Experience
+section_intro_title: Intro
+section_skills_title: Skills
+section_timeline_title: Work experience and education
+skills_ba_description: Process mapping, UML, developer coordination...
+skills_ba_title: Business Analysis
+skills_db_description: SQL, PLSQL, T-SQL, reporting, database procedures...
+skills_db_title: Relational Databases
+skills_introduction: "Of course there's a lot to cover. As an business consultant I touched almost everything, from Windows Servers, through IIS configuration to pieces of code. \r\nBelow are just the most noteworthy mentions."
+skills_oop_description: Integrations, C#, custom in-house applications...
+skills_oop_title: Object Oriented Programming
+skills_prg_title: Programming Languages & Tools
+skills_sw_description: "I have experience with these software and platforms both in implementation and in customization of solutions for our customers.\r\nIntegration with other related systems is also a part of my experience.\r\nIn my career, I have also encountered a wide range of ERP systems such as Dynamics 365 Business Central, Helios Green, Karat! etc."
+skills_sw_title: Software and platform experience (implementation, customization)
+skills_windows_servers_description: >-
+    Configuring servers, installing required software (on-premise, Azure, IIS,
+    and such)...
+skills_windows_servers_title: Windows Servers
+years: years

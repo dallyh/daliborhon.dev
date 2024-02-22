@@ -1,0 +1,81 @@
+---
+import { getLocale } from "@i18n/utils";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { Icon } from "astro-icon/components";
+
+// i18next
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["footer"]);
+---
+
+<footer class="footer-container">
+    <p>
+        {t("footer.page_created_by")}
+    </p>
+    <p>
+        {t("footer.created_with")}
+        <a href="https://astro.build/" aria-label={t("footer.astro_a_label")} title={t("footer.astro_a_label")}>
+            <Icon name="astro-icon" size={45} />
+        </a>
+    </p>
+    <p>{t("footer.hosted_by")}{" "}<a href="https://www.github.com" aria-label={t("footer.github_a_label")} target="_blank"> {t("footer.github_name")}</a>.</p>
+    <a class="admin-link" href="/admin/" aria-hidden="true" title={t("footer.site_admin_a_label")}><Icon name="bi:gear" /> Admin login</a>
+</footer>
+
+<style>
+    /* Footer */
+    .footer-container {
+        width: 100%;
+        padding: 1rem;
+        gap: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--footer-color);
+        margin-top: 1rem;
+    }
+
+    [data-icon="astro-icon"] {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 3px;
+        width: 45px;
+        height: 15px;
+        background-size: contain;
+        color: var(--body-color);
+        opacity: 0.6;
+    }
+
+    .admin-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.2rem;
+        width: max-content;
+    }
+</style>
+
+<script>
+    const initializeFooter = () => {
+        const contactModal = document.querySelector<HTMLDivElement>("#contactModal");
+        const contactLink = document.querySelector<HTMLAnchorElement>("#contactLink");
+
+        if (contactLink !== undefined && contactLink !== null) {
+            contactLink.onclick = (e) => {
+                e.preventDefault();
+                contactModal?.classList.toggle("show");
+                document.documentElement.classList.toggle("no-scroll");
+            };
+        }
+    };
+
+    document.addEventListener(
+        "astro:page-load",
+        (e) => {
+            initializeFooter();
+        },
+        { once: false },
+    );
+</script>

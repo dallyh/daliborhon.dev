@@ -1,0 +1,111 @@
+---
+import FormattedDate from "@components/astro/blog/FormattedDate.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import TagList from "./TagList.astro";
+
+interface Props {
+    post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const locale = getLocale(Astro.url);
+const ogUrl = getOgImageUrl(locale, post, Astro.url);
+const postUrl = getBlogPostUrl(locale, post);
+
+await loadNamespaces(locale, ["blog"]);
+---
+
+<div class="post-preview">
+    {post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>}
+    <img src={ogUrl} alt={post.data.title} loading="eager" />
+    <hr />
+    <div class="post-description">
+        <a href={postUrl} class="post-title">{post.data.title}</a>
+        <div class="post-meta">
+            {
+                post.data.category && (
+                    <p>
+                        {t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                    </p>
+                )
+            }
+            <div>
+                <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+            </div>
+        </div>
+    </div>
+    <div class="tags">
+        <TagList post={post} bgColor="transparent" justify="center" />
+    </div>
+</div>
+
+<style>
+    .hidden-post {
+        color: red;
+        position: absolute;
+        font-weight: 600;
+        font-size: 3rem;
+        opacity: 0.2;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+    
+    .post-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(var(--secondary), 1);
+        border-radius: 6px;
+        box-shadow: var(--global-box-shadow);
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        overflow: hidden;
+        color: var(--body-color);
+        border: var(--border);
+        position: relative;
+
+        .tags {
+            display: flex;
+            justify-content: center;
+            padding: 0.2rem;
+            margin-top: auto;
+        }
+
+        .post-description {
+            padding: 0.5rem;
+            font-size: 0.825rem;
+            display: flex;
+            flex-direction: column;
+
+            > a {
+                margin-top: 0.3rem;
+                margin-bottom: 0.3rem;
+                font-size: 1.2rem;
+            }
+        }
+
+        .post-meta {
+            line-height: 1.5;
+            p {
+                font-size: inherit;
+                line-height: inherit;
+
+                a {
+                    font-size: inherit;
+                }
+            }
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+</style>

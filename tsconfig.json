@@ -5,6 +5,16 @@
         "jsx": "react-jsx",
         "jsxImportSource": "react",
         "resolveJsonModule": true,
-        "esModuleInterop": true
-    }
+        "esModuleInterop": true,
+        "baseUrl": "./",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@assets/*": ["src/assets/*"],
+            "@i18n/*": ["src/i18n/*"],
+            "@public/*": ["src/public/*"],
+            "@layouts/*": ["src/layouts/*"],
+            "@utils": ["src/utils/index.ts"],
+            "@config/*": ["src/config/*"],
+        },
+    },
 }

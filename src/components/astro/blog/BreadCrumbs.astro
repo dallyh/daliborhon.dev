@@ -1,0 +1,25 @@
+---
+// Thanks! https://github.com/markteekman/accessible-astro-components/blob/main/Breadcrumbs.astro
+import { type BreadCrumbsItem } from "./BreadCrumbsItem.astro";
+
+interface Props {
+    children: BreadCrumbsItem | BreadCrumbsItem[];
+}
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
+    <ol>
+        <slot />
+    </ol>
+</nav>
+
+<style is:global>
+    .breadcrumbs ol {
+        color: var(--body-color);
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        margin-bottom: 2rem;
+        line-height: 1.5;
+    }
+</style>

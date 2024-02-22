@@ -1,0 +1,89 @@
+---
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale, getStaticPaths } from "@i18n/utils";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+export { getStaticPaths };
+
+// i18n
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["blog", "common"]);
+
+const layoutProps = {
+    title: t("blog.featured_posts_title"),
+    description: t("blog.featured_posts_description"),
+};
+---
+
+<PageLayout {...layoutProps}>
+    <BreadCrumbs>
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
+        <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
+    </BreadCrumbs>
+    <FeaturedPosts isFirstSection showSeeAllUrl={false} />
+</PageLayout>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .post-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .page-selector {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(var(--secondary), 1);
+            border-radius: 6px;
+            box-shadow: var(--global-box-shadow);
+
+            i.disabled {
+                color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        p {
+            line-height: 1;
+            position: relative;
+
+            &:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                height: 100%;
+                width: 2px;
+                color: red;
+            }
+        }
+    }
+</style>

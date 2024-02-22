@@ -1,23 +1,25 @@
-import i18next from "i18next";
-import FsBackend from "i18next-fs-backend";
-import { defaultLocale, localeKeys } from "astro-i18n-aut";
+import { defaultLocale, locales } from "@config/i18n";
+import i18next, { type InitOptions } from "i18next";
+import fsBackend from "i18next-fs-backend";
 
-const i18nConfig = {
+const i18nConfig: InitOptions = {
     debug: false,
     ns: [],
-    defaultNS: "",
+    defaultNS: "common",
+    nsSeparator: ".",
+    keySeparator: false,
     fallbackLng: defaultLocale,
-    supportedLngs: localeKeys,
+    supportedLngs: locales,
 };
 
 const i18n = i18next
     .createInstance({
         ...i18nConfig,
         backend: {
-            loadPath: "./src/i18n/locales/{{lng}}/{{ns}}.json",
+            loadPath: "./src/i18n/locales/{{lng}}/{{ns}}.yaml",
         },
     })
-    .use(FsBackend);
+    .use(fsBackend);
 
 export const t = i18n.t;
 
@@ -39,6 +41,10 @@ export const loadNamespaces = async (locale: string, namespaces: string[]) => {
     }
 };
 
+export const interpolate = (stringToInterpolate: string, replacements: { [key: string]: string }): string => {
+    return Object.keys(replacements).reduce((acc, key) => acc.replace(new RegExp(`{{${key}}}`, "g"), replacements[key]), stringToInterpolate);
+};
+
 const initOnce = async () => {
     if (!i18n.isInitialized) {
         logMessage("initOnce", "i18n start init.");
@@ -46,7 +52,7 @@ const initOnce = async () => {
             logMessage("initOnce", "i18n was initialized.");
         });
 
-        await i18n.loadLanguages(localeKeys).then(() => {
+        await i18n.loadLanguages(locales).then(() => {
             logMessage("initOnce", "i18n loaded languages.");
         });
     }

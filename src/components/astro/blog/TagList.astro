@@ -1,0 +1,68 @@
+---
+import { getLocale } from "@i18n/utils";
+import { getTagByLocale } from "@utils";
+import { type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
+interface Props {
+    post?: CollectionEntry<"posts">;
+    tags?: CollectionEntry<"tags">[];
+    bgColor: string;
+    justify: string;
+    padding?: string;
+}
+
+const { post, bgColor, justify, tags, padding = "0.5rem" } = Astro.props;
+const locale = getLocale(Astro.url);
+---
+
+<ul class="tag-list">
+    {
+        tags &&
+            tags.map((tag) => (
+                <li>
+                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                </li>
+            ))
+    }
+    {
+        post &&
+            post.data.tags.map(async (tag) => {
+                return (
+                    <li>
+                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                    </li>
+                );
+            })
+    }
+</ul>
+
+<style define:vars={{ bgColor, justify, padding }}>
+    .tag-list {
+        display: flex;
+        gap: 0.3rem;
+        flex-wrap: wrap;
+        justify-content: var(--justify);
+        text-align: center;
+
+        li {
+            a {
+                display: inline-block;
+                background: var(--bgColor);
+                border-radius: 6px;
+                font-size: 0.8rem;
+                padding: var(--padding);
+                position: relative;
+
+                &:visited {
+                    color: var(--a-color);
+                }
+
+                &:hover {
+                    text-decoration: none;
+                    top: -2px;
+                }
+            }
+        }
+    }
+</style>

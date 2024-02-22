@@ -1,0 +1,274 @@
+---
+import avatar from "@assets/img/profile/avatar-casual.svg";
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+
+// i18next
+const locale = getLocale(Astro.url);
+await loadNamespaces(locale, ["common", "landing"]);
+---
+
+<div class="intro-container">
+    <div class="profile-container">
+        <div class="profile-info-container">
+            <h1 class="hi-there">{t("landing.hi_there")} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></h1>
+            <div class="profile-description">
+                <div class="icon-text">
+                    <i><Icon name="bi:briefcase" /></i>
+                    <p>Business Consultant</p>
+                </div>
+                <div class="icon-text">
+                    <i><Icon name="bi:geo-alt" /></i>
+                    <p>Ostrava, {t("common.country_czech_republic")}</p>
+                </div>
+            </div>
+        </div>
+        <div class="profile-social-container">
+            <ul>
+                <li>
+                    <a href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <i><Icon name="bi:github" />GitHub</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <i><Icon name="bi:linkedin" />LinkedIn</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="profile-avatar-wrapper">
+        <Image src={avatar} alt="Avatar" format="webp" />
+    </div>
+</div>
+
+<style>
+    strong {
+        font-weight: 600;
+    }
+
+    .profile-avatar-wrapper {
+        img {
+            max-height: 240px;
+        }
+    }
+
+    .shake {
+        animation: shake 2s infinite;
+    }
+
+    .intro-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+
+        @media (max-width: 1024px) {
+            flex-direction: column-reverse;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 468px) {
+            min-height: calc(100svh - var(--header-margin));
+            margin-top: -1rem; /* Account for sections margin */
+        }
+    }
+
+    .profile-info-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        font-size: clamp(0.65rem, 5vw, 1rem);
+        color: var(--body-color);
+
+        .profile-description {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            .icon-text {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                @media (max-width: 1024px) {
+                    justify-content: center;
+                }
+            }
+        }
+
+        .hi-there {
+            font-weight: 400;
+            font-size: clamp(1rem, 7vw, 1.725rem);
+
+            span {
+                display: inline-block;
+            }
+
+            @media (max-width: 468px) {
+                display: block;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            align-items: center;
+        }
+    }
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        @media (max-width: 468px) {
+            width: 100%;
+        }
+    }
+
+    .profile-social-container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        margin-top: auto;
+        color: var(--body-color);
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+
+            @media (max-width: 468px) {
+                flex-direction: column;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--body-color);
+            display: block;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            border: var(--border);
+
+            i {
+                font-size: 1.2rem;
+                display: inline-flex;
+                gap: 1rem;
+            }
+        }
+
+        ul li {
+            position: relative;
+            background-color: rgba(var(--secondary), 1);
+            box-shadow: var(--global-box-shadow);
+            border-radius: 6px;
+            min-width: 150px;
+        }
+
+        ul li span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 1.2rem;
+            transition: 0.4s;
+            border-radius: inherit;
+        }
+
+        ul li i {
+            transition: 0.4s;
+            border-radius: inherit;
+        }
+
+        a:hover span,
+        a:hover i,
+        a:focus span,
+        a:focus i {
+            z-index: 1000;
+            transition: 0.5s;
+        }
+
+        a:hover span,
+        a:focus span {
+            box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.05);
+        }
+
+        a:hover span:nth-of-type(1),
+        a:focus span:nth-of-type(1) {
+            transform: translate(0px, -0px);
+        }
+        a:hover span:nth-of-type(2),
+        a:focus span:nth-of-type(2) {
+            transform: translate(1px, -1px);
+        }
+        a:hover span:nth-of-type(3),
+        a:focus span:nth-of-type(3) {
+            transform: translate(2px, -2px);
+        }
+        a:hover span:nth-of-type(4),
+        a:focus span:nth-of-type(4) {
+            transform: translate(3px, -3px);
+        }
+        a:hover i,
+        a:focus i {
+            transform: translate(4px, -4px);
+            color: white;
+        }
+
+        a span:nth-of-type(1) {
+            opacity: 0.2;
+        }
+        a span:nth-of-type(2) {
+            opacity: 0.4;
+        }
+        a span:nth-of-type(3) {
+            opacity: 0.6;
+        }
+        a span:nth-of-type(4) {
+            opacity: 0.8;
+        }
+
+        ul li:nth-of-type(1) a:hover span,
+        ul li:nth-of-type(1) a:focus span {
+            background-color: #3b5998;
+            background-image: linear-gradient(270deg, #3b5998, #383838);
+            background-size: 400% 400%;
+            animation: gradient 6s ease infinite;
+        }
+
+        ul li:nth-of-type(2) a:hover span,
+        ul li:nth-of-type(2) a:focus span {
+            background-color: #285aeb;
+            background-image: linear-gradient(270deg, #285aeb, #0077b5);
+            background-size: 800% 800%;
+            animation: gradient 10s ease infinite;
+        }
+    }
+</style>

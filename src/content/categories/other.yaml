@@ -1,0 +1,8 @@
+id: other
+languages:
+    cs:
+        title: Nezařazeno
+        description: Ostatní a nezařazené příspěvky.
+    en:
+        title: Uncategorized
+        description: Other and uncategorized posts.

@@ -1,0 +1,56 @@
+---
+import SmallBlogPostPreview from "@components/astro/blog/SmallBlogPostPreview.astro";
+import { getLocale } from "@i18n/utils";
+import type { Page } from "astro";
+import { type CollectionEntry } from "astro:content";
+import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
+
+interface Props {
+    posts: CollectionEntry<"posts">[] | Page<CollectionEntry<"posts">>;
+    url?: string;
+    urlDescription?: string;
+}
+
+const { posts, url, urlDescription } = Astro.props;
+
+// i18next
+const locale = getLocale(Astro.url);
+
+function isPage<T>(value: any): value is Page<T> {
+    return value && value.data && Array.isArray(value.data);
+}
+---
+
+<div>
+    <ul>
+        {
+            Array.isArray(posts) &&
+                posts.map((post) => (
+                    <li>
+                        <SmallBlogPostPreview post={post} />
+                    </li>
+                ))
+        }
+        {
+            isPage(posts) &&
+                posts.data.map((post) => (
+                    <li>
+                        <SmallBlogPostPreview post={post} />
+                    </li>
+                ))
+        }
+    </ul>
+    {url && urlDescription && <AllEntriesUrl {url} {urlDescription} />}
+</div>
+
+<style>
+    ul {
+        display: grid;
+        grid-template-rows: 1fr;
+        gap: 1rem;
+
+        @media (max-width: 468px) {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

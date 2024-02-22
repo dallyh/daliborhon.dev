@@ -7,7 +7,7 @@ tags:
     - development
 category: software
 language: cs
-hidden: false
+hidden: true
 featured: false
 ogImage: https://astro.build/og/astro.jpg
 pubDateTime: 2024-01-13T22:09:12+01:00

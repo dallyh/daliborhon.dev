@@ -23,9 +23,9 @@ export async function getStaticPaths() {
 
     const paths = await Promise.all(categories.flatMap((cat) => {
         return locales.map(async (locale) => {
-            const filteredPosts = await getFilteredPostsCollection({ locale: locale, categoryId: category });
-
-            if (filteredPosts?.length === 0) {
+            const filteredPosts = await getFilteredPostsCollection({ locale: locale, categoryId: cat.id });
+            
+            if (filteredPosts === undefined || filteredPosts.length === 0) {
                 return { params: { lang: getRoutingLocale(locale), category: undefined } }
             }
 

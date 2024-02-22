@@ -12,7 +12,7 @@ tags:
     - astro
     - development
     - flexicapture
-hidden: false
+hidden: true
 category: guides
 ---
 

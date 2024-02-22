@@ -9,7 +9,11 @@ interface FilteredPostsOptions {
     tagId?: string;
 }
 
-export async function getFilteredPostsCollection(options: FilteredPostsOptions) {
+export async function getFilteredPostsCollection(options: FilteredPostsOptions | undefined = undefined) {
+    if (options === undefined) {
+        return await getCollection("posts");
+    }
+
     const { featured, sort, locale, slice, categoryId, tagId } = options;
 
     let posts = await getCollection("posts", ({ data }) => {
@@ -46,7 +50,14 @@ function buildCondition(data: any, options: BuildConditionOptions = {}) {
     const { featured, locale, categoryId, tagId } = options;
 
     // Basic condition
-    let condition: boolean = !data.hidden;
+    let condition: boolean
+
+    // In DEV mode, show all posts
+    if (import.meta.env.DEV) {
+        condition = true;
+    } else {
+        condition = !data.hidden;
+    }
 
     if (locale) {
         condition = condition && data.language === locale;

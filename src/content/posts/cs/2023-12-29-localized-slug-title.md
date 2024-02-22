@@ -6,7 +6,7 @@ author: Dalibor Hon
 tags:
     - flexicapture
 language: cs
-hidden: false
+hidden: true
 featured: true
 pubDateTime: 2023-12-29T23:20:35.541
 ---

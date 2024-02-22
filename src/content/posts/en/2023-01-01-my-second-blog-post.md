@@ -11,7 +11,7 @@ tags:
     - astro
     - development
     - flexicapture
-hidden: false
+hidden: true
 featured: true
 pubDateTime: 2024-01-04T14:10:16+01:00
 modDatetime: ""

@@ -82,7 +82,7 @@ export function createCmsConfig(): Config {
             name: "github",
             base_url: OAuthProvider,
             repo: "dallyh/daliborhon.dev",
-            branch: "blog-test",
+            branch: "main",
             commit_messages: {
                 create: 'Create {{collection}} "{{slug}}"',
                 update: 'Update {{collection}} "{{slug}}"',

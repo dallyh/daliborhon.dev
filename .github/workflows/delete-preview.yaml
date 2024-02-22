@@ -12,7 +12,7 @@ jobs:
     delete_preview:
         runs-on: ubuntu-latest
         env:
-            PR_PATH: "${{ github.event.repository.name }}/${{ github.event.pull_request.number }}"
+            PR_PATH: ${{ github.event.repository.name }}/${{ github.event.pull_request.number }}
         steps:
             - name: Make empty dir
               run: mkdir dist
@@ -27,7 +27,7 @@ jobs:
                   destination-github-username: ${{ github.actor }}
                   destination-repository-name: "deploy-previews"
                   target-branch: main
-                  target-directory: "${{ github.event.repository.name }}/${{ github.event.pull_request.number }}"
+                  target-directory: ${{ PR_PATH }}
 
             - name: Comment on PR
               uses: hasura/comment-progress@v2.3.0

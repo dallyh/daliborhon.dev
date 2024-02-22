@@ -2,7 +2,7 @@
 title: "Typography example (en)"
 postId: "post-1"
 language: "en"
-featured: true
+featured: false
 pubDateTime: 2022-07-01
 modDatetime: 2022-07-01
 description: "This is the first post of my new Astro blog."
@@ -12,7 +12,6 @@ image:
     alt: "The full Astro logo."
 tags:
     - astro
-    - development
 hidden: false
 ---
 

@@ -29,8 +29,10 @@ interface PostPreviewCardProps {
     title: string;
     body: string;
     pubDateTime: string;
-    modDateTime: string;
+    modDatetime: string;
     hidden: boolean;
+    category: string;
+    tags: string[];
 }
 
 const PostPreviewCard = ({ entry, widgetFor }: TemplatePreviewCardProps<PostPreviewCardProps>) => {
@@ -52,17 +54,26 @@ const PostPreviewCard = ({ entry, widgetFor }: TemplatePreviewCardProps<PostPrev
                             flexDirection: "column",
                             alignItems: "baseline",
                             gap: "8px",
+                            fontSize: "0.8rem"
                         }}
                     >
                         <strong style={{ fontSize: "1.2rem" }}>{entry.data?.title}</strong>
-                        <span style={{ fontSize: "0.8rem" }}>
+                        <div>
                             Published: <br />
                             {entry.data?.pubDateTime}
-                        </span>
-                        <span style={{ fontSize: "0.8rem" }}>
+                        </div>
+                        <div >
                             Modified: <br />
-                            {entry.data?.modDateTime !== undefined ? entry.data?.modDateTime : "Post was not modified."}
-                        </span>
+                            {entry.data?.modDatetime === undefined || entry.data?.modDatetime === "" ? "Post was not modified.": entry.data?.modDatetime}
+                        </div>
+                        <div >
+                            Category: <br />
+                            {entry.data?.category === undefined || entry.data?.category === "" ? "No categories.": entry.data?.category}
+                        </div>
+                        <div >
+                            Tags: <br />
+                            {entry.data?.tags.join(";")}
+                        </div>
                     </div>
                     <div
                         style={{
@@ -107,7 +118,7 @@ const CmsAdmin = () => {
     useEffect(() => {
         const config = createCmsConfig();
 
-        CMS.registerPreviewCard("posts", PostPreviewCard, () => 340);
+        CMS.registerPreviewCard("posts", PostPreviewCard, () => 460);
         CMS.registerFieldPreview("posts", "hidden", PostHiddenFieldPreview);
         CMS.registerIcon("tags", TagIcon);
         CMS.registerIcon("categories", CategoryIcon);

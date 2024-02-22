@@ -126,7 +126,7 @@ export function createCmsConfig(): Config {
                         field: "pubDateTime",
                     },
                 },
-                summary_fields: ["title", "pubDateTime", "modDatetime", "hidden"],
+                summary_fields: ["title", "pubDateTime", "modDatetime", "category", "tags", "hidden"],
                 view_filters: {
                     filters: [
                         {

@@ -1,7 +1,6 @@
 ---
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getCollection } from "astro:content";
 import { BLOG } from "src/config/blog";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
@@ -20,7 +19,12 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog"]);
 
 //Blogs
-const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, featured: filterFeatured, slice: postSize });
+let filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, slice: postSize });
+if (filterFeatured) {
+    filteredPosts = filteredPosts?.filter((post) => {
+        return post.data.featured === false || post.data.featured === undefined
+    })
+}
 
 const sectionProps = {
     id: "recentPosts",

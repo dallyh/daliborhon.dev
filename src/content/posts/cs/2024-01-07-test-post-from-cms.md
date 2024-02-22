@@ -7,7 +7,7 @@ tags:
     - flexicapture
 category: software
 language: cs
-hidden: false
+hidden: true
 featured: false
 ogImage: /assets/uploads/img/astro.jpg
 pubDateTime: 2024-01-07T21:37:39+01:00

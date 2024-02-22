@@ -20,6 +20,7 @@ await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
+    {post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>}
     <img src={ogUrl} alt={post.data.title} loading="eager" />
     <hr />
     <div class="post-description">
@@ -43,6 +44,16 @@ await loadNamespaces(locale, ["blog"]);
 </div>
 
 <style>
+    .hidden-post {
+        color: red;
+        position: absolute;
+        font-weight: 600;
+        font-size: 3rem;
+        opacity: 0.2;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+    
     .post-preview {
         display: flex;
         flex-direction: column;
@@ -56,6 +67,7 @@ await loadNamespaces(locale, ["blog"]);
         overflow: hidden;
         color: var(--body-color);
         border: var(--border);
+        position: relative;
 
         .tags {
             display: flex;

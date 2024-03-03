@@ -7,7 +7,8 @@ import ProjectsList from "@components/astro/projects/ProjectsList.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getStaticPaths } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-
+import { caisySDK } from "src/services/graphql/getSdk";
+import { getPaginatedBlogArticlesByLocale } from "../../../services/content/getAllBlogArticlesByLocale"
 export { getStaticPaths };
 
 // i18next
@@ -21,6 +22,14 @@ const layoutProps = {
 };
 
 const postSize = 3;
+/*
+const test = await getPaginatedBlogArticlesByLocale({locale});
+console.log(test);
+*/
+
+const id = "054954a6-96dc-4dfd-b652-85db10d01aed";
+const test2 = await caisySDK.blogArticleByLocale({id, locale});
+console.log(test2.BlogArticle);
 ---
 
 <PageLayout {...layoutProps}>

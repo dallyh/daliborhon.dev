@@ -1,0 +1,893 @@
+""""""
+type Asset {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  author: String
+
+  """"""
+  blurHash: String
+
+  """"""
+  copyright: String
+
+  """"""
+  description: String
+
+  """"""
+  dominantColor: String
+
+  """"""
+  height: Int
+
+  """"""
+  id: ID
+
+  """"""
+  keywords: String
+
+  """"""
+  originType: String
+
+  """"""
+  originalName: String
+
+  """"""
+  src: String
+
+  """"""
+  title: String
+
+  """"""
+  width: Int
+}
+
+""""""
+type Asset_Connection {
+  """"""
+  edges: [Asset_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type Asset_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: Asset
+}
+
+""""""
+input Asset_Nested_Where {
+  """"""
+  AND: [Asset_Nested_Where]
+
+  """"""
+  OR: [Asset_Nested_Where]
+
+  """"""
+  author: CaisyField_String_Where
+
+  """"""
+  blurHash: CaisyField_String_Where
+
+  """"""
+  copyright: CaisyField_String_Where
+
+  """"""
+  description: CaisyField_String_Where
+
+  """"""
+  dominantColor: CaisyField_Color_Where
+
+  """"""
+  height: CaisyField_Number_WhereInt
+
+  """"""
+  keywords: CaisyField_String_Where
+
+  """"""
+  originType: CaisyField_String_Where
+
+  """"""
+  originalName: CaisyField_String_Where
+
+  """"""
+  title: CaisyField_String_Where
+
+  """"""
+  width: CaisyField_Number_WhereInt
+}
+
+""""""
+input Asset_Sort {
+  """"""
+  author: Order
+
+  """"""
+  blurHash: Order
+
+  """"""
+  copyright: Order
+
+  """"""
+  createdAt: Order
+
+  """"""
+  description: Order
+
+  """"""
+  dominantColor: Order
+
+  """"""
+  height: Order
+
+  """"""
+  id: Order
+
+  """"""
+  keywords: Order
+
+  """"""
+  originType: Order
+
+  """"""
+  originalName: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  title: Order
+
+  """"""
+  updatedAt: Order
+
+  """"""
+  width: Order
+}
+
+""""""
+input Asset_Where {
+  """"""
+  AND: [Asset_Where]
+
+  """"""
+  OR: [Asset_Where]
+
+  """"""
+  author: CaisyField_String_Where
+
+  """"""
+  blurHash: CaisyField_String_Where
+
+  """"""
+  copyright: CaisyField_String_Where
+
+  """"""
+  description: CaisyField_String_Where
+
+  """"""
+  dominantColor: CaisyField_Color_Where
+
+  """"""
+  height: CaisyField_Number_WhereInt
+
+  """"""
+  keywords: CaisyField_String_Where
+
+  """"""
+  originType: CaisyField_String_Where
+
+  """"""
+  originalName: CaisyField_String_Where
+
+  """"""
+  title: CaisyField_String_Where
+
+  """"""
+  width: CaisyField_Number_WhereInt
+}
+
+""""""
+type Author {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  avatar(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): Asset
+
+  """"""
+  bio: String
+
+  """"""
+  id: ID
+
+  """"""
+  name: String
+}
+
+""""""
+input Author_Avatar_Where {
+  """"""
+  findOne: Author_Avatar_WhereConnection
+}
+
+""""""
+input Author_Avatar_WhereConnection {
+  """"""
+  Asset: Asset_Nested_Where
+}
+
+""""""
+type Author_Connection {
+  """"""
+  edges: [Author_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type Author_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: Author
+}
+
+""""""
+input Author_Nested_Where {
+  """"""
+  AND: [Author_Nested_Where]
+
+  """"""
+  OR: [Author_Nested_Where]
+
+  """"""
+  bio: CaisyField_String_Where
+
+  """"""
+  name: CaisyField_String_Where
+}
+
+""""""
+input Author_Sort {
+  """"""
+  avatar: Order
+
+  """"""
+  bio: Order
+
+  """"""
+  createdAt: Order
+
+  """"""
+  id: Order
+
+  """"""
+  name: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input Author_Where {
+  """"""
+  AND: [Author_Where]
+
+  """"""
+  OR: [Author_Where]
+
+  """"""
+  avatar: Author_Avatar_Where
+
+  """"""
+  bio: CaisyField_String_Where
+
+  """"""
+  name: CaisyField_String_Where
+}
+
+""""""
+type BlogArticle {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  author(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): Author
+
+  """"""
+  category(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): Category
+
+  """"""
+  id: ID
+
+  """"""
+  teaserDesciption: String
+
+  """"""
+  teaserHeadline: String
+
+  """"""
+  teaserImage(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): Asset
+
+  """"""
+  text(locale: String): BlogArticle_text
+
+  """"""
+  title: String
+}
+
+""""""
+input BlogArticle_Author_Where {
+  """"""
+  findOne: BlogArticle_Author_WhereConnection
+}
+
+""""""
+input BlogArticle_Author_WhereConnection {
+  """"""
+  Author: Author_Nested_Where
+}
+
+""""""
+input BlogArticle_Category_Where {
+  """"""
+  findOne: BlogArticle_Category_WhereConnection
+}
+
+""""""
+input BlogArticle_Category_WhereConnection {
+  """"""
+  Category: Category_Nested_Where
+}
+
+""""""
+type BlogArticle_Connection {
+  """"""
+  edges: [BlogArticle_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type BlogArticle_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: BlogArticle
+}
+
+""""""
+input BlogArticle_Sort {
+  """"""
+  author: Order
+
+  """"""
+  category: Order
+
+  """"""
+  createdAt: Order
+
+  """"""
+  id: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  teaserDesciption: Order
+
+  """"""
+  teaserHeadline: Order
+
+  """"""
+  teaserImage: Order
+
+  """"""
+  title: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input BlogArticle_TeaserImage_Where {
+  """"""
+  findOne: BlogArticle_TeaserImage_WhereConnection
+}
+
+""""""
+input BlogArticle_TeaserImage_WhereConnection {
+  """"""
+  Asset: Asset_Nested_Where
+}
+
+""""""
+input BlogArticle_Where {
+  """"""
+  AND: [BlogArticle_Where]
+
+  """"""
+  OR: [BlogArticle_Where]
+
+  """"""
+  author: BlogArticle_Author_Where
+
+  """"""
+  category: BlogArticle_Category_Where
+
+  """"""
+  teaserDesciption: CaisyField_String_Where
+
+  """"""
+  teaserHeadline: CaisyField_String_Where
+
+  """"""
+  teaserImage: BlogArticle_TeaserImage_Where
+
+  """"""
+  text: CaisyField_Richtext_Where
+
+  """"""
+  title: CaisyField_String_Where
+}
+
+""""""
+type BlogArticle_text {
+  """"""
+  connections(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): [BlogArticle_text_Connections]
+
+  """"""
+  json: JSON
+}
+
+""""""
+union BlogArticle_text_Connections = Asset | CodeBlock
+
+""""""
+type BlogPostTag {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  background: String
+
+  """"""
+  id: ID
+
+  """"""
+  title: String
+}
+
+""""""
+type CaisyDocument_Meta {
+  """"""
+  createdAt: DateTime
+
+  """"""
+  id: ID
+
+  """"""
+  locale: String
+
+  """"""
+  locales: [String]
+
+  """"""
+  publishedAt: DateTime
+
+  """"""
+  updatedAt: DateTime
+}
+
+""""""
+input CaisyField_Color_Where {
+  """"""
+  contains: String
+
+  """"""
+  eq: String
+
+  """"""
+  neq: String
+}
+
+""""""
+input CaisyField_Number_WhereInt {
+  """"""
+  eq: Int
+
+  """"""
+  gt: Int
+
+  """"""
+  gte: Int
+
+  """"""
+  lt: Int
+
+  """"""
+  lte: Int
+
+  """"""
+  neq: Int
+}
+
+""""""
+input CaisyField_Richtext_Where {
+  """"""
+  contains: String
+
+  """"""
+  eq: String
+
+  """"""
+  neq: String
+}
+
+""""""
+input CaisyField_String_Where {
+  """"""
+  contains: String
+
+  """"""
+  eq: String
+
+  """"""
+  neq: String
+}
+
+""""""
+type Caisy_Field_Tag {
+  """"""
+  color: String
+
+  """"""
+  id: String
+
+  """"""
+  name: String
+}
+
+""""""
+type Category {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  id: ID
+
+  """"""
+  name: String
+}
+
+""""""
+type Category_Connection {
+  """"""
+  edges: [Category_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type Category_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: Category
+}
+
+""""""
+input Category_Nested_Where {
+  """"""
+  AND: [Category_Nested_Where]
+
+  """"""
+  OR: [Category_Nested_Where]
+
+  """"""
+  name: CaisyField_String_Where
+}
+
+""""""
+input Category_Sort {
+  """"""
+  createdAt: Order
+
+  """"""
+  id: Order
+
+  """"""
+  name: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input Category_Where {
+  """"""
+  AND: [Category_Where]
+
+  """"""
+  OR: [Category_Where]
+
+  """"""
+  name: CaisyField_String_Where
+}
+
+""""""
+type CodeBlock {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  code: String
+
+  """"""
+  id: ID
+
+  """"""
+  language: String
+
+  """"""
+  title: String
+}
+
+""""""
+type CodeBlock_Connection {
+  """"""
+  edges: [CodeBlock_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type CodeBlock_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: CodeBlock
+}
+
+""""""
+enum CodeBlock_Language {
+  """"""
+  javascript
+
+  """"""
+  typescript
+}
+
+""""""
+input CodeBlock_Language_Where {
+  """"""
+  eq: CodeBlock_Language
+}
+
+""""""
+input CodeBlock_Sort {
+  """"""
+  code: Order
+
+  """"""
+  createdAt: Order
+
+  """"""
+  id: Order
+
+  """"""
+  language: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  title: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input CodeBlock_Where {
+  """"""
+  AND: [CodeBlock_Where]
+
+  """"""
+  OR: [CodeBlock_Where]
+
+  """"""
+  code: CaisyField_String_Where
+
+  """"""
+  language: CodeBlock_Language_Where
+
+  """"""
+  title: CaisyField_String_Where
+}
+
+"""
+The `DateTime` scalar type represents a DateTime. The DateTime is serialized as an RFC 3339 quoted string
+"""
+scalar DateTime
+
+"""Any JSON value"""
+scalar JSON
+
+""""""
+enum Order {
+  """"""
+  ASC
+
+  """"""
+  DESC
+}
+
+""""""
+type PageInfo {
+  """"""
+  endCursor: String
+
+  """"""
+  hasNextPage: Boolean
+
+  """"""
+  hasPreviousPage: Boolean
+
+  """"""
+  startCursor: String
+}
+
+""""""
+type Query {
+  """"""
+  Asset(id: ID!, locale: String): Asset
+
+  """"""
+  Author(id: ID!, locale: String): Author
+
+  """"""
+  BlogArticle(id: ID!, locale: String): BlogArticle
+
+  """"""
+  BlogPostTag(locale: String): BlogPostTag
+
+  """"""
+  Category(id: ID!, locale: String): Category
+
+  """"""
+  CodeBlock(id: ID!, locale: String): CodeBlock
+
+  """"""
+  Tag(id: ID!): Caisy_Field_Tag
+
+  """"""
+  allAsset(after: String, before: String, first: Int, last: Int, locale: String, sort: [Asset_Sort], where: [Asset_Where]): Asset_Connection
+
+  """"""
+  allAuthor(after: String, before: String, first: Int, last: Int, locale: String, sort: [Author_Sort], where: [Author_Where]): Author_Connection
+
+  """"""
+  allBlogArticle(after: String, before: String, first: Int, last: Int, locale: String, sort: [BlogArticle_Sort], where: [BlogArticle_Where]): BlogArticle_Connection
+
+  """"""
+  allCategory(after: String, before: String, first: Int, last: Int, locale: String, sort: [Category_Sort], where: [Category_Where]): Category_Connection
+
+  """"""
+  allCodeBlock(after: String, before: String, first: Int, last: Int, locale: String, sort: [CodeBlock_Sort], where: [CodeBlock_Where]): CodeBlock_Connection
+
+  """"""
+  allTags(after: String, before: String, first: Int, last: Int): Tag_Connection
+}
+
+""""""
+type Tag_Connection {
+  """"""
+  edges: [Tag_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type Tag_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: Caisy_Field_Tag
+}

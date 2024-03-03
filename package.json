@@ -14,7 +14,9 @@
         "prettier-check": "prettier . --check",
         "prettier-format": "prettier . --write",
         "generate-locale-types": "tsx ./scripts/generate-i18n-locale-types.ts",
-        "build-index": "pagefind --site dist"
+        "build-index": "pagefind --site dist",
+        "gen": "graphql-codegen -r dotenv/config --config codegen.ts",
+        "gen:watch": "graphql-codegen --watch -r dotenv/config --config codegen.ts"
     },
     "dependencies": {
         "@astrojs/react": "^3.0.9",
@@ -30,6 +32,7 @@
         "astro-icon": "^1.0.2",
         "astro-pagefind": "^1.4.0",
         "focus-trap": "^7.5.4",
+        "graphql-request": "^6.1.0",
         "i18next": "^23.7.16",
         "pagefind": "^1.0.4",
         "react": "^18.2.0",
@@ -42,6 +45,11 @@
     },
     "devDependencies": {
         "@astrojs/sitemap": "^3.0.5",
+        "@graphql-codegen/cli": "^5.0.2",
+        "@graphql-codegen/client-preset": "^4.2.4",
+        "@graphql-codegen/introspection": "^4.0.3",
+        "@graphql-codegen/typescript-generic-sdk": "^4.0.1",
+        "@graphql-codegen/typescript-graphql-request": "^6.2.0",
         "@staticcms/proxy-server": "^4.0.4",
         "@types/js-yaml": "^4.0.9",
         "@types/react": "^18.2.48",

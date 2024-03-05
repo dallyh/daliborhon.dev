@@ -6,40 +6,42 @@ import { getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils"
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import TagList from "./TagList.astro";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 
 interface Props {
-    post: CollectionEntry<"posts">;
+    post: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
 const locale = getLocale(Astro.url);
-const ogUrl = getOgImageUrl(locale, post, Astro.url);
-const postUrl = getBlogPostUrl(locale, post);
+//const ogUrl = getOgImageUrl(locale, post, Astro.url);
+//const postUrl = getBlogPostUrl(locale, post);
 
 await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
-    {post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>}
-    <img src={ogUrl} alt={post.data.title} loading="eager" />
+    {/*post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>*/}
+    <img src={post.teaserImage?.src} alt={post.teaserImage?.title} loading="eager" />
     <hr />
     <div class="post-description">
-        <a href={postUrl} class="post-title">{post.data.title}</a>
+        <!--<a href={postUrl} class="post-title">{post.data.title}</a> -->
         <div class="post-meta">
             {
-                post.data.category && (
+                post.category?.name && (
                     <p>
-                        {t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                        {/*t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)</a>*/}
+                        {post.category?.name}
                     </p>
                 )
             }
             <div>
-                <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+                <FormattedDate pubDateTime={post._meta?.publishedAt!} modDatetime={post._meta?.updatedAt!} locale={locale} />
             </div>
         </div>
     </div>
     <div class="tags">
-        <TagList post={post} bgColor="transparent" justify="center" />
+        <!--<TagList post={post} bgColor="transparent" justify="center" />-->
     </div>
 </div>
 

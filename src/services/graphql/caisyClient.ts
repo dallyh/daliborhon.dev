@@ -32,4 +32,4 @@ const requester: Requester<any> = async (doc: any, vars: any) => {
     }
 };
 
-export const caisySDK = getSdkWithClient(requester);
+export const caisyClient = getSdkWithClient(requester);

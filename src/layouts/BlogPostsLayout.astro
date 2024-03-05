@@ -9,13 +9,13 @@ import Section from "@components/astro/global/Section.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import MainLayout from "@layouts/MainLayout.astro";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
-import { type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
-    page: Page<CollectionEntry<"posts">>;
+    page: Page<IGenBlogArticleMetaFragment>;
 }
 
 const { page } = Astro.props;

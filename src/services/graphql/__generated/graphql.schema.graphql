@@ -349,7 +349,24 @@ type BlogArticle {
   ): Category
 
   """"""
+  featured: Boolean
+
+  """"""
   id: ID
+
+  """"""
+  tags(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): [BlogArticle_tags]
 
   """"""
   teaserDesciption: String
@@ -435,10 +452,16 @@ input BlogArticle_Sort {
   createdAt: Order
 
   """"""
+  featured: Order
+
+  """"""
   id: Order
 
   """"""
   publishedAt: Order
+
+  """"""
+  tags: Order
 
   """"""
   teaserDesciption: Order
@@ -454,6 +477,18 @@ input BlogArticle_Sort {
 
   """"""
   updatedAt: Order
+}
+
+""""""
+input BlogArticle_Tags_Where {
+  """"""
+  findOne: BlogArticle_Tags_WhereConnection
+}
+
+""""""
+input BlogArticle_Tags_WhereConnection {
+  """"""
+  BlogPostTag: BlogPostTag_Nested_Where
 }
 
 """"""
@@ -483,6 +518,12 @@ input BlogArticle_Where {
   category: BlogArticle_Category_Where
 
   """"""
+  featured: Boolean
+
+  """"""
+  tags: BlogArticle_Tags_Where
+
+  """"""
   teaserDesciption: CaisyField_String_Where
 
   """"""
@@ -497,6 +538,9 @@ input BlogArticle_Where {
   """"""
   title: CaisyField_String_Where
 }
+
+""""""
+union BlogArticle_tags = BlogPostTag
 
 """"""
 type BlogArticle_text {
@@ -534,6 +578,78 @@ type BlogPostTag {
 
   """"""
   title: String
+}
+
+""""""
+type BlogPostTag_Connection {
+  """"""
+  edges: [BlogPostTag_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type BlogPostTag_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: BlogPostTag
+}
+
+""""""
+input BlogPostTag_Nested_Where {
+  """"""
+  AND: [BlogPostTag_Nested_Where]
+
+  """"""
+  OR: [BlogPostTag_Nested_Where]
+
+  """"""
+  background: CaisyField_Color_Where
+
+  """"""
+  title: CaisyField_String_Where
+}
+
+""""""
+input BlogPostTag_Sort {
+  """"""
+  background: Order
+
+  """"""
+  createdAt: Order
+
+  """"""
+  id: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  title: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input BlogPostTag_Where {
+  """"""
+  AND: [BlogPostTag_Where]
+
+  """"""
+  OR: [BlogPostTag_Where]
+
+  """"""
+  background: CaisyField_Color_Where
+
+  """"""
+  title: CaisyField_String_Where
 }
 
 """"""
@@ -841,7 +957,7 @@ type Query {
   BlogArticle(id: ID!, locale: String): BlogArticle
 
   """"""
-  BlogPostTag(locale: String): BlogPostTag
+  BlogPostTag(id: ID!, locale: String): BlogPostTag
 
   """"""
   Category(id: ID!, locale: String): Category
@@ -860,6 +976,9 @@ type Query {
 
   """"""
   allBlogArticle(after: String, before: String, first: Int, last: Int, locale: String, sort: [BlogArticle_Sort], where: [BlogArticle_Where]): BlogArticle_Connection
+
+  """"""
+  allBlogPostTag(after: String, before: String, first: Int, last: Int, locale: String, sort: [BlogPostTag_Sort], where: [BlogPostTag_Where]): BlogPostTag_Connection
 
   """"""
   allCategory(after: String, before: String, first: Int, last: Int, locale: String, sort: [Category_Sort], where: [Category_Where]): Category_Connection

@@ -1,18 +1,19 @@
 import { gql } from "graphql-request";
 
-export const allCategoryByLocale = gql`
-    query allCategoriesByLocale($locale: String = "") {
-        allCategory(locale: $locale) {
+export const q_allBlogPostTagsByLocale = gql`
+    query allBlogPostTagsByLocale($locale: String!) {
+        allBlogPostTag(locale: $locale) {
+            totalCount
             edges {
                 node {
                     id
-                    name
+                    background
+                    title
                     _meta {
                         locale
                     }
                 }
             }
-            totalCount
         }
     }
 `;

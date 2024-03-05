@@ -1,26 +1,26 @@
-import { caisySDK } from "../graphql/getSdk";
-import { type IGenBlogArticle } from "../graphql/__generated/sdk";
+import { caisyClient } from "../graphql/caisyClient";
+import {type IGenBlogArticleMetaFragment } from "../graphql/__generated/sdk";
 
 export interface GetAllBlogArticles {
     locale: string;
     after?: string;
-    arr?: IGenBlogArticle[];
+    arr?: IGenBlogArticleMetaFragment[];
 }
 
-export const getPaginatedBlogArticlesByLocale = async ({ locale, after, arr = [] }: GetAllBlogArticles): Promise<IGenBlogArticle[]> => {
-    const { allBlogArticle } = await caisySDK.allBlogArticleByLocale({ locale, after });
+export const getAllBlogArticlesByLocale = async ({ locale, after, arr = [] }: GetAllBlogArticles): Promise<IGenBlogArticleMetaFragment[]> => {
+    const { allBlogArticle } = await caisyClient.allBlogArticleByLocale({ locale, after });
 
     allBlogArticle?.edges?.forEach((edge) => {
         edge?.node && arr.push(edge.node);
     });
 
     if (allBlogArticle?.pageInfo?.hasNextPage) {
-        return await getPaginatedBlogArticlesByLocale({
+        return await getAllBlogArticlesByLocale({
             locale: locale,
             after: allBlogArticle?.pageInfo?.endCursor ?? undefined,
             arr,
         });
     }
 
-    return arr as IGenBlogArticle[];
+    return arr as IGenBlogArticleMetaFragment[];
 };

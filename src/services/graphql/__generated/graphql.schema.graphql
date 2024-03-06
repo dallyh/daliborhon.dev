@@ -355,18 +355,7 @@ type BlogArticle {
   id: ID
 
   """"""
-  tags(
-    """
-    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
-    """
-    after: String
-
-    """The number of items to return. Default and max value is 100."""
-    first: Int = 100
-
-    """"""
-    locale: String
-  ): [BlogArticle_tags]
+  tags: [Caisy_Field_Tag]
 
   """"""
   teaserDesciption: String
@@ -480,18 +469,6 @@ input BlogArticle_Sort {
 }
 
 """"""
-input BlogArticle_Tags_Where {
-  """"""
-  findOne: BlogArticle_Tags_WhereConnection
-}
-
-""""""
-input BlogArticle_Tags_WhereConnection {
-  """"""
-  BlogPostTag: BlogPostTag_Nested_Where
-}
-
-""""""
 input BlogArticle_TeaserImage_Where {
   """"""
   findOne: BlogArticle_TeaserImage_WhereConnection
@@ -521,7 +498,7 @@ input BlogArticle_Where {
   featured: Boolean
 
   """"""
-  tags: BlogArticle_Tags_Where
+  tags: CaisyField_String_Where
 
   """"""
   teaserDesciption: CaisyField_String_Where
@@ -538,9 +515,6 @@ input BlogArticle_Where {
   """"""
   title: CaisyField_String_Where
 }
-
-""""""
-union BlogArticle_tags = BlogPostTag
 
 """"""
 type BlogArticle_text {
@@ -563,94 +537,7 @@ type BlogArticle_text {
 }
 
 """"""
-union BlogArticle_text_Connections = Asset | CodeBlock
-
-""""""
-type BlogPostTag {
-  """"""
-  _meta: CaisyDocument_Meta
-
-  """"""
-  background: String
-
-  """"""
-  id: ID
-
-  """"""
-  title: String
-}
-
-""""""
-type BlogPostTag_Connection {
-  """"""
-  edges: [BlogPostTag_ConnectionEdge]
-
-  """"""
-  pageInfo: PageInfo
-
-  """"""
-  totalCount: Int
-}
-
-""""""
-type BlogPostTag_ConnectionEdge {
-  """"""
-  cursor: String
-
-  """"""
-  node: BlogPostTag
-}
-
-""""""
-input BlogPostTag_Nested_Where {
-  """"""
-  AND: [BlogPostTag_Nested_Where]
-
-  """"""
-  OR: [BlogPostTag_Nested_Where]
-
-  """"""
-  background: CaisyField_Color_Where
-
-  """"""
-  title: CaisyField_String_Where
-}
-
-""""""
-input BlogPostTag_Sort {
-  """"""
-  background: Order
-
-  """"""
-  createdAt: Order
-
-  """"""
-  id: Order
-
-  """"""
-  publishedAt: Order
-
-  """"""
-  title: Order
-
-  """"""
-  updatedAt: Order
-}
-
-""""""
-input BlogPostTag_Where {
-  """"""
-  AND: [BlogPostTag_Where]
-
-  """"""
-  OR: [BlogPostTag_Where]
-
-  """"""
-  background: CaisyField_Color_Where
-
-  """"""
-  title: CaisyField_String_Where
-}
+union BlogArticle_text_Connections = Asset
 
 """"""
 type CaisyDocument_Meta {
@@ -817,102 +704,6 @@ input Category_Where {
   name: CaisyField_String_Where
 }
 
-""""""
-type CodeBlock {
-  """"""
-  _meta: CaisyDocument_Meta
-
-  """"""
-  code: String
-
-  """"""
-  id: ID
-
-  """"""
-  language: String
-
-  """"""
-  title: String
-}
-
-""""""
-type CodeBlock_Connection {
-  """"""
-  edges: [CodeBlock_ConnectionEdge]
-
-  """"""
-  pageInfo: PageInfo
-
-  """"""
-  totalCount: Int
-}
-
-""""""
-type CodeBlock_ConnectionEdge {
-  """"""
-  cursor: String
-
-  """"""
-  node: CodeBlock
-}
-
-""""""
-enum CodeBlock_Language {
-  """"""
-  javascript
-
-  """"""
-  typescript
-}
-
-""""""
-input CodeBlock_Language_Where {
-  """"""
-  eq: CodeBlock_Language
-}
-
-""""""
-input CodeBlock_Sort {
-  """"""
-  code: Order
-
-  """"""
-  createdAt: Order
-
-  """"""
-  id: Order
-
-  """"""
-  language: Order
-
-  """"""
-  publishedAt: Order
-
-  """"""
-  title: Order
-
-  """"""
-  updatedAt: Order
-}
-
-""""""
-input CodeBlock_Where {
-  """"""
-  AND: [CodeBlock_Where]
-
-  """"""
-  OR: [CodeBlock_Where]
-
-  """"""
-  code: CaisyField_String_Where
-
-  """"""
-  language: CodeBlock_Language_Where
-
-  """"""
-  title: CaisyField_String_Where
-}
-
 """
 The `DateTime` scalar type represents a DateTime. The DateTime is serialized as an RFC 3339 quoted string
 """
@@ -957,13 +748,7 @@ type Query {
   BlogArticle(id: ID!, locale: String): BlogArticle
 
   """"""
-  BlogPostTag(id: ID!, locale: String): BlogPostTag
-
-  """"""
   Category(id: ID!, locale: String): Category
-
-  """"""
-  CodeBlock(id: ID!, locale: String): CodeBlock
 
   """"""
   Tag(id: ID!): Caisy_Field_Tag
@@ -978,13 +763,7 @@ type Query {
   allBlogArticle(after: String, before: String, first: Int, last: Int, locale: String, sort: [BlogArticle_Sort], where: [BlogArticle_Where]): BlogArticle_Connection
 
   """"""
-  allBlogPostTag(after: String, before: String, first: Int, last: Int, locale: String, sort: [BlogPostTag_Sort], where: [BlogPostTag_Where]): BlogPostTag_Connection
-
-  """"""
   allCategory(after: String, before: String, first: Int, last: Int, locale: String, sort: [Category_Sort], where: [Category_Where]): Category_Connection
-
-  """"""
-  allCodeBlock(after: String, before: String, first: Int, last: Int, locale: String, sort: [CodeBlock_Sort], where: [CodeBlock_Where]): CodeBlock_Connection
 
   """"""
   allTags(after: String, before: String, first: Int, last: Int): Tag_Connection

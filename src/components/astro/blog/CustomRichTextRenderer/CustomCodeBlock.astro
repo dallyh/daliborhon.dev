@@ -1,0 +1,19 @@
+---
+import { Code } from "astro:components";
+import type { BuiltinLanguage, BundledTheme } from "shikiji";
+
+export interface Props {
+    node: any;
+}
+
+const { node } = Astro.props;
+
+const codeBlockProps = {
+    theme: "material-theme-palenight" as BundledTheme,
+    code: node.content[0].text as string,
+    lang: node.attrs.language as BuiltinLanguage,
+    wrap: true,
+};
+---
+
+<Code {...codeBlockProps}  />

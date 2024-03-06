@@ -1,17 +1,13 @@
 import { gql } from "graphql-request";
 
-export const q_allBlogPostTagsByLocale = gql`
-    query allBlogPostTagsByLocale($locale: String!) {
-        allBlogPostTag(locale: $locale) {
-            totalCount
+export const q_allTags = gql`
+    query allTags {
+        allTags {
             edges {
                 node {
+                    color
                     id
-                    background
-                    title
-                    _meta {
-                        locale
-                    }
+                    name
                 }
             }
         }

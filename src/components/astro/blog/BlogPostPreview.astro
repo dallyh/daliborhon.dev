@@ -7,6 +7,7 @@ import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import TagList from "./TagList.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { Blurhash, BlurhashCanvas } from "react-blurhash";
 
 interface Props {
     post: IGenBlogArticleMetaFragment;
@@ -14,24 +15,26 @@ interface Props {
 
 const { post } = Astro.props;
 const locale = getLocale(Astro.url);
-//const ogUrl = getOgImageUrl(locale, post, Astro.url);
-//const postUrl = getBlogPostUrl(locale, post);
+const ogUrl = getOgImageUrl(locale, post, Astro.url);
+const postUrl = getBlogPostUrl(locale, post);
 
 await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
     {/*post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>*/}
-    <img src={post.teaserImage?.src} alt={post.teaserImage?.title} loading="eager" />
+    <div class="post-image">
+        <img src={ogUrl} alt={post.teaserImage?.title} loading="eager" />
+        <!-- <Blurhash client:load hash={post?.teaserImage?.blurHash!} width={"100%"} height={"100%"}/> -->
+    </div>
     <hr />
     <div class="post-description">
-        <!--<a href={postUrl} class="post-title">{post.data.title}</a> -->
+        <a href={postUrl} class="post-title">{post?.title}</a> 
         <div class="post-meta">
             {
                 post.category?.name && (
                     <p>
-                        {/*t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)</a>*/}
-                        {post.category?.name}
+                        {t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.category?.name}`)}>{post.category?.name}</a>
                     </p>
                 )
             }
@@ -41,7 +44,7 @@ await loadNamespaces(locale, ["blog"]);
         </div>
     </div>
     <div class="tags">
-        <!--<TagList post={post} bgColor="transparent" justify="center" />-->
+        <TagList post={post} bgColor="transparent" justify="center" />
     </div>
 </div>
 
@@ -55,7 +58,7 @@ await loadNamespaces(locale, ["blog"]);
         top: 50%;
         transform: translateY(-50%) rotate(45deg);
     }
-    
+
     .post-preview {
         display: flex;
         flex-direction: column;
@@ -103,7 +106,7 @@ await loadNamespaces(locale, ["blog"]);
             }
         }
 
-        img {
+        .post-image {
             display: block;
             width: 100%;
             height: auto;

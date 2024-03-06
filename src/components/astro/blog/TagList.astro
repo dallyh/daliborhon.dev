@@ -1,18 +1,20 @@
 ---
 import { getLocale } from "@i18n/utils";
+import type { IGenBlogArticleMetaFragment, IGenTagFragment } from "@services/graphql/__generated/sdk";
 import { getTagByLocale } from "@utils";
 import { type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
-    post?: CollectionEntry<"posts">;
-    tags?: CollectionEntry<"tags">[];
+    post?: IGenBlogArticleMetaFragment;
+    tags?: IGenTagFragment[];
     bgColor: string;
+    useTagColor?: boolean;
     justify: string;
     padding?: string;
 }
 
-const { post, bgColor, justify, tags, padding = "0.5rem" } = Astro.props;
+const { post, bgColor, justify, tags, useTagColor = false, padding = "0.5rem" } = Astro.props;
 const locale = getLocale(Astro.url);
 ---
 
@@ -21,16 +23,16 @@ const locale = getLocale(Astro.url);
         tags &&
             tags.map((tag) => (
                 <li>
-                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                    <a style={useTagColor ? `background: ${tag?.color}` : ""} href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.name}/`)}>#{tag.name}</a>
                 </li>
             ))
     }
     {
         post &&
-            post.data.tags.map(async (tag) => {
+            post.tags?.map(async (tag) => {
                 return (
                     <li>
-                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{getTagByLocale(locale, tag.id)}</a>
+                        <a style={useTagColor ? `background: ${tag?.color}` : ""} href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name}/`)}>#{tag?.name}</a>
                     </li>
                 );
             })

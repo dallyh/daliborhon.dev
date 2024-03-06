@@ -14,13 +14,15 @@ import Navigation from "@components/astro/global/Navigation.astro";
 import "../styles/markdown.css";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getCategoryTitleByLocale } from "@utils";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import RichTextRenderer from "@caisy/rich-text-astro-renderer";
+import CustomRichTextRenderer from "@components/astro/blog/CustomRichTextRenderer/CustomRichTextRenderer.astro";
 
 interface Props {
-    post: CollectionEntry<"posts">;
+    post: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
-const { title, author, description, canonicalURL, pubDateTime, modDatetime } = post.data;
 
 const locale = getLocale(Astro.url);
 const ogUrl = getOgImageUrl(locale, post, Astro.url);
@@ -28,40 +30,38 @@ const ogUrl = getOgImageUrl(locale, post, Astro.url);
 await loadNamespaces(locale, ["common", "blog"]);
 
 const layoutProps = {
-    title: `${t("blog.post")}: ${title}`,
-    author,
-    description,
-    pubDateTime,
-    // This is here because of CMS shenanigans. It saves dates which are empty as empty strings ("").
-    modDatetime: typeof modDatetime === "string" ? undefined : modDatetime,
-    canonicalURL,
+    title: `${t("blog.post")}: ${post?.title}`,
+    author: post?.author?.name!,
+    description: post?.teaserDesciption ?? "",
+    pubDateTime: post?._meta?.publishedAt!,
+    modDatetime: post?._meta?.updatedAt!,
     ogImage: ogUrl,
 };
-
-const { Content, headings } = await post.render();
 ---
 
 <MainLayout {...layoutProps}>
-    <HeadHrefLangs post={post} slot="hreflangs" />
-    <Navigation post={post} slot="header" />
+    <!-- <HeadHrefLangs post={post} slot="hreflangs" /> -->
+    <!-- <Navigation post={post} slot="header" /> -->
+    <HeadHrefLangs slot="hreflangs" />
+    <Navigation slot="header" />
     <main>
         <div class="post-header">
             <BreadCrumbs>
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
-                <BreadCrumbsItem currentPage={true} label={post.data.title} />
+                <BreadCrumbsItem currentPage={true} label={post?.title!} />
             </BreadCrumbs>
             <div class="post-description">
                 <div class="post-meta" data-pagefind-body>
-                    <h1 class="gradient-text">{post.data.title}</h1>
+                    <h1 class="gradient-text">{post?.title}</h1>
                     <div class="meta-author">
-                        <p>By {post.data.author}. <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} /></p>
+                        <p>By {post.author?.name}. <FormattedDate pubDateTime={post?._meta?.publishedAt!} modDatetime={post?._meta?.updatedAt!} locale={locale} /></p>
 
                         {
-                            post.data.category && (
+                            post.category && (
                                 <p>
-                                    {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                                    {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.category?.name}`)}>{post.category?.name}</a>
                                 </p>
                             )
                         }
@@ -71,13 +71,14 @@ const { Content, headings } = await post.render();
                     </div>
                 </div>
                 <div class="post-image">
-                    <img src={ogUrl} title={post.data.title} alt={post.data.title} loading="eager" transition:animate="slide" />
+                    <img src={ogUrl} title={post.title} alt={post.title} loading="eager" transition:animate="slide" />
                 </div>
             </div>
         </div>
         <article class="post-md">
             <hr />
             {
+                /*
                 headings.length !== 0 && (
                     <>
                         <h2 id="toc">{t("blog.toc")}</h2>
@@ -86,8 +87,9 @@ const { Content, headings } = await post.render();
                         </details>
                     </>
                 )
+                */
             }
-            <Content />
+            <CustomRichTextRenderer richTextJson={post?.text?.json} />
         </article>
     </main>
     <Footer />

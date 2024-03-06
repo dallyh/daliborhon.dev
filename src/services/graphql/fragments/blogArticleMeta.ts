@@ -31,12 +31,8 @@ const f_blogArticleMeta = gql`
             json
         }
         title
-        tags(locale: $locale) {
-            ... on BlogPostTag {
-                id
-                title
-                background
-            }
+        tags {
+            ...tag
         }
     }
 `;

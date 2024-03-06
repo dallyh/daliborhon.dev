@@ -1,5 +1,5 @@
 import { caisyClient } from "../graphql/caisyClient";
-import {type IGenBlogArticleMetaFragment } from "../graphql/__generated/sdk";
+import { type IGenBlogArticleMetaFragment } from "../graphql/__generated/sdk";
 
 export interface GetAllBlogArticles {
     locale: string;

@@ -1,0 +1,16 @@
+---
+import RichTextRenderer from "@caisy/rich-text-astro-renderer";
+import CustomCodeBlock from "./CustomCodeBlock.astro";
+
+export interface Props {
+    richTextJson?: any;
+}
+
+const { richTextJson } = Astro.props;
+
+const overwrites = {
+    codeBlock: CustomCodeBlock,
+};
+---
+
+<RichTextRenderer node={richTextJson} overwrites={overwrites} />

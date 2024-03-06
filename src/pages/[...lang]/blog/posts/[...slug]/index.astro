@@ -1,25 +1,32 @@
 ---
+import { locales } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import BlogPostLayout from "@layouts/BlogPostLayout.astro";
+import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import { getAllVisiblePostsCollection, getBlogPostSlug } from "@utils";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-    const allPosts = await getAllVisiblePostsCollection();
+    const paths = await Promise.all(
+        
+        locales.flatMap(async (locale) => {
+            const posts = (await getAllBlogArticlesByLocale({ locale })) ?? [];
 
-    if (allPosts === undefined) {
-        return [];
-    }
-
-    return allPosts.map((post) => ({
-        params: {
-            lang: getRoutingLocale(post.data.language),
-            slug: getBlogPostSlug(post.data.language, post),
-        },
-        props: {
-            post: post,
-        },
-    }));
+            if (posts === undefined) {
+                return [];
+            }
+            return posts.map((post) => ({
+                params: {
+                    lang: getRoutingLocale(locale),
+                    slug: getBlogPostSlug(locale, post),
+                },
+                props: {
+                    post: post,
+                },
+            }));
+        }),
+    );
+    return paths[0];
 }
 
 const { post } = Astro.props;

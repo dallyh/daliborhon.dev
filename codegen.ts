@@ -24,18 +24,17 @@ export const config: CodegenConfig = {
             plugins: ["typescript", "typescript-operations", "typescript-generic-sdk"],
             config: {
                 rawRequest: false,
-                inlineFragmentTypes: "combine",
+                inlineFragmentTypes: "inline",
                 skipTypename: false,
                 exportFragmentSpreadSubTypes: true,
                 dedupeFragments: true,
                 preResolveTypes: true,
                 typesPrefix: "IGen",
                 useTypeImports: true,
+                strictScalars: true,
                 scalars: {
-                    DateTime: {
-                        input: "Date",
-                        output: "Date",
-                    },
+                    DateTime: "Date",
+                    JSON: "any"
                 },
             },
         },

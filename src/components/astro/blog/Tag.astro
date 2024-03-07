@@ -6,21 +6,24 @@ import { Icon } from "astro-icon/components";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsList from "./PostsList.astro";
+import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
+import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
 
 interface Props {
-    tag: CollectionEntry<"tags">;
+    tag: IGenTagMetaFragment;
 }
 
 const { tag } = Astro.props;
 const locale = getLocale(Astro.url);
 
-const title = await getTagByLocale(locale, tag.id);
-const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`);
-const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, tagId: tag.id });
+const posts = await getAllBlogArticlesByTagAndLocale({locale, tagId: tag?.id!});
+
+const title = tag?.name!;
+const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name!}/`);
 ---
 
 {
-    filteredPosts && filteredPosts.length !== 0 && (
+    posts && posts.length !== 0 && (
         <li class="tag">
             <h2 class="title">
                 <a href={url} aria-label={{ title } + t("blog.tag")}>
@@ -30,7 +33,7 @@ const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: loc
                     {title}
                 </a>
             </h2>
-            <PostsList posts={filteredPosts} />
+            <PostsList posts={posts} />
         </li>
     )
 }

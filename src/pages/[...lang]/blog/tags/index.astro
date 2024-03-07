@@ -13,6 +13,7 @@ import PageLayout from "@layouts/PageLayout.astro";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 export { getStaticPaths };
+import { getAllTags } from "@services/content/getAllTags"
 
 // i18n
 const locale = getLocale(Astro.url);
@@ -23,8 +24,7 @@ const layoutProps = {
     description: t("blog.blog_site_description"),
 };
 
-const tags = await getCollection("tags");
-const sorted = tags === undefined ? undefined : tags.sort((a, b) => a.data.languages[locale].localeCompare(b.data.languages[locale]));
+const tags = await getAllTags({});
 ---
 
 <PageLayout {...layoutProps}>
@@ -34,11 +34,11 @@ const sorted = tags === undefined ? undefined : tags.sort((a, b) => a.data.langu
         <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
     </BreadCrumbs>
     <Section id="categories" isFirstSection sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
-        {!sorted && <p>{t("blog.no_tags")}</p>}
+        {!tags && <p>{t("blog.no_tags")}</p>}
         {
-            sorted && (
+            tags && (
                 <ul class="category-list">
-                    {sorted.map((tag) => (
+                    {tags.map((tag) => (
                         <Tag {tag} />
                     ))}
                 </ul>

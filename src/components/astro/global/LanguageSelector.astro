@@ -5,14 +5,17 @@
 import { locales } from "@config/i18n";
 import { loadNamespaces } from "@i18n/i18n";
 import { getLocale, getPathFromUrl } from "@i18n/utils";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { caisyClient } from "@services/graphql/caisyClient";
 import { getBlogPostByIdAndLocale, getBlogPostUrl } from "@utils";
 import { Icon } from "astro-icon/components";
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import ISO6991 from "iso-639-1";
+import { getBlogArticleByLocale } from "@services/content/getBlogArticleByLocale";
 
 interface Props {
-    post?: CollectionEntry<"posts">;
+    post?: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
@@ -50,7 +53,23 @@ await loadNamespaces(currentLocale, ["common"]);
             {
                 post &&
                     locales.map(async (locale) => {
-                        const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
+                        
+                        // Pevent fetching the same post twice
+                        if (locale === post?._meta?.locale) {
+                            const value = getBlogPostUrl(locale, post);
+                            const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+                            const current = currentLocale === locale;
+
+                            return (
+                                <>
+                                    <option selected={current} data-language={locale} value={value}>
+                                        {nativeName}
+                                    </option>
+                                </>
+                            );
+                        }
+
+                        const currentPost = await getBlogArticleByLocale({ id: post?.id!, locale });
                         const value = getBlogPostUrl(locale, currentPost);
                         const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
                         const current = currentLocale === locale;

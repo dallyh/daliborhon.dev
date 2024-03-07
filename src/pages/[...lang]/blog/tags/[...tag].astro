@@ -7,48 +7,48 @@ import { locales } from "@config/i18n";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
+import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
+import { getAllTags } from "@services/content/getAllTags";
 import { getFilteredPostsCollection, getTagByLocale } from "@utils";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 // This is kinda complicated
 export async function getStaticPaths() {
-    const tags = await getCollection("tags");
+    const paths = await Promise.all(
+        locales.flatMap(async (locale) => {
+            const tags = await getAllTags({});
 
-    if (tags === undefined) {
-        const paths = locales.map((locale) => ({
-            params: { lang: getRoutingLocale(locale), tag: undefined },
-        }));
-        return paths;
-    }
+            return await Promise.all(
+                tags.map(async (tag) => {
+                    const posts = await getAllBlogArticlesByTagAndLocale({ locale, tagId: tag.id! });
 
-    const paths = await Promise.all(tags.flatMap((tag) =>
-        locales.map(async (locale) => {
-            const filteredPosts = await getFilteredPostsCollection({ locale: locale, tagId: tag.id });
+                    if (posts === undefined || posts.length === 0) {
+                        return {
+                            params: { lang: getRoutingLocale(locale), tag: tag?.name },
+                            props: { posts: undefined, tag: tag },
+                        };
+                    }
 
-            if (filteredPosts?.length === 0) {
-                return {
-                    params: { lang: getRoutingLocale(locale), tag: undefined},
-                };
-            }
-
-            return {
-                params: { lang: getRoutingLocale(locale), tag: tag.id },
-            };
+                    return {
+                        params: { lang: getRoutingLocale(locale), tag: tag?.name },
+                        props: { posts: posts, tag: tag },
+                    };
+                }),
+            );
         }),
-    ));
+    );
 
-    return paths;
+    return paths[0];
 }
 
-const { tag } = Astro.params;
+const { posts, tag } = Astro.props;
 const locale = getLocale(Astro.url);
-const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, tagId: tag });
 
 // i18next
 await loadNamespaces(locale, ["blog", "common"]);
 
-const tagTitle = await getTagByLocale(locale, tag);
+const tagTitle = tag.name!;
 const tagDescription = `${t("blog.posts_tagged")} #${tagTitle}`;
 const layoutProps = {
     title: `${t("blog.tag")}: ${tagTitle}`,
@@ -64,9 +64,9 @@ const layoutProps = {
         <BreadCrumbsItem currentPage={true} label={tagTitle} />
     </BreadCrumbs>
     <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
-        {!filteredPosts && <p>{t("blog.no_tagged_posts")}</p>}
-        {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
-        {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
+        {!posts && <p>{t("blog.no_tagged_posts")}</p>}
+        {posts && posts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
+        {posts && posts.length !== 0 && <PostsList posts={posts} />}
     </Section>
 </PageLayout>
 

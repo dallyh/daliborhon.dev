@@ -7,9 +7,10 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 
 interface Props {
-    post?: CollectionEntry<"posts">;
+    post?: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;

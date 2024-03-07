@@ -11,3 +11,4 @@ export * from "./getPostImgTransitionName";
 export * from "./getTagByLocale";
 export * from "./removeTrailingSlash";
 export * from "./slugifyStr";
+export * from "./getAbsoluteCategoryUrl";

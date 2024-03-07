@@ -635,6 +635,9 @@ type Category {
   _meta: CaisyDocument_Meta
 
   """"""
+  description: String
+
+  """"""
   id: ID
 
   """"""
@@ -671,6 +674,9 @@ input Category_Nested_Where {
   OR: [Category_Nested_Where]
 
   """"""
+  description: CaisyField_String_Where
+
+  """"""
   name: CaisyField_String_Where
 }
 
@@ -678,6 +684,9 @@ input Category_Nested_Where {
 input Category_Sort {
   """"""
   createdAt: Order
+
+  """"""
+  description: Order
 
   """"""
   id: Order
@@ -699,6 +708,9 @@ input Category_Where {
 
   """"""
   OR: [Category_Where]
+
+  """"""
+  description: CaisyField_String_Where
 
   """"""
   name: CaisyField_String_Where

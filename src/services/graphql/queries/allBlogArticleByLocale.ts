@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const q_allBlogArticleByLocale = gql`
-    query allBlogArticleByLocale($locale: String, $after: String) {
-        allBlogArticle(sort: {updatedAt: DESC, publishedAt: DESC}, locale: $locale, after: $after) {
+    query allBlogArticleByLocale($locale: String!, $after: String) {
+        allBlogArticle(locale: $locale, after: $after, sort: { updatedAt: DESC, publishedAt: DESC }) {
             edges {
                 cursor
                 node {
@@ -12,8 +12,6 @@ export const q_allBlogArticleByLocale = gql`
             pageInfo {
                 endCursor
                 hasNextPage
-                hasPreviousPage
-                startCursor
             }
             totalCount
         }

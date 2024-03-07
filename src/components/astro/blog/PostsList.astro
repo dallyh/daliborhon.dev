@@ -4,9 +4,10 @@ import { getLocale } from "@i18n/utils";
 import type { Page } from "astro";
 import { type CollectionEntry } from "astro:content";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 
 interface Props {
-    posts: CollectionEntry<"posts">[] | Page<CollectionEntry<"posts">>;
+    posts: IGenBlogArticleMetaFragment[] | Page<IGenBlogArticleMetaFragment>;
     url?: string;
     urlDescription?: string;
 }

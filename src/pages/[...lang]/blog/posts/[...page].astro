@@ -8,8 +8,8 @@ import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticles
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const paths = await Promise.all(
-        locales.flatMap(async (locale) => {
-            const posts = (await getAllBlogArticlesByLocale({locale})) ?? [];
+        locales.map(async (locale) => {
+            const posts = (await getAllBlogArticlesByLocale({ locale })) ?? [];
 
             return paginate(posts, {
                 params: { lang: getRoutingLocale(locale) },
@@ -17,7 +17,8 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
             });
         }),
     );
-    return paths[0];
+
+    return paths.flat();
 }
 
 const { page } = Astro.props;

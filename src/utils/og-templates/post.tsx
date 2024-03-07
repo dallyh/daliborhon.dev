@@ -1,7 +1,8 @@
 import { loadNamespaces, t } from "@i18n/i18n";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import type { CollectionEntry } from "astro:content";
 
-export default async (post: CollectionEntry<"posts">, locale: string) => {
+export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
     await loadNamespaces(locale, ["blog"]);
 
     return (
@@ -68,19 +69,19 @@ export default async (post: CollectionEntry<"posts">, locale: string) => {
                         overflow: "hidden",
                     }}
                 >
-                    <p style={{ fontSize: "60px", fontWeight: "700" }}>{post.data.title}</p>
-                    <p style={{ fontSize: "40px" }}>{post.data.description}</p>
+                    <p style={{ fontSize: "60px", fontWeight: "700" }}>{post?.title}</p>
+                    <p style={{ fontSize: "40px" }}>{post.teaserDesciption}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
                     <div style={{ display: "flex", width: "100%", justifyContent: "space-between", fontSize: 24 }}>
                         <p style={{ padding: 0, margin: 0, fontWeight: "700" }}>
-                            {t("blog.published_date_title")}: {post.data.pubDateTime.toLocaleDateString(locale, { month: "long", day: "2-digit", year: "numeric" })}
+                            {t("blog.published_date_title")}: {post._meta?.publishedAt?.toLocaleDateString(locale, { month: "long", day: "2-digit", year: "numeric" })}
                         </p>
                         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                            {post.data.tags.map((tag) => (
-                                <p key={tag.id} style={{ padding: 0, margin: 0 }}>
+                            {post?.tags && post.tags.map((tag) => (
+                                <p key={tag?.name} style={{ padding: 0, margin: 0 }}>
                                     <strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
-                                    {tag.id}
+                                    {tag?.name}
                                 </p>
                             ))}
                         </div>

@@ -3,6 +3,7 @@ import { type CollectionEntry } from "astro:content";
 import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 
 const fetchFonts = async () => {
     // Regular Font
@@ -44,7 +45,7 @@ function svgBufferToPngBuffer(svg: string) {
     return pngData.asPng();
 }
 
-export async function generateOgImageForPost(post: CollectionEntry<"posts">, locale: string) {
+export async function generateOgImageForPost(post: IGenBlogArticleMetaFragment, locale: string) {
     const svg = await satori(await postOgImage(post, locale), options);
     return svgBufferToPngBuffer(svg);
 }

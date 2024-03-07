@@ -5,6 +5,7 @@ import { BLOG } from "src/config/blog";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 import { getFilteredPostsCollection } from "@utils";
+import { getRecentBlogArticlesByLocale } from "@services/content/getRecentBlogArticlesByLocale";
 
 interface Props {
     postSize?: number;
@@ -19,10 +20,10 @@ const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog"]);
 
 //Blogs
-let filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, slice: postSize });
+let posts = await getRecentBlogArticlesByLocale({locale, first: postSize});
 if (filterFeatured) {
-    filteredPosts = filteredPosts?.filter((post) => {
-        return post.data.featured === false || post.data.featured === undefined
+    posts = posts?.filter((post) => {
+        return post?.featured === false || post?.featured === undefined
     })
 }
 
@@ -34,13 +35,13 @@ const sectionProps = {
 ---
 
 <Section {...sectionProps}>
-    {!filteredPosts && <p>{t("blog.no_posts")} 😞</p>}
-    {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_posts")} 😞</p>}
+    {!posts && <p>{t("blog.no_posts")} 😞</p>}
+    {posts && posts.length === 0 && <p>{t("blog.no_posts")} 😞</p>}
     {
-        filteredPosts && filteredPosts.length !== 0 && (
+        posts && posts.length !== 0 && (
             <>
-                {showSeeAllUrl && <PostsGrid posts={filteredPosts} url="/blog/posts/" urlDescription={t("blog.see_all_posts")} />}
-                {!showSeeAllUrl && <PostsGrid posts={filteredPosts} />}
+                {showSeeAllUrl && <PostsGrid posts={posts} url="/blog/posts/" urlDescription={t("blog.see_all_posts")} />}
+                {!showSeeAllUrl && <PostsGrid posts={posts} />}
             </>
         )
     }

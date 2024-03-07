@@ -11,10 +11,12 @@ import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getStaticPaths } from "@i18n/utils";
 import MainLayout from "@layouts/MainLayout.astro";
 import PageLayout from "@layouts/PageLayout.astro";
+import { caisyClient } from "@services/graphql/caisyClient";
 import { getFilteredPostsCollection } from "@utils";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 export { getStaticPaths };
+import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale"
 
 // i18n
 const locale = getLocale(Astro.url);
@@ -25,9 +27,7 @@ const layoutProps = {
     description: t("blog.blog_site_description"),
 };
 // Categories
-const categories = await getCollection("categories");
-const sorted = categories === undefined ? undefined : categories.sort((a, b) => a.data.languages[locale].title.localeCompare(b.data.languages[locale].title));
-//const postsWithoutCategory = await getFilteredPostsCollection({ sort: true, categoryId: "none", locale: locale });
+const categories = await getAllCategoriesByLocale({locale});
 ---
 
 <PageLayout {...layoutProps}>
@@ -37,28 +37,17 @@ const sorted = categories === undefined ? undefined : categories.sort((a, b) => 
         <BreadCrumbsItem currentPage={true} label={t("blog.categories")} />
     </BreadCrumbs>
     <Section id="categories" isFirstSection sectionTitle={t("blog.categories")} sectionDescription={t("blog.categories_description")}>
-        {!sorted && <p>{t("blog.no_categories")}</p>}
+        {!categories && <p>{t("blog.no_categories")}</p>}
         {
-            sorted && (
+            categories && (
                 <ul class="category-list">
-                    {sorted?.map((category) => (
+                    {categories?.map((category) => (
                         <Category {category} />
                     ))}
                 </ul>
             )
         }
     </Section>
-    {
-        /*
-        postsWithoutCategory && postsWithoutCategory.length !== 0 && (
-            <>
-                <Section id="unsortedPosts" isFirstSection sectionTitle="Posts without category">
-                    <PostsList posts={postsWithoutCategory}  />
-                </Section>
-            </>
-        )
-        */
-    }
 </PageLayout>
 
 <style>

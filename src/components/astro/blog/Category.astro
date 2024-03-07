@@ -6,24 +6,28 @@ import { Icon } from "astro-icon/components";
 import { getCollection, type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsList from "./PostsList.astro";
+import type { IGenCategoryMetaFragment } from "@services/graphql/__generated/sdk";
+import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
+import { getAbsoluteCategoryUrl } from "@utils";
+
 
 interface Props {
-    category: CollectionEntry<"categories">;
+    category: IGenCategoryMetaFragment;
 }
 
 const { category } = Astro.props;
 const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog"]);
 
-const title = await getCategoryTitleByLocale(locale, category.id);
-const description = await getCategoryDescriptionByLocale(locale, category.id);
-const url = getRelativeLocaleUrl(locale, `/blog/categories/${category.id}`);
+const title = category?.name;
+const description = category?.description;
+const url = getAbsoluteCategoryUrl(locale, category);
 
-const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, categoryId: category.id });
+const posts = await getAllBlogArticlesByCategoryAndLocale({locale, categoryName: category.name!})
 ---
 
 {
-    filteredPosts && filteredPosts.length !== 0 && (
+    posts && posts.length !== 0 && (
         <li class="category">
             <h2 class="title">
                 <a href={url}>{title}</a>
@@ -34,7 +38,7 @@ const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: loc
                 </i>
                 <span>{description}</span>
             </p>
-            <PostsList posts={filteredPosts} />
+            <PostsList posts={posts} />
         </li>
     )
 }

@@ -7,49 +7,54 @@ import { locales } from "@config/i18n";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getCategoryTitleByLocale, getFilteredPostsCollection } from "@utils";
+import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
+import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale";
+import { getCategoryTitleByLocale, getFilteredPostsCollection, slugifyStr } from "@utils";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 export async function getStaticPaths() {
-    const categories = await getCollection("categories");
+    const paths = await Promise.all(
+        locales.flatMap(async (locale) => {
+            const categories = await getAllCategoriesByLocale({ locale });
 
-    if (categories === undefined) {
-        const paths = locales.flatMap((locale) => {
-            return { params: { lang: getRoutingLocale(locale), category: undefined } };
-        });
-        return paths;
-    }
+            return await Promise.all(
+                categories.map(async (cat) => {
+                    const posts = await getAllBlogArticlesByCategoryAndLocale({ locale, categoryName: cat?.name! });
 
-    const paths = await Promise.all(categories.flatMap((cat) => {
-        return locales.map(async (locale) => {
-            const filteredPosts = await getFilteredPostsCollection({ locale: locale, categoryId: cat.id });
-            
-            if (filteredPosts === undefined || filteredPosts.length === 0) {
-                return { params: { lang: getRoutingLocale(locale), category: undefined } }
-            }
+                    if (posts === undefined || posts.length === 0) {
+                        return {
+                            params: { lang: getRoutingLocale(locale), category: slugifyStr(locale, cat?.name!) },
+                            props: { posts: undefined, category: cat },
+                        };
+                    }
 
-            return { params: { lang: getRoutingLocale(locale), category: cat.id } };
-        });
-    }));
+                    return {
+                        params: { lang: getRoutingLocale(locale), category: slugifyStr(locale, cat?.name!) },
+                        props: { posts: posts, category: cat },
+                    };
+                }),
+            );
+        }),
+    );
 
-    return paths;
+    return paths[0];
 }
 
-const { category } = Astro.params;
-const locale = getLocale(Astro.url);
-const filteredPosts = await getFilteredPostsCollection({ locale: locale, sort: true, categoryId: category });
+const { posts, category } = Astro.props;
 
-// i18next
+const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["blog", "common"]);
 
-const categoryTitle = await getCategoryTitleByLocale(locale, category);
+const categoryTitle = category?.name!;
 const categoryDescription = `${t("blog.posts_with_category")} ${categoryTitle.toLowerCase()}`;
 const layoutProps = {
     title: `${t("blog.category")}: ${categoryTitle}`,
     description: categoryDescription,
 };
+
 ---
+
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
@@ -59,9 +64,9 @@ const layoutProps = {
         <BreadCrumbsItem currentPage={true} label={categoryTitle} />
     </BreadCrumbs>
     <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
-        {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-        {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-        {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
+        {!posts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+        {posts && posts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
+        {posts && posts.length !== 0 && <PostsList posts={posts} />}
     </Section>
 </PageLayout>
 

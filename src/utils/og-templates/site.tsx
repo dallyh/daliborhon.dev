@@ -1,12 +1,11 @@
 import { loadNamespaces, t } from "@i18n/i18n";
+import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import { getCollection } from "astro:content";
 
 export default async (locale: string) => {
     await loadNamespaces(locale, ["common"]);
-    const posts = await getCollection("posts", ({ data }) => {
-        return !data.hidden && data.language === locale;
-    });
 
+    const posts = await getAllBlogArticlesByLocale({ locale: "" });   
     const projects = await getCollection("projects", ({ data }) => {
         return data.language === locale;
     });

@@ -1,12 +1,14 @@
 ---
 import { defaultLocale, locales } from "@config/i18n";
 import { getPathFromUrl } from "@i18n/utils";
+import { getBlogArticleByLocale } from "@services/content/getBlogArticleByLocale";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { getAbsoluteBlogPostUrl, getBlogPostByIdAndLocale } from "@utils";
 import type { CollectionEntry } from "astro:content";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
 
 interface Props {
-    post?: CollectionEntry<"posts">;
+    post?: IGenBlogArticleMetaFragment;
 }
 const { post } = Astro.props;
 ---
@@ -17,7 +19,11 @@ const { post } = Astro.props;
     {
         post &&
             locales.map(async (locale) => {
-                const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
+                if (locale === post?._meta?.locale) {
+                    const value = getAbsoluteBlogPostUrl(locale, post);
+                    return <link rel="alternate" hreflang={locale} href={value} />;
+                }
+                const currentPost = await getBlogArticleByLocale({locale, id: post?.id!});
                 const value = getAbsoluteBlogPostUrl(locale, currentPost);
                 return <link rel="alternate" hreflang={locale} href={value} />;
             })

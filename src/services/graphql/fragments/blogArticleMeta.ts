@@ -3,6 +3,7 @@ import { gql } from "graphql-request";
 const f_blogArticleMeta = gql`
     fragment blogArticleMeta on BlogArticle {
         _meta {
+            createdAt
             publishedAt
             updatedAt
             locale
@@ -13,8 +14,7 @@ const f_blogArticleMeta = gql`
             name
         }
         category(locale: $locale) {
-            name
-            id
+            ...categoryMeta
         }
         id
         teaserDesciption
@@ -32,7 +32,8 @@ const f_blogArticleMeta = gql`
         }
         title
         tags {
-            ...tag
+            ...tagMeta
         }
+        featured
     }
 `;

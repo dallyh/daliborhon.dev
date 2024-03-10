@@ -2,12 +2,8 @@
 import { BLOG } from "@config/blog";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getCollection } from "astro:content";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
-import { getFilteredPostsCollection } from "@utils";
-import { caisyClient } from "@services/graphql/caisyClient";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { getFeaturedBlogArticlesByLocale } from "@services/content/getFeaturedBlogArticlesByLocale";
 
 interface Props {

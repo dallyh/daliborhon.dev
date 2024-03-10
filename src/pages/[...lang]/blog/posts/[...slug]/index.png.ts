@@ -2,9 +2,8 @@ import { defaultLocale, locales } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import { generateOgImageForPost, getBlogPostSlug, getFilteredPostsCollection } from "@utils";
+import { generateOgImageForPost, getBlogPostSlug } from "@utils";
 import type { APIContext } from "astro";
-import { type CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
     const paths = await Promise.all(

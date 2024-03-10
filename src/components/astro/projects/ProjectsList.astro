@@ -2,11 +2,10 @@
 import { PROJECTS } from "@config/blog";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getCollection } from "astro:content";
 import ProjectCard from "./ProjectCard.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { Icon } from "astro-icon/components";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
+import { getRecentProjectsByLocale } from "@services/content/getRecentProjectsByLocale";
 
 interface Props {
     recentSize?: number;
@@ -19,17 +18,7 @@ const { recentSize = PROJECTS.recentProjectsSize, listAll = false } = Astro.prop
 const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["projects"]);
 
-const projects = await getCollection("projects", ({ data }) => {
-    return data.language === locale;
-});
-
-const sortedProjects = projects.sort((a, b) => {
-    return new Date(b.data.projectStartDate).valueOf() - new Date(a.data.projectStartDate).valueOf();
-});
-
-if (!listAll) {
-    sortedProjects.slice(0, recentSize);
-}
+const projects = await getRecentProjectsByLocale({ locale, first: recentSize });
 
 const allEntriesProps = {
     url: getRelativeLocaleUrl(locale, "/projects"),
@@ -41,7 +30,7 @@ const allEntriesProps = {
     <div class="projects-cards-wrapper">
         <ul class="cards">
             {
-                sortedProjects.map((project) => {
+                projects.map((project) => {
                     return (
                         <li>
                             <ProjectCard {project} />

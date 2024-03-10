@@ -3,6 +3,7 @@ export const BLOG = {
     recentPostsSize: 6,
     featuredPostsSize: 6,
     previewPostsSize: 6,
+    codeBlockTheme: "material-theme-palenight"
 };
 
 export const PROJECTS = {

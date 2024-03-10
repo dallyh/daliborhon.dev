@@ -9,8 +9,7 @@ import { getLocale, getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
 import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale";
-import { getCategoryTitleByLocale, getFilteredPostsCollection, slugifyStr } from "@utils";
-import { getCollection } from "astro:content";
+import { slugifyStr } from "@utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 export async function getStaticPaths() {

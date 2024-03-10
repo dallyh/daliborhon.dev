@@ -3,14 +3,14 @@ import { locales } from "@config/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import BlogPostLayout from "@layouts/BlogPostLayout.astro";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
-import { getAllVisiblePostsCollection, getBlogPostSlug } from "@utils";
+import { getBlogPostSlug } from "@utils";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
     const paths = await Promise.all(
         locales.map(async (locale) => {
             const posts = (await getAllBlogArticlesByLocale({ locale })) ?? [];
-            
+
             if (posts === undefined) {
                 return [];
             }

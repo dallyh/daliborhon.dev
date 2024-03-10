@@ -1,4 +1,4 @@
-import { gql } from "graphql-request";
+import { gql } from "@apollo/client";
 
 const f_categoryMeta = gql`
     fragment categoryMeta on Category {

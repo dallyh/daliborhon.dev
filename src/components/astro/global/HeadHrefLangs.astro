@@ -3,8 +3,7 @@ import { defaultLocale, locales } from "@config/i18n";
 import { getPathFromUrl } from "@i18n/utils";
 import { getBlogArticleByLocale } from "@services/content/getBlogArticleByLocale";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import { getAbsoluteBlogPostUrl, getBlogPostByIdAndLocale } from "@utils";
-import type { CollectionEntry } from "astro:content";
+import { getAbsoluteBlogPostUrl } from "@utils";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
 
 interface Props {

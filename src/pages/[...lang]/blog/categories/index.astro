@@ -2,21 +2,13 @@
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import Category from "@components/astro/blog/Category.astro";
-import PostsList from "@components/astro/blog/PostsList.astro";
-import Footer from "@components/astro/global/Footer.astro";
-import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
-import Navigation from "@components/astro/global/Navigation.astro";
 import Section from "@components/astro/global/Section.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale, getStaticPaths } from "@i18n/utils";
-import MainLayout from "@layouts/MainLayout.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import { caisyClient } from "@services/graphql/caisyClient";
-import { getFilteredPostsCollection } from "@utils";
-import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 export { getStaticPaths };
-import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale"
+import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale";
 
 // i18n
 const locale = getLocale(Astro.url);
@@ -27,7 +19,7 @@ const layoutProps = {
     description: t("blog.blog_site_description"),
 };
 // Categories
-const categories = await getAllCategoriesByLocale({locale});
+const categories = await getAllCategoriesByLocale({ locale });
 ---
 
 <PageLayout {...layoutProps}>

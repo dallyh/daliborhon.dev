@@ -3,9 +3,8 @@ import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import { getAbsoluteCategoryUrl, getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils";
-import type { CollectionEntry } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { Image } from "@unpic/astro";
+import { getAbsoluteCategoryUrl, getBlogPostUrl, getOgImageUrl } from "@utils";
 
 interface Props {
     post: IGenBlogArticleMetaFragment;
@@ -14,15 +13,13 @@ interface Props {
 
 const { post } = Astro.props;
 const locale = getLocale(Astro.url);
-const ogUrl = getOgImageUrl(locale, post, Astro.url);
 const postUrl = getBlogPostUrl(locale, post);
 
 await loadNamespaces(locale, ["blog"]);
 ---
 
 <div class="post-preview">
-    {/*post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>*/}
-    <img src={ogUrl} alt={post.title} />
+    <Image src={post?.previewImage?.src!} alt={post.title} />
     <div class="post-description">
         <a href={postUrl} class="post-title">{post.title}</a>
         {

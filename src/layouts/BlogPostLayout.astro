@@ -1,7 +1,6 @@
 ---
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import MainLayout from "./MainLayout.astro";
-import type { CollectionEntry } from "astro:content";
 import { getLocale } from "@i18n/utils";
 import TagList from "@components/astro/blog/TagList.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
@@ -13,10 +12,9 @@ import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import "../styles/markdown.css";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getCategoryTitleByLocale } from "@utils";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import RichTextRenderer from "@caisy/rich-text-astro-renderer";
-import CustomRichTextRenderer from "@components/astro/blog/CustomRichTextRenderer/CustomRichTextRenderer.astro";
+import { Image } from "@unpic/astro";
+import CaisyRichTextRenderer from "@components/astro/blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 
 interface Props {
     post: IGenBlogArticleMetaFragment;
@@ -32,7 +30,7 @@ await loadNamespaces(locale, ["common", "blog"]);
 const layoutProps = {
     title: `${t("blog.post")}: ${post?.title}`,
     author: post?.author?.name!,
-    description: post?.teaserDesciption ?? "",
+    description: post?.description ?? "",
     pubDateTime: post?._meta?.publishedAt!,
     modDatetime: post?._meta?.updatedAt!,
     ogImage: ogUrl,
@@ -69,7 +67,7 @@ const layoutProps = {
                     </div>
                 </div>
                 <div class="post-image">
-                    <img src={ogUrl} title={post.title} alt={post.title} loading="eager" transition:animate="slide" />
+                    <Image src={post?.previewImage?.src!} title={post.title} alt={post.title} loading="eager" transition:animate="slide" />
                 </div>
             </div>
         </div>
@@ -87,7 +85,7 @@ const layoutProps = {
                 )
                 */
             }
-            <CustomRichTextRenderer richTextJson={post?.text?.json} />
+            <CaisyRichTextRenderer richTextJson={post?.text?.json} />
         </article>
     </main>
     <Footer />

@@ -1,4 +1,4 @@
-import { gql } from "graphql-request";
+import { gql } from "@apollo/client";
 
 export const q_allTags = gql`
     query allTags($after: String) {

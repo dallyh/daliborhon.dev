@@ -1,4 +1,5 @@
 ---
+import { BLOG } from "@config/blog";
 import { Code } from "astro:components";
 import type { BuiltinLanguage, BundledTheme } from "shikiji";
 
@@ -9,7 +10,7 @@ export interface Props {
 const { node } = Astro.props;
 
 const codeBlockProps = {
-    theme: "material-theme-palenight" as BundledTheme,
+    theme: BLOG.codeBlockTheme as BundledTheme,
     code: node.content[0].text as string,
     lang: node.attrs.language as BuiltinLanguage,
     wrap: true,

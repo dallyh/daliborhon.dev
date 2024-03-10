@@ -1,14 +1,13 @@
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
+import { caisyClient } from "@services/graphql/caisyClient";
 import { getCollection } from "astro:content";
 
 export default async (locale: string) => {
     await loadNamespaces(locale, ["common"]);
 
-    const posts = await getAllBlogArticlesByLocale({ locale: "" });   
-    const projects = await getCollection("projects", ({ data }) => {
-        return data.language === locale;
-    });
+    const posts = await caisyClient.getArticlesCount();
+    const projects = await caisyClient.getProjectsCount();
 
     return (
         <div
@@ -80,7 +79,9 @@ export default async (locale: string) => {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
                     <div style={{ display: "flex", fontSize: 24, fontWeight: "700" }}>
-                        {t("blog.posts")}: {posts.length === 0 ? "None :(" : posts.length} | {t("projects.projects")}: {projects.length === 0 ? "None :(" : projects.length}
+                        {t("blog.posts")}: {posts?.allBlogArticle?.totalCount === 0 ? "None :(" : posts?.allBlogArticle?.totalCount}
+                        {"|"}
+                        {t("projects.projects")}: {projects.allProject?.totalCount === 0 ? "None :(" : projects.allProject?.totalCount}
                     </div>
                 </div>
             </div>

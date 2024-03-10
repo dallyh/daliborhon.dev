@@ -5,9 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
 import icon from "astro-icon";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeToc from "rehype-toc";
+import { imageService } from "@unpic/astro/service";
 
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -23,15 +21,13 @@ export default defineConfig({
     build: {
         format: "directory",
     },
-    prefetch: true,
-    markdown: {
-        rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "append" }], [rehypeToc, { headings: ["h1", "h2", "h3"] }]],
-        shikiConfig: {
-            // Choose from Shiki's built-in themes (or add your own)
-            // https://github.com/shikijs/shiki/blob/main/docs/themes.md
-            theme: "material-theme-palenight",
-        },
+    image: {
+        service: imageService({
+            fallbackService: "sharp",
+            placeholder: "blurhash",
+        }),
     },
+    prefetch: true,
     i18n: {
         defaultLocale: i18n.defaultLocale,
         locales: i18n.locales,

@@ -1,4 +1,4 @@
-import { gql } from "graphql-request";
+import { gql } from "@apollo/client";
 
 export const q_featuredBlogArticlesByLocale = gql`
     query featuredBlogArticlesByLocale($locale: String!, $first: Int!, $featured: Boolean = true) {

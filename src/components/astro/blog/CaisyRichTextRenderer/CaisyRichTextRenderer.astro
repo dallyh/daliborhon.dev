@@ -1,6 +1,6 @@
 ---
 import RichTextRenderer from "@caisy/rich-text-astro-renderer";
-import CustomCodeBlock from "./CustomCodeBlock.astro";
+import CaisyCodeBlock from "./CaisyCodeBlock.astro";
 
 export interface Props {
     richTextJson?: any;
@@ -9,7 +9,7 @@ export interface Props {
 const { richTextJson } = Astro.props;
 
 const overwrites = {
-    codeBlock: CustomCodeBlock,
+    codeBlock: CaisyCodeBlock,
 };
 ---
 

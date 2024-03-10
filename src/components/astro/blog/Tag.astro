@@ -1,9 +1,7 @@
 ---
 import { t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getFilteredPostsCollection, getTagByLocale } from "@utils";
 import { Icon } from "astro-icon/components";
-import { getCollection, type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsList from "./PostsList.astro";
 import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
@@ -16,7 +14,7 @@ interface Props {
 const { tag } = Astro.props;
 const locale = getLocale(Astro.url);
 
-const posts = await getAllBlogArticlesByTagAndLocale({locale, tagId: tag?.id!});
+const posts = await getAllBlogArticlesByTagAndLocale({ locale, tagId: tag?.id! });
 
 const title = tag?.name!;
 const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name!}/`);

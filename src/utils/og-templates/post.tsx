@@ -70,7 +70,7 @@ export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
                     }}
                 >
                     <p style={{ fontSize: "60px", fontWeight: "700" }}>{post?.title}</p>
-                    <p style={{ fontSize: "40px" }}>{post.teaserDesciption}</p>
+                    <p style={{ fontSize: "40px" }}>{post.description}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
                     <div style={{ display: "flex", width: "100%", justifyContent: "space-between", fontSize: 24 }}>

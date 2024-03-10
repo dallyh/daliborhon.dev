@@ -349,22 +349,16 @@ type BlogArticle {
   ): Category
 
   """"""
+  description: String
+
+  """"""
   featured: Boolean
 
   """"""
   id: ID
 
   """"""
-  tags: [Caisy_Field_Tag]
-
-  """"""
-  teaserDesciption: String
-
-  """"""
-  teaserHeadline: String
-
-  """"""
-  teaserImage(
+  previewImage(
     """
     The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
     """
@@ -376,6 +370,9 @@ type BlogArticle {
     """"""
     locale: String
   ): Asset
+
+  """"""
+  tags: [Caisy_Field_Tag]
 
   """"""
   text(locale: String): BlogArticle_text
@@ -430,6 +427,18 @@ type BlogArticle_ConnectionEdge {
 }
 
 """"""
+input BlogArticle_PreviewImage_Where {
+  """"""
+  findOne: BlogArticle_PreviewImage_WhereConnection
+}
+
+""""""
+input BlogArticle_PreviewImage_WhereConnection {
+  """"""
+  Asset: Asset_Nested_Where
+}
+
+""""""
 input BlogArticle_Sort {
   """"""
   author: Order
@@ -441,10 +450,16 @@ input BlogArticle_Sort {
   createdAt: Order
 
   """"""
+  description: Order
+
+  """"""
   featured: Order
 
   """"""
   id: Order
+
+  """"""
+  previewImage: Order
 
   """"""
   publishedAt: Order
@@ -453,31 +468,10 @@ input BlogArticle_Sort {
   tags: Order
 
   """"""
-  teaserDesciption: Order
-
-  """"""
-  teaserHeadline: Order
-
-  """"""
-  teaserImage: Order
-
-  """"""
   title: Order
 
   """"""
   updatedAt: Order
-}
-
-""""""
-input BlogArticle_TeaserImage_Where {
-  """"""
-  findOne: BlogArticle_TeaserImage_WhereConnection
-}
-
-""""""
-input BlogArticle_TeaserImage_WhereConnection {
-  """"""
-  Asset: Asset_Nested_Where
 }
 
 """"""
@@ -495,19 +489,16 @@ input BlogArticle_Where {
   category: BlogArticle_Category_Where
 
   """"""
+  description: CaisyField_String_Where
+
+  """"""
   featured: Boolean
 
   """"""
+  previewImage: BlogArticle_PreviewImage_Where
+
+  """"""
   tags: CaisyField_String_Where
-
-  """"""
-  teaserDesciption: CaisyField_String_Where
-
-  """"""
-  teaserHeadline: CaisyField_String_Where
-
-  """"""
-  teaserImage: BlogArticle_TeaserImage_Where
 
   """"""
   text: CaisyField_Richtext_Where
@@ -618,6 +609,36 @@ input CaisyField_String_Where {
 }
 
 """"""
+input Caisy_Field_DateTime_Where {
+  """"""
+  eq: DateTime
+
+  """"""
+  gt: DateTime
+
+  """"""
+  gte: DateTime
+
+  """"""
+  lt: DateTime
+
+  """"""
+  lte: DateTime
+
+  """"""
+  neq: DateTime
+}
+
+""""""
+type Caisy_Field_Document_NotFound {
+  """"""
+  id: ID
+
+  """"""
+  message: String
+}
+
+""""""
 type Caisy_Field_Tag {
   """"""
   color: String
@@ -717,6 +738,11 @@ input Category_Where {
 }
 
 """
+The `Date` scalar type represents a Date. The Date is serialized as an RFC 3339 quoted string
+"""
+scalar Date
+
+"""
 The `DateTime` scalar type represents a DateTime. The DateTime is serialized as an RFC 3339 quoted string
 """
 scalar DateTime
@@ -749,6 +775,267 @@ type PageInfo {
 }
 
 """"""
+type Project {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  description(locale: String): Project_description
+
+  """"""
+  id: ID
+
+  """"""
+  image(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): Asset
+
+  """"""
+  projectSourceUrl: String
+
+  """"""
+  projectStartDate: Date
+
+  """"""
+  projectTags(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): [Project_projectTags]
+
+  """"""
+  title: String
+}
+
+""""""
+type ProjectTag {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  color: String
+
+  """"""
+  cssColor: String
+
+  """"""
+  id: ID
+
+  """"""
+  title: String
+}
+
+""""""
+type ProjectTag_Connection {
+  """"""
+  edges: [ProjectTag_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type ProjectTag_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: ProjectTag
+}
+
+""""""
+input ProjectTag_Nested_Where {
+  """"""
+  AND: [ProjectTag_Nested_Where]
+
+  """"""
+  OR: [ProjectTag_Nested_Where]
+
+  """"""
+  color: CaisyField_Color_Where
+
+  """"""
+  cssColor: CaisyField_String_Where
+
+  """"""
+  title: CaisyField_String_Where
+}
+
+""""""
+input ProjectTag_Sort {
+  """"""
+  color: Order
+
+  """"""
+  createdAt: Order
+
+  """"""
+  cssColor: Order
+
+  """"""
+  id: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  title: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input ProjectTag_Where {
+  """"""
+  AND: [ProjectTag_Where]
+
+  """"""
+  OR: [ProjectTag_Where]
+
+  """"""
+  color: CaisyField_Color_Where
+
+  """"""
+  cssColor: CaisyField_String_Where
+
+  """"""
+  title: CaisyField_String_Where
+}
+
+""""""
+type Project_Connection {
+  """"""
+  edges: [Project_ConnectionEdge]
+
+  """"""
+  pageInfo: PageInfo
+
+  """"""
+  totalCount: Int
+}
+
+""""""
+type Project_ConnectionEdge {
+  """"""
+  cursor: String
+
+  """"""
+  node: Project
+}
+
+""""""
+input Project_ProjectTags_Where {
+  """"""
+  findOne: Project_ProjectTags_WhereConnection
+}
+
+""""""
+input Project_ProjectTags_WhereConnection {
+  """"""
+  ProjectTag: ProjectTag_Nested_Where
+}
+
+""""""
+input Project_Sort {
+  """"""
+  createdAt: Order
+
+  """"""
+  id: Order
+
+  """"""
+  image: Order
+
+  """"""
+  projectSourceUrl: Order
+
+  """"""
+  projectStartDate: Order
+
+  """"""
+  projectTags: Order
+
+  """"""
+  publishedAt: Order
+
+  """"""
+  title: Order
+
+  """"""
+  updatedAt: Order
+}
+
+""""""
+input Project_Where {
+  """"""
+  AND: [Project_Where]
+
+  """"""
+  OR: [Project_Where]
+
+  """"""
+  description: CaisyField_Richtext_Where
+
+  """"""
+  projectSourceUrl: CaisyField_String_Where
+
+  """"""
+  projectStartDate: Caisy_Field_DateTime_Where
+
+  """"""
+  projectTags: Project_ProjectTags_Where
+
+  """"""
+  title: CaisyField_String_Where
+}
+
+""""""
+type Project_description {
+  """"""
+  connections(
+    """
+    The cursor to start the pagination from. In this case the curser equals the id for the (last) element. If not set, we wil start from the beginning.
+    """
+    after: String
+
+    """The number of items to return. Default and max value is 100."""
+    first: Int = 100
+
+    """"""
+    locale: String
+  ): [Project_description_Connections]
+
+  """"""
+  json: JSON
+}
+
+""""""
+union Project_description_Connections = Caisy_Field_Document_NotFound
+
+""""""
+union Project_projectTags = ProjectTag
+
+""""""
 type Query {
   """"""
   Asset(id: ID!, locale: String): Asset
@@ -761,6 +1048,12 @@ type Query {
 
   """"""
   Category(id: ID!, locale: String): Category
+
+  """"""
+  Project(id: ID!, locale: String): Project
+
+  """"""
+  ProjectTag(id: ID!, locale: String): ProjectTag
 
   """"""
   Tag(id: ID!): Caisy_Field_Tag
@@ -776,6 +1069,12 @@ type Query {
 
   """"""
   allCategory(after: String, before: String, first: Int, last: Int, locale: String, sort: [Category_Sort], where: [Category_Where]): Category_Connection
+
+  """"""
+  allProject(after: String, before: String, first: Int, last: Int, locale: String, sort: [Project_Sort], where: [Project_Where]): Project_Connection
+
+  """"""
+  allProjectTag(after: String, before: String, first: Int, last: Int, locale: String, sort: [ProjectTag_Sort], where: [ProjectTag_Where]): ProjectTag_Connection
 
   """"""
   allTags(after: String, before: String, first: Int, last: Int): Tag_Connection

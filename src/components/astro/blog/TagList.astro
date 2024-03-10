@@ -1,13 +1,12 @@
 ---
 import { getLocale } from "@i18n/utils";
-import type { IGenBlogArticleMetaFragment, IGenTagFragment } from "@services/graphql/__generated/sdk";
-import { getTagByLocale } from "@utils";
+import type { IGenBlogArticleMetaFragment, IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
 import { type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     post?: IGenBlogArticleMetaFragment;
-    tags?: IGenTagFragment[];
+    tags?: IGenTagMetaFragment[];
     bgColor: string;
     useTagColor?: boolean;
     justify: string;

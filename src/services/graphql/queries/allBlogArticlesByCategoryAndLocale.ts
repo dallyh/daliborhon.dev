@@ -1,4 +1,4 @@
-import { gql } from "graphql-request";
+import { gql } from "@apollo/client";
 
 export const q_allBlogArticlesByCategoryAndLocale = gql`
     query allBlogArticlesByCategoryAndLocale($locale: String!, $categoryName: String!, $after: String) {

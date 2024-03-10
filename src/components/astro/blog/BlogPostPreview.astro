@@ -2,12 +2,11 @@
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
-import { getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils";
-import type { CollectionEntry } from "astro:content";
+import { getBlogPostUrl, getOgImageUrl } from "@utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import TagList from "./TagList.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import { Blurhash, BlurhashCanvas } from "react-blurhash";
+import { Image } from "@unpic/astro";
 
 interface Props {
     post: IGenBlogArticleMetaFragment;
@@ -15,7 +14,6 @@ interface Props {
 
 const { post } = Astro.props;
 const locale = getLocale(Astro.url);
-const ogUrl = getOgImageUrl(locale, post, Astro.url);
 const postUrl = getBlogPostUrl(locale, post);
 
 await loadNamespaces(locale, ["blog"]);
@@ -24,8 +22,8 @@ await loadNamespaces(locale, ["blog"]);
 <div class="post-preview">
     {/*post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>*/}
     <div class="post-image">
-        <img src={ogUrl} alt={post.teaserImage?.title} loading="eager" />
-        <!-- <Blurhash client:load hash={post?.teaserImage?.blurHash!} width={"100%"} height={"100%"}/> -->
+        <Image src={post?.previewImage?.src!} alt={post!.title!} width={1200} height={630} loading="eager" />
+        <!-- <Blurhash client:load hash={post?.previewImage?.blurHash!} width={"100%"} height={"100%"}/> -->
     </div>
     <hr />
     <div class="post-description">

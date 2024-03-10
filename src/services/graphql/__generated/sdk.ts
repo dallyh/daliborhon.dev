@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: Date; output: Date; }
   DateTime: { input: Date; output: Date; }
   JSON: { input: any; output: any; }
 };
@@ -166,12 +167,11 @@ export type IGenBlogArticle = {
   _meta?: Maybe<IGenCaisyDocument_Meta>;
   author?: Maybe<IGenAuthor>;
   category?: Maybe<IGenCategory>;
+  description?: Maybe<Scalars['String']['output']>;
   featured?: Maybe<Scalars['Boolean']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
+  previewImage?: Maybe<IGenAsset>;
   tags?: Maybe<Array<Maybe<IGenCaisy_Field_Tag>>>;
-  teaserDesciption?: Maybe<Scalars['String']['output']>;
-  teaserHeadline?: Maybe<Scalars['String']['output']>;
-  teaserImage?: Maybe<IGenAsset>;
   text?: Maybe<IGenBlogArticle_Text>;
   title?: Maybe<Scalars['String']['output']>;
 };
@@ -191,7 +191,7 @@ export type IGenBlogArticleCategoryArgs = {
 };
 
 
-export type IGenBlogArticleTeaserImageArgs = {
+export type IGenBlogArticlePreviewImageArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   locale?: InputMaybe<Scalars['String']['input']>;
@@ -231,27 +231,26 @@ export type IGenBlogArticle_ConnectionEdge = {
   node?: Maybe<IGenBlogArticle>;
 };
 
+export type IGenBlogArticle_PreviewImage_Where = {
+  findOne?: InputMaybe<IGenBlogArticle_PreviewImage_WhereConnection>;
+};
+
+export type IGenBlogArticle_PreviewImage_WhereConnection = {
+  Asset?: InputMaybe<IGenAsset_Nested_Where>;
+};
+
 export type IGenBlogArticle_Sort = {
   author?: InputMaybe<IGenOrder>;
   category?: InputMaybe<IGenOrder>;
   createdAt?: InputMaybe<IGenOrder>;
+  description?: InputMaybe<IGenOrder>;
   featured?: InputMaybe<IGenOrder>;
   id?: InputMaybe<IGenOrder>;
+  previewImage?: InputMaybe<IGenOrder>;
   publishedAt?: InputMaybe<IGenOrder>;
   tags?: InputMaybe<IGenOrder>;
-  teaserDesciption?: InputMaybe<IGenOrder>;
-  teaserHeadline?: InputMaybe<IGenOrder>;
-  teaserImage?: InputMaybe<IGenOrder>;
   title?: InputMaybe<IGenOrder>;
   updatedAt?: InputMaybe<IGenOrder>;
-};
-
-export type IGenBlogArticle_TeaserImage_Where = {
-  findOne?: InputMaybe<IGenBlogArticle_TeaserImage_WhereConnection>;
-};
-
-export type IGenBlogArticle_TeaserImage_WhereConnection = {
-  Asset?: InputMaybe<IGenAsset_Nested_Where>;
 };
 
 export type IGenBlogArticle_Where = {
@@ -259,11 +258,10 @@ export type IGenBlogArticle_Where = {
   OR?: InputMaybe<Array<InputMaybe<IGenBlogArticle_Where>>>;
   author?: InputMaybe<IGenBlogArticle_Author_Where>;
   category?: InputMaybe<IGenBlogArticle_Category_Where>;
+  description?: InputMaybe<IGenCaisyField_String_Where>;
   featured?: InputMaybe<Scalars['Boolean']['input']>;
+  previewImage?: InputMaybe<IGenBlogArticle_PreviewImage_Where>;
   tags?: InputMaybe<IGenCaisyField_String_Where>;
-  teaserDesciption?: InputMaybe<IGenCaisyField_String_Where>;
-  teaserHeadline?: InputMaybe<IGenCaisyField_String_Where>;
-  teaserImage?: InputMaybe<IGenBlogArticle_TeaserImage_Where>;
   text?: InputMaybe<IGenCaisyField_Richtext_Where>;
   title?: InputMaybe<IGenCaisyField_String_Where>;
 };
@@ -318,6 +316,21 @@ export type IGenCaisyField_String_Where = {
   contains?: InputMaybe<Scalars['String']['input']>;
   eq?: InputMaybe<Scalars['String']['input']>;
   neq?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type IGenCaisy_Field_DateTime_Where = {
+  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type IGenCaisy_Field_Document_NotFound = {
+  __typename?: 'Caisy_Field_Document_NotFound';
+  id?: Maybe<Scalars['ID']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type IGenCaisy_Field_Tag = {
@@ -384,17 +397,160 @@ export type IGenPageInfo = {
   startCursor?: Maybe<Scalars['String']['output']>;
 };
 
+export type IGenProject = {
+  __typename?: 'Project';
+  _meta?: Maybe<IGenCaisyDocument_Meta>;
+  description?: Maybe<IGenProject_Description>;
+  id?: Maybe<Scalars['ID']['output']>;
+  image?: Maybe<IGenAsset>;
+  projectSourceUrl?: Maybe<Scalars['String']['output']>;
+  projectStartDate?: Maybe<Scalars['Date']['output']>;
+  projectTags?: Maybe<Array<Maybe<IGenProject_ProjectTags>>>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type IGenProjectDescriptionArgs = {
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type IGenProjectImageArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type IGenProjectProjectTagsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type IGenProjectTag = {
+  __typename?: 'ProjectTag';
+  _meta?: Maybe<IGenCaisyDocument_Meta>;
+  color?: Maybe<Scalars['String']['output']>;
+  cssColor?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type IGenProjectTag_Connection = {
+  __typename?: 'ProjectTag_Connection';
+  edges?: Maybe<Array<Maybe<IGenProjectTag_ConnectionEdge>>>;
+  pageInfo?: Maybe<IGenPageInfo>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type IGenProjectTag_ConnectionEdge = {
+  __typename?: 'ProjectTag_ConnectionEdge';
+  cursor?: Maybe<Scalars['String']['output']>;
+  node?: Maybe<IGenProjectTag>;
+};
+
+export type IGenProjectTag_Nested_Where = {
+  AND?: InputMaybe<Array<InputMaybe<IGenProjectTag_Nested_Where>>>;
+  OR?: InputMaybe<Array<InputMaybe<IGenProjectTag_Nested_Where>>>;
+  color?: InputMaybe<IGenCaisyField_Color_Where>;
+  cssColor?: InputMaybe<IGenCaisyField_String_Where>;
+  title?: InputMaybe<IGenCaisyField_String_Where>;
+};
+
+export type IGenProjectTag_Sort = {
+  color?: InputMaybe<IGenOrder>;
+  createdAt?: InputMaybe<IGenOrder>;
+  cssColor?: InputMaybe<IGenOrder>;
+  id?: InputMaybe<IGenOrder>;
+  publishedAt?: InputMaybe<IGenOrder>;
+  title?: InputMaybe<IGenOrder>;
+  updatedAt?: InputMaybe<IGenOrder>;
+};
+
+export type IGenProjectTag_Where = {
+  AND?: InputMaybe<Array<InputMaybe<IGenProjectTag_Where>>>;
+  OR?: InputMaybe<Array<InputMaybe<IGenProjectTag_Where>>>;
+  color?: InputMaybe<IGenCaisyField_Color_Where>;
+  cssColor?: InputMaybe<IGenCaisyField_String_Where>;
+  title?: InputMaybe<IGenCaisyField_String_Where>;
+};
+
+export type IGenProject_Connection = {
+  __typename?: 'Project_Connection';
+  edges?: Maybe<Array<Maybe<IGenProject_ConnectionEdge>>>;
+  pageInfo?: Maybe<IGenPageInfo>;
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type IGenProject_ConnectionEdge = {
+  __typename?: 'Project_ConnectionEdge';
+  cursor?: Maybe<Scalars['String']['output']>;
+  node?: Maybe<IGenProject>;
+};
+
+export type IGenProject_ProjectTags_Where = {
+  findOne?: InputMaybe<IGenProject_ProjectTags_WhereConnection>;
+};
+
+export type IGenProject_ProjectTags_WhereConnection = {
+  ProjectTag?: InputMaybe<IGenProjectTag_Nested_Where>;
+};
+
+export type IGenProject_Sort = {
+  createdAt?: InputMaybe<IGenOrder>;
+  id?: InputMaybe<IGenOrder>;
+  image?: InputMaybe<IGenOrder>;
+  projectSourceUrl?: InputMaybe<IGenOrder>;
+  projectStartDate?: InputMaybe<IGenOrder>;
+  projectTags?: InputMaybe<IGenOrder>;
+  publishedAt?: InputMaybe<IGenOrder>;
+  title?: InputMaybe<IGenOrder>;
+  updatedAt?: InputMaybe<IGenOrder>;
+};
+
+export type IGenProject_Where = {
+  AND?: InputMaybe<Array<InputMaybe<IGenProject_Where>>>;
+  OR?: InputMaybe<Array<InputMaybe<IGenProject_Where>>>;
+  description?: InputMaybe<IGenCaisyField_Richtext_Where>;
+  projectSourceUrl?: InputMaybe<IGenCaisyField_String_Where>;
+  projectStartDate?: InputMaybe<IGenCaisy_Field_DateTime_Where>;
+  projectTags?: InputMaybe<IGenProject_ProjectTags_Where>;
+  title?: InputMaybe<IGenCaisyField_String_Where>;
+};
+
+export type IGenProject_Description = {
+  __typename?: 'Project_description';
+  connections?: Maybe<Array<Maybe<IGenProject_Description_Connections>>>;
+  json?: Maybe<Scalars['JSON']['output']>;
+};
+
+
+export type IGenProject_DescriptionConnectionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type IGenProject_Description_Connections = IGenCaisy_Field_Document_NotFound;
+
+export type IGenProject_ProjectTags = IGenProjectTag;
+
 export type IGenQuery = {
   __typename?: 'Query';
   Asset?: Maybe<IGenAsset>;
   Author?: Maybe<IGenAuthor>;
   BlogArticle?: Maybe<IGenBlogArticle>;
   Category?: Maybe<IGenCategory>;
+  Project?: Maybe<IGenProject>;
+  ProjectTag?: Maybe<IGenProjectTag>;
   Tag?: Maybe<IGenCaisy_Field_Tag>;
   allAsset?: Maybe<IGenAsset_Connection>;
   allAuthor?: Maybe<IGenAuthor_Connection>;
   allBlogArticle?: Maybe<IGenBlogArticle_Connection>;
   allCategory?: Maybe<IGenCategory_Connection>;
+  allProject?: Maybe<IGenProject_Connection>;
+  allProjectTag?: Maybe<IGenProjectTag_Connection>;
   allTags?: Maybe<IGenTag_Connection>;
 };
 
@@ -418,6 +574,18 @@ export type IGenQueryBlogArticleArgs = {
 
 
 export type IGenQueryCategoryArgs = {
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type IGenQueryProjectArgs = {
+  id: Scalars['ID']['input'];
+  locale?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type IGenQueryProjectTagArgs = {
   id: Scalars['ID']['input'];
   locale?: InputMaybe<Scalars['String']['input']>;
 };
@@ -472,6 +640,28 @@ export type IGenQueryAllCategoryArgs = {
 };
 
 
+export type IGenQueryAllProjectArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<Array<InputMaybe<IGenProject_Sort>>>;
+  where?: InputMaybe<Array<InputMaybe<IGenProject_Where>>>;
+};
+
+
+export type IGenQueryAllProjectTagArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<Array<InputMaybe<IGenProjectTag_Sort>>>;
+  where?: InputMaybe<Array<InputMaybe<IGenProjectTag_Where>>>;
+};
+
+
 export type IGenQueryAllTagsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -492,9 +682,11 @@ export type IGenTag_ConnectionEdge = {
   node?: Maybe<IGenCaisy_Field_Tag>;
 };
 
-export type IGenBlogArticleMetaFragment = { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null };
+export type IGenBlogArticleMetaFragment = { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null };
 
 export type IGenCategoryMetaFragment = { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null };
+
+export type IGenProjectMetaFragment = { __typename?: 'Project', projectStartDate?: Date | null, projectSourceUrl?: string | null, title?: string | null, _meta?: { __typename?: 'CaisyDocument_Meta', locale?: string | null } | null, description?: { __typename?: 'Project_description', json?: any | null } | null, image?: { __typename?: 'Asset', blurHash?: string | null, description?: string | null, src?: string | null, title?: string | null, width?: number | null, height?: number | null } | null, projectTags?: Array<{ __typename?: 'ProjectTag', id?: string | null, cssColor?: string | null, color?: string | null, title?: string | null } | null> | null };
 
 export type IGenTagMetaFragment = { __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null };
 
@@ -504,7 +696,7 @@ export type IGenAllBlogArticleByLocaleQueryVariables = Exact<{
 }>;
 
 
-export type IGenAllBlogArticleByLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', totalCount?: number | null, edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', cursor?: string | null, node?: { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
+export type IGenAllBlogArticleByLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', totalCount?: number | null, edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', cursor?: string | null, node?: { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
 
 export type IGenAllBlogArticlesByCategoryAndLocaleQueryVariables = Exact<{
   locale: Scalars['String']['input'];
@@ -513,7 +705,7 @@ export type IGenAllBlogArticlesByCategoryAndLocaleQueryVariables = Exact<{
 }>;
 
 
-export type IGenAllBlogArticlesByCategoryAndLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
+export type IGenAllBlogArticlesByCategoryAndLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
 
 export type IGenAllBlogArticlesByTagAndLocaleQueryVariables = Exact<{
   locale: Scalars['String']['input'];
@@ -522,7 +714,7 @@ export type IGenAllBlogArticlesByTagAndLocaleQueryVariables = Exact<{
 }>;
 
 
-export type IGenAllBlogArticlesByTagAndLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
+export type IGenAllBlogArticlesByTagAndLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
 
 export type IGenAllCategoriesByLocaleQueryVariables = Exact<{
   locale: Scalars['String']['input'];
@@ -531,6 +723,14 @@ export type IGenAllCategoriesByLocaleQueryVariables = Exact<{
 
 
 export type IGenAllCategoriesByLocaleQuery = { __typename?: 'Query', allCategory?: { __typename?: 'Category_Connection', edges?: Array<{ __typename?: 'Category_ConnectionEdge', cursor?: string | null, node?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', hasNextPage?: boolean | null, endCursor?: string | null } | null } | null };
+
+export type IGenAllProjectsByLocaleQueryVariables = Exact<{
+  locale: Scalars['String']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type IGenAllProjectsByLocaleQuery = { __typename?: 'Query', allProject?: { __typename?: 'Project_Connection', edges?: Array<{ __typename?: 'Project_ConnectionEdge', node?: { __typename?: 'Project', projectStartDate?: Date | null, projectSourceUrl?: string | null, title?: string | null, _meta?: { __typename?: 'CaisyDocument_Meta', locale?: string | null } | null, description?: { __typename?: 'Project_description', json?: any | null } | null, image?: { __typename?: 'Asset', blurHash?: string | null, description?: string | null, src?: string | null, title?: string | null, width?: number | null, height?: number | null } | null, projectTags?: Array<{ __typename?: 'ProjectTag', id?: string | null, cssColor?: string | null, color?: string | null, title?: string | null } | null> | null } | null } | null> | null, pageInfo?: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage?: boolean | null } | null } | null };
 
 export type IGenAllTagsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']['input']>;
@@ -545,7 +745,7 @@ export type IGenBlogArticleByLocaleQueryVariables = Exact<{
 }>;
 
 
-export type IGenBlogArticleByLocaleQuery = { __typename?: 'Query', BlogArticle?: { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null };
+export type IGenBlogArticleByLocaleQuery = { __typename?: 'Query', BlogArticle?: { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null };
 
 export type IGenFeaturedBlogArticlesByLocaleQueryVariables = Exact<{
   locale: Scalars['String']['input'];
@@ -554,7 +754,17 @@ export type IGenFeaturedBlogArticlesByLocaleQueryVariables = Exact<{
 }>;
 
 
-export type IGenFeaturedBlogArticlesByLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null } | null };
+export type IGenFeaturedBlogArticlesByLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null } | null };
+
+export type IGenGetArticlesCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IGenGetArticlesCountQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', totalCount?: number | null } | null };
+
+export type IGenGetProjectsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type IGenGetProjectsCountQuery = { __typename?: 'Query', allProject?: { __typename?: 'Project_Connection', totalCount?: number | null } | null };
 
 export type IGenRecentBlogArticlesByLocaleQueryVariables = Exact<{
   locale: Scalars['String']['input'];
@@ -562,7 +772,15 @@ export type IGenRecentBlogArticlesByLocaleQueryVariables = Exact<{
 }>;
 
 
-export type IGenRecentBlogArticlesByLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, teaserDesciption?: string | null, teaserHeadline?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, teaserImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null } | null };
+export type IGenRecentBlogArticlesByLocaleQuery = { __typename?: 'Query', allBlogArticle?: { __typename?: 'BlogArticle_Connection', edges?: Array<{ __typename?: 'BlogArticle_ConnectionEdge', node?: { __typename?: 'BlogArticle', id?: string | null, description?: string | null, title?: string | null, featured?: boolean | null, _meta?: { __typename?: 'CaisyDocument_Meta', createdAt?: Date | null, publishedAt?: Date | null, updatedAt?: Date | null, locale?: string | null } | null, author?: { __typename?: 'Author', bio?: string | null, id?: string | null, name?: string | null } | null, category?: { __typename?: 'Category', id?: string | null, name?: string | null, description?: string | null } | null, previewImage?: { __typename?: 'Asset', height?: number | null, width?: number | null, title?: string | null, src?: string | null, blurHash?: string | null, description?: string | null } | null, text?: { __typename?: 'BlogArticle_text', json?: any | null } | null, tags?: Array<{ __typename?: 'Caisy_Field_Tag', color?: string | null, id?: string | null, name?: string | null } | null> | null } | null } | null> | null } | null };
+
+export type IGenRecentProjectsByLocaleQueryVariables = Exact<{
+  locale: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type IGenRecentProjectsByLocaleQuery = { __typename?: 'Query', allProject?: { __typename?: 'Project_Connection', edges?: Array<{ __typename?: 'Project_ConnectionEdge', node?: { __typename?: 'Project', projectStartDate?: Date | null, projectSourceUrl?: string | null, title?: string | null, _meta?: { __typename?: 'CaisyDocument_Meta', locale?: string | null } | null, description?: { __typename?: 'Project_description', json?: any | null } | null, image?: { __typename?: 'Asset', blurHash?: string | null, description?: string | null, src?: string | null, title?: string | null, width?: number | null, height?: number | null } | null, projectTags?: Array<{ __typename?: 'ProjectTag', id?: string | null, cssColor?: string | null, color?: string | null, title?: string | null } | null> | null } | null } | null> | null } | null };
 
 export const CategoryMetaFragmentDoc = gql`
     fragment categoryMeta on Category {
@@ -595,9 +813,8 @@ export const BlogArticleMetaFragmentDoc = gql`
     ...categoryMeta
   }
   id
-  teaserDesciption
-  teaserHeadline
-  teaserImage {
+  description
+  previewImage {
     height
     width
     title
@@ -613,6 +830,35 @@ export const BlogArticleMetaFragmentDoc = gql`
     ...tagMeta
   }
   featured
+}
+    `;
+export const ProjectMetaFragmentDoc = gql`
+    fragment projectMeta on Project {
+  _meta {
+    locale
+  }
+  description {
+    json
+  }
+  image {
+    blurHash
+    description
+    src
+    title
+    width
+    height
+  }
+  projectStartDate
+  projectSourceUrl
+  title
+  projectTags {
+    ... on ProjectTag {
+      id
+      cssColor
+      color
+      title
+    }
+  }
 }
     `;
 export const AllBlogArticleByLocaleDocument = gql`
@@ -698,6 +944,21 @@ export const AllCategoriesByLocaleDocument = gql`
   }
 }
     ${CategoryMetaFragmentDoc}`;
+export const AllProjectsByLocaleDocument = gql`
+    query allProjectsByLocale($locale: String!, $after: String) {
+  allProject(locale: $locale, after: $after, sort: {projectStartDate: DESC}) {
+    edges {
+      node {
+        ...projectMeta
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+    ${ProjectMetaFragmentDoc}`;
 export const AllTagsDocument = gql`
     query allTags($after: String) {
   allTags(after: $after) {
@@ -740,6 +1001,20 @@ export const FeaturedBlogArticlesByLocaleDocument = gql`
     ${BlogArticleMetaFragmentDoc}
 ${CategoryMetaFragmentDoc}
 ${TagMetaFragmentDoc}`;
+export const GetArticlesCountDocument = gql`
+    query getArticlesCount {
+  allBlogArticle {
+    totalCount
+  }
+}
+    `;
+export const GetProjectsCountDocument = gql`
+    query getProjectsCount {
+  allProject {
+    totalCount
+  }
+}
+    `;
 export const RecentBlogArticlesByLocaleDocument = gql`
     query recentBlogArticlesByLocale($locale: String!, $first: Int!) {
   allBlogArticle(
@@ -757,6 +1032,17 @@ export const RecentBlogArticlesByLocaleDocument = gql`
     ${BlogArticleMetaFragmentDoc}
 ${CategoryMetaFragmentDoc}
 ${TagMetaFragmentDoc}`;
+export const RecentProjectsByLocaleDocument = gql`
+    query recentProjectsByLocale($locale: String!, $first: Int!) {
+  allProject(locale: $locale, first: $first, sort: {projectStartDate: DESC}) {
+    edges {
+      node {
+        ...projectMeta
+      }
+    }
+  }
+}
+    ${ProjectMetaFragmentDoc}`;
 export type Requester<C = {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
@@ -772,6 +1058,9 @@ export function getSdk<C>(requester: Requester<C>) {
     allCategoriesByLocale(variables: IGenAllCategoriesByLocaleQueryVariables, options?: C): Promise<IGenAllCategoriesByLocaleQuery> {
       return requester<IGenAllCategoriesByLocaleQuery, IGenAllCategoriesByLocaleQueryVariables>(AllCategoriesByLocaleDocument, variables, options) as Promise<IGenAllCategoriesByLocaleQuery>;
     },
+    allProjectsByLocale(variables: IGenAllProjectsByLocaleQueryVariables, options?: C): Promise<IGenAllProjectsByLocaleQuery> {
+      return requester<IGenAllProjectsByLocaleQuery, IGenAllProjectsByLocaleQueryVariables>(AllProjectsByLocaleDocument, variables, options) as Promise<IGenAllProjectsByLocaleQuery>;
+    },
     allTags(variables?: IGenAllTagsQueryVariables, options?: C): Promise<IGenAllTagsQuery> {
       return requester<IGenAllTagsQuery, IGenAllTagsQueryVariables>(AllTagsDocument, variables, options) as Promise<IGenAllTagsQuery>;
     },
@@ -781,8 +1070,17 @@ export function getSdk<C>(requester: Requester<C>) {
     featuredBlogArticlesByLocale(variables: IGenFeaturedBlogArticlesByLocaleQueryVariables, options?: C): Promise<IGenFeaturedBlogArticlesByLocaleQuery> {
       return requester<IGenFeaturedBlogArticlesByLocaleQuery, IGenFeaturedBlogArticlesByLocaleQueryVariables>(FeaturedBlogArticlesByLocaleDocument, variables, options) as Promise<IGenFeaturedBlogArticlesByLocaleQuery>;
     },
+    getArticlesCount(variables?: IGenGetArticlesCountQueryVariables, options?: C): Promise<IGenGetArticlesCountQuery> {
+      return requester<IGenGetArticlesCountQuery, IGenGetArticlesCountQueryVariables>(GetArticlesCountDocument, variables, options) as Promise<IGenGetArticlesCountQuery>;
+    },
+    getProjectsCount(variables?: IGenGetProjectsCountQueryVariables, options?: C): Promise<IGenGetProjectsCountQuery> {
+      return requester<IGenGetProjectsCountQuery, IGenGetProjectsCountQueryVariables>(GetProjectsCountDocument, variables, options) as Promise<IGenGetProjectsCountQuery>;
+    },
     recentBlogArticlesByLocale(variables: IGenRecentBlogArticlesByLocaleQueryVariables, options?: C): Promise<IGenRecentBlogArticlesByLocaleQuery> {
       return requester<IGenRecentBlogArticlesByLocaleQuery, IGenRecentBlogArticlesByLocaleQueryVariables>(RecentBlogArticlesByLocaleDocument, variables, options) as Promise<IGenRecentBlogArticlesByLocaleQuery>;
+    },
+    recentProjectsByLocale(variables: IGenRecentProjectsByLocaleQueryVariables, options?: C): Promise<IGenRecentProjectsByLocaleQuery> {
+      return requester<IGenRecentProjectsByLocaleQuery, IGenRecentProjectsByLocaleQueryVariables>(RecentProjectsByLocaleDocument, variables, options) as Promise<IGenRecentProjectsByLocaleQuery>;
     }
   };
 }

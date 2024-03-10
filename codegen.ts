@@ -34,6 +34,7 @@ export const config: CodegenConfig = {
                 strictScalars: true,
                 scalars: {
                     DateTime: "Date",
+                    Date: "Date",
                     JSON: "any"
                 },
             },

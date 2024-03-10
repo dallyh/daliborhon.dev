@@ -7,7 +7,7 @@ import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 
 interface Props {
-    posts: IGenBlogArticleMetaFragment[];
+    posts: IGenBlogArticleMetaFragment[] | Page<IGenBlogArticleMetaFragment>;
     url?: string;
     urlDescription?: string;
 }
@@ -33,14 +33,12 @@ function isPage<T>(value: any): value is Page<T> {
                 ))
         }
         {
-            /*
             isPage(posts) &&
                 posts.data.map((post) => (
                     <li>
                         <BlogPostPreview post={post} />
                     </li>
                 ))
-            */
         }
     </ul>
     {url && urlDescription && <AllEntriesUrl {url} {urlDescription} />}

@@ -1,4 +1,4 @@
-import { gql } from "graphql-request";
+import { gql } from "@apollo/client";
 
 const f_blogArticleMeta = gql`
     fragment blogArticleMeta on BlogArticle {
@@ -17,9 +17,8 @@ const f_blogArticleMeta = gql`
             ...categoryMeta
         }
         id
-        teaserDesciption
-        teaserHeadline
-        teaserImage {
+        description
+        previewImage {
             height
             width
             title

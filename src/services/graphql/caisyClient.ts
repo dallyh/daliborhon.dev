@@ -1,63 +1,33 @@
-import { GraphQLClient } from "graphql-request";
-import { print } from "graphql";
 import { getSdk as getSdkWithClient, type Requester } from "./__generated/sdk";
-import { GraphQLDateTime } from "graphql-scalars";
+import { ApolloClient, InMemoryCache } from "@apollo/client/core";
+import { ApolloLink, HttpLink } from "@apollo/client/core/index";
+import { withScalars } from "apollo-link-scalars";
+import introspectionResult from "@services/graphql/__generated/graphql.schema.json";
+import { buildClientSchema, type IntrospectionQuery } from "graphql";
 
-const RFC_3339_REGEX = /^(\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60))(\.\d{1,})?(([Z])|([+|-]([01][0-9]|2[0-3]):[0-5][0-9]))$/;
-const isDateTimeString = (value: string) => RFC_3339_REGEX.test(value);
-const parse = (value: unknown): unknown => {
-    if (value === null) {
-        return value;
-    }
-    if (typeof value === "string") {
-        if (isDateTimeString(value)) {
-            return GraphQLDateTime.parseValue(value);
-        }
-    }
-    if (typeof value === "object") {
-        if (Array.isArray(value)) {
-            return value.map(parse);
-        }
-        return Object.fromEntries(
-            Object.entries(value).map(([k, v]) => {
-                return [k, parse(v)];
-            }),
-        );
-    }
-
-    return value;
-};
-
-const stringify = (value: unknown): unknown => {
-    if (value === null) {
-        return value;
-    }
-    if (value instanceof Date) {
-        return GraphQLDateTime.serialize(value);
-    }
-    if (typeof value === "object") {
-        if (Array.isArray(value)) {
-            return value.map(stringify);
-        }
-        return Object.fromEntries(
-            Object.entries(value).map(([k, v]) => {
-                return [k, stringify(v)];
-            }),
-        );
-    }
-
-    return value;
-};
-
-const gqlSerializer = {
-    parse: <T = any>(jsonStr: string): T => {
-        const jsonValue = JSON.parse(jsonStr);
-        return parse(jsonValue) as T;
+const schema = buildClientSchema(introspectionResult as unknown as IntrospectionQuery);
+const typesMap = {
+    Date: {
+        serialize: (parsed: unknown): string | null => (parsed instanceof Date ? parsed.toString() : null),
+        parseValue: (raw: unknown): Date | null => {
+            if (!raw) return null;
+            try {
+                return new Date(raw as string);
+            } catch {
+                throw new Error("invalid value to parse");
+            }
+        },
     },
-
-    stringify: <T = unknown>(obj: T): string => {
-        const objWithoutDate = stringify(obj);
-        return JSON.stringify(objWithoutDate);
+    DateTime: {
+        serialize: (parsed: unknown): string | null => (parsed instanceof Date ? parsed.toString() : null),
+        parseValue: (raw: unknown): Date | null => {
+            if (!raw) return null;
+            try {
+                return new Date(raw as string);
+            } catch {
+                throw new Error("invalid value to parse");
+            }
+        },
     },
 };
 
@@ -73,19 +43,28 @@ const requester: Requester<any> = async (doc: any, vars: any) => {
         throw new Error("CAISY_API_KEY is not defined - please add it to the env file");
     }
 
-    const client = new GraphQLClient(`https://cloud.caisy.io/api/e/v4/${CAISY_PROJECT_ID}/graphql`, {
-        headers: {
-            "x-caisy-apikey": `${CAISY_API_KEY}`,
-        },
-        jsonSerializer: gqlSerializer,
+    const uri = `https://cloud.caisy.io/api/e/v4/${CAISY_PROJECT_ID}/graphql`;
+    const link = ApolloLink.from([
+        withScalars({ schema, typesMap }),
+        new HttpLink({
+            uri: uri,
+            headers: {
+                "x-caisy-apikey": `${CAISY_API_KEY}`,
+            },
+        }),
+    ]);
+
+    const client = new ApolloClient({
+        cache: new InMemoryCache(),
+        link: link,
     });
 
     try {
-        const res = await client.rawRequest(print(doc), vars);
+        const res = await client.query({ query: doc, variables: vars });
         return res?.data as any;
     } catch (err: any) {
         if (NODE_ENV == "development") {
-            console.error("Error in GraphQL request:", "\n" + print(doc) + "\n", vars, "\n" + err.message);
+            console.error("Error in GraphQL request:", "\n" + doc + "\n", vars, "\n" + err.message);
         } else {
             console.error(err);
         }

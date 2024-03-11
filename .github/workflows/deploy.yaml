@@ -20,6 +20,8 @@ jobs:
         runs-on: ubuntu-latest
         env:
             UNDER_CONSTRUCTION: ${{ vars.UNDER_CONSTRUCTION }}
+            CAISY_API_KEY: ${{ vars.CAISY_API_KEY }}
+            CAISY_PROJECT_ID: ${{ vars.CAISY_PROJECT_ID }}
         steps:
             - name: Print out under construction variables
               run: |

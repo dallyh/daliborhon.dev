@@ -35,6 +35,8 @@ jobs:
               run: |
                   echo "SITE_URL=https://dallyh.github.io/" >> .env
                   echo "SITE_BASE=/deploy-previews/${{ github.event.repository.name }}/${{ github.event.pull_request.number }}/" >> .env
+                  echo "CAISY_API_KEY=${{ vars.CAISY_API_KEY }}" >> .env 
+                  echo "CAISY_PROJECT_ID=${{ vars.CAISY_PROJECT_ID }}" >> .env 
 
             - name: Install Node dependencies
               run: npm install

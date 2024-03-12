@@ -62,6 +62,7 @@ export default defineConfig({
             include: {
                 bi: ["*"],
                 devicon: ["*"],
+                tabler: ["error-404"]
             },
         }),
     ],

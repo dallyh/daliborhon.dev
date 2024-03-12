@@ -13,8 +13,7 @@ const codeBlockProps = {
     theme: BLOG.codeBlockTheme as BundledTheme,
     code: node.content[0].text as string,
     lang: node.attrs.language as BuiltinLanguage,
-    wrap: true,
 };
 ---
 
-<Code {...codeBlockProps}  />
+<Code {...codeBlockProps} />

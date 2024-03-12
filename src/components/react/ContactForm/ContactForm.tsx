@@ -3,7 +3,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { interpolate } from "@i18n/i18n";
 import type { CommonRes, ContactRes } from "@i18n/locales/types";
 import { useEffect, useRef, useState } from "react";
-import { useForm, useWatch, type FieldValues } from "react-hook-form";
+import { useForm, useWatch, type FieldValues, type Control } from "react-hook-form";
 import styles from "./ContactForm.module.css";
 
 interface ContactFormProps {
@@ -12,7 +12,7 @@ interface ContactFormProps {
 }
 
 const ACCESS_KEY = "7d81d4b3-a54e-4341-9544-2553a5aa4daf";
-const HCAPTCHA_KEY = import.meta.env.DEV ? "10000000-ffff-ffff-ffff-000000000001" : "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
+const HCAPTCHA_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 const API_URL = "https://api.web3forms.com/submit";
 
 export default function ContactForm({ resources, commonResources }: ContactFormProps) {
@@ -23,6 +23,7 @@ export default function ContactForm({ resources, commonResources }: ContactFormP
         reset,
         control,
         formState: { errors, isSubmitSuccessful, isSubmitting },
+        watch,
     } = useForm({
         mode: "onTouched",
     });
@@ -33,13 +34,14 @@ export default function ContactForm({ resources, commonResources }: ContactFormP
 
     const userName = useWatch({
         control,
-        name: "full_name",
+        name: "name",
         defaultValue: "Someone",
+        exact: true,
     });
 
     useEffect(() => {
-        setValue("subject", `${userName} sent a message from Website`);
-    }, []);
+        setValue("subject", `${userName} sent a message from daliborhon.dev`);
+    }, [userName]);
 
     const onSubmit = async (formData: FieldValues, e: any) => {
         const token = await captchaRef.current

@@ -4,6 +4,8 @@ import i18n, { loadNamespaces } from "@i18n/i18n";
 import type { CommonRes, ContactRes } from "@i18n/locales/types";
 import { getLocale } from "@i18n/utils";
 
+export const prerender = false;
+
 // i18next
 const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["contact", "common"]);
@@ -11,4 +13,4 @@ const res: ContactRes = i18n?.getResourceBundle(locale, "contact");
 const common: CommonRes = i18n?.getResourceBundle(locale, "common");
 ---
 
-<ContactForm resources={res} commonResources={common} client:load />
+<ContactForm resources={res} commonResources={common} client:only  />

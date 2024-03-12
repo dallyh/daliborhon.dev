@@ -6,10 +6,12 @@ import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
 import icon from "astro-icon";
 import { imageService } from "@unpic/astro/service";
+import cloudflare from "@astrojs/cloudflare";
 
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 const URL = import.meta.env.DEV ? `http://localhost:${PORT}` : SITE_URL ?? "https://www.daliborhon.dev/";
+
 console.log(`Using SITE_URL: '${URL}'`);
 console.log(`Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`);
 
@@ -17,17 +19,25 @@ console.log(`Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`);
 export default defineConfig({
     site: URL,
     base: SITE_BASE,
-    trailingSlash: "always",
+    trailingSlash: "never",
     build: {
-        format: "directory",
+        format: "file",
     },
     image: {
         service: imageService({
             fallbackService: "sharp",
             placeholder: "blurhash",
         }),
+        domains: ["assets.caisy.io"],
+        remotePatterns: [
+            {
+                protocol: "https",
+            },
+        ],
     },
-    prefetch: true,
+    prefetch: {
+        defaultStrategy: "hover",
+    },
     i18n: {
         defaultLocale: i18n.defaultLocale,
         locales: i18n.locales,
@@ -40,7 +50,6 @@ export default defineConfig({
         sitemap({
             i18n: {
                 defaultLocale: i18n.defaultLocale,
-                // All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
                 locales: {
                     ...i18n.localeKeys,
                 },
@@ -64,4 +73,9 @@ export default defineConfig({
             exclude: ["@resvg/resvg-js"],
         },
     },
+    output: "hybrid",
+    adapter: cloudflare({
+        mode: "directory",
+        imageService: "compile",
+    }),
 });

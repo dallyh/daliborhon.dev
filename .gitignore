@@ -23,3 +23,5 @@ pnpm-debug.log*
 astro_tmp_pages_*
 
 .wrangler
+functions/\[\[path\]\].js
+functions/\[\[path\]\].js.map

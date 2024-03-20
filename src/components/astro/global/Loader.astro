@@ -1,0 +1,69 @@
+---
+import { loadNamespaces, t } from "@i18n/i18n";
+import { getLocale } from "@i18n/utils";
+
+// i18next
+const locale = getLocale(Astro.url);
+const namespaces = ["common"];
+await loadNamespaces(locale, namespaces);
+---
+
+<div id="pageLoad">
+    <div class="dot-flashing" aria-label={t("common.loading")} title={t("common.loading")}></div>
+</div>
+
+<style>
+    #pageLoad {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: var(--bg-color);
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Thanks! https://codepen.io/nzbin/pen/GGrXbp */
+    .dot-flashing {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #9880ff;
+        color: #9880ff;
+        animation: dot-flashing 1s infinite linear alternate;
+        animation-delay: 0.5s;
+    }
+
+    .dot-flashing::before,
+    .dot-flashing::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 0;
+    }
+
+    .dot-flashing::before {
+        left: -15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #9880ff;
+        color: #9880ff;
+        animation: dot-flashing 1s infinite alternate;
+        animation-delay: 0s;
+    }
+
+    .dot-flashing::after {
+        left: 15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #9880ff;
+        color: #9880ff;
+        animation: dot-flashing 1s infinite alternate;
+        animation-delay: 1s;
+    }
+</style>

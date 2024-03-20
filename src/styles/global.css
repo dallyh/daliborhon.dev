@@ -1,3 +1,5 @@
+@tailwind base;
+
 html {
     font-size: 1rem;
     line-height: 1;
@@ -62,6 +64,11 @@ p {
 
 strong {
     font-weight: 600;
+}
+
+i {
+    font-size: 1rem;
+    font-style: normal;
 }
 
 small {
@@ -212,46 +219,4 @@ a {
         border-bottom: 0;
         border-left: 0.3em solid transparent;
     }
-}
-
-/* Thanks! https://codepen.io/nzbin/pen/GGrXbp */
-.dot-flashing {
-    position: relative;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #9880ff;
-    color: #9880ff;
-    animation: dot-flashing 1s infinite linear alternate;
-    animation-delay: 0.5s;
-}
-
-.dot-flashing::before,
-.dot-flashing::after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    top: 0;
-}
-
-.dot-flashing::before {
-    left: -15px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #9880ff;
-    color: #9880ff;
-    animation: dot-flashing 1s infinite alternate;
-    animation-delay: 0s;
-}
-
-.dot-flashing::after {
-    left: 15px;
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #9880ff;
-    color: #9880ff;
-    animation: dot-flashing 1s infinite alternate;
-    animation-delay: 1s;
 }

@@ -1,12 +1,13 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import * as i18n from "./src/config/i18n";
+import { locales, localeKeys, defaultLocale } from "./src/i18n/i18n";
 import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
 import icon from "astro-icon";
 import { imageService } from "@unpic/astro/service";
 import cloudflare from "@astrojs/cloudflare";
+import tailwind from "@astrojs/tailwind";
 
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -39,8 +40,8 @@ export default defineConfig({
         defaultStrategy: "hover",
     },
     i18n: {
-        defaultLocale: i18n.defaultLocale,
-        locales: i18n.locales,
+        defaultLocale: defaultLocale,
+        locales: locales,
         routing: {
             prefixDefaultLocale: false,
         },
@@ -49,9 +50,9 @@ export default defineConfig({
         react(),
         sitemap({
             i18n: {
-                defaultLocale: i18n.defaultLocale,
+                defaultLocale: defaultLocale,
                 locales: {
-                    ...i18n.localeKeys,
+                    ...localeKeys,
                 },
             },
             filter: (page) => page !== `'${URL}admin'`,
@@ -62,9 +63,11 @@ export default defineConfig({
             include: {
                 bi: ["*"],
                 devicon: ["*"],
-                tabler: ["error-404"]
+                tabler: ["error-404"],
+                heroicons: ["chevron-down"],
             },
         }),
+        tailwind(),
     ],
     vite: {
         server: {

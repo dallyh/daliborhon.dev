@@ -10,7 +10,6 @@ import { getOgImageUrl } from "@utils";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
-import "../styles/markdown.css";
 import { loadNamespaces, t } from "@i18n/i18n";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { Image } from "@unpic/astro";
@@ -31,8 +30,8 @@ const layoutProps = {
     title: `${t("blog.post")}: ${post?.title}`,
     author: post?.author?.name!,
     description: post?.description ?? "",
-    pubDateTime: post?._meta?.publishedAt!,
-    modDatetime: post?._meta?.updatedAt!,
+    pubDateTime: post?._meta?.firstPublishedAt!,
+    modDatetime: post?._meta?.publishedAt!,
     ogImage: ogUrl,
 };
 ---
@@ -52,7 +51,7 @@ const layoutProps = {
                 <div class="post-meta" data-pagefind-body>
                     <h1 class="gradient-text">{post?.title}</h1>
                     <div class="meta-author">
-                        <p>By {post.author?.name}. <FormattedDate pubDateTime={post?._meta?.publishedAt!} modDatetime={post?._meta?.updatedAt!} locale={locale} /></p>
+                        <p>By {post.author?.name}. <FormattedDate pubDateTime={post?._meta?.firstPublishedAt!} modDatetime={post?._meta?.publishedAt!} locale={locale} /></p>
 
                         {
                             post.category && (
@@ -70,21 +69,9 @@ const layoutProps = {
                     <Image src={post?.previewImage?.src!} title={post.title} alt={post.title} loading="eager" transition:animate="slide" />
                 </div>
             </div>
-        </div>
-        <article class="post-md">
             <hr />
-            {
-                /*
-                headings.length !== 0 && (
-                    <>
-                        <h2 id="toc">{t("blog.toc")}</h2>
-                        <details id="tocDetails">
-                            <summary>{t("blog.open_toc")}</summary>
-                        </details>
-                    </>
-                )
-                */
-            }
+        </div>
+        <article class="prose dark:prose-invert max-w-none">
             <CaisyRichTextRenderer richTextJson={post?.text?.json} />
         </article>
     </main>
@@ -117,6 +104,16 @@ const layoutProps = {
 </script>
 
 <style>
+    .post-header {
+        hr {
+            border-color: #374151;
+            border-top-width: 1px;
+            border-top-style: solid;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+    
     .post-description {
         display: flex;
         justify-content: space-between;
@@ -176,6 +173,7 @@ const layoutProps = {
             }
         }
     }
+
     .tags {
         margin-top: 0.5rem;
     }

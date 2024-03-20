@@ -1,6 +1,7 @@
 ---
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import PostsList from "@components/astro/blog/PostsList.astro";
 import Section from "@components/astro/global/Section.astro";
 import { locales } from "@config/i18n";
@@ -65,7 +66,7 @@ const layoutProps = {
     <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
         {!posts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
         {posts && posts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-        {posts && posts.length !== 0 && <PostsList posts={posts} />}
+        {posts && posts.length !== 0 && <PostsGrid posts={posts} />}
     </Section>
 </PageLayout>
 

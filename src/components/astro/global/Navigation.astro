@@ -7,6 +7,7 @@ import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import NavLoader from "./NavLoader.astro";
 
 interface Props {
     post?: IGenBlogArticleMetaFragment;
@@ -97,6 +98,7 @@ await loadNamespaces(locale, ["common", "blog", "projects"]);
                 </div>
             </div>
         </div>
+        <NavLoader />
     </header>
 </site-nav>
 

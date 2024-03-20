@@ -536,6 +536,9 @@ type CaisyDocument_Meta {
   createdAt: DateTime
 
   """"""
+  firstPublishedAt: DateTime
+
+  """"""
   id: ID
 
   """"""
@@ -1056,6 +1059,9 @@ type Query {
   ProjectTag(id: ID!, locale: String): ProjectTag
 
   """"""
+  Resume(locale: String): Resume
+
+  """"""
   Tag(id: ID!): Caisy_Field_Tag
 
   """"""
@@ -1078,6 +1084,15 @@ type Query {
 
   """"""
   allTags(after: String, before: String, first: Int, last: Int): Tag_Connection
+}
+
+""""""
+type Resume {
+  """"""
+  _meta: CaisyDocument_Meta
+
+  """"""
+  id: ID
 }
 
 """"""

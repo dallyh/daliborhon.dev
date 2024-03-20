@@ -1,0 +1,133 @@
+<!-- https://codepen.io/dennishn/pen/prWMdy -->
+<div id="pageNavLoader" class="progress">
+    <div class="bar background"></div>
+    <div class="bar one"></div>
+    <div class="bar two"></div>
+</div>
+
+<script is:inline>
+    document.addEventListener("astro:before-preparation", () => {
+        document.querySelector("#pageNavLoader").classList.add("show");
+    });
+    document.addEventListener("astro:after-preparation", () => {
+        document.querySelector("#pageNavLoader").classList.remove("show");
+    });
+</script>
+
+<style>
+    .progress {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+        animation-duration: 0.3s;
+        animation-delay: 1.5s; /* Show only if the load takes long time */
+        animation-fill-mode: both;
+
+        &.show {
+            animation-name: show;
+            visibility: visible;
+        }
+    }
+
+    @keyframes show {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .bar {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .background {
+        width: 100%;
+        z-index: 0;
+        left: 0;
+        background-color: rgba(var(--secondary), 1);
+    }
+    .one,
+    .two {
+        left: 0;
+        z-index: 1;
+        background-color: rgba(var(--accent), 1);
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    .one {
+        animation-name: indeterminate1;
+    }
+    .two {
+        animation-name: indeterminate2;
+    }
+
+    @-webkit-keyframes indeterminate1 {
+        0% {
+            left: 0%;
+            width: 0%;
+        }
+        50% {
+            left: 25%;
+            width: 75%;
+        }
+        75% {
+            left: 100%;
+            width: 0%;
+        }
+    }
+
+    @keyframes indeterminate1 {
+        0% {
+            left: 0%;
+            width: 0%;
+        }
+        50% {
+            left: 25%;
+            width: 75%;
+        }
+        75% {
+            left: 100%;
+            width: 0%;
+        }
+    }
+    @-webkit-keyframes indeterminate2 {
+        0%,
+        50% {
+            left: 0%;
+            width: 0%;
+        }
+        75% {
+            left: 0%;
+            width: 25%;
+        }
+        100% {
+            left: 100%;
+            width: 0%;
+        }
+    }
+    @keyframes indeterminate2 {
+        0%,
+        50% {
+            left: 0%;
+            width: 0%;
+        }
+        75% {
+            left: 0%;
+            width: 25%;
+        }
+        100% {
+            left: 100%;
+            width: 0%;
+        }
+    }
+</style>

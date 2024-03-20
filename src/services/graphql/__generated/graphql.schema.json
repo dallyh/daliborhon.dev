@@ -2178,6 +2178,18 @@
             "deprecationReason": null
           },
           {
+            "name": "firstPublishedAt",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": "",
             "args": [],
@@ -4452,6 +4464,31 @@
             "deprecationReason": null
           },
           {
+            "name": "Resume",
+            "description": "",
+            "args": [
+              {
+                "name": "locale",
+                "description": "",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Resume",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "Tag",
             "description": "",
             "args": [
@@ -5166,6 +5203,41 @@
             "type": {
               "kind": "OBJECT",
               "name": "Tag_Connection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Resume",
+        "description": "",
+        "fields": [
+          {
+            "name": "_meta",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CaisyDocument_Meta",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
               "ofType": null
             },
             "isDeprecated": false,

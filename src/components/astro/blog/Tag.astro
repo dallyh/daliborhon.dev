@@ -6,6 +6,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsList from "./PostsList.astro";
 import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
 import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
+import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
     tag: IGenTagMetaFragment;
@@ -31,7 +32,7 @@ const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name!}/`);
                     {title}
                 </a>
             </h2>
-            <PostsList posts={posts} />
+            <PostsGrid posts={posts} />
         </li>
     )
 }

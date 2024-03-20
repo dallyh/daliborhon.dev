@@ -1,6 +1,11 @@
-import { defaultLocale, locales } from "@config/i18n";
+import { siteConfig } from "../../site.config";
 import i18next, { type InitOptions } from "i18next";
 import fsBackend from "i18next-fs-backend";
+
+export const defaultLocale = siteConfig.i18n.defaultLocale;
+export const locales = Object.keys(siteConfig.i18n.locales);
+export const localeKeys = Object.fromEntries(Object.entries(siteConfig.i18n.locales).map(([key, value]) => [key, value.locale]));
+export type AllowedLocales = keyof typeof siteConfig.i18n.locales;
 
 const i18nConfig: InitOptions = {
     debug: false,

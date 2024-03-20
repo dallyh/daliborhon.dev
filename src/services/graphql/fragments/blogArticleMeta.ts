@@ -7,6 +7,7 @@ const f_blogArticleMeta = gql`
             publishedAt
             updatedAt
             locale
+            firstPublishedAt
         }
         author(locale: $locale) {
             bio

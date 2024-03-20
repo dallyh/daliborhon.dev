@@ -3,6 +3,7 @@ import MainLayout from "@layouts/MainLayout.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import { getStaticPaths } from "@i18n/utils";
+import Loader from "@components/astro/global/Loader.astro";
 
 export { getStaticPaths };
 
@@ -17,43 +18,8 @@ const layoutProps = {
 ---
 
 <MainLayout {...layoutProps}>
-    <!-- Prevent FOUC -->
-    <script is:inline>
-        // This is known in advance from ThemeProvider component in head
-        const theme = document.documentElement.dataset.theme;
-        function setDarkMode(document) {
-            document.documentElement.dataset.theme = theme;
-        }
-
-        document.addEventListener("astro:before-swap", (ev) => {
-            // Pass the incoming document to set the theme on it
-            setDarkMode(ev.newDocument);
-        });
-    </script>
-    <div id="pageLoad" class="dot-flashing" aria-label={t("common.loading")} title={t("common.loading")}></div>
+    <Loader />
 </MainLayout>
-
-<style is:global>
-    body:has(#pageLoad) {
-        width: 100svw;
-        height: 100svh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-
-        > .page-content {
-            width: auto;
-            height: auto;
-            min-height: 0;
-            min-width: 0;
-            margin: 0;
-            padding: 0;
-        }
-    }
-</style>
 
 <script>
     import { navigate } from "astro:transitions/client";

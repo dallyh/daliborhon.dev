@@ -19,7 +19,7 @@ const postUrl = getBlogPostUrl(locale, post);
 await loadNamespaces(locale, ["blog"]);
 ---
 
-<div class="post-preview">
+<article class="post-preview">
     <div class="post-image">
         <Image src={post?.previewImage?.src!} alt={post!.title!} width={1200} height={630} loading="eager" />
     </div>
@@ -35,26 +35,16 @@ await loadNamespaces(locale, ["blog"]);
                 )
             }
             <div>
-                <FormattedDate pubDateTime={post._meta?.publishedAt!} modDatetime={post._meta?.updatedAt!} locale={locale} />
+                <FormattedDate pubDateTime={post._meta?.firstPublishedAt!} modDatetime={post._meta?.publishedAt!} locale={locale} />
             </div>
         </div>
     </div>
     <div class="tags">
         <TagList post={post} bgColor="transparent" justify="center" />
     </div>
-</div>
+</article>
 
 <style>
-    .hidden-post {
-        color: red;
-        position: absolute;
-        font-weight: 600;
-        font-size: 3rem;
-        opacity: 0.2;
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-    }
-
     .post-preview {
         display: flex;
         flex-direction: column;

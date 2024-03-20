@@ -6,6 +6,7 @@ import PostsList from "./PostsList.astro";
 import type { IGenCategoryMetaFragment } from "@services/graphql/__generated/sdk";
 import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
 import { getAbsoluteCategoryUrl } from "@utils";
+import PostsGrid from "./PostsGrid.astro";
 
 
 interface Props {
@@ -35,7 +36,7 @@ const posts = await getAllBlogArticlesByCategoryAndLocale({locale, categoryName:
                 </i>
                 <span>{description}</span>
             </p>
-            <PostsList posts={posts} />
+            <PostsGrid posts={posts} />
         </li>
     )
 }

@@ -15,7 +15,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
                 params: { lang: getRoutingLocale(locale) },
                 pageSize: siteConfig.blog.pageSize,
             });
-        }),
+        })
     );
 
     return paths.flat();

@@ -1,8 +1,8 @@
 ---
 import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
 import Timeline from "@components/astro/resume/Timeline.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
+import { languageTag } from "$paraglide-runtime";
 import { Image } from "@unpic/astro";
 
 export { getStaticPaths } from "@i18n/utils";
@@ -18,13 +18,9 @@ import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["resume", "common"]);
-
 const layoutProps = {
-    title: "Dalibor Hon - " + t("common.resume"),
-    description: t("resume.resume_page_description"),
+    title: "Dalibor Hon - " + m.common__resume(),
+    description: m.resume__resume_page_description(),
 };
 ---
 
@@ -47,77 +43,77 @@ const layoutProps = {
             <ScrollIndicator href="#intro" />
         </div>
     </section>
-    <Section id="intro" sectionTitle={t("resume.section_intro_title")}>
+    <Section id="intro" sectionTitle={m.resume__section_intro_title()}>
         <div class="resume-section skills">
             <div class="intro-projects">
                 <div>
                     <div class="content">
                         <div class="skill-level">
                             <span>+</span>
-                            <h3>45 {t("resume.card_project_title")}</h3>
+                            <h3>45 {m.resume__card_project_title()}</h3>
                         </div>
                     </div>
                 </div>
-                <p>{t("resume.card_project_detail")}</p>
+                <p>{m.resume__card_project_detail()}</p>
             </div>
             <div class="intro-summary">
                 <div class="bars">
                     <div class="bar">
-                        <h3>{t("resume.card_ba_title")}</h3>
+                        <h3>{m.resume__card_ba_title()}</h3>
                         <div class="fill" style="--width: 80%"></div>
-                        <p>{t("resume.card_ba_detail")}</p>
+                        <p>{m.resume__card_ba_detail()}</p>
                     </div>
                     <div class="bar">
-                        <h3>{t("resume.card_implementation_title")}</h3>
+                        <h3>{m.resume__card_implementation_title()}</h3>
                         <div class="fill" style="--width: 60%"></div>
-                        <p>{t("resume.card_implementation_detail")}</p>
+                        <p>{m.resume__card_implementation_detail()}</p>
                     </div>
                     <div class="bar">
-                        <h3>{t("resume.card_dev_title")}</h3>
+                        <h3>{m.resume__card_dev_title()}</h3>
                         <div class="fill" style="--width: 20%"></div>
-                        <p>{t("resume.card_dev_detail")}</p>
+                        <p>{m.resume__card_dev_detail()}</p>
                     </div>
                 </div>
             </div>
         </div>
     </Section>
-    <Section id="skills" sectionTitle={t("resume.section_skills_title")}>
+    <Section id="skills" sectionTitle={m.resume__section_skills_title()}>
         <div class="resume-section">
             <p>
-                {t("resume.skills_introduction")}
+                {m.resume__skills_introduction()}
             </p>
             <div class="list-card exp">
-                <div class="exp-text">+ 2 {t("resume.years")}</div>
+                <div class="exp-text">+ 2 {m.resume__years()}</div>
                 <div class="exp-description">
-                    <h3>{t("resume.skills_ba_title")}</h3>
-                    <span>{t("resume.skills_ba_description")}</span>
+                    <h3>{m.resume__skills_ba_title()}</h3>
+                    <span>{m.resume__skills_ba_description()}</span>
                 </div>
             </div>
             <div class="list-card exp">
-                <div class="exp-text">+ 2 {t("resume.years")}</div>
+                <div class="exp-text">+ 2 {m.resume__years()}</div>
                 <div class="exp-description">
-                    <h3>{t("resume.skills_windows_servers_title")}</h3>
-                    <span>{t("resume.skills_windows_servers_description")}</span>
+                    <h3>{m.resume__skills_windows_servers_title()}</h3>
+                    <span>{m.resume__skills_windows_servers_description()}</span>
                 </div>
             </div>
             <div class="list-card exp">
-                <div class="exp-text">+ 4 {t("resume.years")}</div>
+                <div class="exp-text">+ 4 {m.resume__years()}</div>
                 <div class="exp-description">
-                    <h3>{t("resume.skills_db_title")}</h3>
-                    <span>{t("resume.skills_db_description")}</span>
+                    <h3>{m.resume__skills_db_title()}</h3>
+                    <span>{m.resume__skills_db_description()}</span>
                 </div>
             </div>
             <div class="list-card exp">
-                <div class="exp-text">+ 1 {t("resume.years")}</div>
+                <div class="exp-text">+ 1 {m.resume__years()}</div>
                 <div class="exp-description">
-                    <h3>{t("resume.skills_oop_title")}</h3>
-                    <span>{t("resume.skills_oop_description")}</span>
+                    <h3>{m.resume__skills_oop_title()}</h3>
+                    <span>{m.resume__skills_oop_description()}</span>
                 </div>
             </div>
             <div class="list-card">
                 <h3 class="dev-list-title">
-                    {t("resume.skills_prg_title")}
-                    <span><i data-tooltip="top" data-tooltip-text={t("resume.hover_icons_tooltip")}><Icon name="bi:info-circle" /></i></span>
+                    {m.resume__skills_prg_title()}
+                    <span><i data-tooltip="top" data-tooltip-text={m.resume__hover_icons_tooltip()}><Icon name="bi:info-circle" /></i></span>
                 </h3>
                 <ul class="dev-list-inline">
                     <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="HTML5">
@@ -165,14 +161,14 @@ const layoutProps = {
                 </ul>
             </div>
             <div class="list-card">
-                <h3>{t("resume.skills_sw_title")}</h3>
+                <h3>{m.resume__skills_sw_title()}</h3>
                 <div class="software-experience-list">
                     <ul>
                         <li>
                             <a href="https://www.abbyy.com/flexicapture/" target="_blank">ABBYY FlexiCapture</a>
                         </li>
                         <li>
-                            <a href="https://www.abbyy.com/finereader-server/" target="_blank"> ABBYY FineReader Server</a>
+                            <a href="https://www.abbyy.com/finereader-server/" target="_blank">ABBYY FineReader Server</a>
                         </li>
                         <li>
                             <a href="https://www.abbyy.com/vantage/" target="_blank">ABBYY Vantage</a>
@@ -181,26 +177,26 @@ const layoutProps = {
                             <a href="https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration" target="_blank">Microsoft SharePoint</a>
                         </li>
                         <li>
-                            <a href="https://powerplatform.microsoft.com/en-us/" target="_blank"> Microsoft PowerPlaftorm</a>
+                            <a href="https://powerplatform.microsoft.com/en-us/" target="_blank">Microsoft PowerPlaftorm</a>
                         </li>
                         <li>
                             <a href="https://www.m-files.com/" target="_blank">M-Files</a>
                         </li>
                         <li>
-                            <a href="https://www.nintex.com/process-automation/k2-software/" target="_blank"> K2 Five/K2 Cloud</a>
+                            <a href="https://www.nintex.com/process-automation/k2-software/" target="_blank">K2 Five/K2 Cloud</a>
                         </li>
                     </ul>
                 </div>
                 <p>
-                    {t("resume.skills_sw_description")}
+                    {m.resume__skills_sw_description()}
                 </p>
             </div>
         </div>
     </Section>
-    <Section id="skills" sectionTitle={t("resume.section_cert_title")}>
+    <Section id="skills" sectionTitle={m.resume__section_cert_title()}>
         <div class="resume-section" id="certifications">
             <div class="certifications-list">
-                <p><Fragment set:html={t("resume.linkedin_certs")} /></p>
+                <p><Fragment set:html={m.resume__linkedin_certs()} /></p>
                 <div class="certifications-grid">
                     <div class="cert-card">
                         <Image class="cert-card-logo" src={msftLogo} width={150} height={32} alt="Microsoft logo" />
@@ -241,7 +237,7 @@ const layoutProps = {
             </div>
         </div>
     </Section>
-    <Section id="skills" sectionTitle={t("resume.section_timeline_title")}>
+    <Section id="skills" sectionTitle={m.resume__section_timeline_title()}>
         <div class="resume-setion" id="experience">
             <Timeline />
         </div>

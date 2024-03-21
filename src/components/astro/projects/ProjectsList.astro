@@ -1,7 +1,7 @@
 ---
 import { siteConfig } from "@config";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
+import { languageTag } from "$paraglide-runtime";
 import ProjectCard from "./ProjectCard.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
@@ -14,15 +14,13 @@ interface Props {
 
 const { recentSize = siteConfig.projects.recentProjectsSize, listAll = false } = Astro.props;
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["projects"]);
+const locale = languageTag();
 
 const projects = await getRecentProjectsByLocale({ locale, first: recentSize });
 
 const allEntriesProps = {
     url: getRelativeLocaleUrl(locale, "/projects"),
-    urlDescription: t("projects.see_all"),
+    urlDescription: m.projects__see_all(),
 };
 ---
 

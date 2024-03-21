@@ -3,20 +3,19 @@ import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import Tag from "@components/astro/blog/Tag.astro";
 import Section from "@components/astro/global/Section.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getStaticPaths } from "@i18n/utils";
+import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-export { getStaticPaths };
-import { getAllTags } from "@services/content/getAllTags"
+import { getAllTags } from "@services/content/getAllTags";
+import { languageTag } from "$paraglide-runtime";
 
-// i18n
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["blog", "common"]);
+export { getStaticPaths } from "@i18n/utils";
+
+const locale = languageTag();
 
 const layoutProps = {
-    title: `${t("blog.categories")} - Blog`,
-    description: t("blog.blog_site_description"),
+    title: `${m.blog__categories()} - Blog`,
+    description: m.blog__blog_site_description(),
 };
 
 const tags = await getAllTags({});
@@ -24,12 +23,12 @@ const tags = await getAllTags({});
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem currentPage={true} label={t("blog.tags")} />
+        <BreadCrumbsItem currentPage={true} label={m.blog__tags()} />
     </BreadCrumbs>
-    <Section id="categories" isFirstSection sectionTitle={t("blog.tags")} sectionDescription={t("blog.tags_desctiption")}>
-        {!tags && <p>{t("blog.no_tags")}</p>}
+    <Section id="categories" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
+        {!tags && <p>{m.blog__no_tags()}</p>}
         {
             tags && (
                 <ul class="category-list">

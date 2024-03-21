@@ -1,14 +1,15 @@
 ---
-import { getLocale } from "@i18n/utils";
 import type { IGenProjectMetaFragment } from "@services/graphql/__generated/sdk";
 import CaisyRichTextRenderer from "../blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 import { Buffer } from "node:buffer";
+import { languageTag } from "$paraglide-runtime";
 
 interface Props {
     project: IGenProjectMetaFragment;
 }
 
-const locale = getLocale(Astro.url);
+
+const locale = languageTag();
 const { project } = Astro.props;
 const { projectSourceUrl, title, image, projectStartDate, projectTags, description } = project;
 

@@ -7,7 +7,7 @@ export interface GetAllTags {
 }
 
 export const getAllTags = async ({ after, arr = [] }: GetAllTags): Promise<IGenTagMetaFragment[]> => {
-    const { allTags } = await caisyClient.allTags({after});
+    const { allTags } = await caisyClient.allTags({ after });
 
     allTags?.edges?.forEach((edge) => {
         edge?.node && arr.push(edge.node);

@@ -1,51 +1,46 @@
 ---
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
-
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["resume", "common"]);
+import * as m from "$messages";
 ---
 
 <div class="timeline">
     <div class="timeline-cards">
         <div class="timeline-card">
-            <h3>{t("resume.section_exp_title")}</h3>
+            <h3>{m.resume__section_exp_title()}</h3>
             <div class="timeline-content">
                 <div class="meta">
-                    <p class="date">{t("resume.km_ecm_date")}</p>
+                    <p class="date">{m.resume__km_ecm_date()}</p>
                     <p class="title">ECM Business Consultant</p>
                     <p>Konica Minolta IT Solutions Czech s.r.o</p>
-                    <p class="description">{t("resume.km_ecm_description")}</p>
+                    <p class="description">{m.resume__km_ecm_description()}</p>
                 </div>
                 <div class="meta">
-                    <p class="date">{t("resume.moneta_analyst_date")}</p>
+                    <p class="date">{m.resume__moneta_analyst_date()}</p>
                     <p class="title">Analyst, Shared Services</p>
                     <p>MONETA Money Bank a.s.</p>
-                    <p class="description">{t("resume.moneta_analyst_description")}</p>
+                    <p class="description">{m.resume__moneta_analyst_description()}</p>
                 </div>
                 <div class="meta">
-                    <p class="date">{t("resume.moneta_end_user_date")}</p>
+                    <p class="date">{m.resume__moneta_end_user_date()}</p>
                     <p class="title">Administrator End User Services, IT</p>
                     <p>MONETA Money Bank a.s.</p>
-                    <p class="description">{t("resume.moneta_end_user_description")}</p>
+                    <p class="description">{m.resume__moneta_end_user_description()}</p>
                 </div>
                 <div class="meta">
-                    <p class="date">{t("resume.asus_technician_date")}</p>
+                    <p class="date">{m.resume__asus_technician_date()}</p>
                     <p class="title">Motherboard Technician</p>
                     <p>ASUS Czech Service s.r.o.</p>
-                    <p class="description">{t("resume.asus_tech_description")}</p>
+                    <p class="description">{m.resume__asus_tech_description()}</p>
                 </div>
             </div>
         </div>
         <div class="timeline-card pagebreak">
-            <h3>{t("resume.section_edu_title")}</h3>
+            <h3>{m.resume__section_edu_title()}</h3>
             <div class="timeline-content">
                 <div class="meta">
                     <p class="date">2010 - 2014</p>
-                    <p class="title">{t("resume.high_school_name")}</p>
-                    <p>{t("resume.maturity_diploma")}</p>
-                    <p class="description">{t("resume.high_school_description")}</p>
+                    <p class="title">{m.resume__high_school_name()}</p>
+                    <p>{m.resume__maturity_diploma()}</p>
+                    <p class="description">{m.resume__high_school_description()}</p>
                 </div>
             </div>
         </div>

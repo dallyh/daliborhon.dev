@@ -1,19 +1,15 @@
 ---
 import avatar from "@assets/img/profile/avatar-casual.svg";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
 import { Icon } from "astro-icon/components";
 import { Image } from "@unpic/astro";
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["common", "landing"]);
 ---
 
 <div class="intro-container">
     <div class="profile-container">
         <div class="profile-info-container">
-            <h1 class="hi-there">{t("landing.hi_there")} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></h1>
+            <h1 class="hi-there">{m.landing__hi_there()} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></h1>
             <div class="profile-description">
                 <div class="icon-text">
                     <i><Icon name="bi:briefcase" /></i>
@@ -21,7 +17,7 @@ await loadNamespaces(locale, ["common", "landing"]);
                 </div>
                 <div class="icon-text">
                     <i><Icon name="bi:geo-alt" /></i>
-                    <p>Ostrava, {t("common.country_czech_republic")}</p>
+                    <p>Ostrava, {m.common__country_czech_republic()}</p>
                 </div>
             </div>
         </div>

@@ -1,8 +1,6 @@
 ---
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
-import { getLocale } from "@i18n/utils";
 import type { Page } from "astro";
-import { type CollectionEntry } from "astro:content";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 
@@ -13,9 +11,6 @@ interface Props {
 }
 
 const { posts, url, urlDescription } = Astro.props;
-
-// i18next
-const locale = getLocale(Astro.url);
 
 function isPage<T>(value: any): value is Page<T> {
     return value && value.data && Array.isArray(value.data);

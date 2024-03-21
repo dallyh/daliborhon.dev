@@ -1,22 +1,20 @@
 ---
+import * as m from "$messages";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import { languageTag } from "$paraglide-runtime";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { Image } from "@unpic/astro";
 import { getBlogPostUrl } from "@utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import TagList from "./TagList.astro";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import { Image } from "@unpic/astro";
 
 interface Props {
     post: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
-const locale = getLocale(Astro.url);
+const locale = languageTag();
 const postUrl = getBlogPostUrl(locale, post);
-
-await loadNamespaces(locale, ["blog"]);
 ---
 
 <article class="post-preview">
@@ -25,12 +23,12 @@ await loadNamespaces(locale, ["blog"]);
     </div>
     <hr />
     <div class="post-description">
-        <a href={postUrl} class="post-title">{post?.title}</a> 
+        <a href={postUrl} class="post-title">{post?.title}</a>
         <div class="post-meta">
             {
                 post.category?.name && (
                     <p>
-                        {t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.category?.name}`)}>{post.category?.name}</a>
+                        {m.blog__category()}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.category?.name}`)}>{post.category?.name}</a>
                     </p>
                 )
             }

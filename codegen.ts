@@ -30,12 +30,12 @@ export const config: CodegenConfig = {
                 dedupeFragments: true,
                 preResolveTypes: true,
                 typesPrefix: "IGen",
-                useTypeImports: true,
+                useTypeimports: true,
                 strictScalars: true,
                 scalars: {
                     DateTime: "Date",
                     Date: "Date",
-                    JSON: "any"
+                    JSON: "any",
                 },
             },
         },

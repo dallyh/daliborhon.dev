@@ -1,7 +1,7 @@
 ---
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import MainLayout from "./MainLayout.astro";
-import { getLocale } from "@i18n/utils";
+import { languageTag } from "$paraglide-runtime";
 import TagList from "@components/astro/blog/TagList.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
@@ -10,7 +10,7 @@ import { getOgImageUrl } from "@utils";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
+import * as m from "$messages";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { Image } from "@unpic/astro";
 import CaisyRichTextRenderer from "@components/astro/blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
@@ -21,18 +21,15 @@ interface Props {
 
 const { post } = Astro.props;
 
-const locale = getLocale(Astro.url);
-const ogUrl = getOgImageUrl(locale, post, Astro.url);
-
-await loadNamespaces(locale, ["common", "blog"]);
+const locale = languageTag();
 
 const layoutProps = {
-    title: `${t("blog.post")}: ${post?.title}`,
+    title: `${m.blog__post()}: ${post?.title}`,
     author: post?.author?.name!,
     description: post?.description ?? "",
     pubDateTime: post?._meta?.firstPublishedAt!,
     modDatetime: post?._meta?.publishedAt!,
-    ogImage: ogUrl,
+    ogImage: getOgImageUrl(locale, post, Astro.url),
 };
 ---
 
@@ -42,9 +39,9 @@ const layoutProps = {
     <main>
         <div class="post-header">
             <BreadCrumbs>
-                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
                 <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
+                <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={m.blog__posts()} />
                 <BreadCrumbsItem currentPage={true} label={post?.title!} />
             </BreadCrumbs>
             <div class="post-description">
@@ -71,7 +68,7 @@ const layoutProps = {
             </div>
             <hr />
         </div>
-        <article class="prose dark:prose-invert max-w-none">
+        <article class="prose max-w-none dark:prose-invert">
             <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} />
         </article>
     </main>
@@ -113,7 +110,7 @@ const layoutProps = {
             margin-bottom: 2rem;
         }
     }
-    
+
     .post-description {
         display: flex;
         justify-content: space-between;

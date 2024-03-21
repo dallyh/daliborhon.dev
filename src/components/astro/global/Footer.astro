@@ -1,24 +1,22 @@
 ---
-import { getLocale } from "@i18n/utils";
-import { loadNamespaces, t } from "@i18n/i18n";
+import * as m from "$messages";
 import { Icon } from "astro-icon/components";
+import { languageTag } from "$paraglide-runtime";
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["footer"]);
+const locale = languageTag();
 ---
 
 <footer class="footer-container">
     <p>
-        {t("footer.page_created_by")}
+        {m.footer__page_created_by()}
     </p>
     <p>
-        {t("footer.created_with")}
-        <a href="https://astro.build/" aria-label={t("footer.astro_a_label")} title={t("footer.astro_a_label")}>
+        {m.footer__created_with()}
+        <a href="https://astro.build/" aria-label={m.footer__astro_a_label()} title={m.footer__astro_a_label()}>
             <Icon name="astro-icon" size={45} />
         </a>
     </p>
-    <p>{t("footer.hosted_by")}{" "}<a href="https://www.github.com" aria-label={t("footer.github_a_label")} target="_blank"> {t("footer.github_name")}</a>.</p>
+    <p>{m.footer__hosted_by()}{" "}<a href="https://www.github.com" aria-label={m.footer__github_a_label()} target="_blank"> {m.footer__github_name()}</a>.</p>
 </footer>
 
 <style>
@@ -75,6 +73,6 @@ await loadNamespaces(locale, ["footer"]);
         (e) => {
             initializeFooter();
         },
-        { once: false },
+        { once: false }
     );
 </script>

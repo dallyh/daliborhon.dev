@@ -1,7 +1,7 @@
 ---
-import { getLocale } from "@i18n/utils";
 import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { languageTag } from "$paraglide-runtime";
 
 interface Props {
     url: string;
@@ -11,7 +11,8 @@ interface Props {
 const { url, urlDescription } = Astro.props;
 
 // i18next
-const locale = getLocale(Astro.url);
+
+const locale = languageTag();
 ---
 
 <div class="arrow-link">

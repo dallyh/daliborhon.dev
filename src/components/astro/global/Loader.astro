@@ -1,6 +1,5 @@
 ---
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
 
 export interface Props {
     standalone?: boolean;
@@ -8,18 +7,14 @@ export interface Props {
 
 const { standalone } = Astro.props;
 
-// i18next
-const locale = getLocale(Astro.url);
-const namespaces = ["common"];
-await loadNamespaces(locale, namespaces);
 ---
 
-{standalone && <div class="dot-flashing" aria-label={t("common.loading")} title={t("common.loading")} />}
+{standalone && <div class="dot-flashing" aria-label={m.common__loading()} title={m.common__loading()} />}
 
 {
     !standalone && (
         <div id="pageLoad">
-            <div class="dot-flashing" aria-label={t("common.loading")} title={t("common.loading")} />
+            <div class="dot-flashing" aria-label={m.common__loading()} title={m.common__loading()} />
         </div>
     )
 }

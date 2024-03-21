@@ -20,7 +20,6 @@ export const siteConfig = {
                 locale: "en",
             },
         },
-        defaultLocale: "cs"
+        defaultLocale: "cs",
     },
 };
-

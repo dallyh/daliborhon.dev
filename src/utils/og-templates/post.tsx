@@ -1,10 +1,8 @@
-import { loadNamespaces, t } from "@i18n/i18n";
+import * as m from "$messages";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import type { CollectionEntry } from "astro:content";
 
 export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
-    await loadNamespaces(locale, ["blog"]);
-
     return (
         <div
             style={{
@@ -75,15 +73,16 @@ export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
                 <div style={{ display: "flex", alignItems: "center", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
                     <div style={{ display: "flex", width: "100%", justifyContent: "space-between", fontSize: 24 }}>
                         <p style={{ padding: 0, margin: 0, fontWeight: "700" }}>
-                            {t("blog.published_date_title")}: {post._meta?.publishedAt?.toLocaleDateString(locale, { month: "long", day: "2-digit", year: "numeric" })}
+                            {m.blog__published_date_title()}: {post._meta?.publishedAt?.toLocaleDateString(locale, { month: "long", day: "2-digit", year: "numeric" })}
                         </p>
                         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-                            {post?.tags && post.tags.map((tag) => (
-                                <p key={tag?.name} style={{ padding: 0, margin: 0 }}>
-                                    <strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
-                                    {tag?.name}
-                                </p>
-                            ))}
+                            {post?.tags &&
+                                post.tags.map((tag) => (
+                                    <p key={tag?.name} style={{ padding: 0, margin: 0 }}>
+                                        <strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
+                                        {tag?.name}
+                                    </p>
+                                ))}
                         </div>
                     </div>
                 </div>

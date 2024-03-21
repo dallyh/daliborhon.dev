@@ -1,14 +1,12 @@
 ---
-import Section from "@components/astro/global/Section.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
+
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
 export { getStaticPaths } from "@i18n/utils";
+import { languageTag } from "$paraglide-runtime";
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["contact", "common", "blog", "projects"]);
+const locale = languageTag();
 
 const layoutProps = {
     title: "Error 404 (Not Found)",
@@ -19,7 +17,7 @@ const layoutProps = {
 <PageLayout {...layoutProps}>
     <div class="page-not-found">
         <Icon name="tabler:error-404" />
-        <span>Well, this is awkward...</span>
+        <span>Ooops...</span>
         <h1>Page was not found</h1>
         <p>Looks like the developer forgot something important.</p>
         <button id="homeButton" class="button" data-locale={locale}>Go home</button>

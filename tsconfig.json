@@ -6,6 +6,8 @@
         "jsxImportSource": "react",
         "resolveJsonModule": true,
         "esModuleInterop": true,
+        "moduleResolution": "Bundler",
+        "allowJs": true,
         "baseUrl": "./",
         "paths": {
             "@components/*": ["src/components/*"],
@@ -15,7 +17,9 @@
             "@layouts/*": ["src/layouts/*"],
             "@utils": ["src/utils/index.ts"],
             "@services/*": ["src/services/*"],
-            "@config": ["site.config.ts"]
-        },
-    },
+            "@config": ["site.config.ts"],
+            "$messages": ["src/paraglide/messages.js"],
+            "$paraglide-runtime": ["src/paraglide/runtime.js"]
+        }
+    }
 }

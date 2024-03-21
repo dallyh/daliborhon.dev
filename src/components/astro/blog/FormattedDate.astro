@@ -1,5 +1,5 @@
 ---
-import { loadNamespaces, t } from "@i18n/i18n";
+import * as m from "$messages";
 
 interface Props {
     pubDateTime: string | Date;
@@ -35,13 +35,11 @@ const formattedDatetime = () => {
         time: time,
     };
 };
-
-await loadNamespaces(locale, ["blog"]);
 ---
 
-<span>{wasUpdated() ? t("blog.updated_date_title") : t("blog.published_date_title")}:</span>
+<span>{wasUpdated() ? m.blog__published_date_title() : m.blog__updated_date_title()}</span>
 <time datetime={formattedDatetime().iso}>{formattedDatetime().date}</time>
-<span> |</span>
+<span> | </span>
 <span>{formattedDatetime().time}</span>
 
 <style>

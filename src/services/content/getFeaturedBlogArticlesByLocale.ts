@@ -8,7 +8,7 @@ export interface GetFeaturedBlogArticlesByLocale {
 }
 
 export const getFeaturedBlogArticlesByLocale = async ({ locale, first, arr = [] }: GetFeaturedBlogArticlesByLocale): Promise<IGenBlogArticleMetaFragment[]> => {
-    const { allBlogArticle } = await caisyClient.featuredBlogArticlesByLocale({locale, first});
+    const { allBlogArticle } = await caisyClient.featuredBlogArticlesByLocale({ locale, first });
 
     allBlogArticle?.edges?.forEach((edge) => {
         edge?.node && arr.push(edge.node);

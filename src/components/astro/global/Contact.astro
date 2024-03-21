@@ -1,17 +1,11 @@
 ---
 import ContactForm from "@components/react/ContactForm/ContactForm";
-import i18n, { loadNamespaces } from "@i18n/i18n";
-import type { CommonRes, ContactRes } from "@i18n/locales/types";
-import { getLocale } from "@i18n/utils";
+import { languageTag } from "$paraglide-runtime";
 import Loader from "./Loader.astro";
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["contact", "common"]);
-const res: ContactRes = i18n?.getResourceBundle(locale, "contact");
-const common: CommonRes = i18n?.getResourceBundle(locale, "common");
+const locale = languageTag();
 ---
 
-<ContactForm resources={res} commonResources={common} client:load>
+<ContactForm locale={locale} client:load>
     <Loader slot="loader" standalone />
 </ContactForm>

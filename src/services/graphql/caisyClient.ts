@@ -50,7 +50,7 @@ const requester: Requester<any> = async (doc: any, vars: any) => {
             uri: uri,
             headers: {
                 "x-caisy-apikey": `${CAISY_API_KEY}`,
-                "x-caisy-preview": `${DEV_ENV}`
+                "x-caisy-preview": `${DEV_ENV}`,
             },
         }),
     ]);

@@ -3,14 +3,14 @@
 // Edited for this project needs.
 
 import { locales } from "@i18n/config";
-import { loadNamespaces } from "@i18n/i18n";
-import { getLocale, getPathFromUrl } from "@i18n/utils";
+import { getPathFromUrl } from "@i18n/utils";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { getBlogPostUrl } from "@utils";
 import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import ISO6991 from "iso-639-1";
 import { getBlogArticleByLocale } from "@services/content/getBlogArticleByLocale";
+import { languageTag } from "$paraglide-runtime";
 
 interface Props {
     post?: IGenBlogArticleMetaFragment;
@@ -18,13 +18,11 @@ interface Props {
 
 const { post } = Astro.props;
 
-const currentLocale = getLocale(Astro.url);
+const currentLocale = languageTag();
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
     return capitalized;
 };
-
-await loadNamespaces(currentLocale, ["common"]);
 ---
 
 <lang-select>
@@ -182,7 +180,7 @@ await loadNamespaces(currentLocale, ["common"]);
                 select.addEventListener("change", (e) => {
                     if (e.currentTarget instanceof HTMLSelectElement) {
                         const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
-                        window.localStorage.setItem("language", lang);
+                        window.localStorage.setItem("language", lang); // This should be a cookie
 
                         navigate(e.currentTarget.value);
                     }

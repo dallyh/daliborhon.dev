@@ -8,7 +8,7 @@ export interface GetAllCategoriesByLocale {
 }
 
 export const getAllCategoriesByLocale = async ({ locale, after, arr = [] }: GetAllCategoriesByLocale): Promise<IGenCategoryMetaFragment[]> => {
-    const { allCategory } = await caisyClient.allCategoriesByLocale({locale, after});
+    const { allCategory } = await caisyClient.allCategoriesByLocale({ locale, after });
 
     allCategory?.edges?.forEach((edge) => {
         edge?.node && arr.push(edge.node);

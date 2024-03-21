@@ -1,6 +1,6 @@
 ---
-import { t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
+import { languageTag } from "$paraglide-runtime";
 import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
@@ -12,7 +12,8 @@ interface Props {
 }
 
 const { tag } = Astro.props;
-const locale = getLocale(Astro.url);
+
+const locale = languageTag();
 
 const posts = await getAllBlogArticlesByTagAndLocale({ locale, tagId: tag?.id! });
 
@@ -24,7 +25,7 @@ const url = getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name!}/`);
     posts && posts.length !== 0 && (
         <li class="tag">
             <h2 class="title">
-                <a href={url} aria-label={{ title } + t("blog.tag")}>
+                <a href={url} aria-label={{ title } + m.blog__tag()}>
                     <i>
                         <Icon name="bi:tag" />
                     </i>

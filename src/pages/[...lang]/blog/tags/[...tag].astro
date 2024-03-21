@@ -4,8 +4,8 @@ import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import Section from "@components/astro/global/Section.astro";
 import { locales } from "@i18n/config";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getRoutingLocale } from "@i18n/utils";
+import * as m from "$messages";
+import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
 import { getAllTags } from "@services/content/getAllTags";
@@ -24,46 +24,42 @@ export async function getStaticPaths() {
                     if (posts === undefined || posts.length === 0) {
                         return {
                             params: { lang: getRoutingLocale(locale), tag: tag?.name },
-                            props: { posts: undefined, tag: tag },
+                            props: { posts: undefined, tag: tag, locale: locale },
                         };
                     }
 
                     return {
                         params: { lang: getRoutingLocale(locale), tag: tag?.name },
-                        props: { posts: posts, tag: tag },
+                        props: { posts: posts, tag: tag, locale: locale },
                     };
-                }),
+                })
             );
-        }),
+        })
     );
 
     return paths[0];
 }
 
-const { posts, tag } = Astro.props;
-const locale = getLocale(Astro.url);
-
-// i18next
-await loadNamespaces(locale, ["blog", "common"]);
+const { posts, tag, locale } = Astro.props;
 
 const tagTitle = tag.name!;
-const tagDescription = `${t("blog.posts_tagged")} #${tagTitle}`;
+const tagDescription = `${m.blog__posts_tagged()} #${tagTitle}`;
 const layoutProps = {
-    title: `${t("blog.tag")}: ${tagTitle}`,
+    title: `${m.blog__tag()}: ${tagTitle}`,
     description: tagDescription,
 };
 ---
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={t("blog.tags")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
         <BreadCrumbsItem currentPage={true} label={tagTitle} />
     </BreadCrumbs>
     <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
-        {!posts && <p>{t("blog.no_tagged_posts")}</p>}
-        {posts && posts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
+        {!posts && <p>{m.blog__no_tagged_posts()}</p>}
+        {posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}
         {posts && posts.length !== 0 && <PostsGrid posts={posts} />}
     </Section>
 </PageLayout>

@@ -1,6 +1,5 @@
 ---
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
 
 // Thanks! https://codepen.io/robooneus/pen/noEKNr
 
@@ -9,11 +8,9 @@ interface Props {
 }
 
 const { href } = Astro.props;
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["resume"]);
 ---
 
-<a class="arrow-wrap" href={href} id="indicator" aria-label={t("resume.scroll_next")} title={t("resume.scroll_next")}>
+<a class="arrow-wrap" href={href} id="indicator" aria-label={m.resume__scroll_next()} title={m.resume__scroll_next()}>
     <span class="arrow"></span>
 </a>
 
@@ -128,6 +125,6 @@ await loadNamespaces(locale, ["resume"]);
         (e) => {
             hideIndicator();
         },
-        { once: false },
+        { once: false }
     );
 </script>

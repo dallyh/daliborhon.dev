@@ -1,16 +1,13 @@
 ---
 import { ViewTransitions } from "astro:transitions";
-import { getLocale } from "@i18n/utils";
-import { t, loadNamespaces } from "@i18n/i18n";
+import { languageTag } from "$paraglide-runtime";
+import * as m from "$messages";
 import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
 import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
-
-// Global CSS
 import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/keyframes.css";
-import Loader from "@components/astro/global/Loader.astro";
 
 export interface Props {
     title?: string;
@@ -23,13 +20,13 @@ export interface Props {
     showBrowserWarning?: boolean;
 }
 
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["common"]);
+
+const locale = languageTag();
 
 const {
     title,
     author = "Dalibor Hon",
-    description = t("common.site_description"),
+    description = m.common__site_description(),
     ogImage = getAbsoluteLocaleUrl(locale, "og.png"),
     canonicalURL = new URL(Astro.url.pathname, Astro.site),
     pubDatetime,

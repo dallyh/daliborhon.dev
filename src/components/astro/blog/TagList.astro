@@ -1,8 +1,7 @@
 ---
-import { getLocale } from "@i18n/utils";
 import type { IGenBlogArticleMetaFragment, IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
-import { type CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { languageTag } from "$paraglide-runtime";
 
 interface Props {
     post?: IGenBlogArticleMetaFragment;
@@ -14,7 +13,8 @@ interface Props {
 }
 
 const { post, bgColor, justify, tags, useTagColor = false, padding = "0.5rem" } = Astro.props;
-const locale = getLocale(Astro.url);
+
+const locale = languageTag();
 ---
 
 <ul class="tag-list">
@@ -22,7 +22,9 @@ const locale = getLocale(Astro.url);
         tags &&
             tags.map((tag) => (
                 <li>
-                    <a style={useTagColor ? `background: ${tag?.color}` : ""} href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.name}/`)}>#{tag.name}</a>
+                    <a style={useTagColor ? `background: ${tag?.color}` : ""} href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.name}/`)}>
+                        #{tag.name}
+                    </a>
                 </li>
             ))
     }
@@ -31,7 +33,9 @@ const locale = getLocale(Astro.url);
             post.tags?.map(async (tag) => {
                 return (
                     <li>
-                        <a style={useTagColor ? `background: ${tag?.color}` : ""} href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name}/`)}>#{tag?.name}</a>
+                        <a style={useTagColor ? `background: ${tag?.color}` : ""} href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.name}/`)}>
+                            #{tag?.name}
+                        </a>
                     </li>
                 );
             })

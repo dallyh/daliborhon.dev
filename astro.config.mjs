@@ -8,6 +8,7 @@ import icon from "astro-icon";
 import { imageService } from "@unpic/astro/service";
 import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
+import paraglide from "@inlang/paraglide-js-adapter-astro";
 
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -68,6 +69,10 @@ export default defineConfig({
             },
         }),
         tailwind(),
+        paraglide({
+            project: "./project.inlang",
+            outdir: "./src/paraglide",
+        }),
     ],
     vite: {
         server: {

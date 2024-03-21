@@ -94,13 +94,11 @@ const basePath = import.meta.env.BASE_URL;
             <slot />
         </div>
         <script>
-            import DropdownHandler from "../scripts/dropdown";
             import { initializeTooltips } from "../scripts/tooltips";
 
             document.addEventListener(
                 "astro:page-load",
                 (e) => {
-                    DropdownHandler.init();
                     initializeTooltips();
                 },
                 { once: false }

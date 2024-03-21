@@ -2,10 +2,10 @@
 import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
 import Timeline from "@components/astro/resume/Timeline.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getStaticPaths } from "@i18n/utils";
-import { Image } from "astro:assets";
+import { getLocale } from "@i18n/utils";
+import { Image } from "@unpic/astro";
 
-export { getStaticPaths };
+export { getStaticPaths } from "@i18n/utils";
 
 // Images
 import abbyyLogo from "@assets/img/company-logos/ABBYY.png";
@@ -33,7 +33,7 @@ const layoutProps = {
     <section class="hero-container" id="hero">
         <div class="hero">
             <div class="profile-picture-wrapper">
-                <Image class="profile-picture" src={profilePicture} width={220} height={220} format="webp" alt="Profile picture" />
+                <Image class="profile-picture" src={profilePicture} width={220} height={220} alt="Profile picture" />
             </div>
             <div class="hero-title-wrapper">
                 <h1 class="hero-title gradient-text">
@@ -203,38 +203,38 @@ const layoutProps = {
                 <p><Fragment set:html={t("resume.linkedin_certs")} /></p>
                 <div class="certifications-grid">
                     <div class="cert-card">
-                        <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
+                        <Image class="cert-card-logo" src={msftLogo} width={150} height={32} alt="Microsoft logo" />
                         <p class="cer-card-description">Power Platform Fundamentals (PL-900)</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo" src={msftLogo} format="webp" width={150} height={32} alt="Microsoft logo" />
+                        <Image class="cert-card-logo" src={msftLogo} width={150} height={32} alt="Microsoft logo" />
                         <p class="cer-card-description">Microsoft Dynamics 365 Fundamentals (PL-900)</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo abbyy" src={abbyyLogo} format="webp" width={110} alt="ABBYY logo" />
+                        <Image class="cert-card-logo abbyy" src={abbyyLogo} width={110} alt="ABBYY logo" />
                         <p class="cer-card-description">FlexiCapture 12 Basic</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo abbyy" src={abbyyLogo} format="webp" width={110} alt="ABBYY logo" />
+                        <Image class="cert-card-logo abbyy" src={abbyyLogo} width={110} alt="ABBYY logo" />
                         <p class="cer-card-description">Vantage Certified Business Analyst</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} format="webp" alt="Nintex logo" width={150} height={40} />
-                        <Image class="cert-card-logo nintex dark" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
+                        <Image class="cert-card-logo nintex dark" src={nintextLogo} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
                         <p class="cer-card-description">K2 IT Developer</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} format="webp" alt="Nintex logo" width={150} height={40} />
-                        <Image class="cert-card-logo nintex dark" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
+                        <Image class="cert-card-logo nintex dark" src={nintextLogo} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
                         <p class="cer-card-description">K2 Business Analyst</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} format="webp" alt="Nintex logo" width={150} height={40} />
-                        <Image class="cert-card-logo nintex dark" src={nintextLogo} format="webp" alt="Nintex logo" width={150} height={40} />
+                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
+                        <Image class="cert-card-logo nintex dark" src={nintextLogo} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
                         <p class="cer-card-description">K2 Citizen Developer</p>
                     </div>
                     <div class="cert-card">
-                        <Image class="cert-card-logo" src={mfilesLogo} format="webp" width={150} alt="M-Files Corporation logo" />
+                        <Image class="cert-card-logo" src={mfilesLogo} width={150} alt="M-Files Corporation logo" />
                         <p class="cer-card-description">M-Files Solution Engineer</p>
                     </div>
                 </div>
@@ -448,8 +448,13 @@ const layoutProps = {
     }
 
     .dev-list-inline .dev-list-inline-item {
-        font-size: 3rem;
         transition: all 300ms;
+
+        i {
+            display: inline-block;
+            font-size: 3rem;
+            width: max-content;
+        }
     }
 
     .dev-list-inline .dev-list-inline-item:hover,

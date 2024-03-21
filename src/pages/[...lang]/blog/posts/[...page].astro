@@ -1,9 +1,9 @@
 ---
-import { locales } from "@config/i18n";
+import { locales } from "@i18n/config";
 import { getRoutingLocale } from "@i18n/utils";
 import BlogPostsLayout from "@layouts/BlogPostsLayout.astro";
 import type { GetStaticPathsOptions } from "astro";
-import { BLOG } from "src/config/blog";
+import { siteConfig } from "@config";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -13,7 +13,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 
             return paginate(posts, {
                 params: { lang: getRoutingLocale(locale) },
-                pageSize: BLOG.pageSize,
+                pageSize: siteConfig.blog.pageSize,
             });
         }),
     );

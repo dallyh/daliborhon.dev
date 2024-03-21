@@ -1,22 +1,19 @@
 ---
 import Section from "@components/astro/global/Section.astro";
 import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getStaticPaths } from "@i18n/utils";
+import { getLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
-export { getStaticPaths };
+export { getStaticPaths } from "@i18n/utils";
 
 // i18next
 const locale = getLocale(Astro.url);
 await loadNamespaces(locale, ["contact", "common", "blog", "projects"]);
 
 const layoutProps = {
-    title: t("common.home_page"),
-    description: t("common.site_description"),
-    homepage: true,
+    title: "Error 404 (Not Found)",
+    description: "The requested page was not found.",
 };
-
-const postSize = 3;
 ---
 
 <PageLayout {...layoutProps}>
@@ -25,8 +22,24 @@ const postSize = 3;
         <span>Well, this is awkward...</span>
         <h1>Page was not found</h1>
         <p>Looks like the developer forgot something important.</p>
+        <button id="homeButton" class="button" data-locale={locale}>Go home</button>
     </div>
 </PageLayout>
+
+<script>
+    import { getRelativeLocaleUrl } from "astro:i18n";
+    import { navigate } from "astro:transitions/client";
+
+    const button = document.getElementById("homeButton")!;
+
+    function handleClick() {
+        const locale = button.dataset.locale!;
+        const url = getRelativeLocaleUrl(locale, "/home");
+        navigate(url);
+    }
+
+    button.addEventListener("click", handleClick);
+</script>
 
 <style is:global>
     main {
@@ -43,6 +56,10 @@ const postSize = 3;
         align-items: center;
         flex-direction: column;
         position: relative;
+    }
+
+    .button {
+        margin-top: 1rem;
     }
 
     [data-icon="tabler:error-404"] {

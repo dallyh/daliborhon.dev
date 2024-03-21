@@ -3,7 +3,7 @@ import avatar from "@assets/img/profile/avatar-casual.svg";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
+import { Image } from "@unpic/astro";
 
 // i18next
 const locale = getLocale(Astro.url);
@@ -49,7 +49,7 @@ await loadNamespaces(locale, ["common", "landing"]);
         </div>
     </div>
     <div class="profile-avatar-wrapper">
-        <Image src={avatar} alt="Avatar" format="webp" />
+        <Image src={avatar} alt="Avatar" />
     </div>
 </div>
 

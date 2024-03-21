@@ -1,5 +1,5 @@
 ---
-import { BLOG } from "@config/blog";
+import { siteConfig } from "@config";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import Section from "../global/Section.astro";
@@ -12,7 +12,7 @@ interface Props {
     showSeeAllUrl?: boolean;
 }
 
-const { postSize = BLOG.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
+const { postSize = siteConfig.blog.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);

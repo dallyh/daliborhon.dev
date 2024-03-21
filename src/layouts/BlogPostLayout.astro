@@ -50,13 +50,13 @@ const layoutProps = {
             <div class="post-description">
                 <div class="post-meta" data-pagefind-body>
                     <h1 class="gradient-text">{post?.title}</h1>
-                    <div class="meta-author">
-                        <p>By {post.author?.name}. <FormattedDate pubDateTime={post?._meta?.firstPublishedAt!} modDatetime={post?._meta?.publishedAt!} locale={locale} /></p>
-
+                    <div class="meta-details">
+                        <p>By {post.author?.name}.</p>
+                        <FormattedDate pubDateTime={post?._meta?.firstPublishedAt!} modDatetime={post?._meta?.publishedAt!} locale={locale} />
                         {
                             post.category && (
                                 <p>
-                                    {t("blog.posted_category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.category?.name}`)}>{post.category?.name}</a>
+                                    <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.category?.name}`)}>{post.category?.name}</a>
                                 </p>
                             )
                         }
@@ -72,7 +72,7 @@ const layoutProps = {
             <hr />
         </div>
         <article class="prose dark:prose-invert max-w-none">
-            <CaisyRichTextRenderer richTextJson={post?.text?.json} />
+            <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} />
         </article>
     </main>
     <Footer />
@@ -138,9 +138,10 @@ const layoutProps = {
             }
         }
 
-        .meta-author {
+        .meta-details {
             font-size: 0.85rem;
             color: var(--body-color);
+            line-height: 1.5rem;
         }
 
         .post-image {

@@ -14,8 +14,8 @@
             "@public/*": ["src/public/*"],
             "@layouts/*": ["src/layouts/*"],
             "@utils": ["src/utils/index.ts"],
-            "@config/*": ["src/config/*"],
             "@services/*": ["src/services/*"],
+            "@config": ["site.config.ts"]
         },
     },
 }

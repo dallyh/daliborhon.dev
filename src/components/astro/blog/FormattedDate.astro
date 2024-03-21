@@ -3,14 +3,20 @@ import { loadNamespaces, t } from "@i18n/i18n";
 
 interface Props {
     pubDateTime: string | Date;
-    modDatetime: string | Date | undefined;
+    modDatetime: string | Date | null;
     locale: string;
 }
 
 const { pubDateTime, modDatetime, locale } = Astro.props;
 
+const wasUpdated = () => {
+    if (modDatetime && pubDateTime) {
+        return !(new Date(pubDateTime).getTime() === new Date(modDatetime).getTime());
+    }
+};
+
 const formattedDatetime = () => {
-    const myDatetime = new Date(modDatetime ? modDatetime : pubDateTime);
+    const myDatetime = wasUpdated() ? new Date(modDatetime!) : new Date(pubDateTime);
 
     const date = myDatetime.toLocaleDateString(locale, {
         day: "numeric",
@@ -33,7 +39,7 @@ const formattedDatetime = () => {
 await loadNamespaces(locale, ["blog"]);
 ---
 
-<span>{modDatetime ? t("blog.updated_date_title") : t("blog.published_date_title")}:</span>
+<span>{wasUpdated() ? t("blog.updated_date_title") : t("blog.published_date_title")}:</span>
 <time datetime={formattedDatetime().iso}>{formattedDatetime().date}</time>
 <span> |</span>
 <span>{formattedDatetime().time}</span>

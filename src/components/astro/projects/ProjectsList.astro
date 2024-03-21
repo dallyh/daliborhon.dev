@@ -1,5 +1,5 @@
 ---
-import { PROJECTS } from "@config/blog";
+import { siteConfig } from "@config";
 import { loadNamespaces, t } from "@i18n/i18n";
 import { getLocale } from "@i18n/utils";
 import ProjectCard from "./ProjectCard.astro";
@@ -12,7 +12,7 @@ interface Props {
     listAll?: boolean;
 }
 
-const { recentSize = PROJECTS.recentProjectsSize, listAll = false } = Astro.props;
+const { recentSize = siteConfig.projects.recentProjectsSize, listAll = false } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);

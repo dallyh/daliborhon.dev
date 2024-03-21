@@ -1,7 +1,7 @@
 ---
 import { loadNamespaces, t } from "@i18n/i18n";
+import { siteConfig } from "@config";
 import { getLocale } from "@i18n/utils";
-import { BLOG } from "src/config/blog";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 import { getRecentBlogArticlesByLocale } from "@services/content/getRecentBlogArticlesByLocale";
@@ -12,7 +12,7 @@ interface Props {
     showSeeAllUrl?: boolean;
 }
 
-const { postSize = BLOG.recentPostsSize, filterFeatured = false, showSeeAllUrl = true } = Astro.props;
+const { postSize = siteConfig.blog.recentPostsSize, filterFeatured = false, showSeeAllUrl = true } = Astro.props;
 
 // i18next
 const locale = getLocale(Astro.url);

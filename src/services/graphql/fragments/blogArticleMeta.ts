@@ -29,6 +29,17 @@ const f_blogArticleMeta = gql`
         }
         text(locale: $locale) {
             json
+            connections {
+                ... on Asset {
+                    id
+                    src
+                    blurHash
+                    width
+                    title
+                    description
+                    height
+                }
+            }
         }
         title
         tags {

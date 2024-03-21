@@ -1,4 +1,3 @@
-export * from "./extractFilenameAndExtension";
 export * from "./generateOgImage";
 export * from "./getAbsoluteBlogPostUrl";
 export * from "./getBlogPostSlug";

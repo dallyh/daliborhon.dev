@@ -15,5 +15,7 @@
     "i18n-ally.sortCompare": "locale",
     "i18n-ally.sortKeys": true,
     "i18n-ally.sortLocale": "en",
-    "css.customData": [".vscode/tailwind.json"]
+    "css.customData": [
+        ".vscode/tailwind.json"
+    ]
 }

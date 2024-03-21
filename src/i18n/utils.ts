@@ -1,4 +1,4 @@
-import { defaultLocale, locales, type AllowedLocales } from "@config/i18n";
+import { defaultLocale, locales, type AllowedLocales } from "@i18n/config";
 import { removeTrailingSlash } from "@utils";
 
 export function getLocale(url: URL): AllowedLocales {

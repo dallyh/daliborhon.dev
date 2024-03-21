@@ -1,0 +1,15 @@
+---
+import CaisyAsset from "./CaisyAsset.astro";
+const { connections, node } = Astro.props;
+---
+
+{
+    connections &&
+        connections.map((component: any) => {
+            if (component?.__typename === "Asset" && node?.attrs?.documentId === component.id) {
+                return <CaisyAsset {...component} />;
+            }
+            return null;
+        })
+}
+<slot />

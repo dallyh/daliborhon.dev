@@ -1,16 +1,19 @@
 ---
 import RichTextRenderer from "@caisy/rich-text-astro-renderer";
 import CaisyCodeBlock from "./CaisyCodeBlock.astro";
+import CaisyDocumentLink from "./CaisyDocumentLink.astro";
 
 export interface Props {
     richTextJson?: any;
+    connections?: any;
 }
 
-const { richTextJson } = Astro.props;
+const { richTextJson, connections } = Astro.props;
 
 const overwrites = {
     codeBlock: CaisyCodeBlock,
+    documentLink: CaisyDocumentLink
 };
 ---
 
-<RichTextRenderer node={richTextJson} overwrites={overwrites} />
+<RichTextRenderer node={richTextJson} overwrites={overwrites} connections={connections} />

@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import { locales, localeKeys, defaultLocale } from "./src/i18n/i18n";
+import { locales, localeKeys, defaultLocale } from "./src/i18n/config";
 import sitemap from "@astrojs/sitemap";
 import { loadEnv } from "vite";
 import pagefind from "astro-pagefind";
@@ -79,7 +79,10 @@ export default defineConfig({
     },
     output: "hybrid",
     adapter: cloudflare({
-        mode: "directory",
         imageService: "compile",
+        runtime: {
+            type: "pages",
+            mode: "local",
+        },
     }),
 });

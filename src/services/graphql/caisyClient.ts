@@ -34,7 +34,7 @@ const typesMap = {
 const requester: Requester<any> = async (doc: any, vars: any) => {
     const CAISY_PROJECT_ID = import.meta.env.CAISY_PROJECT_ID;
     const CAISY_API_KEY = import.meta.env.CAISY_API_KEY;
-    const NODE_ENV = import.meta.env.NODE_ENV;
+    const DEV_ENV = import.meta.env.DEV;
 
     if (!CAISY_PROJECT_ID || CAISY_PROJECT_ID == "") {
         throw new Error("CAISY_PROJECT_ID is not defined - please add it to the env file");
@@ -50,6 +50,7 @@ const requester: Requester<any> = async (doc: any, vars: any) => {
             uri: uri,
             headers: {
                 "x-caisy-apikey": `${CAISY_API_KEY}`,
+                "x-caisy-preview": `${DEV_ENV}`
             },
         }),
     ]);
@@ -63,7 +64,7 @@ const requester: Requester<any> = async (doc: any, vars: any) => {
         const res = await client.query({ query: doc, variables: vars });
         return res?.data as any;
     } catch (err: any) {
-        if (NODE_ENV == "development") {
+        if (DEV_ENV) {
             console.error("Error in GraphQL request:", "\n" + doc + "\n", vars, "\n" + err.message);
         } else {
             console.error(err);

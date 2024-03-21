@@ -1,4 +1,3 @@
-import type { CollectionEntry } from "astro:content";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
 import { getBlogPostSlug } from "./getBlogPostSlug";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";

@@ -2,20 +2,21 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { interpolate } from "@i18n/i18n";
 import type { CommonRes, ContactRes } from "@i18n/locales/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useForm, useWatch, type FieldValues, type Control } from "react-hook-form";
 import styles from "./ContactForm.module.css";
 
-interface ContactFormProps {
+export interface Props {
     resources: ContactRes;
     commonResources: CommonRes;
+    loader?: ReactNode;
 }
 
 const ACCESS_KEY = "7d81d4b3-a54e-4341-9544-2553a5aa4daf";
 const HCAPTCHA_KEY = "50b2fe65-b00b-4b9e-ad62-3ba471098be2";
 const API_URL = "https://api.web3forms.com/submit";
 
-export default function ContactForm({ resources, commonResources }: ContactFormProps) {
+export default function ContactForm({ resources, commonResources, loader }: Props) {
     const {
         register,
         handleSubmit,
@@ -27,6 +28,7 @@ export default function ContactForm({ resources, commonResources }: ContactFormP
     } = useForm({
         mode: "onTouched",
     });
+
     const [isSuccess, setIsSuccess] = useState(false);
     const [Message, setMessage] = useState("");
     const [animate] = useAutoAnimate();
@@ -161,7 +163,7 @@ export default function ContactForm({ resources, commonResources }: ContactFormP
                             )}
                         </div>
                         <button type="submit" className="button">
-                            {isSubmitting ? <div className="dot-flashing"></div> : commonResources.submit_btn}
+                            {isSubmitting ? loader : commonResources.submit_btn}
                         </button>
                     </form>
                 )}

@@ -1,4 +1,5 @@
 {
+    "$schema": "https://inlang.com/schema/inlang-message-format",
     "blog__all_posts_title": "All posts",
     "blog__blog_description": "Welcome to my blog on various topics, primarily focused on software, software development, and also snippets from the professional world.",
     "blog__blog_site_description": "Dalibor's blog about various topics, mainly oriented about software and software development.",
@@ -148,5 +149,6 @@
     "resume__skills_sw_title": "Software and platform experience (implementation, customization)",
     "resume__skills_windows_servers_description": "Configuring servers, installing required software (on-premise, Azure, IIS, and such)...",
     "resume__skills_windows_servers_title": "Windows Servers",
-    "resume__years": "years"
+    "resume__years": "years",
+    "projects__start_date_title": "Project started"
 }

@@ -3,6 +3,7 @@ import type { IGenProjectMetaFragment } from "@services/graphql/__generated/sdk"
 import CaisyRichTextRenderer from "../blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 import { Buffer } from "node:buffer";
 import { languageTag } from "$paraglide-runtime";
+import * as m from "$messages";
 
 interface Props {
     project: IGenProjectMetaFragment;
@@ -69,8 +70,7 @@ const img = await fetchImage(image!.src!);
     <div class="card-content">
         <i class="card-image" title={title} aria-label={title}>
             {img?.svg && <Fragment set:html={img?.data} />}
-            {!img?.svg && <img src={img?.data} />}
-            <!--  -->
+            {!img?.svg && <img src={img?.data} alt={title} />}
         </i>
         <div class="card-info-wrapper">
             <div class="card-info">
@@ -80,7 +80,7 @@ const img = await fetchImage(image!.src!);
                         {
                             (
                                 <div class="project-date">
-                                    <span>Project started:</span>
+                                    <span>{m.projects__start_date_title()}:</span>
                                     <time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
                                 </div>
                             )

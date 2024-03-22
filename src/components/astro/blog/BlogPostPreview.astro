@@ -19,7 +19,7 @@ const postUrl = getBlogPostUrl(locale, post);
 
 <article class="post-preview">
     <div class="post-image">
-        <Image src={post?.previewImage?.src!} alt={post!.title!} width={1200} height={630} loading="eager" />
+        <Image src={post?.previewImage?.src!} alt={post!.title!} width={1200} height={630} loading="eager" placeholder="blurhash" />
     </div>
     <hr />
     <div class="post-description">

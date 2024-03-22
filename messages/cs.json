@@ -1,4 +1,5 @@
 {
+    "$schema": "https://inlang.com/schema/inlang-message-format",
     "blog__all_posts_title": "Všechny příspěvky",
     "blog__blog_description": "Vítejte na mém blogu o různých tématech, primárně zaměřen na software, vývoj software a také střípky z pracovního světa.",
     "blog__blog_site_description": "Daliborův blog o různých tématech, primárně zaměřen na software a vývoj softwaru.",
@@ -148,5 +149,6 @@
     "resume__skills_sw_title": "Zkušenosti se softwarem a platformami (implementace, customizace)",
     "resume__skills_windows_servers_description": "Konfigurace serverů, instalace potřebného software (on-premise, IIS, Azure, a další) ...",
     "resume__skills_windows_servers_title": "Windows Servery",
-    "resume__years": "let"
+    "resume__years": "let",
+    "projects__start_date_title": "Start projektu"
 }

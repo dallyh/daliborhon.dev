@@ -26,10 +26,6 @@ export default defineConfig({
         format: "file",
     },
     image: {
-        service: imageService({
-            fallbackService: "sharp",
-            placeholder: "blurhash",
-        }),
         domains: ["assets.caisy.io"],
         remotePatterns: [
             {

@@ -1,0 +1,21 @@
+---
+import { Icon } from "astro-icon/components";
+
+export type DevListItem = {
+    tooltipPlacement?: string;
+    tooltipText: string;
+    iconName: string;
+};
+
+export interface Props {
+    tooltipPlacement?: string;
+    tooltipText: string;
+    iconName: string;
+}
+
+const { tooltipPlacement = "bottom", tooltipText, iconName } = Astro.props;
+---
+
+<li class="dev-list-inline-item" tabindex="0" data-tooltip={tooltipPlacement} data-tooltip-text={tooltipText}>
+    <i><Icon name={iconName} /></i>
+</li>

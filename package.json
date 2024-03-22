@@ -23,6 +23,7 @@
         "@apollo/client": "^3.9.8",
         "@astrojs/check": "^0.5.9",
         "@astrojs/cloudflare": "^9.1.0",
+        "@astrojs/mdx": "^2.2.1",
         "@astrojs/react": "^3.1.0",
         "@astrojs/tailwind": "^5.1.0",
         "@caisy/rich-text-astro-renderer": "^1.0.2",

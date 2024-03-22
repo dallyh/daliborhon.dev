@@ -1,46 +1,26 @@
 ---
 import * as m from "$messages";
+import type { TimelineItem } from "./TimelineItem.astro";
+
+export interface Props {
+    children: TimelineItem | TimelineItem[]
+}
+
 ---
 
-<div class="timeline">
+<div class="timeline prose-p:m-0 prose-headings:m-0">
     <div class="timeline-cards">
         <div class="timeline-card">
             <h3>{m.resume__section_exp_title()}</h3>
             <div class="timeline-content">
-                <div class="meta">
-                    <p class="date">{m.resume__km_ecm_date()}</p>
-                    <p class="title">ECM Business Consultant</p>
-                    <p>Konica Minolta IT Solutions Czech s.r.o</p>
-                    <p class="description">{m.resume__km_ecm_description()}</p>
-                </div>
-                <div class="meta">
-                    <p class="date">{m.resume__moneta_analyst_date()}</p>
-                    <p class="title">Analyst, Shared Services</p>
-                    <p>MONETA Money Bank a.s.</p>
-                    <p class="description">{m.resume__moneta_analyst_description()}</p>
-                </div>
-                <div class="meta">
-                    <p class="date">{m.resume__moneta_end_user_date()}</p>
-                    <p class="title">Administrator End User Services, IT</p>
-                    <p>MONETA Money Bank a.s.</p>
-                    <p class="description">{m.resume__moneta_end_user_description()}</p>
-                </div>
-                <div class="meta">
-                    <p class="date">{m.resume__asus_technician_date()}</p>
-                    <p class="title">Motherboard Technician</p>
-                    <p>ASUS Czech Service s.r.o.</p>
-                    <p class="description">{m.resume__asus_tech_description()}</p>
-                </div>
+                <slot name="exp" />
             </div>
         </div>
         <div class="timeline-card pagebreak">
             <h3>{m.resume__section_edu_title()}</h3>
             <div class="timeline-content">
                 <div class="meta">
-                    <p class="date">2010 - 2014</p>
-                    <p class="title">{m.resume__high_school_name()}</p>
-                    <p>{m.resume__maturity_diploma()}</p>
-                    <p class="description">{m.resume__high_school_description()}</p>
+                    <slot name="edu" />
                 </div>
             </div>
         </div>
@@ -84,51 +64,5 @@ import * as m from "$messages";
         left: 1px;
         top: 0;
         background: linear-gradient(to bottom, rgba(var(--accent), 0.75) 65%, transparent);
-    }
-
-    .timeline-content .meta {
-        position: relative;
-        margin-left: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .timeline-content > .meta > .title {
-        line-height: 1.5;
-        margin-top: 0.2rem;
-        position: relative;
-        font-weight: normal;
-        max-width: 95%;
-        font-size: 1.2rem;
-        color: rgba(var(--accent), 1);
-    }
-
-    .timeline-content > .meta > .date {
-        font-size: 0.835rem;
-        font-weight: 300;
-        position: relative;
-        margin-bottom: 0.5rem;
-
-        &::before {
-            content: "";
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            left: -30px;
-            top: 0;
-            border: 3px solid rgba(var(--accent), 1);
-            background-color: rgba(var(--secondary), 1);
-        }
-    }
-
-    .timeline-content > .meta > .description {
-        font-size: 0.9rem;
-        font-weight: 400;
-        margin-top: 1rem;
-        background-color: rgba(var(--secondary), 1);
-        padding: 0.725rem;
-        box-shadow: var(--global-box-shadow);
-        border-radius: 6px;
-        border: var(--border);
     }
 </style>

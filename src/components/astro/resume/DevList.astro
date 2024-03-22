@@ -1,0 +1,11 @@
+---
+import type { DevListItem } from "./DevListItem.astro";
+
+export interface Props {
+    children: DevListItem | DevListItem[];
+}
+---
+
+<ul class="dev-list-inline prose-li:list-none p-0">
+    <slot />
+</ul>

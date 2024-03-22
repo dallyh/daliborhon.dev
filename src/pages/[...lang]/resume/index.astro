@@ -1,22 +1,18 @@
 ---
 import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
-import Timeline from "@components/astro/resume/Timeline.astro";
 import * as m from "$messages";
 import { languageTag } from "$paraglide-runtime";
 import { Image } from "astro:assets";
+import { getEntry } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import profilePicture from "@assets/img/profile/me.png";
 
 export { getStaticPaths } from "@i18n/utils";
 
-// Images
-import abbyyLogo from "@assets/img/company-logos/ABBYY.png";
-import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
-import mfilesLogo from "@assets/img/company-logos/m-files.png";
-import nintextLogoBlack from "@assets/img/company-logos/nintex-black.svg";
-import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
-import profilePicture from "@assets/img/profile/me.png";
-import Section from "@components/astro/global/Section.astro";
-import PageLayout from "@layouts/PageLayout.astro";
-import { Icon } from "astro-icon/components";
+const locale = languageTag();
+
+const resumeEntry = await getEntry("resume", locale);
+const { Content } = await resumeEntry.render();
 
 const layoutProps = {
     title: "Dalibor Hon - " + m.common__resume(),
@@ -25,7 +21,6 @@ const layoutProps = {
 ---
 
 <PageLayout {...layoutProps}>
-    <!-- Introduction -->
     <section class="hero-container" id="hero">
         <div class="hero">
             <div class="profile-picture-wrapper">
@@ -36,212 +31,16 @@ const layoutProps = {
                     Dalibor<br />
                     Hon
                 </h1>
-                <p>BUSINESS CONSULTANT</p>
+                <p>{resumeEntry.data.currentPosition}</p>
             </div>
         </div>
         <div class="section-footer noprint">
             <ScrollIndicator href="#intro" />
         </div>
     </section>
-    <Section id="intro" sectionTitle={m.resume__section_intro_title()}>
-        <div class="resume-section skills">
-            <div class="intro-projects">
-                <div>
-                    <div class="content">
-                        <div class="skill-level">
-                            <span>+</span>
-                            <h3>45 {m.resume__card_project_title()}</h3>
-                        </div>
-                    </div>
-                </div>
-                <p>{m.resume__card_project_detail()}</p>
-            </div>
-            <div class="intro-summary">
-                <div class="bars">
-                    <div class="bar">
-                        <h3>{m.resume__card_ba_title()}</h3>
-                        <div class="fill" style="--width: 80%"></div>
-                        <p>{m.resume__card_ba_detail()}</p>
-                    </div>
-                    <div class="bar">
-                        <h3>{m.resume__card_implementation_title()}</h3>
-                        <div class="fill" style="--width: 60%"></div>
-                        <p>{m.resume__card_implementation_detail()}</p>
-                    </div>
-                    <div class="bar">
-                        <h3>{m.resume__card_dev_title()}</h3>
-                        <div class="fill" style="--width: 20%"></div>
-                        <p>{m.resume__card_dev_detail()}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </Section>
-    <Section id="skills" sectionTitle={m.resume__section_skills_title()}>
-        <div class="resume-section">
-            <p>
-                {m.resume__skills_introduction()}
-            </p>
-            <div class="list-card exp">
-                <div class="exp-text">+ 2 {m.resume__years()}</div>
-                <div class="exp-description">
-                    <h3>{m.resume__skills_ba_title()}</h3>
-                    <span>{m.resume__skills_ba_description()}</span>
-                </div>
-            </div>
-            <div class="list-card exp">
-                <div class="exp-text">+ 2 {m.resume__years()}</div>
-                <div class="exp-description">
-                    <h3>{m.resume__skills_windows_servers_title()}</h3>
-                    <span>{m.resume__skills_windows_servers_description()}</span>
-                </div>
-            </div>
-            <div class="list-card exp">
-                <div class="exp-text">+ 4 {m.resume__years()}</div>
-                <div class="exp-description">
-                    <h3>{m.resume__skills_db_title()}</h3>
-                    <span>{m.resume__skills_db_description()}</span>
-                </div>
-            </div>
-            <div class="list-card exp">
-                <div class="exp-text">+ 1 {m.resume__years()}</div>
-                <div class="exp-description">
-                    <h3>{m.resume__skills_oop_title()}</h3>
-                    <span>{m.resume__skills_oop_description()}</span>
-                </div>
-            </div>
-            <div class="list-card">
-                <h3 class="dev-list-title">
-                    {m.resume__skills_prg_title()}
-                    <span><i data-tooltip="top" data-tooltip-text={m.resume__hover_icons_tooltip()}><Icon name="bi:info-circle" /></i></span>
-                </h3>
-                <ul class="dev-list-inline">
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="HTML5">
-                        <i><Icon name="devicon:html5" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="CSS3">
-                        <i><Icon name="devicon:css3" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="JavaScript">
-                        <i><Icon name="devicon:javascript" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Node JS">
-                        <i><Icon name="devicon:nodejs" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="SASS">
-                        <i><Icon name="devicon:sass" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="NPM">
-                        <i><Icon name="devicon:npm-wordmark" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="C#">
-                        <i><Icon name="devicon:csharp" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text=".NET Framework">
-                        <i><Icon name="devicon:dot-net" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text=".NET Core">
-                        <i><Icon name="devicon:dotnetcore" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="MSSQL">
-                        <i><Icon name="devicon:microsoftsqlserver" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="GIT">
-                        <i><Icon name="devicon:git" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Adobe Photoshop">
-                        <i><Icon name="devicon:photoshop" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="Azure">
-                        <i><Icon name="devicon:azure" /></i>
-                    </li>
-                    <li class="dev-list-inline-item" tabindex="0" data-tooltip="bottom" data-tooltip-text="TypeScript">
-                        <i><Icon name="devicon:typescript" /></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="list-card">
-                <h3>{m.resume__skills_sw_title()}</h3>
-                <div class="software-experience-list">
-                    <ul>
-                        <li>
-                            <a href="https://www.abbyy.com/flexicapture/" target="_blank">ABBYY FlexiCapture</a>
-                        </li>
-                        <li>
-                            <a href="https://www.abbyy.com/finereader-server/" target="_blank">ABBYY FineReader Server</a>
-                        </li>
-                        <li>
-                            <a href="https://www.abbyy.com/vantage/" target="_blank">ABBYY Vantage</a>
-                        </li>
-                        <li>
-                            <a href="https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration" target="_blank">Microsoft SharePoint</a>
-                        </li>
-                        <li>
-                            <a href="https://powerplatform.microsoft.com/en-us/" target="_blank">Microsoft PowerPlaftorm</a>
-                        </li>
-                        <li>
-                            <a href="https://www.m-files.com/" target="_blank">M-Files</a>
-                        </li>
-                        <li>
-                            <a href="https://www.nintex.com/process-automation/k2-software/" target="_blank">K2 Five/K2 Cloud</a>
-                        </li>
-                    </ul>
-                </div>
-                <p>
-                    {m.resume__skills_sw_description()}
-                </p>
-            </div>
-        </div>
-    </Section>
-    <Section id="skills" sectionTitle={m.resume__section_cert_title()}>
-        <div class="resume-section" id="certifications">
-            <div class="certifications-list">
-                <p><Fragment set:html={m.resume__linkedin_certs()} /></p>
-                <div class="certifications-grid">
-                    <div class="cert-card">
-                        <Image class="cert-card-logo" src={msftLogo} width={150} height={32} alt="Microsoft logo" />
-                        <p class="cer-card-description">Power Platform Fundamentals (PL-900)</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo" src={msftLogo} width={150} height={32} alt="Microsoft logo" />
-                        <p class="cer-card-description">Microsoft Dynamics 365 Fundamentals (PL-900)</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo abbyy" src={abbyyLogo} width={110} alt="ABBYY logo" />
-                        <p class="cer-card-description">FlexiCapture 12 Basic</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo abbyy" src={abbyyLogo} width={110} alt="ABBYY logo" />
-                        <p class="cer-card-description">Vantage Certified Business Analyst</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
-                        <Image class="cert-card-logo nintex dark" src={nintextLogo} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
-                        <p class="cer-card-description">K2 IT Developer</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
-                        <Image class="cert-card-logo nintex dark" src={nintextLogo} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
-                        <p class="cer-card-description">K2 Business Analyst</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo nintex light" src={nintextLogoBlack} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
-                        <Image class="cert-card-logo nintex dark" src={nintextLogo} alt="Nintex logo" width={150} height={40} layout="fullWidth" />
-                        <p class="cer-card-description">K2 Citizen Developer</p>
-                    </div>
-                    <div class="cert-card">
-                        <Image class="cert-card-logo" src={mfilesLogo} width={150} alt="M-Files Corporation logo" />
-                        <p class="cer-card-description">M-Files Solution Engineer</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </Section>
-    <Section id="skills" sectionTitle={m.resume__section_timeline_title()}>
-        <div class="resume-setion" id="experience">
-            <Timeline />
-        </div>
-    </Section>
+    <div class="prose max-w-none dark:prose-invert">
+        <Content />
+    </div>
 </PageLayout>
 
 <style is:global>
@@ -256,26 +55,33 @@ const layoutProps = {
             display: none;
         }
     }
-</style>
 
-<style>
-    h2 {
-        position: relative;
+    .dev-list-inline {
+        margin: 0;
+        text-align: center;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        flex-wrap: wrap;
+        row-gap: 1rem;
     }
 
-    h3 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: rgba(var(--accent), 1);
-        padding-bottom: 1rem;
+    .dev-list-inline .dev-list-inline-item {
+        transition: all 300ms;
 
         i {
             display: inline-block;
-            color: var(--body-color);
-            margin-left: 10px;
+            font-size: 3rem;
+            width: max-content;
         }
     }
 
+    .dev-list-inline .dev-list-inline-item:hover,
+    .dev-list-inline .dev-list-inline-item:focus-visible {
+        transform: scale(1.1);
+    }
+</style>
+
+<style>
     .hero-container {
         display: grid;
         gap: 0.5rem;
@@ -344,6 +150,7 @@ const layoutProps = {
         display: block;
         object-fit: cover;
         border-radius: inherit;
+        height: 100%;
     }
 
     .section-footer {
@@ -352,191 +159,5 @@ const layoutProps = {
         align-items: center;
         align-self: flex-end;
         padding-bottom: 0.5rem;
-    }
-
-    .intro-projects .skill-level {
-        display: flex;
-        color: rgba(var(--accent), 1);
-    }
-
-    .intro-projects .skill-level span {
-        font-size: 1rem;
-    }
-
-    .intro-projects .content {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .intro-summary {
-        width: 100%;
-        margin-top: 1rem;
-    }
-
-    .bars {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-        width: 100%;
-
-        @media (max-width: 800px) {
-            grid-auto-flow: row;
-        }
-
-        .bar {
-            display: flex;
-            gap: 1rem;
-            flex-direction: column;
-            flex: 1 1 0px;
-
-            .fill {
-                height: 3px;
-                background: var(--body-color);
-                position: relative;
-
-                &:before {
-                    content: "";
-                    position: absolute;
-                    width: var(--width);
-                    height: 100%;
-                    background: rgba(var(--accent), 1);
-                }
-            }
-        }
-    }
-
-    .list-card {
-        margin-top: 1rem;
-    }
-
-    .list-card.exp {
-        display: grid;
-        grid-template-columns: max-content 1fr;
-        gap: 1rem;
-    }
-
-    .list-card.exp .exp-text,
-    .list-card span {
-        color: var(--accent-color);
-        font-weight: 600;
-    }
-
-    .list-card.exp .exp-text {
-        text-align: center;
-        font-size: 1.1rem;
-    }
-
-    .list-card.exp .exp-description span {
-        font-weight: inherit;
-    }
-
-    .list-card p {
-        padding-top: 1rem;
-    }
-
-    .dev-list-inline {
-        margin: 0;
-        text-align: center;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        flex-wrap: wrap;
-        row-gap: 1rem;
-    }
-
-    .dev-list-inline .dev-list-inline-item {
-        transition: all 300ms;
-
-        i {
-            display: inline-block;
-            font-size: 3rem;
-            width: max-content;
-        }
-    }
-
-    .dev-list-inline .dev-list-inline-item:hover,
-    .dev-list-inline .dev-list-inline-item:focus-visible {
-        transform: scale(1.1);
-    }
-
-    .software-experience-list {
-        display: flex;
-
-        & ul {
-            list-style: circle;
-            margin-left: 1rem;
-            line-height: 22px;
-        }
-    }
-
-    .certifications-list {
-        display: grid;
-        gap: 1rem;
-    }
-
-    .certifications-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-    }
-
-    @media (max-width: 768px) {
-        .certifications-grid {
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-    }
-
-    .cert-card {
-        height: 150px;
-        padding: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        background-color: var(--card-bg);
-        box-shadow: var(--global-box-shadow);
-        border-radius: 6px;
-        border: var(--border);
-    }
-
-    .cert-card p {
-        margin: 0;
-        max-width: 90%;
-        text-align: center;
-    }
-
-    .cert-card-logo {
-        max-width: 170px;
-        max-height: 50px;
-        width: auto;
-        height: auto;
-    }
-
-    @media (max-width: 768px) {
-        .cert-card {
-            gap: 1rem;
-        }
-
-        .cert-card p {
-            margin: 0;
-            max-width: 90%;
-            text-align: center;
-            font-size: 0.8rem;
-        }
-
-        .cert-card-logo:not(.nintex) {
-            width: 125px;
-            height: 25px;
-        }
-
-        .cert-card-logo.nintex {
-            width: 130px;
-        }
-
-        .cert-card-logo.abbyy {
-            width: 120px;
-            height: unset;
-        }
     }
 </style>

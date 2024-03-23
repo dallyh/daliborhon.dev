@@ -1,19 +1,96 @@
 ---
 import RichTextRenderer from "@caisy/rich-text-astro-renderer";
-import CaisyCodeBlock from "./CaisyCodeBlock.astro";
-import CaisyDocumentLink from "./CaisyDocumentLink.astro";
+import CodeBlock from "./nodes/CodeBlock.astro";
+import DocumentLink from "./nodes/DocumentLink.astro";
+import Heading from "./nodes/Heading.astro";
+import { slugifyStr } from "@utils";
+import * as m from "$messages";
+import type { HeadingNode } from "./types";
 
 export interface Props {
     richTextJson?: any;
     connections?: any;
+    generateToc?: boolean;
+    maxTocDepth?: number;
 }
 
-const { richTextJson, connections } = Astro.props;
+const { richTextJson, connections, generateToc = true, maxTocDepth } = Astro.props;
 
 const overwrites = {
-    codeBlock: CaisyCodeBlock,
-    documentLink: CaisyDocumentLink,
+    codeBlock: CodeBlock,
+    documentLink: DocumentLink,
+    heading: Heading,
 };
+
+const headings = richTextJson.content.filter((node: HeadingNode) => {
+    return node.type === "heading";
+});
+
+function generateTableOfContents(headings: HeadingNode[], maxDepth: number | undefined) {
+    let tocHtml = "<ol>";
+    let currentLevel = 1;
+
+    headings.forEach((heading: HeadingNode) => {
+        if (maxDepth && heading.attrs.level > maxDepth) {
+            return;
+        }
+
+        if (heading.attrs.level > currentLevel) {
+            tocHtml += "<ol>";
+        } else if (heading.attrs.level < currentLevel) {
+            tocHtml += "</ol>".repeat(currentLevel - heading.attrs.level);
+        }
+
+        currentLevel = heading.attrs.level;
+        tocHtml += `<li><a href="#${slugifyStr(undefined, heading.content[0].text)}" title="${heading.content[0].text}">${heading.content[0].text}</a></li>`;
+    });
+
+    tocHtml += "</ol>".repeat(currentLevel);
+
+    return tocHtml;
+}
 ---
 
+{
+    generateToc && (
+        <details>
+            <h2 class="mt-0" id="toc">
+                {m.blog__toc()}
+            </h2>
+            <summary>{m.blog__open_toc}</summary>
+            <nav class="toc">
+                <Fragment set:html={generateTableOfContents(headings, maxTocDepth)} />
+            </nav>
+        </details>
+    )
+}
+
 <RichTextRenderer node={richTextJson} overwrites={overwrites} connections={connections} />
+
+<style is:global>
+    .toc {
+        ol {
+            list-style: inside disc;
+
+            li a {
+                &:visited {
+                    color: var(--a-color);
+                }
+            }
+        }
+    }
+</style>
+
+<style>
+    details {
+        cursor: pointer;
+        user-select: none;
+        display: inline-block;
+        list-style: inside disclosure-closed;
+        margin-bottom: 1rem;
+    }
+
+    details[open] > summary:first-of-type {
+        list-style-type: disclosure-open;
+    }
+</style>

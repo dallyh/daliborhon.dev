@@ -15,6 +15,7 @@ html {
         Arial;
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
+    scroll-padding-top: var(--header-margin);
     /* scrollbar-gutter: stable; */
 }
 

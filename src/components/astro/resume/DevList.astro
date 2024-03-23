@@ -6,6 +6,15 @@ export interface Props {
 }
 ---
 
-<ul class="dev-list-inline prose-li:list-none p-0">
+<ul class="dev-list-inline p-0 m-0 prose-li:list-none prose-li:m-0 prose-li:p-0">
     <slot />
 </ul>
+
+<style>
+    .dev-list-inline {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 1rem;
+        width: 100%;
+    }
+</style>

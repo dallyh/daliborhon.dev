@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 export type CertCard = {
     img: ImageMetadata;
     width: number;
-    height: number;
+    height?: number;
     alt: string;
     description: string;
 };
@@ -12,7 +12,7 @@ export type CertCard = {
 export interface Props {
     img: ImageMetadata;
     width: number;
-    height: number;
+    height?: number;
     alt: string;
     description: string;
 }

@@ -1,7 +1,7 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useForm, useWatch, type FieldValues, type Control } from "react-hook-form";
+import { useForm, useWatch, type FieldValues } from "react-hook-form";
 import styles from "./ContactForm.module.css";
 import * as m from "$messages";
 import { setLanguageTag, type AvailableLanguageTag } from "../../../paraglide/runtime";
@@ -23,19 +23,18 @@ export default function ContactForm({ loader, locale }: Props) {
         reset,
         control,
         formState: { errors, isSubmitSuccessful, isSubmitting },
-        watch,
     } = useForm({
         mode: "onTouched",
-    });
-
-    useEffect(() => {
-        setLanguageTag(locale);
     });
 
     const [isSuccess, setIsSuccess] = useState(false);
     const [Message, setMessage] = useState("");
     const [animate] = useAutoAnimate();
     const captchaRef = useRef<HCaptcha>(null);
+
+    useEffect(() => {
+        setLanguageTag(locale);
+    });
 
     const userName = useWatch({
         control,

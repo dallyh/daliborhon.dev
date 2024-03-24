@@ -69,7 +69,7 @@ const layoutProps = {
             <hr />
         </div>
         <article class="prose max-w-none dark:prose-invert">
-            <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} />
+            <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} generateToc/>
         </article>
     </main>
     <Footer />

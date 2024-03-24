@@ -14,7 +14,7 @@ export interface Props {
     maxTocDepth?: number;
 }
 
-const { richTextJson, connections, generateToc = true, maxTocDepth } = Astro.props;
+const { richTextJson, connections, generateToc = false, maxTocDepth } = Astro.props;
 
 const overwrites = {
     codeBlock: CodeBlock,

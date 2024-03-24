@@ -21,3 +21,7 @@ pnpm-debug.log*
 .DS_Store
 
 astro_tmp_pages_*
+
+.wrangler
+functions/\[\[path\]\].js
+functions/\[\[path\]\].js.map

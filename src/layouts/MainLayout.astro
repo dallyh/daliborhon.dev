@@ -1,13 +1,10 @@
 ---
 import { ViewTransitions } from "astro:transitions";
-import { getLocale } from "@i18n/utils";
-import { t, loadNamespaces } from "@i18n/i18n";
+import { languageTag } from "$paraglide-runtime";
+import * as m from "$messages";
 import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
 import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
-
-// Global CSS
-import "../styles/reset.css";
 import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/keyframes.css";
@@ -23,13 +20,13 @@ export interface Props {
     showBrowserWarning?: boolean;
 }
 
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["common"]);
+
+const locale = languageTag();
 
 const {
     title,
     author = "Dalibor Hon",
-    description = t("common.site_description"),
+    description = m.common__site_description(),
     ogImage = getAbsoluteLocaleUrl(locale, "og.png"),
     canonicalURL = new URL(Astro.url.pathname, Astro.site),
     pubDatetime,
@@ -83,9 +80,9 @@ const basePath = import.meta.env.BASE_URL;
         <!-- Fonts, icons and external scripts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="preload stylesheet" as="style" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" />
-        <!-- <link rel="preload stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" /> -->
-        <!-- <link rel="preload stylesheet" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" /> -->
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="preload" as="style" />
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://assets.caisy.io" />
     </head>
     <body>
         {showBrowserWarning && <BrowserWarning />}
@@ -94,16 +91,14 @@ const basePath = import.meta.env.BASE_URL;
             <slot />
         </div>
         <script>
-            import DropdownHandler from "../scripts/dropdown";
             import { initializeTooltips } from "../scripts/tooltips";
 
             document.addEventListener(
                 "astro:page-load",
                 (e) => {
-                    DropdownHandler.init();
                     initializeTooltips();
                 },
-                { once: false },
+                { once: false }
             );
         </script>
     </body>

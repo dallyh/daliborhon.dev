@@ -16,13 +16,13 @@ jobs:
         env:
             PR_PATH: ${{ github.event.repository.name }}/${{ github.event.pull_request.number }}
         steps:
-        #    - name: Check if preview deploy is currently running and wait
-        #      uses: lewagon/wait-on-check-action@v1.3.1
-        #      with:
-        #          ref: ${{ github.ref }}
-        #          running-workflow-name: "Build and deploy new PR site preview"
-        #          repo-token: ${{ secrets.GITHUB_TOKEN }}
-        #          wait-interval: 10
+            #    - name: Check if preview deploy is currently running and wait
+            #      uses: lewagon/wait-on-check-action@v1.3.1
+            #      with:
+            #          ref: ${{ github.ref }}
+            #          running-workflow-name: "Build and deploy new PR site preview"
+            #          repo-token: ${{ secrets.GITHUB_TOKEN }}
+            #          wait-interval: 10
 
             - name: Make empty dir
               run: mkdir dist

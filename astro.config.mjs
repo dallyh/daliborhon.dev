@@ -1,13 +1,14 @@
-import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
+import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
-import * as i18n from "./src/config/i18n";
 import sitemap from "@astrojs/sitemap";
-import { loadEnv } from "vite";
-import pagefind from "astro-pagefind";
+import tailwind from "@astrojs/tailwind";
+import paraglide from "@inlang/paraglide-js-adapter-astro";
 import icon from "astro-icon";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeToc from "rehype-toc";
+import pagefind from "astro-pagefind";
+import { defineConfig } from "astro/config";
+import { loadEnv } from "vite";
+import { defaultLocale, localeKeys, locales } from "./src/i18n/config";
 
 const { SITE_URL, SITE_BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -19,22 +20,24 @@ console.log(`Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`);
 export default defineConfig({
     site: URL,
     base: SITE_BASE,
-    trailingSlash: "always",
+    trailingSlash: "never",
     build: {
-        format: "directory",
+        format: "file",
     },
-    prefetch: true,
-    markdown: {
-        rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "append" }], [rehypeToc, { headings: ["h1", "h2", "h3"] }]],
-        shikiConfig: {
-            // Choose from Shiki's built-in themes (or add your own)
-            // https://github.com/shikijs/shiki/blob/main/docs/themes.md
-            theme: "material-theme-palenight",
-        },
+    image: {
+        domains: ["assets.caisy.io"],
+        remotePatterns: [
+            {
+                protocol: "https",
+            },
+        ],
+    },
+    prefetch: {
+        defaultStrategy: "hover",
     },
     i18n: {
-        defaultLocale: i18n.defaultLocale,
-        locales: i18n.locales,
+        defaultLocale: defaultLocale,
+        locales: locales,
         routing: {
             prefixDefaultLocale: false,
         },
@@ -43,10 +46,9 @@ export default defineConfig({
         react(),
         sitemap({
             i18n: {
-                defaultLocale: i18n.defaultLocale,
-                // All urls that don't contain `es` or `fr` after `https://stargazers.club/` will be treated as default locale, i.e. `en`
+                defaultLocale: defaultLocale,
                 locales: {
-                    ...i18n.localeKeys,
+                    ...localeKeys,
                 },
             },
             filter: (page) => page !== `'${URL}admin'`,
@@ -57,8 +59,16 @@ export default defineConfig({
             include: {
                 bi: ["*"],
                 devicon: ["*"],
+                tabler: ["error-404"],
+                heroicons: ["chevron-down"],
             },
         }),
+        tailwind(),
+        paraglide({
+            project: "./project.inlang",
+            outdir: "./src/paraglide",
+        }),
+        mdx(),
     ],
     vite: {
         server: {
@@ -68,4 +78,12 @@ export default defineConfig({
             exclude: ["@resvg/resvg-js"],
         },
     },
+    output: "hybrid",
+    adapter: cloudflare({
+        imageService: "compile",
+        runtime: {
+            type: "pages",
+            mode: "local",
+        },
+    }),
 });

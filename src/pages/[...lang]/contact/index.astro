@@ -4,6 +4,7 @@ import Section from "@components/astro/global/Section.astro";
 import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
+import SocialLinks from "@components/astro/home/SocialLinks.astro";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -13,24 +14,15 @@ const layoutProps = {
 ---
 
 <PageLayout {...layoutProps}>
-    <Section isFirstSection sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
-        <Contact />
-    </Section>
-    <Section sectionTitle={m.common__social_links_title()} sectionDescription={m.contact__contact_me_social()} id="contactSocial">
-        <div class="socials-container">
-            <ul class="social-list">
-                <li>
-                    <a href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
-                        <i><Icon name="bi:github" /></i>GitHub
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
-                        <i><Icon name="bi:linkedin" /></i>LinkedIn
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <Section isFirstSection sectionTitle={m.common__contact()} id="contact">
+        <Section sectionTitle={m.common__social_links_title()} sectionDescription={m.contact__contact_me_social()} id="contactSocial">
+            <div class="socials-container">
+                <SocialLinks />
+            </div>
+        </Section>
+        <Section sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
+            <Contact />
+        </Section>
     </Section>
 </PageLayout>
 

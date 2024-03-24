@@ -1,42 +1,48 @@
 ---
 import * as m from "$messages";
-
-import PageLayout from "@layouts/PageLayout.astro";
 import { Icon } from "astro-icon/components";
 export { getStaticPaths } from "@i18n/utils";
 import { languageTag } from "$paraglide-runtime";
+import MainLayout from "@layouts/MainLayout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 const locale = languageTag();
 
 const layoutProps = {
-    title: "Error 404 (Not Found)",
-    description: "The requested page was not found.",
+    title: m.error__not_found(),
+    description: m.error__not_found_description(),
 };
 ---
 
-<PageLayout {...layoutProps}>
-    <div class="page-not-found">
-        <Icon name="tabler:error-404" />
-        <span>Ooops...</span>
-        <h1>Page was not found</h1>
-        <p>Looks like the developer forgot something important.</p>
-        <button id="homeButton" class="button" data-locale={locale}>Go home</button>
+<MainLayout {...layoutProps}>
+    <div class="page-not-found-container">
+        <div class="not-found-meta">
+            <Icon name="tabler:error-404" />
+            <h1>{m.error__not_found_description()}</h1>
+            <div class="meta-url">
+                <Icon name="bi:link-45deg" />
+                <p id="url"></p>
+            </div>
+        </div>
+        <div class="buttons-container">
+            <button id="backButton" class="button" onclick="history.back()"><Icon name="bi:arrow-left-square" />{m.common__back_btn()}</button>
+            <button id="homeButton" class="button" data-href={getRelativeLocaleUrl(locale, "/home")}><Icon name="bi:house" />{m.common__home}</button>
+        </div>
     </div>
-</PageLayout>
+</MainLayout>
 
 <script>
-    import { getRelativeLocaleUrl } from "astro:i18n";
-    import { navigate } from "astro:transitions/client";
-
     const button = document.getElementById("homeButton")!;
+    const urlEle = document.getElementById("url")!;
 
-    function handleClick() {
-        const locale = button.dataset.locale!;
-        const url = getRelativeLocaleUrl(locale, "/home");
-        navigate(url);
-    }
+    const currentUrl = window.location.pathname;
+    urlEle.innerHTML = currentUrl;
 
-    button.addEventListener("click", handleClick);
+    button.addEventListener("click", (e) => {
+        console.log("Home clicked");
+        const url = button.dataset.href!;
+        window.location.href = url;
+    });
 </script>
 
 <style is:global>
@@ -46,23 +52,25 @@ const layoutProps = {
 </style>
 
 <style>
-    .page-not-found {
+    .page-not-found-container {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
+        gap: 2rem;
         align-items: center;
         flex-direction: column;
         position: relative;
     }
 
-    .button {
-        margin-top: 1rem;
-    }
+    .buttons-container {
+        display: flex;
+        gap: 1rem;
 
-    [data-icon="tabler:error-404"] {
-        width: 8rem;
-        height: 8rem;
+        button {
+            display: inline-flex;
+            gap: 0.75rem;
+        }
     }
 
     .code {
@@ -70,5 +78,27 @@ const layoutProps = {
         color: red;
         opacity: 0.2;
         font-size: 8rem;
+    }
+
+    .not-found-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    [data-icon="tabler:error-404"] {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    [data-icon="bi:x-circle"] {
+        color: red;
+    }
+
+    .meta-url {
+        gap: 1rem;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

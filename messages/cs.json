@@ -150,5 +150,7 @@
     "resume__skills_windows_servers_description": "Konfigurace serverů, instalace potřebného software (on-premise, IIS, Azure, a další) ...",
     "resume__skills_windows_servers_title": "Windows Servery",
     "resume__years": "let",
-    "projects__start_date_title": "Start projektu"
+    "projects__start_date_title": "Start projektu",
+    "error__not_found": "Chyba 404 (Nenalezeno)",
+    "error__not_found_description": "Zadaná adresa URL nebyla nalezena"
 }

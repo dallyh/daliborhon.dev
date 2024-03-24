@@ -150,5 +150,7 @@
     "resume__skills_windows_servers_description": "Configuring servers, installing required software (on-premise, Azure, IIS, and such)...",
     "resume__skills_windows_servers_title": "Windows Servers",
     "resume__years": "years",
-    "projects__start_date_title": "Project started"
+    "projects__start_date_title": "Project started",
+    "error__not_found": "Error 404 (Not Found)",
+    "error__not_found_description": "The specified URL was not found"
 }

@@ -31,9 +31,14 @@ export default function ContactForm({ loader, locale }: Props) {
     const [Message, setMessage] = useState("");
     const [animate] = useAutoAnimate();
     const captchaRef = useRef<HCaptcha>(null);
+    const [isLoading, setisLoading] = useState(true);
 
     useEffect(() => {
         setLanguageTag(locale);
+    });
+
+    useEffect(() => {
+        setisLoading(false);
     });
 
     const userName = useWatch({
@@ -97,7 +102,8 @@ export default function ContactForm({ loader, locale }: Props) {
     return (
         <>
             <div className={styles["contact-form-wrapper"]} ref={animate}>
-                {!isSubmitSuccessful && (
+                {isLoading && <div className={styles.loader}>{loader}</div>}
+                {!isLoading && !isSubmitSuccessful && (
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <input type="hidden" value={ACCESS_KEY} {...register("access_key")} />
                         <input type="hidden" {...register("subject")} />

@@ -1,100 +1,102 @@
 ---
-import { getLocale } from "@i18n/utils";
-import { extractFileNameAndExtension } from "@utils";
-import type { ImageMetadata } from "astro";
-import { Image } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
+import type { IGenProjectMetaFragment } from "@services/graphql/__generated/sdk";
+import CaisyRichTextRenderer from "../blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
+import { Buffer } from "node:buffer";
+import * as m from "$messages";
 
 interface Props {
-    project: CollectionEntry<"projects">;
+    project: IGenProjectMetaFragment;
 }
 
-const locale = getLocale(Astro.url);
+const locale = Astro.currentLocale!;
 const { project } = Astro.props;
-const { href, title, image, projectStartDate, projectTags } = project.data;
-const { Content } = await project.render();
-
-const file = extractFileNameAndExtension(image);
-function getSVG(name: string) {
-    const filepath = `/public/assets/uploads/img/projects/${name}.svg`;
-    const files = import.meta.glob<string>("/public/assets/uploads/img/projects/**/*.svg", {
-        query: "?raw",
-        eager: true,
-        import: "default",
-    });
-
-    if (!(filepath in files)) {
-        throw new Error(`${filepath} not found`);
-    }
-
-    return files[filepath];
-}
-
-function getImage(name: string, ext: string): ImageMetadata {
-    const filepath = `/public/assets/uploads/img/projects/${name}.${ext}`;
-    const files = import.meta.glob<ImageMetadata>("/public/assets/uploads/img/projects/**/*.{svg,jpg,jpeg,png,webp,avif}", {
-        eager: true,
-    });
-
-    if (!(filepath in files)) {
-        throw new Error(`${filepath} not found`);
-    }
-
-    return files[filepath];
-}
+const { projectSourceUrl, title, image, projectStartDate, projectTags, description } = project;
 
 const formatDateTime = () => {
-    const date = projectStartDate.toLocaleDateString(locale, {
+    const date = projectStartDate!.toLocaleDateString(locale, {
         day: "numeric",
         month: "short",
         year: "numeric",
     });
 
     return {
-        iso: projectStartDate.toISOString(),
+        iso: projectStartDate!.toISOString(),
         date: date,
     };
 };
+
+const isTagCssColorEmpty = (cssColor: string | null) => {
+    if (cssColor === null || cssColor === "") {
+        return true;
+    }
+    return false;
+};
+
+async function fetchImage(url: string) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error("Failed to fetch image");
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("image/svg+xml")) {
+            const res = await response.text();
+
+            return {
+                svg: true,
+                data: res,
+            };
+        } else {
+            const res = await response.arrayBuffer();
+            const base = Buffer.from(res).toString("base64");
+            const data = `data:${contentType};base64,${base}`;
+
+            return {
+                svg: false,
+                data: data,
+            };
+        }
+    } catch (error) {
+        console.error("Error fetching image:", error);
+    }
+}
+const img = await fetchImage(image!.src!);
 ---
 
 <div class="card">
     <div class="card-content">
         <i class="card-image" title={title} aria-label={title}>
-            {file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
-            {file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} title={title} loading="lazy" format="webp" />}
+            {img?.svg && <Fragment set:html={img?.data} />}
+            {!img?.svg && <img src={img?.data} alt={title} />}
         </i>
         <div class="card-info-wrapper">
-            <div class="card-info">
-                <div class="card-info-title">
-                    <div class="title-meta">
-                        <a href={href} target="_blank" title={title} aria-label={title}>{title}</a>
-                        {
-                            /*
-                                <div class="project-date">
-                                    <span>Project started:</span>
-                                    <time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
+            <div class="card-info-title">
+                <div class="title-meta">
+                    <a href={projectSourceUrl} target="_blank" title={title} aria-label={title}>{title}</a>
+                    {
+                        (
+                            <div class="project-date">
+                                <span>{m.projects__start_date_title()}:</span>
+                                <time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
+                            </div>
+                        )
+                    }
+                </div>
+                <div class="card-info-tags">
+                    {
+                        projectTags!.map((tag) => {
+                            return (
+                                <div class="rounded-tag" style={`background: ${isTagCssColorEmpty(tag?.cssColor!) ? tag?.color : tag?.cssColor};`}>
+                                    {tag?.title}
                                 </div>
-                            */
-                        }
-                    </div>
-                    <div class="card-info-tags">
-                        {
-                            projectTags.map(async (tag) => {
-                                const curr = await getEntry("project-tags", tag.id);
-
-                                return (
-                                    <div class="rounded-tag" style={`background: ${curr.data.bgColor};`}>
-                                        {curr.data.title}
-                                    </div>
-                                );
-                            })
-                        }
-                    </div>
+                            );
+                        })
+                    }
                 </div>
-                <div class="card-body">
-                    <Content />
-                </div>
+            </div>
+            <div class="card-body">
+                <CaisyRichTextRenderer richTextJson={description?.json} />
             </div>
         </div>
     </div>
@@ -150,21 +152,6 @@ const formatDateTime = () => {
         }
     }
 
-    .card-info-wrapper {
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-start;
-        padding: 0px 1rem;
-        width: 100%;
-        height: 100%;
-    }
-
-    .card-info {
-        align-items: flex-start;
-        display: flex;
-        gap: 10px;
-    }
-
     .card-info-tags {
         display: flex;
         flex-wrap: wrap;
@@ -183,9 +170,11 @@ const formatDateTime = () => {
         }
     }
 
-    .card-info {
+    .card-info-wrapper {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
 
         .card-body {
             color: var(--body-color);

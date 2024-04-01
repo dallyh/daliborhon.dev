@@ -1,21 +1,37 @@
-import { defaultLocale } from "@config/i18n";
+import { defaultLocale, locales } from "@i18n/config";
 import { getRoutingLocale } from "@i18n/utils";
-import { generateOgImageForPost, getBlogPostSlug, getFilteredPostsCollection } from "@utils";
+import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { getBlogPostSlug } from "@utils";
+import { generateOgImageForPost } from "@utils/og";
 import type { APIContext } from "astro";
-import {type CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
-    const allPosts = await getFilteredPostsCollection();
+    const paths = await Promise.all(
+        locales.map(async (locale) => {
+            const posts = (await getAllBlogArticlesByLocale({ locale })) ?? [];
 
-    const paths = allPosts?.map((post) => {
-        return { params: { lang: getRoutingLocale(post.data.language), slug: getBlogPostSlug(post.data.language, post) }, props: { post: post } };
-    });
+            if (posts === undefined) {
+                return [];
+            }
 
-    return paths;
+            return posts.map((post) => ({
+                params: {
+                    lang: getRoutingLocale(locale),
+                    slug: getBlogPostSlug(locale, post),
+                },
+                props: {
+                    post: post,
+                },
+            }));
+        }),
+    );
+
+    return paths.flat();
 }
 
 export async function GET({ params, props }: APIContext) {
-    return new Response(await generateOgImageForPost(props.post as CollectionEntry<"posts">, params.lang ?? defaultLocale), {
+    return new Response(await generateOgImageForPost(props.post as IGenBlogArticleMetaFragment, params.lang ?? defaultLocale), {
         headers: { "Content-Type": "image/png" },
     });
 }

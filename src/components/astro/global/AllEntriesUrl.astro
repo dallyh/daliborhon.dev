@@ -1,5 +1,4 @@
 ---
-import { getLocale } from "@i18n/utils";
 import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
@@ -10,8 +9,7 @@ interface Props {
 
 const { url, urlDescription } = Astro.props;
 
-// i18next
-const locale = getLocale(Astro.url);
+const locale = Astro.currentLocale!;
 ---
 
 <div class="arrow-link">

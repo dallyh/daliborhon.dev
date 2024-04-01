@@ -1,72 +1,66 @@
 ---
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import PostsList from "@components/astro/blog/PostsList.astro";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import Section from "@components/astro/global/Section.astro";
-import { locales } from "@config/i18n";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getRoutingLocale } from "@i18n/utils";
+import { locales } from "@i18n/config";
+import * as m from "$messages";
+import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getFilteredPostsCollection, getTagByLocale } from "@utils";
-import { getCollection } from "astro:content";
+import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
+import { getAllTags } from "@services/content/getAllTags";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import SearchMeta from "@components/astro/global/SearchMeta.astro";
 
-// This is kinda complicated
 export async function getStaticPaths() {
-    const tags = await getCollection("tags");
-
-    if (tags === undefined) {
-        const paths = locales.map((locale) => ({
-            params: { lang: getRoutingLocale(locale), tag: undefined },
-        }));
-        return paths;
-    }
-
-    const paths = await Promise.all(tags.flatMap((tag) =>
+    const paths = await Promise.all(
         locales.map(async (locale) => {
-            const filteredPosts = await getFilteredPostsCollection({ locale: locale, tagId: tag.id });
+            const tags = await getAllTags({});
 
-            if (filteredPosts?.length === 0) {
-                return {
-                    params: { lang: getRoutingLocale(locale), tag: undefined},
-                };
-            }
+            return await Promise.all(
+                tags.map(async (tag) => {
+                    const posts = await getAllBlogArticlesByTagAndLocale({ locale, tagId: tag.id! });
 
-            return {
-                params: { lang: getRoutingLocale(locale), tag: tag.id },
-            };
+                    if (posts === undefined || posts.length === 0) {
+                        return {
+                            params: { lang: getRoutingLocale(locale), tag: tag?.name },
+                            props: { posts: undefined, tag: tag, locale: locale },
+                        };
+                    }
+
+                    return {
+                        params: { lang: getRoutingLocale(locale), tag: tag?.name },
+                        props: { posts: posts, tag: tag, locale: locale },
+                    };
+                }),
+            );
         }),
-    ));
+    );
 
-    return paths;
+    return paths.flat();
 }
 
-const { tag } = Astro.params;
-const locale = getLocale(Astro.url);
-const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, tagId: tag });
+const { posts, tag, locale } = Astro.props;
 
-// i18next
-await loadNamespaces(locale, ["blog", "common"]);
-
-const tagTitle = await getTagByLocale(locale, tag);
-const tagDescription = `${t("blog.posts_tagged")} #${tagTitle}`;
+const tagTitle = tag.name!;
+const tagDescription = `${m.blog__posts_tagged()} #${tagTitle}`;
 const layoutProps = {
-    title: `${t("blog.tag")}: ${tagTitle}`,
+    title: `${m.blog__tag()}: #${tagTitle}`,
     description: tagDescription,
 };
 ---
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={t("blog.tags")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
         <BreadCrumbsItem currentPage={true} label={tagTitle} />
     </BreadCrumbs>
     <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
-        {!filteredPosts && <p>{t("blog.no_tagged_posts")}</p>}
-        {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_tagged_posts")}</p>}
-        {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
+        {!posts && <p>{m.blog__no_tagged_posts()}</p>}
+        {posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}
+        {posts && posts.length !== 0 && <PostsGrid posts={posts} />}
     </Section>
 </PageLayout>
 

@@ -1,59 +1,46 @@
 ---
+import * as m from "$messages";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
-import { getBlogPostUrl, getCategoryTitleByLocale, getOgImageUrl } from "@utils";
-import type { CollectionEntry } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { Image } from "@unpic/astro";
+import { getAbsoluteCategoryUrl, getBlogPostUrl } from "@utils";
 import TagList from "./TagList.astro";
 
 interface Props {
-    post: CollectionEntry<"posts">;
+    post: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
-const locale = getLocale(Astro.url);
-const ogUrl = getOgImageUrl(locale, post, Astro.url);
+const locale = Astro.currentLocale!;
 const postUrl = getBlogPostUrl(locale, post);
-
-await loadNamespaces(locale, ["blog"]);
 ---
 
-<div class="post-preview">
-    {post.data.hidden && <div class="hidden-post">DEV MODE HIDDEN</div>}
-    <img src={ogUrl} alt={post.data.title} loading="eager" />
+<article class="post-preview">
+    <div class="post-image">
+        <Image src={post?.previewImage?.src!} alt={post!.title!} width={1200} height={630} loading="eager" placeholder="blurhash" />
+    </div>
     <hr />
     <div class="post-description">
-        <a href={postUrl} class="post-title">{post.data.title}</a>
+        <a href={postUrl} class="post-title">{post?.title}</a>
         <div class="post-meta">
             {
-                post.data.category && (
+                post.category?.name && (
                     <p>
-                        {t("blog.category")}: <a href={getRelativeLocaleUrl(locale, `/blog/categories/${post.data.category.id}`)}>{getCategoryTitleByLocale(locale, post.data.category.id)}</a>
+                        {m.blog__category()}: <a href={getAbsoluteCategoryUrl(locale, post.category)}>{post.category?.name}</a>
                     </p>
                 )
             }
             <div>
-                <FormattedDate pubDateTime={post.data.pubDateTime} modDatetime={post.data.modDatetime} locale={locale} />
+                <FormattedDate pubDateTime={post._meta?.firstPublishedAt!} modDatetime={post._meta?.publishedAt!} locale={locale} />
             </div>
         </div>
     </div>
     <div class="tags">
         <TagList post={post} bgColor="transparent" justify="center" />
     </div>
-</div>
+</article>
 
 <style>
-    .hidden-post {
-        color: red;
-        position: absolute;
-        font-weight: 600;
-        font-size: 3rem;
-        opacity: 0.2;
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-    }
-    
     .post-preview {
         display: flex;
         flex-direction: column;
@@ -101,7 +88,7 @@ await loadNamespaces(locale, ["blog"]);
             }
         }
 
-        img {
+        .post-image {
             display: block;
             width: 100%;
             height: auto;

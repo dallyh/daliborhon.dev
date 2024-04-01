@@ -2,15 +2,14 @@
 // https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
 // Really thanks folks!
 
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
 import "@pagefind/default-ui/css/ui.css";
 import { Icon } from "astro-icon/components";
 
-const locale = getLocale(Astro.url);
-loadNamespaces(locale, ["common"]);
+const locale = Astro.currentLocale!;
 
 // Temporary, until https://github.com/CloudCannon/pagefind/pull/543 gets merged
+// It is merged, waiting for release!
 let translations = {};
 if (locale === "cs") {
     translations = {
@@ -32,14 +31,14 @@ if (locale === "cs") {
 <site-search data-translations={JSON.stringify(translations)}>
     <button data-open-modal disabled>
         <div class="inner">
-            <i class="search-icon"><Icon name="bi:search" size={18} title={t("common.search")} /></i>
-            <i class="slash-icon"><Icon name="forward-slash" size={18} title={t("common.search_label")} /></i>
+            <i class="search-icon"><Icon name="bi:search" size={18} title={m.common__search()} /></i>
+            <i class="slash-icon"><Icon name="forward-slash" size={18} title={m.common__search_label()} /></i>
         </div>
     </button>
 
-    <dialog aria-label={t("common.search")}>
+    <dialog aria-label={m.common__search()}>
         <div class="dialog-frame">
-            <button data-close-modal>{t("common.close_btn")}</button>
+            <button data-close-modal>{m.common__close_btn()}</button>
             <div class="search-container">
                 <div id="pagefind"></div>
             </div>
@@ -117,6 +116,9 @@ if (locale === "cs") {
                             showImages: false,
                             translations,
                             showSubResults: true,
+                            sort: {
+                                date: "asc",
+                            },
                             processResult: function (result: any) {
                                 if (result?.meta?.image) {
                                     let resultBase = new URL(result.url, String(window.location));
@@ -203,7 +205,7 @@ if (locale === "cs") {
         margin: 4rem auto auto;
         border-radius: 0.5rem;
         width: 90%;
-        max-width: 40rem;
+        max-width: 60rem;
         height: max-content;
         min-height: 15rem;
         max-height: calc(100% - 8rem);
@@ -267,7 +269,7 @@ if (locale === "cs") {
 <style is:global>
     :root {
         --pagefind-ui-scale: 0.8;
-        --pagefind-ui-primary: red;
+        --pagefind-ui-primary: rgba(var(--accent), 1);
         --pagefind-ui-text: var(--body-color);
         --pagefind-ui-background: var(--bg-color);
         --pagefind-ui-border: rgba(var(--accent), 1);
@@ -285,7 +287,6 @@ if (locale === "cs") {
 
     #pagefind .pagefind-ui__search-input {
         box-shadow: var(--global-box-shadow);
-        border: var(--border-search);
 
         @media (max-width: 768px) {
             width: calc(100% - 5rem);
@@ -294,6 +295,10 @@ if (locale === "cs") {
         &:focus-visible {
             box-shadow: var(--focus-visible-shadow);
         }
+    }
+
+    #pagefind .pagefind-ui__drawer {
+        gap: calc(30px * var(--pagefind-ui-scale));
     }
 
     #pagefind .pagefind-ui__search-clear {
@@ -331,7 +336,7 @@ if (locale === "cs") {
     #pagefind .pagefind-ui__result {
         padding: calc(10px * var(--pagefind-ui-scale)) calc(10px * var(--pagefind-ui-scale)) calc(20px * var(--pagefind-ui-scale)) calc(10px * var(--pagefind-ui-scale));
         border-radius: 6px;
-        border: 1px solid rgba(var(--accent), 0.2);
+        background-color: var(--pagefind-ui-background);
     }
 
     #pagefind .pagefind-ui__results > * + * {
@@ -347,5 +352,16 @@ if (locale === "cs") {
         font-weight: 700;
         color: inherit;
         text-decoration: underline;
+    }
+
+    #pagefind .pagefind-ui__result-tags {
+        display: flex;
+        gap: 0.5rem;
+
+        .pagefind-ui__result-tag {
+            display: inline-flex;
+            background-color: rgba(var(--accent), 0.6);
+            padding: 0.35rem;
+        }
     }
 </style>

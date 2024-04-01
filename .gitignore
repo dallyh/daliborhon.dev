@@ -16,8 +16,14 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.dev.vars
 
 # macOS-specific files
 .DS_Store
 
 astro_tmp_pages_*
+
+.wrangler
+functions/\[\[path\]\].js
+functions/\[\[path\]\].js.map
+

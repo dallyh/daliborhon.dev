@@ -1,0 +1,20 @@
+---
+import { siteConfig } from "@config";
+import { Code } from "astro:components";
+import type { BuiltinLanguage, BundledTheme } from "shikiji";
+
+export interface Props {
+    node: any;
+}
+
+const { node } = Astro.props;
+
+const codeBlockProps = {
+    theme: siteConfig.blog.codeBlockTheme as BundledTheme,
+    code: node.content[0].text as string,
+    lang: node.attrs.language as BuiltinLanguage,
+};
+---
+
+<div>Language: {codeBlockProps.lang}</div>
+<Code {...codeBlockProps} />

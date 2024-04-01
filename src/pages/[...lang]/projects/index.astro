@@ -1,20 +1,19 @@
 ---
 import Section from "@components/astro/global/Section.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
-import { t } from "@i18n/i18n";
-import { getStaticPaths } from "@i18n/utils";
+import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
 
-export { getStaticPaths };
+export { getStaticPaths } from "@i18n/utils";
 
 const layoutProps = {
-    title: "Dalibor Hon - " + t("projects.projects"),
-    description: t("projects.description"),
+    title: "Dalibor Hon - " + m.projects__projects(),
+    description: m.projects__description(),
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <Section id="projects" isFirstSection sectionTitle={t("projects.projects")} sectionDescription={t("projects.description")}>
+    <Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
         <ProjectsList listAll />
     </Section>
 </PageLayout>

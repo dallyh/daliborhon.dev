@@ -2,7 +2,8 @@
     --page-width: 1024px;
     --padding-x: 0.75rem;
     --header-height: 75px;
-    --header-margin: calc(var(--header-height) + 0.5rem);
+    --header-margin: var(--header-height);
+    --border-radius: 6px;
 
     @media screen and (min-width: 2240px) {
         --page-width: 1324px;
@@ -17,7 +18,7 @@
     --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(0, 120, 180));
     --secondary: 240, 240, 240; /* Light gray */
     --body-color: rgb(0, 0, 0); /* rgb(51, 51, 51) */
-    --button-color: rgb(51, 51, 51);
+    --button-color: rgb(0, 0, 0);
     --button-hover-color: #fff;
     --bg-color: rgb(245, 245, 245); /* Light gray background */
     --header-bg: rgba(235, 235, 235, 0.7);
@@ -33,7 +34,7 @@
 /* Dark theme */
 :root[data-theme="dark"] {
     color-scheme: dark;
-    --border: none;
+    --border: 1px solid rgba(255, 255, 255, 0.1);
     --border-search: 1px solid rgba(255, 255, 255, 0.2);
     --accent: 14, 165, 233; /*136, 58, 234*/
     --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(34, 211, 238));

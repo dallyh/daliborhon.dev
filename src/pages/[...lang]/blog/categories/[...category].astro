@@ -1,67 +1,67 @@
 ---
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import PostsList from "@components/astro/blog/PostsList.astro";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import Section from "@components/astro/global/Section.astro";
-import { locales } from "@config/i18n";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getRoutingLocale } from "@i18n/utils";
+import { locales } from "@i18n/config";
+import * as m from "$messages";
+import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getCategoryTitleByLocale, getFilteredPostsCollection } from "@utils";
-import { getCollection } from "astro:content";
+import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
+import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale";
+import { slugifyStr } from "@utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import SearchMeta from "@components/astro/global/SearchMeta.astro";
 
 export async function getStaticPaths() {
-    const categories = await getCollection("categories");
+    const paths = await Promise.all(
+        locales.map(async (locale) => {
+            const categories = await getAllCategoriesByLocale({ locale });
 
-    if (categories === undefined) {
-        const paths = locales.flatMap((locale) => {
-            return { params: { lang: getRoutingLocale(locale), category: undefined } };
-        });
-        return paths;
-    }
+            return await Promise.all(
+                categories.map(async (cat) => {
+                    const posts = await getAllBlogArticlesByCategoryAndLocale({ locale, categoryName: cat?.name! });
 
-    const paths = await Promise.all(categories.flatMap((cat) => {
-        return locales.map(async (locale) => {
-            const filteredPosts = await getFilteredPostsCollection({ locale: locale, categoryId: cat.id });
-            
-            if (filteredPosts === undefined || filteredPosts.length === 0) {
-                return { params: { lang: getRoutingLocale(locale), category: undefined } }
-            }
+                    if (posts === undefined || posts.length === 0) {
+                        return {
+                            params: { lang: getRoutingLocale(locale), category: slugifyStr(locale, cat?.name!) },
+                            props: { posts: undefined, category: cat, locale: locale },
+                        };
+                    }
 
-            return { params: { lang: getRoutingLocale(locale), category: cat.id } };
-        });
-    }));
+                    return {
+                        params: { lang: getRoutingLocale(locale), category: slugifyStr(locale, cat?.name!) },
+                        props: { posts: posts, category: cat, locale: locale },
+                    };
+                }),
+            );
+        }),
+    );
 
-    return paths;
+    return paths.flat();
 }
 
-const { category } = Astro.params;
-const locale = getLocale(Astro.url);
-const filteredPosts = await getFilteredPostsCollection({ locale: locale, sort: true, categoryId: category });
+const { posts, category, locale } = Astro.props;
 
-// i18next
-await loadNamespaces(locale, ["blog", "common"]);
-
-const categoryTitle = await getCategoryTitleByLocale(locale, category);
-const categoryDescription = `${t("blog.posts_with_category")} ${categoryTitle.toLowerCase()}`;
+const categoryTitle = category?.name!;
+const categoryDescription = `${m.blog__posts_with_category()} ${categoryTitle.toLowerCase()}`;
 const layoutProps = {
-    title: `${t("blog.category")}: ${categoryTitle}`,
+    title: `${m.blog__category()}: ${categoryTitle}`,
     description: categoryDescription,
 };
 ---
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={t("blog.categories")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={m.blog__categories()} />
         <BreadCrumbsItem currentPage={true} label={categoryTitle} />
     </BreadCrumbs>
     <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
-        {!filteredPosts && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-        {filteredPosts && filteredPosts.length === 0 && <p class="category-post-list">{t("blog.no_category_posts")} 😞</p>}
-        {filteredPosts && filteredPosts.length !== 0 && <PostsList posts={filteredPosts} />}
+        {!posts && <p class="category-post-list">{m.blog__no_category_posts()} 😞</p>}
+        {posts && posts.length === 0 && <p class="category-post-list">{m.blog__no_category_posts()} 😞</p>}
+        {posts && posts.length !== 0 && <PostsGrid posts={posts} />}
     </Section>
 </PageLayout>
 

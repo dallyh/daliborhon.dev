@@ -1,18 +1,4 @@
 {
-    "i18n-ally.localesPaths": ["src/i18n/locales"],
-    "i18n-ally.namespace": true,
-    "i18n-ally.pathMatcher": "{locale}/{namespaces}.yaml",
-    "i18n-ally.enabledFrameworks": ["i18next", "custom"],
-    "i18n-ally.keystyle": "flat",
-    "i18n-ally.annotationDelimiter": ":",
-    "i18n-ally.annotationInPlace": false,
-    "i18n-ally.dirStructure": "dir",
-    "i18n-ally.displayLanguage": "en",
-    "i18n-ally.extract.keygenStyle": "snake_case",
-    "i18n-ally.indent": 4,
-    "i18n-ally.review.enabled": false,
-    "i18n-ally.review.gutters": false,
-    "i18n-ally.sortCompare": "locale",
-    "i18n-ally.sortKeys": true,
-    "i18n-ally.sortLocale": "en"
+    "css.customData": [".vscode/tailwind.json"],
+    "i18n-ally.localesPaths": ["messages", "src/i18n", "src/paraglide/messages"]
 }

@@ -15,90 +15,120 @@ const layoutProps = {
 ---
 
 <MainLayout {...layoutProps}>
-    <div class="page-not-found-container">
-        <div class="not-found-meta">
-            <Icon name="tabler:error-404" />
-            <h1>{m.error__not_found_description()}</h1>
-            <div class="meta-url">
-                <Icon name="bi:link-45deg" />
-                <p id="url"></p>
+    <div class="notfound-container">
+        <div class="notfound">
+            <div class="notfound-404">
+                <Icon name="document-404" />
             </div>
-        </div>
-        <div class="buttons-container">
-            <button id="backButton" class="button" onclick="history.back()"><Icon name="bi:arrow-left-square" />{m.common__back_btn()}</button>
-            <button id="homeButton" class="button" data-href={getRelativeLocaleUrl(locale, "/home")}><Icon name="bi:house" />{m.common__home}</button>
+            <h1>404</h1>
+            <h2>{m.error__not_found_description()}</h2>
+            <p>{m.error_not_found_detail()}</p>
+            <button id="backButton" onclick="history.back()"><Icon name="bi:arrow-left-square" />{m.common__back_btn()}</button>
         </div>
     </div>
 </MainLayout>
-
-<script>
-    const button = document.getElementById("homeButton")!;
-    const urlEle = document.getElementById("url")!;
-
-    const currentUrl = window.location.pathname;
-    urlEle.innerHTML = currentUrl;
-
-    button.addEventListener("click", (e) => {
-        console.log("Home clicked");
-        const url = button.dataset.href!;
-        window.location.href = url;
-    });
-</script>
 
 <style is:global>
     main {
         margin: auto;
     }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <style>
-    .page-not-found-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        align-items: center;
-        flex-direction: column;
+    #notfound-container {
         position: relative;
+        height: 100vh;
     }
 
-    .buttons-container {
+    .notfound {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 560px;
+        width: 100%;
+        padding-left: 160px;
+        line-height: 1.1;
         display: flex;
+        flex-direction: column;
         gap: 1rem;
+
+        h1 {
+            font-size: 65px;
+            font-weight: 600;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-weight: 400;
+            margin: 0;
+        }
 
         button {
             display: inline-flex;
-            gap: 0.75rem;
+            align-items: center;
+            gap: 0.5rem;
+            width: max-content;
+            font-weight: 700;
+            color: var(--a-color);
+            height: 2rem;
+
+            &:hover,
+            &:focus-visible {
+                text-decoration: underline;
+            }
         }
     }
 
-    .code {
+    .notfound-404 {
         position: absolute;
-        color: red;
-        opacity: 0.2;
-        font-size: 8rem;
+        left: 0;
+        top: 0;
+        display: inline-block;
+        width: 140px;
+        height: 140px;
+
+        svg {
+            width: 100%;
+            height: 100%;
+            color: rgba(var(--accent, 1));
+        }
+
+        &:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: scale(2.4);
+            border-radius: 50%;
+            background-color: rgba(var(--secondary), 0.4);
+            z-index: -1;
+        }
     }
 
-    .not-found-meta {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    @media (max-width: 768px) {
+        .notfound-404 {
+            width: 110px;
+            height: 110px;
+        }
 
-    [data-icon="tabler:error-404"] {
-        width: 8rem;
-        height: 8rem;
-    }
-
-    [data-icon="bi:x-circle"] {
-        color: red;
-    }
-
-    .meta-url {
-        gap: 1rem;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
+        .notfound {
+            padding-left: 0.2rem;
+            padding-right: 0.2rem;
+            padding-top: 110px;
+        }
     }
 </style>

@@ -1,16 +1,5 @@
-import { defaultLocale, locales, type AllowedLocales } from "@config/i18n";
+import { defaultLocale, locales, type AllowedLocales } from "@i18n/config";
 import { removeTrailingSlash } from "@utils";
-
-export function getLocale(url: URL): AllowedLocales {
-    const pathSegments = url.pathname.split("/");
-
-    // Find the first valid language code in the path
-    const lang = pathSegments.find((segment) => locales.includes(segment));
-
-    // Return the found language or the default locale if none is found
-    const locale = lang || defaultLocale;
-    return locale as AllowedLocales;
-}
 
 export function getRoutingLocale(locale: string | undefined) {
     if (locale === defaultLocale) {
@@ -48,7 +37,7 @@ export function getPathFromUrl(url: URL) {
 // i18n routing
 export async function getStaticPaths() {
     const paths = locales.map((locale) => {
-        return { params: { lang: getRoutingLocale(locale) } };
+        return { params: { lang: getRoutingLocale(locale) }, props: { lang: locale } };
     });
 
     return paths;

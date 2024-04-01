@@ -2,29 +2,26 @@
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getStaticPaths } from "@i18n/utils";
+import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
-export { getStaticPaths };
+export { getStaticPaths } from "@i18n/utils";
 
-// i18n
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["blog", "common"]);
+const locale = Astro.currentLocale!;
 
 const layoutProps = {
-    title: t("blog.featured_posts_title"),
-    description: t("blog.featured_posts_description"),
+    title: m.blog__featured_posts_title(),
+    description: m.blog__featured_posts_description(),
 };
 ---
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={t("blog.posts")} />
-        <BreadCrumbsItem currentPage={true} label={t("blog.featured_posts_title")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={m.blog__posts()} />
+        <BreadCrumbsItem currentPage={true} label={m.blog__featured_posts_title()} />
     </BreadCrumbs>
     <FeaturedPosts isFirstSection showSeeAllUrl={false} />
 </PageLayout>

@@ -1,0 +1,72 @@
+---
+import RichTextRenderer from "@caisy/rich-text-astro-renderer";
+import CodeBlock from "./nodes/CodeBlock.astro";
+import DocumentLink from "./nodes/DocumentLink.astro";
+import Heading from "./nodes/Heading.astro";
+import * as m from "$messages";
+import type { HeadingNode } from "./utils/types";
+import { generateTableOfContents } from "./utils/generateTableOfContents";
+
+export interface Props {
+    richTextJson?: any;
+    connections?: any;
+    generateToc?: boolean;
+    maxTocDepth?: number;
+}
+
+const { richTextJson, connections, generateToc = false, maxTocDepth } = Astro.props;
+
+const overwrites = {
+    codeBlock: CodeBlock,
+    documentLink: DocumentLink,
+    heading: Heading,
+};
+
+const headings: HeadingNode[] = richTextJson.content.filter((node: HeadingNode) => {
+    return node.type === "heading";
+});
+---
+
+{
+    generateToc && headings.length !== 0 && (
+        <details>
+            <h2 class="mt-0" id="toc">
+                {m.blog__toc()}
+            </h2>
+            <summary>{m.blog__open_toc}</summary>
+            <nav class="toc">
+                <Fragment set:html={generateTableOfContents(headings, maxTocDepth)} />
+            </nav>
+        </details>
+    )
+}
+
+<RichTextRenderer node={richTextJson} overwrites={overwrites} connections={connections} />
+
+<style is:global>
+    .toc {
+        ol {
+            list-style: inside disc;
+
+            li a {
+                &:visited {
+                    color: var(--a-color);
+                }
+            }
+        }
+    }
+</style>
+
+<style>
+    details {
+        cursor: pointer;
+        user-select: none;
+        display: inline-block;
+        list-style: inside disclosure-closed;
+        margin-bottom: 1rem;
+    }
+
+    details[open] > summary:first-of-type {
+        list-style-type: disclosure-open;
+    }
+</style>

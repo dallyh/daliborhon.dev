@@ -1,22 +1,20 @@
 ---
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
+import * as m from "$messages";
 import { Icon } from "astro-icon/components";
-import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import NavLoader from "./NavLoader.astro";
 
 interface Props {
-    post?: CollectionEntry<"posts">;
+    post?: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["common", "blog", "projects"]);
+const locale = Astro.currentLocale!;
 ---
 
 <site-nav>
@@ -25,59 +23,79 @@ await loadNamespaces(locale, ["common", "blog", "projects"]);
             <div class="nav-start">
                 <div class="brand">
                     <div class="brand-logo">
-                        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/home")} title={t("common.home")} aria-label={t("common.home")}>
+                        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/home")} title={m.common__home()} aria-label={m.common__home()}>
                             <Icon name="dh-logo" size={40} />
                         </a>
                     </div>
                 </div>
                 <nav class="menu">
                     <ul class="menu-bar">
-                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")}>{t("common.home")}</a></li>
                         <li>
-                            <button class="nav-link dropdown-btn" data-dropdown="blogDropdown" aria-haspopup="true" aria-expanded="false" aria-label={t("common.blog")}>
-                                {t("common.blog")}
+                            <a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")} aria-label={m.common__home()}>
+                                {m.common__home()}
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-link dropdown-btn" data-dropdown="blogDropdown" aria-haspopup="true" aria-expanded="false" aria-label={m.common__blog()}>
+                                {m.common__blog()}
                             </button>
                             <div id="blogDropdown" class="dropdown">
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">{t("blog.browse_posts")}</span>
+                                        <span class="dropdown-link-title">{m.blog__browse_posts()}</span>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")}>{t("blog.posts")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.blog__posts()}>
+                                            {m.blog__posts()}
+                                        </a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")}>{t("blog.all_posts_title")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
+                                            {m.blog__all_posts_title()}
+                                        </a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")}>{t("blog.featured_posts_title")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
+                                            {m.blog__featured_posts_title()}
+                                        </a>
                                     </li>
                                 </ul>
                                 <ul role="menu">
                                     <li>
-                                        <span class="dropdown-link-title">{t("blog.explore_posts")}</span>
+                                        <span class="dropdown-link-title">{m.blog__explore_posts()}</span>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/categories")}>{t("blog.categories")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/categories")} aria-label={m.blog__categories()}>
+                                            {m.blog__categories()}
+                                        </a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/tags")}>{t("blog.tags")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
+                                            {m.blog__tags()}
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li><a class="nav-link" href={getRelativeLocaleUrl(locale, "/projects")}>{t("projects.projects")}</a></li>
                         <li>
-                            <button class="nav-link dropdown-btn" data-dropdown="aboutDropdown" aria-haspopup="true" aria-expanded="false" aria-label={t("common.about")}>
-                                {t("common.about")}
+                            <a class="nav-link" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
+                                {m.projects__projects()}
+                            </a>
+                        </li>
+                        <li>
+                            <button class="nav-link dropdown-btn" data-dropdown="aboutDropdown" aria-haspopup="true" aria-expanded="false" aria-label={m.common__about()}>
+                                {m.common__about()}
                             </button>
                             <div id="aboutDropdown" class="dropdown">
                                 <ul role="menu">
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/resume")}>{t("common.resume")}</a>
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
+                                            {m.common__resume()}
+                                        </a>
                                     </li>
                                     <li role="menuitem">
-                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/contact")}>
-                                            {t("common.contact")}
+                                        <a class="dropdown-link" href={getRelativeLocaleUrl(locale, "/about/contact")} aria-label={m.common__contact()}>
+                                            {m.common__contact()}
                                         </a>
                                     </li>
                                 </ul>
@@ -97,6 +115,7 @@ await loadNamespaces(locale, ["common", "blog", "projects"]);
                 </div>
             </div>
         </div>
+        <NavLoader />
     </header>
 </site-nav>
 
@@ -161,7 +180,7 @@ await loadNamespaces(locale, ["common", "blog", "projects"]);
         position: fixed;
         top: 0;
         background: var(--header-bg);
-        backdrop-filter: blur(16px);
+        backdrop-filter: blur(8px);
         z-index: 1010;
         height: var(--header-height);
         border-bottom: var(--border);

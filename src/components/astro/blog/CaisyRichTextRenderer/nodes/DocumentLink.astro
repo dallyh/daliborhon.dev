@@ -1,0 +1,16 @@
+---
+import Asset from "./Asset.astro";
+
+const { connections, node } = Astro.props;
+---
+
+{
+    connections &&
+        connections.map((component: any) => {
+            if (component?.__typename === "Asset" && node?.attrs?.documentId === component.id) {
+                return <Asset {...component} />;
+            }
+            return null;
+        })
+}
+<slot />

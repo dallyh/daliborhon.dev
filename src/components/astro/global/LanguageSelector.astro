@@ -2,28 +2,27 @@
 // Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
 // Edited for this project needs.
 
-import { locales } from "@config/i18n";
-import { loadNamespaces } from "@i18n/i18n";
-import { getLocale, getPathFromUrl } from "@i18n/utils";
-import { getBlogPostByIdAndLocale, getBlogPostUrl } from "@utils";
+import { locales } from "@i18n/config";
+import { getPathFromUrl } from "@i18n/utils";
+import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { getBlogPostUrl } from "@utils";
 import { Icon } from "astro-icon/components";
-import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import ISO6991 from "iso-639-1";
+import { getBlogArticleByLocale } from "@services/content/getBlogArticleByLocale";
+import { languageTag } from "$paraglide-runtime";
 
 interface Props {
-    post?: CollectionEntry<"posts">;
+    post?: IGenBlogArticleMetaFragment;
 }
 
 const { post } = Astro.props;
 
-const currentLocale = getLocale(Astro.url);
+const currentLocale = languageTag();
 const capitalizeFirstLetter = (str: string) => {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
     return capitalized;
 };
-
-await loadNamespaces(currentLocale, ["common"]);
 ---
 
 <lang-select>
@@ -50,7 +49,22 @@ await loadNamespaces(currentLocale, ["common"]);
             {
                 post &&
                     locales.map(async (locale) => {
-                        const currentPost = await getBlogPostByIdAndLocale(locale, post.data.postId);
+                        // Pevent fetching the same post twice
+                        if (locale === post?._meta?.locale) {
+                            const value = getBlogPostUrl(locale, post);
+                            const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+                            const current = currentLocale === locale;
+
+                            return (
+                                <>
+                                    <option selected={current} data-language={locale} value={value}>
+                                        {nativeName}
+                                    </option>
+                                </>
+                            );
+                        }
+
+                        const currentPost = await getBlogArticleByLocale({ id: post?.id!, locale });
                         const value = getBlogPostUrl(locale, currentPost);
                         const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
                         const current = currentLocale === locale;
@@ -67,6 +81,31 @@ await loadNamespaces(currentLocale, ["common"]);
         </select>
     </label>
 </lang-select>
+
+<script>
+    import { siteConfig } from "@config";
+    import { navigate } from "astro:transitions/client";
+    import cookie from "js-cookie";
+
+    const configCookie = siteConfig.i18n.localeCookie;
+
+    class LanguageSelect extends HTMLElement {
+        constructor() {
+            super();
+            const select = this.querySelector("select");
+            if (select) {
+                select.addEventListener("change", (e) => {
+                    if (e.currentTarget instanceof HTMLSelectElement) {
+                        const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
+                        cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
+                        navigate(e.currentTarget.value);
+                    }
+                });
+            }
+        }
+    }
+    customElements.define("lang-select", LanguageSelect);
+</script>
 
 <style>
     lang-select {
@@ -155,24 +194,3 @@ await loadNamespaces(currentLocale, ["common"]);
         }
     }
 </style>
-
-<script>
-    import { navigate } from "astro:transitions/client";
-    class LanguageSelect extends HTMLElement {
-        constructor() {
-            super();
-            const select = this.querySelector("select");
-            if (select) {
-                select.addEventListener("change", (e) => {
-                    if (e.currentTarget instanceof HTMLSelectElement) {
-                        const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
-                        window.localStorage.setItem("language", lang);
-
-                        navigate(e.currentTarget.value);
-                    }
-                });
-            }
-        }
-    }
-    customElements.define("lang-select", LanguageSelect);
-</script>

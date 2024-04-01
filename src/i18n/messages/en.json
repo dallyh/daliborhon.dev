@@ -154,5 +154,6 @@
     "error__not_found": "Error 404 (Not Found)",
     "error__not_found_description": "The specified URL was not found",
     "common__date": "Date",
-    "resume__download_cv": "Download CV"
+    "resume__download_cv": "Download CV",
+    "error_not_found_detail": "Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable."
 }

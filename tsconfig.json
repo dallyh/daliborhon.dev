@@ -1,11 +1,14 @@
 {
     "extends": "astro/tsconfigs/strict",
+    "include": ["src", "scripts"],
     "compilerOptions": {
         "typeRoots": ["./node_modules/@types"],
         "jsx": "react-jsx",
         "jsxImportSource": "react",
         "resolveJsonModule": true,
         "esModuleInterop": true,
+        "moduleResolution": "Bundler",
+        "allowJs": true,
         "baseUrl": "./",
         "paths": {
             "@components/*": ["src/components/*"],
@@ -14,7 +17,12 @@
             "@public/*": ["src/public/*"],
             "@layouts/*": ["src/layouts/*"],
             "@utils": ["src/utils/index.ts"],
-            "@config/*": ["src/config/*"],
-        },
-    },
+            "@utils/og": ["src/utils/open-graph/index.ts"],
+            "@services/*": ["src/services/*"],
+            "@config": ["site.config.ts"],
+            "@content/*": ["src/content/*"],
+            "$messages": ["src/paraglide/messages.js"],
+            "$paraglide-runtime": ["src/paraglide/runtime.js"]
+        }
+    }
 }

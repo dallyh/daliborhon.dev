@@ -1,11 +1,9 @@
 ---
-import { BLOG } from "@config/blog";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale } from "@i18n/utils";
-import { getCollection } from "astro:content";
+import { siteConfig } from "@config";
+import * as m from "$messages";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
-import { getFilteredPostsCollection } from "@utils";
+import { getFeaturedBlogArticlesByLocale } from "@services/content/getFeaturedBlogArticlesByLocale";
 
 interface Props {
     postSize?: number;
@@ -13,31 +11,28 @@ interface Props {
     showSeeAllUrl?: boolean;
 }
 
-const { postSize = BLOG.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
+const { postSize = siteConfig.blog.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
 
-// i18next
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["blog"]);
+const locale = Astro.currentLocale!;
 
-//Blogs
-const filteredPosts = await getFilteredPostsCollection({ sort: true, locale: locale, featured: true, slice: postSize });
+const posts = await getFeaturedBlogArticlesByLocale({ locale, first: postSize });
 
 const sectionProps = {
     id: "featuredPosts",
     isFirstSection,
-    sectionTitle: t("blog.featured_posts_title"),
-    sectionDescription: t("blog.featured_posts_description"),
+    sectionTitle: m.blog__featured_posts_title(),
+    sectionDescription: m.blog__featured_posts_description(),
 };
 ---
 
 <Section {...sectionProps}>
-    {!filteredPosts && <p>{t("blog.no_featured_posts")} 😞</p>}
-    {filteredPosts && filteredPosts.length === 0 && <p>{t("blog.no_featured_posts")} 😞</p>}
+    {!posts && <p>{m.blog__no_featured_posts()} 😞</p>}
+    {posts && posts.length === 0 && <p>{m.blog__no_featured_posts()} 😞</p>}
     {
-        filteredPosts && filteredPosts.length !== 0 && (
+        posts && posts.length !== 0 && (
             <>
-                {showSeeAllUrl && <PostsGrid posts={filteredPosts} url="/blog/posts/featured" urlDescription={t("blog.see_all_featured")} />}
-                {!showSeeAllUrl && <PostsGrid posts={filteredPosts} />}
+                {showSeeAllUrl && <PostsGrid posts={posts} url="/blog/posts/featured" urlDescription={m.blog__see_all_featured()} />}
+                {!showSeeAllUrl && <PostsGrid posts={posts} />}
             </>
         )
     }

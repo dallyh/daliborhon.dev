@@ -1,0 +1,158 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="profile-social-container">
+    <ul>
+        <li>
+            <a href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i><Icon name="bi:github" />GitHub</i>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i><Icon name="bi:linkedin" />LinkedIn</i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<style>
+    .profile-social-container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        margin-top: auto;
+        color: var(--body-color);
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+
+            @media (max-width: 468px) {
+                flex-direction: column;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--body-color);
+            display: block;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            border: var(--border);
+
+            i {
+                font-size: 1.2rem;
+                display: inline-flex;
+                gap: 1rem;
+            }
+        }
+
+        ul li {
+            position: relative;
+            background-color: rgba(var(--secondary), 1);
+            box-shadow: var(--global-box-shadow);
+            border-radius: 6px;
+            min-width: 150px;
+        }
+
+        ul li span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 1.2rem;
+            transition: 0.4s;
+            border-radius: inherit;
+        }
+
+        ul li i {
+            transition: 0.4s;
+            border-radius: inherit;
+        }
+
+        a:hover span,
+        a:hover i,
+        a:focus span,
+        a:focus i {
+            z-index: 1000;
+            transition: 0.5s;
+        }
+
+        a:hover span,
+        a:focus span {
+            box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.05);
+        }
+
+        a:hover span:nth-of-type(1),
+        a:focus span:nth-of-type(1) {
+            transform: translate(0px, -0px);
+        }
+        a:hover span:nth-of-type(2),
+        a:focus span:nth-of-type(2) {
+            transform: translate(1px, -1px);
+        }
+        a:hover span:nth-of-type(3),
+        a:focus span:nth-of-type(3) {
+            transform: translate(2px, -2px);
+        }
+        a:hover span:nth-of-type(4),
+        a:focus span:nth-of-type(4) {
+            transform: translate(3px, -3px);
+        }
+        a:hover i,
+        a:focus i {
+            transform: translate(4px, -4px);
+            color: white;
+        }
+
+        a span:nth-of-type(1) {
+            opacity: 0.2;
+        }
+        a span:nth-of-type(2) {
+            opacity: 0.4;
+        }
+        a span:nth-of-type(3) {
+            opacity: 0.6;
+        }
+        a span:nth-of-type(4) {
+            opacity: 0.8;
+        }
+
+        ul li:nth-of-type(1) a:hover span,
+        ul li:nth-of-type(1) a:focus span {
+            background-color: #3b5998;
+            background-image: linear-gradient(270deg, #3b5998, #383838);
+            background-size: 400% 400%;
+            animation: gradient 6s ease infinite;
+        }
+
+        ul li:nth-of-type(2) a:hover span,
+        ul li:nth-of-type(2) a:focus span {
+            background-color: #285aeb;
+            background-image: linear-gradient(270deg, #285aeb, #0077b5);
+            background-size: 800% 800%;
+            animation: gradient 10s ease infinite;
+        }
+    }
+</style>

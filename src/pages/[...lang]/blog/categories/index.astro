@@ -2,63 +2,41 @@
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import Category from "@components/astro/blog/Category.astro";
-import PostsList from "@components/astro/blog/PostsList.astro";
-import Footer from "@components/astro/global/Footer.astro";
-import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
-import Navigation from "@components/astro/global/Navigation.astro";
 import Section from "@components/astro/global/Section.astro";
-import { loadNamespaces, t } from "@i18n/i18n";
-import { getLocale, getStaticPaths } from "@i18n/utils";
-import MainLayout from "@layouts/MainLayout.astro";
+import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getFilteredPostsCollection } from "@utils";
-import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-export { getStaticPaths };
+import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale";
+export { getStaticPaths } from "@i18n/utils";
 
-// i18n
-const locale = getLocale(Astro.url);
-await loadNamespaces(locale, ["blog", "common"]);
+const locale = Astro.currentLocale!;
 
 const layoutProps = {
-    title: `${t("blog.categories")} - Blog`,
-    description: t("blog.blog_site_description"),
+    title: `${m.blog__categories()} - Blog`,
+    description: m.blog__blog_site_description(),
 };
-// Categories
-const categories = await getCollection("categories");
-const sorted = categories === undefined ? undefined : categories.sort((a, b) => a.data.languages[locale].title.localeCompare(b.data.languages[locale].title));
-//const postsWithoutCategory = await getFilteredPostsCollection({ sort: true, categoryId: "none", locale: locale });
+
+const categories = await getAllCategoriesByLocale({ locale });
 ---
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={t("common.home")} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem currentPage={true} label={t("blog.categories")} />
+        <BreadCrumbsItem currentPage={true} label={m.blog__categories()} />
     </BreadCrumbs>
-    <Section id="categories" isFirstSection sectionTitle={t("blog.categories")} sectionDescription={t("blog.categories_description")}>
-        {!sorted && <p>{t("blog.no_categories")}</p>}
+    <Section id="categories" isFirstSection sectionTitle={m.blog__categories()} sectionDescription={m.blog__categories_description()}>
+        {!categories && <p>{m.blog__no_categories()}</p>}
         {
-            sorted && (
+            categories && (
                 <ul class="category-list">
-                    {sorted?.map((category) => (
+                    {categories?.map((category) => (
                         <Category {category} />
                     ))}
                 </ul>
             )
         }
     </Section>
-    {
-        /*
-        postsWithoutCategory && postsWithoutCategory.length !== 0 && (
-            <>
-                <Section id="unsortedPosts" isFirstSection sectionTitle="Posts without category">
-                    <PostsList posts={postsWithoutCategory}  />
-                </Section>
-            </>
-        )
-        */
-    }
 </PageLayout>
 
 <style>

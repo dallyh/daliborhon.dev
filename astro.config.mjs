@@ -20,10 +20,6 @@ console.log(`> Using SITE_BASE: '${SITE_BASE === undefined ? "/" : SITE_BASE}'`)
 export default defineConfig({
     site: URL,
     base: SITE_BASE,
-    trailingSlash: "never",
-    build: {
-        format: "file",
-    },
     output: "hybrid",
     adapter: cloudflare({
         imageService: "compile",
@@ -47,7 +43,8 @@ export default defineConfig({
         defaultLocale: defaultLocale,
         locales: [...astroI18nConfigPaths],
         routing: {
-            prefixDefaultLocale: false,
+            prefixDefaultLocale: true,
+            redirectToDefaultLocale: false
         },
     },
     integrations: [

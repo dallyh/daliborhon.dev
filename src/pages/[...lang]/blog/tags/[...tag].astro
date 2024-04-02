@@ -52,7 +52,7 @@ const layoutProps = {
 
 <PageLayout {...layoutProps}>
     <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
+        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
         <BreadCrumbsItem currentPage={true} label={tagTitle} />

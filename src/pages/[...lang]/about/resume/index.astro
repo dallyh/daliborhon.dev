@@ -6,7 +6,7 @@ import { getEntry } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
 import profilePicture from "@assets/img/profile/me.png";
 import type { CollectionEntry } from "astro:content";
-import { createResumePdfFilename } from "@utils";
+import { createResumePdfFilename, removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
@@ -21,6 +21,8 @@ const layoutProps = {
     title: "Dalibor Hon - " + m.common__resume(),
     description: m.resume__resume_page_description(),
 };
+
+const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`));
 ---
 
 <PageLayout {...layoutProps}>
@@ -30,7 +32,7 @@ const layoutProps = {
                 <div class="top-panel-meta-wrapper">
                     <div class="top-panel-meta">
                         <p>Dalibor Hon - Životopis</p>
-                        <a class="button is-anchor" href={getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`)} download>
+                        <a class="button is-anchor" href={resumePdfFileName} download>
                             <Icon name="bi:filetype-pdf" /><span>{m.resume__download_cv()}</span>
                         </a>
                     </div>
@@ -45,7 +47,7 @@ const layoutProps = {
                         <p>{resumeEntry.data.currentPosition.toUpperCase()}</p>
                         <h1 class="text-accent">Dalibor Hon</h1>
                     </div>
-                    <a class="button is-anchor" href={getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`)} download>
+                    <a class="button is-anchor" href={resumePdfFileName} download>
                         <Icon name="bi:filetype-pdf" /><span>{m.resume__download_cv()}</span>
                     </a>
                 </div>

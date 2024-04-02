@@ -17,7 +17,7 @@ export const siteConfig = {
             },
             en: {
                 path: "en",
-                codes: ["en", "en-GB", "en-US"],
+                codes: ["en", "en-GB", "en-US", "en-CA"],
             },
         },
         defaultLocale: "cs",

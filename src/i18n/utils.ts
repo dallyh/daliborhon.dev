@@ -1,10 +1,13 @@
-import { defaultLocale, locales, type AllowedLocales } from "@i18n/config";
+import { defaultLocale, locales } from "@i18n/config";
 import { removeTrailingSlash } from "@utils";
 
 export function getRoutingLocale(locale: string | undefined) {
+    /*
+    // Use in case of prefixDefaultLocale = false in config :)
     if (locale === defaultLocale) {
         return undefined;
     }
+    */
 
     return locale;
 }
@@ -27,7 +30,7 @@ export function getPathFromUrl(url: URL) {
     const possibleLocale = segments.find((segment) => locales.includes(segment));
 
     // First check if we are on default locale
-    if (possibleLocale !== undefined && locales.includes(possibleLocale)) {
+    if (possibleLocale && locales.includes(possibleLocale)) {
         pathNameWithoutBaseUrl = pathNameWithoutBaseUrl.substring(3, pathname.length);
     }
 
@@ -41,4 +44,17 @@ export async function getStaticPaths() {
     });
 
     return paths;
+}
+
+export function checkValidSSRLangPath(lang: string | undefined) {
+    const locale = lang ?? defaultLocale;
+    const isAllowedLocale = locales.find((loc) => {
+        return loc === locale;
+    });
+
+    if (!isAllowedLocale) {
+        return false;
+    }
+
+    return true;
 }

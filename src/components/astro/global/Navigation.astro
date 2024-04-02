@@ -23,7 +23,7 @@ const locale = Astro.currentLocale!;
             <div class="nav-start">
                 <div class="brand">
                     <div class="brand-logo">
-                        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/home")} title={m.common__home()} aria-label={m.common__home()}>
+                        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
                             <Icon name="dh-logo" size={40} />
                         </a>
                     </div>
@@ -31,7 +31,7 @@ const locale = Astro.currentLocale!;
                 <nav class="menu">
                     <ul class="menu-bar">
                         <li>
-                            <a class="nav-link" href={getRelativeLocaleUrl(locale, "/home")} aria-label={m.common__home()}>
+                            <a class="nav-link" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
                                 {m.common__home()}
                             </a>
                         </li>

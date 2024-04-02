@@ -32,6 +32,8 @@ const capitalizeFirstLetter = (str: string) => {
             {
                 !post &&
                     locales.map((locale) => {
+                        // For whatever reason the getRelativeLocaleUrl() for path "/" always adds a trailing slash
+                        // even when it is not set in the config.
                         const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
                         const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
                         const current = currentLocale === locale;

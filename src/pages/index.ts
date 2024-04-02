@@ -17,7 +17,7 @@ export const GET: APIRoute = ({ preferredLocale, redirect, cookies }) => {
     const localeCookie = cookies.get(configCookie.name);
 
     if (localeCookie) {
-        return redirect(getRelativeLocaleUrl(localeCookie.value, "/home"));
+        return redirect(getRelativeLocaleUrl(localeCookie.value, "/"));
     }
 
     const localeSupported = locales.find((locale) => {
@@ -29,13 +29,13 @@ export const GET: APIRoute = ({ preferredLocale, redirect, cookies }) => {
     if (localeSupported) {
         if (preferredLocale === defaultLocale) {
             cookies.set(configCookie.name, defaultLocale, cookieOptions);
-            return redirect(getRelativeLocaleUrl(defaultLocale, "/home"));
+            return redirect(getRelativeLocaleUrl(defaultLocale, "/"));
         }
 
         cookies.set(configCookie.name, preferredLocale!, cookieOptions);
-        return redirect(getRelativeLocaleUrl(preferredLocale!, "/home"));
+        return redirect(getRelativeLocaleUrl(preferredLocale!, "/"));
     }
 
     cookies.set(configCookie.name, defaultLocale, cookieOptions);
-    return redirect(getRelativeLocaleUrl(defaultLocale, "/home"));
+    return redirect(getRelativeLocaleUrl(defaultLocale, "/"));
 };

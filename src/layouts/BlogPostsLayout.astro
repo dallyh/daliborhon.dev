@@ -32,7 +32,7 @@ const layoutProps = {
     <Navigation slot="header" />
     <main>
         <BreadCrumbs>
-            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/home")} label={m.common__home()} />
+            <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
             <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
             <BreadCrumbsItem currentPage={true} label={m.blog__posts()} />
         </BreadCrumbs>

@@ -15,6 +15,8 @@ const layoutProps = {
 ---
 
 <MainLayout {...layoutProps}>
+    <meta name="robots" content="noindex, nofollow" slot="head">
+
     <div class="notfound-container">
         <div class="notfound">
             <div class="notfound-404">
@@ -23,7 +25,10 @@ const layoutProps = {
             <h1>404</h1>
             <h2>{m.error__not_found_description()}</h2>
             <p>{m.error_not_found_detail()}</p>
-            <button id="backButton" onclick="history.back()"><Icon name="bi:arrow-left-square" />{m.common__back_btn()}</button>
+            <div class="buttons">
+                <button id="backButton" onclick="history.back()"><Icon name="bi:arrow-left" />{m.common__back_btn()}</button>
+                <a href={getRelativeLocaleUrl(locale, "/home")}><Icon name="bi:house" />Domů</a>
+            </div>  
         </div>
     </div>
 </MainLayout>
@@ -76,21 +81,6 @@ const layoutProps = {
             font-weight: 400;
             margin: 0;
         }
-
-        button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: max-content;
-            font-weight: 700;
-            color: var(--a-color);
-            height: 2rem;
-
-            &:hover,
-            &:focus-visible {
-                text-decoration: underline;
-            }
-        }
     }
 
     .notfound-404 {
@@ -119,6 +109,36 @@ const layoutProps = {
         }
     }
 
+    .buttons {
+        display: inline-flex;
+        gap: 1rem;
+
+        a,
+        button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            height: 2rem;
+        }
+
+        a {
+            &:visited {
+                color: var(--a-color);
+            }
+        }
+
+        button {
+            width: max-content;
+            color: var(--a-color);
+
+            &:hover,
+            &:focus-visible {
+                text-decoration: underline;
+            }
+        }
+    }
+
     @media (max-width: 768px) {
         .notfound-404 {
             width: 110px;
@@ -126,8 +146,8 @@ const layoutProps = {
         }
 
         .notfound {
-            padding-left: 0.2rem;
-            padding-right: 0.2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
             padding-top: 110px;
         }
     }

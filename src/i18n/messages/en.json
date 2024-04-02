@@ -2,6 +2,7 @@
     "$schema": "https://inlang.com/schema/inlang-message-format",
     "blog__all_posts_title": "All posts",
     "blog__blog_description": "Welcome to my blog on various topics, primarily focused on software, software development, and also snippets from the professional world.",
+    "blog__blog_site_title": "Dalibor's blog",
     "blog__blog_site_description": "Dalibor's blog about various topics, mainly oriented about software and software development.",
     "blog__browse_posts": "Browse posts",
     "blog__categories": "Categories",
@@ -155,5 +156,5 @@
     "error__not_found_description": "The specified URL was not found",
     "common__date": "Date",
     "resume__download_cv": "Download CV",
-    "error_not_found_detail": "Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable."
+    "error__not_found_detail": "Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable."
 }

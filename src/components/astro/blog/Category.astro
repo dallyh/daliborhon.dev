@@ -1,7 +1,7 @@
 ---
 import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
 import type { IGenCategoryMetaFragment } from "@services/graphql/__generated/sdk";
-import { getAbsoluteCategoryUrl } from "@utils";
+import { getCategoryUrl } from "@utils";
 import { Icon } from "astro-icon/components";
 import PostsGrid from "./PostsGrid.astro";
 
@@ -14,7 +14,7 @@ const locale = Astro.currentLocale!;
 
 const title = category?.name;
 const description = category?.description;
-const url = getAbsoluteCategoryUrl(locale, category);
+const url = getCategoryUrl(locale, category);
 
 const posts = await getAllBlogArticlesByCategoryAndLocale({ locale, categoryName: category.name! });
 ---

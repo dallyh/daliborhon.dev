@@ -24,7 +24,7 @@ const layoutProps = {
             </div>
             <h1>404</h1>
             <h2>{m.error__not_found_description()}</h2>
-            <p>{m.error_not_found_detail()}</p>
+            <p>{m.error__not_found_detail()}</p>
             <div class="buttons">
                 <button id="backButton" onclick="history.back()"><Icon name="bi:arrow-left" />{m.common__back_btn()}</button>
                 <a href={getRelativeLocaleUrl(locale, "/home")}><Icon name="bi:house" />Domů</a>

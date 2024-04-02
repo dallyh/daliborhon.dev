@@ -3,7 +3,7 @@ import * as m from "$messages";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { Image } from "@unpic/astro";
-import { getAbsoluteCategoryUrl, getBlogPostUrl } from "@utils";
+import { getCategoryUrl, getBlogPostUrl } from "@utils";
 import TagList from "./TagList.astro";
 
 interface Props {
@@ -26,7 +26,7 @@ const postUrl = getBlogPostUrl(locale, post);
             {
                 post.category?.name && (
                     <p>
-                        {m.blog__category()}: <a href={getAbsoluteCategoryUrl(locale, post.category)}>{post.category?.name}</a>
+                        {m.blog__category()}: <a href={getCategoryUrl(locale, post.category)}>{post.category?.name}</a>
                     </p>
                 )
             }

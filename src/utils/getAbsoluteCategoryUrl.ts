@@ -1,7 +1,7 @@
-import { getAbsoluteLocaleUrl } from "astro:i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import type { IGenCategoryMetaFragment } from "@services/graphql/__generated/sdk";
 import { slugifyStr } from "./slugifyStr";
 
-export function getAbsoluteCategoryUrl(locale: string, category: IGenCategoryMetaFragment) {
-    return getAbsoluteLocaleUrl(locale, `blog/categories/${slugifyStr(locale, category?.name!)}/`);
+export function getCategoryUrl(locale: string, category: IGenCategoryMetaFragment) {
+    return getRelativeLocaleUrl(locale, `blog/categories/${slugifyStr(locale, category?.name!)}/`);
 }

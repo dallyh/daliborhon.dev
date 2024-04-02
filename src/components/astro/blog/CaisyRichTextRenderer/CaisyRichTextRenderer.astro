@@ -31,9 +31,7 @@ const headings: HeadingNode[] = richTextJson.content.filter((node: HeadingNode) 
     generateToc && headings.length !== 0 && (
         <div id="toc">
             <details>
-                <h2>
-                    {m.blog__toc()}
-                </h2>
+                <h2>{m.blog__toc()}</h2>
                 <summary>{m.blog__open_toc}</summary>
                 <nav class="toc">
                     <Fragment set:html={generateTableOfContents(headings, maxTocDepth)} />

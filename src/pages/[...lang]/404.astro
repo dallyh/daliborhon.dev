@@ -15,7 +15,7 @@ const layoutProps = {
 ---
 
 <MainLayout {...layoutProps}>
-    <meta name="robots" content="noindex, nofollow" slot="head">
+    <meta name="robots" content="noindex, nofollow" slot="head" />
 
     <div class="notfound-container">
         <div class="notfound">
@@ -28,7 +28,7 @@ const layoutProps = {
             <div class="buttons">
                 <button id="backButton" onclick="history.back()"><Icon name="bi:arrow-left" />{m.common__back_btn()}</button>
                 <a href={getRelativeLocaleUrl(locale, "/home")}><Icon name="bi:house" />Domů</a>
-            </div>  
+            </div>
         </div>
     </div>
 </MainLayout>

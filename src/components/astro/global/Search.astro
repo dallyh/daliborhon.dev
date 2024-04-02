@@ -7,28 +7,9 @@ import "@pagefind/default-ui/css/ui.css";
 import { Icon } from "astro-icon/components";
 
 const locale = Astro.currentLocale!;
-
-// Temporary, until https://github.com/CloudCannon/pagefind/pull/543 gets merged
-// It is merged, waiting for release!
-let translations = {};
-if (locale === "cs") {
-    translations = {
-        placeholder: "Hledat",
-        clear_search: "Smazat",
-        load_more: "Načíst další výsledky",
-        search_label: "Prohledat tuto stránku",
-        filters_label: "Filtry",
-        zero_results: "Žádné výsledky pro [SEARCH_TERM]",
-        many_results: "[COUNT] výsledků pro [SEARCH_TERM]",
-        one_result: "[COUNT] výsledek pro [SEARCH_TERM]",
-        alt_search: "Žádné výsledky pro [SEARCH_TERM]. Zobrazují se výsledky pro [DIFFERENT_TERM]",
-        search_suggestion: "Žádné výsledky pro [SEARCH_TERM]. Související výsledky hledání:",
-        searching: "Hledám [SEARCH_TERM]...",
-    };
-}
 ---
 
-<site-search data-translations={JSON.stringify(translations)}>
+<site-search>
     <button data-open-modal disabled>
         <div class="inner">
             <i class="search-icon"><Icon name="bi:search" size={18} title={m.common__search()} /></i>
@@ -98,11 +79,6 @@ if (locale === "cs") {
                 }
             });
 
-            let translations = {};
-            try {
-                translations = JSON.parse(this.dataset.translations || "{}");
-            } catch {}
-
             const initPagefind = () => {
                 const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
                 onIdle(async () => {
@@ -114,7 +90,6 @@ if (locale === "cs") {
                             baseUrl: import.meta.env.BASE_URL,
                             bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
                             showImages: false,
-                            translations,
                             showSubResults: true,
                             sort: {
                                 date: "asc",

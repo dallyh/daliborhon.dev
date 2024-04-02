@@ -29,15 +29,17 @@ const headings: HeadingNode[] = richTextJson.content.filter((node: HeadingNode) 
 
 {
     generateToc && headings.length !== 0 && (
-        <details>
-            <h2 class="mt-0" id="toc">
-                {m.blog__toc()}
-            </h2>
-            <summary>{m.blog__open_toc}</summary>
-            <nav class="toc">
-                <Fragment set:html={generateTableOfContents(headings, maxTocDepth)} />
-            </nav>
-        </details>
+        <div id="toc">
+            <details>
+                <h2>
+                    {m.blog__toc()}
+                </h2>
+                <summary>{m.blog__open_toc}</summary>
+                <nav class="toc">
+                    <Fragment set:html={generateTableOfContents(headings, maxTocDepth)} />
+                </nav>
+            </details>
+        </div>
     )
 }
 
@@ -64,6 +66,17 @@ const headings: HeadingNode[] = richTextJson.content.filter((node: HeadingNode) 
         display: inline-block;
         list-style: inside disclosure-closed;
         margin-bottom: 1rem;
+        background: rgba(var(--secondary), 0.5);
+        padding: 0.5rem;
+        border-radius: var(--border-radius);
+        width: 100%;
+        border: var(--border);
+        overflow: hidden;
+
+        h2 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
     }
 
     details[open] > summary:first-of-type {

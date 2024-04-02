@@ -53,6 +53,9 @@ const basePath = import.meta.env.BASE_URL;
         <!-- hreflang from other pages -->
         <slot name="hreflangs" />
 
+        <!-- Additional head from other pages -->
+        <slot name="head" />
+
         <!-- General Meta Tags -->
         <title>{title}</title>
         <meta name="title" content={siteTitle} />

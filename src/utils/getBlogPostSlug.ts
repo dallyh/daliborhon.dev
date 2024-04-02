@@ -9,7 +9,7 @@ export function getBlogPostSlug(locale: string, post: IGenBlogArticleMetaFragmen
     const day = new Date(post._meta?.firstPublishedAt!).getDate().toString().padStart(2, "0");
 
     const date = `${year}/${month}/${day}`;
-    const slug = post.slug ? slugifyStr(locale, post?.slug!) :slugifyStr(locale, post?.title!);
+    const slug = post.slug ? slugifyStr(locale, post?.slug!) : slugifyStr(locale, post?.title!);
 
     return `${date}/${slug}`;
 }

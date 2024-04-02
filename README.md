@@ -76,7 +76,4 @@ All commands are run from the root of the project, from a terminal and prefixed 
 | `deps:check-update`      | Checks update for dependencies using [npm-check-updates](https://github.com/raineorshine/npm-check-updates). |
 | `deps:update`            | Updates for dependencies using [npm-check-updates](https://github.com/raineorshine/npm-check-updates).       |
 
-
-> [!NOTE]
-> `npm-check-updates` has to be installed globally for `deps` commands to work.
-
+> [!NOTE] > `npm-check-updates` has to be installed globally for `deps` commands to work.

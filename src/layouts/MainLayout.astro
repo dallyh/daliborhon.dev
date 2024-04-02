@@ -7,6 +7,7 @@ import { getAbsoluteLocaleUrl } from "astro:i18n";
 import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/keyframes.css";
+import { removeTrailingSlash } from "@utils";
 
 export interface Props {
     title?: string;
@@ -28,7 +29,7 @@ const {
     title,
     author = "Dalibor Hon",
     description = m.common__site_description(),
-    ogImage = getAbsoluteLocaleUrl(locale, "og.png"),
+    ogImage = removeTrailingSlash(getAbsoluteLocaleUrl(locale, "og.png")),
     canonicalURL = new URL(Astro.url.pathname, Astro.site),
     pubDatetime,
     modDatetime,

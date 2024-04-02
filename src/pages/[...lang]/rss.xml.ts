@@ -51,6 +51,7 @@ export async function GET({ site, currentLocale }: APIContext) {
     });
 
     return rss({
+        stylesheet: `/rss/style-${currentLocale}.xsl`,
         title: m.blog__blog_site_title(),
         description: m.blog__blog_site_description(),
         site: site!,

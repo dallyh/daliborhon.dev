@@ -2,6 +2,7 @@
     "$schema": "https://inlang.com/schema/inlang-message-format",
     "blog__all_posts_title": "Všechny příspěvky",
     "blog__blog_description": "Vítejte na mém blogu o různých tématech, primárně zaměřen na software, vývoj software a také střípky z pracovního světa.",
+    "blog__blog_site_title": "Daliborův blog",
     "blog__blog_site_description": "Daliborův blog o různých tématech, primárně zaměřen na software a vývoj softwaru.",
     "blog__browse_posts": "Procházet příspěvky",
     "blog__categories": "Kategorie",
@@ -155,5 +156,5 @@
     "error__not_found_description": "Zadaná adresa URL nebyla nalezena",
     "common__date": "Datum",
     "resume__download_cv": "Stáhnout CV",
-    "error_not_found_detail": "Je mi líto, ale stránka, kterou hledáte, neexistuje, byla odstraněna, změnil se její název nebo je dočasně nedostupná."
+    "error__not_found_detail": "Je mi líto, ale stránka, kterou hledáte, neexistuje, byla odstraněna, změnil se její název nebo je dočasně nedostupná."
 }

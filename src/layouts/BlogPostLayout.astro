@@ -5,7 +5,7 @@ import TagList from "@components/astro/blog/TagList.astro";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { getAbsoluteCategoryUrl, getBlogPostDateTime, getOgImageUrl } from "@utils";
+import { getCategoryUrl, getBlogPostDateTime, getOgImageUrl } from "@utils";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
@@ -96,7 +96,7 @@ const searchProps = {
                         {
                             post.category && (
                                 <p>
-                                    <a href={getAbsoluteCategoryUrl(locale, post.category)}>{post.category?.name}</a>
+                                    <a href={getCategoryUrl(locale, post.category)}>{post.category?.name}</a>
                                 </p>
                             )
                         }

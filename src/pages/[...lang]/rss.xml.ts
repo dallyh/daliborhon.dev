@@ -4,6 +4,7 @@ import * as m from "$messages";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import { getBlogPostUrl } from "@utils";
 import { parseJSONToHTML } from "@caisy/rich-text-html-parser";
+import { JSDOM } from "jsdom";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -11,7 +12,34 @@ export async function GET({ site, currentLocale }: APIContext) {
     const allBlogArticles = await getAllBlogArticlesByLocale({ locale: currentLocale! });
 
     const items = allBlogArticles.map((post) => {
-        const content = parseJSONToHTML(post.text?.json);
+        let content = parseJSONToHTML(post.text?.json);
+        const connections = post.text?.connections;
+
+        if (connections) {
+            const dom = new JSDOM(content);
+            const document = dom.window.document;
+
+            connections.forEach((conn) => {
+                if (conn?.__typename !== "Asset") {
+                    return;
+                }
+
+                const link = document.querySelector<HTMLElement>(`[data-document-id="${conn?.id}"]`);
+
+                if (!link) {
+                    return;
+                }
+
+                const img = document.createElement("img");
+                img.src = conn.src!;
+                img.alt = conn.title!;
+                img.title = conn.title!;
+
+                link.replaceWith(img);
+            });
+
+            content = dom.serialize();
+        }
 
         return {
             title: post.title!,

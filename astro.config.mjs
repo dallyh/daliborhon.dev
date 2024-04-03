@@ -9,14 +9,14 @@ import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import { defaultLocale, localeKeys, astroI18nConfigPaths } from "./src/i18n/config";
 
-const { CF_PAGES_URL, CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 
 // Construct URL on Cloudflare build
 // https://developers.cloudflare.com/pages/configuration/build-configuration/#environment-variables
 let SITE_URL = import.meta.env.DEV ? `http://localhost:${PORT}` : "https://www.daliborhon.dev/";
-if (CF_PAGES_BRANCH.startsWith("dev")) {
-    SITE_URL = CF_PAGES_URL;
+if (CF_PAGES_BRANCH && CF_PAGES_BRANCH.startsWith("dev")) {
+    SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`
 }
 console.log(`> Using SITE_URL: '${SITE_URL}'`);
 
@@ -69,7 +69,6 @@ export default defineConfig({
             include: {
                 bi: ["*"],
                 devicon: ["*"],
-                tabler: ["error-404"],
                 heroicons: ["chevron-down"],
             },
         }),

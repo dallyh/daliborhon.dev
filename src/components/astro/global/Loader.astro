@@ -21,7 +21,7 @@ const { standalone } = Astro.props;
 <style>
     @keyframes dot-flashing {
         0% {
-            background-color: #9880ff;
+            background-color: rgba(var(--accent), 1);
         }
         50%,
         100% {
@@ -47,8 +47,8 @@ const { standalone } = Astro.props;
         width: 10px;
         height: 10px;
         border-radius: 5px;
-        background-color: #9880ff;
-        color: #9880ff;
+        background-color: rgba(var(--accent), 1);
+        color: rgba(var(--accent), 1);
         animation: dot-flashing 1s infinite linear alternate;
         animation-delay: 0.5s;
     }
@@ -66,8 +66,8 @@ const { standalone } = Astro.props;
         width: 10px;
         height: 10px;
         border-radius: 5px;
-        background-color: #9880ff;
-        color: #9880ff;
+        background-color: rgba(var(--accent), 1);
+        color: rgba(var(--accent), 1);
         animation: dot-flashing 1s infinite alternate;
         animation-delay: 0s;
     }
@@ -77,8 +77,8 @@ const { standalone } = Astro.props;
         width: 10px;
         height: 10px;
         border-radius: 5px;
-        background-color: #9880ff;
-        color: #9880ff;
+        background-color: rgba(var(--accent), 1);
+        color: rgba(var(--accent), 1);
         animation: dot-flashing 1s infinite alternate;
         animation-delay: 1s;
     }

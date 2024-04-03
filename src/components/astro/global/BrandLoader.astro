@@ -1,0 +1,105 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="brand-loader" id="pageNavLoader">
+    <Icon class="logo" name="dh-logo" size={40} />
+    <div class="spinner-wrapper">
+        <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </div>
+</div>
+
+<script is:inline>
+    document.addEventListener("astro:before-preparation", () => {
+        document.querySelector("#pageNavLoader").classList.add("spin");
+    });
+    document.addEventListener("astro:after-preparation", () => {
+        document.querySelector("#pageNavLoader").classList.remove("spin");
+    });
+</script>
+
+<style>
+    .brand-loader {
+        color: rgba(var(--accent), 1);
+        width: 40px;
+        height: 40px;
+        position: relative;
+
+        .logo {
+            width: inherit;
+            height: inherit;
+            animation-delay: 2s;
+            animation-fill-mode: both;
+            animation-duration: 0.4s;
+        }
+
+        &.spin {
+            .spinner-wrapper {
+                animation-name: grow;
+            }
+
+            .logo {
+                animation-name: shrink;
+            }
+        }
+    }
+
+    .spinner-wrapper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: inherit;
+        height: inherit;
+        transform: scale(0);
+        animation-delay: 2s;
+        animation-fill-mode: both;
+        animation-duration: 0.4s;
+
+        .spinner {
+            animation: rotate 2s linear infinite;
+            width: inherit;
+            height: inherit;
+
+            .path {
+                stroke: rgba(var(--accent), 1);
+                stroke-linecap: round;
+                animation: dash 1.5s ease-in-out infinite;
+            }
+        }
+    }
+
+    @keyframes shrink {
+        to {
+            transform: scale(0);
+        }
+    }
+
+    @keyframes grow {
+        to {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes dash {
+        0% {
+            stroke-dasharray: 1, 150;
+            stroke-dashoffset: 0;
+        }
+        50% {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -35;
+        }
+        100% {
+            stroke-dasharray: 90, 150;
+            stroke-dashoffset: -124;
+        }
+    }
+</style>

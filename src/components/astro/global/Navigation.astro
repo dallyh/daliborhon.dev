@@ -6,7 +6,7 @@ import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import NavLoader from "./NavLoader.astro";
+import BrandLoader from "./BrandLoader.astro";
 
 interface Props {
     post?: IGenBlogArticleMetaFragment;
@@ -19,12 +19,12 @@ const locale = Astro.currentLocale!;
 
 <site-nav>
     <header id="nav-menu" aria-label="navigation bar">
-        <div class="container">
+        <div class="nav-container">
             <div class="nav-start">
                 <div class="brand">
                     <div class="brand-logo">
                         <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
-                            <Icon name="dh-logo" size={40} />
+                            <BrandLoader />
                         </a>
                     </div>
                 </div>
@@ -115,7 +115,6 @@ const locale = Astro.currentLocale!;
                 </div>
             </div>
         </div>
-        <NavLoader />
     </header>
 </site-nav>
 
@@ -123,7 +122,14 @@ const locale = Astro.currentLocale!;
     @media (max-width: 768px) {
         body.nav-active {
             header {
+                top: 0;
+                padding: 0;
+            }
+
+            .nav-container {
+                border: 0;
                 background: rgba(var(--secondary), 1);
+                border-radius: 0;
             }
 
             .menu {
@@ -153,13 +159,11 @@ const locale = Astro.currentLocale!;
         align-items: center;
         font-weight: 700;
         height: var(--header-height);
+        padding: 0.5rem;
 
         .brand-logo {
-            margin-right: 6px;
-            margin-left: 2px;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            place-content: center;
         }
 
         h1 {
@@ -178,26 +182,29 @@ const locale = Astro.currentLocale!;
         color: var(--body-color);
         font-weight: 500;
         position: fixed;
-        top: 0;
-        background: var(--header-bg);
-        backdrop-filter: blur(8px);
+        top: var(--header-top-position);
+        left: 50%;
+        transform: translateX(-50%);
         z-index: 1010;
-        height: var(--header-height);
-        border-bottom: var(--border);
-        transition: background 0.4s ease;
-    }
-
-    .container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        column-gap: 2rem;
+        transition: all 0.4s ease;
         max-width: var(--page-width);
         padding-left: var(--padding-x);
         padding-right: var(--padding-x);
-        margin: auto;
+        height: var(--header-height);
+    }
+
+    .nav-container {
+        display: flex;
         width: 100%;
-        height: 100%;
+        align-items: center;
+        justify-content: space-between;
+        column-gap: 2rem;
+        background: var(--header-bg);
+        backdrop-filter: blur(8px);
+        border: var(--border);
+        border-radius: 6px;
+        transition: background 0.4s ease;
+        position: relative;
     }
 
     .menu {
@@ -349,6 +356,17 @@ const locale = Astro.currentLocale!;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        header {
+            top: 0;
+            padding: 0;
+        }
+
+        .nav-container {
+            border: 0;
+            border-radius: 0;
+            border-bottom: var(--border);
         }
 
         .menu {
@@ -508,7 +526,7 @@ const locale = Astro.currentLocale!;
                         (e) => {
                             activateFocus(e);
                         },
-                        { once: true },
+                        { once: true }
                     );
                     toggleMenu();
                 }

@@ -14,7 +14,7 @@
 :root {
     color-scheme: light;
     --border: 1px solid rgba(0, 0, 0, 0.2);
-    --border-search: var(--border);
+    --border-darker: 1px solid rgba(0, 0, 0, 0.4);
     --accent: 0, 173, 239; /* Soft blue color */
     --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(0, 120, 180));
     --secondary: 240, 240, 240; /* Light gray */
@@ -36,7 +36,7 @@
 :root[data-theme="dark"] {
     color-scheme: dark;
     --border: 1px solid rgba(255, 255, 255, 0.1);
-    --border-search: 1px solid rgba(255, 255, 255, 0.2);
+    --border-darker: 1px solid rgba(255, 255, 255, 0.2);
     --accent: 14, 165, 233; /*136, 58, 234*/
     --accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(34, 211, 238));
     --secondary: 30, 41, 59;

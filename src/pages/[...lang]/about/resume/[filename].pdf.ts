@@ -23,8 +23,7 @@ export const GET: APIRoute = async ({ params }) => {
         headers["Content-Disposition"] = "";
     }
 
-    // Expect default language
-    if (params.lang === undefined) {
+    if (params.lang === "cs") {
         const content = await import("@content/resume/cs.md");
         const pdf = await mdToPdf({ content: content.rawContent() }, { document_title: params.filename });
         return new Response(pdf.content, { status: 200, headers: headers });

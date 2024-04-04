@@ -15,7 +15,9 @@ const { title, description, homepage = false } = Astro.props;
 
 <MainLayout title={title} description={description}>
     <HeadHrefLangs slot="hreflangs" />
-    <Navigation slot="header" />
+    <Navigation slot="header">
+        <slot name="dynamic-island" slot="dynamic-island" />
+    </Navigation>
     <main>
         <slot />
     </main>

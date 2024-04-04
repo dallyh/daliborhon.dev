@@ -6,7 +6,7 @@ import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import BrandLoader from "./BrandLoader.astro";
+import DynamicIsland from "./DynamicIsland.astro";
 
 interface Props {
     post?: IGenBlogArticleMetaFragment;
@@ -21,12 +21,10 @@ const locale = Astro.currentLocale!;
     <header id="nav-menu" aria-label="navigation bar">
         <div class="nav-container">
             <div class="nav-start">
-                <div class="brand">
-                    <div class="brand-logo">
-                        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
-                            <BrandLoader />
-                        </a>
-                    </div>
+                <div class="dynamic-island-wrapper">
+                    <DynamicIsland>
+                        <slot name="dynamic-island" slot="dynamic-island" />
+                    </DynamicIsland>
                 </div>
                 <nav class="menu">
                     <ul class="menu-bar">
@@ -153,28 +151,13 @@ const locale = Astro.currentLocale!;
 </style>
 
 <style>
-    .brand {
+    .dynamic-island-wrapper {
         color: rgba(var(--accent), 1);
         display: flex;
         align-items: center;
         font-weight: 700;
         height: var(--header-height);
         padding: 0.5rem;
-
-        .brand-logo {
-            display: flex;
-            place-content: center;
-        }
-
-        h1 {
-            font-size: 1rem;
-            font-weight: inherit;
-            padding: 0;
-            margin: 0;
-            background: none;
-            background-clip: none;
-            color: inherit;
-        }
     }
 
     header {

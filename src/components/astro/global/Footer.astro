@@ -5,12 +5,17 @@ import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
+const { CF_PAGES_COMMIT_SHA, CF_PAGES_BRANCH } = import.meta.env;
+
 const locale = Astro.currentLocale!;
+const branchHref = `https://github.com/dallyh/daliborhon.dev/tree/${CF_PAGES_BRANCH}`;
+const commitHref = `https://github.com/dallyh/daliborhon.dev/commit/${CF_PAGES_COMMIT_SHA}`;
+const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as string).substring(0, 7) : "commit";
 ---
 
 <footer class="footer-container">
     <div class="left-section">
-        <a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml", {}))} title="RSS" class="rss">
+        <a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" class="rss">
             <Icon name="bi:rss-fill" />
         </a>
         <a href="https://astro.build" title="Built with Astro">
@@ -18,7 +23,11 @@ const locale = Astro.currentLocale!;
         </a>
     </div>
     <div class="right-section">
-        {m.footer__page_created_by()} © {new Date().getFullYear()}
+        <div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
+        <div class="build-info">
+            [<a href={branchHref}>{CF_PAGES_BRANCH ?? "branch"}</a>
+            <a href={commitHref}>{commit}</a>]
+        </div>
     </div>
 </footer>
 
@@ -39,13 +48,25 @@ const locale = Astro.currentLocale!;
         border-top: var(--border);
 
         @media (max-width: 468px) {
-            flex-direction: column-reverse;
+            flex-direction: column;
+        }
+    }
+
+    .build-info {
+        text-align: right;
+
+        @media (max-width: 468px) {
+            text-align: center;
         }
     }
 
     .astro-img {
         filter: hue-rotate(310deg) grayscale(0.5);
         opacity: 0.7;
+    }
+
+    .right-section {
+        line-height: 1.2;
     }
 
     .left-section {

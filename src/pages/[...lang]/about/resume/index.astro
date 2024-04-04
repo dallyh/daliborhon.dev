@@ -75,7 +75,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: calc(100svh - 4rem); /* Header padding */
+        min-height: calc(100svh - var(--header-margin)); /* Header padding */
     }
 
     .hero-meta {
@@ -141,20 +141,23 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
     }
 
     .button {
+        border: var(--border);
+        
         &.island {
             min-width: max-content;
             height: inherit;
 
             svg {
                 margin-right: 0;
+                width: 1.2rem;
+            height: 1.2rem;
             }
         }
 
         svg {
             display: inline-block;
             margin-right: 0.25rem;
-            width: 1.2rem;
-            height: 1.2rem;
+            
         }
     }
 </style>

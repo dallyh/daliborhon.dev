@@ -30,13 +30,13 @@ const hasDynamicIsland = (await Astro.slots.render("dynamic-island")).length !==
 
 <script is:inline>
     document.addEventListener("astro:before-preparation", () => {
-        document.getElementById("pageNavLoader").classList.add("spin");
+        document.getElementById("pageNavLoader").classList.add("show-loader");
     });
     document.addEventListener("astro:after-preparation", () => {
-        document.getElementById("pageNavLoader").classList.remove("spin");
+        document.getElementById("pageNavLoader").classList.remove("show-loader");
     });
     document.addEventListener("astro:page-load", () => {
-        const island = document.getElementById("dynamicIsland").classList.add("show");
+        const island = document.getElementById("dynamicIsland").classList.add("show-island");
     });
 </script>
 
@@ -44,94 +44,98 @@ const hasDynamicIsland = (await Astro.slots.render("dynamic-island")).length !==
     .dynamic-island-container {
         display: flex;
         gap: 0rem;
-        place-content: center;
+        justify-content: center;
+        align-items: center;
         height: 40px;
-        transition: flex-grow 1000ms linear;
-        flex-grow: 0.00001;
 
-        &.show {
-            flex-grow: 1;
+        .dynamic-island {
+            height: inherit;
+            max-width: 0;
+            display: none;
+            transform: scale(0);
+            overflow: hidden;
+            visibility: hidden;
+            height: inherit;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+        }
 
+        &.show-island {
             .dynamic-island {
-                display: block;
+                display: flex;
                 visibility: visible;
-                animation: showIsland 0.4s ease forwards 0.4s;
+                animation: showIsland 0.6s ease forwards 0.5s;
             }
         }
     }
 
-    .dynamic-island {
-        height: inherit;
-        max-width: 0;
-        display: none;
-        transform: scale(0);
-        overflow: hidden;
-        visibility: hidden;
-    }
-
     @keyframes showIsland {
         0% {
-            max-width: 0;
             transform: scale(0);
         }
 
         50% {
-            max-width: 100px;
+            margin-left: 1rem;
+            max-width: calc(40px + 1rem);
             transform: scale(0);
         }
 
         100% {
             margin-left: 1rem;
-            max-width: 100px;
+            max-width: calc(40px + 1rem);
             transform: scale(1);
         }
     }
 
     .brand-loader {
+        --duration: 0.4s;
+        --delay: 2s;
         color: rgba(var(--accent), 1);
-        width: 40px;
-        height: inherit;
+        width: inherit;
+        height: 40px;
         position: relative;
 
         .logo {
             width: inherit;
             height: inherit;
-            /* animation-delay: 2s; */
+            animation-delay: var(--delay);
             animation-fill-mode: both;
-            animation-duration: 0.4s;
+            animation-duration: var(--duration);
+            color: rgba(var(--accent), 1);
         }
 
-        &.spin {
+        .spinner-wrapper {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: inherit;
+            height: inherit;
+            transform: scale(0);
+            animation-delay: var(--delay);
+            animation-fill-mode: both;
+            animation-duration: var(--duration);
+
+            .spinner {
+                animation: rotate 2s linear infinite;
+                width: inherit;
+                height: inherit;
+
+                .path {
+                    stroke: rgba(var(--accent), 1);
+                    stroke-linecap: round;
+                    animation: dash 1.5s ease-in-out infinite;
+                }
+            }
+        }
+
+        &.show-loader {
             .spinner-wrapper {
                 animation-name: grow;
             }
 
             .logo {
                 animation-name: shrink;
-            }
-        }
-    }
-
-    .spinner-wrapper {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: inherit;
-        height: inherit;
-        transform: scale(0);
-        /* animation-delay: 2s; */
-        animation-fill-mode: both;
-        animation-duration: 0.4s;
-
-        .spinner {
-            animation: rotate 2s linear infinite;
-            width: inherit;
-            height: inherit;
-
-            .path {
-                stroke: rgba(var(--accent), 1);
-                stroke-linecap: round;
-                animation: dash 1.5s ease-in-out infinite;
             }
         }
     }
@@ -145,27 +149,6 @@ const hasDynamicIsland = (await Astro.slots.render("dynamic-island")).length !==
     @keyframes grow {
         to {
             transform: scale(1);
-        }
-    }
-
-    @keyframes rotate {
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    @keyframes dash {
-        0% {
-            stroke-dasharray: 1, 150;
-            stroke-dashoffset: 0;
-        }
-        50% {
-            stroke-dasharray: 90, 150;
-            stroke-dashoffset: -35;
-        }
-        100% {
-            stroke-dasharray: 90, 150;
-            stroke-dashoffset: -124;
         }
     }
 </style>

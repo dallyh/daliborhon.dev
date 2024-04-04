@@ -201,12 +201,8 @@ const locale = Astro.currentLocale!;
             min-width: 480px;
         }
 
-        li:first-child ul:nth-child(1) {
-            border-right: var(--border);
-        }
-
-        li:nth-child(n + 2) ul:nth-child(1) {
-            border-bottom: var(--border);
+        ul:nth-child(2) {
+            border-top: var(--border);
         }
 
         .nav-link {

@@ -8,7 +8,7 @@ currentPosition: Business Consultant
 
 Dalibor Hon - Business Consultant, Ostrava
 
-Contact: [LinkedIn](https://www.linkedin.com/in/dalibor-hon/) | [Email (online form)](https://www.daliborhon.dev/en/contact)
+Contact: [LinkedIn](https://www.linkedin.com/in/dalibor-hon/) | [Email (online form)](https://www.daliborhon.dev/en/about/contact)
 
 Web: [www.daliborhon.dev](https://www.daliborhon.dev)
 

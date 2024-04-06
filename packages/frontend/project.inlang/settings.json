@@ -12,6 +12,6 @@
         "https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@latest/dist/index.js"
     ],
     "plugin.inlang.messageFormat": {
-        "pathPattern": "./src/i18n/messages/{languageTag}.json"
+        "pathPattern": "./astro-site/src/i18n/messages/{languageTag}.json"
     }
 }

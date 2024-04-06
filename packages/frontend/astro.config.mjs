@@ -7,7 +7,9 @@ import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import sanity from "@sanity/astro";
 import { defaultLocale, localeKeys, astroI18nConfigPaths } from "./src/i18n/config";
+import sanityConfig from "../studio/sanity.config";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -16,7 +18,7 @@ const PORT = 4321;
 // https://developers.cloudflare.com/pages/configuration/build-configuration/#environment-variables
 let SITE_URL = import.meta.env.DEV ? `http://localhost:${PORT}` : "https://www.daliborhon.dev/";
 if (CF_PAGES_BRANCH && CF_PAGES_BRANCH.startsWith("dev")) {
-    SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`
+    SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`;
 }
 console.log(`> Using SITE_URL: '${SITE_URL}'`);
 
@@ -47,7 +49,7 @@ export default defineConfig({
         locales: [...astroI18nConfigPaths],
         routing: {
             prefixDefaultLocale: true,
-            redirectToDefaultLocale: false
+            redirectToDefaultLocale: false,
         },
     },
     integrations: [
@@ -74,8 +76,13 @@ export default defineConfig({
         }),
         tailwind(),
         paraglide({
-            project: "./project.inlang",
+            project: "../project.inlang",
             outdir: "./src/paraglide",
+        }),
+        sanity({
+          projectId: sanityConfig.projectId,
+          dataset: sanityConfig.dataset,
+          useCdn: false,
         }),
     ],
     vite: {

@@ -14,10 +14,12 @@ export const siteConfig = {
             cs: {
                 path: "cs",
                 codes: ["cs", "cs-CZ", "sk", "sk-SK"],
+                title: "Čeština"
             },
             en: {
                 path: "en",
                 codes: ["en", "en-GB", "en-US", "en-CA"],
+                title: "English"
             },
         },
         defaultLocale: "cs",

@@ -1,11 +1,7 @@
-# build output
-dist/
-
-# generated types
-.astro/
-
 # dependencies
 node_modules/
+.pnp/
+.pnp.js
 
 # logs
 npm-debug.log*
@@ -17,13 +13,12 @@ pnpm-debug.log*
 .env
 .env.production
 .dev.vars
+*.local
 
-# macOS-specific files
+# misc
 .DS_Store
+*.pem
 
-astro_tmp_pages_*
-
-.wrangler
-functions/\[\[path\]\].js
-functions/\[\[path\]\].js.map
+# Typescript
+*.tsbuildinfo
 

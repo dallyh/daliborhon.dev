@@ -1,28 +1,5 @@
-{
-    "extends": "astro/tsconfigs/strict",
-    "include": ["src", "scripts"],
-    "compilerOptions": {
-        "typeRoots": ["./node_modules/@types"],
-        "jsx": "react-jsx",
-        "jsxImportSource": "react",
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "moduleResolution": "Bundler",
-        "allowJs": true,
-        "baseUrl": "./",
-        "paths": {
-            "@components/*": ["src/components/*"],
-            "@assets/*": ["src/assets/*"],
-            "@i18n/*": ["src/i18n/*"],
-            "@public/*": ["src/public/*"],
-            "@layouts/*": ["src/layouts/*"],
-            "@utils": ["src/utils/index.ts"],
-            "@utils/og": ["src/utils/open-graph/index.ts"],
-            "@services/*": ["src/services/*"],
-            "@config": ["site.config.ts"],
-            "@content/*": ["src/content/*"],
-            "$messages": ["src/paraglide/messages.js"],
-            "$paraglide-runtime": ["src/paraglide/runtime.js"]
-        }
-    }
-}
+// Yes this file is intentionally empty!
+// ---
+// Having a blank `tsconfig.json` file prevents TypeScript from crawling up your directory tree
+// and possibly picking up a parent `tsconfig.json` (which, unsurprisingly, is very hard to debug)
+{}

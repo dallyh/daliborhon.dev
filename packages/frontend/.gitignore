@@ -1,0 +1,13 @@
+# build output
+dist/
+
+# generated types
+.astro/
+
+# cloudflare wrangler
+.wrangler
+functions/\[\[path\]\].js
+functions/\[\[path\]\].js.map
+
+paragdile/
+

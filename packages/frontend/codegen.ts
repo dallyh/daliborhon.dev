@@ -1,5 +1,7 @@
 import { type CodegenConfig } from "@graphql-codegen/cli";
 
+import { type Post } from "$sanity-schema";
+
 export const config: CodegenConfig = {
     overwrite: true,
     ignoreNoDocuments: true,

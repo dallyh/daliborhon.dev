@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { siteConfig } from "../../../frontend/site.config";
+import { siteConfig } from "daliborhon.dev-site";
 
 export default defineType({
     name: "projectTag",

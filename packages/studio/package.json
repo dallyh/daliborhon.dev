@@ -2,6 +2,8 @@
   "name": "daliborhon.dev-studio",
   "private": true,
   "version": "1.0.0",
+  "main": "./index.ts",
+  "types": "./index.d.ts",
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^4.0.0",
-    "@types/react": "^18.0.25"
+    "@types/react": "^18.0.25",
+    "daliborhon.dev-site": "workspace:*"
   }
 }

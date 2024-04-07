@@ -8,9 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
+      '@types/node':
+        specifier: ^20.12.2
+        version: 20.12.5
       eslint:
         specifier: ^8.6.0
         version: 8.57.0
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
@@ -26,202 +35,6 @@ importers:
       typescript:
         specifier: ^5.4.3
         version: 5.4.4
-
-  astro-site:
-    dependencies:
-      '@apollo/client':
-        specifier: ^3.9.10
-        version: 3.9.10(@types/react@18.2.74)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
-      '@astrojs/cloudflare':
-        specifier: 9.2.0
-        version: 9.2.0(astro@4.5.16)
-      '@astrojs/react':
-        specifier: ^3.1.0
-        version: 3.1.1(@types/react-dom@18.2.24)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)(vite@5.2.8)
-      '@astrojs/rss':
-        specifier: ^4.0.5
-        version: 4.0.5
-      '@astrojs/tailwind':
-        specifier: ^5.1.0
-        version: 5.1.0(astro@4.5.16)(tailwindcss@3.4.3)
-      '@caisy/rich-text-astro-renderer':
-        specifier: ^1.0.2
-        version: 1.0.2(astro@4.5.16)
-      '@caisy/rich-text-html-parser':
-        specifier: ^0.1.2
-        version: 0.1.2(prosemirror-keymap@1.2.2)(prosemirror-model@1.19.4)(prosemirror-state@1.4.3)(prosemirror-transform@1.8.0)(prosemirror-view@1.33.3)
-      '@formkit/auto-animate':
-        specifier: ^0.8.1
-        version: 0.8.1
-      '@hcaptcha/react-hcaptcha':
-        specifier: ^1.10.1
-        version: 1.10.1(react-dom@18.2.0)(react@18.2.0)
-      '@iconify-json/bi':
-        specifier: ^1.1.23
-        version: 1.1.23
-      '@iconify-json/devicon':
-        specifier: ^1.1.36
-        version: 1.1.36
-      '@iconify-json/tabler':
-        specifier: ^1.1.109
-        version: 1.1.109
-      '@inlang/paraglide-js-adapter-astro':
-        specifier: ^0.1.19
-        version: 0.1.22(astro@4.5.16)
-      '@pagefind/default-ui':
-        specifier: ^1.1.0
-        version: 1.1.0
-      '@resvg/resvg-js':
-        specifier: ^2.6.2
-        version: 2.6.2
-      '@sanity/astro':
-        specifier: ^3.0.0
-        version: 3.0.0(@sanity/client@6.15.11)(astro@4.5.16)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.36.4)(styled-components@6.1.8)
-      '@tailwindcss/nesting':
-        specifier: ^0.0.0-insiders.565cd3e
-        version: 0.0.0-insiders.565cd3e(postcss@8.4.38)
-      '@tailwindcss/typography':
-        specifier: ^0.5.12
-        version: 0.5.12(tailwindcss@3.4.3)
-      '@unpic/astro':
-        specifier: ^0.0.44
-        version: 0.0.44(astro@4.5.16)
-      apollo-link-scalars:
-        specifier: ^4.0.3
-        version: 4.0.3(@apollo/client@3.9.10)(graphql@16.8.1)
-      astro:
-        specifier: ^4.5.13
-        version: 4.5.16(@types/node@20.12.5)(typescript@5.4.4)
-      astro-icon:
-        specifier: ^1.1.0
-        version: 1.1.0
-      astro-pagefind:
-        specifier: ^1.5.0
-        version: 1.5.0(astro@4.5.16)
-      easymde:
-        specifier: '2'
-        version: 2.18.0
-      focus-trap:
-        specifier: ^7.5.4
-        version: 7.5.4
-      graphql:
-        specifier: ^16.8.1
-        version: 16.8.1
-      graphql-scalars:
-        specifier: ^1.23.0
-        version: 1.23.0(graphql@16.8.1)
-      graphql-tag:
-        specifier: ^2.12.6
-        version: 2.12.6(graphql@16.8.1)
-      iso-639-1:
-        specifier: ^3.1.2
-        version: 3.1.2
-      js-cookie:
-        specifier: ^3.0.5
-        version: 3.0.5
-      jsdom:
-        specifier: ^24.0.0
-        version: 24.0.0
-      pagefind:
-        specifier: ^1.1.0
-        version: 1.1.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-hook-form:
-        specifier: ^7.51.2
-        version: 7.51.2(react@18.2.0)
-      shikiji:
-        specifier: ^0.10.2
-        version: 0.10.2
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.3
-      tippy.js:
-        specifier: ^6.3.7
-        version: 6.3.7
-    devDependencies:
-      '@astrojs/sitemap':
-        specifier: ^3.1.2
-        version: 3.1.2
-      '@cloudflare/workers-types':
-        specifier: ^4.20240329.0
-        version: 4.20240405.0
-      '@graphql-codegen/cli':
-        specifier: ^5.0.2
-        version: 5.0.2(@parcel/watcher@2.4.1)(@types/node@20.12.5)(graphql@16.8.1)(typescript@5.4.4)
-      '@graphql-codegen/client-preset':
-        specifier: ^4.2.5
-        version: 4.2.5(graphql@16.8.1)
-      '@graphql-codegen/introspection':
-        specifier: ^4.0.3
-        version: 4.0.3(graphql@16.8.1)
-      '@graphql-codegen/typescript-generic-sdk':
-        specifier: ^4.0.1
-        version: 4.0.1(graphql-tag@2.12.6)(graphql@16.8.1)
-      '@graphql-codegen/typescript-graphql-request':
-        specifier: ^6.2.0
-        version: 6.2.0(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1)
-      '@inlang/paraglide-js':
-        specifier: 1.3.5
-        version: 1.3.5
-      '@parcel/watcher':
-        specifier: ^2.4.1
-        version: 2.4.1
-      '@types/js-cookie':
-        specifier: ^3.0.6
-        version: 3.0.6
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
-      '@types/jsdom':
-        specifier: ^21.1.6
-        version: 21.1.6
-      '@types/node':
-        specifier: ^20.12.2
-        version: 20.12.5
-      '@types/react':
-        specifier: ^18.2.74
-        version: 18.2.74
-      '@types/react-dom':
-        specifier: ^18.2.23
-        version: 18.2.24
-      '@types/slug':
-        specifier: ^5.0.8
-        version: 5.0.8
-      autoprefixer:
-        specifier: ^10.4.19
-        version: 10.4.19(postcss@8.4.38)
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      md-to-pdf:
-        specifier: ^5.2.4
-        version: 5.2.4(typescript@5.4.4)
-      postcss-import:
-        specifier: ^16.1.0
-        version: 16.1.0(postcss@8.4.38)
-      postcss-preset-env:
-        specifier: ^9.5.4
-        version: 9.5.4(postcss@8.4.38)
-      satori:
-        specifier: ^0.10.13
-        version: 0.10.13
-      sharp:
-        specifier: ^0.33.3
-        version: 0.33.3
-      slug:
-        specifier: ^9.0.0
-        version: 9.0.0
-      vite:
-        specifier: ^5.2.7
-        version: 5.2.8(@types/node@20.12.5)
-      wrangler:
-        specifier: ^3.43.0
-        version: 3.48.0(@cloudflare/workers-types@4.20240405.0)
 
   packages/frontend:
     dependencies:
@@ -297,9 +110,6 @@ importers:
       astro-pagefind:
         specifier: ^1.5.0
         version: 1.5.0(astro@4.5.16)
-      easymde:
-        specifier: '2'
-        version: 2.18.0
       focus-trap:
         specifier: ^7.5.4
         version: 7.5.4
@@ -312,6 +122,9 @@ importers:
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.8.1)
+      groq:
+        specifier: ^3.36.4
+        version: 3.36.4
       iso-639-1:
         specifier: ^3.1.2
         version: 3.1.2
@@ -373,15 +186,9 @@ importers:
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
-      '@types/js-yaml':
-        specifier: ^4.0.9
-        version: 4.0.9
       '@types/jsdom':
         specifier: ^21.1.6
         version: 21.1.6
-      '@types/node':
-        specifier: ^20.12.2
-        version: 20.12.5
       '@types/react':
         specifier: ^18.2.74
         version: 18.2.74
@@ -394,9 +201,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
+      daliborhon.dev-studio:
+        specifier: workspace:*
+        version: link:../studio
       md-to-pdf:
         specifier: ^5.2.4
         version: 5.2.4(typescript@5.4.4)
@@ -470,34 +277,9 @@ importers:
       '@types/react':
         specifier: ^18.0.25
         version: 18.2.74
-
-  sanity-studio:
-    dependencies:
-      '@sanity/vision':
-        specifier: ^3.36.4
-        version: 3.36.4(@babel/runtime@7.24.4)(@codemirror/lint@6.5.0)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.8)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-is:
-        specifier: ^18.2.0
-        version: 18.2.0
-      sanity:
-        specifier: ^3.36.4
-        version: 3.36.4(@types/node@20.12.5)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)(styled-components@6.1.8)
-      styled-components:
-        specifier: ^6.0.7
-        version: 6.1.8(react-dom@18.2.0)(react@18.2.0)
-    devDependencies:
-      '@sanity/eslint-config-studio':
-        specifier: ^4.0.0
-        version: 4.0.0(eslint@8.57.0)(typescript@5.4.4)
-      '@types/react':
-        specifier: ^18.0.25
-        version: 18.2.74
+      daliborhon.dev-site:
+        specifier: workspace:*
+        version: link:../frontend
 
 packages:
 
@@ -6984,12 +6766,6 @@ packages:
       '@types/node': 20.12.5
     dev: false
 
-  /@types/codemirror@5.60.15:
-    resolution: {integrity: sha512-dTOvwEQ+ouKJ/rE9LT1Ue2hmP6H1mZv5+CCnNWu2qtiOe2LQa9lCprEY20HxiDmV/Bxh+dXjywmy5aKvoGjULA==}
-    dependencies:
-      '@types/tern': 0.23.9
-    dev: false
-
   /@types/debug@4.1.12:
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
     dependencies:
@@ -7075,10 +6851,6 @@ packages:
 
   /@types/lodash@4.17.0:
     resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
-    dev: false
-
-  /@types/marked@4.3.2:
-    resolution: {integrity: sha512-a79Yc3TOk6dGdituy8hmTTJXjOkZ7zsFYV10L337ttq/rec8lRMDBpV7fL3uLx6TgbFCa5DU/h8FmIBQPSbU0w==}
     dev: false
 
   /@types/mdast@4.0.3:
@@ -7202,12 +6974,6 @@ packages:
     dependencies:
       '@types/node': 20.12.5
       minipass: 4.2.8
-    dev: false
-
-  /@types/tern@0.23.9:
-    resolution: {integrity: sha512-ypzHFE/wBzh+BlH6rrBgS5I/Z7RD21pGhZ2rltb/+ZrVM1awdZwjx7hE5XfuYgHWk9uvV5HLZN3SloevCAp3Bw==}
-    dependencies:
-      '@types/estree': 1.0.5
     dev: false
 
   /@types/tough-cookie@4.0.5:
@@ -8732,16 +8498,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /codemirror-spell-checker@1.1.2:
-    resolution: {integrity: sha512-2Tl6n0v+GJRsC9K3MLCdLaMOmvWL0uukajNJseorZJsslaxZyZMgENocPU8R0DyoTAiKsyqiemSOZo7kjGV0LQ==}
-    dependencies:
-      typo-js: 1.2.4
-    dev: false
-
-  /codemirror@5.65.16:
-    resolution: {integrity: sha512-br21LjYmSlVL0vFCPWPfhzUCT34FM/pAdK7rRIZwa0rrtrIdotvP4Oh4GUHsu2E3IrQMCfRkL/fN3ytMNxVQvg==}
-    dev: false
-
   /codemirror@6.0.1(@lezer/common@1.2.1):
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
@@ -9612,16 +9368,6 @@ packages:
 
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
-    dev: false
-
-  /easymde@2.18.0:
-    resolution: {integrity: sha512-IxVVUxNWIoXLeqtBU4BLc+eS/ScYhT1Dcb6yF5Wchoj1iXAV+TIIDWx+NCaZhY7RcSHqDPKllbYq7nwGKILnoA==}
-    dependencies:
-      '@types/codemirror': 5.60.15
-      '@types/marked': 4.3.2
-      codemirror: 5.65.16
-      codemirror-spell-checker: 1.1.2
-      marked: 4.3.0
     dev: false
 
   /ecdsa-sig-formatter@1.0.11:
@@ -12505,6 +12251,7 @@ packages:
     resolution: {integrity: sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==}
     engines: {node: '>= 12'}
     hasBin: true
+    dev: true
 
   /material-colors@1.2.6:
     resolution: {integrity: sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==}
@@ -17370,10 +17117,6 @@ packages:
     resolution: {integrity: sha512-dGE2Vv8cpVvw28v8HCPqyb08EzbBURxDpuhJvTrusShUfGnhHBafDsLdS1EhhxyL6BJQE+2cT3dDPAv+MQ6oLw==}
     engines: {node: '>=14.17'}
     hasBin: true
-
-  /typo-js@1.2.4:
-    resolution: {integrity: sha512-Oy/k+tFle5NAA3J/yrrYGfvEnPVrDZ8s8/WCwjUE75k331QyKIsFss7byQ/PzBmXLY6h1moRnZbnaxWBe3I3CA==}
-    dev: false
 
   /ua-parser-js@1.0.37:
     resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}

@@ -7,10 +7,12 @@ import { codeInput } from "@sanity/code-input";
 import { media } from "sanity-plugin-media";
 import { IconManager } from "sanity-plugin-icon-manager";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
-import { siteConfig } from "../frontend/site.config";
+import { siteConfig } from "daliborhon.dev-site";
 import { colorInput } from "@sanity/color-input";
 import { categorySlug } from "./schema/fields/categorySlug";
 import { documentInternationalization, DeleteTranslationAction } from "@sanity/document-internationalization";
+
+export const apiVersion = "2024-04-07";
 
 const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
     return { id: locale.path, title: locale.title };

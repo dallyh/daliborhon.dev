@@ -9,7 +9,7 @@ import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import sanity from "@sanity/astro";
 import { defaultLocale, localeKeys, astroI18nConfigPaths } from "./src/i18n/config";
-import sanityConfig from "../studio/sanity.config";
+import { defaultWorkspace, apiVersion } from "daliborhon.dev-studio";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -76,13 +76,15 @@ export default defineConfig({
         }),
         tailwind(),
         paraglide({
-            project: "../project.inlang",
+            project: "./project.inlang",
             outdir: "./src/paraglide",
         }),
         sanity({
-          projectId: sanityConfig.projectId,
-          dataset: sanityConfig.dataset,
-          useCdn: false,
+            projectId: defaultWorkspace.projectId,
+            dataset: defaultWorkspace.dataset,
+            useCdn: false,
+            apiVersion: apiVersion,
+            perspective: import.meta.env.DEV ? "previewDrafts" : "published",
         }),
     ],
     vite: {

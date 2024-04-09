@@ -1,4 +1,0 @@
-{
-    "schema": "./types/schema.json",
-    "generates": "./types/studio.schema.d.ts"
-}

@@ -1,0 +1,4 @@
+{
+    "schema": "../../packages/shared/src/studio/schema/schema.json",
+    "generates": "../../packages/shared/src/studio/schema/studio.schema.ts"
+}

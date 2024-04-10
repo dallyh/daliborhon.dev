@@ -1,4 +1,5 @@
 {
-    "schema": "../../packages/shared/src/studio/schema/schema.json",
-    "generates": "../../packages/shared/src/studio/schema/studio.schema.ts"
+    "schema": "./schema/types/schema.json",
+    "generates": "./schema/types/studio.schema.ts",
+    "path": "./groq/queries/**/*"
 }

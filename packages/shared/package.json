@@ -1,5 +1,5 @@
 {
-    "name": "shared",
+    "name": "@daliborhon.dev/shared",
     "version": "1.0.0",
     "description": "",
     "type": "module",
@@ -12,10 +12,6 @@
         "./frontend/i18n": {
             "import": "./src/frontend/i18n/index.ts",
             "default": "./src/frontend/i18n/index.ts"
-        },
-        "./studio": {
-            "import": "./src/studio/index.ts",
-            "default": "./src/studio/index.ts"
         }
     },
     "scripts": {

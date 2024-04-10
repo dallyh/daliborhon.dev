@@ -1,4 +1,4 @@
-import { defaultLocale } from "shared/frontend/i18n";
+import { defaultLocale } from "@daliborhon.dev/shared/frontend/i18n";
 import { generateOgImageForSite } from "@utils/og";
 import type { APIContext } from "astro";
 

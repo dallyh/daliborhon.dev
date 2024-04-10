@@ -425,3 +425,13 @@ export type Tag = {
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
+// Source: ./groq/queries/categories.ts
+// Variable: allCategoriesQuery
+// Query: *[_type == "category" && language == $language && _id > $lastId] | order(_id) [0...100] {    _id,  "title": title[_key == $language][0].value,  "slug": slug[_key == $language][0].value,  "description": description[_key == $language][0].value,}
+export type AllCategoriesQueryResult = Array<{
+  _id: string;
+  title: null;
+  slug: null;
+  description: null;
+}>;
+

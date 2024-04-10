@@ -5,10 +5,9 @@
     "scripts": {
         "prettier:check": "prettier . --check",
         "prettier:format": "prettier . --write",
-        "bootstrap": "pnpm install && pnpm --filter daliborhon.dev-studio generate:types",
         "dev": "turbo dev",
-        "dev:studio": "pnpm --filter daliborhon.dev-studio dev",
-        "dev:frontend": "pnpm --filter daliborhon.dev-frontend dev",
+        "dev:studio": "pnpm --filter @daliborhon.dev/studio dev",
+        "dev:frontend": "pnpm --filter @daliborhon.dev/frontend dev",
         "build": "turbo build"
     },
     "devDependencies": {

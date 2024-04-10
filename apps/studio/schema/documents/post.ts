@@ -1,4 +1,4 @@
-import {type SanityDocument, type SlugSourceContext, defineField, defineType } from "sanity";
+import { type SanityDocument, type SlugSourceContext, defineField, defineType } from "sanity";
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments";
 
 export default defineType({
@@ -75,6 +75,7 @@ export default defineType({
             validation: (Rule) => Rule.required(),
             options: {
                 hotspot: true,
+                metadata: ["blurhash", "lqip", "palette"],
             },
         }),
         defineField({

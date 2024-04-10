@@ -1,4 +1,4 @@
-import { defaultLocale, locales } from "shared/frontend/i18n";
+import { defaultLocale, locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { removeTrailingSlash } from "@utils";
 
 export function getRoutingLocale(locale: string | undefined) {

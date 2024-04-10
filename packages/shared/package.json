@@ -6,17 +6,19 @@
     "private": "true",
     "exports": {
         "./frontend": {
-            "default": "./dist/frontend/index.js",
-            "import": "./dist/frontend/index.js",
-            "types": "./dist/types/frontend/index.d.ts"
+            "import": "./src/frontend/index.ts",
+            "default": "./src/frontend/index.ts"
+        },
+        "./frontend/i18n": {
+            "import": "./src/frontend/i18n/index.ts",
+            "default": "./src/frontend/i18n/index.ts"
         },
         "./studio": {
-            "default": "./dist/studio/index.js",
-            "import": "./dist/studio/index.js",
-            "types": "./dist/types/studio/index.d.ts"
+            "import": "./src/studio/index.ts",
+            "default": "./src/studio/index.ts"
         }
     },
     "scripts": {
-        "build": "rimraf ./dist && tsc -p tsconfig.json"
+        "?build": "This package links directly to its source files."
     }
 }

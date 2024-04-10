@@ -10,6 +10,7 @@ import { internationalizedArray } from "sanity-plugin-internationalized-array";
 import { siteConfig } from "shared/frontend";
 import { colorInput } from "@sanity/color-input";
 import { categorySlug } from "./schema/fields/categorySlug";
+import { sanityWorkspaces } from "shared/studio";
 import { documentInternationalization, DeleteTranslationAction } from "@sanity/document-internationalization";
 
 const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
@@ -17,10 +18,10 @@ const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
 });
 
 export default defineConfig({
-    name: "default",
-    title: "daliborhon.dev",
-    projectId: "33c1m11m",
-    dataset: "production",
+    name: sanityWorkspaces.defaultWorkspace.name,
+    title: sanityWorkspaces.defaultWorkspace.title,
+    projectId: sanityWorkspaces.defaultWorkspace.projectId,
+    dataset: sanityWorkspaces.defaultWorkspace.getProdDataset(),
     plugins: [
         structureTool(),
         visionTool(),

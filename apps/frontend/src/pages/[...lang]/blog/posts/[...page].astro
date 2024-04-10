@@ -1,9 +1,9 @@
 ---
-import { locales } from "@i18n/config";
+import { locales } from "shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import BlogPostsLayout from "@layouts/BlogPostsLayout.astro";
 import type { GetStaticPathsOptions } from "astro";
-import { siteConfig } from "@config";
+import { siteConfig } from "shared/frontend";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {

@@ -6,8 +6,7 @@ dist/
 
 # cloudflare wrangler
 .wrangler
-functions/\[\[path\]\].js
-functions/\[\[path\]\].js.map
 
-paragdile/
+# Paraglide JS
+paraglide/
 

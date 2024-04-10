@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { mdToPdf } from "md-to-pdf";
-import { locales } from "@i18n/config";
+import { locales } from "shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import { createResumePdfFilename } from "@utils";
 

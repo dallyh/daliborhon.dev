@@ -8,7 +8,7 @@ import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import sanity from "@sanity/astro";
-import { defaultLocale, localeKeys, astroI18nConfigPaths } from "./src/i18n/config";
+import { defaultLocale, localeKeys, astroI18nConfigPaths } from "shared/frontend/i18n";
 import { sanityWorkspaces, currentApiVersion } from "shared/studio";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");

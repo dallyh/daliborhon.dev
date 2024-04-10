@@ -1,4 +1,4 @@
-import { siteConfig } from "./siteConfig";
+import { siteConfig } from "../configs/siteConfig";
 
 export const defaultLocale = siteConfig.i18n.defaultLocale;
 export const locales = Object.keys(siteConfig.i18n.locales);

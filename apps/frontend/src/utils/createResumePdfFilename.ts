@@ -1,4 +1,4 @@
-import type { AllowedLocales } from "@i18n/config";
+import type { AllowedLocales } from "shared/frontend/i18n";
 import * as m from "$messages";
 import { slugifyStr } from "@utils";
 

@@ -2,7 +2,7 @@
 // Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
 // Edited for this project needs.
 
-import { locales } from "@i18n/config";
+import { locales } from "shared/frontend/i18n";
 import { getPathFromUrl } from "@i18n/utils";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { getBlogPostUrl } from "@utils";
@@ -85,7 +85,7 @@ const capitalizeFirstLetter = (str: string) => {
 </lang-select>
 
 <script>
-    import { siteConfig } from "@config";
+    import { siteConfig } from "shared/frontend";
     import { navigate } from "astro:transitions/client";
     import cookie from "js-cookie";
 

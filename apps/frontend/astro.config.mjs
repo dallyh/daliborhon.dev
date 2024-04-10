@@ -13,6 +13,7 @@ import { sanityWorkspaces, currentApiVersion } from "shared/studio";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
+const SANITY_DATASET = import.meta.env.DEV ? sanityWorkspaces.defaultWorkspace.getDevDataset() : sanityWorkspaces.defaultWorkspace.getProdDataset();
 
 // Construct URL on Cloudflare build
 // https://developers.cloudflare.com/pages/configuration/build-configuration/#environment-variables
@@ -21,6 +22,8 @@ if (CF_PAGES_BRANCH && CF_PAGES_BRANCH.startsWith("dev")) {
     SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`;
 }
 console.log(`> Using SITE_URL: '${SITE_URL}'`);
+
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -81,7 +84,7 @@ export default defineConfig({
         }),
         sanity({
             projectId: sanityWorkspaces.defaultWorkspace.projectId,
-            dataset: sanityWorkspaces.defaultWorkspace.dataset,
+            dataset: SANITY_DATASET,
             useCdn: false,
             apiVersion: currentApiVersion,
             perspective: import.meta.env.DEV ? "previewDrafts" : "published",

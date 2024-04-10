@@ -17,11 +17,13 @@ const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
     return { id: locale.path, title: locale.title };
 });
 
+const DEV_ENV = process.env.NODE_ENV === "development" ? true : false;
+
 export default defineConfig({
     name: sanityWorkspaces.defaultWorkspace.name,
     title: sanityWorkspaces.defaultWorkspace.title,
     projectId: sanityWorkspaces.defaultWorkspace.projectId,
-    dataset: sanityWorkspaces.defaultWorkspace.getProdDataset(),
+    dataset: DEV_ENV ? sanityWorkspaces.defaultWorkspace.getDevDataset() : sanityWorkspaces.defaultWorkspace.getProdDataset(),
     plugins: [
         structureTool(),
         visionTool(),

@@ -30,7 +30,9 @@ export default defineConfig({
         tags(),
         codeInput(),
         media(),
-        IconManager(),
+        IconManager({
+            inlineSvg: true,
+        }),
         colorInput(),
         internationalizedArray({
             languages: [...languages],

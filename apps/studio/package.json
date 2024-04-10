@@ -1,37 +1,37 @@
 {
-  "name": "daliborhon.dev-studio",
-  "private": true,
-  "version": "1.0.0",
-  "main": "./index.ts",
-  "types": "./index.d.ts",
-  "scripts": {
-    "dev": "sanity dev",
-    "start": "sanity start",
-    "build": "sanity build",
-    "deploy": "sanity deploy",
-    "deploy:graphql": "sanity graphql deploy",
-    "extract-schema": "sanity schema extract --path ../../packages/shared/src/studio/schema/schema.json",
-    "generate-types": "sanity typegen generate && rimraf ../../packages/shared/src/studio/schema/schema.json",
-    "generate:types": "pnpm extract-schema && pnpm generate-types"
-  },
-  "dependencies": {
-    "@sanity/code-input": "^4.1.3",
-    "@sanity/color-input": "^3.1.1",
-    "@sanity/document-internationalization": "^2.1.1",
-    "@sanity/vision": "^3.36.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-is": "^18.2.0",
-    "sanity": "^3.36.4",
-    "sanity-plugin-icon-manager": "^1.4.0",
-    "sanity-plugin-internationalized-array": "^1.10.9",
-    "sanity-plugin-media": "^2.2.5",
-    "sanity-plugin-tags": "^2.0.1",
-    "styled-components": "^6.0.7"
-  },
-  "devDependencies": {
-    "@sanity/eslint-config-studio": "^4.0.0",
-    "@types/react": "^18.0.25",
-    "shared": "workspace:*"
-  }
+    "name": "daliborhon.dev-studio",
+    "private": true,
+    "version": "1.0.0",
+    "main": "./index.ts",
+    "types": "./index.d.ts",
+    "scripts": {
+        "dev": "sanity dev",
+        "start": "sanity start",
+        "build": "sanity build",
+        "deploy": "sanity deploy",
+        "deploy:graphql": "sanity graphql deploy",
+        "extract-schema": "sanity schema extract --path ../../packages/shared/src/studio/schema/schema.json",
+        "generate-types": "sanity typegen generate && rimraf ../../packages/shared/src/studio/schema/schema.json",
+        "generate:types": "pnpm extract-schema && pnpm generate-types"
+    },
+    "dependencies": {
+        "@sanity/code-input": "^4.1.3",
+        "@sanity/color-input": "^3.1.1",
+        "@sanity/document-internationalization": "^2.1.1",
+        "@sanity/vision": "^3.36.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-is": "^18.2.0",
+        "sanity": "^3.36.4",
+        "sanity-plugin-icon-manager": "^1.4.0",
+        "sanity-plugin-internationalized-array": "^1.10.9",
+        "sanity-plugin-media": "^2.2.5",
+        "sanity-plugin-tags": "^2.0.1",
+        "styled-components": "^6.0.7"
+    },
+    "devDependencies": {
+        "@sanity/eslint-config-studio": "^4.0.0",
+        "@types/react": "^18.0.25",
+        "shared": "workspace:*"
+    }
 }

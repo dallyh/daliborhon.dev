@@ -7,10 +7,10 @@ import { codeInput } from "@sanity/code-input";
 import { media } from "sanity-plugin-media";
 import { IconManager } from "sanity-plugin-icon-manager";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
-import { siteConfig } from "shared/frontend";
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { colorInput } from "@sanity/color-input";
 import { categorySlug } from "./schema/fields/categorySlug";
-import { sanityWorkspaces } from "shared/studio";
+import { defaultWorkspace } from "./workspaces/workspaces";
 import { documentInternationalization, DeleteTranslationAction } from "@sanity/document-internationalization";
 
 const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
@@ -20,10 +20,10 @@ const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
 const DEV_ENV = process.env.NODE_ENV === "development" ? true : false;
 
 export default defineConfig({
-    name: sanityWorkspaces.defaultWorkspace.name,
-    title: sanityWorkspaces.defaultWorkspace.title,
-    projectId: sanityWorkspaces.defaultWorkspace.projectId,
-    dataset: DEV_ENV ? sanityWorkspaces.defaultWorkspace.getDevDataset() : sanityWorkspaces.defaultWorkspace.getProdDataset(),
+    name: defaultWorkspace.name,
+    title: defaultWorkspace.title,
+    projectId: defaultWorkspace.projectId,
+    dataset: DEV_ENV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getProdDataset(),
     plugins: [
         structureTool(),
         visionTool(),

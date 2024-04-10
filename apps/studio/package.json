@@ -1,17 +1,30 @@
 {
-    "name": "daliborhon.dev-studio",
+    "name": "@daliborhon.dev/studio",
     "private": true,
     "version": "1.0.0",
-    "main": "./index.ts",
-    "types": "./index.d.ts",
+    "exports": {
+        "./workspaces": {
+            "import": "./workspaces/workspaces.ts",
+            "default": "./workspaces/workspaces.ts"
+        },
+        "./schema": {
+            "import": "./schema/types/studio.schema.ts",
+            "default": "./schema/types/studio.schema.ts"
+        },
+        "./groq": {
+            "import": "./groq/index.ts",
+            "default": "./groq/index.ts"
+        }
+    },
     "scripts": {
         "dev": "sanity dev",
         "start": "sanity start",
         "build": "sanity build",
         "deploy": "sanity deploy",
         "deploy:graphql": "sanity graphql deploy",
-        "extract-schema": "sanity schema extract --path ../../packages/shared/src/studio/schema/schema.json",
-        "generate-types": "sanity typegen generate && rimraf ../../packages/shared/src/studio/schema/schema.json",
+        "extract-schema": "sanity schema extract --path ./schema/types/schema.json",
+        "extract-schema-clean": " rimraf ./schema/types/schema.json",
+        "generate-types": "sanity typegen generate",
         "generate:types": "pnpm extract-schema && pnpm generate-types"
     },
     "dependencies": {
@@ -19,6 +32,7 @@
         "@sanity/color-input": "^3.1.1",
         "@sanity/document-internationalization": "^2.1.1",
         "@sanity/vision": "^3.36.4",
+        "groq": "^3.36.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-is": "^18.2.0",
@@ -32,6 +46,6 @@
     "devDependencies": {
         "@sanity/eslint-config-studio": "^4.0.0",
         "@types/react": "^18.0.25",
-        "shared": "workspace:*"
+        "@daliborhon.dev/shared": "workspace:*"
     }
 }

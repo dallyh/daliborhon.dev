@@ -1,4 +1,4 @@
-import { defaultLocale, locales } from "shared/frontend/i18n";
+import { defaultLocale, locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";

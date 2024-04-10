@@ -1,5 +1,5 @@
 {
-    "name": "daliborhon.dev-site",
+    "name": "@daliborhon.dev/frontend",
     "version": "1.0.0",
     "private": true,
     "scripts": {
@@ -85,6 +85,7 @@
         "slug": "^9.0.0",
         "vite": "^5.2.7",
         "wrangler": "^3.43.0",
-        "shared": "workspace:*"
+        "@daliborhon.dev/shared": "workspace:*",
+        "@daliborhon.dev/studio": "workspace:*"
     }
 }

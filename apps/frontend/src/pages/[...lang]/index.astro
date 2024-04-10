@@ -6,8 +6,12 @@ import Intro from "@components/astro/home/Intro.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
 import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
+import { getAllPostsByLocale } from "@services/sanity/content/posts";
 
 export { getStaticPaths } from "@i18n/utils";
+
+const posts = await getAllPostsByLocale({ locale: "cs" });
+console.log(JSON.stringify(posts, null, 2));
 
 const layoutProps = {
     title: "Dalibor Hon - " + m.common__home_page(),

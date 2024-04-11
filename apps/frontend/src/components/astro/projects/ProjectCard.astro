@@ -1,16 +1,17 @@
 ---
-import type { IGenProjectMetaFragment } from "@services/graphql/__generated/sdk";
 import CaisyRichTextRenderer from "../blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 import { Buffer } from "node:buffer";
 import * as m from "$messages";
+import type { Project, ProjectTag } from "@daliborhon.dev/studio/groq";
 
 interface Props {
-    project: IGenProjectMetaFragment;
+    project: Project;
 }
 
 const locale = Astro.currentLocale!;
 const { project } = Astro.props;
-const { projectSourceUrl, title, image, projectStartDate, projectTags, description } = project;
+const { title, description, icon, projectTags, projectSourceUrl } = project!;
+const projectStartDate = new Date(project?.projectStartDate!);
 
 const formatDateTime = () => {
     const date = projectStartDate!.toLocaleDateString(locale, {
@@ -25,50 +26,13 @@ const formatDateTime = () => {
     };
 };
 
-const isTagCssColorEmpty = (cssColor: string | null) => {
-    if (cssColor === null || cssColor === "") {
-        return true;
-    }
-    return false;
-};
-
-async function fetchImage(url: string) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error("Failed to fetch image");
-        }
-
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("image/svg+xml")) {
-            const res = await response.text();
-
-            return {
-                svg: true,
-                data: res,
-            };
-        } else {
-            const res = await response.arrayBuffer();
-            const base = Buffer.from(res).toString("base64");
-            const data = `data:${contentType};base64,${base}`;
-
-            return {
-                svg: false,
-                data: data,
-            };
-        }
-    } catch (error) {
-        console.error("Error fetching image:", error);
-    }
-}
-const img = await fetchImage(image!.src!);
+console.log(project);
 ---
 
 <div class="card">
     <div class="card-content">
         <i class="card-image" title={title} aria-label={title}>
-            {img?.svg && <Fragment set:html={img?.data} />}
-            {!img?.svg && <img src={img?.data} alt={title} />}
+            <Fragment set:html={icon?.metadata?.inlineSvg} />
         </i>
         <div class="card-info-wrapper">
             <div class="card-info-title">
@@ -85,9 +49,9 @@ const img = await fetchImage(image!.src!);
                 </div>
                 <div class="card-info-tags">
                     {
-                        projectTags!.map((tag) => {
+                        projectTags?.map((tag) => {
                             return (
-                                <div class="rounded-tag" style={`background: ${isTagCssColorEmpty(tag?.cssColor!) ? tag?.color : tag?.cssColor};`}>
+                                <div class="rounded-tag" style={`background: ${tag.color?.hex};`}>
                                     {tag?.title}
                                 </div>
                             );
@@ -96,7 +60,7 @@ const img = await fetchImage(image!.src!);
                 </div>
             </div>
             <div class="card-body">
-                <CaisyRichTextRenderer richTextJson={description?.json} />
+                {description}
             </div>
         </div>
     </div>

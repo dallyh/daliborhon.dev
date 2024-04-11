@@ -6,6 +6,7 @@ import ProjectCard from "./ProjectCard.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
 import { getRecentProjectsByLocale } from "@services/content/getRecentProjectsByLocale";
+import { getAllProjects } from "@services/sanity/content/projects"
 
 interface Props {
     recentSize?: number;
@@ -16,7 +17,7 @@ const { recentSize = siteConfig.projects.recentProjectsSize, listAll = false } =
 
 const locale = Astro.currentLocale!;
 
-const projects = await getRecentProjectsByLocale({ locale, first: recentSize });
+const projects = await getAllProjects({locale: locale});
 
 const allEntriesProps = {
     url: getRelativeLocaleUrl(locale, "/projects"),

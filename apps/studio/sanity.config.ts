@@ -12,6 +12,7 @@ import { colorInput } from "@sanity/color-input";
 import { categorySlug } from "./schema/fields/categorySlug";
 import { defaultWorkspace } from "./workspaces/workspaces";
 import { documentInternationalization, DeleteTranslationAction } from "@sanity/document-internationalization";
+import { groqdPlaygroundTool } from "groqd-playground";
 
 const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
     return { id: locale.path, title: locale.title };
@@ -34,6 +35,7 @@ export default defineConfig({
             inlineSvg: true,
         }),
         colorInput(),
+        groqdPlaygroundTool(),
         internationalizedArray({
             languages: [...languages],
             defaultLanguages: [siteConfig.i18n.defaultLocale],

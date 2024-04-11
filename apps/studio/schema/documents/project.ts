@@ -15,6 +15,12 @@ export default defineType({
             validation: (rule) => internationalizedArrayIsRequired(rule),
         }),
         defineField({
+            name: "projectSourceUrl",
+            title: "Source code URL",
+            type: "url",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
             name: "description",
             title: "Description",
             type: "internationalizedArrayText",
@@ -22,15 +28,42 @@ export default defineType({
         }),
         defineField({
             name: "projectTags",
-            title: "Project tags",
+            title: "Tags",
             type: "array",
-            validation: (Rule) => Rule.required(),
             of: [
                 {
-                    type: "reference",
-                    to: {
-                        type: "projectTag",
-                    },
+                    type: "object",
+                    fields: [
+                        {
+                            type: "string",
+                            name: "title",
+                            title: "Title",
+                            validation: (rule) =>
+                                rule
+                                    .custom((title: string) => {
+                                        if (typeof title === "undefined") {
+                                            return "Title is required.";
+                                        }
+
+                                        function initialIsCapital(word: string) {
+                                            return word[0] !== word[0].toLowerCase();
+                                        }
+
+                                        if (title.length > 0 && !initialIsCapital(title)) {
+                                            return "First letter must be uppercase.";
+                                        }
+
+                                        return true;
+                                    })
+                                    .error(),
+                        },
+                        {
+                            name: "color",
+                            title: "Background color",
+                            type: "color",
+                            validation: (Rule) => Rule.required(),
+                        },
+                    ],
                 },
             ],
         }),

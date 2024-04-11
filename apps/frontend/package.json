@@ -50,6 +50,7 @@
         "graphql-scalars": "^1.23.0",
         "graphql-tag": "^2.12.6",
         "groq": "^3.36.4",
+        "groqd": "^0.15.10",
         "iso-639-1": "^3.1.2",
         "js-cookie": "^3.0.5",
         "jsdom": "^24.0.0",
@@ -64,6 +65,8 @@
     "devDependencies": {
         "@astrojs/sitemap": "^3.1.2",
         "@cloudflare/workers-types": "^4.20240329.0",
+        "@daliborhon.dev/shared": "workspace:*",
+        "@daliborhon.dev/studio": "workspace:*",
         "@graphql-codegen/cli": "^5.0.2",
         "@graphql-codegen/client-preset": "^4.2.5",
         "@graphql-codegen/introspection": "^4.0.3",
@@ -84,8 +87,6 @@
         "sharp": "^0.33.3",
         "slug": "^9.0.0",
         "vite": "^5.2.7",
-        "wrangler": "^3.43.0",
-        "@daliborhon.dev/shared": "workspace:*",
-        "@daliborhon.dev/studio": "workspace:*"
+        "wrangler": "^3.43.0"
     }
 }

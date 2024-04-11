@@ -67,6 +67,9 @@ export default defineType({
             name: "tags",
             title: "Tags",
             type: "tags",
+            options: {
+                includeFromRelated: "tags",
+            },
         }),
         defineField({
             name: "mainImage",

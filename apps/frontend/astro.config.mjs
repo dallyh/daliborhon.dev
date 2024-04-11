@@ -9,14 +9,15 @@ import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import sanity from "@sanity/astro";
 import { defaultLocale, localeKeys, astroI18nConfigPaths } from "@daliborhon.dev/shared/frontend/i18n";
-import { defaultWorkspace } from "@daliborhon.dev/studio/workspaces";
-import { CURRENT_API_VERSION } from "@daliborhon.dev/studio/groq";
+import { defaultWorkspace, CURRENT_API_VERSION } from "@daliborhon.dev/studio/workspaces";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
-const SANITY_DATASET = import.meta.env.DEV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getProdDataset();
 
-// Construct URL on Cloudflare build
+// ******************************************************************************  TODO Change this to PROD
+const SANITY_DATASET = import.meta.env.DEV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getDevDataset();
+
+// Construct URL when building on Cloudflare pages
 // https://developers.cloudflare.com/pages/configuration/build-configuration/#environment-variables
 let SITE_URL = import.meta.env.DEV ? `http://localhost:${PORT}` : "https://www.daliborhon.dev/";
 if (CF_PAGES_BRANCH && CF_PAGES_BRANCH.startsWith("dev")) {

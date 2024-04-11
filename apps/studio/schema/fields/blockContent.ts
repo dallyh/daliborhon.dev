@@ -30,6 +30,7 @@ export default defineType({
                 { title: "H4", value: "h4" },
                 { title: "H5", value: "h5" },
                 { title: "H6", value: "h6" },
+                { title: "Quote", value: "blockquote" },
             ],
             lists: [{ title: "Bullet", value: "bullet" }],
             // Marks let you mark up inline text in the block editor.
@@ -41,7 +42,6 @@ export default defineType({
                     { title: "Emphasis", value: "em" },
                     { title: "Underline", value: "underline" },
                     { title: "Strike", value: "strike-through" },
-                    { title: "Quote", value: "blockquote" },
                 ],
                 // Annotations can be any object structure – e.g. a link or a footnote.
                 annotations: [

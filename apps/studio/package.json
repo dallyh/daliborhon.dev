@@ -6,14 +6,6 @@
         "./workspaces": {
             "import": "./workspaces/workspaces.ts",
             "default": "./workspaces/workspaces.ts"
-        },
-        "./schema": {
-            "import": "./schema/types/index.ts",
-            "default": "./schema/types/index.ts"
-        },
-        "./groq": {
-            "import": "./groq/index.ts",
-            "default": "./groq/index.ts"
         }
     },
     "scripts": {

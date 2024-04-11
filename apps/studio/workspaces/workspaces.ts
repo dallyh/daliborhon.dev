@@ -6,6 +6,8 @@ interface ISanityWorkspace {
     getDevDataset: () => string;
 }
 
+export const CURRENT_API_VERSION = "2021-10-21";
+
 export const defaultWorkspace: ISanityWorkspace = {
     name: "default",
     title: "daliborhon.dev",

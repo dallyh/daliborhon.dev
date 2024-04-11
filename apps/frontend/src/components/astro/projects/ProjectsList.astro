@@ -1,26 +1,22 @@
 ---
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import * as m from "$messages";
-import { languageTag } from "$paraglide-runtime";
 import ProjectCard from "./ProjectCard.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
-import { getRecentProjectsByLocale } from "@services/content/getRecentProjectsByLocale";
-import { getAllProjects } from "@services/sanity/content/projects"
+import { runQuery } from "@services/sanity/runQuery";
+import { allProjectsQuery } from "@services/sanity/queries/projects";
 
 interface Props {
     recentSize?: number;
-    listAll?: boolean;
+    showAllUrl?: boolean;
 }
 
-const { recentSize = siteConfig.projects.recentProjectsSize, listAll = false } = Astro.props;
-
+const { showAllUrl = false, recentSize } = Astro.props;
 const locale = Astro.currentLocale!;
-
-const projects = await getAllProjects({locale: locale});
+const query = allProjectsQuery(recentSize);
+const projects = await runQuery(query, { language: locale });
 
 const allEntriesProps = {
-    url: getRelativeLocaleUrl(locale, "/projects"),
+    url: "/projects",
     urlDescription: m.projects__see_all(),
 };
 ---
@@ -39,7 +35,7 @@ const allEntriesProps = {
             }
         </ul>
     </div>
-    {!listAll && <AllEntriesUrl {...allEntriesProps} />}
+    {!showAllUrl && <AllEntriesUrl {...allEntriesProps} />}
 </div>
 
 <style>

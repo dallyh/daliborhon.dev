@@ -6,6 +6,7 @@ import Intro from "@components/astro/home/Intro.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
 import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -15,7 +16,6 @@ const layoutProps = {
     homepage: true,
 };
 
-const postSize = 3;
 ---
 
 <PageLayout {...layoutProps}>
@@ -23,8 +23,8 @@ const postSize = 3;
         <Intro />
     </Section>
     <Section id="projects" sectionTitle={m.projects__projects_title()}>
-        <ProjectsList />
+        <ProjectsList recentSize={siteConfig.projects.recentProjectsSize} />
     </Section>
-    <FeaturedPosts {postSize} />
-    <RecentPosts {postSize} />
+    <FeaturedPosts postSize={siteConfig.blog.featuredPostsSize} />
+    <RecentPosts postSize={siteConfig.blog.recentPostsSize} />
 </PageLayout>

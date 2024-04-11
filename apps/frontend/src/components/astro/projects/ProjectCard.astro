@@ -1,8 +1,6 @@
 ---
-import CaisyRichTextRenderer from "../blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
-import { Buffer } from "node:buffer";
 import * as m from "$messages";
-import type { Project, ProjectTag } from "@daliborhon.dev/studio/groq";
+import type { Project, ProjectTag } from "@services/sanity/queries/projects";
 
 interface Props {
     project: Project;
@@ -10,7 +8,7 @@ interface Props {
 
 const locale = Astro.currentLocale!;
 const { project } = Astro.props;
-const { title, description, icon, projectTags, projectSourceUrl } = project!;
+const { title, description, icon, projectSourceUrl, projectTags } = project!;
 const projectStartDate = new Date(project?.projectStartDate!);
 
 const formatDateTime = () => {
@@ -25,8 +23,6 @@ const formatDateTime = () => {
         date: date,
     };
 };
-
-console.log(project);
 ---
 
 <div class="card">
@@ -49,9 +45,9 @@ console.log(project);
                 </div>
                 <div class="card-info-tags">
                     {
-                        projectTags?.map((tag) => {
+                        projectTags.map((tag) => {
                             return (
-                                <div class="rounded-tag" style={`background: ${tag.color?.hex};`}>
+                                <div class="rounded-tag" style={`background: ${tag.color.hex!};`}>
                                     {tag?.title}
                                 </div>
                             );

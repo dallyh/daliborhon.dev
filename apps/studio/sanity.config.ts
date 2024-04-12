@@ -1,18 +1,18 @@
-import { defineConfig, defineField } from "sanity";
-import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
-import { schema } from "./schema";
-import { tags } from "sanity-plugin-tags";
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { codeInput } from "@sanity/code-input";
-import { media } from "sanity-plugin-media";
+import { colorInput } from "@sanity/color-input";
+import { DeleteTranslationAction, documentInternationalization } from "@sanity/document-internationalization";
+import { visionTool } from "@sanity/vision";
+import { groqdPlaygroundTool } from "groqd-playground";
+import { defineConfig, defineField } from "sanity";
 import { IconManager } from "sanity-plugin-icon-manager";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
-import { colorInput } from "@sanity/color-input";
+import { media } from "sanity-plugin-media";
+import { tags } from "sanity-plugin-tags";
+import { structureTool } from "sanity/structure";
+import { schema } from "./schema";
 import { categorySlug } from "./schema/fields/categorySlug";
 import { defaultWorkspace } from "./workspaces/workspaces";
-import { documentInternationalization, DeleteTranslationAction } from "@sanity/document-internationalization";
-import { groqdPlaygroundTool } from "groqd-playground";
 
 const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
     return { id: locale.path, title: locale.title };

@@ -1,10 +1,10 @@
+import * as m from "$messages";
+import { type AvailableLanguageTag, setLanguageTag } from "$paraglide-runtime";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useForm, useWatch, type FieldValues } from "react-hook-form";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type FieldValues, useForm, useWatch } from "react-hook-form";
 import styles from "./ContactForm.module.css";
-import * as m from "$messages";
-import { setLanguageTag, type AvailableLanguageTag } from "$paraglide-runtime";
 
 export interface Props {
     loader?: ReactNode;

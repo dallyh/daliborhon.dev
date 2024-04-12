@@ -1,4 +1,4 @@
-import { z, q } from "groqd";
+import { q, z } from "groqd";
 
 const codeBlockSchema = z.object({
     language: z.string(),

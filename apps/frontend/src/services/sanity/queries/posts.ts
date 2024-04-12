@@ -1,7 +1,7 @@
 // This all has to be currently in one file, as sanity typegen does not support imports from other files.
 
-import { q, sanityImage, type InferType, z } from "groqd";
 import { __Type } from "graphql";
+import { type InferType, q, sanityImage, z } from "groqd";
 import { contentBlockSchema } from "../schemas/contentBlockSchema";
 import { categoryMetaSchema } from "./categories";
 

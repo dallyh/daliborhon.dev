@@ -1,7 +1,7 @@
+import { getCollection } from "astro:content";
 import * as m from "$messages";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import { caisyClient } from "@services/graphql/caisyClient";
-import { getCollection } from "astro:content";
 
 export default async (locale: string) => {
     const posts = await caisyClient.getArticlesCount();

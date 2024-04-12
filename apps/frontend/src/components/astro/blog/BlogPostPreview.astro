@@ -1,10 +1,10 @@
 ---
 import * as m from "$messages";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
-import { Image } from "@unpic/astro";
-import { getCategoryUrl, getBlogPostUrl } from "@utils";
-import TagList from "./TagList.astro";
 import type { Post } from "@services/sanity/queries/posts";
+import { Image } from "@unpic/astro";
+import { getBlogPostUrl, getCategoryUrl } from "@utils";
+import TagList from "./TagList.astro";
 
 interface Props {
     post: Post;

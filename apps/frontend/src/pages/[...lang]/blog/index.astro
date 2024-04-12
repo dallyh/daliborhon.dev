@@ -1,12 +1,12 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import Section from "@components/astro/global/Section.astro";
-import * as m from "$messages";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 export { getStaticPaths } from "@i18n/utils";
 

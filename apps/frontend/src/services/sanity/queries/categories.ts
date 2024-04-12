@@ -1,5 +1,5 @@
 import groq from "groq";
-import { q, type InferType } from "groqd";
+import { type InferType, q } from "groqd";
 import { getLocalizedArrayQuery } from "../utils/queryUtils";
 
 export const categoryMetaSchema = {

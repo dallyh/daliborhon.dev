@@ -1,14 +1,14 @@
 ---
-import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
-import * as m from "$messages";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
-import PageLayout from "@layouts/PageLayout.astro";
-import profilePicture from "@assets/img/profile/me.png";
 import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
+import profilePicture from "@assets/img/profile/me.png";
+import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
+import PageLayout from "@layouts/PageLayout.astro";
 import { createResumePdfFilename, removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -29,7 +29,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
     <a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download>
         <Icon name="bi:filetype-pdf" />
     </a>
-    
+
     <section class="hero-container" id="hero">
         <div class="hero">
             <div class="hero-meta">
@@ -51,7 +51,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
             <ScrollIndicator href="#content" />
         </div>
     </section>
-    <article class="prose max-w-none dark:prose-invert" id="content">
+    <article class="prose dark:prose-invert max-w-none" id="content">
         <Content />
     </article>
 </PageLayout>
@@ -142,7 +142,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 
     .button {
         border: var(--border);
-        
+
         &.island {
             min-width: max-content;
             height: inherit;
@@ -150,14 +150,13 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
             svg {
                 margin-right: 0;
                 width: 1.2rem;
-            height: 1.2rem;
+                height: 1.2rem;
             }
         }
 
         svg {
             display: inline-block;
             margin-right: 0.25rem;
-            
         }
     }
 </style>

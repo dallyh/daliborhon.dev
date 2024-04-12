@@ -1,12 +1,12 @@
 ---
-import * as m from "$messages";
-import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
+import * as m from "$messages";
 import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
-import PostsGrid from "./PostsGrid.astro";
-import { allPostsByTagQuery, type PostTag } from "@services/sanity/queries/posts";
+import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
+import { type PostTag, allPostsByTagQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
+import { Icon } from "astro-icon/components";
+import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
     tag: PostTag;

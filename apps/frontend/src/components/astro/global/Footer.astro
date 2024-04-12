@@ -1,9 +1,9 @@
 ---
+import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 const { CF_PAGES_COMMIT_SHA, CF_PAGES_BRANCH } = import.meta.env;
 

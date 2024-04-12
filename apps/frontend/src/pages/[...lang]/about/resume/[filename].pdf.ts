@@ -1,8 +1,8 @@
-import type { APIRoute } from "astro";
-import { mdToPdf } from "md-to-pdf";
 import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import { createResumePdfFilename } from "@utils";
+import type { APIRoute } from "astro";
+import { mdToPdf } from "md-to-pdf";
 
 export async function getStaticPaths() {
     const paths = locales.map((locale) => {

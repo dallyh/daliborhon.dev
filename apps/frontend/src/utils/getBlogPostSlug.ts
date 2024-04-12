@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
-import { slugifyStr } from "./slugifyStr";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { slugifyStr } from "./slugifyStr";
 
 export function getBlogPostSlug(locale: string, post: IGenBlogArticleMetaFragment) {
     //"{{year}}/{{month}}/{{day}}/{{slug}}"

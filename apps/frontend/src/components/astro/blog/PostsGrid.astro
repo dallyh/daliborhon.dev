@@ -1,8 +1,8 @@
 ---
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
-import type { Page } from "astro";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
 import type { Post } from "@services/sanity/queries/posts";
+import type { Page } from "astro";
 
 interface Props {
     posts: Post[] | Page<Post>;

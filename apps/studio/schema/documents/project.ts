@@ -1,6 +1,6 @@
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { defineField, defineType } from "sanity";
 import { mediaPreview } from "sanity-plugin-icon-manager";
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { internationalizedArrayIsRequired } from "../validation/internationalizedArrayStringIsRequired";
 
 export default defineType({

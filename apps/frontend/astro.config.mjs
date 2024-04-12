@@ -2,14 +2,14 @@ import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
+import { astroI18nConfigPaths, defaultLocale, localeKeys } from "@daliborhon.dev/shared/frontend/i18n";
+import { CURRENT_API_VERSION, defaultWorkspace } from "@daliborhon.dev/studio/workspaces";
 import paraglide from "@inlang/paraglide-js-adapter-astro";
+import sanity from "@sanity/astro";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
-import sanity from "@sanity/astro";
-import { defaultLocale, localeKeys, astroI18nConfigPaths } from "@daliborhon.dev/shared/frontend/i18n";
-import { defaultWorkspace, CURRENT_API_VERSION } from "@daliborhon.dev/studio/workspaces";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;

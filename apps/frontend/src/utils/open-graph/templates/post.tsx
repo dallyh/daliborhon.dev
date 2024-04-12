@@ -1,6 +1,6 @@
+import type { CollectionEntry } from "astro:content";
 import * as m from "$messages";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import type { CollectionEntry } from "astro:content";
 
 export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
     return (

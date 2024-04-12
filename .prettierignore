@@ -1,0 +1,13 @@
+# Deep directories
+**/dist
+**/node_modules
+**/.astro
+**/.wrangler
+**/.turbo
+
+# Directories
+.github
+.turbo
+
+# Files
+pnpm-lock.yaml

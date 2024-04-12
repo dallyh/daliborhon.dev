@@ -1,10 +1,10 @@
 ---
+import type { Category } from "@services/sanity/queries/categories";
+import { allPostsByCategoryQuery } from "@services/sanity/queries/posts";
+import { runQuery } from "@services/sanity/runQuery";
 import { getCategoryUrl } from "@utils";
 import { Icon } from "astro-icon/components";
 import PostsGrid from "./PostsGrid.astro";
-import type { Category } from "@services/sanity/queries/categories";
-import { runQuery } from "@services/sanity/runQuery";
-import { allPostsByCategoryQuery } from "@services/sanity/queries/posts";
 
 interface Props {
     category: Category;

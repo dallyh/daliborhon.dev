@@ -1,11 +1,8 @@
-import { getCollection } from "astro:content";
 import * as m from "$messages";
-import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
-import { caisyClient } from "@services/graphql/caisyClient";
 
 export default async (locale: string) => {
-    const posts = await caisyClient.getArticlesCount();
-    const projects = await caisyClient.getProjectsCount();
+    /*const posts = await caisyClient.getArticlesCount();
+    const projects = await caisyClient.getProjectsCount();*/
 
     return (
         <div
@@ -76,11 +73,11 @@ export default async (locale: string) => {
                     <p style={{ fontSize: "40px" }}>{m.common__site_description()}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
-                    <div style={{ display: "flex", fontSize: 24, fontWeight: "700" }}>
+                    {/*<div style={{ display: "flex", fontSize: 24, fontWeight: "700" }}>
                         {m.blog__posts()}: {posts?.allBlogArticle?.totalCount === 0 ? "None :(" : posts?.allBlogArticle?.totalCount}
                         {"|"}
                         {m.projects__projects()}: {projects.allProject?.totalCount === 0 ? "None :(" : projects.allProject?.totalCount}
-                    </div>
+                </div>*/}
                 </div>
             </div>
         </div>

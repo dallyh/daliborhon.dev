@@ -1,7 +1,7 @@
 import { defaultLocale, locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
-import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import { allPostsQuery, type Post } from "@services/sanity/queries/posts";
+import { runQuery } from "@services/sanity/runQuery";
 import { getBlogPostSlug } from "@utils";
 import { generateOgImageForPost } from "@utils/og";
 import type { APIContext } from "astro";
@@ -9,7 +9,7 @@ import type { APIContext } from "astro";
 export async function getStaticPaths() {
     const paths = await Promise.all(
         locales.map(async (locale) => {
-            const posts = (await getAllBlogArticlesByLocale({ locale })) ?? [];
+            const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
 
             if (posts === undefined) {
                 return [];
@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 }
 
 export async function GET({ params, props }: APIContext) {
-    return new Response(await generateOgImageForPost(props.post as IGenBlogArticleMetaFragment, params.lang ?? defaultLocale), {
+    return new Response(await generateOgImageForPost(props.post as Post, params.lang ?? defaultLocale), {
         headers: { "Content-Type": "image/png" },
     });
 }

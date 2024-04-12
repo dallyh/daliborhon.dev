@@ -1,8 +1,8 @@
 import type { CollectionEntry } from "astro:content";
 import * as m from "$messages";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import type { Post } from "@services/sanity/queries/posts";
 
-export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
+export default async (post: Post, locale: string) => {
     return (
         <div
             style={{
@@ -68,19 +68,19 @@ export default async (post: IGenBlogArticleMetaFragment, locale: string) => {
                     }}
                 >
                     <p style={{ fontSize: "60px", fontWeight: "700" }}>{post?.title}</p>
-                    <p style={{ fontSize: "40px" }}>{post.description}</p>
+                    <p style={{ fontSize: "40px" }}>{post.headline}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
                     <div style={{ display: "flex", width: "100%", justifyContent: "space-between", fontSize: 24 }}>
                         <p style={{ padding: 0, margin: 0, fontWeight: "700" }}>
-                            {m.blog__published_date_title()}: {post._meta?.publishedAt?.toLocaleDateString(locale, { month: "long", day: "2-digit", year: "numeric" })}
+                            {m.blog__published_date_title()}: {post.publishedAt.toLocaleDateString(locale, { month: "long", day: "2-digit", year: "numeric" })}
                         </p>
                         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                             {post?.tags &&
                                 post.tags.map((tag) => (
-                                    <p key={tag?.name} style={{ padding: 0, margin: 0 }}>
+                                    <p key={tag.label} style={{ padding: 0, margin: 0 }}>
                                         <strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
-                                        {tag?.name}
+                                        {tag.label}
                                     </p>
                                 ))}
                         </div>

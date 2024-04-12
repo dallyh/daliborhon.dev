@@ -1,8 +1,8 @@
 import { Resvg } from "@resvg/resvg-js";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./templates/post";
 import siteOgImage from "./templates/site";
+import type { Post } from "@services/sanity/queries/posts";
 
 const fetchFonts = async () => {
     // Regular Font
@@ -44,7 +44,7 @@ function svgBufferToPngBuffer(svg: string) {
     return pngData.asPng();
 }
 
-export async function generateOgImageForPost(post: IGenBlogArticleMetaFragment, locale: string) {
+export async function generateOgImageForPost(post: Post, locale: string) {
     const svg = await satori(await postOgImage(post, locale), options);
     return svgBufferToPngBuffer(svg);
 }

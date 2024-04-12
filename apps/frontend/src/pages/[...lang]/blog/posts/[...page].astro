@@ -5,17 +5,19 @@ import BlogPostsLayout from "@layouts/BlogPostsLayout.astro";
 import type { GetStaticPathsOptions } from "astro";
 import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
+import { runQuery } from "@services/sanity/runQuery";
+import { allPostsQuery } from "@services/sanity/queries/posts";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const paths = await Promise.all(
         locales.map(async (locale) => {
-            const posts = (await getAllBlogArticlesByLocale({ locale })) ?? [];
+            const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
 
             return paginate(posts, {
                 params: { lang: getRoutingLocale(locale) },
                 pageSize: siteConfig.blog.pageSize,
             });
-        }),
+        })
     );
 
     return paths.flat();

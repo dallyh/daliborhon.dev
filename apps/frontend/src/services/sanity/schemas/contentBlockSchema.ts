@@ -47,12 +47,14 @@ const iconSchema = z.object({
     }),
 });
 
-export const contentBlockSchema = q
+const contentBlockSchemaSingle = q
     .contentBlock({
         markDefs: q.object({ _type: q.literal("link"), href: q.string() }),
     })
     .or(codeBlockSchema)
     .or(iconSchema)
     .or(imageBlockSchema);
+
+export const contentBlockSchema = q.array(contentBlockSchemaSingle).or(contentBlockSchemaSingle);
 
 export type ContentBlock = z.infer<typeof contentBlockSchema>;

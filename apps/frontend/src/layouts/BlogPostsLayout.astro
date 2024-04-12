@@ -8,13 +8,13 @@ import Navigation from "@components/astro/global/Navigation.astro";
 import Section from "@components/astro/global/Section.astro";
 import * as m from "$messages";
 import MainLayout from "@layouts/MainLayout.astro";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
-    page: Page<IGenBlogArticleMetaFragment>;
+    page: Page<Post>;
 }
 
 const { page } = Astro.props;

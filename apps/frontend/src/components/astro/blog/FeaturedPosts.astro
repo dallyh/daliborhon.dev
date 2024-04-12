@@ -1,9 +1,9 @@
 ---
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import * as m from "$messages";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
-import { getFeaturedBlogArticlesByLocale } from "@services/content/getFeaturedBlogArticlesByLocale";
+import { runQuery } from "@services/sanity/runQuery";
+import { recentFeaturedPostsQuery } from "@services/sanity/queries/posts";
 
 interface Props {
     postSize?: number;
@@ -11,11 +11,12 @@ interface Props {
     showSeeAllUrl?: boolean;
 }
 
-const { postSize = siteConfig.blog.featuredPostsSize, isFirstSection = false, showSeeAllUrl = true } = Astro.props;
+const { isFirstSection = false, showSeeAllUrl = true, postSize } = Astro.props;
 
 const locale = Astro.currentLocale!;
 
-const posts = await getFeaturedBlogArticlesByLocale({ locale, first: postSize });
+const query = recentFeaturedPostsQuery(postSize);
+const posts = await runQuery(query, { language: locale });
 
 const sectionProps = {
     id: "featuredPosts",

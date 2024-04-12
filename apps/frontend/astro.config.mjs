@@ -14,8 +14,8 @@ import { defaultWorkspace, CURRENT_API_VERSION } from "@daliborhon.dev/studio/wo
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 
-// ******************************************************************************  TODO Change this to PROD
-const SANITY_DATASET = import.meta.env.DEV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getDevDataset();
+// TODO make this dynamic on build
+const SANITY_DATASET = defaultWorkspace.getDevDataset();
 
 // Construct URL when building on Cloudflare pages
 // https://developers.cloudflare.com/pages/configuration/build-configuration/#environment-variables

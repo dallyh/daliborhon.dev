@@ -3,6 +3,14 @@
 import { q, sanityImage, type InferType, z } from "groqd";
 import { __Type } from "graphql";
 import { contentBlockSchema } from "../schemas/contentBlockSchema";
+import { categoryMetaSchema } from "./categories";
+
+const postTagSchema = q.array(
+    q.object({
+        value: q.string(),
+        label: q.string(),
+    }),
+);
 
 const postMetaFragment = {
     _id: q.string(),
@@ -13,13 +21,9 @@ const postMetaFragment = {
     publishedAt: q.date(),
     updatedAt: q.date().nullable(),
     featured: q.boolean(),
-    tags: q.array(
-        q.object({
-            value: q.string(),
-            label: q.string(),
-        }),
-    ),
+    tags: postTagSchema,
     body: contentBlockSchema,
+    categories: q("categories[]", {isArray: true}).deref().grab(categoryMetaSchema),
     mainImage: sanityImage("mainImage", {
         additionalFields: {
             altText: q.string().nullable(),
@@ -35,15 +39,36 @@ const postMetaFragment = {
 };
 
 export const allPostsQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").order("publishedAt desc").grab(postMetaFragment);
+
 export const allPostsByCategoryQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("references($categoryId)").order("publishedAt desc").grab(postMetaFragment);
+
 export const allPostsByTagQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("count(tags[value == $tag]) > 0").order("publishedAt desc").grab(postMetaFragment);
+
 export const allFeaturedPostsQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("featured == true").order("publishedAt desc").grab(postMetaFragment);
-export const recentPostsQuery = (maxItems: number) => {
-    return q("*", { isArray: true }).filterByType("post").filter("language == $language").slice(0, maxItems).order("publishedAt desc").grab(postMetaFragment);
+
+export const recentFeaturedPostsQuery = (maxRecent: number = -1) => {
+    return q("*", { isArray: true })
+        .filterByType("post")
+        .filter("language == $language")
+        .slice(0, maxRecent === -1 ? -1 : maxRecent - 1)
+        .filter("featured == true")
+        .order("publishedAt desc")
+        .grab(postMetaFragment);
 };
-export const allPostsTagsQuery = q("").grab({
-    tags: q("*[tags != null]").grabOne("tags[]").grabOne("label", q.string()),
+
+export const recentPostsQuery = (maxRecent: number = -1) => {
+    return q("*", { isArray: true })
+        .filterByType("post")
+        .filter("language == $language")
+        .slice(0, maxRecent === -1 ? -1 : maxRecent - 1)
+        .order("publishedAt desc")
+        .grab(postMetaFragment);
+};
+
+export const allPostsTagsQuery = q("*[tags != null].tags[]", { isArray: true }).grab({
+    label: q.string(),
+    value: q.string(),
 });
 
 export type Post = Unpacked<InferType<typeof allPostsQuery>>;
-export type PostTag = Unpacked<InferType<typeof allPostsTagsQuery>>;
+export type PostTag = Unpacked<InferType<typeof postTagSchema>>;

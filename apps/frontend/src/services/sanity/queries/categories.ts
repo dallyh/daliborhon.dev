@@ -2,10 +2,10 @@ import groq from "groq";
 import { q, type InferType } from "groqd";
 import { getLocalizedArrayQuery } from "../utils/queryUtils";
 
-const categoryMetaSchema = {
+export const categoryMetaSchema = {
     _id: q.string(),
     title: getLocalizedArrayQuery("title"),
-    slug: getLocalizedArrayQuery("slug"),
+    slug: getLocalizedArrayQuery("slug", true),
     description: getLocalizedArrayQuery("description"),
 };
 

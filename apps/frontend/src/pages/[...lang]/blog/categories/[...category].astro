@@ -7,35 +7,34 @@ import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import * as m from "$messages";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getAllBlogArticlesByCategoryAndLocale } from "@services/content/getAllBlogArticlesByCategoryAndLocale";
-import { getAllCategoriesByLocale } from "@services/content/getAllCategoriesByLocale";
-import { slugifyStr } from "@utils";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import SearchMeta from "@components/astro/global/SearchMeta.astro";
+import { allCategoriesQuery } from "@services/sanity/queries/categories";
+import { runQuery } from "@services/sanity/runQuery";
+import { allPostsByCategoryQuery } from "@services/sanity/queries/posts";
 
 export async function getStaticPaths() {
     const paths = await Promise.all(
         locales.map(async (locale) => {
-            const categories = await getAllCategoriesByLocale({ locale });
+            const categories = await runQuery(allCategoriesQuery, { language: locale });
 
             return await Promise.all(
                 categories.map(async (cat) => {
-                    const posts = await getAllBlogArticlesByCategoryAndLocale({ locale, categoryName: cat?.name! });
+                    const posts = await runQuery(allPostsByCategoryQuery, { language: locale, categoryId: cat._id });
 
                     if (posts === undefined || posts.length === 0) {
                         return {
-                            params: { lang: getRoutingLocale(locale), category: slugifyStr(locale, cat?.name!) },
+                            params: { lang: getRoutingLocale(locale), category: cat.slug },
                             props: { posts: undefined, category: cat, locale: locale },
                         };
                     }
 
                     return {
-                        params: { lang: getRoutingLocale(locale), category: slugifyStr(locale, cat?.name!) },
+                        params: { lang: getRoutingLocale(locale), category: cat.slug },
                         props: { posts: posts, category: cat, locale: locale },
                     };
-                }),
+                })
             );
-        }),
+        })
     );
 
     return paths.flat();
@@ -43,7 +42,7 @@ export async function getStaticPaths() {
 
 const { posts, category, locale } = Astro.props;
 
-const categoryTitle = category?.name!;
+const categoryTitle = category.title;
 const categoryDescription = `${m.blog__posts_with_category()} ${categoryTitle.toLowerCase()}`;
 const layoutProps = {
     title: `${m.blog__category()}: ${categoryTitle}`,

@@ -1,0 +1,10 @@
+---
+import type { Icon } from "@services/sanity/schemas/contentBlockSchema";
+
+interface Props {
+    node: Icon;
+}
+const { node } = Astro.props;
+---
+
+<Fragment set:html={node.metadata.inlineSvg} />

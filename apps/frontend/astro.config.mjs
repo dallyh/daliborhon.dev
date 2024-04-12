@@ -37,7 +37,7 @@ export default defineConfig({
         },
     }),
     image: {
-        domains: ["assets.caisy.io", "astro.badg.es"],
+        domains: ["cdn.sanity.io", "astro.badg.es"],
         remotePatterns: [
             {
                 protocol: "https",

@@ -3,7 +3,6 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import CaisyRichTextRenderer from "@components/astro/blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import TagList from "@components/astro/blog/TagList.astro";
 import Footer from "@components/astro/global/Footer.astro";
@@ -14,6 +13,7 @@ import type { Post } from "@services/sanity/queries/posts";
 import { Image } from "@unpic/astro";
 import { getBlogPostDateTime, getCategoryUrl, getOgImageUrl } from "@utils";
 import MainLayout from "./MainLayout.astro";
+import PortableText from "@components/astro/global/PortableText/PortableText.astro";
 
 interface Props {
     post: Post;
@@ -114,7 +114,7 @@ const searchProps = {
             <hr />
         </div>
         <article class="prose dark:prose-invert max-w-none">
-            <!-- <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} generateToc /> -->
+            <PortableText value={post.body} />
         </article>
     </main>
     <Footer />

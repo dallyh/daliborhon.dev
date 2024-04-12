@@ -1,0 +1,7 @@
+---
+import { Code } from "astro:components";
+
+const { node } = Astro.props;
+---
+
+<Code lang={node.language} code={node.code} />

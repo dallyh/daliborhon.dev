@@ -59,6 +59,15 @@ export default defineType({
                     },
                 ],
             },
+            of: [
+                {
+                    type: "icon.manager",
+                    title: "Inline icon",
+                    options: {
+                        withFilename: true,
+                    },
+                },
+            ],
         }),
         // You can add additional types here. Note that you can't use
         // primitive types such as 'string' and 'number' in the same array
@@ -69,12 +78,6 @@ export default defineType({
         }),
         defineArrayMember({
             type: "code",
-            options: {
-                withFilename: true,
-            },
-        }),
-        defineArrayMember({
-            type: "icon.manager",
             options: {
                 withFilename: true,
             },

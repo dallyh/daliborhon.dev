@@ -23,7 +23,7 @@ const postMetaFragment = {
     featured: q.boolean(),
     tags: postTagSchema,
     body: contentBlockSchema,
-    categories: q("categories[]", {isArray: true}).deref().grab(categoryMetaSchema),
+    categories: q("categories[]", { isArray: true }).deref().grab(categoryMetaSchema),
     mainImage: sanityImage("mainImage", {
         additionalFields: {
             altText: q.string().nullable(),
@@ -35,6 +35,7 @@ const postMetaFragment = {
         .deref()
         .grab({
             slug: q.slug("slug"),
+            language: q.string(),
         }),
 };
 

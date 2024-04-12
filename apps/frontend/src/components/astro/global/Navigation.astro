@@ -7,9 +7,10 @@ import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
 import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import DynamicIsland from "./DynamicIsland.astro";
+import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
-    post?: IGenBlogArticleMetaFragment;
+    post?: Post;
 }
 
 const { post } = Astro.props;

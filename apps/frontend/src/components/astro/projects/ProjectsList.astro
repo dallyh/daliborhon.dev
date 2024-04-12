@@ -1,9 +1,9 @@
 ---
 import * as m from "$messages";
-import ProjectCard from "./ProjectCard.astro";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
-import { runQuery } from "@services/sanity/runQuery";
 import { allProjectsQuery } from "@services/sanity/queries/projects";
+import { runQuery } from "@services/sanity/runQuery";
+import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
     recentSize?: number;

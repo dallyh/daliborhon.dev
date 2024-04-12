@@ -1,5 +1,5 @@
-import type { AllowedLocales } from "@daliborhon.dev/shared/frontend/i18n";
 import * as m from "$messages";
+import type { AllowedLocales } from "@daliborhon.dev/shared/frontend/i18n";
 import { slugifyStr } from "@utils";
 
 export function createResumePdfFilename(locale: string, extension: boolean = false) {

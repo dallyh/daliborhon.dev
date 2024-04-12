@@ -2,14 +2,14 @@
 // Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
 // Edited for this project needs.
 
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { languageTag } from "$paraglide-runtime";
 import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getPathFromUrl } from "@i18n/utils";
+import type { Post } from "@services/sanity/queries/posts";
 import { getBlogPostUrl } from "@utils";
 import { Icon } from "astro-icon/components";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import ISO6991 from "iso-639-1";
-import { languageTag } from "$paraglide-runtime";
-import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
     post?: Post;

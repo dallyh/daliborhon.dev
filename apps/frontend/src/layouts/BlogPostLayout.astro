@@ -1,19 +1,19 @@
 ---
-import FormattedDate from "@components/astro/blog/FormattedDate.astro";
-import MainLayout from "./MainLayout.astro";
-import TagList from "@components/astro/blog/TagList.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import { getCategoryUrl, getBlogPostDateTime, getOgImageUrl } from "@utils";
+import CaisyRichTextRenderer from "@components/astro/blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
+import FormattedDate from "@components/astro/blog/FormattedDate.astro";
+import TagList from "@components/astro/blog/TagList.astro";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
-import * as m from "$messages";
-import { Image } from "@unpic/astro";
-import CaisyRichTextRenderer from "@components/astro/blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import type { Post } from "@services/sanity/queries/posts";
+import { Image } from "@unpic/astro";
+import { getBlogPostDateTime, getCategoryUrl, getOgImageUrl } from "@utils";
+import MainLayout from "./MainLayout.astro";
 
 interface Props {
     post: Post;

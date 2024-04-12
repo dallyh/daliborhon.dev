@@ -1,7 +1,7 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import type { IGenBlogArticleMetaFragment, IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
 import type { Post, PostTag } from "@services/sanity/queries/posts";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
     post?: Post;

@@ -1,12 +1,12 @@
 ---
+import * as m from "$messages";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import Section from "@components/astro/global/Section.astro";
 import Intro from "@components/astro/home/Intro.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
-import * as m from "$messages";
-import PageLayout from "@layouts/PageLayout.astro";
 import { siteConfig } from "@daliborhon.dev/shared/frontend";
+import PageLayout from "@layouts/PageLayout.astro";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -15,7 +15,6 @@ const layoutProps = {
     description: m.common__site_description(),
     homepage: true,
 };
-
 ---
 
 <PageLayout {...layoutProps}>

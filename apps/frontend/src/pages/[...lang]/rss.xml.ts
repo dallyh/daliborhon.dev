@@ -1,9 +1,9 @@
-import rss from "@astrojs/rss";
-import type { APIContext } from "astro";
 import * as m from "$messages";
+import rss from "@astrojs/rss";
+import { parseJSONToHTML } from "@caisy/rich-text-html-parser";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
 import { getBlogPostUrl } from "@utils";
-import { parseJSONToHTML } from "@caisy/rich-text-html-parser";
+import type { APIContext } from "astro";
 import { JSDOM } from "jsdom";
 
 export { getStaticPaths } from "@i18n/utils";

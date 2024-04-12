@@ -1,9 +1,9 @@
 ---
 import * as m from "$messages";
-import Section from "../global/Section.astro";
-import PostsGrid from "./PostsGrid.astro";
 import { recentPostsQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
+import Section from "../global/Section.astro";
+import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
     postSize?: number;

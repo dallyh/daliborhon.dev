@@ -1,13 +1,12 @@
 ---
-import * as m from "$messages";
-import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
+import type { Post } from "@services/sanity/queries/posts";
+import { Icon } from "astro-icon/components";
+import DynamicIsland from "./DynamicIsland.astro";
 import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
-import DynamicIsland from "./DynamicIsland.astro";
-import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
     post?: Post;
@@ -506,7 +505,7 @@ const locale = Astro.currentLocale!;
                         (e) => {
                             activateFocus(e);
                         },
-                        { once: true }
+                        { once: true },
                     );
                     toggleMenu();
                 }

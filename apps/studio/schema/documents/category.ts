@@ -1,6 +1,6 @@
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { defineField, defineType } from "sanity";
 import { internationalizedArrayIsRequired } from "../validation/internationalizedArrayStringIsRequired";
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
 
 export default defineType({
     name: "category",

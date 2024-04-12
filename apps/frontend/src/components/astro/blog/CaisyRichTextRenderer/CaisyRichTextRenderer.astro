@@ -1,11 +1,11 @@
 ---
+import * as m from "$messages";
 import RichTextRenderer from "@caisy/rich-text-astro-renderer";
 import CodeBlock from "./nodes/CodeBlock.astro";
 import DocumentLink from "./nodes/DocumentLink.astro";
 import Heading from "./nodes/Heading.astro";
-import * as m from "$messages";
-import type { HeadingNode } from "./utils/types";
 import { generateTableOfContents } from "./utils/generateTableOfContents";
+import type { HeadingNode } from "./utils/types";
 
 export interface Props {
     richTextJson?: any;

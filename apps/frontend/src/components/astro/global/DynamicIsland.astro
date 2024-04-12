@@ -1,8 +1,8 @@
 ---
-import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import type { AllowedLocales } from "@daliborhon.dev/shared/frontend/i18n";
+import { Icon } from "astro-icon/components";
 
 const locale = Astro.currentLocale as AllowedLocales;
 const hasDynamicIsland = (await Astro.slots.render("dynamic-island")).length !== 0;

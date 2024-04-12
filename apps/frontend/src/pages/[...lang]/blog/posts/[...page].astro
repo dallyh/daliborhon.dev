@@ -1,12 +1,12 @@
 ---
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import BlogPostsLayout from "@layouts/BlogPostsLayout.astro";
-import type { GetStaticPathsOptions } from "astro";
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { getAllBlogArticlesByLocale } from "@services/content/getAllBlogArticlesByLocale";
-import { runQuery } from "@services/sanity/runQuery";
 import { allPostsQuery } from "@services/sanity/queries/posts";
+import { runQuery } from "@services/sanity/runQuery";
+import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const paths = await Promise.all(
@@ -17,7 +17,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
                 params: { lang: getRoutingLocale(locale) },
                 pageSize: siteConfig.blog.pageSize,
             });
-        })
+        }),
     );
 
     return paths.flat();

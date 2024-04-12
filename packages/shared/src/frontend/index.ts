@@ -1,1 +1,1 @@
-export * from "./configs/siteConfig"
+export * from "./configs/siteConfig";

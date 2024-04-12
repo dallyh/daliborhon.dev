@@ -1,13 +1,13 @@
 ---
+import { getAbsoluteLocaleUrl } from "astro:i18n";
 import { ViewTransitions } from "astro:transitions";
 import * as m from "$messages";
 import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
 import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
-import { getAbsoluteLocaleUrl } from "astro:i18n";
-import "../styles/variables.css";
+import { removeTrailingSlash } from "@utils";
 import "../styles/global.css";
 import "../styles/keyframes.css";
-import { removeTrailingSlash } from "@utils";
+import "../styles/variables.css";
 
 export interface Props {
     title?: string;

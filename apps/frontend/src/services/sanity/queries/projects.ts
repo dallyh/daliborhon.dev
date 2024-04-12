@@ -1,6 +1,6 @@
-import { q, type InferType } from "groqd";
+import { type InferType, q } from "groqd";
+import { type Color, colorSchema } from "../schemas/colorSchema";
 import { getLocalizedArrayQuery } from "../utils/queryUtils";
-import { colorSchema, type Color } from "../schemas/colorSchema";
 
 const projectMetaFragment = {
     _id: q.string(),

@@ -1,7 +1,6 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { getBlogPostSlug } from "./getBlogPostSlug";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import type { Post } from "@services/sanity/queries/posts";
 
-export function getBlogPostUrl(locale: string, post: IGenBlogArticleMetaFragment) {
-    return getRelativeLocaleUrl(locale, `blog/posts/${getBlogPostSlug(locale, post)}/`);
+export function getBlogPostUrl(locale: string, post: Post) {
+    return getRelativeLocaleUrl(locale, `blog/posts/${post.slug}/`);
 }

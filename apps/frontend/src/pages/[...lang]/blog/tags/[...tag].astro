@@ -7,29 +7,29 @@ import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import * as m from "$messages";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
-import { getAllTags } from "@services/content/getAllTags";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import SearchMeta from "@components/astro/global/SearchMeta.astro";
+import { getUniquePostsTags } from "@services/sanity/content/getUniquePostsTags";
+import { runQuery } from "@services/sanity/runQuery";
+import { allPostsByTagQuery } from "@services/sanity/queries/posts";
 
 export async function getStaticPaths() {
     const paths = await Promise.all(
         locales.map(async (locale) => {
-            const tags = await getAllTags({});
+            const tags = await getUniquePostsTags();
 
             return await Promise.all(
                 tags.map(async (tag) => {
-                    const posts = await getAllBlogArticlesByTagAndLocale({ locale, tagId: tag.id! });
+                    const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag });
 
                     if (posts === undefined || posts.length === 0) {
                         return {
-                            params: { lang: getRoutingLocale(locale), tag: tag?.name },
+                            params: { lang: getRoutingLocale(locale), tag: tag?.value },
                             props: { posts: undefined, tag: tag, locale: locale },
                         };
                     }
 
                     return {
-                        params: { lang: getRoutingLocale(locale), tag: tag?.name },
+                        params: { lang: getRoutingLocale(locale), tag: tag?.value },
                         props: { posts: posts, tag: tag, locale: locale },
                     };
                 }),
@@ -42,7 +42,7 @@ export async function getStaticPaths() {
 
 const { posts, tag, locale } = Astro.props;
 
-const tagTitle = tag.name!;
+const tagTitle = tag.label!;
 const tagDescription = `${m.blog__posts_tagged()} #${tagTitle}`;
 const layoutProps = {
     title: `${m.blog__tag()}: #${tagTitle}`,

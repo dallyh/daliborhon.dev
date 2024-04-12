@@ -2,10 +2,10 @@
 import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
 import type { Page } from "astro";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
+import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
-    posts: IGenBlogArticleMetaFragment[] | Page<IGenBlogArticleMetaFragment>;
+    posts: Post[] | Page<Post>;
     url?: string;
     urlDescription?: string;
 }

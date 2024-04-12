@@ -1,13 +1,13 @@
 ---
 import * as m from "$messages";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { Image } from "@unpic/astro";
 import { getCategoryUrl, getBlogPostUrl } from "@utils";
 import TagList from "./TagList.astro";
+import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
-    post: IGenBlogArticleMetaFragment;
+    post: Post;
 }
 
 const { post } = Astro.props;
@@ -17,21 +17,23 @@ const postUrl = getBlogPostUrl(locale, post);
 
 <article class="post-preview">
     <div class="post-image">
-        <Image src={post?.previewImage?.src!} alt={post!.title!} width={1200} height={630} loading="eager" placeholder="blurhash" />
+        <Image src={post.mainImage.asset.url} alt={post!.title!} width={1200} height={630} loading="eager" placeholder="blurhash" />
     </div>
     <hr />
     <div class="post-description">
         <a href={postUrl} class="post-title">{post?.title}</a>
         <div class="post-meta">
             {
-                post.category?.name && (
-                    <p>
-                        {m.blog__category()}: <a href={getCategoryUrl(locale, post.category)}>{post.category?.name}</a>
-                    </p>
-                )
+                post.categories.map((category) => {
+                    return (
+                        <p>
+                            {m.blog__category()}: <a href={getCategoryUrl(locale, category)}>{category.title}</a>
+                        </p>
+                    );
+                })
             }
             <div>
-                <FormattedDate pubDateTime={post._meta?.firstPublishedAt!} modDatetime={post._meta?.publishedAt!} locale={locale} />
+                <FormattedDate pubDateTime={post.publishedAt} modDatetime={post.updatedAt} locale={locale} />
             </div>
         </div>
     </div>

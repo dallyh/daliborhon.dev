@@ -10,13 +10,13 @@ import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import Navigation from "@components/astro/global/Navigation.astro";
 import * as m from "$messages";
-import type { IGenBlogArticleMetaFragment } from "@services/graphql/__generated/sdk";
 import { Image } from "@unpic/astro";
 import CaisyRichTextRenderer from "@components/astro/blog/CaisyRichTextRenderer/CaisyRichTextRenderer.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
+import type { Post } from "@services/sanity/queries/posts";
 
 interface Props {
-    post: IGenBlogArticleMetaFragment;
+    post: Post;
 }
 
 const { post } = Astro.props;
@@ -25,23 +25,23 @@ const locale = Astro.currentLocale!;
 
 const layoutProps = {
     title: `${m.blog__post()}: ${post?.title}`,
-    author: post?.author?.name!,
-    description: post?.description ?? "",
-    pubDateTime: post?._meta?.firstPublishedAt!,
-    modDatetime: post?._meta?.publishedAt!,
+    author: "Dalibor Hon",
+    description: post.headline ?? "",
+    pubDateTime: post.publishedAt,
+    modDatetime: post.updatedAt,
     ogImage: getOgImageUrl(locale, post, Astro.url),
 };
 
 const tagFilter = post.tags?.map((tag) => {
     return {
         name: m.blog__tags(),
-        value: "#" + tag?.name!,
+        value: "#" + tag?.label!,
     };
 });
 
 const tags = post.tags
     ?.map((tag) => {
-        return "#" + tag?.name!;
+        return "#" + tag?.label!;
     })
     .join(" ");
 
@@ -52,14 +52,14 @@ const searchProps = {
     filter: [
         {
             name: m.blog__category(),
-            value: post.category!.name!,
+            value: post.categories[0].title,
         },
         ...tagFilter!,
     ],
     meta: [
         {
             name: m.blog__category(),
-            value: post.category!.name!,
+            value: post.categories[0].title!,
         },
         {
             name: m.blog__tags(),
@@ -76,8 +76,8 @@ const searchProps = {
 ---
 
 <MainLayout {...layoutProps}>
-    <HeadHrefLangs post={post} slot="hreflangs" />
-    <Navigation post={post} slot="header" />
+    <!-- <HeadHrefLangs post={post} slot="hreflangs" />
+    <Navigation post={post} slot="header" />-->
     <SearchMeta {...searchProps} />
     <main>
         <div class="post-header">
@@ -91,14 +91,16 @@ const searchProps = {
                 <div class="post-meta">
                     <h1 class="gradient-text">{post?.title}</h1>
                     <div class="meta-details">
-                        <p>By {post.author?.name}.</p>
-                        <FormattedDate pubDateTime={post?._meta?.firstPublishedAt!} modDatetime={post?._meta?.publishedAt!} locale={locale} />
+                        <p>By Dalibor Hon.</p>
+                        <FormattedDate pubDateTime={post.publishedAt} modDatetime={post.updatedAt} locale={locale} />
                         {
-                            post.category && (
-                                <p>
-                                    <a href={getCategoryUrl(locale, post.category)}>{post.category?.name}</a>
-                                </p>
-                            )
+                            post.categories.map((category) => {
+                                return (
+                                    <p>
+                                        <a href={getCategoryUrl(locale, category)}>{category.title}</a>
+                                    </p>
+                                );
+                            })
                         }
                     </div>
                     <div class="tags">
@@ -106,13 +108,13 @@ const searchProps = {
                     </div>
                 </div>
                 <div class="post-image">
-                    <Image src={post?.previewImage?.src!} width={1200} height={630} title={post.title} alt={post.title!} loading="eager" transition:animate="slide" />
+                    <Image src={post.mainImage.asset.url} width={1200} height={630} title={post.title} alt={post.title!} loading="eager" transition:animate="slide" />
                 </div>
             </div>
             <hr />
         </div>
-        <article class="prose max-w-none dark:prose-invert">
-            <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} generateToc />
+        <article class="prose dark:prose-invert max-w-none">
+            <!-- <CaisyRichTextRenderer richTextJson={post?.text?.json} connections={post?.text?.connections} generateToc /> -->
         </article>
     </main>
     <Footer />

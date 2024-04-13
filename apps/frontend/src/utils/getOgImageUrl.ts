@@ -1,6 +1,5 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import type { Post } from "@services/sanity/queries/posts";
-import { getBlogPostSlug } from "./getBlogPostSlug";
 import { removeTrailingSlash } from "./removeTrailingSlash";
 
 export function getOgImageUrl(locale: string, post: Post, url: URL) {

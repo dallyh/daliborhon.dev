@@ -10,7 +10,7 @@ import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
-
+import expressiveCode from "astro-expressive-code";
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 
@@ -89,6 +89,7 @@ export default defineConfig({
             apiVersion: CURRENT_API_VERSION,
             perspective: import.meta.env.DEV ? "previewDrafts" : "published",
         }),
+        expressiveCode(),
     ],
     vite: {
         server: {

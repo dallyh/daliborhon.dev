@@ -1,4 +1,3 @@
-import type { CollectionEntry } from "astro:content";
 import * as m from "$messages";
 import type { Post } from "@services/sanity/queries/posts";
 

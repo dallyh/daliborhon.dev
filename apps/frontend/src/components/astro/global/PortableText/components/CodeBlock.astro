@@ -1,7 +1,12 @@
 ---
-import { Code } from "astro:components";
+import { Code } from "astro-expressive-code/components";
+import type { CodeBlock } from "@services/sanity/schemas/contentBlockSchema";
+
+interface Props {
+    node: CodeBlock;
+}
 
 const { node } = Astro.props;
 ---
 
-<Code lang={node.language} code={node.code} />
+<Code lang={node.language} code={node.code} title={node.filename} />

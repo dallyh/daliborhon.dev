@@ -15,7 +15,8 @@
         "compile:paraglide": "paraglide-js compile --project ./project.inlang",
         "wrangler:types": "wrangler types ./src/worker-configuration.d.ts",
         "deps:check-update": "pnpm ncu -x @astrojs/cloudflare",
-        "deps:update": "pnpm ncu -u -x @astrojs/cloudflare && pnpm install"
+        "deps:update": "pnpm ncu -u -x @astrojs/cloudflare && pnpm install",
+        "dev:tunnel": "pnpm lt --port 4321 --subdomain daliborhondev"
     },
     "dependencies": {
         "@astro-community/astro-embed-youtube": "^0.5.2",
@@ -35,6 +36,7 @@
         "@sanity/astro": "^3.0.0",
         "@sanity/client": "^6.15.13",
         "@sanity/image-url": "^1.0.2",
+        "@sanity/webhook": "^4.0.4",
         "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
         "@tailwindcss/typography": "^0.5.12",
         "@unpic/astro": "^0.0.44",
@@ -73,6 +75,7 @@
         "@types/slug": "^5.0.8",
         "@types/vhtml": "^2.2.9",
         "autoprefixer": "^10.4.19",
+        "localtunnel": "^2.0.2",
         "md-to-pdf": "^5.2.4",
         "postcss-import": "^16.1.0",
         "postcss-preset-env": "^9.5.5",

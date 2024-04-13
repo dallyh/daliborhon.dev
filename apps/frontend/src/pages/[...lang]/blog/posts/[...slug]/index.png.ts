@@ -2,7 +2,6 @@ import { defaultLocale, locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import { allPostsQuery, type Post } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
-import { getBlogPostSlug } from "@utils";
 import { generateOgImageForPost } from "@utils/og";
 import type { APIContext } from "astro";
 
@@ -18,7 +17,7 @@ export async function getStaticPaths() {
             return posts.map((post) => ({
                 params: {
                     lang: getRoutingLocale(locale),
-                    slug: getBlogPostSlug(locale, post),
+                    slug: post.slug,
                 },
                 props: {
                     post: post,

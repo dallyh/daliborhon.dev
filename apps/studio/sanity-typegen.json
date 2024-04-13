@@ -1,5 +1,0 @@
-{
-    "schema": "./groq/schema/schema.json",
-    "generates": "./groq/schema/studio.schema.ts",
-    "path": "./groq/queries.ts"
-}

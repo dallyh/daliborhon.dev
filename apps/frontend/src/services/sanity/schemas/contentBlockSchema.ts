@@ -5,6 +5,7 @@ const codeBlock = q.object({
     _key: q.string(),
     code: q.string(),
     _type: q.literal("code"),
+    filename: q.string().optional(),
 });
 
 const imageBlock = q.object({
@@ -85,3 +86,4 @@ export const contentBlockSchema = q.array(contentBlock).or(contentBlock);
 
 export type ContentBlock = z.infer<typeof contentBlockSchema>;
 export type Icon = z.infer<typeof iconSchema>;
+export type CodeBlock = z.infer<typeof codeBlock>;

@@ -1,4 +1,3 @@
-import groq from "groq";
 import { type InferType, q } from "groqd";
 import { getLocalizedArrayQuery } from "../utils/queryUtils";
 

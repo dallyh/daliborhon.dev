@@ -1,5 +1,4 @@
 export * from "./getAbsoluteBlogPostUrl";
-export * from "./getBlogPostSlug";
 export * from "./getBlogPostUrl";
 export * from "./getOgImageUrl";
 export * from "./removeTrailingSlash";

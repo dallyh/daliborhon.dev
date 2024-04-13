@@ -9,7 +9,6 @@ import vhtml from "vhtml";
 import { toHTML, uriLooksSafe, type PortableTextHtmlComponents, type PortableTextComponentOptions, type PortableTextMarkComponentOptions } from "@portabletext/to-html";
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
-import { q } from "groqd";
 
 export { getStaticPaths } from "@i18n/utils";
 

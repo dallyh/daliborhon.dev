@@ -34,7 +34,6 @@
         "@daliborhon.dev/shared": "workspace:*"
     },
     "devDependencies": {
-        "@sanity/eslint-config-studio": "^4.0.0",
         "@types/react": "^18.0.25"
     }
 }

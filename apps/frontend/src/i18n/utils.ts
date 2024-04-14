@@ -47,9 +47,12 @@ export async function getStaticPaths() {
 }
 
 export function checkValidSSRLangPath(lang: string | undefined) {
-    const locale = lang ?? defaultLocale;
+    if (!lang) {
+        return false;
+    }
+
     const isAllowedLocale = locales.find((loc) => {
-        return loc === locale;
+        return loc === lang;
     });
 
     if (!isAllowedLocale) {

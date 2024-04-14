@@ -7,10 +7,13 @@ import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-
-export { getStaticPaths } from "@i18n/utils";
+import { siteConfig } from "@daliborhon.dev/shared/frontend";
+import { recentPostsQuery, recentFeaturedPostsQuery } from "@services/sanity/queries/posts";
+import { runQuery } from "@services/sanity/runQuery";
 
 const locale = Astro.currentLocale!;
+const recentPosts = await runQuery(recentPostsQuery(siteConfig.blog.recentPostsSize), { language: locale });
+const featuredPosts = await runQuery(recentFeaturedPostsQuery(siteConfig.blog.featuredPostsSize), { language: locale });
 
 const layoutProps = {
     title: "Blog",
@@ -26,8 +29,8 @@ const layoutProps = {
     <Section id="blogIntro" sectionTitle="Blog">
         <p>{m.blog__blog_description()}</p>
     </Section>
-    <FeaturedPosts />
-    <RecentPosts />
+    <FeaturedPosts posts={featuredPosts} />
+    <RecentPosts posts={recentPosts} />
 </PageLayout>
 
 <style>

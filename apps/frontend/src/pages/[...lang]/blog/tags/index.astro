@@ -7,8 +7,8 @@ import Tag from "@components/astro/blog/Tag.astro";
 import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getUniquePostsTags } from "@services/sanity/content/getUniquePostsTags";
-
-export { getStaticPaths } from "@i18n/utils";
+import { allPostsByTagQuery } from "@services/sanity/queries/posts";
+import { runQuery } from "@services/sanity/runQuery";
 
 const locale = Astro.currentLocale!;
 
@@ -31,9 +31,12 @@ const tags = await getUniquePostsTags();
         {
             tags && (
                 <ul class="category-list">
-                    {tags.map((tag) => (
-                        <Tag {tag} />
-                    ))}
+                    {tags.map(async (tag) => {
+                        const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag.value });
+
+                        return <Tag {posts} {tag} />
+                        ;
+                    })}
                 </ul>
             )
         }

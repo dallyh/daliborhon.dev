@@ -1,23 +1,22 @@
 ---
 import type { Category } from "@services/sanity/queries/categories";
-import { allPostsByCategoryQuery } from "@services/sanity/queries/posts";
+import { allPostsByCategoryQuery, type Post } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 import { getCategoryUrl } from "@utils";
 import { Icon } from "astro-icon/components";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
+    posts: Post[];
     category: Category;
 }
 
 const locale = Astro.currentLocale!;
 
-const { category } = Astro.props;
+const { category, posts } = Astro.props;
 
 const { title, description } = category;
 const url = getCategoryUrl(locale, category);
-
-const posts = await runQuery(allPostsByCategoryQuery, { language: locale, categoryId: category._id });
 ---
 
 {

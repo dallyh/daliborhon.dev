@@ -10,8 +10,6 @@ import { toHTML, uriLooksSafe, type PortableTextHtmlComponents, type PortableTex
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
 
-export { getStaticPaths } from "@i18n/utils";
-
 export async function GET({ site, currentLocale }: APIContext) {
     const html = htm.bind(vhtml);
 

@@ -1,9 +1,11 @@
----
-import { locales } from "@daliborhon.dev/shared/frontend/i18n";
+import { defaultLocale, locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
-import BlogPostLayout from "@layouts/BlogPostLayout.astro";
-import { allPostsQuery } from "@services/sanity/queries/posts";
+import { allPostsQuery, type Post } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
+import { generateOgImageForPost } from "@utils/og";
+import type { APIContext } from "astro";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
     const paths = await Promise.all(
@@ -29,7 +31,8 @@ export async function getStaticPaths() {
     return paths.flat();
 }
 
-const { post } = Astro.props;
----
-
-<BlogPostLayout post={post} />
+export async function GET({ params, props }: APIContext) {
+    return new Response(await generateOgImageForPost(props.post as Post, params.lang ?? defaultLocale), {
+        headers: { "Content-Type": "image/png" },
+    });
+}

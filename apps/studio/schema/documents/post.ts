@@ -69,6 +69,10 @@ export default defineType({
             type: "tags",
             options: {
                 includeFromRelated: "tags",
+                onCreate: (value: string) => ({
+                    label: value,
+                    value: value.toLowerCase().replace(/\W/g, "-"),
+                }),
             },
         }),
         defineField({

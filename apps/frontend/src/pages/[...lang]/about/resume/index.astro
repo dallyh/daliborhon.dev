@@ -10,6 +10,8 @@ import PageLayout from "@layouts/PageLayout.astro";
 import { createResumePdfFilename, removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 
+export const prerender = true;
+
 export { getStaticPaths } from "@i18n/utils";
 
 const locale = Astro.currentLocale!;

@@ -1,26 +1,22 @@
 ---
 import * as m from "$messages";
-import { recentPostsQuery } from "@services/sanity/queries/posts";
+import { recentPostsQuery, type Post } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
+    posts: Post[];
     postSize?: number;
     filterFeatured?: boolean;
     showSeeAllUrl?: boolean;
 }
 
-const { postSize, filterFeatured = false, showSeeAllUrl = true } = Astro.props;
+const { filterFeatured = false, showSeeAllUrl = true, posts = [] } = Astro.props;
 
-const locale = Astro.currentLocale!;
-
-//Blogs
-const query = recentPostsQuery(postSize);
-let posts = await runQuery(query, { language: locale });
-
+let recentPosts = posts;
 if (filterFeatured) {
-    posts = posts?.filter((post) => {
+    recentPosts = posts?.filter((post) => {
         return post?.featured === false || post?.featured === undefined;
     });
 }
@@ -33,13 +29,13 @@ const sectionProps = {
 ---
 
 <Section {...sectionProps}>
-    {!posts && <p>{m.blog__no_posts()} 😞</p>}
-    {posts && posts.length === 0 && <p>{m.blog__no_posts()} 😞</p>}
+    {!recentPosts && <p>{m.blog__no_posts()} 😞</p>}
+    {recentPosts && recentPosts.length === 0 && <p>{m.blog__no_posts()} 😞</p>}
     {
-        posts && posts.length !== 0 && (
+        recentPosts && recentPosts.length !== 0 && (
             <>
-                {showSeeAllUrl && <PostsGrid posts={posts} url="/blog/posts/" urlDescription={m.blog__see_all_posts()} />}
-                {!showSeeAllUrl && <PostsGrid posts={posts} />}
+                {showSeeAllUrl && <PostsGrid posts={recentPosts} url="/blog/posts/" urlDescription={m.blog__see_all_posts()} />}
+                {!showSeeAllUrl && <PostsGrid posts={recentPosts} />}
             </>
         )
     }

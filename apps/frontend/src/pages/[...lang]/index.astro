@@ -6,15 +6,29 @@ import Section from "@components/astro/global/Section.astro";
 import Intro from "@components/astro/home/Intro.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
 import { siteConfig } from "@daliborhon.dev/shared/frontend";
+import { checkValidSSRLangPath } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
+import { allProjectsQuery } from "@services/sanity/queries/projects";
+import { recentFeaturedPostsQuery, recentPostsQuery } from "@services/sanity/queries/posts";
+import { runQuery } from "@services/sanity/runQuery";
 
-export { getStaticPaths } from "@i18n/utils";
+if (!checkValidSSRLangPath(Astro)) {
+    return invalidLocaleResponse();
+}
 
 const layoutProps = {
     title: "Dalibor Hon - " + m.common__home_page(),
     description: m.common__site_description(),
     homepage: true,
 };
+
+const locale = Astro.currentLocale!;
+
+const projects = await runQuery(allProjectsQuery(siteConfig.projects.recentProjectsSize), { language: locale });
+const recentPosts = await runQuery(recentPostsQuery(siteConfig.blog.recentPostsSize), { language: locale });
+const featuredPosts = await runQuery(recentFeaturedPostsQuery(siteConfig.blog.featuredPostsSize), { language: locale });
+
+
 ---
 
 <PageLayout {...layoutProps}>
@@ -22,8 +36,8 @@ const layoutProps = {
         <Intro />
     </Section>
     <Section id="projects" sectionTitle={m.projects__projects_title()}>
-        <ProjectsList recentSize={siteConfig.projects.recentProjectsSize} />
+        <ProjectsList {projects} />
     </Section>
-    <FeaturedPosts postSize={siteConfig.blog.featuredPostsSize} />
-    <RecentPosts postSize={siteConfig.blog.recentPostsSize} />
+    <FeaturedPosts posts={featuredPosts} />
+    <RecentPosts posts={recentPosts} />
 </PageLayout>

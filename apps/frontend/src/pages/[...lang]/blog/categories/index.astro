@@ -8,7 +8,7 @@ import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { allCategoriesQuery } from "@services/sanity/queries/categories";
 import { runQuery } from "@services/sanity/runQuery";
-export { getStaticPaths } from "@i18n/utils";
+import { allPostsByCategoryQuery } from "@services/sanity/queries/posts";
 
 const locale = Astro.currentLocale!;
 
@@ -31,9 +31,11 @@ const categories = await runQuery(allCategoriesQuery, { language: locale });
         {
             categories && (
                 <ul class="category-list">
-                    {categories?.map((category) => (
-                        <Category {category} />
-                    ))}
+                    {categories?.map(async (category) => {
+                        const posts = await runQuery(allPostsByCategoryQuery, { language: locale, categoryId: category._id });
+
+                        return <Category {category} {posts} />;
+                    })}
                 </ul>
             )
         }

@@ -16,9 +16,12 @@
         "deploy:graphql": "sanity graphql deploy"
     },
     "dependencies": {
+        "@daliborhon.dev/shared": "workspace:*",
         "@sanity/code-input": "^4.1.3",
         "@sanity/color-input": "^3.1.1",
         "@sanity/document-internationalization": "^2.1.1",
+        "@sanity/icons": "^2.11.8",
+        "@sanity/table": "^1.1.2",
         "@sanity/vision": "^3.36.4",
         "groq": "^3.36.4",
         "groqd-playground": "^0.0.18",
@@ -30,8 +33,7 @@
         "sanity-plugin-internationalized-array": "^1.10.9",
         "sanity-plugin-media": "^2.2.5",
         "sanity-plugin-tags": "^2.0.1",
-        "styled-components": "^6.0.7",
-        "@daliborhon.dev/shared": "workspace:*"
+        "styled-components": "^6.0.7"
     },
     "devDependencies": {
         "@types/react": "^18.0.25"

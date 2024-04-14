@@ -5,6 +5,7 @@ import { PortableText as PortableTextInternal } from "astro-portabletext";
 import SanityImage from "./components/SanityImage.astro";
 import Link from "./components/Link.astro";
 import IconManager from "./components/IconManager.astro";
+import Table from "./components/Table.astro";
 
 const components = {
     type: {
@@ -12,6 +13,7 @@ const components = {
         image: SanityImage,
         code: Code,
         "icon.manager": IconManager,
+        table: Table
     },
     mark: {
         link: Link,

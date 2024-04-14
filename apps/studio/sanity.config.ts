@@ -13,6 +13,7 @@ import { structureTool } from "sanity/structure";
 import { schema } from "./schema";
 import { categorySlug } from "./schema/fields/categorySlug";
 import { defaultWorkspace } from "./workspaces/workspaces";
+import { table } from "@sanity/table";
 
 const languages = Object.values(siteConfig.i18n.locales).map((locale) => {
     return { id: locale.path, title: locale.title };
@@ -47,6 +48,7 @@ export default defineConfig({
             schemaTypes: ["post"],
             metadataFields: [defineField({ name: "slug", type: "slug" })],
         }),
+        table(),
     ],
     schema: {
         types: schema,

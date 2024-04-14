@@ -17,6 +17,22 @@ const imageBlock = q.object({
     }),
 });
 
+const tableBlock = q.object({
+    _key: q.string(),
+    _type: z.literal("table"),
+    rows: q
+        .array(
+            q.object({
+                _key: q.string(),
+                _type: z.literal("tableRow"),
+                cells: q.array(q.string()).optional(),
+            }),
+        )
+        .optional(),
+});
+
+const youtubeEmbedBlock = q.object({ _key: q.string(), _type: q.literal("youtube"), url: q.string() });
+
 const iconSchema = q.object({
     icon: q.string(),
     _key: q.string(),
@@ -73,17 +89,22 @@ const markDefsSchema = q.union([q.array(markDefSingle), markDefSingle]);
 const singleChildren = q.union([iconSchema, baseChildren]);
 const childrenSchema = q.union([q.array(singleChildren), singleChildren]);
 
-const contentBlock = q
-    .contentBlock({
-        markDefs: markDefsSchema,
-    })
-    .extend({ children: childrenSchema })
-    .or(codeBlock)
-    .or(iconSchema)
-    .or(imageBlock);
+const contentBlock = q.union([
+    q
+        .contentBlock({
+            markDefs: markDefsSchema,
+        })
+        .extend({ children: childrenSchema }),
+    codeBlock,
+    iconSchema,
+    imageBlock,
+    youtubeEmbedBlock,
+    tableBlock,
+]);
 
 export const contentBlockSchema = q.array(contentBlock).or(contentBlock);
 
 export type ContentBlock = z.infer<typeof contentBlockSchema>;
 export type Icon = z.infer<typeof iconSchema>;
 export type CodeBlock = z.infer<typeof codeBlock>;
+export type TableBlock = z.infer<typeof tableBlock>;

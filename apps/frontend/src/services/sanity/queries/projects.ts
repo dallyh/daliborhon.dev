@@ -29,7 +29,7 @@ const projectMetaFragment = {
                     b: q.number(),
                     a: q.number(),
                 }),
-            }),
+            }).optional(),
         }),
     }),
 };

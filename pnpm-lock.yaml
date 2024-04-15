@@ -296,6 +296,12 @@ importers:
         specifier: ^18.0.25
         version: 18.2.74
 
+  packages/cf-worker-clean-deployments:
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20240405.0
+        version: 4.20240405.0
+
   packages/shared: {}
 
 packages:

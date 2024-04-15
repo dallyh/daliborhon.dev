@@ -30,4 +30,5 @@ logs/
 coverage/
 
 .turbo
+.wrangler
 

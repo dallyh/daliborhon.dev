@@ -12,18 +12,18 @@ const jsonFiles = fs.readdirSync(folderName).filter((file) => file.endsWith(".js
 let bundledData: any = {};
 
 jsonFiles.forEach((file) => {
-    const filePath = path.join(folderName, file);
-    console.log("Working on file: " + filePath);
+	const filePath = path.join(folderName, file);
+	console.log("Working on file: " + filePath);
 
-    const jsonData = fs.readFileSync(filePath, "utf8");
-    const parsedData = JSON.parse(jsonData);
+	const jsonData = fs.readFileSync(filePath, "utf8");
+	const parsedData = JSON.parse(jsonData);
 
-    const prefix = path.parse(file).name + "__";
+	const prefix = path.parse(file).name + "__";
 
-    Object.keys(parsedData).forEach((key) => {
-        const prefixedKey = prefix + key;
-        bundledData[prefixedKey] = parsedData[key];
-    });
+	Object.keys(parsedData).forEach((key) => {
+		const prefixedKey = prefix + key;
+		bundledData[prefixedKey] = parsedData[key];
+	});
 });
 
 console.log(bundledData);

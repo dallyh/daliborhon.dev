@@ -3,24 +3,24 @@
 import { type BreadCrumbsItem } from "./BreadCrumbsItem.astro";
 
 interface Props {
-    children: BreadCrumbsItem | BreadCrumbsItem[];
+	children: BreadCrumbsItem | BreadCrumbsItem[];
 }
 ---
 
 <nav class="breadcrumbs" aria-label="Breadcrumbs">
-    <ol>
-        <slot />
-    </ol>
+	<ol>
+		<slot />
+	</ol>
 </nav>
 
 <style is:global>
-    .breadcrumbs ol {
-        color: var(--body-color);
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        margin-bottom: 2rem;
-        margin-top: 1rem;
-        line-height: 1.5;
-    }
+	.breadcrumbs ol {
+		color: var(--body-color);
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		margin-bottom: 2rem;
+		margin-top: 1rem;
+		line-height: 1.5;
+	}
 </style>

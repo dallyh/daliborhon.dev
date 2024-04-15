@@ -11,76 +11,76 @@ export { getStaticPaths } from "@i18n/utils";
 const locale = Astro.currentLocale!;
 
 const layoutProps = {
-    title: m.blog__featured_posts_title(),
-    description: m.blog__featured_posts_description(),
+	title: m.blog__featured_posts_title(),
+	description: m.blog__featured_posts_description(),
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={m.blog__posts()} />
-        <BreadCrumbsItem currentPage={true} label={m.blog__featured_posts_title()} />
-    </BreadCrumbs>
-    <FeaturedPosts isFirstSection showSeeAllUrl={false} />
+	<BreadCrumbs>
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={m.blog__posts()} />
+		<BreadCrumbsItem currentPage={true} label={m.blog__featured_posts_title()} />
+	</BreadCrumbs>
+	<FeaturedPosts isFirstSection showSeeAllUrl={false} />
 </PageLayout>
 
 <style>
-    ul {
-        display: grid;
-        grid-template-rows: 1fr;
-        gap: 1rem;
-        margin-bottom: 2rem;
+	ul {
+		display: grid;
+		grid-template-rows: 1fr;
+		gap: 1rem;
+		margin-bottom: 2rem;
 
-        @media (max-width: 468px) {
-            grid-template-columns: 1fr;
-        }
-    }
+		@media (max-width: 468px) {
+			grid-template-columns: 1fr;
+		}
+	}
 
-    .post-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
+	.post-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1rem;
+		margin-bottom: 2rem;
 
-        @media (max-width: 468px) {
-            grid-template-columns: 1fr;
-        }
-    }
+		@media (max-width: 468px) {
+			grid-template-columns: 1fr;
+		}
+	}
 
-    .page-selector {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+	.page-selector {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
-        > div {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-            padding: 0.5rem;
-            background: rgba(var(--secondary), 1);
-            border-radius: 6px;
-            box-shadow: var(--global-box-shadow);
+		> div {
+			display: flex;
+			gap: 1rem;
+			justify-content: center;
+			align-items: center;
+			padding: 0.5rem;
+			background: rgba(var(--secondary), 1);
+			border-radius: 6px;
+			box-shadow: var(--global-box-shadow);
 
-            i.disabled {
-                color: rgba(255, 255, 255, 0.2);
-            }
-        }
+			i.disabled {
+				color: rgba(255, 255, 255, 0.2);
+			}
+		}
 
-        p {
-            line-height: 1;
-            position: relative;
+		p {
+			line-height: 1;
+			position: relative;
 
-            &:after {
-                content: "";
-                position: absolute;
-                left: 0;
-                height: 100%;
-                width: 2px;
-                color: red;
-            }
-        }
-    }
+			&:after {
+				content: "";
+				position: absolute;
+				left: 0;
+				height: 100%;
+				width: 2px;
+				color: red;
+			}
+		}
+	}
 </style>

@@ -13,31 +13,31 @@ import { allPostsByCategoryQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 
 export async function getStaticPaths() {
-    const paths = await Promise.all(
-        locales.map(async (locale) => {
-            const categories = await runQuery(allCategoriesQuery, { language: locale });
+	const paths = await Promise.all(
+		locales.map(async (locale) => {
+			const categories = await runQuery(allCategoriesQuery, { language: locale });
 
-            return await Promise.all(
-                categories.map(async (cat) => {
-                    const posts = await runQuery(allPostsByCategoryQuery, { language: locale, categoryId: cat._id });
+			return await Promise.all(
+				categories.map(async (cat) => {
+					const posts = await runQuery(allPostsByCategoryQuery, { language: locale, categoryId: cat._id });
 
-                    if (posts === undefined || posts.length === 0) {
-                        return {
-                            params: { lang: getRoutingLocale(locale), category: cat.slug },
-                            props: { posts: undefined, category: cat, locale: locale },
-                        };
-                    }
+					if (posts === undefined || posts.length === 0) {
+						return {
+							params: { lang: getRoutingLocale(locale), category: cat.slug },
+							props: { posts: undefined, category: cat, locale: locale },
+						};
+					}
 
-                    return {
-                        params: { lang: getRoutingLocale(locale), category: cat.slug },
-                        props: { posts: posts, category: cat, locale: locale },
-                    };
-                }),
-            );
-        }),
-    );
+					return {
+						params: { lang: getRoutingLocale(locale), category: cat.slug },
+						props: { posts: posts, category: cat, locale: locale },
+					};
+				}),
+			);
+		}),
+	);
 
-    return paths.flat();
+	return paths.flat();
 }
 
 const { posts, category, locale } = Astro.props;
@@ -45,34 +45,34 @@ const { posts, category, locale } = Astro.props;
 const categoryTitle = category.title;
 const categoryDescription = `${m.blog__posts_with_category()} ${categoryTitle.toLowerCase()}`;
 const layoutProps = {
-    title: `${m.blog__category()}: ${categoryTitle}`,
-    description: categoryDescription,
+	title: `${m.blog__category()}: ${categoryTitle}`,
+	description: categoryDescription,
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={m.blog__categories()} />
-        <BreadCrumbsItem currentPage={true} label={categoryTitle} />
-    </BreadCrumbs>
-    <Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
-        {!posts && <p class="category-post-list">{m.blog__no_category_posts()} 😞</p>}
-        {posts && posts.length === 0 && <p class="category-post-list">{m.blog__no_category_posts()} 😞</p>}
-        {posts && posts.length !== 0 && <PostsGrid posts={posts} />}
-    </Section>
+	<BreadCrumbs>
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/categories")} label={m.blog__categories()} />
+		<BreadCrumbsItem currentPage={true} label={categoryTitle} />
+	</BreadCrumbs>
+	<Section id="taggedPosts" isFirstSection sectionTitle={categoryDescription}>
+		{!posts && <p class="category-post-list">{m.blog__no_category_posts()} 😞</p>}
+		{posts && posts.length === 0 && <p class="category-post-list">{m.blog__no_category_posts()} 😞</p>}
+		{posts && posts.length !== 0 && <PostsGrid posts={posts} />}
+	</Section>
 </PageLayout>
 
 <style>
-    ul {
-        display: grid;
-        grid-template-rows: 1fr;
-        gap: 1rem;
-        margin-bottom: 2rem;
+	ul {
+		display: grid;
+		grid-template-rows: 1fr;
+		gap: 1rem;
+		margin-bottom: 2rem;
 
-        @media (max-width: 468px) {
-            grid-template-columns: 1fr;
-        }
-    }
+		@media (max-width: 468px) {
+			grid-template-columns: 1fr;
+		}
+	}
 </style>

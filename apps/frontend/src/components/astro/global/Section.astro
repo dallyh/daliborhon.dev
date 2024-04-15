@@ -1,92 +1,92 @@
 ---
 interface Props {
-    sectionTitle?: string;
-    sectionDescription?: string;
-    isFirstSection?: boolean;
-    id: string;
+	sectionTitle?: string;
+	sectionDescription?: string;
+	isFirstSection?: boolean;
+	id: string;
 }
 
 const { sectionTitle, sectionDescription, id, isFirstSection = false } = Astro.props;
 ---
 
 <section id={id}>
-    <div class="section-content-container">
-        {
-            sectionTitle && (
-                <div class="section-header">
-                    {isFirstSection && <h1 class="gradient-text">{sectionTitle}</h1>}
-                    {!isFirstSection && <h2 class="gradient-text">{sectionTitle}</h2>}
-                </div>
-            )
-        }
-        {
-            sectionDescription && (
-                <div class="section-description">
-                    <p>{sectionDescription}</p>
-                </div>
-            )
-        }
-        <div class={`section-content ${sectionDescription !== undefined ? "with-description" : ""}`}>
-            <slot />
-        </div>
-    </div>
+	<div class="section-content-container">
+		{
+			sectionTitle && (
+				<div class="section-header">
+					{isFirstSection && <h1 class="gradient-text">{sectionTitle}</h1>}
+					{!isFirstSection && <h2 class="gradient-text">{sectionTitle}</h2>}
+				</div>
+			)
+		}
+		{
+			sectionDescription && (
+				<div class="section-description">
+					<p>{sectionDescription}</p>
+				</div>
+			)
+		}
+		<div class={`section-content ${sectionDescription !== undefined ? "with-description" : ""}`}>
+			<slot />
+		</div>
+	</div>
 </section>
 
 <style>
-    section {
-        display: grid;
-        width: 100%;
-        padding-bottom: 1.5rem;
-        color: var(--body-color);
+	section {
+		display: grid;
+		width: 100%;
+		padding-bottom: 1.5rem;
+		color: var(--body-color);
 
-        @media (max-width: 768px) {
-            height: unset;
-        }
-    }
+		@media (max-width: 768px) {
+			height: unset;
+		}
+	}
 
-    .section-content-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
+	.section-content-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
 
-        .section-subheader {
-            font-size: 1.5rem;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-            color: rgba(var(--accent), 1);
-            padding-top: 1rem;
-        }
+		.section-subheader {
+			font-size: 1.5rem;
+			font-weight: 500;
+			position: relative;
+			z-index: 1;
+			color: rgba(var(--accent), 1);
+			padding-top: 1rem;
+		}
 
-        .section-header {
-            h2 {
-                margin: 0;
-                padding-bottom: 0.2rem;
-            }
-        }
+		.section-header {
+			h2 {
+				margin: 0;
+				padding-bottom: 0.2rem;
+			}
+		}
 
-        .section-description {
-            margin-top: 0.5rem;
-        }
+		.section-description {
+			margin-top: 0.5rem;
+		}
 
-        .section-content {
-            width: 100%;
-            height: 100%;
-            margin-top: 0.5rem;
+		.section-content {
+			width: 100%;
+			height: 100%;
+			margin-top: 0.5rem;
 
-            &.with-description {
-                margin-top: 1.5rem;
-            }
-        }
-    }
+			&.with-description {
+				margin-top: 1.5rem;
+			}
+		}
+	}
 
-    .section-footer {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 0.5rem;
-    }
+	.section-footer {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-bottom: 0.5rem;
+	}
 </style>

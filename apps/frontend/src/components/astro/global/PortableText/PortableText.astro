@@ -1,40 +1,38 @@
 ---
-import Code from "./components/CodeBlock.astro";
-import YouTube from "./components/YouTube.astro";
 import { PortableText as PortableTextInternal } from "astro-portabletext";
-import SanityImage from "./components/SanityImage.astro";
-import Link from "./components/Link.astro";
+import Code from "./components/CodeBlock.astro";
 import IconManager from "./components/IconManager.astro";
+import Link from "./components/Link.astro";
+import SanityImage from "./components/SanityImage.astro";
 import Table from "./components/Table.astro";
+import YouTube from "./components/YouTube.astro";
 
 const components = {
-    type: {
-        youtube: YouTube,
-        image: SanityImage,
-        code: Code,
-        "icon.manager": IconManager,
-        table: Table
-    },
-    mark: {
-        link: Link,
-    },
+	type: {
+		youtube: YouTube,
+		image: SanityImage,
+		code: Code,
+		"icon.manager": IconManager,
+		table: Table,
+	},
+	mark: {
+		link: Link,
+	},
 };
 ---
 
 <PortableTextInternal class="portable-text" value={Astro.props.value} components={components} />
 
 <style is:global>
-    .portable-text:has(svg) {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        height: max-content;
+	.portable-text:has(svg) {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		height: max-content;
 
-        svg {
-            display: inline-flex;
-            margin-right: 0.5rem;
-        }
-    }
+		svg {
+			display: inline-flex;
+			margin-right: 0.5rem;
+		}
+	}
 </style>
-
-

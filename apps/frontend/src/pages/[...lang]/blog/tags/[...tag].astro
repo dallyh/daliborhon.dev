@@ -13,31 +13,31 @@ import { allPostsByTagQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 
 export async function getStaticPaths() {
-    const paths = await Promise.all(
-        locales.map(async (locale) => {
-            const tags = await getUniquePostsTags();
+	const paths = await Promise.all(
+		locales.map(async (locale) => {
+			const tags = await getUniquePostsTags();
 
-            return await Promise.all(
-                tags.map(async (tag) => {
-                    const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag });
+			return await Promise.all(
+				tags.map(async (tag) => {
+					const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag });
 
-                    if (posts === undefined || posts.length === 0) {
-                        return {
-                            params: { lang: getRoutingLocale(locale), tag: tag?.value },
-                            props: { posts: undefined, tag: tag, locale: locale },
-                        };
-                    }
+					if (posts === undefined || posts.length === 0) {
+						return {
+							params: { lang: getRoutingLocale(locale), tag: tag?.value },
+							props: { posts: undefined, tag: tag, locale: locale },
+						};
+					}
 
-                    return {
-                        params: { lang: getRoutingLocale(locale), tag: tag?.value },
-                        props: { posts: posts, tag: tag, locale: locale },
-                    };
-                }),
-            );
-        }),
-    );
+					return {
+						params: { lang: getRoutingLocale(locale), tag: tag?.value },
+						props: { posts: posts, tag: tag, locale: locale },
+					};
+				}),
+			);
+		}),
+	);
 
-    return paths.flat();
+	return paths.flat();
 }
 
 const { posts, tag, locale } = Astro.props;
@@ -45,34 +45,34 @@ const { posts, tag, locale } = Astro.props;
 const tagTitle = tag.label!;
 const tagDescription = `${m.blog__posts_tagged()} #${tagTitle}`;
 const layoutProps = {
-    title: `${m.blog__tag()}: #${tagTitle}`,
-    description: tagDescription,
+	title: `${m.blog__tag()}: #${tagTitle}`,
+	description: tagDescription,
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <BreadCrumbs>
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
-        <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
-        <BreadCrumbsItem currentPage={true} label={tagTitle} />
-    </BreadCrumbs>
-    <Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
-        {!posts && <p>{m.blog__no_tagged_posts()}</p>}
-        {posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}
-        {posts && posts.length !== 0 && <PostsGrid posts={posts} />}
-    </Section>
+	<BreadCrumbs>
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
+		<BreadCrumbsItem currentPage={true} label={tagTitle} />
+	</BreadCrumbs>
+	<Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
+		{!posts && <p>{m.blog__no_tagged_posts()}</p>}
+		{posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}
+		{posts && posts.length !== 0 && <PostsGrid posts={posts} />}
+	</Section>
 </PageLayout>
 
 <style>
-    ul {
-        display: grid;
-        grid-template-rows: 1fr;
-        gap: 1rem;
-        margin-bottom: 2rem;
+	ul {
+		display: grid;
+		grid-template-rows: 1fr;
+		gap: 1rem;
+		margin-bottom: 2rem;
 
-        @media (max-width: 468px) {
-            grid-template-columns: 1fr;
-        }
-    }
+		@media (max-width: 468px) {
+			grid-template-columns: 1fr;
+		}
+	}
 </style>

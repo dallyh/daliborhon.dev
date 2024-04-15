@@ -6,11 +6,11 @@ import { astroI18nConfigPaths, defaultLocale, localeKeys } from "@daliborhon.dev
 import { CURRENT_API_VERSION, defaultWorkspace } from "@daliborhon.dev/studio/workspaces";
 import paraglide from "@inlang/paraglide-js-adapter-astro";
 import sanity from "@sanity/astro";
+import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
-import expressiveCode from "astro-expressive-code";
 
 const { CF_PAGES_BRANCH } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -21,9 +21,12 @@ let SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://www.daliborhon.de
 let SANITY_PERSPECTIVE = DEV_ENV ? "previewDrafts" : "published";
 let SANITY_DATASET = DEV_ENV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getProdDataset();
 
+// First on every new post a new build is triggered for previewing with webhooks.
+// Production deployment is done manually by me.
 if (PREVIEW_BUILD) {
-    SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`;
-    SANITY_PERSPECTIVE = "previewDrafts";
+	SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`;
+	SANITY_PERSPECTIVE = "previewDrafts";
+	SANITY_DATASET = defaultWorkspace.getProdDataset();
 }
 
 console.log(`>> Using PREVIEW_BUILD: '${PREVIEW_BUILD}'`);
@@ -33,76 +36,76 @@ console.log(`>> Using SANITY_DATASET: '${SANITY_DATASET}'`);
 
 // https://astro.build/config
 export default defineConfig({
-    site: SITE_URL,
-    output: "hybrid",
-    adapter: cloudflare({
-        imageService: "compile",
-        runtime: {
-            type: "pages",
-            mode: "local",
-        },
-    }),
-    image: {
-        domains: ["cdn.sanity.io", "astro.badg.es"],
-        remotePatterns: [
-            {
-                protocol: "https",
-            },
-        ],
-    },
-    prefetch: {
-        defaultStrategy: "hover",
-    },
-    i18n: {
-        defaultLocale: defaultLocale,
-        locales: [...astroI18nConfigPaths],
-        routing: {
-            prefixDefaultLocale: true,
-            redirectToDefaultLocale: false,
-        },
-    },
-    integrations: [
-        react(),
-        sitemap({
-            i18n: {
-                defaultLocale: defaultLocale,
-                locales: {
-                    ...localeKeys,
-                },
-            },
-            filter: (page) => {
-                return !page.includes("404");
-            },
-        }),
-        pagefind(),
-        icon({
-            iconDir: "src/assets/icons",
-            include: {
-                bi: ["*"],
-                devicon: ["*"],
-                heroicons: ["chevron-down"],
-            },
-        }),
-        tailwind(),
-        paraglide({
-            project: "./project.inlang",
-            outdir: "./src/paraglide",
-        }),
-        sanity({
-            projectId: defaultWorkspace.projectId,
-            dataset: SANITY_DATASET,
-            useCdn: false,
-            apiVersion: CURRENT_API_VERSION,
-            perspective: import.meta.env.DEV ? "previewDrafts" : "published",
-        }),
-        expressiveCode(),
-    ],
-    vite: {
-        server: {
-            port: PORT,
-        },
-        optimizeDeps: {
-            exclude: ["@resvg/resvg-js"],
-        },
-    },
+	site: SITE_URL,
+	output: "hybrid",
+	adapter: cloudflare({
+		imageService: "compile",
+		runtime: {
+			type: "pages",
+			mode: "local",
+		},
+	}),
+	image: {
+		domains: ["cdn.sanity.io", "astro.badg.es"],
+		remotePatterns: [
+			{
+				protocol: "https",
+			},
+		],
+	},
+	prefetch: {
+		defaultStrategy: "hover",
+	},
+	i18n: {
+		defaultLocale: defaultLocale,
+		locales: [...astroI18nConfigPaths],
+		routing: {
+			prefixDefaultLocale: true,
+			redirectToDefaultLocale: false,
+		},
+	},
+	integrations: [
+		react(),
+		sitemap({
+			i18n: {
+				defaultLocale: defaultLocale,
+				locales: {
+					...localeKeys,
+				},
+			},
+			filter: (page) => {
+				return !page.includes("404");
+			},
+		}),
+		pagefind(),
+		icon({
+			iconDir: "src/assets/icons",
+			include: {
+				bi: ["*"],
+				devicon: ["*"],
+				heroicons: ["chevron-down"],
+			},
+		}),
+		tailwind(),
+		paraglide({
+			project: "./project.inlang",
+			outdir: "./src/paraglide",
+		}),
+		sanity({
+			projectId: defaultWorkspace.projectId,
+			dataset: SANITY_DATASET,
+			useCdn: false,
+			apiVersion: CURRENT_API_VERSION,
+			perspective: import.meta.env.DEV ? "previewDrafts" : "published",
+		}),
+		expressiveCode(),
+	],
+	vite: {
+		server: {
+			port: PORT,
+		},
+		optimizeDeps: {
+			exclude: ["@resvg/resvg-js"],
+		},
+	},
 });

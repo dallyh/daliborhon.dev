@@ -9,18 +9,18 @@ import { runQuery } from "@services/sanity/runQuery";
 import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const paths = await Promise.all(
-        locales.map(async (locale) => {
-            const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
+	const paths = await Promise.all(
+		locales.map(async (locale) => {
+			const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
 
-            return paginate(posts, {
-                params: { lang: getRoutingLocale(locale) },
-                pageSize: siteConfig.blog.pageSize,
-            });
-        }),
-    );
+			return paginate(posts, {
+				params: { lang: getRoutingLocale(locale) },
+				pageSize: siteConfig.blog.pageSize,
+			});
+		}),
+	);
 
-    return paths.flat();
+	return paths.flat();
 }
 
 const { page } = Astro.props;

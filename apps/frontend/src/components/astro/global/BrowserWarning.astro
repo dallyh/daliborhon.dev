@@ -4,88 +4,88 @@ import { Icon } from "astro-icon/components";
 ---
 
 <div class="top-panel">
-    <i><Icon name="bi:info-circle" /></i>
-    <p>{m.common__browser_warning_text()}</p>
-    <i id="panelCloseButton"><Icon name="bi:x-lg" /></i>
+	<i><Icon name="bi:info-circle" /></i>
+	<p>{m.common__browser_warning_text()}</p>
+	<i id="panelCloseButton"><Icon name="bi:x-lg" /></i>
 </div>
 
 <style>
-    .top-panel {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: var(--header-height);
-        background-color: #dad06f;
-        align-items: center;
-        color: black;
-        transition: transform 400ms ease-in-out;
-        z-index: 9999;
-        display: none;
-        grid-auto-flow: column;
-        justify-content: space-between;
-        gap: 1rem;
+	.top-panel {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: var(--header-height);
+		background-color: #dad06f;
+		align-items: center;
+		color: black;
+		transition: transform 400ms ease-in-out;
+		z-index: 9999;
+		display: none;
+		grid-auto-flow: column;
+		justify-content: space-between;
+		gap: 1rem;
 
-        & i {
-            color: inherit;
-            margin-right: 1rem;
-            margin-left: 1rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
+		& i {
+			color: inherit;
+			margin-right: 1rem;
+			margin-left: 1rem;
+			cursor: pointer;
+			font-size: 1.5rem;
+		}
 
-        & p {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
+		& p {
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
 
-        &.enabled {
-            display: grid;
-        }
+		&.enabled {
+			display: grid;
+		}
 
-        &.hidden {
-            transform: translateY(-100%);
-        }
-    }
+		&.hidden {
+			transform: translateY(-100%);
+		}
+	}
 </style>
 
 <script>
-    const showWarning = () => {
-        //@ts-ignore - ignore for now, because it is not widely supported, thus, the function does not exist in typings yet
-        const supportsViewTransitions = !!document.startViewTransition;
-        if (supportsViewTransitions) {
-            return;
-        }
+	const showWarning = () => {
+		//@ts-ignore - ignore for now, because it is not widely supported, thus, the function does not exist in typings yet
+		const supportsViewTransitions = !!document.startViewTransition;
+		if (supportsViewTransitions) {
+			return;
+		}
 
-        let languagePreference = window.localStorage.getItem("language");
-        if (languagePreference) {
-            return;
-        }
+		let languagePreference = window.localStorage.getItem("language");
+		if (languagePreference) {
+			return;
+		}
 
-        const topPanel = document.querySelector<HTMLDivElement>(".top-panel");
-        const topPanelButton = topPanel?.querySelector("#panelCloseButton");
-        const warningShown = window.localStorage.getItem("warningShown");
+		const topPanel = document.querySelector<HTMLDivElement>(".top-panel");
+		const topPanelButton = topPanel?.querySelector("#panelCloseButton");
+		const warningShown = window.localStorage.getItem("warningShown");
 
-        if (warningShown === "true") {
-            return;
-        }
+		if (warningShown === "true") {
+			return;
+		}
 
-        topPanel?.classList.add("enabled");
-        window.localStorage.setItem("warningShown", "true");
+		topPanel?.classList.add("enabled");
+		window.localStorage.setItem("warningShown", "true");
 
-        topPanelButton?.addEventListener("click", () => {
-            topPanel?.classList.add("hidden");
-        });
+		topPanelButton?.addEventListener("click", () => {
+			topPanel?.classList.add("hidden");
+		});
 
-        setTimeout(() => {
-            topPanel?.classList.add("hidden");
-        }, 10000);
-    };
+		setTimeout(() => {
+			topPanel?.classList.add("hidden");
+		}, 10000);
+	};
 
-    document.addEventListener(
-        "astro:page-load",
-        (e) => {
-            showWarning();
-        },
-        { once: true },
-    );
+	document.addEventListener(
+		"astro:page-load",
+		(e) => {
+			showWarning();
+		},
+		{ once: true },
+	);
 </script>

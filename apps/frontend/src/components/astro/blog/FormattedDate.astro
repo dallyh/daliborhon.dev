@@ -3,9 +3,9 @@ import * as m from "$messages";
 import { getBlogPostDateTime, wasPostUpdated } from "@utils";
 
 interface Props {
-    pubDateTime: string | Date;
-    modDatetime: string | Date | null;
-    locale: string;
+	pubDateTime: string | Date;
+	modDatetime: string | Date | null;
+	locale: string;
 }
 
 const { pubDateTime, modDatetime, locale } = Astro.props;
@@ -19,9 +19,9 @@ const date = getBlogPostDateTime(locale, pubDateTime, modDatetime);
 <span>{date.time}</span>
 
 <style>
-    span,
-    time {
-        font-size: inherit;
-        font-weight: inherit;
-    }
+	span,
+	time {
+		font-size: inherit;
+		font-weight: inherit;
+	}
 </style>

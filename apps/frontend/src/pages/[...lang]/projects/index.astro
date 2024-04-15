@@ -7,13 +7,13 @@ import PageLayout from "@layouts/PageLayout.astro";
 export { getStaticPaths } from "@i18n/utils";
 
 const layoutProps = {
-    title: "Dalibor Hon - " + m.projects__projects(),
-    description: m.projects__description(),
+	title: "Dalibor Hon - " + m.projects__projects(),
+	description: m.projects__description(),
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
-        <ProjectsList />
-    </Section>
+	<Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
+		<ProjectsList />
+	</Section>
 </PageLayout>

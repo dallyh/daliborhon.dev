@@ -7,7 +7,7 @@ import { Icon } from "astro-icon/components";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
-    category: Category;
+	category: Category;
 }
 
 const locale = Astro.currentLocale!;
@@ -21,45 +21,45 @@ const posts = await runQuery(allPostsByCategoryQuery, { language: locale, catego
 ---
 
 {
-    posts && posts.length !== 0 && (
-        <li class="category">
-            <h2 class="title">
-                <a href={url}>{title}</a>
-            </h2>
-            <p class="description">
-                <i>
-                    <Icon name="bi:arrow-return-right" />
-                </i>
-                <span>{description}</span>
-            </p>
-            <PostsGrid posts={posts} />
-        </li>
-    )
+	posts && posts.length !== 0 && (
+		<li class="category">
+			<h2 class="title">
+				<a href={url}>{title}</a>
+			</h2>
+			<p class="description">
+				<i>
+					<Icon name="bi:arrow-return-right" />
+				</i>
+				<span>{description}</span>
+			</p>
+			<PostsGrid posts={posts} />
+		</li>
+	)
 }
 
 <style>
-    .category {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
+	.category {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		width: 100%;
 
-        h2 {
-            a:visited {
-                color: rgba(var(--accent), 1);
-            }
-        }
+		h2 {
+			a:visited {
+				color: rgba(var(--accent), 1);
+			}
+		}
 
-        .title {
-            display: flex;
-            align-items: center;
-        }
+		.title {
+			display: flex;
+			align-items: center;
+		}
 
-        .description {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: 0.4rem;
-        }
-    }
+		.description {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			margin-left: 0.4rem;
+		}
+	}
 </style>

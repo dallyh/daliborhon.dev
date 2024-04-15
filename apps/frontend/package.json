@@ -3,20 +3,20 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "init": "pnpm run wrangler:types && pnpm run build",
-        "dev": "astro dev",
-        "dev:host": "astro dev --host",
-        "build": "astro build",
-        "build-and-preview": "astro build && pnpm run preview",
-        "preview": "wrangler pages dev ./dist --compatibility-flags='nodejs_compat' --live-reload --port 4321",
         "astro": "astro",
         "sync": "astro sync",
+        "dev": "astro dev",
+        "dev:host": "astro dev --host",
+        "dev:tunnel": "pnpm lt --port 4321 --subdomain daliborhondev",
+        "build": "astro build",
+        "build:turbo": "turbo build",
         "build:index": "pagefind --site dist",
+        "build-and-preview": "astro build && pnpm run preview",
+        "preview": "wrangler pages dev ./dist --compatibility-flags='nodejs_compat' --live-reload --port 4321",
         "compile:paraglide": "paraglide-js compile --project ./project.inlang",
         "wrangler:types": "wrangler types ./src/worker-configuration.d.ts",
         "deps:check-update": "pnpm ncu -x @astrojs/cloudflare",
-        "deps:update": "pnpm ncu -u -x @astrojs/cloudflare && pnpm install",
-        "dev:tunnel": "pnpm lt --port 4321 --subdomain daliborhondev"
+        "deps:update": "pnpm ncu -u -x @astrojs/cloudflare && pnpm install"
     },
     "dependencies": {
         "@astro-community/astro-embed-youtube": "^0.5.2",

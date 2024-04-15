@@ -12,6 +12,7 @@
         "dev": "sanity dev",
         "start": "sanity start",
         "build": "sanity build",
+        "build:turbo": "turbo build",
         "deploy": "sanity deploy",
         "deploy:graphql": "sanity graphql deploy"
     },

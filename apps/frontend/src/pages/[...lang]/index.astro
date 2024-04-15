@@ -11,19 +11,19 @@ import PageLayout from "@layouts/PageLayout.astro";
 export { getStaticPaths } from "@i18n/utils";
 
 const layoutProps = {
-    title: "Dalibor Hon - " + m.common__home_page(),
-    description: m.common__site_description(),
-    homepage: true,
+	title: "Dalibor Hon - " + m.common__home_page(),
+	description: m.common__site_description(),
+	homepage: true,
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <Section id="hero">
-        <Intro />
-    </Section>
-    <Section id="projects" sectionTitle={m.projects__projects_title()}>
-        <ProjectsList recentSize={siteConfig.projects.recentProjectsSize} />
-    </Section>
-    <FeaturedPosts postSize={siteConfig.blog.featuredPostsSize} />
-    <RecentPosts postSize={siteConfig.blog.recentPostsSize} />
+	<Section id="hero">
+		<Intro />
+	</Section>
+	<Section id="projects" sectionTitle={m.projects__projects_title()}>
+		<ProjectsList recentSize={siteConfig.projects.recentProjectsSize} />
+	</Section>
+	<FeaturedPosts postSize={siteConfig.blog.featuredPostsSize} />
+	<RecentPosts postSize={siteConfig.blog.recentPostsSize} />
 </PageLayout>

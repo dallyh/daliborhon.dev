@@ -6,9 +6,9 @@ import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
-    postSize?: number;
-    filterFeatured?: boolean;
-    showSeeAllUrl?: boolean;
+	postSize?: number;
+	filterFeatured?: boolean;
+	showSeeAllUrl?: boolean;
 }
 
 const { postSize, filterFeatured = false, showSeeAllUrl = true } = Astro.props;
@@ -20,27 +20,27 @@ const query = recentPostsQuery(postSize);
 let posts = await runQuery(query, { language: locale });
 
 if (filterFeatured) {
-    posts = posts?.filter((post) => {
-        return post?.featured === false || post?.featured === undefined;
-    });
+	posts = posts?.filter((post) => {
+		return post?.featured === false || post?.featured === undefined;
+	});
 }
 
 const sectionProps = {
-    id: "recentPosts",
-    sectionTitle: m.blog__recent_posts_title(),
-    sectionDescription: m.blog__recent_posts_description(),
+	id: "recentPosts",
+	sectionTitle: m.blog__recent_posts_title(),
+	sectionDescription: m.blog__recent_posts_description(),
 };
 ---
 
 <Section {...sectionProps}>
-    {!posts && <p>{m.blog__no_posts()} 😞</p>}
-    {posts && posts.length === 0 && <p>{m.blog__no_posts()} 😞</p>}
-    {
-        posts && posts.length !== 0 && (
-            <>
-                {showSeeAllUrl && <PostsGrid posts={posts} url="/blog/posts/" urlDescription={m.blog__see_all_posts()} />}
-                {!showSeeAllUrl && <PostsGrid posts={posts} />}
-            </>
-        )
-    }
+	{!posts && <p>{m.blog__no_posts()} 😞</p>}
+	{posts && posts.length === 0 && <p>{m.blog__no_posts()} 😞</p>}
+	{
+		posts && posts.length !== 0 && (
+			<>
+				{showSeeAllUrl && <PostsGrid posts={posts} url="/blog/posts/" urlDescription={m.blog__see_all_posts()} />}
+				{!showSeeAllUrl && <PostsGrid posts={posts} />}
+			</>
+		)
+	}
 </Section>

@@ -6,27 +6,27 @@ import { allPostsQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 
 export async function getStaticPaths() {
-    const paths = await Promise.all(
-        locales.map(async (locale) => {
-            const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
+	const paths = await Promise.all(
+		locales.map(async (locale) => {
+			const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
 
-            if (posts === undefined) {
-                return [];
-            }
+			if (posts === undefined) {
+				return [];
+			}
 
-            return posts.map((post) => ({
-                params: {
-                    lang: getRoutingLocale(locale),
-                    slug: post.slug,
-                },
-                props: {
-                    post: post,
-                },
-            }));
-        }),
-    );
+			return posts.map((post) => ({
+				params: {
+					lang: getRoutingLocale(locale),
+					slug: post.slug,
+				},
+				props: {
+					post: post,
+				},
+			}));
+		}),
+	);
 
-    return paths.flat();
+	return paths.flat();
 }
 
 const { post } = Astro.props;

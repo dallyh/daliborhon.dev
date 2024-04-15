@@ -4,11 +4,11 @@ import type { IGenBlogArticleMetaFragment, IGenTagMetaFragment } from "@services
 import type { Post, PostTag } from "@services/sanity/queries/posts";
 
 interface Props {
-    post?: Post;
-    tags?: PostTag[];
-    bgColor: string;
-    justify: string;
-    padding?: string;
+	post?: Post;
+	tags?: PostTag[];
+	bgColor: string;
+	justify: string;
+	padding?: string;
 }
 
 const { post, bgColor, justify, tags, padding = "0.5rem" } = Astro.props;
@@ -17,52 +17,52 @@ const locale = Astro.currentLocale!;
 ---
 
 <ul class="tag-list">
-    {
-        tags &&
-            tags.map((tag) => (
-                <li>
-                    <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.label}/`)}>#{tag.label}</a>
-                </li>
-            ))
-    }
-    {
-        post &&
-            post.tags.map(async (tag) => {
-                return (
-                    <li>
-                        <a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.label}/`)}>#{tag?.label}</a>
-                    </li>
-                );
-            })
-    }
+	{
+		tags &&
+			tags.map((tag) => (
+				<li>
+					<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.label}/`)}>#{tag.label}</a>
+				</li>
+			))
+	}
+	{
+		post &&
+			post.tags.map(async (tag) => {
+				return (
+					<li>
+						<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.label}/`)}>#{tag?.label}</a>
+					</li>
+				);
+			})
+	}
 </ul>
 
 <style define:vars={{ bgColor, justify, padding }}>
-    .tag-list {
-        display: flex;
-        gap: 0.3rem;
-        flex-wrap: wrap;
-        justify-content: var(--justify);
-        text-align: center;
+	.tag-list {
+		display: flex;
+		gap: 0.3rem;
+		flex-wrap: wrap;
+		justify-content: var(--justify);
+		text-align: center;
 
-        li {
-            a {
-                display: inline-block;
-                background: var(--bgColor);
-                border-radius: 6px;
-                font-size: 0.8rem;
-                padding: var(--padding);
-                position: relative;
+		li {
+			a {
+				display: inline-block;
+				background: var(--bgColor);
+				border-radius: 6px;
+				font-size: 0.8rem;
+				padding: var(--padding);
+				position: relative;
 
-                &:visited {
-                    color: var(--a-color);
-                }
+				&:visited {
+					color: var(--a-color);
+				}
 
-                &:hover {
-                    text-decoration: none;
-                    top: -2px;
-                }
-            }
-        }
-    }
+				&:hover {
+					text-decoration: none;
+					top: -2px;
+				}
+			}
+		}
+	}
 </style>

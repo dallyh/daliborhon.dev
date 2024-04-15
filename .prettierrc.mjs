@@ -3,7 +3,16 @@ export default {
     printWidth: 210,
     tabWidth: 4,
     plugins: ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+    useTabs: true,
+    singleQuote: false,
+    semi: true,
     overrides: [
+        {
+            files: [".*", "*.json", "*.md", "*.toml", "*.yml"],
+            options: {
+                useTabs: false,
+            },
+        },
         {
             files: "*.astro",
             options: {

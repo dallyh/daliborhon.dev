@@ -2,7 +2,7 @@
 import * as m from "$messages";
 
 export interface Props {
-    standalone?: boolean;
+	standalone?: boolean;
 }
 
 const { standalone } = Astro.props;
@@ -11,75 +11,75 @@ const { standalone } = Astro.props;
 {standalone && <div class="dot-flashing" aria-label={m.common__loading()} title={m.common__loading()} />}
 
 {
-    !standalone && (
-        <div id="pageLoad">
-            <div class="dot-flashing" aria-label={m.common__loading()} title={m.common__loading()} />
-        </div>
-    )
+	!standalone && (
+		<div id="pageLoad">
+			<div class="dot-flashing" aria-label={m.common__loading()} title={m.common__loading()} />
+		</div>
+	)
 }
 
 <style>
-    @keyframes dot-flashing {
-        0% {
-            background-color: rgba(var(--accent), 1);
-        }
-        50%,
-        100% {
-            background-color: rgba(152, 128, 255, 0.2);
-        }
-    }
-    #pageLoad {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1000;
-        background-color: var(--bg-color);
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+	@keyframes dot-flashing {
+		0% {
+			background-color: rgba(var(--accent), 1);
+		}
+		50%,
+		100% {
+			background-color: rgba(152, 128, 255, 0.2);
+		}
+	}
+	#pageLoad {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		background-color: var(--bg-color);
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
-    /* Thanks! https://codepen.io/nzbin/pen/GGrXbp */
-    .dot-flashing {
-        position: relative;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background-color: rgba(var(--accent), 1);
-        color: rgba(var(--accent), 1);
-        animation: dot-flashing 1s infinite linear alternate;
-        animation-delay: 0.5s;
-    }
+	/* Thanks! https://codepen.io/nzbin/pen/GGrXbp */
+	.dot-flashing {
+		position: relative;
+		width: 10px;
+		height: 10px;
+		border-radius: 5px;
+		background-color: rgba(var(--accent), 1);
+		color: rgba(var(--accent), 1);
+		animation: dot-flashing 1s infinite linear alternate;
+		animation-delay: 0.5s;
+	}
 
-    .dot-flashing::before,
-    .dot-flashing::after {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        top: 0;
-    }
+	.dot-flashing::before,
+	.dot-flashing::after {
+		content: "";
+		display: inline-block;
+		position: absolute;
+		top: 0;
+	}
 
-    .dot-flashing::before {
-        left: -15px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background-color: rgba(var(--accent), 1);
-        color: rgba(var(--accent), 1);
-        animation: dot-flashing 1s infinite alternate;
-        animation-delay: 0s;
-    }
+	.dot-flashing::before {
+		left: -15px;
+		width: 10px;
+		height: 10px;
+		border-radius: 5px;
+		background-color: rgba(var(--accent), 1);
+		color: rgba(var(--accent), 1);
+		animation: dot-flashing 1s infinite alternate;
+		animation-delay: 0s;
+	}
 
-    .dot-flashing::after {
-        left: 15px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background-color: rgba(var(--accent), 1);
-        color: rgba(var(--accent), 1);
-        animation: dot-flashing 1s infinite alternate;
-        animation-delay: 1s;
-    }
+	.dot-flashing::after {
+		left: 15px;
+		width: 10px;
+		height: 10px;
+		border-radius: 5px;
+		background-color: rgba(var(--accent), 1);
+		color: rgba(var(--accent), 1);
+		animation: dot-flashing 1s infinite alternate;
+		animation-delay: 1s;
+	}
 </style>

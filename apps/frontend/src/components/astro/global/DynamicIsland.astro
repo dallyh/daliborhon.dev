@@ -9,146 +9,146 @@ const hasDynamicIsland = (await Astro.slots.render("dynamic-island")).length !==
 ---
 
 <div class="dynamic-island-container" id="dynamicIsland">
-    <div class="brand-loader" id="pageNavLoader">
-        <a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
-            <Icon class="logo" name="dh-logo" size={40} />
-        </a>
-        <div class="spinner-wrapper">
-            <svg class="spinner" viewBox="0 0 50 50">
-                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-            </svg>
-        </div>
-    </div>
-    {
-        hasDynamicIsland && (
-            <div class="dynamic-island">
-                <slot name="dynamic-island" />
-            </div>
-        )
-    }
+	<div class="brand-loader" id="pageNavLoader">
+		<a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
+			<Icon class="logo" name="dh-logo" size={40} />
+		</a>
+		<div class="spinner-wrapper">
+			<svg class="spinner" viewBox="0 0 50 50">
+				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+			</svg>
+		</div>
+	</div>
+	{
+		hasDynamicIsland && (
+			<div class="dynamic-island">
+				<slot name="dynamic-island" />
+			</div>
+		)
+	}
 </div>
 
 <script is:inline>
-    document.addEventListener("astro:before-preparation", () => {
-        document.getElementById("pageNavLoader").classList.add("show-loader");
-    });
-    document.addEventListener("astro:after-preparation", () => {
-        document.getElementById("pageNavLoader").classList.remove("show-loader");
-    });
-    document.addEventListener("astro:page-load", () => {
-        const island = document.getElementById("dynamicIsland").classList.add("show-island");
-    });
+	document.addEventListener("astro:before-preparation", () => {
+		document.getElementById("pageNavLoader").classList.add("show-loader");
+	});
+	document.addEventListener("astro:after-preparation", () => {
+		document.getElementById("pageNavLoader").classList.remove("show-loader");
+	});
+	document.addEventListener("astro:page-load", () => {
+		const island = document.getElementById("dynamicIsland").classList.add("show-island");
+	});
 </script>
 
 <style>
-    .dynamic-island-container {
-        display: flex;
-        gap: 0rem;
-        justify-content: center;
-        align-items: center;
-        height: 40px;
+	.dynamic-island-container {
+		display: flex;
+		gap: 0rem;
+		justify-content: center;
+		align-items: center;
+		height: 40px;
 
-        .dynamic-island {
-            height: inherit;
-            max-width: 0;
-            display: none;
-            transform: scale(0);
-            overflow: hidden;
-            visibility: hidden;
-            height: inherit;
-            height: 40px;
-            justify-content: center;
-            align-items: center;
-        }
+		.dynamic-island {
+			height: inherit;
+			max-width: 0;
+			display: none;
+			transform: scale(0);
+			overflow: hidden;
+			visibility: hidden;
+			height: inherit;
+			height: 40px;
+			justify-content: center;
+			align-items: center;
+		}
 
-        &.show-island {
-            .dynamic-island {
-                display: flex;
-                visibility: visible;
-                animation: showIsland 0.6s ease forwards 0.5s;
-            }
-        }
-    }
+		&.show-island {
+			.dynamic-island {
+				display: flex;
+				visibility: visible;
+				animation: showIsland 0.6s ease forwards 0.5s;
+			}
+		}
+	}
 
-    @keyframes showIsland {
-        0% {
-            transform: scale(0);
-        }
+	@keyframes showIsland {
+		0% {
+			transform: scale(0);
+		}
 
-        50% {
-            margin-left: 1rem;
-            max-width: calc(40px + 1rem);
-            transform: scale(0);
-        }
+		50% {
+			margin-left: 1rem;
+			max-width: calc(40px + 1rem);
+			transform: scale(0);
+		}
 
-        100% {
-            margin-left: 1rem;
-            max-width: calc(40px + 1rem);
-            transform: scale(1);
-        }
-    }
+		100% {
+			margin-left: 1rem;
+			max-width: calc(40px + 1rem);
+			transform: scale(1);
+		}
+	}
 
-    .brand-loader {
-        --duration: 0.4s;
-        --delay: 2s;
-        color: rgba(var(--accent), 1);
-        width: inherit;
-        height: 40px;
-        position: relative;
+	.brand-loader {
+		--duration: 0.4s;
+		--delay: 2s;
+		color: rgba(var(--accent), 1);
+		width: inherit;
+		height: 40px;
+		position: relative;
 
-        .logo {
-            width: inherit;
-            height: inherit;
-            animation-delay: var(--delay);
-            animation-fill-mode: both;
-            animation-duration: var(--duration);
-            color: rgba(var(--accent), 1);
-        }
+		.logo {
+			width: inherit;
+			height: inherit;
+			animation-delay: var(--delay);
+			animation-fill-mode: both;
+			animation-duration: var(--duration);
+			color: rgba(var(--accent), 1);
+		}
 
-        .spinner-wrapper {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: inherit;
-            height: inherit;
-            transform: scale(0);
-            animation-delay: var(--delay);
-            animation-fill-mode: both;
-            animation-duration: var(--duration);
+		.spinner-wrapper {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: inherit;
+			height: inherit;
+			transform: scale(0);
+			animation-delay: var(--delay);
+			animation-fill-mode: both;
+			animation-duration: var(--duration);
 
-            .spinner {
-                animation: rotate 2s linear infinite;
-                width: inherit;
-                height: inherit;
+			.spinner {
+				animation: rotate 2s linear infinite;
+				width: inherit;
+				height: inherit;
 
-                .path {
-                    stroke: rgba(var(--accent), 1);
-                    stroke-linecap: round;
-                    animation: dash 1.5s ease-in-out infinite;
-                }
-            }
-        }
+				.path {
+					stroke: rgba(var(--accent), 1);
+					stroke-linecap: round;
+					animation: dash 1.5s ease-in-out infinite;
+				}
+			}
+		}
 
-        &.show-loader {
-            .spinner-wrapper {
-                animation-name: grow;
-            }
+		&.show-loader {
+			.spinner-wrapper {
+				animation-name: grow;
+			}
 
-            .logo {
-                animation-name: shrink;
-            }
-        }
-    }
+			.logo {
+				animation-name: shrink;
+			}
+		}
+	}
 
-    @keyframes shrink {
-        to {
-            transform: scale(0);
-        }
-    }
+	@keyframes shrink {
+		to {
+			transform: scale(0);
+		}
+	}
 
-    @keyframes grow {
-        to {
-            transform: scale(1);
-        }
-    }
+	@keyframes grow {
+		to {
+			transform: scale(1);
+		}
+	}
 </style>

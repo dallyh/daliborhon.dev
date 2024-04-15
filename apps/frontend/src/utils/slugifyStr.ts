@@ -1,9 +1,9 @@
 import slug from "slug";
 
 export function slugifyStr(locale: string | undefined, str: string) {
-    if (locale === undefined) {
-        return slug(str);
-    }
+	if (locale === undefined) {
+		return slug(str);
+	}
 
-    return slug(str, { locale: locale });
+	return slug(str, { locale: locale });
 }

@@ -10,14 +10,14 @@ import "../styles/keyframes.css";
 import "../styles/variables.css";
 
 export interface Props {
-    title?: string;
-    author?: string;
-    description?: string;
-    ogImage?: string;
-    canonicalURL?: string;
-    pubDatetime?: Date;
-    modDatetime?: Date | null;
-    showBrowserWarning?: boolean;
+	title?: string;
+	author?: string;
+	description?: string;
+	ogImage?: string;
+	canonicalURL?: string;
+	pubDatetime?: Date;
+	modDatetime?: Date | null;
+	showBrowserWarning?: boolean;
 }
 
 // Note for me
@@ -26,14 +26,14 @@ export interface Props {
 const locale = Astro.currentLocale!;
 
 const {
-    title,
-    author = "Dalibor Hon",
-    description = m.common__site_description(),
-    ogImage = removeTrailingSlash(getAbsoluteLocaleUrl(locale, "og.png")),
-    canonicalURL = new URL(Astro.url.pathname, Astro.site),
-    pubDatetime,
-    modDatetime,
-    showBrowserWarning = true,
+	title,
+	author = "Dalibor Hon",
+	description = m.common__site_description(),
+	ogImage = removeTrailingSlash(getAbsoluteLocaleUrl(locale, "og.png")),
+	canonicalURL = new URL(Astro.url.pathname, Astro.site),
+	pubDatetime,
+	modDatetime,
+	showBrowserWarning = true,
 } = Astro.props;
 
 const siteTitle = title == undefined ? "Dalibor Hon" : `${title} - Dalibor Hon`;
@@ -42,68 +42,68 @@ const basePath = import.meta.env.BASE_URL;
 
 <!doctype html>
 <html lang={locale}>
-    <head>
-        <!-- Base head -->
-        <ViewTransitions fallback="swap" />
-        <meta charset="UTF-8" />
-        <meta name="generator" content={Astro.generator} />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/x-icon" href={`${basePath}favicon.ico`} />
-        <ThemeProvider />
+	<head>
+		<!-- Base head -->
+		<ViewTransitions fallback="swap" />
+		<meta charset="UTF-8" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/x-icon" href={`${basePath}favicon.ico`} />
+		<ThemeProvider />
 
-        <!-- hreflang from other pages -->
-        <slot name="hreflangs" />
+		<!-- hreflang from other pages -->
+		<slot name="hreflangs" />
 
-        <!-- Additional head from other pages -->
-        <slot name="head" />
+		<!-- Additional head from other pages -->
+		<slot name="head" />
 
-        <!-- General Meta Tags -->
-        <title>{title}</title>
-        <meta name="title" content={siteTitle} />
-        <meta name="description" content={description} />
-        <meta name="author" content={author} />
-        <link rel="sitemap" href="/sitemap-index.xml" />
+		<!-- General Meta Tags -->
+		<title>{title}</title>
+		<meta name="title" content={siteTitle} />
+		<meta name="description" content={description} />
+		<meta name="author" content={author} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:title" content={siteTitle} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalURL} />
-        <meta property="og:image" content={ogImage} />
+		<!-- Open Graph / Facebook -->
+		<meta property="og:title" content={siteTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:image" content={ogImage} />
 
-        <!-- Article Published/Modified time -->
-        {pubDatetime && <meta property="article:published_time" content={pubDatetime.toISOString()} />}
-        {modDatetime && <meta property="article:modified_time" content={modDatetime.toISOString()} />}
+		<!-- Article Published/Modified time -->
+		{pubDatetime && <meta property="article:published_time" content={pubDatetime.toISOString()} />}
+		{modDatetime && <meta property="article:modified_time" content={modDatetime.toISOString()} />}
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={canonicalURL} />
-        <meta property="twitter:title" content={siteTitle} />
-        <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={ogImage} />
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={siteTitle} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImage} />
 
-        <!-- Fonts, icons and external scripts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="preload" as="style" />
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
-        <link rel="preconnect" href="https://assets.caisy.io" />
-    </head>
-    <body>
-        {showBrowserWarning && <BrowserWarning />}
-        <slot name="header" />
-        <div class="page-content" id="#pageContent" aria-hidden="false">
-            <slot />
-        </div>
-        <script>
-            import { initializeTooltips } from "../scripts/tooltips";
+		<!-- Fonts, icons and external scripts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="preload" as="style" />
+		<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
+		<link rel="preconnect" href="https://assets.caisy.io" />
+	</head>
+	<body>
+		{showBrowserWarning && <BrowserWarning />}
+		<slot name="header" />
+		<div class="page-content" id="#pageContent" aria-hidden="false">
+			<slot />
+		</div>
+		<script>
+			import { initializeTooltips } from "../scripts/tooltips";
 
-            document.addEventListener(
-                "astro:page-load",
-                (e) => {
-                    initializeTooltips();
-                },
-                { once: false },
-            );
-        </script>
-    </body>
+			document.addEventListener(
+				"astro:page-load",
+				(e) => {
+					initializeTooltips();
+				},
+				{ once: false },
+			);
+		</script>
+	</body>
 </html>

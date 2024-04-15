@@ -14,76 +14,76 @@ const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as strin
 ---
 
 <footer class="footer-container">
-    <div class="left-section">
-        <a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" class="rss">
-            <Icon name="bi:rss-fill" />
-        </a>
-        <a href="https://astro.build" title="Built with Astro">
-            <Image class="astro-img" src="https://astro.badg.es/v2/built-with-astro/tiny.svg" alt="Built with Astro" width={120} height={20} />
-        </a>
-    </div>
-    <div class="right-section">
-        <div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
-        <div class="build-info">
-            [<a href={branchHref}>{CF_PAGES_BRANCH ?? "branch"}</a>
-            <a href={commitHref}>{commit}</a>]
-        </div>
-    </div>
+	<div class="left-section">
+		<a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" class="rss">
+			<Icon name="bi:rss-fill" />
+		</a>
+		<a href="https://astro.build" title="Built with Astro">
+			<Image class="astro-img" src="https://astro.badg.es/v2/built-with-astro/tiny.svg" alt="Built with Astro" width={120} height={20} />
+		</a>
+	</div>
+	<div class="right-section">
+		<div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
+		<div class="build-info">
+			[<a href={branchHref}>{CF_PAGES_BRANCH ?? "branch"}</a>
+			<a href={commitHref}>{commit}</a>]
+		</div>
+	</div>
 </footer>
 
 <style>
-    /* Footer */
-    .footer-container {
-        width: 100%;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        gap: 1rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.8rem;
-        color: var(--footer-color);
-        margin-top: 1rem;
-        border-top: var(--border);
+	/* Footer */
+	.footer-container {
+		width: 100%;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		gap: 1rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 0.8rem;
+		color: var(--footer-color);
+		margin-top: 1rem;
+		border-top: var(--border);
 
-        @media (max-width: 468px) {
-            flex-direction: column;
-        }
-    }
+		@media (max-width: 468px) {
+			flex-direction: column;
+		}
+	}
 
-    .build-info {
-        text-align: right;
+	.build-info {
+		text-align: right;
 
-        @media (max-width: 468px) {
-            text-align: center;
-        }
-    }
+		@media (max-width: 468px) {
+			text-align: center;
+		}
+	}
 
-    .astro-img {
-        filter: hue-rotate(310deg) grayscale(0.5);
-        opacity: 0.7;
-    }
+	.astro-img {
+		filter: hue-rotate(310deg) grayscale(0.5);
+		opacity: 0.7;
+	}
 
-    .right-section {
-        line-height: 1.2;
-    }
+	.right-section {
+		line-height: 1.2;
+	}
 
-    .left-section {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
+	.left-section {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
 
-        svg {
-            height: auto;
-            width: 18px;
-        }
+		svg {
+			height: auto;
+			width: 18px;
+		}
 
-        .rss,
-        .rss:visited {
-            color: #ee802f;
-            opacity: 0.8;
-        }
-    }
+		.rss,
+		.rss:visited {
+			color: #ee802f;
+			opacity: 0.8;
+		}
+	}
 </style>

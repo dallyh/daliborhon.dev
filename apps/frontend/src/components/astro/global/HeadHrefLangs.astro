@@ -6,19 +6,19 @@ import type { Post } from "@services/sanity/queries/posts";
 import { getAbsoluteBlogPostUrl } from "@utils";
 
 interface Props {
-    post?: Post;
+	post?: Post;
 }
 const { post } = Astro.props;
 ---
 
 <Fragment>
-    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale, getPathFromUrl(Astro.url))} />
-    {!post && locales.map((locale) => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, getPathFromUrl(Astro.url))} />)}
-    {
-        post &&
-            post._translations.map((t) => {
-                const value = getAbsoluteBlogPostUrl(t.language, t.slug);
-                return <link rel="alternate" hreflang={t.language} href={value} />;
-            })
-    }
+	<link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale, getPathFromUrl(Astro.url))} />
+	{!post && locales.map((locale) => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, getPathFromUrl(Astro.url))} />)}
+	{
+		post &&
+			post._translations.map((t) => {
+				const value = getAbsoluteBlogPostUrl(t.language, t.slug);
+				return <link rel="alternate" hreflang={t.language} href={value} />;
+			})
+	}
 </Fragment>

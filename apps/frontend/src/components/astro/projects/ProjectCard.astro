@@ -3,7 +3,7 @@ import * as m from "$messages";
 import type { Project, ProjectTag } from "@services/sanity/queries/projects";
 
 interface Props {
-    project: Project;
+	project: Project;
 }
 
 const locale = Astro.currentLocale!;
@@ -12,159 +12,159 @@ const { title, description, icon, projectSourceUrl, projectTags } = project!;
 const projectStartDate = new Date(project?.projectStartDate!);
 
 const formatDateTime = () => {
-    const date = projectStartDate!.toLocaleDateString(locale, {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    });
+	const date = projectStartDate!.toLocaleDateString(locale, {
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+	});
 
-    return {
-        iso: projectStartDate!.toISOString(),
-        date: date,
-    };
+	return {
+		iso: projectStartDate!.toISOString(),
+		date: date,
+	};
 };
 ---
 
 <div class="card">
-    <div class="card-content">
-        <i class="card-image" title={title} aria-label={title}>
-            <Fragment set:html={icon?.metadata?.inlineSvg} />
-        </i>
-        <div class="card-info-wrapper">
-            <div class="card-info-title">
-                <div class="title-meta">
-                    <a href={projectSourceUrl} target="_blank" title={title} aria-label={title}>{title}</a>
-                    {
-                        (
-                            <div class="project-date">
-                                <span>{m.projects__start_date_title()}:</span>
-                                <time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
-                            </div>
-                        )
-                    }
-                </div>
-                <div class="card-info-tags">
-                    {
-                        projectTags.map((tag) => {
-                            return (
-                                <div class="rounded-tag" style={`background: ${tag.color.hex!};`}>
-                                    {tag?.title}
-                                </div>
-                            );
-                        })
-                    }
-                </div>
-            </div>
-            <div class="card-body">
-                {description}
-            </div>
-        </div>
-    </div>
+	<div class="card-content">
+		<i class="card-image" title={title} aria-label={title}>
+			<Fragment set:html={icon?.metadata?.inlineSvg} />
+		</i>
+		<div class="card-info-wrapper">
+			<div class="card-info-title">
+				<div class="title-meta">
+					<a href={projectSourceUrl} target="_blank" title={title} aria-label={title}>{title}</a>
+					{
+						(
+							<div class="project-date">
+								<span>{m.projects__start_date_title()}:</span>
+								<time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
+							</div>
+						)
+					}
+				</div>
+				<div class="card-info-tags">
+					{
+						projectTags.map((tag) => {
+							return (
+								<div class="rounded-tag" style={`background: ${tag.color.hex!};`}>
+									{tag?.title}
+								</div>
+							);
+						})
+					}
+				</div>
+			</div>
+			<div class="card-body">
+				{description}
+			</div>
+		</div>
+	</div>
 </div>
 
 <style is:global>
-    .card-image {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        overflow: hidden;
-        height: 120px;
-        width: 100px;
-        color: var(--body-color);
-        opacity: 0.6;
+	.card-image {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		overflow: hidden;
+		height: 120px;
+		width: 100px;
+		color: var(--body-color);
+		opacity: 0.6;
 
-        > img,
-        > svg {
-            padding: 0.2rem;
-            height: 100%;
-            width: 100%;
-        }
+		> img,
+		> svg {
+			padding: 0.2rem;
+			height: 100%;
+			width: 100%;
+		}
 
-        [data-icon="lemmy-icon"] {
-            color: black;
-        }
-    }
+		[data-icon="lemmy-icon"] {
+			color: black;
+		}
+	}
 </style>
 
 <style>
-    .card {
-        background-color: var(--card-bg);
-        backdrop-filter: blur(2px);
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        box-shadow: var(--global-box-shadow);
-        border-radius: 6px;
-        padding: 1rem;
-        overflow: hidden;
-        width: 100%;
-        height: max-content;
-        border: var(--border);
-    }
+	.card {
+		background-color: var(--card-bg);
+		backdrop-filter: blur(2px);
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		box-shadow: var(--global-box-shadow);
+		border-radius: 6px;
+		padding: 1rem;
+		overflow: hidden;
+		width: 100%;
+		height: max-content;
+		border: var(--border);
+	}
 
-    .card-content {
-        display: flex;
-        gap: 1rem;
+	.card-content {
+		display: flex;
+		gap: 1rem;
 
-        @media (max-width: 468px) {
-            flex-direction: column;
-            align-items: center;
-        }
-    }
+		@media (max-width: 468px) {
+			flex-direction: column;
+			align-items: center;
+		}
+	}
 
-    .card-info-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        font-size: 0.725rem;
-        margin-top: 0.5rem;
-        color: black;
-        font-weight: 600;
+	.card-info-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		font-size: 0.725rem;
+		margin-top: 0.5rem;
+		color: black;
+		font-weight: 600;
 
-        :global(.rounded-tag) {
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            border-radius: 8px;
-        }
-    }
+		:global(.rounded-tag) {
+			padding-top: 0.25rem;
+			padding-bottom: 0.25rem;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+			border-radius: 8px;
+		}
+	}
 
-    .card-info-wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+	.card-info-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
 
-        .card-body {
-            color: var(--body-color);
-            font-size: 0.85em;
-            margin-top: 8px;
-        }
-    }
+		.card-body {
+			color: var(--body-color);
+			font-size: 0.85em;
+			margin-top: 8px;
+		}
+	}
 
-    .card-info-title {
-        .title-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+	.card-info-title {
+		.title-meta {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
 
-            .project-date {
-                color: var(--body-color);
-                font-size: 0.8rem;
-                opacity: 0.8;
-            }
-        }
+			.project-date {
+				color: var(--body-color);
+				font-size: 0.8rem;
+				opacity: 0.8;
+			}
+		}
 
-        > a {
-            font-weight: 600;
-            position: relative;
-            display: inline-flex;
-            min-height: 25px;
+		> a {
+			font-weight: 600;
+			position: relative;
+			display: inline-flex;
+			min-height: 25px;
 
-            i {
-                margin-right: 5px;
-            }
-        }
-    }
+			i {
+				margin-right: 5px;
+			}
+		}
+	}
 </style>

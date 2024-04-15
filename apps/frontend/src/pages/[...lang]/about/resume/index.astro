@@ -18,145 +18,145 @@ const resumeEntry = (await getEntry("resume", locale)) as CollectionEntry<"resum
 const { Content } = await resumeEntry.render();
 
 const layoutProps = {
-    title: "Dalibor Hon - " + m.common__resume(),
-    description: m.resume__resume_page_description(),
+	title: "Dalibor Hon - " + m.common__resume(),
+	description: m.resume__resume_page_description(),
 };
 
 const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`));
 ---
 
 <PageLayout {...layoutProps}>
-    <a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download>
-        <Icon name="bi:filetype-pdf" />
-    </a>
+	<a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download>
+		<Icon name="bi:filetype-pdf" />
+	</a>
 
-    <section class="hero-container" id="hero">
-        <div class="hero">
-            <div class="hero-meta">
-                <div class="profile-picture-wrapper">
-                    <Image class="profile-picture" src={profilePicture} width={220} height={220} alt="Profile picture" />
-                </div>
-                <div class="hero-title-wrapper">
-                    <div>
-                        <p>{resumeEntry.data.currentPosition.toUpperCase()}</p>
-                        <h1 class="text-accent">Dalibor Hon</h1>
-                    </div>
-                    <a class="button is-anchor" href={resumePdfFileName} download>
-                        <Icon name="bi:filetype-pdf" /><span>{m.resume__download_cv()}</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="section-footer noprint">
-            <ScrollIndicator href="#content" />
-        </div>
-    </section>
-    <article class="prose dark:prose-invert max-w-none" id="content">
-        <Content />
-    </article>
+	<section class="hero-container" id="hero">
+		<div class="hero">
+			<div class="hero-meta">
+				<div class="profile-picture-wrapper">
+					<Image class="profile-picture" src={profilePicture} width={220} height={220} alt="Profile picture" />
+				</div>
+				<div class="hero-title-wrapper">
+					<div>
+						<p>{resumeEntry.data.currentPosition.toUpperCase()}</p>
+						<h1 class="text-accent">Dalibor Hon</h1>
+					</div>
+					<a class="button is-anchor" href={resumePdfFileName} download>
+						<Icon name="bi:filetype-pdf" /><span>{m.resume__download_cv()}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="section-footer noprint">
+			<ScrollIndicator href="#content" />
+		</div>
+	</section>
+	<article class="prose dark:prose-invert max-w-none" id="content">
+		<Content />
+	</article>
 </PageLayout>
 
 <style is:global>
-    :root[data-theme="light"] {
-        .cert-card-logo.dark {
-            display: none;
-        }
-    }
+	:root[data-theme="light"] {
+		.cert-card-logo.dark {
+			display: none;
+		}
+	}
 
-    :root[data-theme="dark"] {
-        .cert-card-logo.light {
-            display: none;
-        }
-    }
+	:root[data-theme="dark"] {
+		.cert-card-logo.light {
+			display: none;
+		}
+	}
 </style>
 
 <style>
-    .hero-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: calc(100svh - var(--header-margin)); /* Header padding */
-    }
+	.hero-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: calc(100svh - var(--header-margin)); /* Header padding */
+	}
 
-    .hero-meta {
-        display: flex;
-        gap: 3rem;
+	.hero-meta {
+		display: flex;
+		gap: 3rem;
 
-        @media (max-width: 768px) {
-            flex-direction: column;
-        }
-    }
+		@media (max-width: 768px) {
+			flex-direction: column;
+		}
+	}
 
-    .hero-title-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        row-gap: 1rem;
+	.hero-title-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		row-gap: 1rem;
 
-        p {
-            font-weight: 600;
-            letter-spacing: 0.1rem;
-            position: relative;
-            font-size: 0.75rem;
-            color: var(--body-color);
-            opacity: 0.8;
-        }
+		p {
+			font-weight: 600;
+			letter-spacing: 0.1rem;
+			position: relative;
+			font-size: 0.75rem;
+			color: var(--body-color);
+			opacity: 0.8;
+		}
 
-        h1 {
-            font-size: 4rem;
-            font-weight: 600;
-            margin: 0;
-            margin-left: -4px;
-            padding: 0;
-        }
-    }
+		h1 {
+			font-size: 4rem;
+			font-weight: 600;
+			margin: 0;
+			margin-left: -4px;
+			padding: 0;
+		}
+	}
 
-    .profile-picture-wrapper {
-        position: relative;
-        width: clamp(110px, 50vw, 190px);
-        height: clamp(110px, 50vw, 190px);
-        border-radius: 50%;
-        margin-left: 0.2rem;
-        box-shadow:
-            0px 5px 30px 0px rgba(var(--accent), 0.8),
-            0px 0px 0px 7px rgba(var(--accent), 0.5);
+	.profile-picture-wrapper {
+		position: relative;
+		width: clamp(110px, 50vw, 190px);
+		height: clamp(110px, 50vw, 190px);
+		border-radius: 50%;
+		margin-left: 0.2rem;
+		box-shadow:
+			0px 5px 30px 0px rgba(var(--accent), 0.8),
+			0px 0px 0px 7px rgba(var(--accent), 0.5);
 
-        .profile-picture {
-            display: block;
-            object-fit: cover;
-            border-radius: inherit;
-            height: 100%;
-        }
-    }
+		.profile-picture {
+			display: block;
+			object-fit: cover;
+			border-radius: inherit;
+			height: 100%;
+		}
+	}
 
-    .section-footer {
-        position: absolute;
-        bottom: 0.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        align-self: flex-end;
-    }
+	.section-footer {
+		position: absolute;
+		bottom: 0.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-self: flex-end;
+	}
 
-    .button {
-        border: var(--border);
+	.button {
+		border: var(--border);
 
-        &.island {
-            min-width: max-content;
-            height: inherit;
+		&.island {
+			min-width: max-content;
+			height: inherit;
 
-            svg {
-                margin-right: 0;
-                width: 1.2rem;
-                height: 1.2rem;
-            }
-        }
+			svg {
+				margin-right: 0;
+				width: 1.2rem;
+				height: 1.2rem;
+			}
+		}
 
-        svg {
-            display: inline-block;
-            margin-right: 0.25rem;
-        }
-    }
+		svg {
+			display: inline-block;
+			margin-right: 0.25rem;
+		}
+	}
 </style>

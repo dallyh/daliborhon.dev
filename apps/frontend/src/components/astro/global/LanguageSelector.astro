@@ -12,170 +12,170 @@ import { Icon } from "astro-icon/components";
 import ISO6991 from "iso-639-1";
 
 interface Props {
-    post?: Post;
+	post?: Post;
 }
 
 const { post } = Astro.props;
 
 const currentLocale = languageTag();
 const capitalizeFirstLetter = (str: string) => {
-    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
-    return capitalized;
+	const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+	return capitalized;
 };
 ---
 
 <lang-select>
-    <label>
-        <Icon name="bi:translate" size={18} />
-        <select>
-            {
-                !post &&
-                    locales.map((locale) => {
-                        // For whatever reason the getRelativeLocaleUrl() for path "/" always adds a trailing slash
-                        // even when it is not set in the config.
-                        const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
-                        const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
-                        const current = currentLocale === locale;
+	<label>
+		<Icon name="bi:translate" size={18} />
+		<select>
+			{
+				!post &&
+					locales.map((locale) => {
+						// For whatever reason the getRelativeLocaleUrl() for path "/" always adds a trailing slash
+						// even when it is not set in the config.
+						const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
+						const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+						const current = currentLocale === locale;
 
-                        return (
-                            <>
-                                <option selected={current} data-language={locale} value={value}>
-                                    {nativeName}
-                                </option>
-                            </>
-                        );
-                    })
-            }
-            {
-                post &&
-                    post._translations.map((t) => {
-                        const locale = t.language;
-                        const value = getBlogPostUrl(locale, t.slug);
-                        const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
-                        const current = currentLocale === locale;
+						return (
+							<>
+								<option selected={current} data-language={locale} value={value}>
+									{nativeName}
+								</option>
+							</>
+						);
+					})
+			}
+			{
+				post &&
+					post._translations.map((t) => {
+						const locale = t.language;
+						const value = getBlogPostUrl(locale, t.slug);
+						const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+						const current = currentLocale === locale;
 
-                        return (
-                            <>
-                                <option selected={current} data-language={locale} value={value}>
-                                    {nativeName}
-                                </option>
-                            </>
-                        );
-                    })
-            }
-        </select>
-    </label>
+						return (
+							<>
+								<option selected={current} data-language={locale} value={value}>
+									{nativeName}
+								</option>
+							</>
+						);
+					})
+			}
+		</select>
+	</label>
 </lang-select>
 
 <script>
-    import { siteConfig } from "@daliborhon.dev/shared/frontend";
-    import { navigate } from "astro:transitions/client";
-    import cookie from "js-cookie";
+	import { siteConfig } from "@daliborhon.dev/shared/frontend";
+	import { navigate } from "astro:transitions/client";
+	import cookie from "js-cookie";
 
-    const configCookie = siteConfig.i18n.localeCookie;
+	const configCookie = siteConfig.i18n.localeCookie;
 
-    class LanguageSelect extends HTMLElement {
-        constructor() {
-            super();
-            const select = this.querySelector("select");
-            if (select) {
-                select.addEventListener("change", (e) => {
-                    if (e.currentTarget instanceof HTMLSelectElement) {
-                        const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
-                        cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
-                        navigate(e.currentTarget.value);
-                    }
-                });
-            }
-        }
-    }
-    customElements.define("lang-select", LanguageSelect);
+	class LanguageSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector("select");
+			if (select) {
+				select.addEventListener("change", (e) => {
+					if (e.currentTarget instanceof HTMLSelectElement) {
+						const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
+						cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
+						navigate(e.currentTarget.value);
+					}
+				});
+			}
+		}
+	}
+	customElements.define("lang-select", LanguageSelect);
 </script>
 
 <style>
-    lang-select {
-        display: contents;
-    }
+	lang-select {
+		display: contents;
+	}
 
-    label {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        pointer-events: all;
-        position: relative;
+	label {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+		pointer-events: all;
+		position: relative;
 
-        svg {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-60%);
-            pointer-events: none;
-        }
+		svg {
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-60%);
+			pointer-events: none;
+		}
 
-        @media (max-width: 768px) {
-            svg {
-                left: 50%;
-                transform: translateY(-60%) translateX(-50%);
-            }
-        }
+		@media (max-width: 768px) {
+			svg {
+				left: 50%;
+				transform: translateY(-60%) translateX(-50%);
+			}
+		}
 
-        select {
-            border: 0;
-            padding-left: 1.7rem;
-            padding-right: 0.8rem;
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
-            background-color: transparent;
-            text-overflow: ellipsis;
-            color: inherit;
-            appearance: none;
-            line-height: 1.2;
-            border-radius: 6px;
+		select {
+			border: 0;
+			padding-left: 1.7rem;
+			padding-right: 0.8rem;
+			padding-top: 0.25rem;
+			padding-bottom: 0.25rem;
+			background-color: transparent;
+			text-overflow: ellipsis;
+			color: inherit;
+			appearance: none;
+			line-height: 1.2;
+			border-radius: 6px;
 
-            @media (max-width: 768px) {
-                width: 0;
-                padding: 0.5rem;
-            }
+			@media (max-width: 768px) {
+				width: 0;
+				padding: 0.5rem;
+			}
 
-            &:focus-visible {
-                box-shadow: var(--focus-visible-shadow);
-            }
-        }
+			&:focus-visible {
+				box-shadow: var(--focus-visible-shadow);
+			}
+		}
 
-        &::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            right: 0.2rem;
-            display: inline-block;
-            border-bottom: 2px solid var(--body-color);
-            border-right: 2px solid var(--body-color);
-            height: 6px;
-            width: 6px;
-            transform: rotate(45deg) translateY(-85%);
-            pointer-events: none;
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 0.2rem;
+			display: inline-block;
+			border-bottom: 2px solid var(--body-color);
+			border-right: 2px solid var(--body-color);
+			height: 6px;
+			width: 6px;
+			transform: rotate(45deg) translateY(-85%);
+			pointer-events: none;
 
-            @media (max-width: 768px) {
-                display: none;
-            }
-        }
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
 
-        &:hover,
-        &:focus-within {
-            color: rgba(var(--accent), 1);
+		&:hover,
+		&:focus-within {
+			color: rgba(var(--accent), 1);
 
-            &::after {
-                border-bottom: 2px solid rgba(var(--accent), 1);
-                border-right: 2px solid rgba(var(--accent), 1);
-            }
-        }
+			&::after {
+				border-bottom: 2px solid rgba(var(--accent), 1);
+				border-right: 2px solid rgba(var(--accent), 1);
+			}
+		}
 
-        option {
-            background-color: rgba(var(--secondary), 1);
-            color: var(--body-color);
-            padding: 1rem;
-            text-overflow: ellipsis;
-        }
-    }
+		option {
+			background-color: rgba(var(--secondary), 1);
+			color: var(--body-color);
+			padding: 1rem;
+			text-overflow: ellipsis;
+		}
+	}
 </style>

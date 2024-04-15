@@ -12,46 +12,46 @@ export { getStaticPaths } from "@i18n/utils";
 const locale = Astro.currentLocale as AllowedLocales;
 
 const layoutProps = {
-    title: m.contact__leave_message_title(),
+	title: m.contact__leave_message_title(),
 };
 ---
 
 <PageLayout {...layoutProps}>
-    <Section isFirstSection sectionTitle={m.common__contact()} id="contact">
-        <Section sectionTitle={m.common__social_links_title()} sectionDescription={m.contact__contact_me_social()} id="contactSocial">
-            <div class="socials-container">
-                <SocialLinks />
-            </div>
-        </Section>
-        <Section sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
-            <ContactForm locale={locale} client:load>
-                <Loader slot="loader" standalone />
-            </ContactForm>
-        </Section>
-    </Section>
+	<Section isFirstSection sectionTitle={m.common__contact()} id="contact">
+		<Section sectionTitle={m.common__social_links_title()} sectionDescription={m.contact__contact_me_social()} id="contactSocial">
+			<div class="socials-container">
+				<SocialLinks />
+			</div>
+		</Section>
+		<Section sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
+			<ContactForm locale={locale} client:load>
+				<Loader slot="loader" standalone />
+			</ContactForm>
+		</Section>
+	</Section>
 </PageLayout>
 
 <style>
-    .socials-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+	.socials-container {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
 
-    .social-list {
-        font-size: 1.2rem;
-        line-height: 1.2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+	.social-list {
+		font-size: 1.2rem;
+		line-height: 1.2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 
-        a {
-            display: inline-flex;
-            gap: 0.5rem;
+		a {
+			display: inline-flex;
+			gap: 0.5rem;
 
-            i {
-                color: var(--body-color);
-            }
-        }
-    }
+			i {
+				color: var(--body-color);
+			}
+		}
+	}
 </style>

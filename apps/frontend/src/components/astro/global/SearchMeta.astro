@@ -2,57 +2,57 @@
 import * as m from "$messages";
 
 interface Props {
-    title: string;
-    date?: string;
-    description?: string;
-    filter?: Value[];
-    sort?: Value[];
-    meta?: Value[];
+	title: string;
+	date?: string;
+	description?: string;
+	filter?: Value[];
+	sort?: Value[];
+	meta?: Value[];
 }
 
 type Value = {
-    name: string;
-    value: string;
+	name: string;
+	value: string;
 };
 
 const { title, date, filter, sort, description, meta } = Astro.props;
 ---
 
 <div aria-hidden="true" hidden data-pagefind-body>
-    <span title={title} data-pagefind-meta="title[title]"></span>
-    {date && <span data-meta-date={date} data-pagefind-meta={`${m.common__date()}[data-meta-date]`} />}
-    {
-        sort &&
-            sort.map((s) => {
-                return (
-                    <>
-                        <span data-pagefind-sort={`${s.name}:${s.value}`} />
-                    </>
-                );
-            })
-    }
-    {
-        filter &&
-            filter.map((f) => {
-                return (
-                    <>
-                        <span data-pagefind-filter={`${f.name}:${f.value}`} />
-                    </>
-                );
-            })
-    }
-    {
-        meta &&
-            meta.map((meta) => {
-                return (
-                    <>
-                        <span data-pagefind-meta={`${meta.name}:${meta.value}`} />
-                    </>
-                );
-            })
-    }
-    <div class="meta-search">
-        <p>{title}</p>
-        {description && <span>{description}</span>}
-    </div>
+	<span title={title} data-pagefind-meta="title[title]"></span>
+	{date && <span data-meta-date={date} data-pagefind-meta={`${m.common__date()}[data-meta-date]`} />}
+	{
+		sort &&
+			sort.map((s) => {
+				return (
+					<>
+						<span data-pagefind-sort={`${s.name}:${s.value}`} />
+					</>
+				);
+			})
+	}
+	{
+		filter &&
+			filter.map((f) => {
+				return (
+					<>
+						<span data-pagefind-filter={`${f.name}:${f.value}`} />
+					</>
+				);
+			})
+	}
+	{
+		meta &&
+			meta.map((meta) => {
+				return (
+					<>
+						<span data-pagefind-meta={`${meta.name}:${meta.value}`} />
+					</>
+				);
+			})
+	}
+	<div class="meta-search">
+		<p>{title}</p>
+		{description && <span>{description}</span>}
+	</div>
 </div>

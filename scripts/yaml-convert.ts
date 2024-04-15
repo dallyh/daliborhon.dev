@@ -12,21 +12,21 @@ console.log("Working on folder: " + folderName);
 
 const files = fs.readdirSync(folderName);
 files.forEach((file) => {
-    const filePath = `${folderName}\\${file}`;
-    console.log("Working on file: " + filePath);
+	const filePath = `${folderName}\\${file}`;
+	console.log("Working on file: " + filePath);
 
-    if (path.parse(filePath).ext === ".yaml") {
-        console.log("Skipping file...");
-        return;
-    }
+	if (path.parse(filePath).ext === ".yaml") {
+		console.log("Skipping file...");
+		return;
+	}
 
-    console.log("Loading and parsing file...");
-    const jsonData = fs.readFileSync(filePath, "utf8");
-    const parsedData = JSON.parse(jsonData);
-    const yamlData = yaml.dump(parsedData);
+	console.log("Loading and parsing file...");
+	const jsonData = fs.readFileSync(filePath, "utf8");
+	const parsedData = JSON.parse(jsonData);
+	const yamlData = yaml.dump(parsedData);
 
-    const output = path.parse(filePath);
-    const outputFilePath = `${output.dir}\\${output.name}.yaml`;
-    console.log("Saving file to: " + outputFilePath);
-    fs.writeFileSync(outputFilePath, yamlData, "utf8");
+	const output = path.parse(filePath);
+	const outputFilePath = `${output.dir}\\${output.name}.yaml`;
+	console.log("Saving file to: " + outputFilePath);
+	fs.writeFileSync(outputFilePath, yamlData, "utf8");
 });

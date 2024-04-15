@@ -8,5 +8,5 @@ type Unpacked<T> = T extends (infer U)[] ? U : T;
 type Runtime = import("@astrojs/cloudflare").AdvancedRuntime<Env>;
 
 declare namespace App {
-    interface Locals extends Runtime {}
+	interface Locals extends Runtime {}
 }

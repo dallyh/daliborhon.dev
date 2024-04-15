@@ -2,18 +2,9 @@
 import * as m from "$messages";
 import Section from "@components/astro/global/Section.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
-import { checkValidSSRLangPath, invalidLocaleResponse } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { allProjectsQuery, type Project } from "@services/sanity/queries/projects";
-import { runQuery } from "@services/sanity/runQuery";
 
-if (!checkValidSSRLangPath(Astro)) {
-    return invalidLocaleResponse();
-}
-
-const locale = Astro.currentLocale!;
-const query = allProjectsQuery();
-const projects = await runQuery(query, { language: locale });
+export { getStaticPaths } from "@i18n/utils";
 
 const layoutProps = {
     title: "Dalibor Hon - " + m.projects__projects(),
@@ -23,6 +14,6 @@ const layoutProps = {
 
 <PageLayout {...layoutProps}>
     <Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
-        <ProjectsList {projects} />
+        <ProjectsList />
     </Section>
 </PageLayout>

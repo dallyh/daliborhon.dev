@@ -1,16 +1,19 @@
 ---
 import * as m from "$messages";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
-import { allProjectsQuery, type Project } from "@services/sanity/queries/projects";
+import { allProjectsQuery } from "@services/sanity/queries/projects";
 import { runQuery } from "@services/sanity/runQuery";
 import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
+    recentSize?: number;
     showAllUrl?: boolean;
-    projects: Project[];
 }
 
-const { showAllUrl = false, projects = [] } = Astro.props;
+const { showAllUrl = false, recentSize } = Astro.props;
+const locale = Astro.currentLocale!;
+const query = allProjectsQuery(recentSize);
+const projects = await runQuery(query, { language: locale });
 
 const allEntriesProps = {
     url: "/projects",

@@ -1,7 +1,5 @@
 import { defaultLocale, locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { removeTrailingSlash } from "@utils";
-import type { AstroGlobal } from "astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
 
 export function getRoutingLocale(locale: string | undefined) {
     /*
@@ -48,13 +46,13 @@ export async function getStaticPaths() {
     return paths;
 }
 
-export function checkValidSSRLangPath(astro: AstroGlobal) {
-    if (!astro.currentLocale) {
+export function checkValidSSRLangPath(lang: string | undefined) {
+    if (!lang) {
         return false;
     }
 
     const isAllowedLocale = locales.find((loc) => {
-        return loc === astro.currentLocale;
+        return loc === lang;
     });
 
     if (!isAllowedLocale) {
@@ -62,8 +60,4 @@ export function checkValidSSRLangPath(astro: AstroGlobal) {
     }
 
     return true;
-}
-
-export function invalidLocaleResponse() {
-    return new Response(null, { status: 404, statusText: "The specified resource was not found on the server." });
 }

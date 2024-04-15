@@ -19,9 +19,7 @@ const PREVIEW_BUILD = CF_PAGES_BRANCH && CF_PAGES_BRANCH.startsWith("dev");
 
 let SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://www.daliborhon.dev/";
 let SANITY_PERSPECTIVE = DEV_ENV ? "previewDrafts" : "published";
-
-console.log(`>> Dont forget to change the datasets!`);
-let SANITY_DATASET = DEV_ENV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getDevDataset();
+let SANITY_DATASET = DEV_ENV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getProdDataset();
 
 if (PREVIEW_BUILD) {
     SITE_URL = `https://${CF_PAGES_BRANCH}.daliborhon-dev.pages.dev`;
@@ -36,7 +34,7 @@ console.log(`>> Using SANITY_DATASET: '${SANITY_DATASET}'`);
 // https://astro.build/config
 export default defineConfig({
     site: SITE_URL,
-    output: "server",
+    output: "hybrid",
     adapter: cloudflare({
         imageService: "compile",
         runtime: {

@@ -4,8 +4,6 @@ import { createResumePdfFilename } from "@utils";
 import type { APIRoute } from "astro";
 import { mdToPdf } from "md-to-pdf";
 
-export const prerender = true;
-
 export async function getStaticPaths() {
     const paths = locales.map((locale) => {
         const filename = createResumePdfFilename(locale);

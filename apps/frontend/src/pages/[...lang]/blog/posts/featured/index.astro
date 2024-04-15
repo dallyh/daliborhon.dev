@@ -5,12 +5,10 @@ import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import { siteConfig } from "@daliborhon.dev/shared/frontend";
-import { recentFeaturedPostsQuery } from "@services/sanity/queries/posts";
-import { runQuery } from "@services/sanity/runQuery";
+
+export { getStaticPaths } from "@i18n/utils";
 
 const locale = Astro.currentLocale!;
-const featuredPosts = await runQuery(recentFeaturedPostsQuery(siteConfig.blog.featuredPostsSize), { language: locale });
 
 const layoutProps = {
     title: m.blog__featured_posts_title(),
@@ -25,7 +23,7 @@ const layoutProps = {
         <BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={m.blog__posts()} />
         <BreadCrumbsItem currentPage={true} label={m.blog__featured_posts_title()} />
     </BreadCrumbs>
-    <FeaturedPosts isFirstSection showSeeAllUrl={false} posts={featuredPosts} />
+    <FeaturedPosts isFirstSection showSeeAllUrl={false} />
 </PageLayout>
 
 <style>

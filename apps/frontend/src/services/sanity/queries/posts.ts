@@ -38,16 +38,7 @@ const postMetaFragment = {
 
 export const allPostsQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").order("publishedAt desc").grab(postMetaFragment);
 
-export const postBySlugQuery = q("*", { isArray: false }).filterByType("post").filter("language == $language").filter("slug.current == $slug").slice(0).grab(postMetaFragment);
-
 export const allPostsByCategoryQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("references($categoryId)").order("publishedAt desc").grab(postMetaFragment);
-
-export const allPostsByCategorySlugQuery = q("*", { isArray: true })
-    .filterByType("post")
-    .filter("language == $language")
-    .filter("references(*[_type == 'category' && $category in slug[].value.current]._id)")
-    .order("publishedAt desc")
-    .grab(postMetaFragment);
 
 export const allPostsByTagQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("count(tags[value == $tag]) > 0").order("publishedAt desc").grab(postMetaFragment);
 
@@ -72,7 +63,7 @@ export const recentPostsQuery = (maxRecent: number = -1) => {
         .grab(postMetaFragment);
 };
 
-export const allPostsTagsQuery = q("*", { isArray: true }).filterByType("post").grabOne("tags[]").grab({
+export const allPostsTagsQuery = q("*[tags != null].tags[]", { isArray: true }).grab({
     label: q.string(),
     value: q.string(),
 });

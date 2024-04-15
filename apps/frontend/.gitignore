@@ -4,9 +4,6 @@ dist/
 # generated types
 .astro/
 
-# cloudflare wrangler
-.wrangler
-
 # Paraglide JS
 paraglide/
 

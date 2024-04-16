@@ -9,7 +9,6 @@ import { defineConfig, defineField } from "sanity";
 import { IconManager } from "sanity-plugin-icon-manager";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
 import { media } from "sanity-plugin-media";
-import { tags } from "sanity-plugin-tags";
 import { structureTool } from "sanity/structure";
 import { schema } from "./schema";
 import { categorySlug } from "./schema/fields/categorySlug";
@@ -29,7 +28,6 @@ export default defineConfig({
 	plugins: [
 		structureTool(),
 		visionTool(),
-		tags(),
 		codeInput(),
 		media(),
 		IconManager({

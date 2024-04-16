@@ -1,11 +1,11 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import type { IGenBlogArticleMetaFragment, IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
-import type { Post, PostTag } from "@services/sanity/queries/posts";
+import type { Post } from "@services/sanity/queries/posts";
+import type { Tag } from "@services/sanity/queries/tags";
 
 interface Props {
 	post?: Post;
-	tags?: PostTag[];
+	tags?: Tag[];
 	bgColor: string;
 	justify: string;
 	padding?: string;
@@ -21,7 +21,7 @@ const locale = Astro.currentLocale!;
 		tags &&
 			tags.map((tag) => (
 				<li>
-					<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.label}/`)}>#{tag.label}</a>
+					<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.slug}/`)}>#{tag.title.toLowerCase()}</a>
 				</li>
 			))
 	}
@@ -30,7 +30,7 @@ const locale = Astro.currentLocale!;
 			post.tags.map(async (tag) => {
 				return (
 					<li>
-						<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.label}/`)}>#{tag?.label}</a>
+						<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag?.slug}/`)}>#{tag?.title.toLowerCase()}</a>
 					</li>
 				);
 			})

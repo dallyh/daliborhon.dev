@@ -1,6 +1,6 @@
 import { type InferType, q } from "groqd";
-import { type Color, colorSchema } from "../schemas/colorSchema";
 import { getLocalizedArrayQuery } from "../utils/queryUtils";
+import { tagsFragment } from "./tags";
 
 const projectMetaFragment = {
 	_id: q.string(),
@@ -8,10 +8,7 @@ const projectMetaFragment = {
 	description: getLocalizedArrayQuery("description"),
 	projectStartDate: q.date(),
 	projectSourceUrl: q.string(),
-	projectTags: q("projectTags[]", { isArray: true }).grab({
-		title: q.string(),
-		color: colorSchema,
-	}),
+	tags: tagsFragment,
 	icon: q.object({
 		icon: q.string(),
 		metadata: q.object({
@@ -46,8 +43,3 @@ export const allProjectsQuery = (maxRecent: number = -1) => {
 
 const allProjectsQueryType = allProjectsQuery(0);
 export type Project = Unpacked<InferType<typeof allProjectsQueryType>>;
-
-export type ProjectTag = {
-	title: string;
-	color: Color;
-};

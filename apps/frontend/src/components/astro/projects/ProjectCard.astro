@@ -1,6 +1,6 @@
 ---
 import * as m from "$messages";
-import type { Project, ProjectTag } from "@services/sanity/queries/projects";
+import type { Project } from "@services/sanity/queries/projects";
 
 interface Props {
 	project: Project;
@@ -8,7 +8,7 @@ interface Props {
 
 const locale = Astro.currentLocale!;
 const { project } = Astro.props;
-const { title, description, icon, projectSourceUrl, projectTags } = project!;
+const { title, description, icon, projectSourceUrl, tags } = project!;
 const projectStartDate = new Date(project?.projectStartDate!);
 
 const formatDateTime = () => {
@@ -45,9 +45,9 @@ const formatDateTime = () => {
 				</div>
 				<div class="card-info-tags">
 					{
-						projectTags.map((tag) => {
+						tags.map((tag) => {
 							return (
-								<div class="rounded-tag" style={`background: ${tag.color.hex!};`}>
+								<div class="rounded-tag" style={`background: ${tag.color ? tag.color.hex : "rgba(var(--accent), 1)"};`}>
 									{tag?.title}
 								</div>
 							);

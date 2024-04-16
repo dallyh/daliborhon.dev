@@ -1,24 +1,22 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import { getAllBlogArticlesByTagAndLocale } from "@services/content/getAllBlogArticlesByTagAndLocale";
-import type { IGenTagMetaFragment } from "@services/graphql/__generated/sdk";
-import { type PostTag, allPostsByTagQuery } from "@services/sanity/queries/posts";
+import { allPostsByTagQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 import { Icon } from "astro-icon/components";
 import PostsGrid from "./PostsGrid.astro";
+import type { Tag } from "@services/sanity/queries/tags";
 
 interface Props {
-	tag: PostTag;
+	tag: Tag;
 }
 
 const { tag } = Astro.props;
-
 const locale = Astro.currentLocale!;
 
-const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag });
+const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag.slug });
 
-const title = tag.label;
+const title = tag.title.toLowerCase();
 const url = getRelativeLocaleUrl(locale, `/blog/tags/${title}/`);
 ---
 

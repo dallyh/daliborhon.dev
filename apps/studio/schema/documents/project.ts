@@ -33,7 +33,7 @@ export default defineType({
 		defineField({
 			name: "projectStartDate",
 			title: "Project start date",
-			type: "datetime",
+			type: "date",
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({

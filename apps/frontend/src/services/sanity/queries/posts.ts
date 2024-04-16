@@ -9,6 +9,19 @@ const postTagSchema = q.array(
 	}),
 );
 
+const headingsFragment = q("body", { isArray: true })
+	.filter("length(style) == 2")
+	.filter("string::startsWith(style, 'h')")
+	.grab({
+		_key: q.string(),
+		style: q.string(),
+		children: q.array(
+			q.object({
+				text: q.string(),
+			}),
+		),
+	});
+
 const postMetaFragment = {
 	_id: q.string(),
 	title: q.string(),
@@ -20,6 +33,7 @@ const postMetaFragment = {
 	featured: q.boolean(),
 	tags: postTagSchema,
 	body: contentBlockSchema,
+	headings: headingsFragment,
 	categories: q("categories[]", { isArray: true }).deref().grab(categoryMetaSchema),
 	mainImage: sanityImage("mainImage", {
 		additionalFields: {
@@ -70,3 +84,4 @@ export const allPostsTagsQuery = q("*[tags != null].tags[]", { isArray: true }).
 
 export type Post = Unpacked<InferType<typeof allPostsQuery>>;
 export type PostTag = Unpacked<InferType<typeof postTagSchema>>;
+export type Heading = Unpacked<InferType<typeof headingsFragment>>;

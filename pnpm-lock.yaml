@@ -298,12 +298,9 @@ importers:
       '@types/react':
         specifier: ^18.0.25
         version: 18.2.74
-
-  packages/cf-worker-clean-deployments:
-    devDependencies:
-      '@cloudflare/workers-types':
-        specifier: ^4.20240405.0
-        version: 4.20240405.0
+      '@types/react-dom':
+        specifier: ^18.2.25
+        version: 18.2.25
 
   packages/shared: {}
 
@@ -5634,7 +5631,7 @@ packages:
     resolution: {integrity: sha512-UJ6Zrs258mvODOwvV2wIQ0XdhCiqi24OuRObPFYALeE0oVtWWHuSsljPhQ2rt1VHLTVdVHcvace4MvNM7lIraQ==}
     dependencies:
       '@sanity/client': 6.15.13
-      '@types/react': 18.2.74
+      '@types/react': 18.2.78
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5940,7 +5937,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.5:
     resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.2.78
       hoist-non-react-statics: 3.3.2
     dev: false
 
@@ -6038,7 +6035,7 @@ packages:
   /@types/react-copy-to-clipboard@5.0.7:
     resolution: {integrity: sha512-Gft19D+as4M+9Whq1oglhmK49vqPhcLzk8WfvfLvaYMIPYanyfLy0+CwFucMJfdKoSFyySPmkkWn8/E6voQXjQ==}
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.2.78
     dev: false
 
   /@types/react-dom@18.2.25:
@@ -6049,14 +6046,14 @@ packages:
   /@types/react-is@18.2.4:
     resolution: {integrity: sha512-wBc7HgmbCcrvw0fZjxbgz/xrrlZKzEqmABBMeSvpTvdm25u6KI6xdIi9pRE2G0C1Lw5ETFdcn4UbYZ4/rpqUYw==}
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.2.78
     dev: false
 
   /@types/react-redux@7.1.33:
     resolution: {integrity: sha512-NF8m5AjWCkert+fosDsN3hAlHzpjSiXlVy9EgQEmLoBhaNXbmyeGs/aj5dQzKuF+/q+S7JQagorGDW8pJ28Hmg==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.5
-      '@types/react': 18.2.74
+      '@types/react': 18.2.78
       hoist-non-react-statics: 3.3.2
       redux: 4.2.1
     dev: false
@@ -6064,7 +6061,7 @@ packages:
   /@types/react-transition-group@4.4.10:
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.2.78
     dev: false
 
   /@types/react@18.2.74:

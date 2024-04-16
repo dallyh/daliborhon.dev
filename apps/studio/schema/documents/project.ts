@@ -1,12 +1,15 @@
 import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { defineField, defineType } from "sanity";
 import { mediaPreview } from "sanity-plugin-icon-manager";
-import { internationalizedArrayIsRequired } from "../validation/internationalizedArrayStringIsRequired";
+import { internationalizedArrayIsRequired } from "../../lib/internationalizedArrayStringIsRequired";
+import { ProjectsIcon } from "@sanity/icons";
+import tagField from "../fields/tagField";
 
 export default defineType({
 	name: "project",
 	title: "Project",
 	type: "document",
+	icon: ProjectsIcon,
 	fields: [
 		defineField({
 			name: "title",
@@ -26,47 +29,7 @@ export default defineType({
 			type: "internationalizedArrayText",
 			validation: (rule) => internationalizedArrayIsRequired(rule),
 		}),
-		defineField({
-			name: "projectTags",
-			title: "Tags",
-			type: "array",
-			of: [
-				{
-					type: "object",
-					fields: [
-						{
-							type: "string",
-							name: "title",
-							title: "Title",
-							validation: (rule) =>
-								rule
-									.custom((title: string) => {
-										if (typeof title === "undefined") {
-											return "Title is required.";
-										}
-
-										function initialIsCapital(word: string) {
-											return word[0] !== word[0].toLowerCase();
-										}
-
-										if (title.length > 0 && !initialIsCapital(title)) {
-											return "First letter must be uppercase.";
-										}
-
-										return true;
-									})
-									.error(),
-						},
-						{
-							name: "color",
-							title: "Background color",
-							type: "color",
-							validation: (Rule) => Rule.required(),
-						},
-					],
-				},
-			],
-		}),
+		tagField,
 		defineField({
 			name: "projectStartDate",
 			title: "Project start date",

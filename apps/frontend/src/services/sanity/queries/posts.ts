@@ -1,13 +1,7 @@
 import { type InferType, q, sanityImage, z } from "groqd";
 import { contentBlockSchema } from "../schemas/contentBlockSchema";
 import { categoryMetaSchema } from "./categories";
-
-const postTagSchema = q.array(
-	q.object({
-		value: q.string(),
-		label: q.string(),
-	}),
-);
+import { tagFragment, tagsFragment } from "./tags";
 
 const headingsFragment = q("body", { isArray: true })
 	.filter("length(style) == 2")
@@ -31,7 +25,7 @@ const postMetaFragment = {
 	publishedAt: q.date(),
 	updatedAt: q.date().nullable(),
 	featured: q.boolean(),
-	tags: postTagSchema,
+	tags: tagsFragment,
 	body: contentBlockSchema,
 	headings: headingsFragment,
 	categories: q("categories[]", { isArray: true }).deref().grab(categoryMetaSchema),
@@ -54,7 +48,7 @@ export const allPostsQuery = q("*", { isArray: true }).filterByType("post").filt
 
 export const allPostsByCategoryQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("references($categoryId)").order("publishedAt desc").grab(postMetaFragment);
 
-export const allPostsByTagQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("count(tags[value == $tag]) > 0").order("publishedAt desc").grab(postMetaFragment);
+export const allPostsByTagQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("$tag in tags[]->slug.current").order("publishedAt desc").grab(postMetaFragment);
 
 export const allFeaturedPostsQuery = q("*", { isArray: true }).filterByType("post").filter("language == $language").filter("featured == true").order("publishedAt desc").grab(postMetaFragment);
 
@@ -77,11 +71,7 @@ export const recentPostsQuery = (maxRecent: number = -1) => {
 		.grab(postMetaFragment);
 };
 
-export const allPostsTagsQuery = q("*[tags != null].tags[]", { isArray: true }).grab({
-	label: q.string(),
-	value: q.string(),
-});
+export const allPostsTagsQuery = q("*").filterByType("tag").filter("slug.current in (*[_type == 'post'].tags[]->slug.current)").grab(tagFragment);
 
 export type Post = Unpacked<InferType<typeof allPostsQuery>>;
-export type PostTag = Unpacked<InferType<typeof postTagSchema>>;
 export type Heading = Unpacked<InferType<typeof headingsFragment>>;

@@ -1,10 +1,13 @@
 import { type SanityDocument, type SlugSourceContext, defineField, defineType } from "sanity";
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments";
+import { DocumentTextIcon } from "@sanity/icons";
+import tagField from "../fields/tagField";
 
 export default defineType({
 	name: "post",
 	title: "Post",
 	type: "document",
+	icon: DocumentTextIcon,
 	fields: [
 		defineField({
 			// should match 'languageField' plugin configuration setting, if customized
@@ -17,12 +20,6 @@ export default defineType({
 			name: "title",
 			title: "Title",
 			type: "string",
-			validation: (Rule) => Rule.required(),
-		}),
-		defineField({
-			name: "headline",
-			title: "Headline",
-			type: "text",
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
@@ -47,6 +44,22 @@ export default defineType({
 			},
 		}),
 		defineField({
+			name: "headline",
+			title: "Headline",
+			type: "text",
+			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: "mainImage",
+			title: "Main image",
+			type: "image",
+			validation: (Rule) => Rule.required(),
+			options: {
+				hotspot: true,
+				metadata: ["blurhash", "lqip", "palette"],
+			},
+		}),
+		defineField({
 			name: "publishedAt",
 			title: "Published at",
 			type: "datetime",
@@ -63,24 +76,7 @@ export default defineType({
 			type: "boolean",
 			initialValue: false,
 		}),
-		defineField({
-			name: "tags",
-			title: "Tags",
-			type: "tags",
-			options: {
-				includeFromRelated: "tags",
-			},
-		}),
-		defineField({
-			name: "mainImage",
-			title: "Main image",
-			type: "image",
-			validation: (Rule) => Rule.required(),
-			options: {
-				hotspot: true,
-				metadata: ["blurhash", "lqip", "palette"],
-			},
-		}),
+		tagField,
 		defineField({
 			name: "categories",
 			title: "Categories",

@@ -8,33 +8,32 @@ import Section from "@components/astro/global/Section.astro";
 import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { getUniquePostsTags } from "@services/sanity/content/getUniquePostsTags";
-import { allPostsByTagQuery } from "@services/sanity/queries/posts";
+import { allPostsByTagQuery, allPostsTagsQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 
 export async function getStaticPaths() {
 	const paths = await Promise.all(
 		locales.map(async (locale) => {
-			const tags = await getUniquePostsTags();
+			const tags = await runQuery(allPostsTagsQuery, { language: locale });
 
 			return await Promise.all(
 				tags.map(async (tag) => {
-					const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag });
+					const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag.slug });
 
 					if (posts === undefined || posts.length === 0) {
 						return {
-							params: { lang: getRoutingLocale(locale), tag: tag?.value },
+							params: { lang: getRoutingLocale(locale), tag: tag?.slug },
 							props: { posts: undefined, tag: tag, locale: locale },
 						};
 					}
 
 					return {
-						params: { lang: getRoutingLocale(locale), tag: tag?.value },
+						params: { lang: getRoutingLocale(locale), tag: tag?.slug },
 						props: { posts: posts, tag: tag, locale: locale },
 					};
-				}),
+				})
 			);
-		}),
+		})
 	);
 
 	return paths.flat();
@@ -42,7 +41,7 @@ export async function getStaticPaths() {
 
 const { posts, tag, locale } = Astro.props;
 
-const tagTitle = tag.label!;
+const tagTitle = tag.title!;
 const tagDescription = `${m.blog__posts_tagged()} #${tagTitle}`;
 const layoutProps = {
 	title: `${m.blog__tag()}: #${tagTitle}`,

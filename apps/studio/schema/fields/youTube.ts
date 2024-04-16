@@ -1,7 +1,7 @@
 import { PlayIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
-export const youtube = defineType({
+export default defineType({
 	name: "youtube",
 	type: "object",
 	title: "YouTube Embed",

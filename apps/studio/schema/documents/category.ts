@@ -1,11 +1,13 @@
 import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { defineField, defineType } from "sanity";
-import { internationalizedArrayIsRequired } from "../validation/internationalizedArrayStringIsRequired";
+import { internationalizedArrayIsRequired } from "../../lib/internationalizedArrayStringIsRequired";
+import { CubeIcon } from "@sanity/icons";
 
 export default defineType({
 	name: "category",
 	title: "Category",
 	type: "document",
+	icon: CubeIcon,
 	fields: [
 		defineField({
 			name: "title",

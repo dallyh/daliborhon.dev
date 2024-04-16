@@ -58,8 +58,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
 	const SANITY_WEBHOOK_AUTH_KEY = env.SANITY_WEBHOOK_AUTH_KEY;
 
 	if (!SANITY_WEBHOOK_AUTH_KEY) {
-		console.error("SANITY_WEBHOOK_AUTH_KEY is not set!");
-		return new Response(null, { status: 400 });
+		const res = {
+			status: "error",
+			message: "Auth key was not found on the server",
+		};
+		console.log(res);
+
+		return new Response(JSON.stringify(res), { status: 400 });
 	}
 
 	if (!signature) {
@@ -67,18 +72,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
 			status: "error",
 			message: "Not authorized - signature not found",
 		};
+		console.log(res);
 
 		return new Response(JSON.stringify(res), { status: 401 });
 	}
 
 	const body = await request.text();
-	console.log(body);
-	console.log(SANITY_WEBHOOK_AUTH_KEY);
 	if (!(await isValidSignature(body, signature, SANITY_WEBHOOK_AUTH_KEY))) {
 		const res = {
 			status: "error",
 			message: "Not authorized - invalid signature",
 		};
+		console.log(res);
 
 		return new Response(JSON.stringify(res), { status: 401 });
 	}

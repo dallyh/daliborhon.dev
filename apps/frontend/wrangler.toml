@@ -8,6 +8,10 @@ compatibility_flags = [ "nodejs_compat" ]
 compatibility_date = "2024-04-15"
 compatibility_flags = [ "nodejs_compat" ]
 
-[vars]
+[env.preview.vars]
+TURBO_API = "https://turborepo-remote-cache.hon-dalibor.workers.dev"
+TURBO_TEAM = "team_daliborhon_dev"
+
+[env.production.vars]
 TURBO_API = "https://turborepo-remote-cache.hon-dalibor.workers.dev"
 TURBO_TEAM = "team_daliborhon_dev"

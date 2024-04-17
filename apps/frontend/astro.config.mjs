@@ -38,6 +38,10 @@ console.log(`>> Using SANITY_DATASET: '${SANITY_DATASET}'`);
 export default defineConfig({
 	site: SITE_URL,
 	output: "hybrid",
+	trailingSlash: "never",
+	build: {
+		format: "file",
+	},
 	adapter: cloudflare({
 		imageService: "compile",
 		runtime: {

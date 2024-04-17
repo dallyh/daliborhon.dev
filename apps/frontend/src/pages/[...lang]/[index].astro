@@ -6,9 +6,18 @@ import Section from "@components/astro/global/Section.astro";
 import Intro from "@components/astro/home/Intro.astro";
 import ProjectsList from "@components/astro/projects/ProjectsList.astro";
 import { siteConfig } from "@daliborhon.dev/shared/frontend";
+import { locales } from "@daliborhon.dev/shared/frontend/i18n";
+import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
 
-export { getStaticPaths } from "@i18n/utils";
+// The "index" is here on purpose. Without it, Astro prerenders the index.astro as "cs.html" or "en.html"
+export async function getStaticPaths() {
+	const paths = locales.map((locale) => {
+		return { params: { lang: getRoutingLocale(locale), index: "index" }, props: { lang: locale } };
+	});
+
+	return paths;
+}
 
 const layoutProps = {
 	title: "Dalibor Hon - " + m.common__home_page(),

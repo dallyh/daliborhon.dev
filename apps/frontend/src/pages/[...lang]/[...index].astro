@@ -10,9 +10,16 @@ import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
 
-// The "index" is here on purpose. Without it, Astro prerenders the index.astro as "cs.html" or "en.html".
-// thus preventing Cloudflare from picking the file.
-// Also while running the dev mode, it is not correctly picked up when the parameter is set to "index".
+/**
+ * The "index" is here on purpose. Without it, Astro prerenders the index.astro as "cs.html" or "en.html".
+ * ▶ src/pages/[...lang]/index.astro
+ * ├─ /cs.html (+2ms)
+ * └─ /en.html (+1ms)
+ * And for whatever reason the HTML file is never outputted to the dist directory, only other files exists under the locale route.
+ * Maybe it has to do something with i18n routing and the way I use the [...lang] parameter, but I haven't had much time to investigate it.
+ * Also while running the dev mode, it is not correctly picked up when the parameter is set to "index" so here it has to be undefined.
+ * The build is set to "file", see the config file for more details.
+ */
 export async function getStaticPaths() {
 	const paths = locales.map((locale) => {
 		return { params: { lang: getRoutingLocale(locale), index: import.meta.env.DEV ? undefined : "index" }, props: { lang: locale } };

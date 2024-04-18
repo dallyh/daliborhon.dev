@@ -38,8 +38,10 @@ console.log(`>> Using SANITY_DATASET: '${SANITY_DATASET}'`);
 export default defineConfig({
 	site: SITE_URL,
 	output: "hybrid",
-	trailingSlash: "never",
+	trailingSlash: "ignore",
 	build: {
+		// Format has to be set to file because of this:
+		// https://developers.cloudflare.com/pages/configuration/serving-pages/#not-found-behavior
 		format: "file",
 	},
 	adapter: cloudflare({
@@ -100,7 +102,7 @@ export default defineConfig({
 			dataset: SANITY_DATASET,
 			useCdn: false,
 			apiVersion: CURRENT_API_VERSION,
-			perspective: import.meta.env.DEV ? "previewDrafts" : "published",
+			perspective: SANITY_PERSPECTIVE,
 		}),
 		expressiveCode(),
 	],

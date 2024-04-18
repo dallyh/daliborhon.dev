@@ -10,10 +10,12 @@ import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
 
-// The "index" is here on purpose. Without it, Astro prerenders the index.astro as "cs.html" or "en.html"
+// The "index" is here on purpose. Without it, Astro prerenders the index.astro as "cs.html" or "en.html".
+// thus preventing Cloudflare from picking the file.
+// Also while running the dev mode, it is not correctly picked up when the parameter is set to "index".
 export async function getStaticPaths() {
 	const paths = locales.map((locale) => {
-		return { params: { lang: getRoutingLocale(locale), index: "index" }, props: { lang: locale } };
+		return { params: { lang: getRoutingLocale(locale), index: import.meta.env.DEV ? undefined : "index" }, props: { lang: locale } };
 	});
 
 	return paths;

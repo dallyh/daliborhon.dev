@@ -35,13 +35,13 @@ const layoutProps = {
 const tagFilter = post.tags?.map((tag) => {
 	return {
 		name: m.blog__tags(),
-		value: "#" + tag?.label!,
+		value: "#" + tag.title,
 	};
 });
 
 const tags = post.tags
 	?.map((tag) => {
-		return "#" + tag?.label!;
+		return "#" + tag.title;
 	})
 	.join(" ");
 

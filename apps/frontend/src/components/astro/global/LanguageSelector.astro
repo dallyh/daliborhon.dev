@@ -24,13 +24,13 @@ const capitalizeFirstLetter = (str: string) => {
 };
 ---
 
-<lang-select>
-	<label>
-		<Icon name="bi:translate" size={18} />
-		<select>
-			{
-				!post &&
-					locales.map((locale) => {
+{
+	!post && (
+		<lang-select>
+			<label>
+				<Icon name="bi:translate" size={18} />
+				<select>
+					{locales.map((locale) => {
 						// For whatever reason the getRelativeLocaleUrl() for path "/" always adds a trailing slash
 						// even when it is not set in the config.
 						const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
@@ -44,11 +44,20 @@ const capitalizeFirstLetter = (str: string) => {
 								</option>
 							</>
 						);
-					})
-			}
-			{
-				post &&
-					post._translations.map((t) => {
+					})}
+				</select>
+			</label>
+		</lang-select>
+	)
+}
+
+{
+	post && post._translations.length !== 0 && (
+		<lang-select>
+			<label>
+				<Icon name="bi:translate" size={18} />
+				<select>
+					{post._translations.map((t) => {
 						const locale = t.language;
 						const value = getBlogPostUrl(locale, t.slug);
 						const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
@@ -61,11 +70,12 @@ const capitalizeFirstLetter = (str: string) => {
 								</option>
 							</>
 						);
-					})
-			}
-		</select>
-	</label>
-</lang-select>
+					})}
+				</select>
+			</label>
+		</lang-select>
+	)
+}
 
 <script>
 	import { siteConfig } from "@daliborhon.dev/shared/frontend";

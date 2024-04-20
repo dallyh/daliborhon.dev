@@ -3,7 +3,7 @@
 	--padding-x: 0.75rem;
 	--header-height: 75px;
 	--header-top-position: 0.5rem;
-	--header-margin: calc(var(--header-height) + var(--header-top-position));
+	--header-margin: calc(var(--header-height) + var(--header-top-position) + 0.5rem);
 	--border-radius: 6px;
 
 	@media screen and (min-width: 2240px) {

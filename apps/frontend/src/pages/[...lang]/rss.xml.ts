@@ -9,6 +9,7 @@ import { getBlogPostUrl } from "@utils";
 import type { APIContext } from "astro";
 import htm from "htm";
 import vhtml from "vhtml";
+import type { CodeBlock, TableBlock } from "@services/sanity/schemas/contentBlockSchema";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -23,8 +24,28 @@ export async function GET({ site, currentLocale }: APIContext) {
 
 				return html`<img src="${image.url()}" />`.toString();
 			},
-			code: ({ value }: PortableTextComponentOptions<any>) => html`<pre>${value.code}</pre>`.toString(),
+			code: ({ value }: PortableTextComponentOptions<CodeBlock>) => html`<pre>${value.code}</pre>`.toString(),
 			"icon.manager": ({ value }: PortableTextComponentOptions<any>) => html`${value.metadata.inlineSvg}`.toString(),
+			table: ({ value }: PortableTextComponentOptions<TableBlock>) => {
+				return html`<table>
+					${value.rows &&
+					"<thead><tr>" +
+						value.rows[0].cells?.map((cell) => {
+							return `<th scope='col'>${cell}</th>`;
+						}) +
+						"</tr></thead>"}
+					${value.rows &&
+					"<tbody>" +
+						value.rows.slice(1).map((row) => {
+							return `<tr>
+										${row.cells?.map((cell) => {
+											return `<td>${cell}</td>`;
+										})}
+									</tr>`;
+						}) +
+						"</tbody>"}
+				</table>`.toString();
+			},
 		},
 		marks: {
 			// This does not work somehow...

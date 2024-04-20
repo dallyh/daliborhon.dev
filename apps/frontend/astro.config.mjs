@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { astroI18nConfigPaths, defaultLocale, localeKeys } from "@daliborhon.dev/shared/frontend/i18n";
 import { CURRENT_API_VERSION, defaultWorkspace } from "@daliborhon.dev/studio/workspaces";
-import paraglide from "@inlang/paraglide-js-adapter-astro";
+import paraglide from "@inlang/paraglide-astro";
 import sanity from "@sanity/astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";

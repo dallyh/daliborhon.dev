@@ -6,7 +6,7 @@ import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import Tag from "@components/astro/blog/Tag.astro";
 import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import { allPostsTagsQuery } from "@services/sanity/queries/posts";
+import { allPostsByTagQuery, allPostsTagsQuery } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 import type { getStaticPaths } from "../index.astro";
 
@@ -20,6 +20,7 @@ const layoutProps = {
 };
 
 const tags = await runQuery(allPostsTagsQuery, { language: locale });
+//const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag.slug }); return <Tag {tag} />
 ---
 
 <PageLayout {...layoutProps}>
@@ -28,14 +29,16 @@ const tags = await runQuery(allPostsTagsQuery, { language: locale });
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
 		<BreadCrumbsItem currentPage={true} label={m.blog__tags()} />
 	</BreadCrumbs>
-	<Section id="categories" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
+	<Section id="tags" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
 		{!tags && <p>{m.blog__no_tags()}</p>}
 		{
 			tags && (
-				<ul class="category-list">
-					{tags.map((tag) => (
-						<Tag {tag} />
-					))}
+				<ul class="tag-list">
+					{tags.map(async (tag) => {
+						const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag.slug });
+
+						return <Tag {tag} {posts} />;
+					})}
 				</ul>
 			)
 		}
@@ -43,7 +46,7 @@ const tags = await runQuery(allPostsTagsQuery, { language: locale });
 </PageLayout>
 
 <style>
-	.category-list {
+	.tag-list {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;

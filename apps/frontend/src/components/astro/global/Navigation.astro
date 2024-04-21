@@ -120,14 +120,7 @@ const locale = Astro.currentLocale!;
 	@media (max-width: 768px) {
 		body.nav-active {
 			header {
-				top: 0;
-				padding: 0;
-			}
-
-			.nav-container {
-				border: 0;
 				background: rgba(var(--secondary), 1);
-				border-radius: 0;
 			}
 
 			.menu {
@@ -136,12 +129,10 @@ const locale = Astro.currentLocale!;
 			}
 
 			.nav-end {
-				transition: 0.4s ease;
+				transition: background-color 0.4s ease;
 				background-color: var(--header-bg);
-				border-radius: 6px;
+				border-radius: var(--border-radius);
 			}
-
-			overflow: hidden;
 
 			.page-content {
 				pointer-events: none;
@@ -151,6 +142,14 @@ const locale = Astro.currentLocale!;
 </style>
 
 <style>
+	site-nav {
+		display: contents;
+	}
+
+	a:visited {
+		color: var(--a-color);
+	}
+
 	.dynamic-island-wrapper {
 		color: rgba(var(--accent), 1);
 		display: flex;
@@ -165,29 +164,28 @@ const locale = Astro.currentLocale!;
 		color: var(--body-color);
 		font-weight: 500;
 		position: fixed;
-		top: var(--header-top-position);
-		left: 50%;
-		transform: translateX(-50%);
+		top: 0;
+		left: 0;
+		width: 100%;
 		z-index: 1010;
 		transition: all 0.4s ease;
-		max-width: calc(var(--page-width) + var(--padding-x) * 4);
-		padding-left: var(--padding-x);
-		padding-right: var(--padding-x);
 		height: var(--header-height);
+		background: var(--header-bg);
+		backdrop-filter: blur(8px);
+		border-bottom: var(--border);
 	}
 
 	.nav-container {
 		display: flex;
-		width: 100%;
+		max-width: calc(var(--page-width) + var(--padding-x) * 4);
+		padding-left: var(--padding-x);
+		padding-right: var(--padding-x);
+		margin: auto;
 		align-items: center;
 		justify-content: space-between;
 		column-gap: 2rem;
-		background: var(--header-bg);
-		backdrop-filter: blur(8px);
-		border: var(--border);
-		border-radius: 6px;
-		transition: background 0.4s ease;
 		position: relative;
+		transition: background 0.4s ease;
 	}
 
 	.menu {
@@ -335,17 +333,6 @@ const locale = Astro.currentLocale!;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-		}
-
-		header {
-			top: 0;
-			padding: 0;
-		}
-
-		.nav-container {
-			border: 0;
-			border-radius: 0;
-			border-bottom: var(--border);
 		}
 
 		.menu {
@@ -505,7 +492,7 @@ const locale = Astro.currentLocale!;
 						(e) => {
 							activateFocus(e);
 						},
-						{ once: true },
+						{ once: true }
 					);
 					toggleMenu();
 				}

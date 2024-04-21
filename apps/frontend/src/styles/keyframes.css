@@ -1,9 +1,3 @@
-@keyframes typing {
-	to {
-		width: 0;
-	}
-}
-
 @keyframes scaleUpX {
 	from {
 		transform: scaleX(0);

@@ -2,8 +2,7 @@
 	--page-width: 1024px;
 	--padding-x: 0.75rem;
 	--header-height: 75px;
-	--header-top-position: 0.5rem;
-	--header-margin: calc(var(--header-height) + var(--header-top-position) + 0.5rem);
+	--header-margin: calc(var(--header-height) + 0.5rem);
 	--border-radius: 6px;
 
 	@media screen and (min-width: 2240px) {
@@ -13,19 +12,19 @@
 
 :root {
 	color-scheme: light;
-	--border: 1px solid rgba(0, 0, 0, 0.2);
+	--border: 1px solid rgba(0, 0, 0, 0.3);
 	--border-darker: 1px solid rgba(0, 0, 0, 0.4);
-	--accent: 0, 173, 239; /* Soft blue color */
+	--accent: 0, 120, 180;
 	--accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(0, 120, 180));
-	--secondary: 240, 240, 240; /* Light gray */
+	--secondary: 230, 230, 230; /* Light gray */
 	--body-color: rgb(0, 0, 0); /* rgb(51, 51, 51) */
 	--button-color: rgb(0, 0, 0);
 	--button-hover-color: #fff;
 	--bg-color: rgb(245, 245, 245); /* Light gray background */
 	--header-bg: rgba(235, 235, 235, 0.7);
 	--card-bg: rgba(var(--secondary), 1);
-	--a-visited: rgb(149, 125, 173); /* Soft purple for visited links */
-	--a-color: rgb(0, 120, 180); /* Blue for links */
+	--a-visited: rgb(104, 64, 145); /* Soft purple for visited links */
+	--a-color: rgb(3, 100, 148); /* Blue for links */
 	--footer-color: rgba(0, 0, 0, 0.8);
 	--global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
 	--light-gray: rgba(44, 44, 44, 0.2);

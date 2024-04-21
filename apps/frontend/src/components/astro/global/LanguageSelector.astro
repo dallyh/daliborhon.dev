@@ -10,6 +10,7 @@ import type { Post } from "@services/sanity/queries/posts";
 import { getBlogPostUrl } from "@utils";
 import { Icon } from "astro-icon/components";
 import ISO6991 from "iso-639-1";
+import * as m from "$messages";
 
 interface Props {
 	post?: Post;
@@ -28,6 +29,7 @@ const capitalizeFirstLetter = (str: string) => {
 	!post && (
 		<lang-select>
 			<label>
+				<span class="sr-only">{m.common__language()}</span>
 				<Icon name="bi:translate" size={18} />
 				<select>
 					{locales.map((locale) => {
@@ -55,6 +57,7 @@ const capitalizeFirstLetter = (str: string) => {
 	post && post._translations.length !== 0 && (
 		<lang-select>
 			<label>
+				<span class="sr-only">{m.common__language()}</span>
 				<Icon name="bi:translate" size={18} />
 				<select>
 					{post._translations.map((t) => {

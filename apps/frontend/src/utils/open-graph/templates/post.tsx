@@ -77,9 +77,9 @@ export default async (post: Post, locale: string) => {
 						<div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 							{post?.tags &&
 								post.tags.map((tag) => (
-									<p key={tag.label} style={{ padding: 0, margin: 0 }}>
+									<p key={tag.title} style={{ padding: 0, margin: 0 }}>
 										<strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
-										{tag.label}
+										{tag.title}
 									</p>
 								))}
 						</div>

@@ -9,6 +9,7 @@ import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { createResumePdfFilename, removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
+import SearchMeta from "@components/astro/global/SearchMeta.astro";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -22,10 +23,16 @@ const layoutProps = {
 	description: m.resume__resume_page_description(),
 };
 
+const searchProps = {
+	title: m.common__resume(),
+	description: layoutProps.description,
+};
+
 const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`));
 ---
 
 <PageLayout {...layoutProps}>
+	<SearchMeta {...searchProps} />
 	<a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download title={m.resume__download_cv()} aria-label={m.resume__download_cv()}>
 		<Icon name="bi:filetype-pdf" />
 	</a>

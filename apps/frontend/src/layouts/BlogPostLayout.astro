@@ -66,12 +66,6 @@ const searchProps = {
 			value: tags!,
 		},
 	],
-	sort: [
-		{
-			name: "date",
-			value: getBlogPostDateTime(locale, layoutProps.pubDateTime, layoutProps.modDatetime).date,
-		},
-	],
 };
 ---
 
@@ -113,7 +107,7 @@ const searchProps = {
 			<hr />
 		</div>
 		<article class="prose dark:prose-invert max-w-none">
-			<PortableText value={post.body} headings={post.headings}  />
+			<PortableText value={post.body} headings={post.headings} />
 		</article>
 	</main>
 	<Footer />

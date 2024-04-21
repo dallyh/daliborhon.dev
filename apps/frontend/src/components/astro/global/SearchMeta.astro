@@ -6,7 +6,6 @@ interface Props {
 	date?: string;
 	description?: string;
 	filter?: Value[];
-	sort?: Value[];
 	meta?: Value[];
 }
 
@@ -15,22 +14,12 @@ type Value = {
 	value: string;
 };
 
-const { title, date, filter, sort, description, meta } = Astro.props;
+const { title, date, filter, description, meta } = Astro.props;
 ---
 
 <div aria-hidden="true" hidden data-pagefind-body>
 	<span title={title} data-pagefind-meta="title[title]"></span>
 	{date && <span data-meta-date={date} data-pagefind-meta={`${m.common__date()}[data-meta-date]`} />}
-	{
-		sort &&
-			sort.map((s) => {
-				return (
-					<>
-						<span data-pagefind-sort={`${s.name}:${s.value}`} />
-					</>
-				);
-			})
-	}
 	{
 		filter &&
 			filter.map((f) => {

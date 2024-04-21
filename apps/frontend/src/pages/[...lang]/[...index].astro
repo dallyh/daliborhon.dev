@@ -9,6 +9,9 @@ import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
+import { allFeaturedPostsQuery, recentFeaturedPostsQuery, recentPostsQuery } from "@services/sanity/queries/posts";
+import { allProjectsQuery } from "@services/sanity/queries/projects";
+import { runQuery } from "@services/sanity/runQuery";
 
 /**
  * The "index" is here on purpose. Without it, Astro prerenders the index.astro as "cs.html" or "en.html".
@@ -27,6 +30,10 @@ export async function getStaticPaths() {
 
 	return paths;
 }
+const locale = Astro.currentLocale!;
+const projects = await runQuery(allProjectsQuery(siteConfig.projects.recentProjectsSize), { language: locale });
+const recentPosts = await runQuery(recentPostsQuery(siteConfig.blog.recentPostsSize), { language: locale });
+const featuredPosts = await runQuery(recentFeaturedPostsQuery(siteConfig.blog.featuredPostsSize), { language: locale });
 
 const layoutProps = {
 	title: "Dalibor Hon - " + m.common__home_page(),
@@ -40,8 +47,8 @@ const layoutProps = {
 		<Intro />
 	</Section>
 	<Section id="projects" sectionTitle={m.projects__projects_title()}>
-		<ProjectsList recentSize={siteConfig.projects.recentProjectsSize} />
+		<ProjectsList {projects} />
 	</Section>
-	<FeaturedPosts postSize={siteConfig.blog.featuredPostsSize} />
-	<RecentPosts postSize={siteConfig.blog.recentPostsSize} />
+	<FeaturedPosts posts={featuredPosts} />
+	<RecentPosts posts={recentPosts} />
 </PageLayout>

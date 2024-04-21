@@ -1,22 +1,17 @@
 ---
 import * as m from "$messages";
-import { recentFeaturedPostsQuery } from "@services/sanity/queries/posts";
+import { recentFeaturedPostsQuery, type Post } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 import Section from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
-	postSize?: number;
+	posts: Post[];
 	isFirstSection?: boolean;
 	showSeeAllUrl?: boolean;
 }
 
-const { isFirstSection = false, showSeeAllUrl = true, postSize } = Astro.props;
-
-const locale = Astro.currentLocale!;
-
-const query = recentFeaturedPostsQuery(postSize);
-const posts = await runQuery(query, { language: locale });
+const { isFirstSection = false, showSeeAllUrl = true, posts } = Astro.props;
 
 const sectionProps = {
 	id: "featuredPosts",

@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import { allPostsByTagQuery } from "@services/sanity/queries/posts";
+import { allPostsByTagQuery, type Post } from "@services/sanity/queries/posts";
 import { runQuery } from "@services/sanity/runQuery";
 import { Icon } from "astro-icon/components";
 import PostsGrid from "./PostsGrid.astro";
@@ -9,12 +9,11 @@ import type { Tag } from "@services/sanity/queries/tags";
 
 interface Props {
 	tag: Tag;
+	posts: Post[];
 }
 
-const { tag } = Astro.props;
+const { tag, posts } = Astro.props;
 const locale = Astro.currentLocale!;
-
-const posts = await runQuery(allPostsByTagQuery, { language: locale, tag: tag.slug });
 
 const title = tag.title.toLowerCase();
 const url = getRelativeLocaleUrl(locale, `/blog/tags/${title}/`);

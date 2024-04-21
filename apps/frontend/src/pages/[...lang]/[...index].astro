@@ -9,7 +9,7 @@ import { siteConfig } from "@daliborhon.dev/shared/frontend";
 import { locales } from "@daliborhon.dev/shared/frontend/i18n";
 import { getRoutingLocale } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
-import { allFeaturedPostsQuery, recentFeaturedPostsQuery, recentPostsQuery } from "@services/sanity/queries/posts";
+import { recentFeaturedPostsQuery, recentPostsQuery } from "@services/sanity/queries/posts";
 import { allProjectsQuery } from "@services/sanity/queries/projects";
 import { runQuery } from "@services/sanity/runQuery";
 
@@ -30,10 +30,11 @@ export async function getStaticPaths() {
 
 	return paths;
 }
-const locale = Astro.currentLocale!;
-const projects = await runQuery(allProjectsQuery(siteConfig.projects.recentProjectsSize), { language: locale });
-const recentPosts = await runQuery(recentPostsQuery(siteConfig.blog.recentPostsSize), { language: locale });
-const featuredPosts = await runQuery(recentFeaturedPostsQuery(siteConfig.blog.featuredPostsSize), { language: locale });
+
+const { lang } = Astro.props;
+const projects = await runQuery(allProjectsQuery(siteConfig.projects.recentProjectsSize), { language: lang });
+const recentPosts = await runQuery(recentPostsQuery(siteConfig.blog.recentPostsSize), { language: lang });
+const featuredPosts = await runQuery(recentFeaturedPostsQuery(siteConfig.blog.featuredPostsSize), { language: lang });
 
 const layoutProps = {
 	title: "Dalibor Hon - " + m.common__home_page(),

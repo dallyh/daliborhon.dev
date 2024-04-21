@@ -9,6 +9,7 @@
         "dev:host": "astro dev --host",
         "dev:tunnel": "pnpm lt --port 4321 --subdomain daliborhondev",
         "build": "astro build",
+        "build:devdata": "set BUILD_DEV_DATASET=true && astro build",
         "build:turbo": "dotenv -- turbo build",
         "build:index": "pagefind --site dist",
         "build-and-preview": "astro build && pnpm run preview",

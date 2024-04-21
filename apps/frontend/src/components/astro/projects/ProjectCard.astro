@@ -36,10 +36,10 @@ const formatDateTime = () => {
 					<a href={projectSourceUrl} target="_blank" title={title} aria-label={title}>{title}</a>
 					{
 						(
-							<div class="project-date">
+							<p class="project-date">
 								<span>{m.projects__start_date_title()}:</span>
 								<time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
-							</div>
+							</p>
 						)
 					}
 				</div>
@@ -70,18 +70,15 @@ const formatDateTime = () => {
 		overflow: hidden;
 		height: 120px;
 		width: 100px;
-		color: var(--body-color);
-		opacity: 0.6;
+		align-self: center;
 
 		> img,
 		> svg {
+			color: var(--body-color);
+			opacity: 0.8;
 			padding: 0.2rem;
 			height: 100%;
 			width: 100%;
-		}
-
-		[data-icon="lemmy-icon"] {
-			color: black;
 		}
 	}
 </style>
@@ -89,12 +86,11 @@ const formatDateTime = () => {
 <style>
 	.card {
 		background-color: var(--card-bg);
-		backdrop-filter: blur(2px);
 		display: flex;
 		flex-direction: column;
 		position: relative;
 		box-shadow: var(--global-box-shadow);
-		border-radius: 6px;
+		border-radius: var(--border-radius);
 		padding: 1rem;
 		overflow: hidden;
 		width: 100%;
@@ -108,7 +104,6 @@ const formatDateTime = () => {
 
 		@media (max-width: 468px) {
 			flex-direction: column;
-			align-items: center;
 		}
 	}
 
@@ -118,8 +113,8 @@ const formatDateTime = () => {
 		gap: 0.5rem;
 		font-size: 0.725rem;
 		margin-top: 0.5rem;
-		color: black;
-		font-weight: 600;
+		color: rgb(40, 40, 40);
+		font-weight: 700;
 
 		:global(.rounded-tag) {
 			padding-top: 0.25rem;
@@ -138,7 +133,7 @@ const formatDateTime = () => {
 
 		.card-body {
 			color: var(--body-color);
-			font-size: 0.85em;
+			font-size: 0.875em;
 			margin-top: 8px;
 		}
 	}
@@ -151,19 +146,12 @@ const formatDateTime = () => {
 
 			.project-date {
 				color: var(--body-color);
-				font-size: 0.8rem;
+				font-size: 0.875rem;
 				opacity: 0.8;
 			}
-		}
 
-		> a {
-			font-weight: 600;
-			position: relative;
-			display: inline-flex;
-			min-height: 25px;
-
-			i {
-				margin-right: 5px;
+			> a {
+				font-size: 1.1rem;
 			}
 		}
 	}

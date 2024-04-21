@@ -15,7 +15,7 @@ const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as strin
 
 <footer class="footer-container">
 	<div class="left-section">
-		<a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" class="rss">
+		<a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
 			<Icon name="bi:rss-fill" />
 		</a>
 		<a href="https://astro.build" title="Built with Astro">
@@ -42,7 +42,7 @@ const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as strin
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-		font-size: 0.8rem;
+		font-size: 0.875rem;
 		color: var(--footer-color);
 		margin-top: 1rem;
 		border-top: var(--border);

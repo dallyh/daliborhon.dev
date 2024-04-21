@@ -91,7 +91,6 @@ const searchProps = {
 				<div class="post-meta">
 					<h1 class="gradient-text">{post?.title}</h1>
 					<div class="meta-details">
-						<p>By Dalibor Hon.</p>
 						<FormattedDate pubDateTime={post.publishedAt} modDatetime={post.updatedAt} locale={locale} />
 						{
 							post.categories.map((category) => {
@@ -156,7 +155,7 @@ const searchProps = {
 		}
 
 		.meta-details {
-			font-size: 0.85rem;
+			font-size: 0.875rem;
 			color: var(--body-color);
 			line-height: 1.5rem;
 		}

@@ -26,7 +26,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 ---
 
 <PageLayout {...layoutProps}>
-	<a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download>
+	<a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download title={m.resume__download_cv()} aria-label={m.resume__download_cv()}>
 		<Icon name="bi:filetype-pdf" />
 	</a>
 

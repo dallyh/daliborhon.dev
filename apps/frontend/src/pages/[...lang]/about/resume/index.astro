@@ -33,7 +33,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 
 <PageLayout {...layoutProps}>
 	<SearchMeta {...searchProps} />
-	<a class="button is-anchor island" slot="dynamic-island" href={resumePdfFileName} download title={m.resume__download_cv()} aria-label={m.resume__download_cv()}>
+	<a class="button is-anchor floating" href={resumePdfFileName} download title={m.resume__download_cv()} aria-label={m.resume__download_cv()}>
 		<Icon name="bi:filetype-pdf" />
 	</a>
 
@@ -150,20 +150,32 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 	.button {
 		border: var(--border);
 
-		&.island {
-			min-width: max-content;
-			height: inherit;
-
-			svg {
-				margin-right: 0;
-				width: 1.2rem;
-				height: 1.2rem;
-			}
+		&.floating {
+			position: fixed;
+			right: 1rem;
+			bottom: 1rem;
+			width: 55px;
+			height: 55px;
+			border-radius: 50%;
+			min-width: unset;
+			transform: scale(0);
+			animation: showButton forwards 0.25s 0.2s ease-in;
 		}
 
 		svg {
+			font-size: 1.25rem;
 			display: inline-block;
-			margin-right: 0.25rem;
 		}
+	}
+
+	@keyframes showButton {
+		from {
+			transform: scale(0);
+		}
+
+		to {
+			transform: scale(1);
+		}
+		
 	}
 </style>

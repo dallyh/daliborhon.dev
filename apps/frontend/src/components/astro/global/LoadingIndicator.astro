@@ -1,0 +1,54 @@
+---
+// Heavily modified and inspired from here: https://github.com/florian-lefebvre/astro-loading-indicator/blob/main/package/src/LoadingIndicator.astro
+// Thanks!
+---
+
+<script>
+	import SwupProgressPlugin from "@swup/progress-plugin";
+	import { TRANSITION_BEFORE_PREPARATION } from "astro:transitions/client";
+
+	const plugin = new SwupProgressPlugin({ className: "astro-loading-indicator" });
+
+	export function startIndicator() {
+		(plugin.progressBar as any).installStyleElement();
+		(plugin.progressBar as any).installProgressElement();
+		plugin.startShowingProgress();
+
+		return function stopSpinner() {
+			plugin.stopShowingProgress();
+
+			setTimeout(() => {
+				(plugin.progressBar as any).fadeProgressElement();
+			}, plugin.options.delay);
+		};
+	}
+
+	document.addEventListener(TRANSITION_BEFORE_PREPARATION, (ev) => {
+		const originalLoader = ev.loader;
+
+		ev.loader = async function () {
+			const stop = startIndicator();
+
+			try {
+				await originalLoader();
+			} finally {
+				stop();
+			}
+		};
+	});
+</script>
+
+<style is:global>
+	.astro-loading-indicator {
+		pointer-events: none;
+		background-color: rgba(var(--accent), 1);
+		position: fixed;
+		z-index: 9999;
+		top: var(--header-height);
+		left: 0;
+		height: 2px;
+		transition-property: opacity;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 450ms;
+	}
+</style>

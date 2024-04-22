@@ -3,7 +3,6 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import type { Post } from "@services/sanity/queries/posts";
 import { Icon } from "astro-icon/components";
-import DynamicIsland from "./DynamicIsland.astro";
 import LanguageSelector from "./LanguageSelector.astro";
 import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
@@ -21,10 +20,10 @@ const locale = Astro.currentLocale!;
 	<header id="nav-menu" aria-label="navigation bar">
 		<div class="nav-container">
 			<div class="nav-start">
-				<div class="dynamic-island-wrapper">
-					<DynamicIsland>
-						<slot name="dynamic-island" slot="dynamic-island" />
-					</DynamicIsland>
+				<div class="logo">
+					<a class="gradient-text-static" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
+						<Icon class="logo" name="dh-logo" size={40} />
+					</a>
 				</div>
 				<nav class="menu">
 					<ul class="menu-bar">
@@ -119,6 +118,8 @@ const locale = Astro.currentLocale!;
 <style is:global>
 	@media (max-width: 768px) {
 		body.nav-active {
+			overflow: hidden;
+
 			header {
 				background: rgba(var(--secondary), 1);
 			}
@@ -150,13 +151,11 @@ const locale = Astro.currentLocale!;
 		color: var(--a-color);
 	}
 
-	.dynamic-island-wrapper {
+	.logo {
 		color: rgba(var(--accent), 1);
 		display: flex;
 		align-items: center;
-		font-weight: 700;
-		height: var(--header-height);
-		padding: 0.5rem;
+		justify-content: center;
 	}
 
 	header {
@@ -177,7 +176,8 @@ const locale = Astro.currentLocale!;
 
 	.nav-container {
 		display: flex;
-		max-width: calc(var(--page-width) + var(--padding-x) * 4);
+		height: 100%;
+		max-width: var(--page-width);
 		padding-left: var(--padding-x);
 		padding-right: var(--padding-x);
 		margin: auto;
@@ -340,7 +340,7 @@ const locale = Astro.currentLocale!;
 			position: fixed;
 			top: var(--header-height);
 			left: 0;
-			height: calc(100svh - var(--header-height));
+			height: calc(100vh - var(--header-height));
 			width: 100vw;
 			background: rgba(var(--secondary), 1);
 			backdrop-filter: blur(4px);
@@ -348,9 +348,6 @@ const locale = Astro.currentLocale!;
 			transition:
 				transform var(--tr-duration) ease-in-out,
 				visibility var(--tr-duration) ease-in-out;
-			overflow-y: scroll;
-			overflow-x: hidden;
-			visibility: hidden;
 		}
 
 		.dropdown {
@@ -382,6 +379,8 @@ const locale = Astro.currentLocale!;
 			align-items: stretch;
 			row-gap: 1rem;
 			padding: 1rem;
+			height: calc(100svh - var(--header-height));
+			overflow-y: scroll;
 
 			.nav-link {
 				display: flex;
@@ -461,13 +460,13 @@ const locale = Astro.currentLocale!;
 				});
 			});
 
-			// close dropdown menu when you click on the document body
+			// Close dropdown menu when you click on the document body
 			document.documentElement.addEventListener("click", () => {
 				closeDropdownMenu();
 				setAriaExpandedAttrs();
 			});
 
-			// close dropdown when the escape key is pressed
+			// Close dropdown when the escape key is pressed
 			document.addEventListener("keydown", (e) => {
 				if (e.key === "Escape") {
 					closeDropdownMenu();
@@ -475,6 +474,7 @@ const locale = Astro.currentLocale!;
 				}
 			});
 
+			// Close menu on escape
 			menu.onkeydown = (e) => {
 				if (e.key === "Escape") {
 					e.preventDefault();
@@ -483,7 +483,7 @@ const locale = Astro.currentLocale!;
 				}
 			};
 
-			// toggle hamburger menu
+			// Toggle hamburger menu
 			hamburgerBtn.addEventListener("keydown", (e) => {
 				if (e.key === "Enter") {
 					e.preventDefault();
@@ -496,6 +496,13 @@ const locale = Astro.currentLocale!;
 					);
 					toggleMenu();
 				}
+			});
+
+			// Hide menu on click on any of the links
+			menu.querySelectorAll<HTMLAnchorElement>("a").forEach((ele) => {
+				ele.onclick = () => {
+					toggleMenu();
+				};
 			});
 
 			hamburgerBtn.addEventListener("click", toggleMenu);

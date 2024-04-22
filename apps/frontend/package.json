@@ -39,6 +39,7 @@
         "@sanity/client": "^6.15.19",
         "@sanity/image-url": "^1.0.2",
         "@sanity/webhook": "^4.0.4",
+        "@swup/progress-plugin": "^3.2.0",
         "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
         "@tailwindcss/typography": "^0.5.12",
         "@unpic/astro": "^0.0.44",
@@ -64,7 +65,6 @@
         "shikiji": "^0.10.2",
         "slug": "^9.0.0",
         "tailwindcss": "^3.4.3",
-        "tippy.js": "^6.3.7",
         "vhtml": "^2.2.0",
         "zod": "^3.22.5"
     },

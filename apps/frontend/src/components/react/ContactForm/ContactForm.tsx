@@ -104,7 +104,7 @@ export default function ContactForm({ loader, locale }: Props) {
 		<>
 			<div className={styles["contact-form-wrapper"]} ref={animate}>
 				{isLoading && <div className={styles.loader}>{loader}</div>}
-				{!isLoading && !isSubmitSuccessful && (
+				{!isSubmitSuccessful && (
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<input type="hidden" value={ACCESS_KEY} {...register("access_key")} />
 						<input type="hidden" {...register("subject")} />

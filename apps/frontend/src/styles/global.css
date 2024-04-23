@@ -117,9 +117,10 @@ small {
 	width: max-content;
 	min-width: 120px;
 	line-height: 1.5;
+	text-transform: uppercase;
 
-	&.upper {
-		text-transform: uppercase;
+	&.no-text-transform {
+		text-transform: none;
 	}
 
 	&:hover,

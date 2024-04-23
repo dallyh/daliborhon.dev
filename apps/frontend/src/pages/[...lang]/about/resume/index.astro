@@ -48,7 +48,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 						<p>{resumeEntry.data.currentPosition.toUpperCase()}</p>
 						<h1 class="text-accent">Dalibor Hon</h1>
 					</div>
-					<a class="button is-anchor" href={resumePdfFileName} download>
+					<a class="button is-anchor no-text-transform" href={resumePdfFileName} download>
 						<Icon name="bi:filetype-pdf" /><span>{m.resume__download_cv()}</span>
 					</a>
 				</div>

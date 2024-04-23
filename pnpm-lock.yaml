@@ -134,6 +134,9 @@ importers:
       astro-icon:
         specifier: ^1.1.0
         version: 1.1.0
+      astro-loading-indicator:
+        specifier: ^0.4.0
+        version: 0.4.0(astro@4.6.3(@types/node@20.12.7)(typescript@5.4.5))
       astro-pagefind:
         specifier: ^1.5.0
         version: 1.5.0(astro@4.6.3(@types/node@20.12.7)(typescript@5.4.5))
@@ -3425,6 +3428,11 @@ packages:
 
   astro-icon@1.1.0:
     resolution: {integrity: sha512-Nksc09p7UuHeMcPNS9w1pKqRw3+wEmmh0A3FJW+FNXvqaeWI4RLvD1MCWErpY3Z5Cvad317rvLdik/Hg8GEk8Q==}
+
+  astro-loading-indicator@0.4.0:
+    resolution: {integrity: sha512-8GX6hSy1Wbnto1GCPokNtBndjrRwf94KaBOdaqe3PQSC1vrBATrUcHovcctPkfUXvOopbnow92CwmXdTrbE74Q==}
+    peerDependencies:
+      astro: ^4.0.0
 
   astro-pagefind@1.5.0:
     resolution: {integrity: sha512-CN7Afe9qW640U1qliCQMXN259Dl6VPUnl8FneLfKE7STV4HLiif4PbNZejylC6yXYyP6uyNVDHNOfJfBBW5h6A==}
@@ -11794,6 +11802,10 @@ snapshots:
       '@iconify/utils': 2.1.23
     transitivePeerDependencies:
       - supports-color
+
+  astro-loading-indicator@0.4.0(astro@4.6.3(@types/node@20.12.7)(typescript@5.4.5)):
+    dependencies:
+      astro: 4.6.3(@types/node@20.12.7)(typescript@5.4.5)
 
   astro-pagefind@1.5.0(astro@4.6.3(@types/node@20.12.7)(typescript@5.4.5)):
     dependencies:

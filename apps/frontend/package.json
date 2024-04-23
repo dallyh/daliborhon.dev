@@ -46,6 +46,7 @@
         "astro": "^4.6.3",
         "astro-expressive-code": "^0.35.2",
         "astro-icon": "^1.1.0",
+        "astro-loading-indicator": "^0.4.0",
         "astro-pagefind": "^1.5.0",
         "astro-portabletext": "^0.9.8",
         "focus-trap": "^7.5.4",

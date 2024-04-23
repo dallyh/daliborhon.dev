@@ -21,7 +21,9 @@ import SocialLinks from "./SocialLinks.astro";
 				</div>
 			</div>
 		</div>
-		<SocialLinks />
+		<div class="socials">
+			<SocialLinks />
+		</div>
 	</div>
 	<div class="profile-avatar-wrapper">
 		<Image src={avatar} alt="Avatar" loading="eager" />
@@ -31,6 +33,14 @@ import SocialLinks from "./SocialLinks.astro";
 <style>
 	strong {
 		font-weight: 600;
+	}
+
+	:global(.socials > ul) {
+		@media (max-width: 1024px) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 
 	.profile-avatar-wrapper {
@@ -112,6 +122,11 @@ import SocialLinks from "./SocialLinks.astro";
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+
+		@media (max-width: 1024px) {
+			justify-content: center;
+			align-items: center;
+		}
 
 		@media (max-width: 468px) {
 			width: 100%;

@@ -1,7 +1,15 @@
 <script is:inline>
-	window.ThemeProvider = (() => {
+	// Itentionally inline to prevent FOUC
+	
+	function setTheme(doc) {
 		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme-preference");
 		const theme = storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-		document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
-	})();
+		doc.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+	}
+
+	setTheme(document);
+
+	document.addEventListener("astro:before-swap", (ev) => {
+		setTheme(ev.newDocument);
+	});
 </script>

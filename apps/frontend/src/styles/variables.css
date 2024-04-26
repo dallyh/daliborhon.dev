@@ -1,7 +1,7 @@
 :root {
 	--page-width: 1024px;
 	--padding-x: 0.75rem;
-	--header-height: 75px;
+	--header-height: 4.5rem;
 	--header-margin: calc(var(--header-height) + 0.5rem);
 	--border-radius: 6px;
 

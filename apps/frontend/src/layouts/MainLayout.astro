@@ -8,8 +8,8 @@ import { removeTrailingSlash } from "@utils";
 import "../styles/global.css";
 import "../styles/keyframes.css";
 import "../styles/variables.css";
-import spaceGroteskLatin from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2";
-import spaceGroteskLatinExt from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-ext-wght-normal.woff2";
+import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2";
+import nunitoLatinExt from "@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2";
 import LoadingIndicator from "@components/astro/global/LoadingIndicator.astro";
 
 export interface Props {
@@ -83,8 +83,8 @@ const basePath = import.meta.env.BASE_URL;
 		<meta property="twitter:image" content={ogImage} />
 
 		<!-- Fonts, icons and external scripts -->
-		<link rel="preload" href={spaceGroteskLatinExt} as="font" type="font/woff" crossorigin />
-		<link rel="preload" href={spaceGroteskLatin} as="font" type="font/woff" crossorigin />
+		<link rel="preload" href={nunitoLatinExt} as="font" type="font/woff" crossorigin />
+		<link rel="preload" href={nunitoLatin} as="font" type="font/woff" crossorigin />
 		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
 
 		<script is:inline>

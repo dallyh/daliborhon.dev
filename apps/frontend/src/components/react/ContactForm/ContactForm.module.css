@@ -21,7 +21,7 @@
 			margin: 8px 0;
 			box-sizing: border-box;
 			box-shadow: var(--global-box-shadow);
-			border-radius: 6px;
+			border-radius: var(--border-radius);
 			position: relative;
 			border: var(--border);
 		}

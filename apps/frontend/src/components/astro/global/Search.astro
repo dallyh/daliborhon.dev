@@ -137,7 +137,7 @@ import { Icon } from "astro-icon/components";
 			display: flex;
 			align-items: center;
 			border: var(--border-darker);
-			border-radius: 6px;
+			border-radius: var(--border-radius);
 			padding-inline: 0.75rem 1rem;
 			min-width: 13rem;
 			min-height: 2.2rem;
@@ -264,8 +264,8 @@ import { Icon } from "astro-icon/components";
 		--pagefind-ui-border: rgba(var(--accent), 1);
 		--pagefind-ui-tag: rgba(var(--accent), 1);
 		--pagefind-ui-border-width: 0px;
-		--pagefind-ui-border-radius: 6px;
-		--pagefind-ui-image-border-radius: 6px;
+		--pagefind-ui-border-radius: var(--border-radius);
+		--pagefind-ui-image-border-radius: var(--border-radius);
 		--pagefind-ui-image-box-ratio: 3 / 2;
 		--pagefind-ui-font: unset;
 	}
@@ -324,7 +324,7 @@ import { Icon } from "astro-icon/components";
 
 	#pagefind .pagefind-ui__result {
 		padding: calc(10px * var(--pagefind-ui-scale)) calc(10px * var(--pagefind-ui-scale)) calc(20px * var(--pagefind-ui-scale)) calc(10px * var(--pagefind-ui-scale));
-		border-radius: 6px;
+		border-radius: var(--border-radius);
 		background-color: var(--pagefind-ui-background);
 	}
 

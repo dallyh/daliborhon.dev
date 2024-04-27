@@ -4,19 +4,28 @@ import { getBlogPostDateTime, wasPostUpdated } from "@utils";
 
 interface Props {
 	pubDateTime: string | Date;
-	modDatetime: string | Date | null;
+	modDatetime?: string | Date | null;
 	locale: string;
+	showTime?: boolean;
 }
 
-const { pubDateTime, modDatetime, locale } = Astro.props;
+const { pubDateTime, modDatetime = null, locale, showTime = false } = Astro.props;
 
 const date = getBlogPostDateTime(locale, pubDateTime, modDatetime);
 ---
 
-<span>{wasPostUpdated(pubDateTime, modDatetime) ? m.blog__updated_date_title() : m.blog__published_date_title()}</span>
-<time datetime={date.iso}>{date.date}</time>
-<span> | </span>
-<span>{date.time}</span>
+<div>
+	{modDatetime && <span>{wasPostUpdated(pubDateTime, modDatetime) ? m.blog__updated_date_title() : m.blog__published_date_title()}</span>}
+	<time datetime={date.iso}>{date.date}</time>
+	{
+		showTime && (
+			<>
+				<span> | </span>
+				<span>{date.time}</span>
+			</>
+		)
+	}
+</div>
 
 <style>
 	span,

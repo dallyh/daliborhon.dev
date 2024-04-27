@@ -3,7 +3,7 @@ export function getBlogPostDateTime(locale: string, pubDateTime: string | Date, 
 
 	const date = myDatetime.toLocaleDateString(locale, {
 		day: "numeric",
-		month: "short",
+		month: "long",
 		year: "numeric",
 	});
 

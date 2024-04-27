@@ -434,7 +434,6 @@ const locale = Astro.currentLocale!;
 			function closeDropdownMenu() {
 				dropdown.forEach((drop) => {
 					drop.classList.remove("active");
-					drop.addEventListener("click", (e) => e.stopPropagation());
 				});
 			}
 

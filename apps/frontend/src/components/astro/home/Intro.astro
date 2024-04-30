@@ -9,7 +9,7 @@ import SocialLinks from "./SocialLinks.astro";
 <div class="intro-container">
 	<div class="profile-container">
 		<div class="profile-info-container">
-			<h1 class="hi-there">{m.landing__hi_there()} <strong class="text-accent">Dalibor</strong><span class="shake">👋</span></h1>
+			<h1 class="hi-there">{m.landing__hi_there()} <strong class="gradient-text">Dalibor</strong><span class="shake">👋</span></h1>
 			<div class="profile-description">
 				<div class="icon-text">
 					<i><Icon name="bi:briefcase" /></i>
@@ -31,10 +31,6 @@ import SocialLinks from "./SocialLinks.astro";
 </div>
 
 <style>
-	strong {
-		font-weight: 600;
-	}
-
 	:global(.profile-container .socials > ul) {
 		@media (max-width: 1024px) {
 			display: flex;
@@ -47,6 +43,21 @@ import SocialLinks from "./SocialLinks.astro";
 		img {
 			height: 240px;
 			width: auto;
+		}
+	}
+
+	@keyframes shake {
+		10% {
+			transform: scale(1.05) rotate(5deg);
+		}
+		20% {
+			transform: scale(1.05) rotate(-5deg);
+		}
+		30% {
+			transform: scale(1.05) rotate(5deg);
+		}
+		40% {
+			transform: none;
 		}
 	}
 
@@ -101,7 +112,7 @@ import SocialLinks from "./SocialLinks.astro";
 		}
 
 		.hi-there {
-			font-weight: 400;
+			font-weight: 500;
 			font-size: clamp(1rem, 7vw, 1.725rem);
 
 			span {

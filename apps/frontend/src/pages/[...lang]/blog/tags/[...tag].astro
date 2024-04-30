@@ -62,16 +62,3 @@ const layoutProps = {
 		{posts && posts.length !== 0 && <PostsGrid posts={posts} />}
 	</Section>
 </PageLayout>
-
-<style>
-	ul {
-		display: grid;
-		grid-template-rows: 1fr;
-		gap: 1rem;
-		margin-bottom: 2rem;
-
-		@media (max-width: 468px) {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

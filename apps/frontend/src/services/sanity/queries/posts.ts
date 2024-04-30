@@ -1,6 +1,6 @@
 import { type InferType, q, sanityImage, z } from "groqd";
 import { contentBlockSchema } from "../schemas/contentBlockSchema";
-import { categoryMetaSchema } from "./categories";
+import { categoryMetaFragment } from "./categories";
 import { tagFragment, tagsFragment } from "./tags";
 
 const headingsFragment = q("body", { isArray: true })
@@ -28,14 +28,14 @@ const postMetaFragment = {
 	tags: tagsFragment,
 	body: contentBlockSchema,
 	headings: headingsFragment,
-	categories: q("categories[]", { isArray: true }).deref().grab(categoryMetaSchema),
+	categories: q("categories[]", { isArray: true }).deref().grab(categoryMetaFragment),
 	mainImage: sanityImage("mainImage", {
 		additionalFields: {
 			altText: q.string().nullable(),
 			description: q.string().nullable(),
 		},
 		withAsset: ["base", "blurHash"],
-	}),
+	}).nullable(),
 	_translations: q("*[_type == 'translation.metadata'&& references(^._id)].translations[].value", { isArray: true })
 		.deref()
 		.grab({
@@ -56,8 +56,8 @@ export const recentFeaturedPostsQuery = (maxRecent: number = -1) => {
 	return q("*", { isArray: true })
 		.filterByType("post")
 		.filter("language == $language")
-		.slice(0, maxRecent === -1 ? -1 : maxRecent - 1)
 		.filter("featured == true")
+		.slice(0, maxRecent === -1 ? -1 : maxRecent - 1)
 		.order("publishedAt desc")
 		.grab(postMetaFragment);
 };

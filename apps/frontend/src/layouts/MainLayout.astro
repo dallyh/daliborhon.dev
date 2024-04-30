@@ -2,11 +2,9 @@
 import { getAbsoluteLocaleUrl } from "astro:i18n";
 import { ViewTransitions } from "astro:transitions";
 import * as m from "$messages";
-import BrowserWarning from "@components/astro/global/BrowserWarning.astro";
 import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
 import { removeTrailingSlash } from "@utils";
 import "../styles/global.css";
-import "../styles/keyframes.css";
 import "../styles/variables.css";
 import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2";
 import nunitoLatinExt from "@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2";
@@ -33,7 +31,6 @@ const {
 	canonicalURL = new URL(Astro.url.pathname, Astro.site),
 	pubDatetime,
 	modDatetime,
-	showBrowserWarning = true,
 } = Astro.props;
 
 const siteTitle = title == undefined ? "Dalibor Hon" : `${title} - Dalibor Hon`;
@@ -92,7 +89,6 @@ const basePath = import.meta.env.BASE_URL;
 		</script>
 	</head>
 	<body>
-		{showBrowserWarning && <BrowserWarning />}
 		<slot name="header" />
 		<div class="page-content" id="#pageContent" aria-hidden="false">
 			<slot />

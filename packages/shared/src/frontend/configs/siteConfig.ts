@@ -1,8 +1,8 @@
 export const siteConfig = {
 	blog: {
 		pageSize: 6,
-		recentPostsSize: 6,
-		featuredPostsSize: 6,
+		recentPostsSize: 3,
+		featuredPostsSize: 3,
 		previewPostsSize: 6,
 		codeBlockTheme: "material-theme-palenight",
 	},

@@ -43,7 +43,7 @@ const layoutProps = {
 					<div class="paginated-posts">
 						<PostsGrid posts={page.data} />
 						<div class="page-selector">
-							<div>
+							<nav>
 								{page.url.prev && (
 									<a href={page.url.prev} title={m.blog__prev_page()} aria-label={m.blog__prev_page()}>
 										<i>
@@ -71,7 +71,7 @@ const layoutProps = {
 										<Icon name="bi:arrow-right" />
 									</i>
 								)}
-							</div>
+							</nav>
 						</div>
 					</div>
 				)
@@ -87,7 +87,7 @@ const layoutProps = {
 		justify-content: center;
 		align-items: center;
 
-		> div {
+		> nav {
 			display: flex;
 			gap: 1rem;
 			justify-content: center;

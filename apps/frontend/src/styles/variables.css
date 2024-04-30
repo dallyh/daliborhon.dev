@@ -3,7 +3,8 @@
 	--padding-x: 0.75rem;
 	--header-height: 4.5rem;
 	--header-margin: var(--header-height);
-	--border-radius: 0.35rem;
+	--border-radius: 0.25rem;
+	--border-accent: 1px solid rgb(var(--accent));
 
 	@media screen and (min-width: 2240px) {
 		--page-width: 1324px;
@@ -12,19 +13,20 @@
 
 :root {
 	color-scheme: light;
-	--border: 1px solid rgba(0, 0, 0, 0.3);
+	--border: 1px solid color-mix(in srgb, #bac4c8, transparent 25%);
+	--header-border: var(--border);
 	--border-darker: 1px solid rgba(0, 0, 0, 0.4);
-	--accent: 0, 120, 180;
+	--accent: 50, 115, 168;
 	--accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(0, 120, 180));
-	--secondary: 230, 230, 230; /* Light gray */
-	--body-color: rgb(0, 0, 0); /* rgb(51, 51, 51) */
+	--secondary: 244, 247, 249;
+	--body-color: rgb(0, 0, 0);
 	--button-color: rgb(0, 0, 0);
 	--button-hover-color: #fff;
-	--bg-color: rgb(245, 245, 245); /* Light gray background */
+	--bg-color: rgb(255, 255, 255);
 	--header-bg: rgba(235, 235, 235, 0.7);
 	--card-bg: rgba(var(--secondary), 1);
-	--a-visited: rgb(104, 64, 145); /* Soft purple for visited links */
-	--a-color: rgb(3, 100, 148); /* Blue for links */
+	--a-visited: rgb(var(--accent));
+	--a-color: rgb(var(--accent));
 	--footer-color: rgba(0, 0, 0, 0.8);
 	--global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
 	--light-gray: rgba(44, 44, 44, 0.2);
@@ -34,19 +36,20 @@
 /* Dark theme */
 :root[data-theme="dark"] {
 	color-scheme: dark;
-	--border: 1px solid rgba(255, 255, 255, 0.1);
+	--border: 1px solid color-mix(in srgb, #353841, transparent 25%);
+	--header-border: var(--border);
 	--border-darker: 1px solid rgba(255, 255, 255, 0.2);
-	--accent: 14, 165, 233; /*136, 58, 234*/
-	--accent-gradient: linear-gradient(to bottom, rgba(var(--accent), 1), rgb(34, 211, 238));
-	--secondary: 30, 41, 59;
+	--accent: 87, 217, 255;
+	--accent-gradient: linear-gradient(to bottom right, #0ea5e9, #22d3ee);
+	--secondary: 36, 38, 45;
 	--body-color: white;
 	--button-color: white;
 	--button-hover-color: black;
-	--bg-color: rgb(13, 19, 32); /* rgba(15, 23, 42, 1) */
-	--header-bg: rgba(15, 23, 42, 0.8);
+	--bg-color: rgb(13, 15, 20);
+	--header-bg: rgba(13, 15, 20, 0.7);
 	--card-bg: rgba(var(--secondary), 1);
-	--a-visited: rgb(197, 138, 249);
-	--a-color: rgb(34 211 238);
+	--a-visited: rgb(var(--accent));
+	--a-color: rgb(var(--accent));
 	--footer-color: rgba(255, 255, 255, 0.6);
 	--global-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
 	--light-gray: rgba(255, 255, 255, 0.2);

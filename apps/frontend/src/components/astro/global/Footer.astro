@@ -11,6 +11,8 @@ const locale = Astro.currentLocale!;
 const branchHref = `https://github.com/dallyh/daliborhon.dev/tree/${CF_PAGES_BRANCH}`;
 const commitHref = `https://github.com/dallyh/daliborhon.dev/commit/${CF_PAGES_COMMIT_SHA}`;
 const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as string).substring(0, 7) : "commit";
+const currentDate = new Date();
+const updated = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
 ---
 
 <footer class="footer-container">
@@ -18,8 +20,8 @@ const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as strin
 		<a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
 			<Icon name="bi:rss-fill" />
 		</a>
-		<a href="https://astro.build" title="Built with Astro">
-			<Image class="astro-img" src="https://astro.badg.es/v2/built-with-astro/tiny.svg" alt="Built with Astro" width={120} height={20} />
+		<a href="https://astro.build" title={m.footer__astro_a_label()} class="astro">
+			<Icon name="astro-icon-dark" />
 		</a>
 	</div>
 	<div class="right-section">
@@ -45,7 +47,7 @@ const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as strin
 		font-size: 0.875rem;
 		color: var(--footer-color);
 		margin-top: 1rem;
-		border-top: var(--border);
+		border-top: var(--border-darker);
 
 		@media (max-width: 468px) {
 			flex-direction: column;
@@ -75,15 +77,27 @@ const commit = CF_PAGES_COMMIT_SHA !== undefined ? (CF_PAGES_COMMIT_SHA as strin
 		justify-content: center;
 		gap: 1rem;
 
-		svg {
-			height: auto;
-			width: 18px;
+		.astro,
+		.astro:visited {
+			color: var(--body-color);
+			display: inline-flex;
+
+			svg {
+				height: auto;
+				width: 3.2rem;
+				margin-top: 4px;
+			}
 		}
 
 		.rss,
 		.rss:visited {
 			color: #ee802f;
 			opacity: 0.8;
+
+			svg {
+				height: auto;
+				width: 1.2rem;
+			}
 		}
 	}
 </style>

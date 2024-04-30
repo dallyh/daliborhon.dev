@@ -15,7 +15,7 @@ const projectStartDate = new Date(project?.projectStartDate!);
 const formatDateTime = () => {
 	const date = projectStartDate!.toLocaleDateString(locale, {
 		day: "numeric",
-		month: "short",
+		month: "long",
 		year: "numeric",
 	});
 
@@ -33,17 +33,17 @@ const formatDateTime = () => {
 		</i>
 		<div class="card-info-wrapper">
 			<div class="card-info-title">
-				<div class="title-meta">
+				<h3 class="title-meta">
 					<a href={projectSourceUrl} target="_blank" title={title} aria-label={title}>{title}</a>
 					{
 						(
 							<p class="project-date">
-								<span>{m.projects__start_date_title()}:</span>
+								<span>🚀</span>
 								<time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
 							</p>
 						)
 					}
-				</div>
+				</h3>
 				<div class="card-info-tags">
 					{
 						tags.map((tag) => {
@@ -56,9 +56,12 @@ const formatDateTime = () => {
 					}
 				</div>
 			</div>
-			<div class="card-body">
+			<p class="card-body">
 				{description}
-			</div>
+			</p>
+		</div>
+		<div class="date">
+			
 		</div>
 	</div>
 </div>
@@ -72,12 +75,17 @@ const formatDateTime = () => {
 		height: 120px;
 		width: 100px;
 		align-self: center;
+		padding: 0.5rem;
+
+		@media (max-width: 468px) {
+			padding: 0;
+		}
 
 		> img,
 		> svg {
 			color: var(--body-color);
 			opacity: 0.8;
-			padding: 0.2rem;
+
 			height: 100%;
 			width: 100%;
 		}
@@ -89,19 +97,19 @@ const formatDateTime = () => {
 		background-color: var(--card-bg);
 		display: flex;
 		flex-direction: column;
-		position: relative;
 		box-shadow: var(--global-box-shadow);
 		border-radius: var(--border-radius);
 		padding: 1rem;
 		overflow: hidden;
 		width: 100%;
-		height: max-content;
+		min-height: 155px;
 		border: var(--border);
 	}
 
 	.card-content {
 		display: flex;
 		gap: 1rem;
+		position: relative;
 
 		@media (max-width: 468px) {
 			flex-direction: column;
@@ -155,5 +163,11 @@ const formatDateTime = () => {
 				font-size: 1.1rem;
 			}
 		}
+	}
+
+	.date {
+		position: absolute;
+		right: 0;
+		font-size: 0.825rem;
 	}
 </style>

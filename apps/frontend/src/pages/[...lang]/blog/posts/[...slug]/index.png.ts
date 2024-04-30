@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 		locales.map(async (locale) => {
 			const posts = (await runQuery(allPostsQuery, { language: locale })) ?? [];
 
-			if (posts === undefined) {
+			if (posts.length === 0) {
 				return [];
 			}
 

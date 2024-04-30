@@ -171,7 +171,7 @@ const locale = Astro.currentLocale!;
 		height: var(--header-height);
 		background: var(--header-bg);
 		backdrop-filter: blur(8px);
-		border-bottom: var(--border);
+		border-bottom: var(--header-border);
 	}
 
 	.nav-container {
@@ -200,7 +200,7 @@ const locale = Astro.currentLocale!;
 		}
 
 		ul:nth-child(2) {
-			border-top: var(--border);
+			border-top: var(--header-border);
 		}
 
 		.nav-link {
@@ -255,7 +255,7 @@ const locale = Astro.currentLocale!;
 		transform: scale(0.97) translateX(-5px);
 		transition: 0.1s ease-in-out;
 		box-shadow: var(--global-box-shadow);
-		border: var(--border);
+		border: var(--header-border);
 
 		&.active {
 			visibility: visible;
@@ -393,7 +393,7 @@ const locale = Astro.currentLocale!;
 
 			li:first-child ul:nth-child(1) {
 				border-right: none;
-				border-bottom: var(--border);
+				border-bottom: var(--header-border);
 			}
 
 			li:first-child .dropdown {
@@ -401,7 +401,7 @@ const locale = Astro.currentLocale!;
 			}
 			> li:not(:last-child) {
 				padding-bottom: 0.5rem;
-				border-bottom: var(--border);
+				border-bottom: var(--header-border);
 			}
 		}
 	}

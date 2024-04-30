@@ -1,5 +1,5 @@
 ---
-import BlogPostPreview from "@components/astro/blog/BlogPostPreview.astro";
+import PostPreview from "@components/astro/blog/PostPreview.astro";
 import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
 import type { Post } from "@services/sanity/queries/posts";
 import type { Page } from "astro";
@@ -23,7 +23,7 @@ function isPage<T>(value: any): value is Page<T> {
 			Array.isArray(posts) &&
 				posts.map((post) => (
 					<li>
-						<BlogPostPreview post={post} />
+						<PostPreview post={post} />
 					</li>
 				))
 		}
@@ -31,7 +31,7 @@ function isPage<T>(value: any): value is Page<T> {
 			isPage(posts) &&
 				posts.data.map((post) => (
 					<li>
-						<BlogPostPreview post={post} />
+						<PostPreview post={post} />
 					</li>
 				))
 		}

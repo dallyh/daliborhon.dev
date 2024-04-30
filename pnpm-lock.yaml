@@ -77,12 +77,6 @@ importers:
       '@iconify-json/bi':
         specifier: ^1.1.23
         version: 1.1.23
-      '@iconify-json/devicon':
-        specifier: ^1.1.40
-        version: 1.1.40
-      '@iconify-json/tabler':
-        specifier: ^1.1.110
-        version: 1.1.110
       '@inlang/paraglide-astro':
         specifier: ^0.1.5
         version: 0.1.5(astro@4.7.0(@types/node@20.12.7)(typescript@5.4.5))(babel-plugin-macros@3.1.0)
@@ -2182,12 +2176,6 @@ packages:
 
   '@iconify-json/bi@1.1.23':
     resolution: {integrity: sha512-1te+g9ZzI+PU1Lv6Xerd3XPXf4DE6g3TvDL2buIopTAfrauPHyXCHPFQMrzoQVNrVPCpN3rv3vBtJMPyBwJ9IA==}
-
-  '@iconify-json/devicon@1.1.40':
-    resolution: {integrity: sha512-1uR1QlGvLp7t8qaxBY/zM14xoUOgIEVfXK0QhLyPNrpuDrdcootx+EEOhqAQMjJLNlwRiYgcWEAuYfGM0Aixew==}
-
-  '@iconify-json/tabler@1.1.110':
-    resolution: {integrity: sha512-+0TbyNeQpFI2r+bjtbazGrpGskI3c9NTii/6HhWTS+/d5+PiLs6+wWJW0M9AU2ykew7zdMKB2WtyczFyjYzZIQ==}
 
   '@iconify/react@4.1.1':
     resolution: {integrity: sha512-jed14EjvKjee8mc0eoscGxlg7mSQRkwQG3iX3cPBCO7UlOjz0DtlvTqxqEcHUJGh+z1VJ31Yhu5B9PxfO0zbdg==}
@@ -10232,14 +10220,6 @@ snapshots:
   '@iarna/toml@2.2.5': {}
 
   '@iconify-json/bi@1.1.23':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/devicon@1.1.40':
-    dependencies:
-      '@iconify/types': 2.0.0
-
-  '@iconify-json/tabler@1.1.110':
     dependencies:
       '@iconify/types': 2.0.0
 

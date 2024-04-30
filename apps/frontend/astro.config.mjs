@@ -11,15 +11,21 @@ import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import iconConfig from "./icons.config";
 
-const { CF_PAGES_BRANCH, NODE_ENV, BUILD_DEV_DATASET } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+const { CF_PAGES_BRANCH, NODE_ENV, USE_SANITY_DATASET } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
+// Default config
 const PORT = 4321;
 const DEV_ENV = NODE_ENV !== "production";
 const PREVIEW_BUILD = CF_PAGES_BRANCH && CF_PAGES_BRANCH.startsWith("dev");
-
 let SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://www.daliborhon.dev/";
 let SANITY_PERSPECTIVE = DEV_ENV ? "previewDrafts" : "published";
-let SANITY_DATASET = DEV_ENV ? defaultWorkspace.getDevDataset() : BUILD_DEV_DATASET ? defaultWorkspace.getDevDataset() : defaultWorkspace.getProdDataset();
+let SANITY_DATASET = DEV_ENV ? defaultWorkspace.getDevDataset() : defaultWorkspace.getProdDataset();
+
+if (USE_SANITY_DATASET) {
+	SANITY_DATASET = USE_SANITY_DATASET;
+}
 
 // First on every new post a new build is triggered for previewing with webhooks.
 // Production deployment is done manually by me.
@@ -28,7 +34,7 @@ if (PREVIEW_BUILD) {
 	SANITY_PERSPECTIVE = "previewDrafts";
 }
 
-console.log(`>> Building for environment: '${NODE_ENV}'`);
+console.log(`>> Using environment: '${NODE_ENV}'`);
 console.log(`>> Using PREVIEW_BUILD: '${PREVIEW_BUILD ?? false}'`);
 console.log(`>> Using SITE_URL: '${SITE_URL}'`);
 console.log(`>> Using SANITY_PERSPECTIVE: '${SANITY_PERSPECTIVE}'`);
@@ -52,7 +58,7 @@ export default defineConfig({
 		},
 	}),
 	image: {
-		domains: ["cdn.sanity.io", "astro.badg.es"],
+		domains: ["cdn.sanity.io"],
 		remotePatterns: [
 			{
 				protocol: "https",
@@ -84,14 +90,7 @@ export default defineConfig({
 			},
 		}),
 		pagefind(),
-		icon({
-			iconDir: "src/assets/icons",
-			include: {
-				bi: ["*"],
-				devicon: ["*"],
-				heroicons: ["chevron-down"],
-			},
-		}),
+		icon({ ...iconConfig }),
 		tailwind(),
 		paraglide({
 			project: "./project.inlang",

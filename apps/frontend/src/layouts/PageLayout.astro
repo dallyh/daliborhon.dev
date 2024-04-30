@@ -10,7 +10,7 @@ interface Props {
 	homepage?: boolean;
 }
 
-const { title, description, homepage = false } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <MainLayout title={title} description={description}>

@@ -5,4 +5,7 @@ export default defineEcConfig({
 	themeCssSelector: (theme) => {
 		return `[data-theme='${theme.type}']`;
 	},
+	styleOverrides: {
+		borderRadius: "var(--border-radius)",
+	},
 });

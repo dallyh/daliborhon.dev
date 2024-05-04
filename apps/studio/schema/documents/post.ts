@@ -1,7 +1,7 @@
 import { type SanityDocument, type SlugSourceContext, defineField, defineType } from "sanity";
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments";
 import { DocumentTextIcon } from "@sanity/icons";
-import tagField from "../fields/tagField";
+import getTagField from "../fields/tagField";
 
 export default defineType({
 	name: "post",
@@ -75,7 +75,7 @@ export default defineType({
 			type: "boolean",
 			initialValue: false,
 		}),
-		tagField,
+		getTagField(true),
 		defineField({
 			name: "categories",
 			title: "Categories",

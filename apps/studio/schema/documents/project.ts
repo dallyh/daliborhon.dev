@@ -3,7 +3,7 @@ import { defineField, defineType } from "sanity";
 import { mediaPreview } from "sanity-plugin-icon-manager";
 import { internationalizedArrayIsRequired } from "../../lib/internationalizedArrayStringIsRequired";
 import { ProjectsIcon } from "@sanity/icons";
-import tagField from "../fields/tagField";
+import getTagField from "../fields/tagField";
 
 export default defineType({
 	name: "project",
@@ -29,7 +29,7 @@ export default defineType({
 			type: "internationalizedArrayText",
 			validation: (rule) => internationalizedArrayIsRequired(rule),
 		}),
-		tagField,
+		getTagField(false),
 		defineField({
 			name: "projectStartDate",
 			title: "Project start date",

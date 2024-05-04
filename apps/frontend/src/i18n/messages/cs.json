@@ -157,5 +157,6 @@
     "common__date": "Datum",
     "resume__download_cv": "Stáhnout CV",
     "error__not_found_detail": "Je mi líto, ale stránka, kterou hledáte, neexistuje, byla odstraněna, změnil se její název nebo je dočasně nedostupná.",
-    "common__page": "Stránka"
+    "common__page": "Stránka",
+    "common__profile_picture": "Profilový obrázek"
 }

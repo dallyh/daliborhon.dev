@@ -1,7 +1,8 @@
 ---
-import * as m from "$messages";
 import type { Project } from "@services/sanity/queries/projects";
-import SearchMeta from "../global/SearchMeta.astro";
+import GithubLanguages from "./GithubLanguages.astro";
+import { formatDateTime } from "@utils";
+import GithubDate from "./GithubDate.astro";
 
 interface Props {
 	project: Project;
@@ -10,20 +11,9 @@ interface Props {
 const locale = Astro.currentLocale!;
 const { project } = Astro.props;
 const { title, description, icon, projectSourceUrl, tags } = project!;
-const projectStartDate = new Date(project?.projectStartDate!);
 
-const formatDateTime = () => {
-	const date = projectStartDate!.toLocaleDateString(locale, {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
-
-	return {
-		iso: projectStartDate!.toISOString(),
-		date: date,
-	};
-};
+const projectUrl = new URL(project.projectSourceUrl);
+const isOnGithub = projectUrl.host === "github.com";
 ---
 
 <div class="card">
@@ -35,14 +25,11 @@ const formatDateTime = () => {
 			<div class="card-info-title">
 				<h3 class="title-meta">
 					<a href={projectSourceUrl} target="_blank" title={title} aria-label={title}>{title}</a>
-					{
-						(
-							<p class="project-date">
-								<span>🚀</span>
-								<time datetime={formatDateTime().iso}>{formatDateTime().date}</time>
-							</p>
-						)
-					}
+					<p class="project-date">
+						<span>🚀</span>
+						{isOnGithub && <GithubDate {projectUrl} />}
+						{!isOnGithub && <time datetime={formatDateTime(project.projectStartDate, locale).iso}>{formatDateTime(project.projectStartDate, locale).date}</time>}
+					</p>
 				</h3>
 				<div class="card-info-tags">
 					{
@@ -59,115 +46,115 @@ const formatDateTime = () => {
 			<p class="card-body">
 				{description}
 			</p>
-		</div>
-		<div class="date">
-			
+			{isOnGithub && <GithubLanguages {projectUrl} />}
 		</div>
 	</div>
-</div>
 
-<style is:global>
-	.card-image {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		overflow: hidden;
-		height: 120px;
-		width: 100px;
-		align-self: center;
-		padding: 0.5rem;
+	<style is:global>
+		.card-image {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			overflow: hidden;
+			height: 120px;
+			width: 100px;
+			align-self: center;
+			padding: 0.5rem;
 
-		@media (max-width: 468px) {
-			padding: 0;
+			@media (max-width: 468px) {
+				padding: 0;
+			}
+
+			> img,
+			> svg {
+				color: var(--body-color);
+				opacity: 0.8;
+
+				height: 100%;
+				width: 100%;
+			}
 		}
+	</style>
 
-		> img,
-		> svg {
-			color: var(--body-color);
-			opacity: 0.8;
-
-			height: 100%;
+	<style>
+		.card {
+			background-color: var(--card-bg);
+			box-shadow: var(--global-box-shadow);
+			border-radius: var(--border-radius);
 			width: 100%;
-		}
-	}
-</style>
-
-<style>
-	.card {
-		background-color: var(--card-bg);
-		display: flex;
-		flex-direction: column;
-		box-shadow: var(--global-box-shadow);
-		border-radius: var(--border-radius);
-		padding: 1rem;
-		overflow: hidden;
-		width: 100%;
-		min-height: 155px;
-		border: var(--border);
-	}
-
-	.card-content {
-		display: flex;
-		gap: 1rem;
-		position: relative;
-
-		@media (max-width: 468px) {
-			flex-direction: column;
-		}
-	}
-
-	.card-info-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		font-size: 0.725rem;
-		margin-top: 0.5rem;
-		color: rgb(40, 40, 40);
-		font-weight: 700;
-
-		:global(.rounded-tag) {
-			padding-top: 0.25rem;
-			padding-bottom: 0.25rem;
-			padding-left: 0.5rem;
-			padding-right: 0.5rem;
-			border-radius: 8px;
-		}
-	}
-
-	.card-info-wrapper {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 10px;
-
-		.card-body {
-			color: var(--body-color);
-			font-size: 0.875em;
-			margin-top: 8px;
-		}
-	}
-
-	.card-info-title {
-		.title-meta {
+			min-height: 155px;
+			border: var(--border);
+			position: relative;
+			overflow: hidden;
 			display: flex;
 			flex-direction: column;
-			gap: 0.5rem;
+			padding: 1rem;
+		}
 
-			.project-date {
-				color: var(--body-color);
-				font-size: 0.875rem;
-				opacity: 0.8;
-			}
+		.card-content {
+			display: flex;
+			gap: 1rem;
+			position: relative;
 
-			> a {
-				font-size: 1.1rem;
+			@media (max-width: 468px) {
+				flex-direction: column;
 			}
 		}
-	}
 
-	.date {
-		position: absolute;
-		right: 0;
-		font-size: 0.825rem;
-	}
-</style>
+		.card-info-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			font-size: 0.725rem;
+			margin-top: 0.5rem;
+			color: rgb(40, 40, 40);
+			font-weight: 700;
+
+			.rounded-tag {
+				padding-top: 0.25rem;
+				padding-bottom: 0.25rem;
+				padding-left: 0.5rem;
+				padding-right: 0.5rem;
+				border-radius: 8px;
+			}
+		}
+
+		.card-info-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
+			width: 100%;
+
+			.card-body {
+				color: var(--body-color);
+				font-size: 0.875em;
+				margin-top: 8px;
+			}
+		}
+
+		.card-info-title {
+			.title-meta {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+
+				.project-date {
+					color: var(--body-color);
+					font-size: 0.875rem;
+					opacity: 0.8;
+				}
+
+				> a {
+					font-size: 1.1rem;
+				}
+			}
+		}
+
+		.date {
+			position: absolute;
+			right: 0;
+			font-size: 0.825rem;
+		}
+	</style>
+</div>

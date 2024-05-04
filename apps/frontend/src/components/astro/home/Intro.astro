@@ -4,6 +4,8 @@ import * as m from "$messages";
 import avatar from "@assets/img/profile/avatar-casual.svg";
 import { Icon } from "astro-icon/components";
 import SocialLinks from "./SocialLinks.astro";
+import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
+import profilePicture from "@assets/img/profile/me.png";
 ---
 
 <div class="intro-container">
@@ -25,9 +27,7 @@ import SocialLinks from "./SocialLinks.astro";
 			<SocialLinks />
 		</div>
 	</div>
-	<div class="profile-avatar-wrapper">
-		<Image src={avatar} alt="Avatar" loading="eager" />
-	</div>
+	<ProfilePicture img={profilePicture} imgClass="picture-bw" />
 </div>
 
 <style>
@@ -39,11 +39,8 @@ import SocialLinks from "./SocialLinks.astro";
 		}
 	}
 
-	.profile-avatar-wrapper {
-		img {
-			height: 240px;
-			width: auto;
-		}
+	.picture-bw {
+		filter: grayscale(1);
 	}
 
 	@keyframes shake {

@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import * as m from "$messages";
+
+interface Props {
+	img: ImageMetadata;
+	imgClass?: string;
+}
+
+const { imgClass, img, ...rest } = Astro.props;
+---
+
+<div class="profile-picture-wrapper" >
+	<Image  class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...rest}/>
+</div>
+
+<style>
+	.profile-picture-wrapper {
+		position: relative;
+		width: 12rem;
+		height: 12rem;
+		border-radius: 50%;
+		border: 4px solid rgb(var(--accent));
+
+		@media (max-width: 768px) {
+			width: 10rem;
+			height: 10rem;
+		}
+
+		.profile-picture {
+			display: block;
+			object-fit: cover;
+			border-radius: inherit;
+			height: 100%;
+		}
+	}
+</style>

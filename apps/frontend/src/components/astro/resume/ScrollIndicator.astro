@@ -27,6 +27,12 @@ const { href } = Astro.props;
 		align-items: center;
 		border: var(--border);
 		box-shadow: var(--global-box-shadow);
+		border: 1px solid transparent;
+		transition: 0.3s;
+
+		&:hover {
+			border: var(--border-accent);
+		}
 
 		@media (max-width: 468px) {
 			transform: scale(0.85);
@@ -43,29 +49,26 @@ const { href } = Astro.props;
 		border-color: var(--body-color) transparent transparent transparent;
 		transform: rotate(360deg);
 		margin-top: 0.5em;
-	}
-
-	.arrow:after {
-		content: "";
-		position: absolute;
-		top: -1.8em;
-		left: -1.5em;
-		width: 0px;
-		height: 0px;
-		border-style: solid;
-		border-width: 1.5em 1.5em 0 1.5em;
-		border-color: rgba(var(--secondary), 1) transparent transparent transparent;
-		transform: rotate(360deg);
-	}
-
-	.arrow-wrap:focus-visible {
-		box-shadow: 0 0 0 0.2rem rgba(var(--accent), 1);
-	}
-
-	.arrow-wrap .arrow {
 		animation: arrows 2.8s 0.4s;
 		animation-delay: 1s;
 		animation-timing-function: ease-in-out;
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: -1.8em;
+			left: -1.5em;
+			width: 0px;
+			height: 0px;
+			border-style: solid;
+			border-width: 1.5em 1.5em 0 1.5em;
+			border-color: rgba(var(--secondary), 1) transparent transparent transparent;
+			transform: rotate(360deg);
+		}
+
+		&:focus-visible {
+			box-shadow: 0 0 0 0.2rem rgba(var(--accent), 1);
+		}
 	}
 
 	@keyframes arrows {
@@ -115,8 +118,12 @@ const { href } = Astro.props;
 		const maxScroll = 250;
 		const initialOpacity = Number(window.getComputedStyle(mouseElem).opacity) ?? 1;
 
-		document.addEventListener("scroll", (e) => {
+		document.addEventListener("scroll", () => {
 			let opacity = initialOpacity - window.scrollY / maxScroll;
+
+			if (opacity < 0) {
+				return;
+			}
 			mouseElem.style.opacity = opacity.toString();
 		});
 	};
@@ -125,6 +132,6 @@ const { href } = Astro.props;
 		(e) => {
 			hideIndicator();
 		},
-		{ once: false },
+		{ once: false }
 	);
 </script>

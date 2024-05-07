@@ -221,8 +221,6 @@ const locale = Astro.currentLocale!;
 
 	.menu-bar .nav-link:hover,
 	.menu-bar .nav-link:focus-visible,
-	.dropdown-link:hover,
-	.dropdown-link:focus-visible,
 	.menu-bar .nav-link[aria-expanded="true"] {
 		color: rgba(var(--accent), 1);
 		text-decoration: none;
@@ -291,15 +289,33 @@ const locale = Astro.currentLocale!;
 	}
 
 	.dropdown-link {
-		display: flex;
-		gap: 0.5rem;
+		display: block;
 		padding: 0.5rem 0;
-		border-radius: 7px;
 		transition: 0.1s ease-in-out;
 		white-space: nowrap;
+		border-left: 1px solid transparent;
 
-		p {
-			font-size: 0.8rem;
+		&::before {
+			content: "";
+			position: absolute;
+			left: -18px;
+			top: calc(50% - 0.5rem);
+			border-bottom: 2px solid rgba(var(--accent));
+			border-right: 2px solid rgba(var(--accent));
+			height: 8px;
+			width: 8px;
+			transform: rotate(315deg) translateY(calc(-50% + 0.5rem));
+			opacity: 0;
+			transition: opacity 0.1s ease;
+		}
+
+		&:hover {
+			text-decoration: none;
+			transform: translateX(4px);
+
+			&::before {
+				opacity: 1;
+			}
 		}
 	}
 

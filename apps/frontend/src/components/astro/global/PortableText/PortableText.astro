@@ -55,11 +55,9 @@ const components = {
 		</div>
 	)
 }
-<div class="portable-text">
-	<PortableTextInternal {value} {components} />
-</div>
+<PortableTextInternal class="portable-text" {value} {components} />
 
-<style>
+<style is:global>
 	.portable-text:has(svg) {
 		display: inline-flex;
 		justify-content: center;
@@ -83,7 +81,9 @@ const components = {
 			}
 		}
 	}
+</style>
 
+<style>
 	details {
 		cursor: pointer;
 		user-select: none;

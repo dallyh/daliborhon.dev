@@ -1,4 +1,4 @@
-name: Create new tag on dispatch
+name: Create new tag on repository dispatch
 
 on:
     workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
               with:
-                  ref: exp-cc-v4
+                  ref: ${{ vars.CMS_DISPATCH_REF }}
 
             - name: Get current date
               id: date
@@ -22,7 +22,7 @@ jobs:
             - name: Determine tag sequence number
               id: tag_number
               run: |
-                BRANCH_NAME=exp-cc-v4
+                BRANCH_NAME=${{ vars.CMS_DISPATCH_REF }}
                 DATE=$(date +'%Y%m%d')
                 TAG_PREFIX="${BRANCH_NAME}-${DATE}"
                 EXISTING_TAGS=$(git tag --list "${TAG_PREFIX}-*")

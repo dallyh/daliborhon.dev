@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from "astro:content";
+import * as m from "$messages";
+import Section from "../global/Section.astro";
+import PostsGrid from "./PostsGrid.astro";
+
+interface Props {
+	posts: CollectionEntry<"posts">[] | undefined;
+	isFirstSection?: boolean;
+	showSeeAllUrl?: boolean;
+}
+
+const { isFirstSection = false, showSeeAllUrl = true, posts } = Astro.props;
+
+const sectionProps = {
+	id: "featuredPosts",
+	isFirstSection,
+	sectionTitle: m.blog__featured_posts_title(),
+	sectionDescription: m.blog__featured_posts_description(),
+};
+---
+
+<Section {...sectionProps}>
+	{!posts && <p>{m.blog__no_featured_posts()} 😞</p>}
+	{posts && posts.length === 0 && <p>{m.blog__no_featured_posts()} 😞</p>}
+	{
+		posts && posts.length !== 0 && (
+			<>
+				{showSeeAllUrl && <PostsGrid posts={posts} url="/blog/posts/featured" urlDescription={m.blog__see_all_featured()} />}
+				{!showSeeAllUrl && <PostsGrid posts={posts} />}
+			</>
+		)
+	}
+</Section>

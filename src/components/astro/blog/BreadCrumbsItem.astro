@@ -1,0 +1,35 @@
+---
+// Thanks! https://github.com/markteekman/accessible-astro-components/blob/main/BreadcrumbsItem.astro
+export type BreadCrumbsItem = {
+	href?: string;
+	label: string;
+	currentPage?: boolean;
+};
+
+interface Props {
+	href?: string;
+	label: string;
+	currentPage?: boolean;
+}
+
+const { href = "#", label = "Breadcrumb", currentPage = false } = Astro.props;
+---
+
+<li class="breadcrumbs-item">
+	{currentPage ? <span aria-current="page">{label}</span> : <a href={href}>{label}</a>}
+</li>
+
+<style is:global>
+	.breadcrumbs-item {
+		display: inline;
+	}
+
+	.breadcrumbs-item::after {
+		content: "/";
+		margin: 0 0.5rem;
+	}
+
+	.breadcrumbs-item:last-child::after {
+		content: "";
+	}
+</style>

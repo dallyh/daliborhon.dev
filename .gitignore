@@ -32,3 +32,12 @@ coverage/
 .turbo
 .wrangler
 
+# build output
+dist/
+
+# generated types
+.astro/
+
+# Paraglide JS
+paraglide/
+

@@ -2,12 +2,11 @@
 **/dist
 **/node_modules
 **/.astro
-**/.wrangler
-**/.turbo
 
 # Directories
-.github
-.turbo
+.astro
+dist
+node_modules
 
 # Files
 pnpm-lock.yaml

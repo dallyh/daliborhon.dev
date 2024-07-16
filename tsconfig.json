@@ -1,4 +1,41 @@
 {
-    "extends": "./tsconfig.base.json",
-    "include": ["./scripts"]
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "include": ["./src/**/*", "./*.ts"],
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "strict": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "react",
+        "baseUrl": "./",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@assets/*": ["src/assets/*"],
+            "@i18n/*": ["src/i18n/*"],
+            "@i18n-config": ["i18n.config.ts"],
+            "@public/*": ["src/public/*"],
+            "@layouts/*": ["src/layouts/*"],
+            "@utils": ["src/utils/index.ts"],
+            "@utils/content": ["src/utils/content/index.ts"],
+            "@utils/og": ["src/utils/open-graph/index.ts"],
+            "@services/*": ["src/services/*"],
+            "@site-config": ["site.config.ts"],
+            "@content/*": ["src/content/*"],
+            "$messages": ["src/paraglide/messages.js"],
+            "$paraglide-runtime": ["src/paraglide/runtime.js"],
+            "$sanity-schema": ["../studio/src/index.d.ts"],
+            "@lib/*": ["src/lib/*"]
+        }
+    }
 }

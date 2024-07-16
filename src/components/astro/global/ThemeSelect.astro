@@ -1,0 +1,188 @@
+---
+// https://github.com/withastro/starlight/blob/main/packages/starlight/components/ThemeSelect.astro
+// Thanks!
+---
+
+<theme-select>
+	<button class="theme-toggle" id="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">
+		<svg class="sun-and-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24">
+			<circle class="sun" cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor"></circle>
+			<g class="sun-beams" stroke="currentColor">
+				<line x1="12" y1="1" x2="12" y2="3"></line>
+				<line x1="12" y1="21" x2="12" y2="23"></line>
+				<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+				<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+				<line x1="1" y1="12" x2="3" y2="12"></line>
+				<line x1="21" y1="12" x2="23" y2="12"></line>
+				<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+				<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+			</g>
+			<mask class="moon" id="moon-mask">
+				<rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
+				<circle cx="24" cy="10" r="6" fill="black"></circle>
+			</mask>
+		</svg>
+	</button>
+</theme-select>
+
+<script>
+	class ThemeSelect extends HTMLElement {
+		#storageKey = "theme-preference";
+		#themeToggle = this.querySelector("#theme-toggle");
+
+		constructor() {
+			super();
+			this.#reflectPreference();
+			this.#themeToggle?.addEventListener("click", () => this.#onClick());
+		}
+
+		#getColorPreference(): string {
+			if (localStorage.getItem(this.#storageKey)) {
+				return localStorage.getItem(this.#storageKey)!;
+			} else {
+				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			}
+		}
+
+		#reflectPreference() {
+			document.documentElement.dataset.theme = this.#getColorPreference();
+			this.#themeToggle?.setAttribute("aria-label", this.#getColorPreference());
+		}
+
+		#setPreference(theme: string) {
+			localStorage.setItem(this.#storageKey, theme);
+			this.#reflectPreference();
+		}
+
+		#onClick() {
+			const theme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+			this.#setPreference(theme);
+		}
+	}
+
+	customElements.define("theme-select", ThemeSelect);
+</script>
+
+<style is:global>
+	.sun-and-moon {
+		[data-theme="dark"] & {
+			& > .sun {
+				transform: scale(1.75);
+			}
+
+			& > .sun-beams {
+				opacity: 0;
+			}
+
+			& > .moon > circle {
+				transform: translateX(-7px);
+
+				@supports (cx: 1) {
+					transform: translateX(0);
+					cx: 17;
+				}
+			}
+		}
+	}
+
+	@custom-media --motionOK (prefers-reduced-motion: no-preference);
+
+	/* usage example */
+	@media (--motionOK) {
+		.sun {
+			transition: transform 0.5s ease;
+		}
+	}
+
+	​​.sun-and-moon {
+		@media (--motionOK) {
+			& > .sun {
+				transition: transform 0.5s ease;
+			}
+
+			& > .sun-beams {
+				transition:
+					transform 0.5s ease,
+					opacity 0.5s ease;
+			}
+
+			[data-theme="dark"] & {
+				& > .sun {
+					transform: scale(1.75);
+					transition-timing-function: ease;
+					transition-duration: 0.25s;
+				}
+
+				& > .sun-beams {
+					transform: rotateZ(-25deg);
+					transition-duration: 0.15s;
+				}
+			}
+		}
+	}
+
+	​​.sun-and-moon {
+		@media (--motionOK) {
+			& .moon > circle {
+				transform: translateX(-7px);
+				transition: transform 0.25s ease-out;
+
+				@supports (cx: 1) {
+					transform: translateX(0);
+					cx: 17;
+					transition: cx 0.25s ease-out;
+				}
+			}
+
+			[data-theme="dark"] & {
+				& > .moon > circle {
+					transition-delay: 0.25s;
+					transition-duration: 0.5s;
+				}
+			}
+		}
+	}
+</style>
+
+<style>
+	.theme-toggle {
+		--icon-fill: var(--body-color);
+		--icon-fill-hover: rgba(var(--accent), 1);
+		background: none;
+		border: none;
+		padding: 0.5rem;
+		aspect-ratio: 1;
+		border-radius: var(--border-radius);
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		outline-offset: 5px;
+
+		& > svg {
+			stroke-linecap: round;
+		}
+	}
+
+	.sun-and-moon {
+		& > :is(.moon, .sun, .sun-beams) {
+			transform-origin: center center;
+		}
+
+		& > :is(.moon, .sun) {
+			fill: var(--icon-fill);
+
+			.theme-toggle:is(:hover, :focus-visible) > & {
+				fill: var(--icon-fill-hover);
+			}
+		}
+
+		& > .sun-beams {
+			stroke: var(--icon-fill);
+			stroke-width: 2px;
+
+			.theme-toggle:is(:hover, :focus-visible) & {
+				stroke: var(--icon-fill-hover);
+			}
+		}
+	}
+</style>

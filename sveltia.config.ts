@@ -12,11 +12,13 @@ export function createCmsConfig() {
 	const siteUrl = removeTrailingSlash(`${import.meta.env.SITE}${import.meta.env.BASE_URL}`);
 	const oAuthProviderBase =`${siteUrl}/cms`;
 	const authEndpoint = "auth";
+	const branch = import.meta.env.DEV ? "dev" : "main";
 
 	if (import.meta.env.DEV) {
 		console.warn("[getCmsConfig] CMS running in development mode!");
 		console.log("[getCmsConfig] CMS config OAuth Endpoint: " + `${siteUrl}/cms/${authEndpoint}`);
-		console.log("[getCmsConfig] CMS config siteUrl: " + siteUrl);	
+		console.log("[getCmsConfig] CMS config siteUrl: " + siteUrl);
+		console.log("[getCmsConfig] CMS config branch: " + branch);		
 	}
 
 	const tagTranslationsArray = Object.keys(localeSettings).map((key) => {
@@ -74,7 +76,7 @@ export function createCmsConfig() {
 			base_url: oAuthProviderBase,
 			auth_endpoint: "auth",
 			repo: "dallyh/daliborhon.dev",
-			branch: "exp-cc-v4",
+			branch: branch,
 			commit_messages: {
 				create: 'Create {{collection}} "{{slug}}"',
 				update: 'Update {{collection}} "{{slug}}"',

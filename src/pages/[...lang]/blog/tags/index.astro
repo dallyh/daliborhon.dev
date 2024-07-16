@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
+import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import Tag from "@components/astro/blog/Tag.astro";
+import Section from "@components/astro/global/Section.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getPostsByTag } from "@utils/content";
+import type { getStaticPaths } from "../index.astro";
+
+export { getStaticPaths } from "@i18n/utils";
+
+const locale = Astro.currentLocale!;
+
+const layoutProps = {
+	title: `${m.blog__categories()} - Blog`,
+	description: m.blog__blog_site_description(),
+};
+
+const tags = await getCollection("tags");
+---
+
+<PageLayout {...layoutProps}>
+	<BreadCrumbs>
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+		<BreadCrumbsItem currentPage={true} label={m.blog__tags()} />
+	</BreadCrumbs>
+	<Section id="tags" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
+		{!tags && <p>{m.blog__no_tags()}</p>}
+		{
+			tags && (
+				<ul class="tag-list">
+					{tags.map(async (tag) => {
+						const posts = await getPostsByTag(locale, tag.id);
+						return <Tag {tag} {posts} />;
+					})}
+				</ul>
+			)
+		}
+	</Section>
+</PageLayout>
+
+<style>
+	.tag-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		a {
+			color: var(--body-color);
+			display: inline-block;
+
+			&:visited {
+				color: var(--body-color);
+			}
+
+			&:hover {
+				color: rgba(var(--accent), 1);
+			}
+		}
+	}
+</style>

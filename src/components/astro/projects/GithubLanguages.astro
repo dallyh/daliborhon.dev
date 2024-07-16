@@ -1,0 +1,88 @@
+---
+import { fetchGithubData } from "@services/github/fetchGithubData";
+
+interface Props {
+	projectUrl: URL;
+}
+
+const { projectUrl } = Astro.props;
+
+type LanguageData = {
+	[key: string]: number;
+};
+
+type LanguageColor = {
+	[key: string]: { color: string; url: string };
+};
+
+const projectLanguages: LanguageData = await fetchGithubData(`https://api.github.com/repos${projectUrl.pathname}/languages`);
+const languageColors: LanguageColor = await fetchGithubData("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
+const total = Object.values(projectLanguages).reduce((acc, curr) => acc + curr, 0);
+const languages = Object.keys(projectLanguages).map((language) => ({
+	language: language,
+	percentage: (projectLanguages[language] / total) * 100,
+	color: languageColors[language].color,
+}));
+---
+
+<div class="gh-languages">
+	<span>
+		{
+			languages.map((lang) => {
+				return <span style={`background-color:${lang.color}; width: ${lang.percentage}%`} />;
+			})
+		}
+	</span>
+	<ul>
+		{
+			languages.map((lang) => {
+				return (
+					<li>
+						<span style={`background-color:${lang.color};`} /> {lang.language}
+					</li>
+				);
+			})
+		}
+	</ul>
+</div>
+
+<style>
+	.gh-languages {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		width: 100%;
+
+		> span {
+			width: 100%;
+			border-radius: 6px;
+			display: flex;
+			height: 8px;
+			overflow: hidden;
+			border: var(--border);
+
+			span:not(:first-child) {
+				margin-left: 2px;
+			}
+		}
+
+		> ul {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 1rem;
+			font-size: 0.825rem;
+
+			li {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 0.25rem;
+				span {
+					width: 0.5rem;
+					height: 0.5rem;
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+</style>

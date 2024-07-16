@@ -1,0 +1,197 @@
+---
+// Credits: https://github.com/yassinedoghri/astro-i18next/blob/beta/src/components/LanguageSelector.astro
+// Edited for this project needs.
+
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
+import { languageTag } from "$paraglide-runtime";
+import { locales } from "@i18n-config";
+import { getPathFromUrl } from "@i18n/utils";
+import { getBlogPostUrl } from "@utils/content";
+import { getBlogPostTranslations } from "@utils/content";
+import { Icon } from "astro-icon/components";
+import ISO6991 from "iso-639-1";
+
+interface Props {
+	post?: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+
+const currentLocale = languageTag();
+const capitalizeFirstLetter = (str: string) => {
+	const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+	return capitalized;
+};
+---
+
+{
+	!post && (
+		<lang-select>
+			<label>
+				<span class="sr-only">{m.common__language()}</span>
+				<Icon name="bi:translate" size={18} />
+				<select>
+					{locales.map((locale) => {
+						// For whatever reason the getRelativeLocaleUrl() for path "/" always adds a trailing slash
+						// even when it is not set in the config.
+						const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
+						const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
+						const current = currentLocale === locale;
+
+						return (
+							<>
+								<option selected={current} data-language={locale} value={value}>
+									{nativeName}
+								</option>
+							</>
+						);
+					})}
+				</select>
+			</label>
+		</lang-select>
+	)
+}
+
+{
+	post && (
+		<lang-select>
+			<label>
+				<span class="sr-only">{m.common__language()}</span>
+				<Icon name="bi:translate" size={18} />
+				<select>
+					{async () => {
+						const posts = await getBlogPostTranslations(post);
+						return posts.map((post) => {
+							const value = getBlogPostUrl(post.data.language, post);
+							const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(post.data.language));
+							const current = currentLocale === post.data.language;
+
+							return (
+								<>
+									<option selected={current} data-language={post.data.language} value={value}>
+										{nativeName}
+									</option>
+								</>
+							);
+						});
+					}}
+				</select>
+			</label>
+		</lang-select>
+	)
+}
+
+<script>
+	import { siteConfig } from "@site-config";
+	import { navigate } from "astro:transitions/client";
+	import cookie from "js-cookie";
+
+	const configCookie = siteConfig.i18n.localeCookie;
+
+	class LanguageSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector("select");
+			if (select) {
+				select.addEventListener("change", (e) => {
+					if (e.currentTarget instanceof HTMLSelectElement) {
+						const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language!;
+						cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
+						navigate(e.currentTarget.value);
+					}
+				});
+			}
+		}
+	}
+	customElements.define("lang-select", LanguageSelect);
+</script>
+
+<style>
+	lang-select {
+		display: contents;
+	}
+
+	label {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		pointer-events: all;
+		position: relative;
+
+		svg {
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-60%);
+			pointer-events: none;
+		}
+
+		@media (max-width: 768px) {
+			svg {
+				left: 50%;
+				transform: translateY(-60%) translateX(-50%);
+			}
+		}
+
+		select {
+			border: 0;
+			padding-left: 1.7rem;
+			padding-right: 0.8rem;
+			padding-top: 0.25rem;
+			padding-bottom: 0.25rem;
+			background-color: transparent;
+			text-overflow: ellipsis;
+			color: inherit;
+			appearance: none;
+			line-height: 1.5;
+			border-radius: var(--border-radius);
+			cursor: pointer;
+
+			@media (max-width: 768px) {
+				width: 0;
+				padding: 0.5rem;
+			}
+
+			&:focus-visible {
+				box-shadow: var(--focus-visible-shadow);
+			}
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 0.2rem;
+			display: inline-block;
+			border-bottom: 2px solid var(--body-color);
+			border-right: 2px solid var(--body-color);
+			height: 6px;
+			width: 6px;
+			transform: rotate(45deg) translateY(-85%);
+			pointer-events: none;
+
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
+
+		&:hover,
+		&:focus-within {
+			color: rgba(var(--accent), 1);
+
+			&::after {
+				border-bottom: 2px solid rgba(var(--accent), 1);
+				border-right: 2px solid rgba(var(--accent), 1);
+			}
+		}
+
+		option {
+			background-color: rgba(var(--secondary), 1);
+			color: var(--body-color);
+			padding: 1rem;
+			text-overflow: ellipsis;
+		}
+	}
+</style>

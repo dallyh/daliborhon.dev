@@ -1,0 +1,141 @@
+---
+import * as m from "$messages";
+import profilePicture from "@assets/img/profile/me.png";
+import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
+import { Icon } from "astro-icon/components";
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<div class="intro-container">
+	<div class="profile-container">
+		<div class="profile-info-container">
+			<h1 class="hi-there">{m.landing__hi_there()} <strong class="gradient-text">Dalibor</strong><span class="shake">👋</span></h1>
+			<div class="profile-description">
+				<div class="icon-text">
+					<i><Icon name="bi:briefcase" /></i>
+					<p>Business Consultant</p>
+				</div>
+				<div class="icon-text">
+					<i><Icon name="bi:geo-alt" /></i>
+					<p>Ostrava, {m.common__country_czech_republic()}</p>
+				</div>
+			</div>
+		</div>
+		<div class="socials">
+			<SocialLinks />
+		</div>
+	</div>
+	<ProfilePicture img={profilePicture} imgClass="picture-bw" />
+</div>
+
+<style>
+	:global(.profile-container .socials > ul) {
+		@media (max-width: 1024px) {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	.picture-bw {
+		filter: grayscale(1);
+	}
+
+	@keyframes shake {
+		10% {
+			transform: scale(1.05) rotate(5deg);
+		}
+		20% {
+			transform: scale(1.05) rotate(-5deg);
+		}
+		30% {
+			transform: scale(1.05) rotate(5deg);
+		}
+		40% {
+			transform: none;
+		}
+	}
+
+	.shake {
+		animation: shake 2s infinite;
+	}
+
+	.intro-container {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		position: relative;
+		justify-content: space-between;
+		width: 100%;
+		height: 100%;
+
+		@media (max-width: 1024px) {
+			flex-direction: column-reverse;
+			gap: 0.5rem;
+			justify-content: center;
+			align-items: center;
+		}
+
+		@media (max-width: 468px) {
+			min-height: calc(100svh - var(--header-margin));
+			margin-top: -1rem; /* Account for sections margin */
+		}
+	}
+
+	.profile-info-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		font-size: clamp(0.65rem, 5vw, 1rem);
+		color: var(--body-color);
+
+		.profile-description {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			margin-bottom: 1rem;
+
+			.icon-text {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+
+				@media (max-width: 1024px) {
+					justify-content: center;
+				}
+			}
+		}
+
+		.hi-there {
+			font-weight: 500;
+			font-size: clamp(1rem, 7vw, 1.725rem);
+
+			span {
+				display: inline-block;
+			}
+
+			@media (max-width: 468px) {
+				display: block;
+			}
+		}
+
+		@media (max-width: 1024px) {
+			align-items: center;
+		}
+	}
+
+	.profile-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
+		@media (max-width: 1024px) {
+			justify-content: center;
+			align-items: center;
+		}
+
+		@media (max-width: 468px) {
+			width: 100%;
+		}
+	}
+</style>

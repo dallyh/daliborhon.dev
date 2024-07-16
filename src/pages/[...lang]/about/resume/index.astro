@@ -1,0 +1,155 @@
+---
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
+import profilePicture from "@assets/img/profile/me.png";
+import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
+import SearchMeta from "@components/astro/global/SearchMeta.astro";
+import TableOfContents from "@components/astro/global/TableOfContents.astro";
+import ScrollIndicator from "@components/astro/resume/ScrollIndicator.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { createResumePdfFilename, removeTrailingSlash } from "@utils";
+import { Icon } from "astro-icon/components";
+
+export { getStaticPaths } from "@i18n/utils";
+
+const locale = Astro.currentLocale!;
+
+const resumeEntry = (await getEntry("resume", locale)) as CollectionEntry<"resume">;
+const { Content, headings } = await resumeEntry.render();
+
+const layoutProps = {
+	title: "Dalibor Hon - " + m.common__resume(),
+	description: m.resume__resume_page_description(),
+};
+
+const searchProps = {
+	title: m.common__resume(),
+	description: layoutProps.description,
+};
+
+const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`));
+---
+
+<PageLayout {...layoutProps}>
+	<SearchMeta {...searchProps} />
+	<a class="button is-anchor floating" href={resumePdfFileName} download title={m.resume__download_cv()} aria-label={m.resume__download_cv()}>
+		<Icon name="bi:filetype-pdf" />
+	</a>
+
+	<section class="hero-container" id="hero">
+		<div class="hero">
+			<div class="hero-meta">
+				<ProfilePicture img={profilePicture} />
+				<div class="hero-title-wrapper">
+					<div>
+						<h1 class="text-accent">Dalibor Hon</h1>
+						<p>{resumeEntry.data.currentPosition.toUpperCase()}</p>
+					</div>
+					<a class="button is-anchor no-text-transform" href={resumePdfFileName} download>
+						<Icon name="bi:filetype-pdf" /><span>{m.resume__download_cv()}</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="section-footer">
+			<ScrollIndicator href="#content" />
+		</div>
+	</section>
+	<article class="prose max-w-none dark:prose-invert md-content" id="content">
+		<TableOfContents {headings} />
+		<Content />
+	</article>
+</PageLayout>
+
+<style>
+	.hero-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: calc(100svh - var(--header-margin));
+	}
+
+	.hero-meta {
+		display: flex;
+		gap: 2rem;
+
+		@media (max-width: 768px) {
+			flex-direction: column;
+			gap: 1rem;
+		}
+	}
+
+	.hero-title-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		row-gap: 1rem;
+
+		p {
+			font-weight: 600;
+			letter-spacing: 0.1rem;
+			position: relative;
+			font-size: 0.75rem;
+			color: var(--body-color);
+			opacity: 0.8;
+			margin-top: 0.2rem;
+		}
+
+		h1 {
+			font-size: 3rem;
+			font-weight: 600;
+			margin: 0;
+			padding: 0;
+			margin-left: -4px; /* Font was misaligned */
+		}
+	}
+
+	.section-footer {
+		position: absolute;
+		bottom: 0.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		align-self: flex-end;
+	}
+
+	.button {
+		border: var(--border);
+		font-size: 0.825rem;
+
+		span {
+			margin-left: 0.25rem;
+		}
+
+		&.floating {
+			position: fixed;
+			right: 1rem;
+			bottom: 1rem;
+			width: 55px;
+			height: 55px;
+			border-radius: 50%;
+			min-width: unset;
+			transform: scale(0);
+			animation: showButton forwards 0.25s 0.2s ease-in;
+		}
+
+		svg {
+			font-size: 1.25rem;
+			display: inline-block;
+		}
+	}
+
+	@keyframes showButton {
+		from {
+			transform: scale(0);
+		}
+
+		to {
+			transform: scale(1);
+		}
+	}
+</style>

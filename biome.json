@@ -1,8 +1,8 @@
 {
     "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
     "files": {
-        "include": ["apps/**", "packages/**"],
-        "ignore": ["dist/**", "node_modules/**", ".turbo/**", ".wrangler/**", ".sanity/**"]
+        "include": ["src/**"],
+        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**"]
     },
     "organizeImports": {
         "enabled": true

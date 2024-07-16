@@ -18,11 +18,24 @@ jobs:
               id: date
               run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
+            - name: Determine tag sequence number
+              id: tag_number
+              run: |
+                BRANCH_NAME=exp-cc-v4
+                DATE=$(date +'%Y%m%d')
+                TAG_PREFIX="${BRANCH_NAME}-${DATE}"
+                EXISTING_TAGS=$(git tag --list "${TAG_PREFIX}*")
+                if [ -z "$EXISTING_TAGS" ]; then
+                  SEQUENCE=1
+                else
+                  SEQUENCE=$(echo "$EXISTING_TAGS" | awk -F '-' '{print $NF}' | sort -n | tail -1)
+                  SEQUENCE=$((SEQUENCE + 1))
+                fi
+                echo "TAG_NAME=${TAG_PREFIX}-${SEQUENCE}" >> $GITHUB_ENV
+
             - name: Create a new tag
               run: |
-                  BRANCH_NAME=exp-cc-v4
-                  TAG_NAME="${BRANCH_NAME}-$(date +'%Y%m%d')"
-                  git tag $TAG_NAME
-                  git push origin $TAG_NAME
+                git tag ${{ env.TAG_NAME }}
+                git push origin ${{ env.TAG_NAME }}
               env:
-                  GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
+                GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}

@@ -1,6 +1,7 @@
 name: Create new tag on dispatch
 
 on:
+    workflow_dispatch:
     repository_dispatch:
         types: [sveltia-cms-publish] # Specify your custom event type here
 

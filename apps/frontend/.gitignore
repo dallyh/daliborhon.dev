@@ -1,9 +1,0 @@
-# build output
-dist/
-
-# generated types
-.astro/
-
-# Paraglide JS
-paraglide/
-

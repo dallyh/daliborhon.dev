@@ -1,0 +1,32 @@
+export const siteConfig = {
+	blog: {
+		pageSize: 6,
+		recentPostsSize: 3,
+		featuredPostsSize: 3,
+		previewPostsSize: 6,
+		codeBlockTheme: "material-theme-palenight",
+		authorName: "Dalibor Hon",
+	},
+	projects: {
+		recentProjectsSize: 3,
+	},
+	i18n: {
+		locales: {
+			cs: {
+				path: "cs",
+				codes: ["cs", "cs-CZ", "sk", "sk-SK"],
+				title: "Čeština",
+			},
+			en: {
+				path: "en",
+				codes: ["en", "en-GB", "en-US", "en-CA"],
+				title: "English",
+			},
+		},
+		defaultLocale: "cs",
+		localeCookie: {
+			name: "redirected-locale",
+			expDays: 60,
+		},
+	},
+};

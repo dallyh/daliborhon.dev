@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getAbsoluteLocaleUrl } from "astro:i18n";
+import { defaultLocale, locales } from "@i18n-config";
+import { getPathFromUrl } from "@i18n/utils";
+import { getAbsoluteBlogPostUrl, getBlogPostTranslations } from "@utils/content";
+
+interface Props {
+	post?: CollectionEntry<"posts">;
+}
+const { post } = Astro.props;
+---
+
+<Fragment>
+	<link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl(defaultLocale, getPathFromUrl(Astro.url))} />
+	{!post && locales.map((locale) => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, getPathFromUrl(Astro.url))} />)}
+	{
+		post &&
+			(async () => {
+				const posts = await getBlogPostTranslations(post);
+				return posts.map(async (post) => {
+					const value = getAbsoluteBlogPostUrl(post.data.language, post);
+					return <link rel="alternate" hreflang={post.data.language} href={value} />;
+				});
+			})
+	}
+</Fragment>

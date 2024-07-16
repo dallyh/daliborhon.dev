@@ -1,0 +1,117 @@
+---
+import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "$messages";
+import { removeTrailingSlash } from "@utils";
+import { Icon } from "astro-icon/components";
+
+const { APP_VERSION_NAME } = import.meta.env;
+
+const locale = Astro.currentLocale!;
+const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
+---
+
+<footer class="footer-container">
+	<div class="left-section">
+		<a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
+			<Icon name="bi:rss-fill" />
+		</a>
+		<div class="powered-by">
+			<p>Powered by:</p>
+			<a href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
+				<Icon name="astro-icon-dark" />
+			</a>
+		</div>
+		<div class="hosted-by">
+			<p>Hosted by:</p>
+			<a href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
+				<Icon name="zerops-logo-symbol" />
+			</a>
+		</div>
+	</div>
+	<div class="right-section">
+		<div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
+		<div class="build-info">
+			[<a href={tagHref}>{APP_VERSION_NAME ?? "tag"}</a>]
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer-container {
+		width: 100%;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		gap: 1rem;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 0.875rem;
+		color: var(--footer-color);
+		margin-top: 1rem;
+		border-top: var(--border-darker);
+
+		@media (max-width: 468px) {
+			flex-direction: column;
+		}
+	}
+
+	.build-info {
+		text-align: right;
+
+		@media (max-width: 468px) {
+			text-align: center;
+		}
+	}
+
+	.right-section {
+		line-height: 1.2;
+	}
+
+	.left-section {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+
+		.hosted-by,
+		.powered-by {
+			display: flex;
+			gap: 0.4rem;
+			align-items: center;
+
+			p {
+				font-size: 0.725rem;
+			}
+		}
+
+		.astro {
+			color: var(--body-color);
+
+			svg {
+				height: auto;
+				width: 3.2rem;
+				margin-top: 2px;
+			}
+		}
+
+		.zerops {
+			svg {
+				height: auto;
+				width: 3.8rem;
+			}
+		}
+
+		.rss,
+		.rss:visited {
+			color: #ee802f;
+			opacity: 0.8;
+
+			svg {
+				height: auto;
+				width: 1.2rem;
+			}
+		}
+	}
+</style>

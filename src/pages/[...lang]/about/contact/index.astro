@@ -1,0 +1,40 @@
+---
+import * as m from "$messages";
+import Loader from "@components/astro/global/Loader.astro";
+import SearchMeta from "@components/astro/global/SearchMeta.astro";
+import Section from "@components/astro/global/Section.astro";
+import SocialLinks from "@components/astro/home/SocialLinks.astro";
+import ContactForm from "@components/react/ContactForm/ContactForm";
+import type { AllowedLocales } from "@i18n-config";
+import PageLayout from "@layouts/PageLayout.astro";
+
+export { getStaticPaths } from "@i18n/utils";
+
+const locale = Astro.currentLocale as AllowedLocales;
+
+const layoutProps = {
+	title: "Dalibor Hon - " + m.common__contact(),
+	description: m.contact__leave_message_title(),
+};
+
+const searchProps = {
+	title: m.common__contact(),
+	description: layoutProps.description,
+};
+---
+
+<PageLayout {...layoutProps}>
+	<SearchMeta {...searchProps} />
+	<Section isFirstSection sectionTitle={m.common__contact()} id="contact">
+		<Section sectionTitle={m.common__social_links_title()} sectionDescription={m.contact__contact_me_social()} id="contactSocial">
+			<div class="socials-container">
+				<SocialLinks />
+			</div>
+		</Section>
+		<Section sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
+			<ContactForm locale={locale} client:only="react">
+				<Loader slot="loader" standalone />
+			</ContactForm>
+		</Section>
+	</Section>
+</PageLayout>

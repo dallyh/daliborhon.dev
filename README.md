@@ -2,28 +2,42 @@
 
 ## Info
 
-This is an [Astro](https://astro.build) and [Sanity](https://sanity.io) project, to be used as my personal website.
-All of the hosting is currently done on [Cloudflare](https://cloudflare.com).
+This is an [Astro](https://astro.build) project for my personal website, which I plan to use as a blog.
+The project is continually in development, as I also take it as an opportunity to learn something new.
 
-This project uses `pnpm` as it's package manager. It is installed using `corepack`. If you don't have it enabled, please see the [corepack docs](https://nodejs.org/api/corepack.html).
+I guess for experienced developers a lot of things in this repo will not make any sense, however, everybody has to start somewhere.
 
-> [!WARNING]
-> I'm not a developer (but i'm trying). Please be vary of what lies in this repository.
+## Stack
 
-For more info please see the [frontend](./apps/frontend/README.md) readme, and the [studio](./apps/studio/README.md) readme files.
+-   Frameworks:
+    -   [Astro](https://astro.build)
+    -   Some of the UI: [React](https://react.dev/)
+    -   Internationalization [Inlang - ParaglideJS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
+- Content management
+    - For content I do use plain markdown (Astro's content collections) and [Sveltia](https://github.com/sveltia/sveltia-cms) to manage it.
 
-## Turborepo
+## Deployment
 
-Because I see myself rebuilding this project on Cloudflare many times even without any changes, I do use remote cache for Turborepo.
-The cache is hosted on Cloudflare, and uses [this](https://adirishi.github.io/turborepo-remote-cache-cloudflare/) package to do so.
+Deployments are done on [Zerops](https://zerops.io) for all new tags containing `cms-*` (automatically by [Sveltia](https://github.com/sveltia/sveltia-cms)) or `deploy-*` (manually).
 
-### Variables
 
-Variables in `.env` are used only locally, variables in `.dev.vars` or `wrangler.toml` are used in the Cloudflare's runtime.
+## Variables
 
-| Name                             | Defined in (per package/app) | Description                                                                                           |
-| :------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------- |
-| TURBO_API                        | wrangler.toml                | URL for self hosted Turborepo remote cache                                                            |
-| TURBO_TEAM                       | wrangler.toml                | See [here](https://adirishi.github.io/turborepo-remote-cache-cloudflare/introduction/setup-turborepo) |
-| TURBO_REMOTE_CACHE_SIGNATURE_KEY | .dev.vars                    | See [here](https://adirishi.github.io/turborepo-remote-cache-cloudflare/introduction/setup-turborepo) |
-| TURBO_TOKEN                      | .dev.vars                    | See [here](https://adirishi.github.io/turborepo-remote-cache-cloudflare/introduction/setup-turborepo) |
+List of used variables can be found in the [astro.config.mjs](./astro.config.mjs) file.
+
+## Commands
+
+| Command             | Action                                                                  |
+| :------------------ | :---------------------------------------------------------------------- |
+| `dev`               | Starts local dev server at `localhost:4321`                             |
+| `dev:tunnel`        | Runs a localtunnel proxy to test endpoints                              |
+| `dev-host`          | Starts local dev server hosted at a network                             |
+| `build`             | Build production site to `./dist/`                                      |
+| `start`             | Starts the production server                                            |
+| `preview`           | Preview the build locally with Wrangler                                 |
+| `astro ...`         | Run CLI commands like `astro add`, `astro preview`                      |
+| `sync`              | Runs the `astro sync` command to generate content collection types      |
+| `format:code`       | Formattes code using Biome and Prettier                                 |
+| `format:imports`    | Formattes imports using Biome                                           |
+| `build:index`       | Generates indexes for Pagefind from `./dist/` (site mustbe built first) |
+| `compile:paraglide` | Compiles Paraglide project located at `./project.inlang`                |

@@ -22,9 +22,9 @@ jobs:
             - name: Determine tag sequence number
               id: tag_number
               run: |
-                BRANCH_NAME=${{ vars.CMS_DISPATCH_REF }}
+                CMS_TAG_NAME=${{ vars.CMS_TAG_NAME }}
                 DATE=$(date +'%Y%m%d')
-                TAG_PREFIX="${BRANCH_NAME}-${DATE}"
+                TAG_PREFIX="${CMS_TAG_NAME}-${DATE}"
                 EXISTING_TAGS=$(git tag --list "${TAG_PREFIX}-*")
                 if [ -z "$EXISTING_TAGS" ]; then
                   SEQUENCE=1

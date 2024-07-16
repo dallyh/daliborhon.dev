@@ -1,0 +1,28 @@
+name: Create new tag on dispatch
+
+on:
+    repository_dispatch:
+        types: [sveltia-cms-publish] # Specify your custom event type here
+
+jobs:
+    create_tag:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+              with:
+                  ref: exp-cc-v4
+
+            - name: Get current date
+              id: date
+              run: echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+            - name: Create a new tag
+              run: |
+                  BRANCH_NAME=exp-cc-v4
+                  TAG_NAME="${BRANCH_NAME}-$(date +'%Y%m%d')"
+                  git tag $TAG_NAME
+                  git push origin $TAG_NAME
+              env:
+                  GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}

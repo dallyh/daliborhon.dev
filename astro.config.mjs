@@ -10,11 +10,11 @@ import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
 import node from "@astrojs/node";
-// Default config
+
 const { NODE_ENV } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 const DEV_ENV = NODE_ENV !== "production";
-const SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://zo.daliborhon.dev";
+const SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://daliborhon.dev";
 
 console.log(`>> Using environment: '${NODE_ENV}'`);
 console.log(`>> Using SITE_URL: '${SITE_URL}'`);

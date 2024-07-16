@@ -8,6 +8,7 @@ zerops:
               GITHUB_API_AUTH_TOKEN: ${RUNTIME_GITHUB_API_AUTH_TOKEN}
               OA_GITHUB_CLIENT_SECRET: ${RUNTIME_OA_GITHUB_CLIENT_SECRET}
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
+              APP_VERSION_NAME: ${RUNTIME_appVersionName}
           buildCommands:
               - pnpm install
               - pnpm run build
@@ -23,4 +24,5 @@ zerops:
                 httpSupport: true
           envVariables:
               HOST: 0.0.0.0
+              APP_VERSION_NAME: ${appVersionName}
           start: pnpm start

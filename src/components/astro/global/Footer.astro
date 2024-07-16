@@ -5,10 +5,10 @@ import * as m from "$messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 
-const { appVersionName } = import.meta.env;
+const { APP_VERSION_NAME } = import.meta.env;
 
 const locale = Astro.currentLocale!;
-const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${appVersionName}`;
+const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
 ---
 
 <footer class="footer-container">
@@ -32,7 +32,7 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${appVers
 	<div class="right-section">
 		<div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
 		<div class="build-info">
-			[<a href={tagHref}>{appVersionName ?? "tag"}</a>]
+			[<a href={tagHref}>{APP_VERSION_NAME ?? "tag"}</a>]
 		</div>
 	</div>
 </footer>

@@ -1,9 +1,7 @@
 zerops:
     - setup: frontend
       build:
-          os: ubuntu
           base: nodejs@22
-
           envVariables:
               GITHUB_API_AUTH_TOKEN: ${RUNTIME_GITHUB_API_AUTH_TOKEN}
               OA_GITHUB_CLIENT_SECRET: ${RUNTIME_OA_GITHUB_CLIENT_SECRET}
@@ -17,7 +15,6 @@ zerops:
               - node_modules
               - package.json
       run:
-          os: ubuntu
           base: nodejs@22
           ports:
               - port: 4321

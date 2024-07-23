@@ -31,9 +31,13 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 	</div>
 	<div class="right-section">
 		<div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
-		<div class="build-info">
-			[<a href={tagHref}>{APP_VERSION_NAME ?? "tag"}</a>]
-		</div>
+		{
+			APP_VERSION_NAME && APP_VERSION_NAME !== "" && (
+				<div class="build-info">
+					[<a href={tagHref}>{APP_VERSION_NAME}</a>]
+				</div>
+			)
+		}
 	</div>
 </footer>
 

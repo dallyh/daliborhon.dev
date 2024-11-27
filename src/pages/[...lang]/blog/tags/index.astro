@@ -1,65 +1,95 @@
 ---
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
-import Tag from "@components/astro/blog/Tag.astro";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getPostsByTag } from "@utils/content";
-import type { getStaticPaths } from "../index.astro";
 
-export { getStaticPaths } from "@i18n/utils";
+export const prerender = false;
+let search = Astro.url.searchParams.get("tag");
 
 const locale = Astro.currentLocale!;
 
 const layoutProps = {
-	title: `${m.blog__categories()} - Blog`,
+	title: `${m.blog__tags()} - Blog`,
 	description: m.blog__blog_site_description(),
 };
 
 const tags = await getCollection("tags");
+if (tags !== undefined) {
+	tags.sort((a, b) => {
+		if (a.id < b.id) return -1;
+		if (a.id > b.id) return 1;
+		return 0;
+	});
+}
+
+if (search === null) {
+	search = tags[0].id;
+}
+const posts = await getPostsByTag(locale, search);
+
 ---
 
-<PageLayout {...layoutProps}>
-	<BreadCrumbs>
-		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
 		<BreadCrumbsItem currentPage={true} label={m.blog__tags()} />
-	</BreadCrumbs>
+	</Fragment>
 	<Section id="tags" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
-		{!tags && <p>{m.blog__no_tags()}</p>}
+		{tags && tags.length === 0 && <p>{m.blog__no_tags()}</p>}
 		{
-			tags && (
-				<ul class="tag-list">
-					{tags.map(async (tag) => {
-						const posts = await getPostsByTag(locale, tag.id);
-						return <Tag {tag} {posts} />;
-					})}
-				</ul>
+			tags && tags.length !== 0 && (
+				<Fragment>
+					<div class="tabs is-toggle">
+						{tags && (
+							<ul class="tags">
+								{tags.map(async (tag) => {
+									return (
+										<li class={`${tag.id === search ? "is-active" : ""}`}>
+											<a class="has-text-weight-bold is-size-6 tag mb-2" href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
+												<span class="icon-text">
+													<span class="icon">
+														<i class="fas fa-tag" />
+													</span>
+													<span>{tag.id}</span>
+												</span>
+											</a>
+										</li>
+									);
+								})}
+							</ul>
+						)}
+					</div>
+					{posts && posts.length !== 0 && (
+						<div>
+							<PostsGrid posts={posts} />
+						</div>
+					)}
+					{posts === undefined ||
+						(posts.length === 0 && (
+							<div>
+								<h2 class="title is-size-5"> {m.blog__no_posts()}</h2>
+							</div>
+						))}
+				</Fragment>
 			)
 		}
 	</Section>
 </PageLayout>
 
 <style>
-	.tag-list {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-
-		a {
-			color: var(--body-color);
-			display: inline-block;
-
-			&:visited {
-				color: var(--body-color);
-			}
-
-			&:hover {
-				color: rgba(var(--accent), 1);
-			}
+	.tabs {
+		overflow-x: auto;
+		flex-wrap: wrap;
+		.tags {
+			display: flex;
+			flex-wrap: wrap;
+			flex-shrink: 1;
 		}
 	}
 </style>

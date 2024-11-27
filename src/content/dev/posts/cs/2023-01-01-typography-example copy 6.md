@@ -3,7 +3,7 @@ translationKey: 2023-01-01-typography-example
 title: Příklad typografie
 description: Tohle je můj první příspěvek.
 tags:
-  - astro
+  - test
 language: cs
 hidden: true
 featured: true

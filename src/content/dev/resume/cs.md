@@ -11,7 +11,7 @@ currentPosition: Business Consultant
 **Kontakt:**
 
 - [LinkedIn](https://www.linkedin.com/in/dalibor-hon/)
-- [Email (online formulář)](https://www.daliborhon.dev/cs/about/contact)
+- [Email (online formulář)](https://www.daliborhon.dev/cs/about/#contact)
 - [contact@daliborhon.dev](mailto:contact@daliborhon.dev)
 
 Web: [www.daliborhon.dev](https://www.daliborhon.dev)
@@ -20,7 +20,7 @@ Web: [www.daliborhon.dev](https://www.daliborhon.dev)
 
 ### +55 Dokončených Projektů
 
-Za své léta v oboru business konzultanta mám již za sebou více než 45 dokončených projektů. Patří mezi ně projekty menších rozměrů, ale také projekty pohybující se v řádech měsíců až let pro dokončení.
+Za své léta v oboru business konzultanta mám již za sebou více než 50 dokončených projektů. Patří mezi ně projekty menších rozměrů, ale také projekty pohybující se v řádech měsíců až let pro dokončení.
 Mezi většinu těchto projektů patří hlavně implementace software pro vytěžování a správu pro digitální dokumenty (systémy DMS, primárně M-Files či na míru šitá řešení v MS SharePoint).
 
 #### Business Analýza

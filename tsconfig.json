@@ -1,6 +1,7 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "include": ["./src/**/*", "./*.ts"],
+    "include": [".astro/types.d.ts", "./src/**/*", "./*.ts"],
+    "exclude": ["dist"],
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",

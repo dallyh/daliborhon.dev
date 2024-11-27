@@ -158,5 +158,6 @@
     "resume__download_cv": "Download CV",
     "error__not_found_detail": "Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable.",
     "common__page": "Page",
-    "common__profile_picture": "Profile picture"
+    "common__profile_picture": "Profile picture",
+    "about__about_me": "I am Dalibor Hon, an experienced business consultant with over six years of expertise in digital transformation. Throughout my career, I have successfully completed more than 50 projects, ranging from implementing DMS systems like M-Files and SharePoint to developing tailored solutions. My focus lies in business analysis, programming, and customizing software platforms to streamline document management and optimize business processes."
 }

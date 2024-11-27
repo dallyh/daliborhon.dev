@@ -1,15 +1,20 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
+import { glob } from "astro/loaders";
+
+const isDevOrPreview = import.meta.env.DEV ? true : import.meta.env.PREVIEW ? true : false;
+const path = isDevOrPreview ? "dev" : "prod";
+console.log(`Content config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 // Define a `type` and `schema` for each collection
-const postsCollection = defineCollection({
-	type: "content",
+const posts = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/posts` }),
 	schema: () =>
 		z.object({
 			translationKey: z.string(),
 			title: z.string(),
-			pubDate: z.date(),
-			modDate: z.date().or(z.string()).optional(),
+			pubDate: z.coerce.date(),
+			modDate: z.coerce.date().or(z.string()).optional(),
 			hidden: z.boolean().optional(),
 			description: z.string(),
 			featured: z.boolean().default(false).optional(),
@@ -31,8 +36,8 @@ const postsCollection = defineCollection({
 });
 
 // TO-DO: Find a way to do this automatically with locales.map...
-const tagsCollection = defineCollection({
-	type: "data",
+const tags = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.yaml", base: `./src/content/${path}/tags` }),
 	schema: z.object({
 		id: z.string(),
 		languages: z.object({
@@ -42,8 +47,8 @@ const tagsCollection = defineCollection({
 	}),
 });
 
-const projectsCollection = defineCollection({
-	type: "content",
+const projects = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/projects` }),
 	schema: () =>
 		z.object({
 			title: z.string(),
@@ -53,15 +58,15 @@ const projectsCollection = defineCollection({
 				}),
 			}),
 			sourceUrl: z.string(),
-			startDate: z.date(),
+			startDate: z.coerce.date(),
 			image: z.string(),
-			tags: z.array(reference("project-tags")),
+			tags: z.array(reference("projectTags")),
 			active: z.boolean().default(true),
 		}),
 });
 
-const projectTagsCollection = defineCollection({
-	type: "data",
+const projectTags = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.yaml", base: `./src/content/${path}/project-tags` }),
 	schema: z.object({
 		id: z.string(),
 		title: z.string(),
@@ -69,8 +74,8 @@ const projectTagsCollection = defineCollection({
 	}),
 });
 
-const resumeCollection = defineCollection({
-	type: "content",
+const resume = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/resume` }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
@@ -80,9 +85,9 @@ const resumeCollection = defineCollection({
 
 // Export a single `collections` object to register your collection(s)
 export const collections = {
-	posts: postsCollection,
-	tags: tagsCollection,
-	projects: projectsCollection,
-	"project-tags": projectTagsCollection,
-	resume: resumeCollection,
+	posts,
+	tags,
+	projects,
+	projectTags,
+	resume,
 };

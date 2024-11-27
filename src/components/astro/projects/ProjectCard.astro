@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { getEntries } from "astro:content";
+import { getEntries, render } from "astro:content";
 import { formatDateTime } from "@utils";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
 import { extractFileNameAndExtension } from "src/utils/extractFilenameAndExtension";
@@ -16,7 +16,7 @@ const locale = Astro.currentLocale!;
 const { project } = Astro.props;
 const { title, image, sourceUrl, tags, startDate } = project.data;
 const relatedTags = await getEntries(tags);
-const { Content } = await project.render();
+const { Content } = await render(project);
 
 const projectUrl = new URL(sourceUrl);
 const isOnGithub = projectUrl.host === "github.com";
@@ -53,154 +53,67 @@ function getImage(name: string, ext: string): ImageMetadata {
 
 <div class="card">
 	<div class="card-content">
-		<i class="card-image" title={title} aria-label={title}>
-			{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
-			{file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} title={title} loading="lazy" format="webp" />}
-		</i>
-		<div class="card-info-wrapper">
-			<div class="card-info-title">
-				<h3 class="title-meta">
-					<a href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<Icon name="bi:box-arrow-up-right" /></a>
-					<p class="project-date">
-						<span>🚀</span>
-						{isOnGithub && <GithubDate {projectUrl} />}
-						{!isOnGithub && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
-					</p>
-				</h3>
-				<div class="card-info-tags">
+		<div class="media">
+			<div class="media-left">
+				{
+					file.ext !== "svg" && (
+						<figure class="image is-48x48">
+							<Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />
+						</figure>
+					)
+				}
+				{
+					file.ext === "svg" && (
+						<div class="svg-img-card">
+							<Fragment set:html={getSVG(file.name)} />
+						</div>
+					)
+				}
+			</div>
+			<div class="media-content">
+				<a class="title is-4" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<Icon name="bi:box-arrow-up-right" /></a>
+				<p class="subtitle is-6 mt-2">
+					<span>🚀</span>
+					{isOnGithub && <GithubDate {projectUrl} />}
+					{!isOnGithub && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
+				</p>
+				<div class="tags are-small">
 					{
 						relatedTags.map((tag) => {
 							const { bgColor, title } = tag.data;
 							return (
-								<div class="rounded-tag" style={`background: ${bgColor};`}>
+								<span class="tag has-text-black" style={`background: ${bgColor};`}>
 									{title}
-								</div>
+								</span>
 							);
 						})
 					}
 				</div>
 			</div>
-			<div class="card-body md-content">
+		</div>
+		<div class="content">
+			<div class="md-content">
 				<Content />
 			</div>
-			{isOnGithub && <GithubLanguages {projectUrl} />}
 		</div>
+		{isOnGithub && <GithubLanguages {projectUrl}/>}
 	</div>
-
-	<style is:global>
-		.card-image {
-			align-items: center;
-			display: flex;
-			justify-content: center;
-			overflow: hidden;
-			height: 120px;
-			width: 100px;
-			align-self: center;
-			padding: 0.5rem;
-
-			@media (max-width: 468px) {
-				padding: 0;
-			}
-
-			> img,
-			> svg {
-				color: var(--body-color);
-				opacity: 0.8;
-
-				height: 100%;
-				width: 100%;
-			}
-		}
-	</style>
-
-	<style>
-		.card {
-			background-color: var(--card-bg);
-			box-shadow: var(--global-box-shadow);
-			border-radius: var(--border-radius);
-			width: 100%;
-			min-height: 155px;
-			border: var(--border);
-			position: relative;
-			overflow: hidden;
-			display: flex;
-			flex-direction: column;
-			padding: 1rem;
-		}
-
-		.card-content {
-			display: flex;
-			gap: 1rem;
-			position: relative;
-
-			@media (max-width: 468px) {
-				flex-direction: column;
-			}
-		}
-
-		.card-info-tags {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 0.5rem;
-			font-size: 0.725rem;
-			margin-top: 0.5rem;
-			color: rgb(40, 40, 40);
-			font-weight: 700;
-
-			.rounded-tag {
-				padding-top: 0.25rem;
-				padding-bottom: 0.25rem;
-				padding-left: 0.5rem;
-				padding-right: 0.5rem;
-				border-radius: 8px;
-			}
-		}
-
-		.card-info-wrapper {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 1rem;
-			width: 100%;
-
-			.card-body {
-				color: var(--body-color);
-				font-size: 0.875em;
-				margin-top: 8px;
-			}
-		}
-
-		.card-info-title {
-			.title-meta {
-				display: flex;
-				flex-direction: column;
-				gap: 0.5rem;
-
-				.project-date {
-					color: var(--body-color);
-					font-size: 0.875rem;
-					opacity: 0.8;
-				}
-
-				> a {
-					font-size: 1.1rem;
-					display: inline-flex;
-
-					svg {
-						position: relative;
-						margin: 0 0 0 4px;
-						height: 1rem;
-						width: 1rem;
-						bottom: 2px;
-					}
-				}
-			}
-		}
-
-		.date {
-			position: absolute;
-			right: 0;
-			font-size: 0.825rem;
-		}
-	</style>
 </div>
+
+<style is:global>
+	.svg-img-card {
+		> svg {
+			width: 48px;
+			height: 48px;
+		}
+	}
+
+	.title {
+		> svg {
+				margin: 0 0 0 10px;
+				height: 20px;
+				width: 20px;
+				bottom: 0px;
+			}
+	}
+</style>

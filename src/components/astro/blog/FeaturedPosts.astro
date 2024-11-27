@@ -1,26 +1,29 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import * as m from "$messages";
-import Section from "../global/Section.astro";
+import Section, { type Props as SectionProps } from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
 	posts: CollectionEntry<"posts">[] | undefined;
-	isFirstSection?: boolean;
 	showSeeAllUrl?: boolean;
+	sectionProps?: SectionProps;
 }
 
-const { isFirstSection = false, showSeeAllUrl = true, posts } = Astro.props;
+const { showSeeAllUrl = true, posts, sectionProps } = Astro.props;
 
-const sectionProps = {
+const defaultSectionProps: SectionProps = {
 	id: "featuredPosts",
-	isFirstSection,
+	isFirstSection: false,
 	sectionTitle: m.blog__featured_posts_title(),
 	sectionDescription: m.blog__featured_posts_description(),
+	heading: "h2",
 };
+
+const mergedSectionProps = { ...defaultSectionProps, ...sectionProps };
 ---
 
-<Section {...sectionProps}>
+<Section {...mergedSectionProps}>
 	{!posts && <p>{m.blog__no_featured_posts()} 😞</p>}
 	{posts && posts.length === 0 && <p>{m.blog__no_featured_posts()} 😞</p>}
 	{

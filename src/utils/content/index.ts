@@ -4,7 +4,7 @@ export * from "./getBlogPostSlug";
 export * from "./getBlogPostUrl";
 export * from "./getFilteredPostsCollection";
 export * from "./getOgImageUrl";
-export * from "./getTagByLocale";
+export * from "./getTagById";
 export * from "./getProjectsByLocale";
 export * from "./getBlogPostDate";
 export * from "./getSlugWithoutLocale";

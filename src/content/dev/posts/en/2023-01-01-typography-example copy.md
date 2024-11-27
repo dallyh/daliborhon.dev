@@ -3,9 +3,9 @@ translationKey: 2023-01-01-typography-example
 title: Typography example
 description: This is my first blog post.
 tags:
-  - astro
+  - development
 language: en
-hidden: true
+hidden: false
 featured: true
 image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01

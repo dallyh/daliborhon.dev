@@ -1,3 +1,4 @@
+import { render } from "astro:content";
 import * as m from "$messages";
 import rss from "@astrojs/rss";
 import { getBlogPostUrl, getFilteredPostsCollection } from "@utils/content";
@@ -15,7 +16,7 @@ export async function GET({ site, currentLocale }: APIContext) {
 	}
 
 	const items = await Promise.all(allBlogArticles.map(async (post) => {
-		const { Content } = await post.render();
+		const { Content } = await render(post);
 		const { title, pubDate, description } = post.data;
 
 		return {

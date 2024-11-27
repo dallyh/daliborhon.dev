@@ -2,11 +2,12 @@
 import Indicator from "astro-loading-indicator/component";
 ---
 
-<Indicator color="rgba(var(--accent), 1)" />
+<Indicator color="var(--bulma-primary)" />
 
 <style is:global>
 	:root .astro-loading-indicator {
-		top: var(--header-height);
-		z-index: 9999;
+		top: 0;
+		height: 2px;
+		z-index: 10000;
 	}
 </style>

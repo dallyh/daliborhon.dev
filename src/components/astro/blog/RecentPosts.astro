@@ -1,16 +1,32 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import * as m from "$messages";
-import Section from "../global/Section.astro";
+import Section, { type Props as SectionProps } from "../global/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
 
 interface Props {
 	posts: CollectionEntry<"posts">[] | undefined;
 	filterFeatured?: boolean;
 	showSeeAllUrl?: boolean;
+	sectionProps?: SectionProps;
 }
 
-const { posts, filterFeatured = false, showSeeAllUrl = true } = Astro.props;
+const {
+	posts,
+	filterFeatured = false,
+	showSeeAllUrl = true,
+	sectionProps,
+} = Astro.props;
+
+const defaultSectionProps: SectionProps = {
+  isFirstSection: false,
+  id: "recentPosts",
+  sectionTitle: m.blog__recent_posts_title(),
+  sectionDescription: m.blog__recent_posts_description(),
+  heading: "h2",
+};
+
+const mergedSectionProps = { ...defaultSectionProps, ...sectionProps };
 
 let filteredPosts = posts;
 if (filterFeatured) {
@@ -18,15 +34,9 @@ if (filterFeatured) {
 		return post?.data.featured === false || post?.data.featured === undefined;
 	});
 }
-
-const sectionProps = {
-	id: "recentPosts",
-	sectionTitle: m.blog__recent_posts_title(),
-	sectionDescription: m.blog__recent_posts_description(),
-};
 ---
 
-<Section {...sectionProps}>
+<Section {...mergedSectionProps}>
 	{!filteredPosts && <p>{m.blog__no_posts()} 😞</p>}
 	{filteredPosts && filteredPosts.length === 0 && <p>{m.blog__no_posts()} 😞</p>}
 	{

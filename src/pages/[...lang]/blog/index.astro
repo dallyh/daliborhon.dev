@@ -22,14 +22,12 @@ const layoutProps = {
 };
 ---
 
-<PageLayout {...layoutProps}>
-	<BreadCrumbs>
-		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
 		<BreadCrumbsItem currentPage={true} label="Blog" />
-	</BreadCrumbs>
-	<Section id="blogIntro" sectionTitle="Blog">
-		<p>{m.blog__blog_description()}</p>
+	</Fragment>
+	<Section id="blogIntro" sectionTitle="Blog" sectionDescription={m.blog__blog_description()} isFirstSection>
+		<FeaturedPosts posts={featuredPosts} sectionProps={{ isInsideSection: true, id: "featuredPosts", heading: "h2" }} />
+		<RecentPosts posts={recentPosts} sectionProps={{ isInsideSection: true, id: "recentPosts", heading: "h2" }} />
 	</Section>
-	<FeaturedPosts posts={featuredPosts} />
-	<RecentPosts posts={recentPosts} />
 </PageLayout>

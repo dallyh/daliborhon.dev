@@ -1,4 +1,4 @@
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
 import { locales } from "@i18n-config";
 import { getRoutingLocale } from "@i18n/utils";
 import { createResumePdfFilename } from "@utils";
@@ -30,13 +30,14 @@ export const GET: APIRoute = async ({ params }) => {
 	if (!entry) {
 		return new Response(null, { status: 500 });
 	}
-	const { Content } = await entry.render();
-
-	const content = await container.renderToString(Content);
+	const { Content } = await render(entry);
+	const content = await container.renderToString(Content, { partial: false });
 
 	const { JSDOM } = jsdom;
 	const { window } = new JSDOM("");
-	pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+	//@ts-ignore the types are wrong, it is not under pdfFonts.pdfMake.vfs...
+	pdfMake.vfs = pdfFonts.vfs;
 
 	const html = htmlToPdfMake(content, {
 		window,

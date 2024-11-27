@@ -14,12 +14,12 @@ const { post, tags } = Astro.props;
 const locale = Astro.currentLocale as AllowedLocales;
 ---
 
-<ul class="tag-list">
+<ul>
 	{
 		tags &&
 			tags.map((tag) => (
-				<li>
-					<a class="underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
+				<li class="tag">
+					<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
 				</li>
 			))
 	}
@@ -32,8 +32,8 @@ const locale = Astro.currentLocale as AllowedLocales;
 						<>
 							{relatedTags.map(async (tag) => {
 								return (
-									<li>
-										<a class="underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
+									<li class="tag">
+										<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
 									</li>
 								);
 							})}
@@ -46,23 +46,7 @@ const locale = Astro.currentLocale as AllowedLocales;
 </ul>
 
 <style>
-	.tag-list {
-		display: flex;
-		gap: 0.3rem;
-		flex-wrap: wrap;
-		text-align: center;
-
-		li {
-			a {
-				display: inline-block;
-				font-size: 0.875rem;
-				position: relative;
-				color: rgba(var(--accent));
-
-				&:visited {
-					color: rgba(var(--accent));
-				}
-			}
-		}
+	ul {
+		list-style: none;
 	}
 </style>

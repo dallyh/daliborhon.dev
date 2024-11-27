@@ -18,7 +18,7 @@
     "blog__no_featured_posts": "Momentálně zde nejsou žádné vybrané příspěvky.",
     "blog__no_posts": "Momentálně zde nejsou žádné příspěvky.",
     "blog__no_tagged_posts": "Momentálně zde nejsou příspěvky označené",
-    "blog__no_tags": "Momentálně zde nejsou žádné značky.",
+    "blog__no_tags": "Momentálně zde nejsou žádné štítky.",
     "blog__open_toc": "Rozbalit obsah",
     "blog__page_count_title": "Aktuální stránka {current} z celkového počtu {total} stránek.",
     "blog__post": "Příspěvek",
@@ -158,5 +158,6 @@
     "resume__download_cv": "Stáhnout CV",
     "error__not_found_detail": "Je mi líto, ale stránka, kterou hledáte, neexistuje, byla odstraněna, změnil se její název nebo je dočasně nedostupná.",
     "common__page": "Stránka",
-    "common__profile_picture": "Profilový obrázek"
+    "common__profile_picture": "Profilový obrázek",
+    "about__about_me": "Jsem Dalibor Hon, zkušený business konzultant s více než 6 lety praxe v oblasti digitalizace firem. Za svou kariéru jsem dokončil přes 50 projektů, od implementace DMS systémů jako M-Files a SharePoint až po tvorbu řešení šitých na míru. Specializuji se na business analýzu, programování a přizpůsobení softwarových platforem pro efektivní správu dokumentů a optimalizaci firemních procesů."
 }

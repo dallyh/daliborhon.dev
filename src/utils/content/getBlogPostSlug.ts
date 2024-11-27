@@ -4,7 +4,7 @@ import { getSlugWithoutLocale } from "./getSlugWithoutLocale";
 
 export function getBlogPostSlug(locale: string, post: CollectionEntry<"posts">) {
 	const regex = /^(\d{4})-(\d{2})-(\d{2})/;
-	const filename = getSlugWithoutLocale(post.slug);
+	const filename = getSlugWithoutLocale(post.id);
 	const slug = slugifyStr(locale, post.data.title);
 
 	const match = filename.match(regex);

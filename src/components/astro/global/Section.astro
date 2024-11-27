@@ -1,83 +1,31 @@
 ---
-interface Props {
+type Heading = "h2" | "h3" | "h4";
+
+export interface Props {
 	sectionTitle?: string;
 	sectionDescription?: string;
 	isFirstSection?: boolean;
+	isInsideSection?: boolean;
+	heading?: Heading;
 	id: string;
 }
 
-const { sectionTitle, sectionDescription, id, isFirstSection = false } = Astro.props;
+const { sectionTitle, sectionDescription = null, id, isFirstSection = false, heading = "h2", isInsideSection = false } = Astro.props;
 ---
 
-<section id={id}>
-	<div class="section-content-container">
-		{
-			sectionTitle && (
-				<div class="section-header">
-					{isFirstSection && <h1 class="gradient-text">{sectionTitle}</h1>}
-					{!isFirstSection && <h2 class="gradient-text">{sectionTitle}</h2>}
-				</div>
-			)
-		}
-		{
-			sectionDescription && (
-				<div class="section-description">
-					<p>{sectionDescription}</p>
-				</div>
-			)
-		}
-		<div class={`section-content ${sectionDescription !== undefined ? "with-description" : ""}`}>
-			<slot />
-		</div>
+<section class={`${isInsideSection === false ? "section" : "block"}`} id={id}>
+	{
+		sectionTitle && (
+			<Fragment>
+				{isFirstSection && <h1 class={`title is-3 ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h1>}
+				{!isFirstSection && heading === "h2" && <h2 class={`title ${isInsideSection ? "is-4" : "is-3 " } ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h2>}
+				{!isFirstSection && heading === "h3" && <h3 class={`title is-4 ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h3>}
+				{!isFirstSection && heading === "h4" && <h4 class={`title is-5 ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h4>}
+			</Fragment>
+		)
+	}
+	{sectionDescription && <p class="subtitle is-6">{sectionDescription}</p>}
+	<div>
+		<slot />
 	</div>
 </section>
-
-<style>
-	section {
-		display: grid;
-		width: 100%;
-		padding-bottom: 1.5rem;
-		color: var(--body-color);
-
-		@media (max-width: 768px) {
-			height: unset;
-		}
-	}
-
-	.section-content-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-start;
-
-		.section-header {
-			h2 {
-				margin: 0;
-				padding-bottom: 0.2rem;
-			}
-		}
-
-		.section-description {
-			margin-top: 0.5rem;
-		}
-
-		.section-content {
-			width: 100%;
-			height: 100%;
-			margin-top: 0.5rem;
-
-			&.with-description {
-				margin-top: 1.5rem;
-			}
-		}
-	}
-
-	.section-footer {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding-bottom: 0.5rem;
-	}
-</style>

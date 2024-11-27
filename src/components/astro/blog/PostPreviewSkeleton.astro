@@ -1,0 +1,42 @@
+<script>
+	function removeSkeletonOnIntersection() {
+		const images = document.querySelectorAll(".card-image.is-skeleton") as NodeListOf<HTMLElement>;
+
+		// Create an Intersection Observer
+		const observer = new IntersectionObserver((entries, observer) => {
+			for (const entry of entries) {
+				if (entry.isIntersecting) {
+					const imgDiv = entry.target as HTMLDivElement;
+					const i = imgDiv.querySelector("img") as HTMLImageElement;
+					// Check if the image is already loaded
+					if (i.complete) {
+						imgDiv.classList.remove("is-skeleton");
+						observer.unobserve(imgDiv); // Stop observing this element
+					} else {
+						// Wait for the image to load
+						i.onload = () => {
+							imgDiv.classList.remove("is-skeleton");
+							observer.unobserve(imgDiv); // Stop observing this element
+						};
+
+						i.onerror = () => {
+							console.error("Image failed to load:", i.src);
+						};
+					}
+				}
+			}
+		});
+
+		for (const img of images) {
+            observer.observe(img);	
+		}
+	}
+
+	document.addEventListener("astro:after-swap", () => {
+		removeSkeletonOnIntersection();
+	});
+
+	document.addEventListener("DOMContentLoaded", () => {
+		removeSkeletonOnIntersection();
+	});
+</script>

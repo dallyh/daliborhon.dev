@@ -1,28 +1,30 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
+import { setLanguageTag } from "$paraglide-runtime";
+import {type AllowedLocales, defaultLocale } from "@i18n-config";
 import MainLayout from "@layouts/MainLayout.astro";
+import { siteConfig } from "@site-config";
 import { Icon } from "astro-icon/components";
 
 export const prerender = false;
-
-const { lang } = Astro.params;
-
-if (lang === undefined) {
-	return new Response(null, { status: 400 });
-}
-
-const locale = Astro.currentLocale!;
+let locale = Astro.currentLocale ?? defaultLocale;
 
 const layoutProps = {
 	title: m.error__not_found(),
 	description: m.error__not_found_description(),
 };
+
+const configCookie = siteConfig.i18n.localeCookie;
+const localeCookie = Astro.cookies.get(configCookie.name);
+if (localeCookie) {
+	locale = localeCookie.value;
+}
+setLanguageTag(locale as AllowedLocales);
 ---
 
 <MainLayout {...layoutProps}>
 	<meta name="robots" content="noindex, nofollow" slot="head" />
-
 	<div class="notfound-container">
 		<div class="notfound">
 			<div class="notfound-404">
@@ -51,19 +53,20 @@ const layoutProps = {
 </style>
 
 <style>
-	#notfound-container {
-		position: relative;
+	.notfound-container {
+		top: 0;
+		left: 0;
+		position: fixed;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		height: 100vh;
+		width: 100vw;
 	}
 
 	.notfound {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+		position: relative;
 		max-width: 560px;
-		width: 100%;
-		padding-left: 160px;
 		line-height: 1.1;
 		display: flex;
 		flex-direction: column;
@@ -91,7 +94,7 @@ const layoutProps = {
 
 	.notfound-404 {
 		position: absolute;
-		left: 0;
+		left: -140px;
 		top: 0;
 		display: inline-block;
 		width: 140px;
@@ -100,7 +103,7 @@ const layoutProps = {
 		svg {
 			width: 100%;
 			height: 100%;
-			color: rgba(var(--accent, 1));
+			color: var(--bulma-primary);
 		}
 
 		&:before {
@@ -108,9 +111,9 @@ const layoutProps = {
 			position: absolute;
 			width: 100%;
 			height: 100%;
-			transform: scale(2.4);
+			transform: scale(1.8);
 			border-radius: 50%;
-			background-color: rgba(var(--secondary), 0.4);
+			background-color: rgba(var(--bulma-primary-rgb), 0.1);
 			z-index: -1;
 		}
 	}
@@ -147,6 +150,7 @@ const layoutProps = {
 
 	@media (max-width: 768px) {
 		.notfound-404 {
+			left: 0;
 			width: 110px;
 			height: 110px;
 		}

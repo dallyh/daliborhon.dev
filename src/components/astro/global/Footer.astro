@@ -1,121 +1,81 @@
 ---
-import { Image } from "astro:assets";
+import { APP_VERSION_NAME } from "astro:env/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 
-const { APP_VERSION_NAME } = import.meta.env;
-
 const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
 ---
 
-<footer class="footer-container">
-	<div class="left-section">
-		<a href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
-			<Icon name="bi:rss-fill" />
-		</a>
-		<div class="powered-by">
-			<p>Powered by:</p>
-			<a href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
+<footer class="footer section">
+	<hr />
+	<div class="level">
+		<div class="is-flex">
+			<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
+				<span class="icon is-medium"><i class="fas fa-lg fa-solid fa-square-rss"></i></span>
+			</a>
+			<a class="astro" href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
 				<Icon name="astro-icon-dark" />
 			</a>
-		</div>
-		<div class="hosted-by">
-			<p>Hosted by:</p>
-			<a href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
+			<a class="zerops" href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
 				<Icon name="zerops-logo-symbol" />
 			</a>
 		</div>
-	</div>
-	<div class="right-section">
-		<div>{m.footer__page_created_by()} © {new Date().getFullYear()}</div>
-		{
-			APP_VERSION_NAME && APP_VERSION_NAME !== "" && (
-				<div class="build-info">
-					[<a href={tagHref}>{APP_VERSION_NAME}</a>]
-				</div>
-			)
-		}
+		<div>
+			<p>
+				{m.footer__page_created_by()} © {new Date().getFullYear()}
+			</p>
+			<p class="app">
+				[<a href={tagHref}>{APP_VERSION_NAME}</a>]
+			</p>
+		</div>
 	</div>
 </footer>
 
 <style>
-	.footer-container {
-		width: 100%;
-		padding-top: 1rem;
-		padding-bottom: 1rem;
+	.is-flex {
 		gap: 1rem;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 0.875rem;
-		color: var(--footer-color);
-		margin-top: 1rem;
-		border-top: var(--border-darker);
-
-		@media (max-width: 468px) {
-			flex-direction: column;
-		}
-	}
-
-	.build-info {
-		text-align: right;
-
-		@media (max-width: 468px) {
-			text-align: center;
-		}
-	}
-
-	.right-section {
-		line-height: 1.2;
-	}
-
-	.left-section {
-		display: inline-flex;
-		align-items: center;
 		justify-content: center;
-		gap: 1rem;
+		align-items: center;
 
-		.hosted-by,
-		.powered-by {
-			display: flex;
-			gap: 0.4rem;
+		a {
+			display: inline-flex;
+			justify-content: center;
 			align-items: center;
-
-			p {
-				font-size: 0.725rem;
-			}
 		}
+	}
 
-		.astro {
-			color: var(--body-color);
+	.app {
+		text-align: center;
+	}
+	
+	footer {
+		--bulma-footer-padding: 1rem;
+		background-color: var(--bulma-scheme-main);
+		padding-top: 0rem;
+		padding-bottom: 1rem;
+	}
 
-			svg {
-				height: auto;
-				width: 3.2rem;
-				margin-top: 2px;
-			}
+	.astro {
+		color: unset;
+
+		svg {
+			height: auto;
+			width: 3.8rem;
 		}
+	}
 
-		.zerops {
-			svg {
-				height: auto;
-				width: 3.8rem;
-			}
+	.zerops {
+		svg {
+			height: auto;
+			width: 4rem;
 		}
+	}
 
-		.rss,
-		.rss:visited {
-			color: #ee802f;
-			opacity: 0.8;
-
-			svg {
-				height: auto;
-				width: 1.2rem;
-			}
-		}
+	.rss,
+	.rss:visited {
+		color: #ee802f;
 	}
 </style>

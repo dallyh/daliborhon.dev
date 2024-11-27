@@ -1,6 +1,5 @@
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
 import { astroI18nConfigPaths, defaultLocale, localeKeys } from "./i18n.config";
 import paraglide from "@inlang/paraglide-astro";
 import expressiveCode from "astro-expressive-code";
@@ -10,6 +9,7 @@ import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
 import node from "@astrojs/node";
+import { h } from "hastscript";
 
 const { NODE_ENV } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -27,14 +27,16 @@ const envVars = {
 	GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
 	HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
 	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
+	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
+	APP_VERSION_NAME: envField.string({ context: "client", access: "public", default: "UNKNOWN-APP" }),
 };
 
 // https://astro.build/config
 export default defineConfig({
 	site: SITE_URL,
-	output: "hybrid",
 	build: {
 		format: "directory",
+		client: "./", // Temporary fix for astro-pagefind
 	},
 	adapter: node({
 		mode: "standalone",
@@ -42,10 +44,30 @@ export default defineConfig({
 	prefetch: {
 		defaultStrategy: "hover",
 	},
+	env: {
+		schema: envVars,
+	},
 	markdown: {
 		rehypePlugins: [
 			"rehype-slug",
-			["rehype-autolink-headings", { behavior: "append" }],
+			[
+				"rehype-autolink-headings",
+				{
+					behavior: "append",
+					content: {
+						type: "element",
+						tagName: "span",
+						properties: { className: ["icon"] },
+						children: [
+							{
+								type: "element",
+								tagName: "i",
+								properties: { className: ["fas", "fa-link"] },
+							},
+						],
+					},
+				},
+			],
 			["rehype-toc", { headings: ["h2", "h3", "h4", "h5", "h6"] }],
 			[
 				"rehype-external-links",
@@ -89,7 +111,6 @@ export default defineConfig({
 		icon({
 			...iconConfig,
 		}),
-		tailwind(),
 		paraglide({
 			project: "./src/project.inlang",
 			outdir: "./src/paraglide",
@@ -102,11 +123,6 @@ export default defineConfig({
 		},
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
-		},
-	},
-	experimental: {
-		env: {
-			schema: envVars,
 		},
 	},
 });

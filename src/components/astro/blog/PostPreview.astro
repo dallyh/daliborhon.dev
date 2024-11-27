@@ -22,180 +22,39 @@ const image = getBlogPostImageUrl(locale, post, Astro.url);
 const { pubDate, modDate, title, description } = post.data;
 ---
 
-<article class="post-preview">
-	<header class="header">
-		<div class="date">
-			<FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} />
-		</div>
-	</header>
-	<a class="post-image" href={postUrl}>
-		<Icon name="bi:chevron-right" />
-		<div class="overlay"></div>
-		<span class="sr-only">{title}</span>
-		<div class="image">
-			<Image src={image} alt={title} width={1200} height={630} loading="eager" />
-		</div>
-		{post.data.hidden && <div class="post-hidden">HIDDEN</div>}
-	</a>
-	<div class="post-description">
-		<div>
-			<h3>
-				<a href={postUrl} class="post-title">{title}<Icon name="bi:chevron-right" /></a>
-			</h3>
-			<div class="post-meta">
-				<TagList tags={relatedTags} />
+<article class="card">
+	<div class="card-image is-skeleton">
+		<figure class="image is-5by3">
+			<a href={postUrl}>
+				<Image class="post-image" src={image} alt={title} width={1200} height={630} loading="lazy" />
+			</a>
+		</figure>
+	</div>
+	<div class="card-content">
+		<div class="media">
+			<div class="media-content">
+				<a class="is-size-4" href={postUrl}>{title}</a>
+				<p><FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} /></p>
 			</div>
 		</div>
-		<div class="post-headline">
-			<p>
-				{description}
-			</p>
+		<div>
+			<p class="block">{description}{post.data.hidden && <div class="post-hidden">HIDDEN</div>}</p>
+			<div class="block">
+				<TagList tags={relatedTags!} />
+			</div>
 		</div>
 	</div>
 </article>
 
 <style>
-	.post-preview {
-		display: grid;
-		grid-template-rows: max-content 1fr;
-		border: var(--border);
-		box-shadow: var(--global-box-shadow);
-		position: relative;
-		height: 100%;
-		border-radius: var(--border-radius);
-		overflow: hidden;
-	}
-
-	.header {
-		padding: 0.7rem;
-		background-color: rgba(var(--secondary), 1);
-		font-size: 0.825rem;
-		z-index: 1;
-		border-bottom: var(--border);
+	.post-hidden {
 		position: absolute;
-		border-right: var(--border);
-		top: 0;
-	}
-
-	.post-description {
-		display: flex;
-		flex-direction: column;
-		background-color: rgba(var(--secondary), 1);
-		border-top: var(--border);
-		font-size: 0.825rem;
-
-		> div:first-child {
-			display: flex;
-			flex-direction: column;
-			gap: 0.725rem;
-			padding: 1rem;
-		}
-
-		a {
-			display: block;
-			position: relative;
-			width: 100%;
-
-			svg {
-				stroke: rgba(var(--accent), 1);
-				position: absolute;
-				right: 0;
-				top: 50%;
-				transform: translateY(-50%);
-			}
-		}
-	}
-
-	.post-meta {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		flex-basis: 4rem;
-	}
-
-	.post-headline {
-		border-top: var(--border);
-		padding: 1rem;
-	}
-
-	.post-image {
-		position: relative;
-		overflow: hidden;
-		height: 100%;
-		width: 100%;
-
-		@media (max-width: 768px) {
-			display: flex;
-		}
-
-		.image {
-			border-radius: inherit;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			@media (max-width: 768px) {
-				max-height: 12rem;
-			}
-
-			img {
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
-				object-position: center;
-				border-radius: inherit;
-			}
-		}
-
-		svg {
-			opacity: 0;
-			color: white;
-			stroke: white;
-			stroke-width: 2px;
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translateY(-50%) translateX(-50%) scale(1.4);
-			transition: opacity 0.2s ease-in-out;
-			z-index: 3;
-		}
-
-		.overlay {
-			position: absolute;
-			left: 0;
-			top: 0;
-			border: var(--border);
-			background-color: var(--bg-color);
-			width: 100%;
-			height: 100%;
-			transition: opacity 0.2s ease-in-out;
-			opacity: 0;
-			border: none;
-			background-color: rgba(0, 0, 0, 0.35);
-		}
-
-		.post-hidden {
-			color: red;
-			opacity: 0.45;
-			position: absolute;
-			font-size: 4rem;
-			z-index: 1000;
-			left: 50%;
-			top: 50%;
-			transform: translateY(-50%) translateX(-50%) rotate(-20deg);
-		}
-
-		&:hover {
-			svg {
-				opacity: 1;
-			}
-
-			.overlay {
-				opacity: 1;
-			}
-		}
+		color: red;
+		top: 10px;
+		left: 10px;
+		background-color: black;
+		border-radius: 5rem;
+		display: block;
+		padding: 0.5rem;
 	}
 </style>

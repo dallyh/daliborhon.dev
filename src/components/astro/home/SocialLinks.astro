@@ -45,27 +45,31 @@ import { Icon } from "astro-icon/components";
 
 	a {
 		text-decoration: none;
-		color: var(--body-color);
 		display: block;
 		padding: 1rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		color: var(--bulma-text);
 
 		i {
-			font-size: 1.2rem;
+			color: inherit;
+			font-size: 1.5rem;
 			display: inline-flex;
 			gap: 1rem;
-			color: var(--body-color);
 		}
 	}
 
 	ul li {
 		position: relative;
-		background-color: rgba(var(--secondary), 1);
-		box-shadow: var(--global-box-shadow);
 		border-radius: 50%;
-		border: var(--border);
+		background-color: var(--bulma-dark-invert);
+	}
+
+	:root[data-theme="dark"] {
+		ul li {
+			background-color: var(--bulma-dark);
+		}
 	}
 
 	ul li span {

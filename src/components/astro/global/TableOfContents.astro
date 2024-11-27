@@ -12,7 +12,7 @@ const { headings } = Astro.props;
 {
 	headings.length !== 0 && (
 		<>
-			<div id="toc">
+			<div id="toc" class="box">
 				<details id="tocDetails">
 					<h2>{m.blog__toc()}</h2>
 					<summary>{m.blog__open_toc}</summary>
@@ -51,41 +51,14 @@ const { headings } = Astro.props;
 	.toc {
 		display: none;
 	}
-</style>
 
-<style>
-	#toc {
-		ol {
-			list-style: inside disc;
+	summary {
+		cursor: pointer;
 
-			li a {
-				&:visited {
-					color: var(--a-color);
-				}
-			}
-		}
-
-		details {
-			cursor: pointer;
-			user-select: none;
-			display: inline-block;
-			list-style: inside disclosure-closed;
-			margin-bottom: 1rem;
-			background: rgba(var(--secondary), 0.5);
-			padding: 0.5rem;
-			border-radius: var(--border-radius);
-			width: 100%;
-			border: var(--border);
-			overflow: hidden;
-
-			h2 {
-				margin-top: 1rem;
-				margin-bottom: 1rem;
-			}
-		}
-
-		details[open] > summary:first-of-type {
-			list-style-type: disclosure-open;
+		&:focus {
+			outline: none;
+			border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
+			box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
 		}
 	}
 </style>

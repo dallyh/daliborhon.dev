@@ -49,13 +49,12 @@ const layoutProps = {
 };
 ---
 
-<PageLayout {...layoutProps}>
-	<BreadCrumbs>
-		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
 		<BreadCrumbsItem currentPage={true} label={tagTitle} />
-	</BreadCrumbs>
+	</Fragment>
 	<Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
 		{!posts && <p>{m.blog__no_tagged_posts()}</p>}
 		{posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}

@@ -11,7 +11,7 @@ currentPosition: Business Consultant
 **Kontakt:**
 
 - [LinkedIn](https://www.linkedin.com/in/dalibor-hon/)
-- [Email (online form)](https://www.daliborhon.dev/cs/about/contact)
+- [Email (online form)](https://www.daliborhon.dev/cs/about/#contact)
 - [contact@daliborhon.dev](mailto:contact@daliborhon.dev)
 
 Web: [www.daliborhon.dev](https://www.daliborhon.dev)
@@ -20,7 +20,7 @@ Web: [www.daliborhon.dev](https://www.daliborhon.dev)
 
 ### +55 Completed Projects
 
-During my years as a business consultant, I have already completed more than 45 projects. These include smaller projects, but also projects that take months or years to complete.
+During my years as a business consultant, I have already completed more than 50 projects. These include smaller projects, but also projects that take months or years to complete.
 Most of these projects mainly include the implementation of software for the extraction of data from documents and document management systems ( primarily M-Files or tailor-made solutions in MS SharePoint).
 
 #### Business Analysis

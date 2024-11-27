@@ -15,21 +15,6 @@ interface Props {
 const { href = "#", label = "Breadcrumb", currentPage = false } = Astro.props;
 ---
 
-<li class="breadcrumbs-item">
-	{currentPage ? <span aria-current="page">{label}</span> : <a href={href}>{label}</a>}
+<li class={`${currentPage && "is-active"}`}>
+	{currentPage ? <a aria-current="page" href={href}>{label}</a> : <a href={href}>{label}</a>}
 </li>
-
-<style is:global>
-	.breadcrumbs-item {
-		display: inline;
-	}
-
-	.breadcrumbs-item::after {
-		content: "/";
-		margin: 0 0.5rem;
-	}
-
-	.breadcrumbs-item:last-child::after {
-		content: "";
-	}
-</style>

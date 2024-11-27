@@ -17,12 +17,12 @@ function isPage<T>(value: any): value is Page<T> {
 }
 ---
 
-<div>
-	<ul>
+<div class="fixed-grid has-3-cols has-1-cols-mobile">
+	<ul class="grid">
 		{
 			Array.isArray(posts) &&
 				posts.map((post) => (
-					<li>
+					<li class="cell">
 						<PostPreview post={post} />
 					</li>
 				))
@@ -30,7 +30,7 @@ function isPage<T>(value: any): value is Page<T> {
 		{
 			isPage(posts) &&
 				posts.data.map((post) => (
-					<li>
+					<li class="cell">
 						<PostPreview post={post} />
 					</li>
 				))
@@ -41,17 +41,6 @@ function isPage<T>(value: any): value is Page<T> {
 
 <style>
 	ul {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1rem;
-		margin-bottom: 2rem;
-
-		@media (max-width: 768px) {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-
-		@media (max-width: 468px) {
-			grid-template-columns: repeat(1, minmax(0, 1fr));
-		}
+		list-style: none;
 	}
 </style>

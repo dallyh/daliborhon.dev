@@ -60,15 +60,15 @@ import { Icon } from "astro-icon/components";
 		}
 	}
 
-	ul li {
-		position: relative;
-		border-radius: 50%;
-		background-color: var(--bulma-dark-invert);
-	}
+	ul {
+		li {
+			position: relative;
+			border-radius: 50%;
+			background-color: var(--bulma-dark-invert);
 
-	:root[data-theme="dark"] {
-		ul li {
-			background-color: var(--bulma-dark);
+			:root[data-theme="dark"] & {
+				background-color: var(--bulma-dark);
+			}
 		}
 	}
 

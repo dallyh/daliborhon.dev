@@ -18,16 +18,11 @@
 	unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-html {
-	font-size: 1rem;
-	line-height: 1;
-	scroll-behavior: smooth;
-	text-rendering: optimizeLegibility;
-	scroll-padding-top: calc(var(--bulma-navbar-height) + 0.5rem); /* Navbar */
-}
-
 :root {
 	--bulma-family-primary: "Nunito Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--bulma-primary-h: 46deg;
+	--bulma-primary-s: 96%;
+	--bulma-primary-l: 63%;
 	color-scheme: light;
 }
 
@@ -35,7 +30,18 @@ html {
 	color-scheme: dark;
 }
 
-a {
+html {
+	font-size: 1rem;
+	line-height: 1;
+	text-rendering: optimizeLegibility;
+	scroll-padding-top: calc(var(--bulma-navbar-height) + 0.5rem); /* Navbar */
+
+	@media (prefers-reduced-motion: no-preference) {
+		scroll-behavior: smooth;
+	}
+}
+
+a:not(.navbar-link, .navbar-item) {
 	&:hover {
 		text-decoration: underline;
 	}
@@ -43,9 +49,9 @@ a {
 
 .page-content {
 	justify-content: space-between;
-    min-height: calc(100vh - var(--bulma-navbar-height));
-    display: flex;
-    flex-direction: column;
+	min-height: calc(100vh - var(--bulma-navbar-height));
+	display: flex;
+	flex-direction: column;
 }
 
 .md-content {
@@ -99,4 +105,8 @@ a {
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
+}
+
+.tabs.is-toggle .tags li + li {
+	margin-inline-start: unset;
 }

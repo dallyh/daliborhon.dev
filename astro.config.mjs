@@ -9,7 +9,6 @@ import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
 import node from "@astrojs/node";
-import { h } from "hastscript";
 
 const { NODE_ENV } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;

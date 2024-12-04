@@ -7,6 +7,7 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
 import { extractFileNameAndExtension } from "src/utils/extractFilenameAndExtension";
 import GithubDate from "./GithubDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
+import { githubRestClient } from "@services/github/githubRestClient";
 
 interface Props {
 	project: CollectionEntry<"projects">;
@@ -19,7 +20,13 @@ const relatedTags = await getEntries(tags);
 const { Content } = await render(project);
 
 const projectUrl = new URL(sourceUrl);
-const isOnGithub = projectUrl.host === "github.com";
+let repository = undefined;
+if (projectUrl.host === "github.com")
+{
+	// Example: https://github.com/dallyh/static-cms-gh-oauth-provider
+	repository = await githubRestClient.repos.get({owner: projectUrl.pathname.split("/")[1], repo: projectUrl.pathname.split("/")[2]})
+	
+}
 
 const file = extractFileNameAndExtension(image);
 function getSVG(name: string) {
@@ -57,9 +64,9 @@ function getImage(name: string, ext: string): ImageMetadata {
 			<div class="media-left">
 				{
 					file.ext !== "svg" && (
-						<figure class="image is-48x48">
+						<div class="image is-48x48">
 							<Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />
-						</figure>
+						</div>
 					)
 				}
 				{
@@ -74,8 +81,8 @@ function getImage(name: string, ext: string): ImageMetadata {
 				<a class="title is-4" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<Icon name="bi:box-arrow-up-right" /></a>
 				<p class="subtitle is-6 mt-2">
 					<span>🚀</span>
-					{isOnGithub && <GithubDate {projectUrl} />}
-					{!isOnGithub && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
+					{repository && <GithubDate date={new Date(repository.data.created_at)} />}
+					{!repository && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
 				</p>
 				<div class="tags are-small">
 					{
@@ -96,7 +103,7 @@ function getImage(name: string, ext: string): ImageMetadata {
 				<Content />
 			</div>
 		</div>
-		{isOnGithub && <GithubLanguages {projectUrl}/>}
+		{repository && <GithubLanguages repository={repository.data}/>}
 	</div>
 </div>
 

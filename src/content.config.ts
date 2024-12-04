@@ -83,6 +83,29 @@ const resume = defineCollection({
 	}),
 });
 
+type LanguageColor = {
+	[key: string]: {
+		color: string; // A string representing a color (e.g., a hex code)
+		url: string; // A string representing a valid URL
+	};
+};
+
+const githubLanguages = defineCollection({
+	loader: async () => {
+		console.log("Loading github language colors...");
+		const response = await fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
+		const data: LanguageColor = await response.json();
+		const langs = Object.keys(data).map((key) => ({
+			id: key,
+			color: data[key].color,
+		}));
+		return langs;
+	},
+	schema: z.object({
+		color: z.string().nullable(),
+	}),
+});
+
 // Export a single `collections` object to register your collection(s)
 export const collections = {
 	posts,
@@ -90,4 +113,5 @@ export const collections = {
 	projects,
 	projectTags,
 	resume,
+	githubLanguages,
 };

@@ -1,27 +1,27 @@
 ---
-import { fetchGithubData } from "@services/github/fetchGithubData";
+import type { Endpoints } from "@octokit/types";
+import { getCollection } from "astro:content";
 
 interface Props {
-	projectUrl: URL;
+	repository: Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"];
 }
 
-const { projectUrl } = Astro.props;
+const { repository } = Astro.props;
 
 type LanguageData = {
 	[key: string]: number;
 };
 
-type LanguageColor = {
-	[key: string]: { color: string; url: string };
-};
+const languagesData = await fetch(repository.languages_url);
 
-const projectLanguages: LanguageData = await fetchGithubData(`https://api.github.com/repos${projectUrl.pathname}/languages`);
-const languageColors: LanguageColor = await fetchGithubData("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
+const projectLanguages: LanguageData = await languagesData.json();
+const colors = await getCollection("githubLanguages");
+
 const total = Object.values(projectLanguages).reduce((acc, curr) => acc + curr, 0);
 const languages = Object.keys(projectLanguages).map((language) => ({
 	language: language,
 	percentage: (projectLanguages[language] / total) * 100,
-	color: languageColors[language].color,
+	color: colors.filter((c) => c.id === language)[0].data.color,
 }));
 ---
 

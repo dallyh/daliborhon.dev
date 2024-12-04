@@ -1,15 +1,11 @@
 ---
-import { fetchGithubData } from "@services/github/fetchGithubData";
 import { formatDateTime } from "@utils";
 
 interface Props {
-	projectUrl: URL;
+	date: Date
 }
 
-const { projectUrl } = Astro.props;
-
-const projectData = await fetchGithubData(`https://api.github.com/repos${projectUrl.pathname}`);
-const date = new Date(projectData.created_at);
+const { date } = Astro.props;
 const locale = Astro.currentLocale!;
 ---
 

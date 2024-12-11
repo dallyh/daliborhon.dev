@@ -16,8 +16,8 @@ const { post } = Astro.props;
 const locale = Astro.currentLocale!;
 ---
 
-<header id="nav-menu" class="nav-menu has-background-dark" aria-label="navigation bar">
-	<nav class="navbar is-dark container" role="navigation" aria-label="main navigation">
+<header id="nav-menu" class="nav-menu" aria-label="navigation bar">
+	<nav class="navbar container" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
 				<Icon class="logo" name="dh-logo" size={40} />
@@ -38,14 +38,14 @@ const locale = Astro.currentLocale!;
 					<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
 						{m.common__blog()}
 					</a>
-					<div class="navbar-dropdown is-boxed has-background-dark">
-						<a class="navbar-item has-background-dark" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
+					<div class="navbar-dropdown is-boxed">
+						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
 							{m.blog__all_posts_title()}
 						</a>
-						<a class="navbar-item has-background-dark" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
+						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
 							{m.blog__featured_posts_title()}
 						</a>
-						<a class="navbar-item has-background-dark" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
+						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
 							{m.blog__tags()}
 						</a>
 					</div>
@@ -57,8 +57,8 @@ const locale = Astro.currentLocale!;
 					<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
 						{m.common__about()}
 					</a>
-					<div class="navbar-dropdown is-boxed has-background-dark">
-						<a class="navbar-item has-background-dark" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
+					<div class="navbar-dropdown is-boxed">
+						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
 							{m.common__resume()}
 						</a>
 					</div>
@@ -113,10 +113,22 @@ const locale = Astro.currentLocale!;
 		position: sticky;
 		top: 0;
 		z-index: 9999;
-	}
-	.navbar {
-		[data-theme="light"] & {
-			--bulma-navbar-dropdown-item-color-l: 100%;
+		border-bottom: 1px solid hsl(0, 0%, 70%);
+
+		[data-theme="dark"] & {
+			border: 1px solid hsl(0, 0%, 20%);
 		}
+	}
+
+	.navbar-dropdown {
+		border: 1px solid hsl(0, 0%, 70%);
+
+		[data-theme="dark"] & {
+			border: 1px solid hsl(0, 0%, 20%);
+		}
+	}
+
+	.navbar {
+		--bulma-navbar-burger-color: rgb(171, 177, 191);
 	}
 </style>

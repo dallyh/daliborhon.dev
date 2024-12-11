@@ -7,5 +7,9 @@ export const githubRestClient = (() => {
 	}
 
 	const octokit = new Octokit({ auth: GITHUB_API_AUTH_TOKEN });
+	octokit.rest.rateLimit.get().then((res) => {
+		console.log("Github rate limit: " + res.data.rate.remaining + "/" + res.data.rate.limit);
+	});
+	
 	return octokit.rest;
 })();

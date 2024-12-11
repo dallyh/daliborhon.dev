@@ -1,5 +1,6 @@
 ---
 import type { Endpoints } from "@octokit/types";
+import { githubRestClient } from "@services/github/githubRestClient";
 import { getCollection } from "astro:content";
 
 interface Props {
@@ -8,21 +9,18 @@ interface Props {
 
 const { repository } = Astro.props;
 
-type LanguageData = {
-	[key: string]: number;
-};
-
-const languagesData = await fetch(repository.languages_url);
-
-const projectLanguages: LanguageData = await languagesData.json();
+const languagesData = await githubRestClient.repos.listLanguages({ repo: repository.name, owner: repository.owner.login });
+const projectLanguages = languagesData.data;
 const colors = await getCollection("githubLanguages");
 
 const total = Object.values(projectLanguages).reduce((acc, curr) => acc + curr, 0);
-const languages = Object.keys(projectLanguages).map((language) => ({
-	language: language,
-	percentage: (projectLanguages[language] / total) * 100,
-	color: colors.filter((c) => c.id === language)[0].data.color,
-}));
+const languages = Object.keys(projectLanguages).map((language) => {
+	return {
+		language: language,
+		percentage: (projectLanguages[language] / total) * 100,
+		color: colors.filter((c) => c.id === language)[0].data.color,
+	};
+});
 ---
 
 <div class="gh-languages">

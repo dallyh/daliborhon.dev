@@ -5,105 +5,93 @@ import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
 import SocialLinks from "./SocialLinks.astro";
 ---
 
-<div class='hero"'>
-	<div class="hero-body">
-		<div class="hero-title">
-			<h1 class="title">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
-			<p class="subtitle mb-1 mt-2 is-size-6">
-				<span class="icon-text">
-					<span class="icon">
-						<i class="fa-solid fa-location-dot"></i>
-					</span>
-					<span>Ostrava, {m.common__country_czech_republic()}</span>
-				</span>
-			</p>
-			<p class="subtitle is-size-6">
-				<span class="icon-text">
-					<span class="icon">
-						<i class="fa-solid fa-suitcase"></i>
-					</span>
-					<span>Business Consultant</span>
-				</span>
-			</p>
-			<div class="social">
-				<SocialLinks />
+<div class="hero">
+	<div class="hero-body is-medium">
+		<div class="media">
+			<div class="media-left">
+				<div class="hero-image">
+					<ProfilePicture img={profilePicture} imgClass="picture-bw" />
+				</div>
 			</div>
-		</div>
-		<div class="hero-image">
-			<ProfilePicture img={profilePicture} imgClass="picture-bw" />
+			<div class="media-content">
+				<div class="content">
+					<h1 class="title">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
+					<p class="subtitle mb-1 mt-2 is-size-6">
+						<span class="icon-text tag is-primary">
+							<span class="icon">
+								<i class="fa-solid fa-location-dot"></i>
+							</span>
+							<span>{m.common__country_czech_republic()}</span>
+						</span>
+						<span class="icon-text tag is-primary">
+							<span class="icon">
+								<i class="fa-solid fa-circle-dot"></i>
+							</span>
+							<span class="has-text-dark" id="time">00:00</span>
+						</span>
+					</p>
+					<p class="subtitle mb-1 is-size-6">
+						<span class="icon-text tag is-primary">
+							<span class="icon">
+								<i class="fa-solid fa-suitcase"></i>
+							</span>
+							<span>Business Consultant</span>
+						</span>
+					</p>
+					<p class="subtitle is-size-6">
+						
+					</p>
+				</div>
+				<div class="social">
+					<SocialLinks />
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
+<script>
+	function displayClock() {
+		var display = new Date().toLocaleTimeString("cs-CZ");
+		var ele = document.getElementById("time");
+		if (!ele) {
+			return;
+		}
+		ele.innerHTML = `${display} CET`;
+		setTimeout(displayClock, 1000);
+	}
+
+	document.addEventListener("DOMContentLoaded", displayClock);
+	document.addEventListener("astro:after-swap", displayClock);
+</script>
+
 <style>
-	.hero-body {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-
-		.title {
-			font-size: clamp(1rem, 7vw, 2rem);
-
-			span {
-				display: inline-block;
-			}
-
-			@media (max-width: 468px) {
-				display: block;
-			}
+	@media (max-width: 768px) {
+		.media {
+			display: flex;
+			flex-direction: column;
 		}
 
-		@media screen and (max-width: 768px) {
-			flex-direction: column-reverse;
-			justify-content: center;
-			align-items: center;
-
-			.hero-title {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.subtitle {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.social {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.title {
-				margin-top: 1.5rem;
-			}
+		.media-content {
+			margin-top: 0.75rem;
 		}
 	}
 
-	@keyframes shake {
-		10% {
-			transform: scale(1.05) rotate(5deg);
-		}
-		20% {
-			transform: scale(1.05) rotate(-5deg);
-		}
-		30% {
-			transform: scale(1.05) rotate(5deg);
-		}
-		40% {
-			transform: none;
-		}
+	.social {
+		margin-left: -0.5rem;
 	}
 
-	.shake {
-		animation: shake 2s infinite;
-	}
+	@keyframes blink {
+		0% {
+			opacity: 1;
+		}
 
-	.picture-bw {
-		filter: grayscale(1);
-		border: 5px solid transparent;
+		50% {
+			opacity: 0;
+		}
+
+		100% {
+			opacity: 1;
+		}
 	}
 </style>

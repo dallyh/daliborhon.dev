@@ -2,173 +2,40 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<ul>
+<ul class="is-flex gap-1">
 	<li>
 		<a href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<i><Icon name="bi:github" /></i>
+			<span class="icon is-large">
+				<i class="fa-brands fa-github fa-2x"></i>
+			</span>
 		</a>
 	</li>
 	<li>
 		<a href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<i><Icon name="bi:linkedin" /></i>
+			<span class="icon is-large">
+				<i class="fa-brands fa-linkedin fa-2x"></i>
+			</span>
 		</a>
 	</li>
 	<li>
 		<a href="mailto:contact@daliborhon.dev" title="Email" aria-label="email">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<i><Icon name="bi:envelope-fill" /></i>
+			<span class="icon is-large">
+				<i class="fas fa-envelope fa-2x"></i>
+			</span>
 		</a>
 	</li>
 </ul>
 
 <style>
+	a {
+		color: var(--bulma-content-heading-color);
+
+		&:hover {
+			color: var(--bulma-link-text);
+		}
+	}
+
 	ul {
 		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-direction: row;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-
-	a {
-		text-decoration: none;
-		display: block;
-		padding: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: var(--bulma-text);
-
-		i {
-			color: inherit;
-			font-size: 1.5rem;
-			display: inline-flex;
-			gap: 1rem;
-		}
-	}
-
-	ul {
-		li {
-			position: relative;
-			border-radius: 50%;
-			background-color: var(--bulma-dark-invert);
-
-			:root[data-theme="dark"] & {
-				background-color: var(--bulma-dark);
-			}
-		}
-	}
-
-	ul li span {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		font-size: 1.2rem;
-		transition: 0.4s;
-		border-radius: 50%;
-	}
-
-	ul li i {
-		transition: 0.4s;
-		border-radius: 50%;
-	}
-
-	a:hover span,
-	a:hover i,
-	a:focus span,
-	a:focus i {
-		z-index: 1000;
-		transition: 0.5s;
-	}
-
-	a:hover span,
-	a:focus span {
-		box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.05);
-	}
-
-	a:hover span:nth-of-type(1),
-	a:focus span:nth-of-type(1) {
-		transform: translate(0px, -0px);
-	}
-	a:hover span:nth-of-type(2),
-	a:focus span:nth-of-type(2) {
-		transform: translate(1px, -1px);
-	}
-	a:hover span:nth-of-type(3),
-	a:focus span:nth-of-type(3) {
-		transform: translate(2px, -2px);
-	}
-	a:hover span:nth-of-type(4),
-	a:focus span:nth-of-type(4) {
-		transform: translate(3px, -3px);
-	}
-	a:hover i,
-	a:focus i {
-		transform: translate(4px, -4px);
-		color: white;
-	}
-
-	a span:nth-of-type(1) {
-		opacity: 0.2;
-	}
-	a span:nth-of-type(2) {
-		opacity: 0.4;
-	}
-	a span:nth-of-type(3) {
-		opacity: 0.6;
-	}
-	a span:nth-of-type(4) {
-		opacity: 0.8;
-	}
-
-	@keyframes gradient {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
-
-	ul li:nth-of-type(1) a:hover span,
-	ul li:nth-of-type(1) a:focus span {
-		background-color: #3b5998;
-		background-image: linear-gradient(270deg, #3b5998, #383838);
-		background-size: 400% 400%;
-		animation: gradient 4s ease infinite;
-	}
-
-	ul li:nth-of-type(2) a:hover span,
-	ul li:nth-of-type(2) a:focus span {
-		background-color: #285aeb;
-		background-image: linear-gradient(270deg, #285aeb, #0077b5);
-		background-size: 800% 800%;
-		animation: gradient 4s ease infinite;
-	}
-
-	ul li:nth-of-type(3) a:hover span,
-	ul li:nth-of-type(3) a:focus span {
-		background-color: #6d1c9c;
-		background-image: linear-gradient(270deg, #6d1c9c, #b659ec);
-		background-size: 800% 800%;
-		animation: gradient 4s ease infinite;
 	}
 </style>

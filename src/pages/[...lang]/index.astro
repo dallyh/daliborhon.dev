@@ -25,9 +25,7 @@ const layoutProps = {
 ---
 
 <PageLayout {...layoutProps}>
-	<Section id="hero" isFirstSection>
-		<Intro />
-	</Section>
+	<Intro />
 	<Section id="projects" heading="h2" sectionTitle={m.projects__projects_title()}>
 		<ProjectsGrid {projects} />
 	</Section>

@@ -1,12 +1,12 @@
 ---
-translationKey: 2023-01-01-typography-example
-title: Typography example
+translationKey: 2023-01-01-typography-example-4
+title: Typography example 4
 description: This is my first blog post.
 tags:
-  - development
+  - astro
 language: en
 hidden: false
-featured: true
+featured: false
 image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01
 modDate: ""

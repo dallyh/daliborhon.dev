@@ -1,6 +1,6 @@
 ---
-translationKey: 2023-01-01-typography-example
-title: Příklad typografie
+translationKey: 2023-01-01-typography-example-6
+title: Příklad typografie 6
 description: Tohle je můj první příspěvek.
 tags:
   - astro

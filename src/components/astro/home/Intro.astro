@@ -6,7 +6,7 @@ import SocialLinks from "./SocialLinks.astro";
 ---
 
 <div class="hero">
-	<div class="hero-body is-medium">
+	<div class="hero-body">
 		<div class="media">
 			<div class="media-left">
 				<div class="hero-image">
@@ -52,17 +52,16 @@ import SocialLinks from "./SocialLinks.astro";
 
 <script>
 	function displayClock() {
-		var display = new Date().toLocaleTimeString("cs-CZ");
 		var ele = document.getElementById("time");
 		if (!ele) {
 			return;
 		}
+		var display = new Date().toLocaleTimeString("cs-CZ");
 		ele.innerHTML = `${display} CET`;
 		setTimeout(displayClock, 1000);
 	}
 
-	document.addEventListener("DOMContentLoaded", displayClock);
-	document.addEventListener("astro:after-swap", displayClock);
+	document.addEventListener("astro:page-load", displayClock);
 </script>
 
 <style>
@@ -75,6 +74,10 @@ import SocialLinks from "./SocialLinks.astro";
 		.media-content {
 			margin-top: 0.75rem;
 		}
+	}
+
+	.media-left {
+		margin-right: 2rem;
 	}
 
 	.social {

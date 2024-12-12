@@ -44,13 +44,13 @@ const layoutProps = {
 						<PostsGrid posts={page.data} />
 						<nav class="pagination is-small" role="navigation" aria-label="pagination">
 							{page.url.prev && (
-								<a href={page.url.prev} class="pagination-previous" title={m.blog__prev_page()} aria-label={m.blog__prev_page()}>
-									Previous page
+								<a href={page.url.prev} class="pagination-previous" title={m.common__prev_page()} aria-label={m.common__prev_page()}>
+									{m.common__prev_page()}
 								</a>
 							)}
 							{page.url.next && (
-								<a href={page.url.next} class="pagination-next" title={m.blog__next_page()} aria-label={m.blog__next_page()}>
-									Next page
+								<a href={page.url.next} class="pagination-next" title={m.common__next_page()} aria-label={m.common__next_page()}>
+									{m.common__next_page()}
 								</a>
 							)}
 							<ul class="pagination-list">

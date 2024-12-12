@@ -1,12 +1,12 @@
 ---
-translationKey: 2023-01-01-typography-example
-title: Příklad typografie
+translationKey: 2023-01-01-typography-example-4
+title: Příklad typografie 4
 description: Tohle je můj první příspěvek.
 tags:
-  - development
+  - astro
 language: cs
 hidden: false
-featured: true
+featured: false
 image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01
 modDate: ""

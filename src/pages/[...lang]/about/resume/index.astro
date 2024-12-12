@@ -8,7 +8,6 @@ import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import TableOfContents from "@components/astro/global/TableOfContents.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { createResumePdfFilename, removeTrailingSlash } from "@utils";
-import { Icon } from "astro-icon/components";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -29,21 +28,84 @@ const searchProps = {
 
 const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`));
 ---
-
 <PageLayout {...layoutProps} showCrumbs>
 	<Fragment slot="crumbs">
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/about")} label={m.common__about()} />
 		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/resume")} label={m.common__resume()} />
 	</Fragment>
 	<SearchMeta {...searchProps} />
-	<a class="button is-primary is-anchor floating" href={resumePdfFileName} download title={m.resume__download_cv()} aria-label={m.resume__download_cv()}>
-		<Icon name="bi:filetype-pdf" />
+	<a
+		id="download"
+		data-filename={createResumePdfFilename(locale, true)}
+		class="button is-primary is-anchor floating"
+		href={resumePdfFileName}
+		download
+		title={m.resume__download_cv()}
+		aria-label={m.resume__download_cv()}
+	>
+		<span class="icon is-medium">
+			<i class="fas fa-file-pdf fa-lg"></i>
+		</span>
 	</a>
 	<article class="content md-content section" id="content">
 		<TableOfContents {headings} />
 		<Content />
 	</article>
 </PageLayout>
+
+<script>
+	import * as m from "$messages";
+
+	function createAndDownloadBlob(blob: Blob, name = "") {
+		const link = document.createElement("a");
+		link.setAttribute("download", name);
+
+		const blobUrl = URL.createObjectURL(blob);
+		link.href = blobUrl;
+
+		document.body.appendChild(link);
+
+		link.click();
+		
+		document.body.removeChild(link);
+		URL.revokeObjectURL(blobUrl);
+	}
+	function setupDownload() {
+		const downloadButton = document.getElementById("download") as HTMLAnchorElement;
+
+		downloadButton.onclick = async (e) => {
+			e.preventDefault(); // Prevent the default navigation behavior
+			downloadButton.classList.toggle("is-loading");
+
+			try {
+				window.toast({ message: m.resume__generating_pdf(), type: "is-info" });
+
+				// Fetch the PDF file
+				const res = await fetch(downloadButton.href);
+
+				// Check if the response is OK
+				if (!res.ok) {
+					window.toast({ message: m.common__download_error(), type: "is-danger" });
+					console.error(`Failed to fetch the file: ${res.statusText}`);
+					return;
+				}
+
+				// Convert response to Blob
+				const blob = await res.blob();
+				createAndDownloadBlob(blob, downloadButton.dataset.filename)
+				window.toast({ message: m.common__download_success(), type: "is-success" });
+
+			} catch (error) {
+				window.toast({ message: m.common__download_error(), type: "is-danger" });
+				console.error("Error downloading the file:", error);
+			} finally {
+				downloadButton.classList.toggle("is-loading");
+			}
+		};
+	}
+
+	document.addEventListener("astro:page-load", setupDownload);
+</script>
 
 <style>
 	.button {

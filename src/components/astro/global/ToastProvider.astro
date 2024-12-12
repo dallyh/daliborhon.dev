@@ -1,0 +1,26 @@
+<script>
+	import * as bulmaToast from "bulma-toast";
+
+	bulmaToast.setDefaults({
+		duration: 3000,
+		position: "top-right",
+		message: "This is a toast",
+		animate: { in: "fadeIn", out: "fadeOut" },
+		closeOnClick: false,
+		dismissible: true,
+	});
+
+	window.toast = bulmaToast.toast;
+</script>
+
+<style is:global>
+	.notification {
+		width: max-content;
+
+		.delete {
+			top: 0.6rem;
+			right: 0.6rem;
+			--bulma-delete-dimensions: 1rem;
+		}
+	}
+</style>

@@ -2,12 +2,12 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries, render } from "astro:content";
+import { githubRestClient } from "@services/github/githubRestClient";
 import { formatDateTime } from "@utils";
 import Icon from "node_modules/astro-icon/components/Icon.astro";
 import { extractFileNameAndExtension } from "src/utils/extractFilenameAndExtension";
 import GithubDate from "./GithubDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
-import { githubRestClient } from "@services/github/githubRestClient";
 
 interface Props {
 	project: CollectionEntry<"projects">;
@@ -21,11 +21,9 @@ const { Content } = await render(project);
 
 const projectUrl = new URL(sourceUrl);
 let repository = undefined;
-if (projectUrl.host === "github.com")
-{
+if (projectUrl.host === "github.com") {
 	// Example: https://github.com/dallyh/static-cms-gh-oauth-provider
-	repository = await githubRestClient.repos.get({owner: projectUrl.pathname.split("/")[1], repo: projectUrl.pathname.split("/")[2]})
-	
+	repository = await githubRestClient.repos.get({ owner: projectUrl.pathname.split("/")[1], repo: projectUrl.pathname.split("/")[2] });
 }
 
 const file = extractFileNameAndExtension(image);
@@ -103,9 +101,15 @@ function getImage(name: string, ext: string): ImageMetadata {
 				<Content />
 			</div>
 		</div>
-		{repository && <GithubLanguages repository={repository.data}/>}
-	</div>
+		{repository && <GithubLanguages repository={repository.data} />}
+	</div>	
 </div>
+
+<style>
+	.card {
+		height: 100%;
+	}
+</style>
 
 <style is:global>
 	.svg-img-card {
@@ -117,10 +121,10 @@ function getImage(name: string, ext: string): ImageMetadata {
 
 	.title {
 		> svg {
-				margin: 0 0 0 10px;
-				height: 20px;
-				width: 20px;
-				bottom: 0px;
-			}
+			margin: 0 0 0 10px;
+			height: 20px;
+			width: 20px;
+			bottom: 0px;
+		}
 	}
 </style>

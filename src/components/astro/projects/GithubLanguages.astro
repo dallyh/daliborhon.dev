@@ -1,7 +1,7 @@
 ---
+import { getCollection } from "astro:content";
 import type { Endpoints } from "@octokit/types";
 import { githubRestClient } from "@services/github/githubRestClient";
-import { getCollection } from "astro:content";
 
 interface Props {
 	repository: Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"];

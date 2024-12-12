@@ -56,6 +56,9 @@ importers:
       astro-pagefind:
         specifier: ^1.7.0
         version: 1.7.0(astro@5.0.5(@types/node@22.10.2)(jiti@1.21.6)(rollup@4.27.4)(tsx@4.19.2)(typescript@5.7.2)(yaml@2.5.0))
+      bulma-toast:
+        specifier: ^2.4.4
+        version: 2.4.4
       html-to-pdfmake:
         specifier: ^2.5.17
         version: 2.5.17
@@ -1829,6 +1832,9 @@ packages:
 
   buffer-equal-constant-time@1.0.1:
     resolution: {integrity: sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==}
+
+  bulma-toast@2.4.4:
+    resolution: {integrity: sha512-frK7CiTE7sW6bgJFnWE4aL3Fga9O2U6O536gj6xox+52kqb5S5WaDUq37cArzjuvnSXY5mPIvzt5xNdBeOnShA==}
 
   call-bind@1.0.7:
     resolution: {integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==}
@@ -5839,6 +5845,8 @@ snapshots:
   buffer-crc32@0.2.13: {}
 
   buffer-equal-constant-time@1.0.1: {}
+
+  bulma-toast@2.4.4: {}
 
   call-bind@1.0.7:
     dependencies:

@@ -1,0 +1,138 @@
+---
+title: Životopis
+description: Webová verze mého životopisu.
+currentPosition: Business Consultant
+---
+
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import CertGrid from "@components/astro/resume/CertGrid.astro";
+import CertCard from "@components/astro/resume/CertCard.astro";
+import Timeline from "@components/astro/resume/Timeline.astro";
+import TimelineItem from "@components/astro/resume/TimelineItem.astro";
+import DevList from "@components/astro/resume/DevList.astro";
+import DevListItem from "@components/astro/resume/DevListItem.astro";
+import abbyyLogo from "@assets/img/company-logos/ABBYY.png";
+import msftLogo from "@assets/img/company-logos/MSFT_BIG.png";
+import mfilesLogo from "@assets/img/company-logos/m-files.png";
+import nintextLogoBlack from "@assets/img/company-logos/nintex-black.svg";
+import nintextLogo from "@assets/img/company-logos/nintex-logo-white.png";
+
+<section class="intro">
+    ## Úvod
+
+    ### 45 Dokončených Projektů
+
+    Za své léta v oboru business konzultanta mám již za sebou více než 45 dokončených projektů. Patří mezi ně projekty menších rozměrů, ale také projekty pohybující se v řádech měsíců až let pro dokončení.
+    Mezi většinu těchto projektů patří hlavně implementace software pro vytěžování a správu pro digitální dokumenty (systémy DMS, primárně M-Files či na míru šitá řešení v MS SharePoint).
+
+    - Business Analýza
+      - Business analýza pro mě není neznámým pojmem. S touto činností se setkávám na denním pořádku. To vše zahrnuje úzkou spolupráci se zákazníkem, vývojovým oddělením, projektovými manažery a podobně.
+        Samozřejmostí k těmto analýzám jsou také analytické dokumenty, procesní analýzy, use-case diagramy a návrhy infrastruktury.
+
+    - Implementace
+      - Business analýza pro mě není neznámým pojmem. S touto činností se setkávám na denním pořádku.
+        To vše zahrnuje úzkou spolupráci se zákazníkem, vývojovým oddělením, projektovými manažery a podobně.
+        Samozřejmostí k těmto analýzám jsou také analytické dokumenty, procesní analýzy, use-case diagramy a návrhy infrastruktury.
+
+    - Programování / vývoj
+      -  Jako třešničku na dort považuji tuto zkušenost, jelikož mě baví psát kód a programovat. Postupem času jsem se učil v oboru porozumět kódu a tomu, jak věci v něm fungují a jak vše do sebe zapadá.
+         Z počátku jsem využíval hlavně skriptovacích rozhraní implementovaného software, primárně v jazyce C# a také VBScript.
+         Postupem času jsem se začal také zapojovat a pomáhat při vývoji interních rozšiřovacích modulů a také různých nástrojů.
+
+</section>
+
+<section class="skills">
+    ## Dovednosti
+
+    Jako business konzultant jsem si stačil osahat hodně věcí, od Windows serverů, přes konfigurace IIS a také programování/skriptování.
+    Níže jsou uvedeny pouze ty největší oblasti, s kterými se setkávám dennodenně.
+
+    - Business Analýza (\+ 2 let)
+      - Mapování procesů, UML, vývojářské zadání...
+
+    - Windows Servery (\+ 2 let)
+      - Konfigurace serverů, instalace potřebného software (on-premise, IIS, Azure, a další) ...
+
+    - Relační Databáze (\+ 4 let)
+      - SQL, PLSQL, T-SQL, reporting, databázové procedury...
+
+    - Objektově Orientované Programování (\+ 1 let)
+      - Integrace, C#, interní aplikace na míru...
+
+    ### Programovací jazyky a nástroje
+
+    <DevList>
+        <DevListItem tooltipText="HTML5" iconName="devicon:html5" />
+        <DevListItem tooltipText="CSS3" iconName="devicon:css3" />
+        <DevListItem tooltipText="JavaScript" iconName="devicon:javascript" />
+        <DevListItem tooltipText="Node JS" iconName="devicon:nodejs" />
+        <DevListItem tooltipText="SASS" iconName="devicon:sass" />
+        <DevListItem tooltipText="NPM" iconName="devicon:npm-wordmark" />
+        <DevListItem tooltipText="C#" iconName="devicon:csharp" />
+        <DevListItem tooltipText=".NET Framework" iconName="devicon:dot-net" />
+        <DevListItem tooltipText=".NET Core" iconName="devicon:dotnetcore" />
+        <DevListItem tooltipText="MSSQL" iconName="devicon:microsoftsqlserver" />
+        <DevListItem tooltipText="GIT" iconName="devicon:git" />
+        <DevListItem tooltipText="Adobe Photoshop" iconName="devicon:photoshop" />
+        <DevListItem tooltipText="Azure" iconName="devicon:azure" />
+        <DevListItem tooltipText="TypeScript" iconName="devicon:typescript" />
+    </DevList>
+
+    #### Zkušenosti se softwarem a platformami (implementace, customizace)
+
+    -   [ABBYY FlexiCapture](https://www.abbyy.com/flexicapture/)
+    -   [ABBYY FineReader Server](https://www.abbyy.com/finereader-server/)
+    -   [ABBYY Vantage](https://www.abbyy.com/vantage/)
+    -   [Microsoft SharePoint](https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration)
+    -   [Microsoft PowerPlaftorm](https://powerplatform.microsoft.com/en-us/)
+    -   [M-Files](https://www.m-files.com/)
+    -   [K2 Five/K2 Cloud](https://www.nintex.com/process-automation/k2-software/)
+
+    Zkušenosti s těmito softwary a platformami mám jak v rámci implementace, tak také v customizaci řešení na míru šitém zákazníkovi.
+    Samozřejmostí je také integrace na další navazující systémy. Ve své kariéře jsem se také setkal s celou řadou ERP systémů jako např. Dynamics 365 Business Central, Helios Green, Karat! apod.
+
+</section>
+
+<section class="certifications">
+    ## Certifikace
+    <CertGrid>
+        <CertCard img={msftLogo} width={150} height={32} alt="Microsoft logo" description="Power Platform Fundamentals (PL-900)" />
+        <CertCard img={msftLogo} width={150} height={32} alt="Microsoft logo" description="Microsoft Dynamics 365 Fundamentals (PL-900)" />
+        <CertCard img={abbyyLogo} width={110} alt="ABBYY logo" description="FlexiCapture 12 Basic" />
+        <CertCard img={abbyyLogo} width={110} alt="ABBYY logo" description="Vantage Certified Business Analyst" />
+        <CertCard img={nintextLogo} alt="Nintex logo" width={150} height={40} description="K2 IT Developer" />
+        <CertCard img={nintextLogo} alt="Nintex logo" width={150} height={40} description="K2 Business Analyst" />
+        <CertCard img={nintextLogo} alt="Nintex logo" width={150} height={40} description="K2 Citizen Developer" />
+        <CertCard img={mfilesLogo} width={150} alt="M-Files Corporation logo" description="M-Files Solution Engineer" />
+    </CertGrid>
+</section>
+
+<section class="experience">
+    ## Pracovní zkušenosti a vzdělání
+
+    <Timeline>
+        <TimelineItem slot="exp" date="Duben 2020 – Současnost" title="ECM Business Consultant" institute="Konica Minolta IT Solutions Czech s.r.o">
+            Konzultace ve směru digitalizace kanceláří a zbavení se papírových procesů ve firmách.
+            Digitalizace zahrnuje automatické vytěžování údajů z dokumentů, integrace na interní systémy zákazníka a popřípadě také zavádění nových systémů, z pravidla systémů pro správu dokumentů (DMS).
+            Využití agilních metodik, ale také waterfallu. Úzká spolupráce se zákazníkem a interními týmy jako např. vývojové oddělení, při vytváření vývojového zadání a také business analýz.
+            Součástí je také školení zákazníku pro práce s novými implementovanými systémy.
+        </TimelineItem>
+        <TimelineItem slot="exp" date="Září 2018 – Březen 2020" title="Analyst, Shared Services" institute="MONETA Money Bank a.s.">
+            Vytváření reportů za použití nástrojů jako Microsoft Excel, SQL (Oracle), Microsoft Access, PowerBI a SAS BI.
+            Součástí byla také tvorba procesních analýz pro komerční (SMB) backoffice, se zaměřením na komerční proces RWA (risk-weighted asset).
+        </TimelineItem>
+        <TimelineItem slot="exp" date="Červenec 2017 – Srpen 2018" title="Administrator End User Services, IT" institute="MONETA Money Bank a.s.">
+             Podpora interních koncových uživatelů po telefonu, emailem a dalšími kanály. Práce s ticketovacím systémem, eskalování důležitých záležitostí a také troška programování.
+             Zde jsem se začal postupně učit hlavně VBScript u maker v Microsoft Excelu.
+        </TimelineItem>
+        <TimelineItem slot="exp" date="Říjen 2014 – Duben 2017" title="Motherboard Technician" institute="ASUS Czech Service s.r.o.">
+            Opravování základních desek všeho druhu na úrovni malých součástek. Pájení, měření (osciloskopem), a samozřejmě čtení v elektronických schématech.
+        </TimelineItem>
+
+        <TimelineItem slot="edu" date="2010 - 2014" title="Maturita" institute="Střední škola Elektrotechnická Ostrava, Na Jízdárně">
+            Mechanik elektrotechnik - počítačové a zabezpečovací systémy
+        </TimelineItem>
+    </Timeline>
+
+</section>

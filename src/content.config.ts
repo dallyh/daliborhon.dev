@@ -75,7 +75,7 @@ const projectTags = defineCollection({
 });
 
 const resume = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/resume` }),
+	loader: glob({ pattern: "**/[^_]*.mdx", base: `./src/content/${path}/resume` }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),

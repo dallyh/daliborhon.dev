@@ -6,7 +6,7 @@ import Indicator from "astro-loading-indicator/component";
 
 <style is:global>
 	:root .astro-loading-indicator {
-		top: 0;
+		top: var(--bulma-navbar-height);
 		height: 2px;
 		z-index: 10000;
 	}

@@ -19,10 +19,22 @@ const allEntriesProps = {
 	url: "/projects",
 	urlDescription: m.projects__see_all(),
 };
+
+const cols = () => {
+	if (projects.length % 3 === 0) {
+		return 3;
+	}
+
+	if (projects.length % 2 === 0) {
+		return 2;
+	}
+
+	return 1;
+}
 ---
 
 <div class="projects">
-	<div class="fixed-grid has-1-cols">
+	<div class={`fixed-grid has-${cols()}-cols has-1-cols-mobile`}>
 		<ul class="grid">
 			{
 				projects.map((project) => {

@@ -1,12 +1,12 @@
 ---
-translationKey: 2023-01-01-typography-example
-title: Typography example
-description: This is my first blog post.
+translationKey: 2023-01-01-typography-example-2
+title: Příklad typografie 2
+description: Tohle je můj první příspěvek.
 tags:
-  - astro
-language: en
+  - development
+language: cs
 hidden: false
-featured: true
+featured: false
 image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01
 modDate: ""
@@ -45,7 +45,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 ## Emphasis
 
-Emphasis, aka italics, with *asterisks* or *underscores*.
+Emphasis, aka italics, with _asterisks_ or _underscores_.
 
 Strong emphasis, aka bold, with **asterisks** or **underscores**.
 
@@ -58,7 +58,7 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 Quote break.
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
 
 ## Horizontal separator
 
@@ -94,9 +94,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 1. First ordered list item
 2. Another item
-
     - Unordered sub-list.
-
 3. Actual numbers don't matter, just that it's a number
     1. Ordered sub-list
 4. And another item.
@@ -121,7 +119,7 @@ Some text to show that the reference links can follow later.
 
 ## Images
 
-Images included in *\_posts* folder are lazy loaded.
+Images included in _\_posts_ folder are lazy loaded.
 
 Inline-style:
 ![alt text](https://docs.astro.build/assets/arc.webp "Logo Title Text 1")
@@ -136,7 +134,7 @@ Inline-style:
 
 | Markdown | Less      | Pretty     |
 | -------- | --------- | ---------- |
-| *Still*  | `renders` | **nicely** |
+| _Still_  | `renders` | **nicely** |
 | 1        | 2         | 3          |
 
 ## Syntax highlight

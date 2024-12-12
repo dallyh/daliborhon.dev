@@ -31,6 +31,7 @@ const { pubDate, modDate, title, description } = post.data;
 		</figure>
 	</div>
 	<div class="card-content">
+		{post.data.hidden && <div class="post-hidden tag is-danger">Hidden</div>}
 		<div class="media">
 			<div class="media-content">
 				<a class="is-size-4" href={postUrl}>{title}</a>
@@ -38,7 +39,7 @@ const { pubDate, modDate, title, description } = post.data;
 			</div>
 		</div>
 		<div>
-			<p class="block">{description}{post.data.hidden && <div class="post-hidden">HIDDEN</div>}</p>
+			<p class="block">{description}</p>
 			<div class="block">
 				<TagList tags={relatedTags!} />
 			</div>
@@ -49,12 +50,7 @@ const { pubDate, modDate, title, description } = post.data;
 <style>
 	.post-hidden {
 		position: absolute;
-		color: red;
 		top: 10px;
 		left: 10px;
-		background-color: black;
-		border-radius: 5rem;
-		display: block;
-		padding: 0.5rem;
 	}
 </style>

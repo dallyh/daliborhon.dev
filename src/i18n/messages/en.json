@@ -12,7 +12,6 @@
     "blog__featured": "Featured",
     "blog__featured_posts_description": "Newest featured posts.",
     "blog__featured_posts_title": "Featured posts",
-    "blog__next_page": "Next page",
     "blog__no_categories": "There are currently no categories.",
     "blog__no_category_posts": "There are currently no posts in this category.",
     "blog__no_featured_posts": "There are currently no featured posts.",
@@ -26,7 +25,6 @@
     "blog__posts": "Posts",
     "blog__posts_tagged": "Posts tagged with",
     "blog__posts_with_category": "Posts marked with category",
-    "blog__prev_page": "Previous page",
     "blog__published_date_title": "Published",
     "blog__recent_posts_description": "A list of my recent blog posts, which I create when I have some more spare time.",
     "blog__recent_posts_title": "Recent posts",
@@ -38,6 +36,8 @@
     "blog__toc": "Table of contents",
     "blog__updated_date_title": "Updated",
     "blog__written_by": "Written by",
+    "common__next_page": "Next page",
+    "common__prev_page": "Previous page",
     "common__about": "About me",
     "common__back_btn": "Back",
     "common__blog": "Blog",
@@ -159,5 +159,9 @@
     "error__not_found_detail": "Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable.",
     "common__page": "Page",
     "common__profile_picture": "Profile picture",
-    "about__about_me": "I am Dalibor Hon, an experienced business consultant with over six years of expertise in digital transformation. Throughout my career, I have successfully completed more than 50 projects, ranging from implementing DMS systems like M-Files and SharePoint to developing tailored solutions. My focus lies in business analysis, programming, and customizing software platforms to streamline document management and optimize business processes."
+    "about__about_me": "I am Dalibor Hon, an experienced business consultant with over six years of expertise in digital transformation. Throughout my career, I have successfully completed more than 50 projects, ranging from implementing DMS systems like M-Files and SharePoint to developing tailored solutions. My focus lies in business analysis, programming, and customizing software platforms to streamline document management and optimize business processes.",
+    "common__repository": "Repository",
+    "common__download_success": "Download success",
+    "common__download_error": "An error occured",
+    "resume__generating_pdf": "Generating PDF..."
 }

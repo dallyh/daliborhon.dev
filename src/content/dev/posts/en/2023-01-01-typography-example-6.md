@@ -1,6 +1,6 @@
 ---
-translationKey: 2023-01-01-typography-example
-title: Typography example
+translationKey: 2023-01-01-typography-example-6
+title: Typography example 6
 description: This is my first blog post.
 tags:
   - astro

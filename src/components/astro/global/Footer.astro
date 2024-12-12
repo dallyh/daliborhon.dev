@@ -24,11 +24,9 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 			</a>
 		</div>
 		<div>
-			<p>
-				{m.footer__page_created_by()} © {new Date().getFullYear()}
-			</p>
+			<p>© {new Date().getFullYear()} - Dalibor Hon</p>
 			<p class="app">
-				[<a href={tagHref}>{APP_VERSION_NAME}</a>]
+				<a href={tagHref}>{APP_VERSION_NAME}<span class="external-link-icon"><i></i></span></a>
 			</p>
 		</div>
 	</div>
@@ -48,9 +46,10 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 	}
 
 	.app {
+		font-size: 0.75rem;
 		text-align: center;
 	}
-	
+
 	footer {
 		--bulma-footer-padding: 1rem;
 		background-color: var(--bulma-scheme-main);

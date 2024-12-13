@@ -7,7 +7,7 @@ import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import TableOfContents from "@components/astro/global/TableOfContents.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import { createResumePdfFilename, removeTrailingSlash } from "@utils";
+import { removeTrailingSlash } from "@utils";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -25,9 +25,8 @@ const searchProps = {
 	title: m.common__resume(),
 	description: layoutProps.description,
 };
-
-const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/about/resume/${createResumePdfFilename(locale, true)}`));
 ---
+
 <PageLayout {...layoutProps} showCrumbs>
 	<Fragment slot="crumbs">
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/about")} label={m.common__about()} />
@@ -36,9 +35,8 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 	<SearchMeta {...searchProps} />
 	<a
 		id="download"
-		data-filename={createResumePdfFilename(locale, true)}
 		class="button is-primary is-anchor floating"
-		href={resumePdfFileName}
+		href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/about/resume/pdf"))}
 		download
 		title={m.resume__download_cv()}
 		aria-label={m.resume__download_cv()}
@@ -56,7 +54,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 <script>
 	import * as m from "$messages";
 
-	function createAndDownloadBlob(blob: Blob, name = "") {
+	function createAndDownloadBlob(blob: Blob, name: string) {
 		const link = document.createElement("a");
 		link.setAttribute("download", name);
 
@@ -66,16 +64,17 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 		document.body.appendChild(link);
 
 		link.click();
-		
+
 		document.body.removeChild(link);
 		URL.revokeObjectURL(blobUrl);
 	}
-	
+
 	function setupDownload() {
 		const downloadButton = document.getElementById("download") as HTMLAnchorElement;
 
 		downloadButton.onclick = async (e) => {
-			e.preventDefault(); // Prevent the default navigation behavior
+			e.preventDefault();
+
 			downloadButton.classList.toggle("is-loading");
 
 			try {
@@ -93,9 +92,9 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 
 				// Convert response to Blob
 				const blob = await res.blob();
-				createAndDownloadBlob(blob, downloadButton.dataset.filename)
+				const filename = res.headers.get("x-filename")!;
+				createAndDownloadBlob(blob, filename);
 				window.toast({ message: m.common__download_success(), type: "is-success" });
-
 			} catch (error) {
 				window.toast({ message: m.common__download_error(), type: "is-danger" });
 				console.error("Error downloading the file:", error);

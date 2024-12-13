@@ -44,6 +44,7 @@ export function createCmsConfig() {
 				"bold",
 				"italic",
 				"strikethrough",
+				"image",
 				"code",
 				"font",
 				"unordered-list",
@@ -51,6 +52,7 @@ export function createCmsConfig() {
 				"decrease-indent",
 				"increase-indent",
 				"shortcode",
+
 				{
 					label: "Insert",
 					groups: [
@@ -329,6 +331,36 @@ export function createCmsConfig() {
 						label: "Tag background color",
 						widget: "color",
 					},
+				],
+			},
+			{
+				name: "resume",
+				label: "Resumes",
+				label_singular: "Resume",
+				folder: "src/content/prod/resume",
+				identifier_field: "id",
+				create: false,
+				delete: false,
+				i18n: false,
+				extension: "mdx",
+				format: "frontmatter",
+				fields: [
+					{
+						name: "title",
+						label: "Title",
+						widget: "string",
+					},
+					{
+						name: "description",
+						label: "Description",
+						widget: "string",
+					},
+					{
+						name: "currentPosition",
+						label: "Current position",
+						widget: "string",
+					},
+					bodyField
 				],
 			},
 		],

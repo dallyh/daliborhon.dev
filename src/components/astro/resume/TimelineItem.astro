@@ -12,15 +12,18 @@ export interface Props {
 }
 
 const { date, title, institute } = Astro.props;
+const isPrint = Astro.locals.isPrint;
 ---
 
 <div class="timeline-item">
     <p class="date">{date}</p>
-    <p class="title">{title}</p>
-    <p>{institute}</p>
-    <div class="description">
-        <slot class="desc" />
+    <p class="title"><strong>{title}</strong></p>
+    <p><i>{institute}</i></p>
+    <div class="box is-size-7">
+        <slot />
     </div>
+    {isPrint && <hr />}
+    
 </div>
 
 <style>
@@ -43,8 +46,8 @@ const { date, title, institute } = Astro.props;
                 border-radius: 50%;
                 left: -30px;
                 top: 0;
-                border: 3px solid rgba(var(--accent), 1);
-                background-color: rgba(var(--secondary), 1);
+                border: 3px solid var(--bulma-primary);
+                background-color: var(--bulma-primary);
             }
         }
 
@@ -55,18 +58,7 @@ const { date, title, institute } = Astro.props;
             font-weight: normal;
             max-width: 95%;
             font-size: 1.2rem;
-            color: rgba(var(--accent), 1);
-        }
-
-        .description {
-            font-size: 0.9rem;
-            font-weight: 400;
-            margin-top: 1rem;
-            background-color: rgba(var(--secondary), 1);
-            padding: 0.725rem;
-            box-shadow: var(--global-box-shadow);
-            border-radius: 6px;
-            border: var(--border);
+            color: var(--bulma-primary);
         }
     }
 </style>

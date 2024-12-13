@@ -2,27 +2,32 @@
 import type { CertCard } from "./CertCard.astro";
 
 export interface Props {
-    children: CertCard | CertCard[];
+	children: CertCard | CertCard[];
+}
+
+const { children } = Astro.props;
+
+let cols = 1;
+if (Array.isArray(children)) {
+	if (children.length % 4) {
+		cols = 4;
+	}
+
+	if (children.length % 2) {
+		cols = 2;
+	}
 }
 ---
 
-<div class="prose-ul:m-0 prose-ul:p-0 prose-p:m-0">
-    <ul class="certifications-grid prose-img:m-0">
-        <slot />
-    </ul>
+<div class={`fixed-grid has-${4}-cols`}>
+	<ul class="grid is-col-min-7">
+		<slot />
+	</ul>
 </div>
 
 <style>
-    .certifications-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-    }
-
-    @media (max-width: 768px) {
-        .certifications-grid {
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-    }
+	ul {
+		list-style: none;
+		margin: 0;
+	}
 </style>

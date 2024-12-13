@@ -6,4 +6,10 @@ declare global {
 	interface Window {
 		toast: typeof toast;
 	}
-}
+
+	namespace App {
+		interface Locals {
+			isPrint: boolean | undefined;
+		}
+	}
+} 

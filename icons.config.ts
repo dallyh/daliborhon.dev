@@ -11,5 +11,6 @@ export default {
 			"envelope-fill",
 			"box-arrow-up-right",
 		],
+		devicon: ["*"]
 	},
 };

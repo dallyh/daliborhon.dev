@@ -8,7 +8,7 @@ export interface Props {
 
 ---
 
-<div class="timeline prose-p:m-0 prose-headings:m-0">
+<div class="timeline content">
     <div class="timeline-cards">
         <div class="timeline-card">
             <h3>{m.resume__section_exp_title()}</h3>
@@ -16,10 +16,10 @@ export interface Props {
                 <slot name="exp" />
             </div>
         </div>
-        <div class="timeline-card pagebreak">
+        <div class="timeline-card">
             <h3>{m.resume__section_edu_title()}</h3>
             <div class="timeline-content">
-                <div class="meta">
+                <div>
                     <slot name="edu" />
                 </div>
             </div>
@@ -46,7 +46,6 @@ export interface Props {
 
     .timeline-card {
         h3 {
-            color: rgba(var(--accent), 1);
             margin-bottom: 1rem;
         }
     }
@@ -63,6 +62,6 @@ export interface Props {
         height: 100%;
         left: 1px;
         top: 0;
-        background: linear-gradient(to bottom, rgba(var(--accent), 0.75) 65%, transparent);
+        background: linear-gradient(to bottom, var(--bulma-primary) 65%, transparent);
     }
 </style>

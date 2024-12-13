@@ -6,6 +6,13 @@ export interface Props {
 }
 ---
 
-<ul class="dev-list-inline prose-li:list-none p-0">
+<ul class="grid is-col-min-4">
     <slot />
 </ul>
+
+<style>
+    ul {
+        list-style: none;
+        margin: 0;
+    }
+</style>

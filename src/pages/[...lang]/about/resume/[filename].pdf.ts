@@ -6,13 +6,10 @@ import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
 import jsdom from "jsdom";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
 import { loadRenderers } from "astro:container";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
-import type { Content, ContentImage, ContentTable, TDocumentInformation } from "pdfmake/interfaces";
+import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import PdfPrinter from "pdfmake";
-//@ts-ignore
 import { WritableStreamBuffer } from "stream-buffers";
 
 export async function getStaticPaths() {
@@ -44,19 +41,25 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 			// Remove query parameters
 			const [path] = imageUrl.split("?");
 
-			// Extract the part after `/src/`
-			const srcIndex = path.indexOf("/src/");
+			// Check for `/src/`
+			let srcIndex = path.indexOf("/src/");
 			if (srcIndex !== -1) {
 				return path.substring(srcIndex + 1); // Remove the leading slash
 			}
 
-			return null; // Return null if `/src/` is not found
+			// Check for `/public/`
+			const publicIndex = path.indexOf("/public/");
+			if (publicIndex !== -1) {
+				return path.substring(publicIndex + 1); // Remove the leading slash
+			}
+
+			return null; // Return null if neither `/src/` nor `/public/` is found
 		} catch {
 			return null; // Handle any unexpected errors gracefully
 		}
 	}
 
-	function traverse(node: Content[] | Content) {
+	function traverse(node: Content) {
 		if (Array.isArray(node)) {
 			// If the node is an array, iterate over its elements
 			node.forEach(traverse);
@@ -67,9 +70,10 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 				const decodedSrc = getDecodedSrc(node.image);
 				const cleanedSrc = getCleanedSrc(decodedSrc);
 				const src = `./${cleanedSrc}`;
-				console.log(src);
 				if (cleanedSrc) {
 					node.image = src; // Update with the cleaned `src` part
+				} else {
+					node.image = "";
 				}
 			}
 
@@ -85,7 +89,6 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 			}
 		}
 	}
-
 	traverse(content);
 }
 
@@ -107,60 +110,39 @@ export const GET: APIRoute = async ({ params }) => {
 	const { Content } = await render(entry);
 
 	const content = await container.renderToString(Content, {
-		partial: false,
+		partial: true,
+		locals: {
+			isPrint: true
+		}
 	});
 
 	const { JSDOM } = jsdom;
 	const { window } = new JSDOM("");
 
-	//@ts-ignore the types are wrong, it is not under pdfFonts.pdfMake.vfs...
-	//pdfMake.vfs = pdfFonts.vfs;
-
 	var fonts = {
-		Courier: {
-			normal: "Courier",
-			bold: "Courier-Bold",
-			italics: "Courier-Oblique",
-			bolditalics: "Courier-BoldOblique",
-		},
-		Helvetica: {
-			normal: "Helvetica",
-			bold: "Helvetica-Bold",
-			italics: "Helvetica-Oblique",
-			bolditalics: "Helvetica-BoldOblique",
-		},
-		Times: {
-			normal: "Times-Roman",
-			bold: "Times-Bold",
-			italics: "Times-Italic",
-			bolditalics: "Times-BoldItalic",
-		},
-		Symbol: {
-			normal: "Symbol",
-		},
-		ZapfDingbats: {
-			normal: "ZapfDingbats",
+		Roboto: {
+			normal: "./src/assets/fonts/Roboto-Regular.ttf",
+			bold: "./src/assets/fonts/Roboto-Medium.ttf",
+			italics: "./src/assets/fonts/Roboto-Italic.ttf",
+			bolditalics: "./src/assets/fonts/Roboto-MediumItalic.ttf",
 		},
 	};
 
-	Object.keys(pdfFonts).forEach((o) => {
-		console.log(o);
-	});
-
 	const html = htmlToPdfMake(content, {
 		window,
+		removeExtraBlanks: true,
 	});
 
-	const docDefinition = {
+	const docDefinition: TDocumentDefinitions = {
 		content: [html],
 		styles: {
 			"html-h1": {
-				marginTop: 25,
+				marginTop: 10,
 			},
 		},
 		defaultStyle: {
 			fontSize: 11,
-			font: "Helvetica",
+			font: "Roboto",
 		},
 	};
 
@@ -196,7 +178,7 @@ export const GET: APIRoute = async ({ params }) => {
 					resolve(
 						new Response(pdfBuffer as Buffer, {
 							status: 200,
-							headers: { "Content-Type": "application/pdf" },
+							headers,
 						}),
 					);
 				});
@@ -205,27 +187,14 @@ export const GET: APIRoute = async ({ params }) => {
 				bufferStream.on("error", (err: Error) => {
 					reject(new Error(`Buffer stream error: ${err.message}`));
 				});
-			} catch (error) {
+			} catch (error: any) {
 				reject(new Error(`Failed to generate PDF: ${error.message}`));
 			}
 		});
 	}
 
-	return generatePdfResponse(docDefinition);
-
-	//const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-
-	/**const getPdfBuffer = () => {
-		return new Promise((resolve) => {
-			pdfDocGenerator.getBuffer((buffer) => {
-				resolve(buffer);
-			});
-		});
-	};**/
-
 	try {
-		//const buffer = await getPdfBuffer();
-		return new Response(bufferStream.getContents() as Buffer, { status: 200, headers });
+		return generatePdfResponse(docDefinition);
 	} catch (error) {
 		return new Response(null, { status: 500 });
 	}

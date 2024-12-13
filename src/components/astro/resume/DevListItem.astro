@@ -2,20 +2,42 @@
 import { Icon } from "astro-icon/components";
 
 export type DevListItem = {
-    tooltipPlacement?: string;
-    tooltipText: string;
-    iconName: string;
+	label: string;
+	iconName: string;
 };
 
 export interface Props {
-    tooltipPlacement?: string;
-    tooltipText: string;
-    iconName: string;
+	label: string;
+	iconName: string;
 }
 
-const { tooltipPlacement = "bottom", tooltipText, iconName } = Astro.props;
+const { label, iconName } = Astro.props;
+const isPrint = Astro.locals.isPrint;
 ---
 
-<li class="dev-list-inline-item" tabindex="0" data-tooltip={tooltipPlacement} data-tooltip-text={tooltipText}>
-    <i><!--<Icon name={iconName} />--</i>
-</li>
+{
+	isPrint && (
+		<li>
+			{label}
+		</li>
+	)
+}
+
+{
+	!isPrint && (
+		<li class="cell">
+			<p class="print-only">{label}</p>
+			<div class="noprint">
+				<Icon name={`devicon:${iconName}`} size={52} aria-label={label} title={label} />
+			</div>
+		</li>
+	)
+}
+
+<style>
+	.cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

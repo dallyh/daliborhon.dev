@@ -40,7 +40,6 @@ export default defineConfig({
 	site: SITE_URL,
 	build: {
 		format: "directory",
-		client: "./", // Temporary fix for astro-pagefind
 	},
 	adapter: node({
 		mode: "standalone",

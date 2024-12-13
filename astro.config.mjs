@@ -9,6 +9,11 @@ import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
 import node from "@astrojs/node";
+import mdx from "@astrojs/mdx";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeToc from "rehype-toc";
+import rehypeExtenalLinks from "rehype-external-links";
 
 const { NODE_ENV } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
@@ -35,7 +40,6 @@ export default defineConfig({
 	site: SITE_URL,
 	build: {
 		format: "directory",
-		client: "./", // Temporary fix for astro-pagefind
 	},
 	adapter: node({
 		mode: "standalone",
@@ -48,9 +52,9 @@ export default defineConfig({
 	},
 	markdown: {
 		rehypePlugins: [
-			"rehype-slug",
+			rehypeSlug,
 			[
-				"rehype-autolink-headings",
+				rehypeAutolinkHeadings,
 				{
 					behavior: "append",
 					content: {
@@ -67,9 +71,9 @@ export default defineConfig({
 					},
 				},
 			],
-			["rehype-toc", { headings: ["h2", "h3", "h4", "h5", "h6"] }],
+			[rehypeToc, { headings: ["h2", "h3", "h4", "h5", "h6"] }],
 			[
-				"rehype-external-links",
+				rehypeExtenalLinks,
 				{
 					content: {
 						type: "element",
@@ -115,6 +119,7 @@ export default defineConfig({
 			outdir: "./src/paraglide",
 		}),
 		expressiveCode(),
+		mdx(),
 	],
 	vite: {
 		server: {

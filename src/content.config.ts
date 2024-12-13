@@ -1,9 +1,9 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
+import { getDevOrProdContentPath } from "@utils";
 import { glob } from "astro/loaders";
 
-const isDevOrPreview = import.meta.env.DEV ? true : import.meta.env.PREVIEW ? true : false;
-const path = isDevOrPreview ? "dev" : "prod";
+const path = getDevOrProdContentPath();
 console.log(`Content config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 // Define a `type` and `schema` for each collection
@@ -75,7 +75,7 @@ const projectTags = defineCollection({
 });
 
 const resume = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/resume` }),
+	loader: glob({ pattern: "**/[^_]*.mdx", base: `./src/content/${path}/resume` }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),

@@ -99,6 +99,7 @@
     "footer__page_created_by": "Vytvořil Dalibor Hon",
     "footer__site_admin_a_label": "Přihlášení do správy webu",
     "landing__hi_there": "Zdravím, jsem",
+    "landing__intro": "Business Consultant který je zapálený analytik a zároveň i nadšenec do technologií.",
     "projects__cms_oauth_description": "Rozhraní API, které poskytuje autentizaci pro systém Static CMS prostřednictvím služby GitHub OAuth.",
     "projects__cms_oauth_title": "Zprostředkovatel GitHub OAuth pro Static CMS",
     "projects__description": "Seznam mých větších projektů.",

@@ -18,7 +18,7 @@ const recentPosts = await getFilteredPostsCollection({ sort: true, slice: siteCo
 const featuredPosts = await getFilteredPostsCollection({ featured: true, sort: true, slice: siteConfig.blog.featuredPostsSize, locale: locale });
 
 const layoutProps = {
-	title: "Dalibor Hon - " + m.common__home_page(),
+	title: m.common__home_page(),
 	description: m.common__site_description(),
 	homepage: true,
 };

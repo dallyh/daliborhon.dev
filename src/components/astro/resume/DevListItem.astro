@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components";
+
+export type DevListItem = {
+	label: string;
+	iconName: string;
+};
+
+export interface Props {
+	label: string;
+	iconName: string;
+}
+
+const { label, iconName } = Astro.props;
+const isPrint = Astro.locals.isPrint;
+---
+
+{
+	isPrint && (
+		<li>
+			{label}
+		</li>
+	)
+}
+
+{
+	!isPrint && (
+		<li class="cell">
+			<p class="print-only">{label}</p>
+			<div class="noprint">
+				<Icon name={`devicon:${iconName}`} size={52} aria-label={label} title={label} />
+			</div>
+		</li>
+	)
+}
+
+<style>
+	.cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

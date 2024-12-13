@@ -116,7 +116,7 @@ const locale = Astro.currentLocale!;
 		border-bottom: 1px solid hsl(0, 0%, 70%);
 
 		[data-theme="dark"] & {
-			border: 1px solid hsl(0, 0%, 20%);
+			border-bottom: 1px solid hsl(0, 0%, 20%);
 		}
 	}
 
@@ -126,9 +126,17 @@ const locale = Astro.currentLocale!;
 		[data-theme="dark"] & {
 			border: 1px solid hsl(0, 0%, 20%);
 		}
+
+		@media (max-width: 1024px) {
+			border: unset;
+
+			[data-theme="dark"] & {
+				border: unset;
+			}
+		}
 	}
 
 	.navbar {
-		--bulma-navbar-burger-color: rgb(171, 177, 191);
+		--bulma-navbar-burger-color: var(--bulma-text-strong);
 	}
 </style>

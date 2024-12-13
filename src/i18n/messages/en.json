@@ -99,6 +99,7 @@
     "footer__page_created_by": "Created by Dalibor Hon",
     "footer__site_admin_a_label": "Site administration login",
     "landing__hi_there": "Hi there, I'm",
+    "landing__intro": "A Business Consultant who is a passionate analyst and also a technology enthusiast.",
     "projects__cms_oauth_description": "An API that provides authentification for Static CMS through GitHub's OAuth.",
     "projects__cms_oauth_title": "GitHub OAuth provider for Static CMS",
     "projects__description": "A list of all my projects, which are a little bit bigger.",

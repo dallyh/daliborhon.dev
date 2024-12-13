@@ -70,6 +70,7 @@ const resumePdfFileName = removeTrailingSlash(getRelativeLocaleUrl(locale, `/abo
 		document.body.removeChild(link);
 		URL.revokeObjectURL(blobUrl);
 	}
+	
 	function setupDownload() {
 		const downloadButton = document.getElementById("download") as HTMLAnchorElement;
 

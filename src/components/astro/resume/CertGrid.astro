@@ -1,0 +1,33 @@
+---
+import type { CertCard } from "./CertCard.astro";
+
+export interface Props {
+	children: CertCard | CertCard[];
+}
+
+const { children } = Astro.props;
+
+let cols = 1;
+if (Array.isArray(children)) {
+	if (children.length % 4) {
+		cols = 4;
+	}
+
+	if (children.length % 2) {
+		cols = 2;
+	}
+}
+---
+
+<div class={`fixed-grid has-${4}-cols has-${2}-cols-mobile`}>
+	<ul class="grid is-col-min-7">
+		<slot />
+	</ul>
+</div>
+
+<style>
+	ul {
+		list-style: none;
+		margin: 0;
+	}
+</style>

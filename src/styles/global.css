@@ -54,6 +54,10 @@ a:not(.navbar-link, .navbar-item, .navbar-burger) {
 	flex-direction: column;
 }
 
+.print-only {
+	display: none;
+}
+
 .md-content {
 	h1,
 	h2,

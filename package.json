@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@astrojs/check": "^0.9.4",
+        "@astrojs/mdx": "^4.0.2",
         "@astrojs/node": "^9.0.0",
         "@astrojs/react": "^4.1.0",
         "@astrojs/rss": "^4.0.10",
@@ -27,7 +28,8 @@
         "@formkit/auto-animate": "^0.8.2",
         "@hcaptcha/react-hcaptcha": "^1.11.0",
         "@iconify-json/bi": "^1.2.1",
-        "@inlang/paraglide-astro": "^0.2.6",
+        "@iconify-json/devicon": "^1.2.8",
+        "@inlang/paraglide-astro": "^0.3.0",
         "@pagefind/default-ui": "^1.2.0",
         "@resvg/resvg-js": "^2.6.2",
         "astro": "^5.0.5",
@@ -45,14 +47,15 @@
         "pdfmake": "^0.2.15",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
-        "react-hook-form": "^7.54.0",
+        "react-hook-form": "^7.54.1",
         "rehype-autolink-headings": "^7.1.0",
         "rehype-external-links": "^3.0.0",
         "rehype-slug": "^6.0.0",
         "rehype-toc": "^3.0.2",
         "satori": "^0.12.0",
         "sharp": "^0.33.5",
-        "slug": "^10.0.0"
+        "slug": "^10.0.0",
+        "stream-buffers": "^3.0.3"
     },
     "devDependencies": {
         "@astrojs/sitemap": "^3.2.1",
@@ -68,6 +71,7 @@
         "@types/react": "^19.0.1",
         "@types/react-dom": "^19.0.2",
         "@types/slug": "^5.0.9",
+        "@types/stream-buffers": "^3.0.7",
         "autoprefixer": "^10.4.20",
         "ci-info": "^4.1.0",
         "cssnano": "^7.0.6",

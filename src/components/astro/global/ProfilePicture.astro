@@ -1,18 +1,26 @@
 ---
 import { Image } from "astro:assets";
 import * as m from "$messages";
+import profilePicture from "@assets/img/profile/me.png";
 
 interface Props {
-	img: ImageMetadata;
+	img?: ImageMetadata;
 	imgClass?: string;
 }
 
-const { imgClass, img, ...rest } = Astro.props;
+const { imgClass, img = profilePicture, ...rest } = Astro.props;
+const isPrint = Astro.locals.isPrint;
 ---
 
-<div class="profile-picture-wrapper">
-	<Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...rest} />
-</div>
+{
+	!isPrint && (
+		<div class="profile-picture-wrapper">
+			<Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...rest} />
+		</div>
+	)
+}
+
+{isPrint && <Image src={img} style="width: 10rem; height: 11rem;" alt={m.common__profile_picture()} {...rest} />}
 
 <style>
 	.profile-picture-wrapper {

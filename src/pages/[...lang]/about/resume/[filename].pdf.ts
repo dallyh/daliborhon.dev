@@ -1,4 +1,6 @@
+import { loadRenderers } from "astro:container";
 import { getEntry, render } from "astro:content";
+import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
 import { locales } from "@i18n-config";
 import { getRoutingLocale } from "@i18n/utils";
 import { createResumePdfFilename } from "@utils";
@@ -6,12 +8,11 @@ import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
 import jsdom from "jsdom";
-import { loadRenderers } from "astro:container";
-import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
-import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import PdfPrinter from "pdfmake";
+import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
 
+// Prerender so it does not take server resources on download
 export async function getStaticPaths() {
 	const paths = locales.map((locale) => {
 		const filename = createResumePdfFilename(locale);
@@ -50,7 +51,7 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 			// Check for `/public/`
 			const publicIndex = path.indexOf("/public/");
 			if (publicIndex !== -1) {
-				return path.substring(publicIndex + 1); // Remove the leading slash
+				return path.substring(publicIndex + 1);
 			}
 
 			return null; // Return null if neither `/src/` nor `/public/` is found
@@ -61,7 +62,6 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 
 	function traverse(node: Content) {
 		if (Array.isArray(node)) {
-			// If the node is an array, iterate over its elements
 			node.forEach(traverse);
 		} else if (typeof node === "object" && node !== null) {
 			// If the node is an object, check for `nodeName: 'IMG'`
@@ -71,7 +71,7 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 				const cleanedSrc = getCleanedSrc(decodedSrc);
 				const src = `./${cleanedSrc}`;
 				if (cleanedSrc) {
-					node.image = src; // Update with the cleaned `src` part
+					node.image = src;
 				} else {
 					node.image = "";
 				}
@@ -104,7 +104,7 @@ export const GET: APIRoute = async ({ params }) => {
 	const entry = await getEntry("resume", params.lang);
 
 	if (!entry) {
-		return new Response(null, { status: 500 });
+		return new Response(null, { status: 404 });
 	}
 
 	const { Content } = await render(entry);
@@ -160,11 +160,7 @@ export const GET: APIRoute = async ({ params }) => {
 
 		return new Promise<Response>((resolve, reject) => {
 			try {
-				const pdfDoc = printer.createPdfKitDocument(docDefinition);
-
-				// Pipe PDF into the writable buffer stream
-				pdfDoc.pipe(bufferStream);
-				pdfDoc.end();
+				printer.createPdfKitDocument(docDefinition).pipe(bufferStream).end()
 
 				// Wait for the "finish" event to get the PDF buffer
 				bufferStream.on("finish", () => {
@@ -174,7 +170,6 @@ export const GET: APIRoute = async ({ params }) => {
 						return reject(new Error("Failed to generate PDF buffer"));
 					}
 
-					// Return the response with the buffer
 					resolve(
 						new Response(pdfBuffer as Buffer, {
 							status: 200,
@@ -194,7 +189,7 @@ export const GET: APIRoute = async ({ params }) => {
 	}
 
 	try {
-		return generatePdfResponse(docDefinition);
+		return await generatePdfResponse(docDefinition);
 	} catch (error) {
 		return new Response(null, { status: 500 });
 	}

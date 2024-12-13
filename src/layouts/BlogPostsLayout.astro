@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getRelativeLocaleUrl, getRelativeLocaleUrlList } from "astro:i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
@@ -11,7 +11,6 @@ import Navigation from "@components/astro/global/Navigation.astro";
 import Section from "@components/astro/global/Section.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 import type { Page } from "astro";
-import { Icon } from "astro-icon/components";
 
 interface Props {
 	page: Page<CollectionEntry<"posts">>;

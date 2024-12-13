@@ -1,6 +1,10 @@
 import { removeTrailingSlash } from "@utils";
 import { locales, type AllowedLocales } from "./i18n.config";
 import { siteConfig } from "./site.config";
+import { getDevOrProdContentPath } from "@utils";
+
+const path = getDevOrProdContentPath();
+console.log(`Sveltia CMS config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 const localeSettings = siteConfig.i18n.locales;
 
@@ -108,7 +112,7 @@ export function createCmsConfig() {
 				name: "posts",
 				label: "Posts",
 				label_singular: "Post",
-				folder: "src/content/prod/posts",
+				folder: `src/content/${path}/posts`,
 				create: true,
 				delete: true,
 				i18n: true,
@@ -206,7 +210,7 @@ export function createCmsConfig() {
 				name: "tags",
 				label: "Tags",
 				label_singular: "Tag",
-				folder: "src/content/prod/tags",
+				folder: `src/content/${path}/tags`,
 				identifier_field: "id",
 				create: true,
 				delete: true,
@@ -233,7 +237,7 @@ export function createCmsConfig() {
 				name: "projects",
 				label: "Projects",
 				label_singular: "Project",
-				folder: "src/content/prod/projects",
+				folder: `src/content/${path}/projects`,
 				create: true,
 				delete: true,
 				i18n: true,
@@ -307,7 +311,7 @@ export function createCmsConfig() {
 				name: "projectTags",
 				label: "Project tags",
 				label_singular: "Project tag",
-				folder: "src/content/prod/project-tags",
+				folder: `src/content/${path}/project-tags`,
 				identifier_field: "id",
 				create: true,
 				delete: true,
@@ -337,7 +341,7 @@ export function createCmsConfig() {
 				name: "resume",
 				label: "Resumes",
 				label_singular: "Resume",
-				folder: "src/content/prod/resume",
+				folder: `src/content/${path}/resume`,
 				identifier_field: "id",
 				create: false,
 				delete: false,

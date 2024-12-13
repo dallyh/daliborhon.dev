@@ -1,9 +1,6 @@
 import { loadRenderers } from "astro:container";
 import { getEntry, render } from "astro:content";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
-import { locales } from "@i18n-config";
-import { getRoutingLocale } from "@i18n/utils";
-import { createResumePdfFilename } from "@utils";
 import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
@@ -11,26 +8,28 @@ import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
+import { createResumePdfFilename } from "@utils";
 
-// Prerender so it does not take server resources on download
-export async function getStaticPaths() {
-	const paths = locales.map((locale) => {
-		const filename = createResumePdfFilename(locale);
-		return { params: { lang: getRoutingLocale(locale), filename: filename } };
-	});
-
-	return paths;
-}
+// This cannot be prerendered, because the images are written last in the build step
+export const prerender = false;
 
 function updateAllIMGNodes(content: Content[] | Content): void {
 	function isContentImage(node: any): node is ContentImage {
 		return node && typeof node === "object" && node.nodeName === "IMG" && typeof node.image === "string";
 	}
 
+	
+	
 	function getDecodedSrc(imageUrl: string): string | null {
-		const queryParams = new URLSearchParams(imageUrl.split("?")[1]);
-		const href = queryParams.get("href");
-		return href ? decodeURIComponent(href) : null;
+		// Example: /_image?href=/_astro/me.BN5ISb12.png&w=541&h=574&f=webp
+		if (imageUrl.split("?").length > 0) {
+			const queryParams = new URLSearchParams(imageUrl.split("?")[1]);
+			const href = queryParams.get("href");
+			return href ? decodeURIComponent(href) : null;
+		}
+
+		// Example: /assets/uploads/company-logos/abbyy.png
+		return imageUrl;
 	}
 
 	function getCleanedSrc(imageUrl: string | null): string | null {
@@ -38,8 +37,7 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 			return null;
 		}
 
-		try {
-			// Remove query parameters
+		if (import.meta.env.DEV) {
 			const [path] = imageUrl.split("?");
 
 			// Check for `/src/`
@@ -54,9 +52,9 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 				return path.substring(publicIndex + 1);
 			}
 
-			return null; // Return null if neither `/src/` nor `/public/` is found
-		} catch {
-			return null; // Handle any unexpected errors gracefully
+			throw new Error(`Could not determine local image path for: ${imageUrl}`);
+		} else {
+			return `/dist/client${imageUrl}`; // Build output and asset path in config
 		}
 	}
 
@@ -112,8 +110,8 @@ export const GET: APIRoute = async ({ params }) => {
 	const content = await container.renderToString(Content, {
 		partial: true,
 		locals: {
-			isPrint: true
-		}
+			isPrint: true,
+		},
 	});
 
 	const { JSDOM } = jsdom;
@@ -150,17 +148,20 @@ export const GET: APIRoute = async ({ params }) => {
 
 	let headers = {
 		"Content-Type": "application/pdf",
-		"Content-Disposition": `attachment; filename="${params.filename}.pdf"`,
+		"Content-Disposition": `attachment; filename="${createResumePdfFilename(params.lang)}.pdf"`,
+		"x-filename": `${createResumePdfFilename(params.lang)}.pdf`
 	};
 
 	const printer = new PdfPrinter(fonts);
 
-	async function generatePdfResponse(docDefinition: any): Promise<Response> {
+	async function generatePdfResponse(docDefinition: any): Promise<Buffer> {
 		const bufferStream = new WritableStreamBuffer();
 
-		return new Promise<Response>((resolve, reject) => {
+		return new Promise<Buffer>((resolve, reject) => {
 			try {
-				printer.createPdfKitDocument(docDefinition).pipe(bufferStream).end()
+				const pdfMake = printer.createPdfKitDocument(docDefinition);
+				pdfMake.pipe(bufferStream);
+				pdfMake.end();
 
 				// Wait for the "finish" event to get the PDF buffer
 				bufferStream.on("finish", () => {
@@ -170,12 +171,7 @@ export const GET: APIRoute = async ({ params }) => {
 						return reject(new Error("Failed to generate PDF buffer"));
 					}
 
-					resolve(
-						new Response(pdfBuffer as Buffer, {
-							status: 200,
-							headers,
-						}),
-					);
+					resolve(pdfBuffer as Buffer);
 				});
 
 				// Handle stream errors
@@ -183,14 +179,16 @@ export const GET: APIRoute = async ({ params }) => {
 					reject(new Error(`Buffer stream error: ${err.message}`));
 				});
 			} catch (error: any) {
-				reject(new Error(`Failed to generate PDF: ${error.message}`));
+				reject(new Error(`Failed to generate PDF: ${error}`));
 			}
 		});
 	}
 
 	try {
-		return await generatePdfResponse(docDefinition);
-	} catch (error) {
+		const pdf = await generatePdfResponse(docDefinition);
+		return new Response(pdf, { status: 200, headers: headers });
+	} catch (error: any) {
+		console.log(`Fatal error: ${error}`);
 		return new Response(null, { status: 500 });
 	}
 };

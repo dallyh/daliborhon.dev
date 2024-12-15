@@ -17,6 +17,7 @@ import TableOfContents from "@components/astro/global/TableOfContents.astro";
 import type { AllowedLocales } from "@i18n-config";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import MainLayout from "./MainLayout.astro";
+import { getReadingTime } from "@utils/content";
 
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -29,6 +30,7 @@ const { pubDate, modDate, title, description } = post.data;
 const { Content, headings } = await render(post);
 const relatedTags = await getEntries(post.data.tags);
 const image = getBlogPostImageUrl(locale, post, Astro.url);
+const readingTime = getReadingTime(post.body ?? "");
 
 const layoutProps = {
 	title: `${m.blog__post()}: ${title}`,
@@ -81,16 +83,31 @@ const searchProps = {
 			<div class="columns">
 				<div class="column">
 					<h1 class="title">{title}</h1>
-					<p class="subtitle">
-						<FormattedDate {pubDate} {modDate} {locale} />
-					</p>
-					<div class="tags mt-2">
-						<TagList post={post} />
+					<div class="subtitles">
+						<p class="subtitle is-size-6">
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fa-regular fa-calendar"></i>
+								</span>
+								<span><FormattedDate {pubDate} {modDate} {locale} /></span>
+							</span>
+						</p>
+						<p class="subtitle is-size-6 mt-2">
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fa-regular fa-clock"></i>
+								</span>
+								<span>{readingTime} {m.common__minutes()}</span>
+							</span>
+						</p>
+						<div class="tags mt-2">
+							<TagList post={post} />
+						</div>
 					</div>
 				</div>
-				<figure class="column image post-image">
+				<div class="column image post-image">
 					<Image src={image} width={600} height={315} title={title} alt={title} loading="eager" transition:animate="slide" />
-				</figure>
+				</div>
 			</div>
 			<hr />
 			<article class="content md-content">
@@ -118,6 +135,21 @@ const searchProps = {
 			object-position: 50% 50%;
 			box-shadow: var(--global-box-shadow);
 			border: 1px solid transparent;
+		}
+	}
+</style>
+
+<style>
+	.title {
+		margin-bottom: 0.5rem;
+	}
+
+	.subtitles {
+		display: flex;
+		flex-direction: column;
+
+		.subtitle {
+			margin: 0;
 		}
 	}
 </style>

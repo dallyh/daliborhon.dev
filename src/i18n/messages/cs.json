@@ -164,5 +164,6 @@
     "common__repository": "Repozitář",
     "common__download_success": "Stahování úspěšné",
     "common__download_error": "Nastala chyba",
-    "resume__generating_pdf": "Generuji PDF..."
+    "resume__generating_pdf": "Generuji PDF...",
+    "common__minutes": "minuty"
 }

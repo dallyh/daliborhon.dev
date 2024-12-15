@@ -20,7 +20,7 @@ const isPrint = Astro.locals.isPrint;
 {
 	!isPrint && (
 		<li class="cell">
-			<p>{label}</p>
+			<span class="sr-only">{label}</span>
 			<div>
 				<Icon name={`devicon:${iconName}`} size={52} aria-label={label} title={label} />
 			</div>

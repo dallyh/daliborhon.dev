@@ -164,5 +164,6 @@
     "common__repository": "Repository",
     "common__download_success": "Download success",
     "common__download_error": "An error occured",
-    "resume__generating_pdf": "Generating PDF..."
+    "resume__generating_pdf": "Generating PDF...",
+    "common__minutes": "minutes"
 }

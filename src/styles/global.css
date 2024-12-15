@@ -41,7 +41,10 @@ html {
 	}
 }
 
-a:not(.navbar-link, .navbar-item, .navbar-burger) {
+a:not(.navbar-link,
+.navbar-item,
+.navbar-burger,
+.button) {
 	&:hover {
 		text-decoration: underline;
 	}

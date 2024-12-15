@@ -9,6 +9,7 @@ import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
+import * as m from "$messages";
 
 // This cannot be prerendered, because the images are written last in the build step
 export const prerender = false;
@@ -129,11 +130,37 @@ export const GET: APIRoute = async ({ params }) => {
 		removeExtraBlanks: true,
 	});
 
+	const currentDate = new Date();
+
 	const docDefinition: TDocumentDefinitions = {
-		content: [html],
+		content: [
+			{
+				text: m.blog__toc(),
+				style: "header",
+				marginBottom: 10,
+			},
+			html,
+		],
+		footer: function (currentPage, pageCount) {
+			return {
+				columns: [
+					{ text: `${m.common__resume()} - Dalibor Hon (${currentDate.toLocaleString()})`, alignment: "left", style: "footer", marginLeft: 38 },
+					{ text: `${currentPage.toString()}/${pageCount}`, alignment: "right", style: "footer", marginRight: 38 },
+				],
+			};
+		},
 		styles: {
 			"html-h1": {
 				marginTop: 10,
+			},
+			header: {
+				fontSize: 18,
+				bold: true,
+			},
+			footer: {
+				fontSize: 8,
+				opacity: 0.8,
+				marginTop: 15,
 			},
 		},
 		defaultStyle: {

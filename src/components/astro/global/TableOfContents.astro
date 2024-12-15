@@ -48,17 +48,44 @@ const { headings } = Astro.props;
 </script>
 
 <style is:global>
-	.toc {
-		display: none;
+	nav .toc {
+		display: none; /* This is generated */
 	}
 
-	summary {
-		cursor: pointer;
+	#toc {
+		summary::marker,
+		summary::-webkit-details-marker {
+			display: none!;
+		}
 
-		&:focus {
-			outline: none;
-			border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
-			box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
+		summary:before {
+			content: "";
+			border-width: 0.4rem;
+			border-style: solid;
+			border-color: transparent transparent transparent var(--bulma-box-color);
+			position: absolute;
+			top: 0.35rem;
+			left: 0rem;
+			transform: rotate(0);
+			transform-origin: 0.2rem 50%;
+			transition: 0.25s transform ease;
+		}
+
+		details[open] > summary:before {
+			transform: rotate(90deg);
+		}
+
+		summary {
+			padding-left: 1rem;
+			position: relative;
+			cursor: pointer;
+			list-style: none;
+
+			&:focus {
+				outline: none;
+				border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
+				box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
+			}
 		}
 	}
 </style>

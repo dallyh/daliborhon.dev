@@ -15,13 +15,7 @@ const { label, iconName } = Astro.props;
 const isPrint = Astro.locals.isPrint;
 ---
 
-{
-	isPrint && (
-		<li>
-			{label}
-		</li>
-	)
-}
+{isPrint && <li>{label}</li>}
 
 {
 	!isPrint && (

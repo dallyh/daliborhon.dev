@@ -9,24 +9,26 @@ export { getStaticPaths } from "@i18n/utils";
 
 export async function GET({ site, currentLocale }: APIContext) {
 	const container = await experimental_AstroContainer.create();
-	const allBlogArticles = await getFilteredPostsCollection({locale: currentLocale, sort: true});
+	const allBlogArticles = await getFilteredPostsCollection({ locale: currentLocale, sort: true });
 
 	if (allBlogArticles === undefined) {
-		return new Response(null, {status: 500})
+		return new Response(null, { status: 500 });
 	}
 
-	const items = await Promise.all(allBlogArticles.map(async (post) => {
-		const { Content } = await render(post);
-		const { title, pubDate, description } = post.data;
+	const items = await Promise.all(
+		allBlogArticles.map(async (post) => {
+			const { Content } = await render(post);
+			const { title, pubDate, description } = post.data;
 
-		return {
-			title: title,
-			pubDate: pubDate,
-			description: description,
-			link: getBlogPostUrl(currentLocale!, post),
-			content: await container.renderToString(Content),
-		};
-	}));
+			return {
+				title: title,
+				pubDate: pubDate,
+				description: description,
+				link: getBlogPostUrl(currentLocale!, post),
+				content: await container.renderToString(Content),
+			};
+		}),
+	);
 
 	return rss({
 		stylesheet: `/rss/style-${currentLocale}.xsl`,

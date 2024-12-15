@@ -3,7 +3,7 @@ translationKey: 2023-01-01-typography-example-6
 title: Typography example 6
 description: This is my first blog post.
 tags:
-  - astro
+    - astro
 language: en
 hidden: false
 featured: true
@@ -11,6 +11,7 @@ image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01
 modDate: ""
 ---
+
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
@@ -45,7 +46,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 ## Emphasis
 
-Emphasis, aka italics, with *asterisks* or *underscores*.
+Emphasis, aka italics, with _asterisks_ or _underscores_.
 
 Strong emphasis, aka bold, with **asterisks** or **underscores**.
 
@@ -58,7 +59,7 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 Quote break.
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
 
 ## Horizontal separator
 
@@ -82,13 +83,13 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 ### Unordered list
 
--   List item
--   List item
-    -   Nested list item
-    -   Nested list item
-        -   Double nested list item
-        -   Double nested list item
--   List item
+- List item
+- List item
+    - Nested list item
+    - Nested list item
+        - Double nested list item
+        - Double nested list item
+- List item
 
 ### Mixed list
 
@@ -121,7 +122,7 @@ Some text to show that the reference links can follow later.
 
 ## Images
 
-Images included in *\_posts* folder are lazy loaded.
+Images included in _\_posts_ folder are lazy loaded.
 
 Inline-style:
 ![alt text](https://docs.astro.build/assets/arc.webp "Logo Title Text 1")
@@ -136,7 +137,7 @@ Inline-style:
 
 | Markdown | Less      | Pretty     |
 | -------- | --------- | ---------- |
-| *Still*  | `renders` | **nicely** |
+| _Still_  | `renders` | **nicely** |
 | 1        | 2         | 3          |
 
 ## Syntax highlight

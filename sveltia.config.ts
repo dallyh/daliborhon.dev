@@ -14,7 +14,7 @@ const localeSettings = siteConfig.i18n.locales;
  */
 export function createCmsConfig() {
 	const siteUrl = removeTrailingSlash(`${import.meta.env.SITE}${import.meta.env.BASE_URL}`);
-	const oAuthProviderBase =`${siteUrl}/cms`;
+	const oAuthProviderBase = `${siteUrl}/cms`;
 	const authEndpoint = "auth";
 	const branch = import.meta.env.DEV ? "dev" : "main";
 
@@ -22,18 +22,18 @@ export function createCmsConfig() {
 		console.warn("[getCmsConfig] CMS running in development mode!");
 		console.log("[getCmsConfig] CMS config OAuth Endpoint: " + `${siteUrl}/cms/${authEndpoint}`);
 		console.log("[getCmsConfig] CMS config siteUrl: " + siteUrl);
-		console.log("[getCmsConfig] CMS config branch: " + branch);		
+		console.log("[getCmsConfig] CMS config branch: " + branch);
 	}
 
 	const tagTranslationsArray = Object.keys(localeSettings).map((key) => {
-        const locale = key as AllowedLocales;
-        return  {
-            name: key,
-            label: localeSettings[locale].title,
-            widget: "string",
-            i18n: false,
-        }
-    });
+		const locale = key as AllowedLocales;
+		return {
+			name: key,
+			label: localeSettings[locale].title,
+			widget: "string",
+			i18n: false,
+		};
+	});
 
 	const tagDisplayFields = locales.flatMap((locale) => [`languages.${locale}`]);
 
@@ -364,7 +364,7 @@ export function createCmsConfig() {
 						label: "Current position",
 						widget: "string",
 					},
-					bodyField
+					bodyField,
 				],
 			},
 		],

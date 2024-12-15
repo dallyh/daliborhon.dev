@@ -6,18 +6,17 @@ interface Props {
 	pubDate: string | Date;
 	modDate: string | Date | undefined;
 	locale: string;
-	showTime?: boolean;
 }
 
-const { pubDate, modDate, locale, showTime = false } = Astro.props;
+const { pubDate, modDate, locale } = Astro.props;
 
 const date = getBlogPostDate(locale, pubDate, modDate);
 ---
 
-<div>
+<span>
 	{modDate && <span>{wasPostUpdated(pubDate, modDate) ? m.blog__updated_date_title() : m.blog__published_date_title()}</span>}
 	<time datetime={date.iso}>{date.date}</time>
-</div>
+</span>
 
 <style>
 	span,

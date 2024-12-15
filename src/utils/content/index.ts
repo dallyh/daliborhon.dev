@@ -10,3 +10,4 @@ export * from "./getBlogPostDate";
 export * from "./getSlugWithoutLocale";
 export * from "./getPostsByTag";
 export * from "./getBlogPostImageUrl";
+export * from "./getReadingTime";

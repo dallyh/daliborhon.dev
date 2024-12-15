@@ -24,7 +24,7 @@ export const prerender = false;
 		window.CMS_MANUAL_INIT = true;
 		//@ts-ignore
 		const { initCMS: init } = window;
-		
+
 		const config = createCmsConfig();
 		init({ config: config });
 	});

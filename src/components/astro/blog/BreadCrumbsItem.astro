@@ -16,5 +16,13 @@ const { href = "#", label = "Breadcrumb", currentPage = false } = Astro.props;
 ---
 
 <li class={`${currentPage && "is-active"}`}>
-	{currentPage ? <a aria-current="page" href={href}>{label}</a> : <a href={href}>{label}</a>}
+	{
+		currentPage ? (
+			<a aria-current="page" href={href}>
+				{label}
+			</a>
+		) : (
+			<a href={href}>{label}</a>
+		)
+	}
 </li>

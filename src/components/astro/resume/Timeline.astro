@@ -3,65 +3,64 @@ import * as m from "$messages";
 import type { TimelineItem } from "./TimelineItem.astro";
 
 export interface Props {
-    children: TimelineItem | TimelineItem[]
+	children: TimelineItem | TimelineItem[];
 }
-
 ---
 
 <div class="timeline content">
-    <div class="timeline-cards">
-        <div class="timeline-card">
-            <h3>{m.resume__section_exp_title()}</h3>
-            <div class="timeline-content">
-                <slot name="exp" />
-            </div>
-        </div>
-        <div class="timeline-card">
-            <h3>{m.resume__section_edu_title()}</h3>
-            <div class="timeline-content">
-                <div>
-                    <slot name="edu" />
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="timeline-cards">
+		<div class="timeline-card">
+			<h3>{m.resume__section_exp_title()}</h3>
+			<div class="timeline-content">
+				<slot name="exp" />
+			</div>
+		</div>
+		<div class="timeline-card">
+			<h3>{m.resume__section_edu_title()}</h3>
+			<div class="timeline-content">
+				<div>
+					<slot name="edu" />
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
-    .timeline {
-        position: relative;
-        display: grid;
-        grid-template-rows: min-content 1fr;
-    }
+	.timeline {
+		position: relative;
+		display: grid;
+		grid-template-rows: min-content 1fr;
+	}
 
-    .timeline-cards {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+	.timeline-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
 
-        @media (max-width: 800px) {
-            grid-template-columns: unset;
-        }
-    }
+		@media (max-width: 800px) {
+			grid-template-columns: unset;
+		}
+	}
 
-    .timeline-card {
-        h3 {
-            margin-bottom: 1rem;
-        }
-    }
+	.timeline-card {
+		h3 {
+			margin-bottom: 1rem;
+		}
+	}
 
-    .timeline-content {
-        position: relative;
-        margin-left: 5px; /* Just so the dots align with headings */
-    }
+	.timeline-content {
+		position: relative;
+		margin-left: 5px; /* Just so the dots align with headings */
+	}
 
-    .timeline-content::before {
-        content: "";
-        position: absolute;
-        width: 2px;
-        height: 100%;
-        left: 1px;
-        top: 0;
-        background: linear-gradient(to bottom, var(--bulma-primary) 65%, transparent);
-    }
+	.timeline-content::before {
+		content: "";
+		position: absolute;
+		width: 2px;
+		height: 100%;
+		left: 1px;
+		top: 0;
+		background: linear-gradient(to bottom, var(--bulma-primary) 65%, transparent);
+	}
 </style>

@@ -10,6 +10,6 @@ export const githubRestClient = (() => {
 	octokit.rest.rateLimit.get().then((res) => {
 		console.log("Github rate limit: " + res.data.rate.remaining + "/" + res.data.rate.limit);
 	});
-	
+
 	return octokit.rest;
 })();

@@ -1,24 +1,24 @@
 ---
-import ProfilePicture from "@components/astro/global/ProfilePicture.astro"
+import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
 ---
 
 <div class="hero">
-    <ProfilePicture/>
-    <div>
-        <slot/>
-    </div>
+	<ProfilePicture />
+	<div>
+		<slot />
+	</div>
 </div>
 
 <style>
-    .hero {
-        display: flex;
-        gap: 1rem;
-        flex-direction: row;
-        width: 100%;
-        justify-content: start;
+	.hero {
+		display: flex;
+		gap: 1rem;
+		flex-direction: row;
+		width: 100%;
+		justify-content: start;
 
-        @media screen and (max-width: 768px) {
-            flex-direction: column;            
-        }
-    }
+		@media screen and (max-width: 768px) {
+			flex-direction: column;
+		}
+	}
 </style>

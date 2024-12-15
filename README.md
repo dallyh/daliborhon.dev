@@ -9,17 +9,16 @@ I guess for experienced developers a lot of things in this repo will not make an
 
 ## Stack
 
--   Frameworks:
-    -   [Astro](https://astro.build)
-    -   Some of the UI: [React](https://react.dev/)
-    -   Internationalization [Inlang - ParaglideJS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
+- Frameworks:
+    - [Astro](https://astro.build)
+    - Some of the UI: [React](https://react.dev/)
+    - Internationalization [Inlang - ParaglideJS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
 - Content management
     - For content I do use plain markdown (Astro's content collections) and [Sveltia](https://github.com/sveltia/sveltia-cms) to manage it.
 
 ## Deployment
 
 Deployments are done on [Zerops](https://zerops.io) for all new tags containing `cms-*` (automatically by [Sveltia](https://github.com/sveltia/sveltia-cms)) or `deploy-*` (manually).
-
 
 ## Variables
 

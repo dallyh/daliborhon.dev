@@ -3,7 +3,7 @@ translationKey: 2023-01-01-typography-example-5
 title: Příklad typografie 5
 description: Tohle je můj první příspěvek.
 tags:
-  - astro
+    - astro
 language: cs
 hidden: false
 featured: false
@@ -11,6 +11,7 @@ image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01
 modDate: ""
 ---
+
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
@@ -82,13 +83,13 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non m
 
 ### Unordered list
 
--   List item
--   List item
-    -   Nested list item
-    -   Nested list item
-        -   Double nested list item
-        -   Double nested list item
--   List item
+- List item
+- List item
+    - Nested list item
+    - Nested list item
+        - Double nested list item
+        - Double nested list item
+- List item
 
 ### Mixed list
 

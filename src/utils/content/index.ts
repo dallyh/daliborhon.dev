@@ -9,4 +9,4 @@ export * from "./getProjectsByLocale";
 export * from "./getBlogPostDate";
 export * from "./getSlugWithoutLocale";
 export * from "./getPostsByTag";
-export * from "./getBlogPostImageUrl"
+export * from "./getBlogPostImageUrl";

@@ -1,6 +1,7 @@
 import { loadRenderers } from "astro:container";
 import { getEntry, render } from "astro:content";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import { createResumePdfFilename } from "@utils";
 import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
@@ -8,7 +9,6 @@ import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
-import { createResumePdfFilename } from "@utils";
 
 // This cannot be prerendered, because the images are written last in the build step
 export const prerender = false;
@@ -18,8 +18,6 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 		return node && typeof node === "object" && node.nodeName === "IMG" && typeof node.image === "string";
 	}
 
-	
-	
 	function getDecodedSrc(imageUrl: string): string | null {
 		// Example: /_image?href=/_astro/me.BN5ISb12.png&w=541&h=574&f=webp
 		if (imageUrl.split("?").length > 0) {
@@ -149,7 +147,7 @@ export const GET: APIRoute = async ({ params }) => {
 	let headers = {
 		"Content-Type": "application/pdf",
 		"Content-Disposition": `attachment; filename="${createResumePdfFilename(params.lang)}.pdf"`,
-		"x-filename": `${createResumePdfFilename(params.lang)}.pdf`
+		"x-filename": `${createResumePdfFilename(params.lang)}.pdf`,
 	};
 
 	const printer = new PdfPrinter(fonts);

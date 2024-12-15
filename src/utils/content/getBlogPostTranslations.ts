@@ -5,7 +5,7 @@ export async function getBlogPostTranslations(post: CollectionEntry<"posts">) {
 
 	const posts = await getCollection("posts", ({ data }) => {
 		return data.translationKey === translationKey;
-	})
+	});
 
 	if (!posts || posts.length === 0) {
 		throw Error(`getBlogPostTranslations: there were no translated posts matching the translationKey: ${translationKey}.`);

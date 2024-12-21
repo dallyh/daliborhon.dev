@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import Tooltip from "../global/Tooltip.astro";
 
 export type DevListItem = {
 	label: string;
@@ -21,9 +22,11 @@ const isPrint = Astro.locals.isPrint;
 	!isPrint && (
 		<li class="cell">
 			<span class="sr-only">{label}</span>
-			<div>
-				<Icon name={`devicon:${iconName}`} size={52} aria-label={label} title={label} />
-			</div>
+			<Tooltip text={label} placement="bottom">
+				<div>
+					<Icon name={`devicon:${iconName}`} size={52} aria-label={label} title={label} />
+				</div>
+			</Tooltip>
 		</li>
 	)
 }

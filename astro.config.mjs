@@ -60,14 +60,8 @@ export default defineConfig({
 					content: {
 						type: "element",
 						tagName: "span",
-						properties: { className: ["icon"] },
-						children: [
-							{
-								type: "element",
-								tagName: "i",
-								properties: { className: ["fas", "fa-link"] },
-							},
-						],
+						properties: { className: ["heading-link-icon"] },
+						children: [],
 					},
 				},
 			],

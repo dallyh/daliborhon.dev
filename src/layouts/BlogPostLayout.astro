@@ -24,7 +24,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-
+const { Content, headings } = await render(post);
 const locale = Astro.currentLocale as AllowedLocales;
 const { pubDate, modDate, title, description } = post.data;
 const relatedTags = await getEntries(post.data.tags);
@@ -109,7 +109,9 @@ const searchProps = {
 				</div>
 			</div>
 			<hr />
-			<MarkdownContent render={() => render(post)} tocPosition="inside" />
+			<MarkdownContent headings={headings} tocPosition="inside">
+				<Content />
+			</MarkdownContent>
 		</Section>
 	</main>
 	<Footer />

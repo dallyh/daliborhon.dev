@@ -4,6 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
+import ExternalLink from "./ExternalLink.astro";
 
 const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
@@ -26,7 +27,9 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 		<div>
 			<p>© {new Date().getFullYear()} - Dalibor Hon</p>
 			<p class="app">
-				<a href={tagHref}>{APP_VERSION_NAME}<span class="external-link-icon"><i></i></span></a>
+				<ExternalLink href={tagHref} title={APP_VERSION_NAME} attrs={{"aria-label": APP_VERSION_NAME}}>
+					{APP_VERSION_NAME}
+				</ExternalLink>
 			</p>
 		</div>
 	</div>

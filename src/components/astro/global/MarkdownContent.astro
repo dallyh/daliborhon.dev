@@ -15,8 +15,7 @@ const { tocPosition = "default", headings } = Astro.props;
 		headings && headings.length !== 0 && (
 			<div id="toc" class="box">
 				<details id="tocDetails" open={tocPosition === "inside" ? true : false}>
-					<h2>{m.blog__toc()}</h2>
-					<summary>{m.blog__open_toc}</summary>
+					<summary class="title is-size-6">{m.blog__toc()}</summary>
 				</details>
 			</div>
 		)
@@ -71,6 +70,7 @@ const { tocPosition = "default", headings } = Astro.props;
 				}
 
 				#toc {
+					z-index: 2;
 					grid-row: 1;
 					grid-column: 2;
 					position: sticky;
@@ -80,8 +80,8 @@ const { tocPosition = "default", headings } = Astro.props;
 					/* Remove Bulma Box styling */
 					padding: 0;
 					min-width: 250px;
-					box-shadow: none;
-					background-color: none;
+					box-shadow: unset;
+					background-color: unset;
 				}
 
 				/* Maybe for future enhancement */
@@ -147,44 +147,57 @@ const { tocPosition = "default", headings } = Astro.props;
 	}
 
 	#toc {
-		z-index: 2;
-
 		summary::marker,
 		summary::-webkit-details-marker {
 			display: none;
 		}
 
-		summary:before {
-			content: "";
-			border-width: 0.4rem;
-			border-style: solid;
-			border-color: transparent transparent transparent var(--bulma-text);
-			position: absolute;
-			top: 0.35rem;
-			left: 0rem;
-			transform: rotate(0);
-			transform-origin: 0.2rem 50%;
-			transition: 0.25s transform ease;
-		}
-
-		details[open] > summary:before {
-			transform: rotate(90deg);
-		}
-
-		details[open] > summary {
-			margin-bottom: 1rem;
-		}
-
 		summary {
-			padding-left: 1rem;
-			position: relative;
-			cursor: pointer;
 			list-style: none;
+			pointer-events: none;
+		}
+	}
 
-			&:focus {
-				outline: none;
-				border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
-				box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
+	@media screen and (max-width: 1024px) {
+		#toc {
+			summary::marker,
+			summary::-webkit-details-marker {
+				display: none;
+			}
+
+			summary:before {
+				content: "";
+				border-width: 0.4rem;
+				border-style: solid;
+				border-color: transparent transparent transparent var(--bulma-text);
+				position: absolute;
+				top: 50%;
+				left: 0rem;
+				transform: translateY(-50%) rotate(0);
+				transform-origin: 0.2rem 50%;
+				transition: 0.25s transform ease;
+			}
+
+			details[open] > summary:before {
+				transform: translateY(-50%) rotate(90deg);
+			}
+
+			details[open] > summary {
+				margin-bottom: 1rem;
+			}
+
+			summary {
+				pointer-events: all;
+				padding-left: 1rem;
+				margin-bottom: 0;
+				position: relative;
+				cursor: pointer;
+
+				&:focus {
+					outline: none;
+					border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
+					box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
+				}
 			}
 		}
 	}

@@ -17,95 +17,102 @@ const locale = Astro.currentLocale!;
 ---
 
 <header id="nav-menu" class="nav-menu" aria-label="navigation bar">
-	<nav class="navbar container" role="navigation" aria-label="main navigation">
-		<div class="navbar-brand">
-			<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
-				<Icon class="logo" name="dh-logo" size={40} />
-			</a>
-			<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-top">
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-				<span aria-hidden="true"></span>
-			</a>
-		</div>
-		<div id="navbar-top" class="navbar-menu">
-			<div class="navbar-start">
-				<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
-					{m.common__home()}
+	<site-navigation>
+		<nav class="navbar container" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
+					<Icon class="logo" name="dh-logo" size={40} />
 				</a>
-				<div class="navbar-item has-dropdown is-hoverable">
-					<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
-						{m.common__blog()}
-					</a>
-					<div class="navbar-dropdown is-boxed">
-						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
-							{m.blog__all_posts_title()}
-						</a>
-						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
-							{m.blog__featured_posts_title()}
-						</a>
-						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
-							{m.blog__tags()}
-						</a>
-					</div>
-				</div>
-				<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
-					{m.projects__projects()}
+				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarTop">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
 				</a>
-				<div class="navbar-item has-dropdown is-hoverable">
-					<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
-						{m.common__about()}
-					</a>
-					<div class="navbar-dropdown is-boxed">
-						<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
-							{m.common__resume()}
-						</a>
-					</div>
-				</div>
 			</div>
+			<div id="navbarTop" class="navbar-menu">
+				<div class="navbar-start">
+					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
+						{m.common__home()}
+					</a>
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
+							{m.common__blog()}
+						</a>
+						<div class="navbar-dropdown is-boxed">
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
+								{m.blog__all_posts_title()}
+							</a>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
+								{m.blog__featured_posts_title()}
+							</a>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
+								{m.blog__tags()}
+							</a>
+						</div>
+					</div>
+					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
+						{m.projects__projects()}
+					</a>
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
+							{m.common__about()}
+						</a>
+						<div class="navbar-dropdown is-boxed">
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
+								{m.common__resume()}
+							</a>
+						</div>
+					</div>
+				</div>
 
-			<div class="navbar-end">
-				<div class="level">
-					<div class="level-item">
-						<div class="navbar-item">
-							<Search />
-						</div>
-						<div class="navbar-item">
-							<LanguageSelector post={post} />
-						</div>
-						<div class="navbar-item">
-							<ThemeSelect />
+				<div class="navbar-end">
+					<div class="level">
+						<div class="level-item">
+							<div class="navbar-item">
+								<Search />
+							</div>
+							<div class="navbar-item">
+								<LanguageSelector post={post} />
+							</div>
+							<div class="navbar-item">
+								<ThemeSelect />
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</nav>
+		</nav>
+	</site-navigation>
 </header>
 
 <script>
-	function setup() {
-		// Get all "navbar-burger" elements
-		const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll(".navbar-burger"), 0);
+	class Navigation extends HTMLElement {
+		connectedCallback() {
+			const navbarBurger = this.querySelector<HTMLAnchorElement>(".navbar-burger");
 
-		// Add a click event on each of them
-		$navbarBurgers.forEach((el) => {
-			el.addEventListener("click", () => {
-				// Get the target from the "data-target" attribute
-				const target = el.dataset.target;
-				const $target = document.getElementById(target);
+			if (!navbarBurger) {
+				console.warn("Navigation: No .navbar-burger element found within the component.");
+				return;
+			}
 
-				// Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-				el.classList.toggle("is-active");
-				$target!.classList.toggle("is-active");
+			navbarBurger.addEventListener("click", () => {
+				const target = navbarBurger.dataset.target;
+
+				const targetElement = this.querySelector(`#${target}`);
+
+				if (!target || !targetElement) {
+					console.warn("Navigation: Missing target element or data-target attribute.");
+					return;
+				}
+
+				navbarBurger.classList.toggle("is-active");
+				targetElement.classList.toggle("is-active");
 			});
-		});
+		}
 	}
 
-	document.addEventListener("astro:page-load", () => {
-		setup();
-	});
+	customElements.define("site-navigation", Navigation);
 </script>
 
 <style>

@@ -23,25 +23,17 @@ import { Icon } from "astro-icon/components";
 	</button>
 
 	<dialog aria-label={m.common__search()}>
-		<div class="modal is-active">
-			<div class="modal-background"></div>
-			<div class="modal-content">
-				<div class="box">
-					<div>
-						<div id="pagefind"></div>
-						<button data-close-modal class="delete is-large has-background-primary"><span class="sr-only">Close</span></button>
-					</div>
-				</div>
-			</div>
-			<button class="modal-close is-large" data-close-modal aria-label={m.common__close_btn()}></button>
+		<div class="box">
+			<div id="pagefind"></div>
+			<button data-close-modal class="delete is-large has-background-primary"><span class="sr-only">{m.common__close_btn()}</span></button>
 		</div>
+		<button class="delete is-large has-background-primary" data-close-modal aria-label={m.common__close_btn()}></button>
 	</dialog>
 </site-search>
 
 <script>
 	class SiteSearch extends HTMLElement {
-		constructor() {
-			super();
+		connectedCallback() {
 			const openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
 			const closeBtns = this.querySelectorAll<HTMLButtonElement>("button[data-close-modal]")!;
 			const dialog = this.querySelector("dialog")!;
@@ -60,7 +52,7 @@ import { Icon } from "astro-icon/components";
 
 			const openModal = (event?: MouseEvent) => {
 				dialog.showModal();
-				document.body.toggleAttribute("data-search-modal-open", true);
+				document.documentElement.toggleAttribute("data-search-modal-open", true);
 				this.querySelector("input")?.focus();
 				event?.stopPropagation();
 				window.addEventListener("click", onClick);
@@ -75,7 +67,7 @@ import { Icon } from "astro-icon/components";
 			});
 
 			dialog.addEventListener("close", () => {
-				document.body.toggleAttribute("data-search-modal-open", false);
+				document.documentElement.toggleAttribute("data-search-modal-open", false);
 				window.removeEventListener("click", onClick);
 			});
 
@@ -95,29 +87,33 @@ import { Icon } from "astro-icon/components";
 			const initPagefind = () => {
 				const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 				onIdle(async () => {
+					// @ts-ignore - could not find types for this import
 					const { PagefindUI } = await import("@pagefind/default-ui");
 
-					if (pageFindInstance === null) {
-						pageFindInstance = new PagefindUI({
-							element: "#pagefind",
-							baseUrl: import.meta.env.BASE_URL,
-							bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
-							showImages: false,
-							showSubResults: false,
-							processResult: function (result: any) {
-								if (result?.meta?.image) {
-									let resultBase = new URL(result.url, String(window.location));
-									let remappedImage = new URL(result.meta.image, resultBase);
-
-									if (remappedImage.hostname !== window.location.hostname) {
-										result.meta.image = remappedImage.toString();
-									} else {
-										result.meta.image = remappedImage.pathname + trailingSlash;
-									}
-								}
-							},
-						});
+					if (pageFindInstance !== null) {
+						console.log("Pagefind instance is already initialized.");
+						return;
 					}
+
+					pageFindInstance = new PagefindUI({
+						element: "#pagefind",
+						baseUrl: import.meta.env.BASE_URL,
+						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
+						showImages: false,
+						showSubResults: false,
+						processResult: function (result: any) {
+							if (result?.meta?.image) {
+								let resultBase = new URL(result.url, String(window.location));
+								let remappedImage = new URL(result.meta.image, resultBase);
+
+								if (remappedImage.hostname !== window.location.hostname) {
+									result.meta.image = remappedImage.toString();
+								} else {
+									result.meta.image = remappedImage.pathname + trailingSlash;
+								}
+							}
+						},
+					});
 				});
 			};
 
@@ -132,7 +128,7 @@ import { Icon } from "astro-icon/components";
 				() => {
 					initPagefind();
 				},
-				{ once: false },
+				{ once: false }
 			);
 		}
 	}
@@ -144,8 +140,36 @@ import { Icon } from "astro-icon/components";
 		display: contents;
 	}
 
+	dialog {
+		padding: 1rem;
+		margin: 2rem auto auto;
+		border: none;
+		width: 100%;
+		max-width: 60rem;
+		height: max-content;
+		max-height: calc(100% - 4rem);
+		background-color: unset;
+		overflow: auto;
+
+		@media screen and (min-width: 608px) {
+			overflow: hidden;
+		}
+
+		@media screen and (max-width: 768px) {
+			padding: 0;
+			margin: 0;
+			width: 100vw;
+			max-width: unset;
+			height: 100%;
+			max-height: max-content;
+			min-height: 100vh;
+		}
+	}
+
 	dialog::backdrop {
-		background-color: transparent;
+		background-color: hsla(223, 13%, 10%, 0.66);
+		-webkit-backdrop-filter: blur(0.25rem);
+		backdrop-filter: blur(0.25rem);
 	}
 
 	.slash-icon {
@@ -153,47 +177,30 @@ import { Icon } from "astro-icon/components";
 	}
 
 	.box {
-		button {
-			display: none;
+		margin: 0;
+		min-width: 100%;
+		min-height: 100%;
+
+		@media screen and (max-width: 768px) {
+			border-radius: unset;
 		}
 	}
 
-	.modal-content {
-		position: fixed;
-		top: 5rem;
+	.delete {
+		--bulma-delete-color: black;
+		position: absolute;
+		right: 2rem;
+		top: 2.8rem;
+
+		@media screen and (max-width: 768px) {
+			top: 1.8rem;
+			right: 1rem;
+		}
 	}
 
-	@media screen and (max-width: 768px) {
-		.modal-content {
-			top: 0rem;
-			height: 100vh;
-			max-height: unset;
-		}
-
-		.modal-close {
-			display: none;
-		}
-
-		.box {
-			width: 100%;
-			gap: 1rem;
-			height: 100%;
-
-			button {
-				position: absolute;
-				right: 1rem;
-				top: 1.8rem;
-				--bulma-delete-color: var(--bulma-primary-00);
-				display: initial;
-			}
-
-			#pagefind {
-				width: 100%;
-			}
-		}
-
-		.field {
-			.input {
+	.field {
+		.input {
+			@media screen and (max-width: 425px) {
 				max-width: 120px;
 			}
 		}
@@ -220,6 +227,8 @@ import { Icon } from "astro-icon/components";
 	}
 
 	#pagefind .pagefind-ui__search-input {
+		width: calc(100% - 3rem);
+
 		&:focus-within,
 		&:focus-visible,
 		&:focus {
@@ -227,14 +236,27 @@ import { Icon } from "astro-icon/components";
 			border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
 			box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
 		}
-
-		@media (max-width: 768px) {
-			width: calc(100% - 3rem);
-		}
 	}
 
 	#pagefind .pagefind-ui__drawer {
 		gap: calc(30px * var(--pagefind-ui-scale));
+	}
+
+	#pagefind .pagefind-ui__results-area {
+		max-height: max-content;
+
+		@media screen and (min-width: 608px) {
+			&:has(button) {
+				.pagefind-ui__results {
+					height: calc(100vh - 225px - 6rem);
+				}
+			}
+
+			.pagefind-ui__results {
+				overflow-y: scroll;
+				max-height: calc(100vh - 225px - 2rem);
+			}
+		}
 	}
 
 	#pagefind .pagefind-ui__search-clear {
@@ -243,10 +265,7 @@ import { Icon } from "astro-icon/components";
 		background-color: transparent;
 		overflow: hidden;
 		display: block;
-
-		@media (max-width: 768px) {
-			inset-inline-end: 3rem;
-		}
+		inset-inline-end: 3rem;
 	}
 
 	#pagefind .pagefind-ui__search-clear::before {
@@ -264,6 +283,10 @@ import { Icon } from "astro-icon/components";
 	#pagefind .pagefind-ui__result {
 		padding: calc(10px * var(--pagefind-ui-scale)) calc(10px * var(--pagefind-ui-scale)) calc(20px * var(--pagefind-ui-scale)) calc(10px * var(--pagefind-ui-scale));
 		background-color: var(--pagefind-ui-background);
+	}
+
+	#pagefind .pagefind-ui__result-tag {
+		color: black;
 	}
 
 	#pagefind .pagefind-ui__results > * + * {

@@ -3,6 +3,7 @@
 	--bulma-primary-h: 46deg;
 	--bulma-primary-s: 96%;
 	--bulma-primary-l: 63%;
+	--bulma-primary-rgb: 251, 209, 70;
 	color-scheme: light;
 }
 
@@ -25,13 +26,6 @@ a:not(.navbar-link, .navbar-item, .navbar-burger, .button) {
 	&:hover {
 		text-decoration: underline;
 	}
-}
-
-.page-content {
-	justify-content: space-between;
-	min-height: calc(100vh - var(--bulma-navbar-height));
-	display: flex;
-	flex-direction: column;
 }
 
 .print-only {

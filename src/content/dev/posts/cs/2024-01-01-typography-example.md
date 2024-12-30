@@ -1,5 +1,5 @@
 ---
-translationKey: 2023-01-01-typography-example
+translationKey: 2024-01-01-typography-example
 title: Příklad typografie
 description: Tohle je můj první příspěvek.
 tags:
@@ -8,7 +8,7 @@ language: cs
 hidden: false
 featured: true
 image: https://astro.build/og/astro.jpg
-pubDate: 2022-07-01
+pubDate: 2024-01-01
 modDate: ""
 ---
 

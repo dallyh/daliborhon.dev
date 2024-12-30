@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import * as m from "$messages";
 import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
 import { removeTrailingSlash } from "@utils";
+import "../styles/fonts.css";
 import "../styles/global.css";
 import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astro";
 import LoadingIndicator from "@components/astro/global/LoadingIndicator.astro";
@@ -44,6 +45,7 @@ const basePath = import.meta.env.BASE_URL;
 		<!-- Base head -->
 		<ClientRouter fallback="swap" />
 		<ThemeProvider />
+		<ToastProvider />
 		<LoadingIndicator />
 		<PostPreviewSkeleton />
 		<meta charset="UTF-8" />
@@ -83,6 +85,7 @@ const basePath = import.meta.env.BASE_URL;
 
 		<!-- Fonts, icons and external scripts -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -90,18 +93,16 @@ const basePath = import.meta.env.BASE_URL;
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="preload" href={nunitoLatinExt} as="font" type="font/woff" crossorigin />
 		<link rel="preload" href={nunitoLatin} as="font" type="font/woff" crossorigin />
 
 		<script is:inline>
 			document.addEventListener("astro:before-swap", (e) => e.newDocument.head.querySelectorAll('link[as="font"]').forEach((link) => link.remove()), { once: false });
 		</script>
-		<ToastProvider />
 	</head>
 	<body>
 		<slot name="header" />
-		<div class="container page-content" id="#pageContent" aria-hidden="false">
+		<div class="container" id="#pageContent" aria-hidden="false">
 			<slot />
 		</div>
 	</body>

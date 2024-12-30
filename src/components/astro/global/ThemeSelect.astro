@@ -27,8 +27,7 @@
 		#storageKey = "theme-preference";
 		#themeToggle = this.querySelector("#theme-toggle");
 
-		constructor() {
-			super();
+		connectedCallback() {
 			this.#reflectPreference();
 			this.#themeToggle?.addEventListener("click", () => this.#onClick());
 		}

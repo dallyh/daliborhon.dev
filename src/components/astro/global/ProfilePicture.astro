@@ -2,45 +2,31 @@
 import { Image } from "astro:assets";
 import * as m from "$messages";
 import profilePicture from "@assets/img/profile/me.png";
+import type { HTMLAttributes } from "astro/types";
 
 interface Props {
 	img?: ImageMetadata;
 	imgClass?: string;
+	attrs?: HTMLAttributes<"img">;
 }
 
-const { imgClass, img = profilePicture, ...rest } = Astro.props;
+const { imgClass, img = profilePicture, ...attrs } = Astro.props;
 const isPrint = Astro.locals.isPrint;
 ---
 
-{
-	!isPrint && (
-		<div class="profile-picture-wrapper">
-			<Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...rest} />
-		</div>
-	)
-}
+{!isPrint && <Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...attrs} />}
 
-{isPrint && <Image src={img} style="width: 10rem; height: 11rem;" alt={m.common__profile_picture()} {...rest} />}
+{isPrint && <Image src={img} style="width: 10rem; height: 11rem;" alt={m.common__profile_picture()} {...attrs} />}
 
 <style>
-	.profile-picture-wrapper {
+	.profile-picture {
 		position: relative;
-		width: 11rem;
-		height: 11rem;
+		display: block;
+		object-fit: cover;
+		height: 100%;
 		border-radius: 50%;
-		border: 4px solid var(--bulma-primary);
-
-		@media (max-width: 768px) {
-			width: 10rem;
-			height: 10rem;
-		}
-
-		.profile-picture {
-			display: block;
-			object-fit: cover;
-			border-radius: inherit;
-			height: 100%;
-			border: 4px solid transparent;
-		}
+		outline: 4px solid var(--bulma-primary);
+		max-width: 11rem;
+		border: 4px solid transparent;
 	}
 </style>

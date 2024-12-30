@@ -14,6 +14,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeToc from "rehype-toc";
 import rehypeExtenalLinks from "rehype-external-links";
+import rehypeFigure from "@microflash/rehype-figure";
 
 const { NODE_ENV } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;

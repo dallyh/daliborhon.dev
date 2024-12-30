@@ -84,19 +84,22 @@ const search = Astro.url.search;
 	const configCookie = siteConfig.i18n.localeCookie;
 
 	class LanguageSelect extends HTMLElement {
-		constructor() {
-			super();
+		connectedCallback() {
 			const select = this.querySelector("select");
-			if (select) {
-				select.addEventListener("change", (e) => {
-					if (e.currentTarget instanceof HTMLSelectElement) {
-						const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language! as AllowedLocales;
-						cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
-						setLanguageTag(lang); // Do not delete this, has to be done on the client also
-						navigate(e.currentTarget.value);
-					}
-				});
+
+			if (!select) {
+				console.error("Could not initialize LanguageSelect");
+				return;
 			}
+
+			select.addEventListener("change", (e) => {
+				if (e.currentTarget instanceof HTMLSelectElement) {
+					const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language! as AllowedLocales;
+					cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
+					setLanguageTag(lang); // Do not delete this, has to be done on the client also
+					navigate(e.currentTarget.value);
+				}
+			});
 		}
 	}
 	customElements.define("lang-select", LanguageSelect);

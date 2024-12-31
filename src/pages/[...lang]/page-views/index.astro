@@ -1,0 +1,13 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import PageViewsComponent from "@components/react/PageViews/PageViews";
+import Section from "@components/astro/global/Section.astro";
+
+export { getStaticPaths } from "@i18n/utils";
+---
+
+<PageLayout title="Page views" description="Page views">
+	<Section sectionTitle="Page views" sectionDescription="Thanks to https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro" isFirstSection id="pageViews">
+		<PageViewsComponent client:load />
+	</Section>
+</PageLayout>

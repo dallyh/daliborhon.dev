@@ -15,107 +15,122 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeToc from "rehype-toc";
 import rehypeExtenalLinks from "rehype-external-links";
 import rehypeFigure from "@microflash/rehype-figure";
-
+import runtimeLogger from "@inox-tools/runtime-logger";
 import db from "@astrojs/db";
 
-const { NODE_ENV } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+const envVars = {
+	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
+	OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
+	OA_ALLOWED_DOMAINS: envField.string({ context: "server", access: "secret", optional: true }),
+	GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
+	HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
+	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
+	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
+	APP_VERSION_NAME: envField.string({ context: "client", access: "public", default: "UNKNOWN-APP" }),
+	ASTRO_DB_REMOTE_URL: envField.string({ context: "server", access: "secret", default: "file:db/remote-test.db", optional: false }),
+	ASTRO_DB_APP_TOKEN: envField.string({ context: "server", access: "secret", default: "", optional: true }),
+};
+
+const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 const PORT = 4321;
 const DEV_ENV = NODE_ENV !== "production";
 const SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://daliborhon.dev";
 
-console.log(`>> Using environment: '${NODE_ENV}'`);
-console.log(`>> Using SITE_URL: '${SITE_URL}'`);
-console.log(`>> Using PORT: '${PORT}'`);
-
-const envVars = {
-    OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
-    OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
-    OA_ALLOWED_DOMAINS: envField.string({ context: "server", access: "secret", optional: true }),
-    GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
-    HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
-    CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
-    PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
-    APP_VERSION_NAME: envField.string({ context: "client", access: "public", default: "UNKNOWN-APP" }),
-};
+console.log(`CONFIG >> Using environment: '${NODE_ENV}'`);
+console.log(`CONFIG >> Using SITE_URL: '${SITE_URL}'`);
+console.log(`CONFIG >> Using PORT: '${PORT}'`);
+console.log(`CONFIG >> Using PREVIEW: '${PREVIEW}'`);
 
 // https://astro.build/config
+// @ts-check
 export default defineConfig({
-    site: SITE_URL,
-    build: {
-        format: "directory",
-    },
-    adapter: node({
-        mode: "standalone",
-    }),
-    prefetch: {
-        defaultStrategy: "hover",
-    },
-    env: {
-        schema: envVars,
-    },
-    markdown: {
-        rehypePlugins: [
-            rehypeSlug,
-            [
-                rehypeAutolinkHeadings,
-                {
-                    behavior: "append",
-                    content: {
-                        type: "element",
-                        tagName: "span",
-                        properties: { className: ["heading-link-icon"] },
-                        children: [],
-                    },
-                },
-            ],
-            [rehypeToc, { headings: ["h2", "h3", "h4", "h5", "h6"] }],
-            [
-                rehypeExtenalLinks,
-                {
-                    content: {
-                        type: "element",
-                        tagName: "i",
-                        children: [],
-                    },
-                    contentProperties: { className: ["external-link-icon"] },
-                    target: "_blank",
-                    rel: "nofollow noopener noreferrer",
-                },
-            ],
-        ],
-        shikiConfig: {
-            // Choose from Shiki's built-in themes (or add your own)
-            // https://github.com/shikijs/shiki/blob/main/docs/themes.md
-            theme: "material-theme-palenight",
-        },
-    },
-    i18n: {
-        defaultLocale: defaultLocale,
-        locales: [...astroI18nConfigPaths],
-        routing: "manual",
-    },
-    integrations: [react(), sitemap({
-        i18n: {
-            defaultLocale: defaultLocale,
-            locales: {
-                ...localeKeys,
-            },
-        },
-        filter: (page) => {
-            return !page.includes("404");
-        },
-		}), pagefind(), icon({
-        ...iconConfig,
-		}), paraglide({
-        project: "./src/project.inlang",
-        outdir: "./src/paraglide",
-		}), expressiveCode(), mdx(), db()],
-    vite: {
-        server: {
-            port: PORT,
-        },
-        optimizeDeps: {
-            exclude: ["@resvg/resvg-js"],
-        },
-    },
+	site: SITE_URL,
+	build: {
+		format: "directory",
+	},
+	adapter: node({
+		mode: "standalone",
+	}),
+	prefetch: {
+		defaultStrategy: "hover",
+	},
+	env: {
+		schema: envVars,
+	},
+	markdown: {
+		rehypePlugins: [
+			rehypeSlug,
+			[
+				rehypeAutolinkHeadings,
+				{
+					behavior: "append",
+					content: {
+						type: "element",
+						tagName: "span",
+						properties: { className: ["heading-link-icon"] },
+						children: [],
+					},
+				},
+			],
+			[rehypeToc, { headings: ["h2", "h3", "h4", "h5", "h6"] }],
+			[
+				rehypeExtenalLinks,
+				{
+					content: {
+						type: "element",
+						tagName: "i",
+						children: [],
+					},
+					contentProperties: { className: ["external-link-icon"] },
+					target: "_blank",
+					rel: "nofollow noopener noreferrer",
+				},
+			],
+			rehypeFigure,
+		],
+		shikiConfig: {
+			// Choose from Shiki's built-in themes (or add your own)
+			// https://github.com/shikijs/shiki/blob/main/docs/themes.md
+			theme: "material-theme-palenight",
+		},
+	},
+	i18n: {
+		defaultLocale: defaultLocale,
+		locales: [...astroI18nConfigPaths],
+		routing: "manual",
+	},
+	integrations: [
+		runtimeLogger(),
+		react(),
+		sitemap({
+			i18n: {
+				defaultLocale: defaultLocale,
+				locales: {
+					...localeKeys,
+				},
+			},
+			filter: (page) => {
+				return !page.includes("404");
+			},
+		}),
+		pagefind(),
+		icon({
+			...iconConfig,
+		}),
+		paraglide({
+			project: "./src/project.inlang",
+			outdir: "./src/paraglide",
+		}),
+		expressiveCode(),
+		mdx(),
+		db(),
+	],
+	vite: {
+		server: {
+			port: PORT,
+		},
+		optimizeDeps: {
+			exclude: ["@resvg/resvg-js"],
+		},
+	},
 });

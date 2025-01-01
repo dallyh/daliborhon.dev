@@ -18,6 +18,7 @@ import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/cont
 import MainLayout from "./MainLayout.astro";
 import { getReadingTime } from "@utils/content";
 import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
+import ViewCount from "@components/astro/blog/ViewCount.astro";
 
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -30,6 +31,7 @@ const { pubDate, modDate, title, description } = post.data;
 const relatedTags = await getEntries(post.data.tags);
 const image = getBlogPostImageUrl(locale, post, Astro.url);
 const readingTime = getReadingTime(post.body ?? "");
+//const url = Astro.url.pathname;
 
 const layoutProps = {
 	title: `${m.blog__post()}: ${title}`,
@@ -99,6 +101,17 @@ const searchProps = {
 								<span>{readingTime} {m.common__minutes()}</span>
 							</span>
 						</p>
+						<p class="subtitle is-size-6 mt-2">
+							<span class="icon-text">
+								<span class="icon">
+									<i class="fa-regular fa-eye"></i>
+								</span>
+								<ViewCount server:defer url={"url"}>
+									<span slot="fallback" class="is-skeleton" style="min-width: 100px">000</span>
+								</ViewCount>
+							</span>
+						</p>
+
 						<div class="tags mt-2">
 							<TagList post={post} />
 						</div>

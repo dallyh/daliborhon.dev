@@ -23,11 +23,21 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 			<a class="zerops" href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
 				<Icon name="zerops-logo-symbol" />
 			</a>
+			<div class="analytics">
+				<a href={getRelativeLocaleUrl(locale, "/analytics")}
+					><span class="icon-text">
+						<span class="icon">
+							<i class="fas fa-chart-simple"></i>
+						</span>
+						<span>Analytics</span>
+					</span></a
+				>
+			</div>
 		</div>
 		<div>
 			<p>© {new Date().getFullYear()} - Dalibor Hon</p>
 			<p class="app">
-				<ExternalLink href={tagHref} title={APP_VERSION_NAME} attrs={{"aria-label": APP_VERSION_NAME}}>
+				<ExternalLink href={tagHref} title={APP_VERSION_NAME} attrs={{ "aria-label": APP_VERSION_NAME }}>
 					{APP_VERSION_NAME}
 				</ExternalLink>
 			</p>
@@ -41,10 +51,20 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 		justify-content: center;
 		align-items: center;
 
-		a {
+		> a {
 			display: inline-flex;
 			justify-content: center;
 			align-items: center;
+
+			&:hover {
+				text-decoration: none;
+			}
+		}
+
+		.analytics {
+			a {
+				font-size: 0.8rem;
+			}
 		}
 	}
 

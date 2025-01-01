@@ -1,18 +1,20 @@
+import type { AllowedLocales } from "@i18n-config";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type ViewChartProps = {
 	data: [date: string, pageViewNumber: number][];
+	locale: AllowedLocales
 };
 
-const ViewChart = ({ data }: ViewChartProps) => {
+export default function ViewChart({ data, locale }: ViewChartProps) {
 	return (
-		<ResponsiveContainer width="100%" height={400}>
+		<ResponsiveContainer height={400}>
 			<AreaChart
 				width={500}
 				height={400}
 				data={data.map((el) => ({
 					...el,
-					day: new Date(el[0]).toLocaleDateString("en-US", {
+					day: new Date(el[0]).toLocaleDateString(locale, {
 						month: "short",
 						day: "numeric",
 					}),
@@ -20,19 +22,17 @@ const ViewChart = ({ data }: ViewChartProps) => {
 				}))}
 				margin={{
 					top: 10,
-					right: 30,
-					left: 0,
+					right: 0,
+					left: -36,
 					bottom: 0,
 				}}
 			>
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="day" />
 				<YAxis />
-				<Tooltip />
+				<Tooltip contentStyle={{ backgroundColor: "var(--bulma-body-background-color)" }} />
 				<Area type="monotone" dataKey="page_views_count" stroke="var(--bulma-primary)" fill="var(--bulma-primary)" />
 			</AreaChart>
 		</ResponsiveContainer>
 	);
-};
-
-export default ViewChart;
+}

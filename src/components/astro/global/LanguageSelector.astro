@@ -23,7 +23,6 @@ const capitalizeFirstLetter = (str: string) => {
 	return capitalized;
 };
 const translations = post ? await getBlogPostTranslations(post) : [];
-const search = Astro.url.search;
 ---
 
 <lang-select>
@@ -36,7 +35,7 @@ const search = Astro.url.search;
 							locales.map((locale) => {
 								// For whatever reason the getRelativeLocaleUrl() for path "/" always adds a trailing slash
 								// even when it is not set in the config.
-								const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url)) + search;
+								const value = getRelativeLocaleUrl(locale, getPathFromUrl(Astro.url));
 								const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(locale));
 								const current = currentLocale === locale;
 
@@ -52,7 +51,7 @@ const search = Astro.url.search;
 					{
 						post &&
 							translations.map((post) => {
-								const value = getBlogPostUrl(post.data.language, post) + search;
+								const value = getBlogPostUrl(post.data.language, post);
 								const nativeName = capitalizeFirstLetter(ISO6991.getNativeName(post.data.language));
 								const current = currentLocale === post.data.language;
 
@@ -97,7 +96,9 @@ const search = Astro.url.search;
 					const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language! as AllowedLocales;
 					cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
 					setLanguageTag(lang); // Do not delete this, has to be done on the client also
-					navigate(e.currentTarget.value);
+
+					const next = e.currentTarget.value + window.location.search;
+					navigate(next);
 				}
 			});
 		}

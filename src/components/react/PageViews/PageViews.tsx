@@ -17,6 +17,7 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState(1);
 	const [dateRange, setDateRange] = useState<DateRange>("all-time");
+	const [isLoading, setIsLoading] = useState(true);
 
 	const { data, isPending } = useQuery(
 		{
@@ -48,15 +49,24 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 		}
 	}, []);
 
+	// This is here to prevent client-side hydration errors, useQuery runs on the server.
+	useEffect(() => {
+		setIsLoading(isPending);
+	}, [isPending]);
+
 	return (
 		<>
 			<Fragment>
 				<p className="mb-2">
-					{m.analytics__total_views()}: <b className={`${isPending && "is-skeleton"}`}>{data?.totalViews ?? m.common__loading()}</b>
+					{m.analytics__total_views()}:{" "}
+					<b>
+						{isLoading && <span className="is-skeleton">0</span>}
+						{!isLoading && <span>{data.totalViews}</span>}
+					</b>
 				</p>
 				<div>
 					<button
-						className={`button mr-2 ${isPending ? "is-skeleton" : mode === "page-views" ? "is-active" : ""}`}
+						className={`button mr-2 ${isLoading ? "is-skeleton" : mode === "page-views" ? "is-active" : ""}`}
 						onClick={() => {
 							setMode("page-views");
 							setSearch("");
@@ -64,7 +74,7 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 					>
 						{m.common__page_views()}
 					</button>
-					<button className={`button ${isPending ? "is-skeleton" : mode === "per-url" ? "is-active" : ""}`} onClick={() => setMode("per-url")}>
+					<button className={`button ${isLoading ? "is-skeleton" : mode === "per-url" ? "is-active" : ""}`} onClick={() => setMode("per-url")}>
 						{m.common__per_url()}
 					</button>
 				</div>
@@ -82,14 +92,14 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 									type="search"
 									id="search"
 									name="search"
-									className={`input ${isPending && "is-skeleton"}`}
+									className={`input ${isLoading && "is-skeleton"}`}
 									placeholder={m.analytics__search_url()}
 									value={searchLocalState}
 									onChange={(e) => setSearchLocalState(e.currentTarget.value)}
 								/>
 							</div>
 							<div className="control">
-								<button className={`button is-info ${isPending && "is-skeleton"}`} type="submit">
+								<button className={`button is-info ${isLoading && "is-skeleton"}`} type="submit">
 									{m.common__submit_btn()}
 								</button>
 							</div>
@@ -112,10 +122,10 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 					</div>
 				</form>
 
-				{isPending && <div className="skeleton-block" style={{ height: 400 }}></div>}
+				{isLoading && <div className="skeleton-block" style={{ height: 400 }}></div>}
 
-				{data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
-				{data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
+				{!isLoading && data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
+				{!isLoading && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
 
 				{data?.totalPages && data?.totalPages > 1 && (
 					<div className="field is-grouped is-grouped-multiline mt-2 buttons are-small">

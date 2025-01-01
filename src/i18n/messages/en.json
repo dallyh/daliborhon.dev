@@ -167,6 +167,7 @@
     "resume__generating_pdf": "Generating PDF...",
     "common__minutes": "minutes",
     "common__page_views": "Page views",
+    "common__view_count": "View count",
     "common__per_url": "Per URL",
     "common__all_time": "All time",
     "common__past_day": "Past day",

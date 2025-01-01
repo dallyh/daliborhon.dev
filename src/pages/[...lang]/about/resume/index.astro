@@ -42,78 +42,94 @@ const searchProps = {
 		<MarkdownContent headings={headings} tocPosition="inside">
 			<Content />
 		</MarkdownContent>
-		<a
-			id="download"
-			class="button is-primary is-anchor floating"
-			href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/about/resume/pdf"))}
-			download
-			title={m.resume__download_cv()}
-			aria-label={m.resume__download_cv()}
-		>
-			<span class="icon-text">
-				<span class="icon is-medium">
-					<i class="fas fa-file-pdf fa-lg"></i>
+		<download-button>
+			<a
+				id="download"
+				class="button is-primary is-anchor floating"
+				href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/about/resume/pdf"))}
+				download
+				title={m.resume__download_cv()}
+				aria-label={m.resume__download_cv()}
+				data-astro-prefetch="false"
+			>
+				<span class="icon-text">
+					<span class="icon is-medium">
+						<i class="fas fa-file-pdf fa-lg"></i>
+					</span>
+					<span class="text">{m.resume__download_cv()}</span>
 				</span>
-				<span class="text">{m.resume__download_cv()}</span>
-			</span>
-		</a>
+			</a>
+		</download-button>
 	</div>
 </PageLayout>
 
 <script>
 	import * as m from "$messages";
 
-	function createAndDownloadBlob(blob: Blob, name: string) {
-		const link = document.createElement("a");
-		link.setAttribute("download", name);
+	class DownloadButton extends HTMLElement {
+		private downloadButton!: HTMLAnchorElement;
 
-		const blobUrl = URL.createObjectURL(blob);
-		link.href = blobUrl;
+		connectedCallback(): void {
+			// Fetch the button when the element is added to the DOM
+			this.downloadButton = this.querySelector("#download") as HTMLAnchorElement;
+			if (!this.downloadButton) {
+				throw new Error("The element requires a child anchor with the ID 'download'.");
+			}
 
-		document.body.appendChild(link);
+			this.downloadButton.addEventListener("click", this.handleDownload.bind(this));
+		}
 
-		link.click();
+		disconnectedCallback(): void {
+			if (this.downloadButton) {
+				this.downloadButton.removeEventListener("click", this.handleDownload);
+			}
+		}
 
-		document.body.removeChild(link);
-		URL.revokeObjectURL(blobUrl);
-	}
-
-	function setupDownload() {
-		const downloadButton = document.getElementById("download") as HTMLAnchorElement;
-
-		downloadButton.onclick = async (e) => {
+		private async handleDownload(e: MouseEvent): Promise<void> {
 			e.preventDefault();
-
-			downloadButton.classList.toggle("is-loading");
+			this.downloadButton.classList.toggle("is-loading");
 
 			try {
 				window.toast({ message: m.resume__generating_pdf(), type: "is-info" });
 
 				// Fetch the PDF file
-				const res = await fetch(downloadButton.href);
+				const res = await fetch(this.downloadButton.href);
 
-				// Check if the response is OK
 				if (!res.ok) {
 					window.toast({ message: m.common__download_error(), type: "is-danger" });
 					console.error(`Failed to fetch the file: ${res.statusText}`);
 					return;
 				}
 
-				// Convert response to Blob
 				const blob = await res.blob();
-				const filename = res.headers.get("x-filename")!;
-				createAndDownloadBlob(blob, filename);
+				const filename = res.headers.get("x-filename") || "download.pdf";
+				this.createAndDownloadBlob(blob, filename);
+
 				window.toast({ message: m.common__download_success(), type: "is-success" });
 			} catch (error) {
 				window.toast({ message: m.common__download_error(), type: "is-danger" });
 				console.error("Error downloading the file:", error);
 			} finally {
-				downloadButton.classList.toggle("is-loading");
+				this.downloadButton.classList.toggle("is-loading");
 			}
-		};
+		}
+
+		private createAndDownloadBlob(blob: Blob, name: string): void {
+			const link = document.createElement("a");
+			link.setAttribute("download", name);
+
+			const blobUrl = URL.createObjectURL(blob);
+			link.href = blobUrl;
+
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
+			URL.revokeObjectURL(blobUrl);
+		}
 	}
 
-	document.addEventListener("astro:page-load", setupDownload);
+	customElements.define("download-button", DownloadButton);
 </script>
 
 <style>

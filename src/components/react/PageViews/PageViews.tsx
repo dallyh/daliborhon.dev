@@ -2,16 +2,23 @@ import { QueryClient, useQuery, keepPreviousData } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";
 import UrlChart from "./UrlChart";
 import ViewChart from "./ViewChart";
+import * as m from "$messages";
+import type { AllowedLocales } from "@i18n-config";
+
+const type = ["page-views", "per-url"] as const;
+type Mode = (typeof type)[number];
+const isValidMode = (x: any): x is Mode => type.includes(x);
 
 const queryClient = new QueryClient();
 
-const PageViews = () => {
-	const [mode, setMode] = useState("page-views");
+export default function PageViews({ locale }: { locale: AllowedLocales }) {
+	const [mode, setModeState] = useState<Mode>("page-views");
 	const [searchLocalState, setSearchLocalState] = useState("");
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState(1);
-	const [dateRange, setDateRange] = useState("all-time");
-	const { data, isLoading } = useQuery(
+	const [dateRange, setDateRange] = useState<DateRange>("all-time");
+
+	const { data, isPending } = useQuery(
 		{
 			queryKey: ["pageViews", search, mode, page, dateRange],
 			placeholderData: keepPreviousData,
@@ -26,125 +33,144 @@ const PageViews = () => {
 	const pageSize = 10;
 	const offset = (page - 1) * pageSize;
 
-	return isLoading ? (
-		"Loading..."
-	) : (
-		<Fragment>
-			<p className="mb-2">
-				Total views on all pages: <b>{data.totalViews}</b>
-			</p>
-			<div className="flex mb-4">
-				<button
-					className={`button mr-2 ${mode === "page-views" ? "is-active" : ""}`}
-					onClick={() => {
-						setMode("page-views");
-						setSearch("");
+	const setMode = (mode: Mode) => {
+		var searchParams = new URLSearchParams(window.location.search);
+		searchParams.set("mode", mode);
+		window.history.replaceState(null, "", "?" + searchParams.toString());
+		setModeState(mode);
+	};
+
+	useEffect(() => {
+		const searchParams = new URLSearchParams(window.location.search);
+		const mode = searchParams.get("mode");
+		if (mode && isValidMode(mode)) {
+			setMode(mode as Mode);
+		}
+	}, []);
+
+	return (
+		<>
+			<Fragment>
+				<p className="mb-2">
+					{m.analytics__total_views()}: <b className={`${isPending && "is-skeleton"}`}>{data?.totalViews ?? m.common__loading()}</b>
+				</p>
+				<div>
+					<button
+						className={`button mr-2 ${isPending ? "is-skeleton" : mode === "page-views" ? "is-active" : ""}`}
+						onClick={() => {
+							setMode("page-views");
+							setSearch("");
+						}}
+					>
+						{m.common__page_views()}
+					</button>
+					<button className={`button ${isPending ? "is-skeleton" : mode === "per-url" ? "is-active" : ""}`} onClick={() => setMode("per-url")}>
+						{m.common__per_url()}
+					</button>
+				</div>
+				<form
+					id="date-range-form"
+					onSubmit={(e) => {
+						e.preventDefault();
+						setSearch(searchLocalState);
 					}}
 				>
-					Page views
-				</button>
-				<button className={`button ${mode === "per-url" ? "is-active" : ""}`} onClick={() => setMode("per-url")}>
-					Per URL
-				</button>
-			</div>
-			<form
-				id="date-range-form"
-				onSubmit={(e) => {
-					e.preventDefault();
-					setSearch(searchLocalState);
-				}}
-			>
-				{mode === "per-url" ? (
-					<>
-						<div className="field has-addons">
+					{mode === "per-url" && (
+						<div className="field has-addons mt-2">
 							<div className="control">
 								<input
 									type="search"
 									id="search"
 									name="search"
-									className="input"
-									placeholder="Search for a URL"
+									className={`input ${isPending && "is-skeleton"}`}
+									placeholder={m.analytics__search_url()}
 									value={searchLocalState}
 									onChange={(e) => setSearchLocalState(e.currentTarget.value)}
 								/>
 							</div>
 							<div className="control">
-								<button className="button is-info" type="submit">
-									Submit
+								<button className={`button is-info ${isPending && "is-skeleton"}`} type="submit">
+									{m.common__submit_btn()}
 								</button>
 							</div>
 						</div>
-					</>
-				) : null}
-				<div className="field mb-2">
-					<label className="label">Period</label>
-					<div className="control">
-						<div className="select">
-							<select name="date-range" id="date-range" value={dateRange} onChange={(e) => setDateRange(e.currentTarget.value)}>
-								<option value="all-time">All time</option>
-								<option value="past-day">Past day</option>
-								<option value="past-week">Past week</option>
-								<option value="past-month">Past month</option>
-								<option value="past-year">Past year</option>
-							</select>
+					)}
+
+					<div className="field mb-2 mt-2">
+						<label className="label">{m.analytics__period()}</label>
+						<div className="control">
+							<div className="select">
+								<select name="date-range" id="date-range" value={dateRange} onChange={(e) => setDateRange(e.currentTarget.value as DateRange)}>
+									<option value="all-time">{m.common__all_time()}</option>
+									<option value="past-day">{m.common__past_day()}</option>
+									<option value="past-week">{m.common__past_week()}</option>
+									<option value="past-month">{m.common__past_month()}</option>
+									<option value="past-year">{m.common__past_year()}</option>
+								</select>
+							</div>
 						</div>
 					</div>
-				</div>
-			</form>
-			{data.viewsPerUrl ? <UrlChart data={data.viewsPerUrl} /> : data.pageViews ? <ViewChart data={data.pageViews.rows} /> : null}
-			{data.totalPages && data.totalPages > 1 ? (
-				<div className="field is-grouped is-grouped-multiline mt-2 buttons are-small">
-					{offset === 0 ? (
-						<>
-							<p className="control">
-								<span className={`button is-static`}>First</span>
-							</p>
-							<p className="control">
-								<span className={`button is-static`}>Previous</span>
-							</p>
-						</>
-					) : (
-						<>
-							<p className="control">
-								<button className={`button`} onClick={() => setPage(1)}>
-									First
-								</button>
-							</p>
-							<p className="control">
-								<button className={`button`} onClick={() => setPage(page - 1)}>
-									Previous
-								</button>
-							</p>
-						</>
-					)}
-					<p className="control has-text-centered">{page}</p>
-					{page === data.totalPages ? (
-						<>
-							<p className="control">
-								<span className={`button is-static`}>Next</span>
-							</p>
-							<p className="control">
-								<span className={`button is-static`}>Last</span>
-							</p>
-						</>
-					) : (
-						<>
-							<p className="control">
-								<button className={`button`} onClick={() => setPage(page + 1)}>
-									Next
-								</button>
-							</p>
-							<p className="control">
-								<a className={`button`} onClick={() => setPage(data.totalPages)}>
-									Last
-								</a>
-							</p>
-						</>
-					)}
-				</div>
-			) : null}
-		</Fragment>
-	);
-};
+				</form>
 
-export default PageViews;
+				{isPending && <div className="skeleton-block" style={{ height: 400 }}></div>}
+
+				{data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
+				{data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
+
+				{data?.totalPages && data?.totalPages > 1 && (
+					<div className="field is-grouped is-grouped-multiline mt-2 buttons are-small">
+						{offset === 0 ? (
+							<>
+								<p className="control">
+									<span className={`button is-static`}>{m.common__first()}</span>
+								</p>
+								<p className="control">
+									<span className={`button is-static`}>{m.common__prev_page()}</span>
+								</p>
+							</>
+						) : (
+							<>
+								<p className="control">
+									<button className={`button`} onClick={() => setPage(1)}>
+										First
+									</button>
+								</p>
+								<p className="control">
+									<button className={`button`} onClick={() => setPage(page - 1)}>
+										{m.common__prev_page()}
+									</button>
+								</p>
+							</>
+						)}
+
+						<p className="control has-text-centered">{page}</p>
+
+						{page === data.totalPages ? (
+							<>
+								<p className="control">
+									<span className={`button is-static`}>{m.common__next_page()}</span>
+								</p>
+								<p className="control">
+									<span className={`button is-static`}>{m.common__last()}</span>
+								</p>
+							</>
+						) : (
+							<>
+								<p className="control">
+									<button className={`button`} onClick={() => setPage(page + 1)}>
+										{m.common__next_page()}
+									</button>
+								</p>
+								<p className="control">
+									<a className={`button`} onClick={() => setPage(data.totalPages)}>
+										{m.common__last()}
+									</a>
+								</p>
+							</>
+						)}
+					</div>
+				)}
+			</Fragment>
+		</>
+	);
+}

@@ -117,19 +117,7 @@ import { Icon } from "astro-icon/components";
 				});
 			};
 
-			document.addEventListener("astro:after-swap", () => {
-				if (pageFindInstance !== null) {
-					pageFindInstance.destroy();
-				}
-			});
-
-			document.addEventListener(
-				"astro:page-load",
-				() => {
-					initPagefind();
-				},
-				{ once: false }
-			);
+			initPagefind();
 		}
 	}
 	customElements.define("site-search", SiteSearch);

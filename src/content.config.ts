@@ -1,10 +1,11 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
 import { getDevOrProdContentPath } from "@utils";
-import { glob } from "astro/loaders";
+import { glob, type Loader, type LoaderContext } from "astro/loaders";
+//import { logger as _logger } from "@it-astro:logger"; // Do not use here
 
 const path = getDevOrProdContentPath();
-console.log(`Content config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
+console.info(`Content config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({
@@ -90,17 +91,40 @@ type LanguageColor = {
 	};
 };
 
+function ghLanguagesLoader(): Loader {
+	return {
+		name: "gh-lang-loader",
+		load: async ({ store, logger, parseData, meta, generateDigest }: LoaderContext) => {
+			logger.info("Loading github language colors...");
+
+			const response = await fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
+			const data: LanguageColor = await response.json();
+			const langs = Object.keys(data).map((key) => ({
+				id: key,
+				color: data[key].color,
+			}));
+
+			store.clear();
+
+			for (const item of langs) {
+				const data = await parseData({
+					id: item.id,
+					data: {
+						color: item.color,
+					},
+				});
+
+				store.set({
+					id: item.id,
+					data: data,
+				});
+			}
+		},
+	};
+}
+
 const githubLanguages = defineCollection({
-	loader: async () => {
-		console.log("Loading github language colors...");
-		const response = await fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
-		const data: LanguageColor = await response.json();
-		const langs = Object.keys(data).map((key) => ({
-			id: key,
-			color: data[key].color,
-		}));
-		return langs;
-	},
+	loader: ghLanguagesLoader(),
 	schema: z.object({
 		color: z.string().nullable(),
 	}),

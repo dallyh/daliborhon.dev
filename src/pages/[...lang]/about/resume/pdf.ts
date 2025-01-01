@@ -10,6 +10,7 @@ import PdfPrinter from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
 import * as m from "$messages";
+import { logger } from "@it-astro:logger";
 
 // This cannot be prerendered, because the images are written last in the build step
 export const prerender = false;
@@ -213,7 +214,7 @@ export const GET: APIRoute = async ({ params }) => {
 		const pdf = await generatePdfResponse(docDefinition);
 		return new Response(pdf, { status: 200, headers: headers });
 	} catch (error: any) {
-		console.log(`Fatal error: ${error}`);
+		logger.error(`Fatal error: ${error}`);
 		return new Response(null, { status: 500 });
 	}
 };

@@ -165,5 +165,18 @@
     "common__download_success": "Download success",
     "common__download_error": "An error occured",
     "resume__generating_pdf": "Generating PDF...",
-    "common__minutes": "minutes"
+    "common__minutes": "minutes",
+    "common__page_views": "Page views",
+    "common__per_url": "Per URL",
+    "common__all_time": "All time",
+    "common__past_day": "Past day",
+    "common__past_week": "Past week",
+    "common__past_month": "Past month",
+    "common__past_year": "Past year",
+    "common__first": "First",
+    "common__last": "Last",
+    "analytics__total_views": "Total views on all pages",
+    "analytics__search_url": "Search for URL",
+    "analytics__period": "Period",
+    "analytics__credits": "All credits for this page goes to"
 }

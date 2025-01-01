@@ -12,4 +12,6 @@ declare global {
 			isPrint: boolean | undefined;
 		}
 	}
+	
+	type DateRange = "all-time" | "past-day" | "past-week" | "past-month" | "past-year";
 }

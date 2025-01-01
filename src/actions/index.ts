@@ -2,6 +2,8 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { PageView, db } from "astro:db";
 import { isbot } from "isbot";
+import { logger } from "@it-astro:logger";
+import { PREVIEW } from "astro:env/client";
 
 export const server = {
 	pageView: defineAction({
@@ -10,6 +12,13 @@ export const server = {
 		}),
 		handler: async ({ url }, context) => {
 			const { request } = context;
+
+			if (PREVIEW) {
+				throw new ActionError({
+					code: "BAD_REQUEST",
+					message: "Preview environment is not supported.",
+				});
+			}
 
 			if (isbot(request.headers.get("user-agent"))) {
 				throw new ActionError({
@@ -25,13 +34,13 @@ export const server = {
 				});
 			}
 
-			if (url === "/page-views") {
+			if (url.includes("/analytics")) {
 				throw new ActionError({
 					code: "BAD_REQUEST",
 					message: "This url is not tracked",
 				});
 			}
-            
+
 			try {
 				const id = await db.insert(PageView).values([
 					{
@@ -39,12 +48,12 @@ export const server = {
 						date: new Date(),
 					},
 				]);
-				console.log(`Inserted page view for: ${url} with id: ${id.lastInsertRowid}`);
+				logger.info(`Inserted page view for: ${url} with id: ${id.lastInsertRowid}`);
 				return {};
 			} catch (e) {
-				console.error(e);
+				logger.error((e as Error).message);
 				throw new ActionError({
-					code: "BAD_REQUEST",
+					code: "INTERNAL_SERVER_ERROR",
 					message: "Error updating views",
 				});
 			}

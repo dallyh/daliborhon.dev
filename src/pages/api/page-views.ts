@@ -1,12 +1,13 @@
-export const prerender = false;
-
 import type { APIRoute } from "astro";
 import { db, and, desc, gte, like, lte, sql, count, countDistinct } from "astro:db";
 import { PageView } from "astro:db";
+import { logger } from "@it-astro:logger";
+
+export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
 	const searchParams = new URL(request.url).searchParams;
-	const dateRange = searchParams.get("date-range") ?? "all-time";
+	const dateRange = searchParams.get("date-range") ?? ("all-time" as DateRange);
 	const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
 	let dateGreaterThan: Date | undefined;
 	const dateLessThan = new Date(Date.now());
@@ -87,8 +88,8 @@ export const GET: APIRoute = async ({ request }) => {
 			})
 			.from(PageView)
 			.where(and(...conditions));
-		
-            const viewsQuery = db
+
+		const viewsQuery = db
 			.select({
 				url: PageView.url,
 				pageviews: count(),
@@ -99,7 +100,7 @@ export const GET: APIRoute = async ({ request }) => {
 			.offset(offset)
 			.groupBy(PageView.url)
 			.orderBy(desc(count()));
-        
+
 		[totalViewsRes, viewsPerUrl] = await Promise.all([totalViewsQuery, viewsQuery]);
 
 		totalViews = totalViewsRes[0]?.totalCount ?? 0;
@@ -108,7 +109,8 @@ export const GET: APIRoute = async ({ request }) => {
 	}
 
 	const end = performance.now();
-	console.log(`Query took ${end - start}ms`);
+	const perf = end - start;
+	logger.info(`Query took ${perf}ms`);
 
 	const res = JSON.stringify({
 		totalViews,
@@ -116,6 +118,7 @@ export const GET: APIRoute = async ({ request }) => {
 		totalPages,
 		pageViews,
 		viewsPerUrl,
+		perf: perf,
 	});
 
 	return new Response(res);

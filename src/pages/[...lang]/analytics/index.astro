@@ -12,7 +12,7 @@ const locale = Astro.currentLocale as AllowedLocales;
 
 <PageLayout title={m.common__page_views()} description={m.common__page_views()}>
 	<Section sectionTitle={m.common__page_views()} isFirstSection id="pageViews">
-		<PageViewsComponent locale={locale} client:only="react" />
+		<PageViewsComponent locale={locale} client:load />
 	</Section>
 	<footer class="footer">
 		<div class="content has-text-centered">

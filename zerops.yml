@@ -29,6 +29,7 @@ zerops:
               OA_GITHUB_CLIENT_SECRET: ${RUNTIME_OA_GITHUB_CLIENT_SECRET}
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
+              ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
               PREVIEW: false
           buildCommands:
               - pnpm install
@@ -46,6 +47,7 @@ zerops:
           envVariables:
               HOST: 0.0.0.0
               APP_VERSION_NAME: ${appVersionName}
+              ASTRO_DB_REMOTE_URL: http://libsqlserver:8080
               PREVIEW: false
           start: pnpm start
 

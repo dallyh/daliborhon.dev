@@ -12,12 +12,7 @@ const pageViewAction = defineAction({
 	handler: async ({ url }, context) => {
 		const { request } = context;
 
-		if (PREVIEW) {
-			throw new ActionError({
-				code: "BAD_REQUEST",
-				message: "Preview environment is not supported.",
-			});
-		}
+		return {};
 
 		if (isbot(request.headers.get("user-agent"))) {
 			throw new ActionError({

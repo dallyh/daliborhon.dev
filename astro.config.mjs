@@ -101,7 +101,11 @@ export default defineConfig({
 	},
 	integrations: [
 		runtimeLogger(),
+		db(),
 		react(),
+		expressiveCode(),
+		mdx(),
+		pagefind(),
 		sitemap({
 			i18n: {
 				defaultLocale: defaultLocale,
@@ -113,17 +117,13 @@ export default defineConfig({
 				return !page.includes("404");
 			},
 		}),
-		pagefind(),
 		icon({
 			...iconConfig,
 		}),
 		paraglide({
 			project: "./src/project.inlang",
 			outdir: "./src/paraglide",
-		}),
-		expressiveCode(),
-		mdx(),
-		db(),
+		}),		
 	],
 	vite: {
 		server: {

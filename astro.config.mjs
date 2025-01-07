@@ -27,8 +27,8 @@ const envVars = {
 	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
 	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
 	APP_VERSION_NAME: envField.string({ context: "client", access: "public", default: "UNKNOWN-APP" }),
-	ASTRO_DB_REMOTE_URL: envField.string({ context: "server", access: "secret", default: "file:db/remote-test.db", optional: false }),
-	ASTRO_DB_APP_TOKEN: envField.string({ context: "server", access: "secret", default: "", optional: true }),
+	//ASTRO_DB_REMOTE_URL: envField.string({ context: "server", access: "secret", optional: false }),
+	//ASTRO_DB_APP_TOKEN: envField.string({ context: "server", access: "secret", optional: true }),
 };
 
 const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV, process.cwd(), "");

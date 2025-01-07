@@ -9,8 +9,8 @@ zerops:
               - git clone --depth 1 --branch musl-fix https://github.com/dallyh/libsql.git
               - |
                   cd libsql
-                  cargo build -p libsql-server --release # target not needed, default is host
-                  target/release/sqld --help # Test functionality
+                  cargo build -p libsql-server --release
+                  target/release/sqld --help
           deployFiles:
               - libsql/target/release/sqld
       run:

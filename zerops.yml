@@ -1,5 +1,5 @@
 zerops:
-    - setup: libsql
+    - setup: libsqld
       build:
           os: alpine
           base: rust@1.80
@@ -16,12 +16,18 @@ zerops:
       run:
           os: alpine
           base: rust@1.80
-          start: sqld
+          envVariables:
+              LIBSQL_BOTTOMLESS_ENDPOINT: ${dbstorage_apiUrl}
+              LIBSQL_BOTTOMLESS_BUCKET: ${dbstorage_bucketName}
+              LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION: eu-central-1
+              LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID: ${dbstorage_accessKeyId}
+              LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY: ${dbstorage_secretAccessKey}
+          start: sqld --enable-bottomless-replication --http-listen-addr 0.0.0.0:8080
           ports:
               - port: 8080
                 httpSupport: true
 
-    - setup: libsqlserver
+    - setup: libsqlserver_old
       build:
           base: ubuntu@24.04
           buildCommands:
@@ -69,7 +75,7 @@ zerops:
           envVariables:
               HOST: 0.0.0.0
               APP_VERSION_NAME: ${appVersionName}
-              ASTRO_DB_REMOTE_URL: http://libsqlserver:8080
+              ASTRO_DB_REMOTE_URL: http://libsqld:8080
               PREVIEW: false
           start: pnpm start
           healthCheck:

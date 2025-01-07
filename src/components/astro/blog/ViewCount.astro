@@ -1,0 +1,14 @@
+---
+/* Credits: https://www.thomasledoux.be/blog/using-server-islands-actions-view-counter */
+// Borked, see: https://github.com/withastro/astro/issues/12871
+import { PageView, count, db, eq } from "astro:db";
+
+const { url } = Astro.props;
+
+const viewCount = await db
+  .select({ value: count() })
+  .from(PageView)
+  .where(eq(PageView.url, url));
+---
+
+<span>{viewCount[0]?.value ?? 0}</span>

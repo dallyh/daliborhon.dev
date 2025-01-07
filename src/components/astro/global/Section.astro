@@ -25,6 +25,7 @@ const { sectionTitle, sectionDescription = null, id, isFirstSection = false, hea
 		)
 	}
 	{sectionDescription && <p class="subtitle is-6">{sectionDescription}</p>}
+	<slot name="subtitle" />
 	<div>
 		<slot />
 	</div>

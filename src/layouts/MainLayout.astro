@@ -60,7 +60,7 @@ const basePath = import.meta.env.BASE_URL;
 		<slot name="head" />
 
 		<!-- General Meta Tags -->
-		<title>{title}</title>
+		<title>{siteTitle}</title>
 		<meta name="title" content={siteTitle} />
 		<meta name="description" content={description} />
 		<meta name="author" content={author} />
@@ -105,5 +105,11 @@ const basePath = import.meta.env.BASE_URL;
 		<div class="container" id="#pageContent" aria-hidden="false">
 			<slot />
 		</div>
+		<script>
+			import { actions } from "astro:actions";
+			document.addEventListener("astro:page-load", () => {
+				actions.pageView({ url: window.location.pathname });
+			});
+		</script>
 	</body>
 </html>

@@ -26,7 +26,7 @@ const envVars = {
 	HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
 	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
 	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
-	APP_VERSION_NAME: envField.string({ context: "client", access: "public", default: "UNKNOWN-APP" }),
+	APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
 	//ASTRO_DB_REMOTE_URL: envField.string({ context: "server", access: "secret", optional: false }),
 	//ASTRO_DB_APP_TOKEN: envField.string({ context: "server", access: "secret", optional: true }),
 };
@@ -123,7 +123,7 @@ export default defineConfig({
 		paraglide({
 			project: "./src/project.inlang",
 			outdir: "./src/paraglide",
-		}),		
+		}),
 	],
 	vite: {
 		server: {

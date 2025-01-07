@@ -8,6 +8,7 @@ import ExternalLink from "./ExternalLink.astro";
 
 const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
+const repoHref = "https://github.com/dallyh/daliborhon.dev";
 ---
 
 <footer class="footer section">
@@ -36,11 +37,24 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 		</div>
 		<div>
 			<p>© {new Date().getFullYear()} - Dalibor Hon</p>
-			<p class="app">
-				<ExternalLink href={tagHref} title={APP_VERSION_NAME} attrs={{ "aria-label": APP_VERSION_NAME }}>
-					{APP_VERSION_NAME}
-				</ExternalLink>
-			</p>
+			{
+				APP_VERSION_NAME && (
+					<p class="app">
+						<ExternalLink href={tagHref} title={APP_VERSION_NAME} attrs={{ "aria-label": APP_VERSION_NAME }}>
+							{APP_VERSION_NAME}
+						</ExternalLink>
+					</p>
+				)
+			}
+			{
+				!APP_VERSION_NAME && (
+					<p class="app">
+						<ExternalLink href={tagHref} title={m.common__repository()} attrs={{ "aria-label": m.common__repository() }}>
+							{m.common__repository()}
+						</ExternalLink>
+					</p>
+				)
+			}
 		</div>
 	</div>
 </footer>

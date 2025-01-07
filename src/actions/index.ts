@@ -12,8 +12,6 @@ const pageViewAction = defineAction({
 	handler: async ({ url }, context) => {
 		const { request } = context;
 
-		return {};
-
 		if (isbot(request.headers.get("user-agent"))) {
 			throw new ActionError({
 				code: "FORBIDDEN",

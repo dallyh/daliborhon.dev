@@ -12,7 +12,10 @@ zerops:
                   cargo build -p libsql-server --release
                   target/release/sqld --help
           deployFiles:
-              - libsql/target/release/sqld
+              - libsql/target/release/~sqld
+          cache:
+              - target
+              - ~/.cargo
       run:
           os: alpine
           base: rust@1.80
@@ -22,29 +25,7 @@ zerops:
               LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION: eu-central-1
               LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID: ${dbstorage_accessKeyId}
               LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY: ${dbstorage_secretAccessKey}
-          start: sqld --enable-bottomless-replication --http-listen-addr 0.0.0.0:8080
-          ports:
-              - port: 8080
-                httpSupport: true
-
-    - setup: libsqlserver_old
-      build:
-          base: ubuntu@24.04
-          buildCommands:
-              - echo "Setting up..."
-          deployFiles: ./
-      run:
-          base: ubuntu@24.04
-          envVariables:
-              LIBSQL_BOTTOMLESS_ENDPOINT: ${dbstorage_apiUrl}
-              LIBSQL_BOTTOMLESS_BUCKET: ${dbstorage_bucketName}
-              LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION: eu-central-1
-              LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID: ${dbstorage_accessKeyId}
-              LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY: ${dbstorage_secretAccessKey}
-          prepareCommands:
-              - curl --proto '=https' --tlsv1.2 -LsSf https://github.com/tursodatabase/libsql/releases/download/libsql-server-v0.24.30/libsql-server-installer.sh | sh
-              - mv /root/.cargo/bin/sqld /usr/local/bin/sqld
-          start: sqld --enable-bottomless-replication --http-listen-addr 0.0.0.0:8080
+          start: ./sqld --enable-bottomless-replication --http-listen-addr 0.0.0.0:8080
           ports:
               - port: 8080
                 httpSupport: true
@@ -61,7 +42,7 @@ zerops:
               PREVIEW: false
           buildCommands:
               - pnpm install
-              - pnpm run build
+              - pnpm build:remote
           deployFiles:
               - dist
               - node_modules

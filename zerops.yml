@@ -1,4 +1,26 @@
 zerops:
+    - setup: libsql
+      build:
+          os: alpine
+          base: rust@1.80
+          prepareCommands:
+              - apk add musl-dev coreutils build-base gcc
+          buildCommands:
+              - git clone --depth 1 --branch musl-fix https://github.com/dallyh/libsql.git
+              - |
+                  cd libsql
+                  cargo build -p libsql-server --release # target not needed, default is host
+                  target/release/sqld --help # Test functionality
+          deployFiles:
+              - libsql/target/release/sqld
+      run:
+          os: alpine
+          base: rust@1.80
+          start: sqld
+          ports:
+              - port: 8080
+                httpSupport: true
+
     - setup: libsqlserver
       build:
           base: ubuntu@24.04

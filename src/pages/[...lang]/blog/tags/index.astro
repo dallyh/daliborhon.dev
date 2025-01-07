@@ -15,7 +15,7 @@ let search = Astro.url.searchParams.get("tag");
 const locale = Astro.currentLocale!;
 
 const layoutProps = {
-	title: `${m.blog__tags()} - Blog`,
+	title: `Blog - ${m.blog__tags()}`,
 	description: m.blog__blog_site_description(),
 };
 

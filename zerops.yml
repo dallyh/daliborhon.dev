@@ -1,4 +1,35 @@
 zerops:
+    - setup: libsqld
+      build:
+          os: alpine
+          base: rust@1.80
+          prepareCommands:
+              - apk add musl-dev coreutils build-base gcc
+          buildCommands:
+              - git clone --depth 1 --branch musl-fix https://github.com/dallyh/libsql.git
+              - |
+                  cd libsql
+                  cargo build -p libsql-server --release
+                  target/release/sqld --help
+          deployFiles:
+              - libsql/target/release/~sqld
+          cache:
+              - target
+              - ~/.cargo
+      run:
+          os: alpine
+          base: rust@1.80
+          envVariables:
+              LIBSQL_BOTTOMLESS_ENDPOINT: ${dbstorage_apiUrl}
+              LIBSQL_BOTTOMLESS_BUCKET: ${dbstorage_bucketName}
+              LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION: eu-central-1
+              LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID: ${dbstorage_accessKeyId}
+              LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY: ${dbstorage_secretAccessKey}
+          start: ./sqld --enable-bottomless-replication --http-listen-addr 0.0.0.0:8080
+          ports:
+              - port: 8080
+                httpSupport: true
+
     - setup: frontend
       build:
           base: nodejs@22
@@ -7,10 +38,11 @@ zerops:
               OA_GITHUB_CLIENT_SECRET: ${RUNTIME_OA_GITHUB_CLIENT_SECRET}
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
+              ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
               PREVIEW: false
           buildCommands:
               - pnpm install
-              - pnpm run build
+              - pnpm build:remote
           deployFiles:
               - dist
               - node_modules
@@ -24,8 +56,14 @@ zerops:
           envVariables:
               HOST: 0.0.0.0
               APP_VERSION_NAME: ${appVersionName}
+              ASTRO_DB_REMOTE_URL: http://libsqld:8080
               PREVIEW: false
           start: pnpm start
+          healthCheck:
+              httpGet:
+                  port: 4321
+                  path: /api/status
+
     - setup: fepreview
       build:
           base: nodejs@22
@@ -34,15 +72,17 @@ zerops:
               OA_GITHUB_CLIENT_SECRET: ${RUNTIME_OA_GITHUB_CLIENT_SECRET}
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
-              PREVIEW: true
+              ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
+              PREVIEW: true # Builds preview posts
           buildCommands:
               - pnpm install
-              - pnpm run build
+              - pnpm run build:remote # Building remote, but using local preseeded file
           deployFiles:
               - dist
               - node_modules
               - package.json
               - src/assets/fonts
+              - db/dev.db
       run:
           base: nodejs@22
           ports:
@@ -51,5 +91,10 @@ zerops:
           envVariables:
               HOST: 0.0.0.0
               APP_VERSION_NAME: ${appVersionName}
-              PREVIEW: true
+              ASTRO_DB_REMOTE_URL: file:db/dev.db
+              PREVIEW: true # Builds preview posts
           start: pnpm start
+          healthCheck:
+              httpGet:
+                  port: 4321
+                  path: /api/status

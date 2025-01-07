@@ -20,6 +20,18 @@ I guess for experienced developers a lot of things in this repo will not make an
 
 Deployments are done on [Zerops](https://zerops.io) for all new tags containing `cms-*` (automatically by [Sveltia](https://github.com/sveltia/sveltia-cms)) or `deploy-*` (manually).
 
+## Database
+Required env vars:
+
+LIBSQL_BOTTOMLESS_ENDPOINT=https://storage-prg1.zerops.io
+LIBSQL_BOTTOMLESS_BUCKET=bucket-name
+LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION=eu-central-1
+LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID=acces_key
+LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY=secret_key
+
+`libsql-server` does run in bottomless replication mode, and it is replicated to Zerops object storage which is esentially an S3 bucket.
+The server is used as production, for local development i do use local files.
+
 ## Variables
 
 List of used variables can be found in the [astro.config.mjs](./astro.config.mjs) file.

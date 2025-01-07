@@ -165,5 +165,19 @@
     "common__download_success": "Stahování úspěšné",
     "common__download_error": "Nastala chyba",
     "resume__generating_pdf": "Generuji PDF...",
-    "common__minutes": "minuty"
+    "common__minutes": "minuty",
+    "common__page_views": "Zobrazení stránek",
+    "common__view_count": "Počet zobrazení",
+    "common__per_url": "Zobrazení URL",
+    "common__all_time": "Celkově",
+    "common__past_day": "Poslední den",
+    "common__past_week": "Poslední týden",
+    "common__past_month": "Poslední měsíc",
+    "common__past_year": "Poslední rok",
+    "common__first": "První",
+    "common__last": "Poslední",
+    "analytics__total_views": "Celkový počet zobrazení všech stránek",
+    "analytics__search_url": "Hledat URL",
+    "analytics__period": "Období",
+    "analytics__credits": "Veškeré zásluhy za tuto stránku patří"
 }

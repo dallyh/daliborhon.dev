@@ -14,7 +14,7 @@ const locale = Astro.currentLocale!;
 const projects = await getProjectsByLocale(locale);
 
 const layoutProps = {
-	title: "Dalibor Hon - " + m.projects__projects(),
+	title: m.projects__projects(),
 	description: m.projects__description(),
 };
 

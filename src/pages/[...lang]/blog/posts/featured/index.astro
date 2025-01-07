@@ -13,7 +13,7 @@ const locale = Astro.currentLocale!;
 const posts = await getFilteredPostsCollection({ sort: true, featured: true, locale: locale });
 
 const layoutProps = {
-	title: m.blog__featured_posts_title(),
+	title: `Blog - ${m.blog__featured_posts_title()}`,
 	description: m.blog__featured_posts_description(),
 };
 ---

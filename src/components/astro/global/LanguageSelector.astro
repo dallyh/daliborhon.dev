@@ -90,6 +90,11 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 				console.error("Could not initialize LanguageSelect");
 				return;
 			}
+				
+			// Why does this happen?
+			select.addEventListener("mousedown", (e) => {
+				(e.target as HTMLSelectElement).focus({ preventScroll: true });
+			});
 
 			select.addEventListener("change", (e) => {
 				if (e.currentTarget instanceof HTMLSelectElement) {

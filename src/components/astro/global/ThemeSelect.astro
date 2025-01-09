@@ -48,6 +48,7 @@
 		#setPreference(theme: string) {
 			localStorage.setItem(this.#storageKey, theme);
 			this.#reflectPreference();
+			window.dispatchEvent(new Event("theme-changed"));
 		}
 
 		#onClick() {

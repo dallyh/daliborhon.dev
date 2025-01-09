@@ -19,6 +19,7 @@ import MainLayout from "./MainLayout.astro";
 import { getReadingTime } from "@utils/content";
 import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import ViewCount from "@components/react/PageViews/ViewCount";
+import Comments from "@components/react/Comments";
 
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -123,6 +124,9 @@ const searchProps = {
 			<MarkdownContent headings={headings} tocPosition="inside">
 				<Content />
 			</MarkdownContent>
+		</Section>
+		<Section id="comments">
+			<Comments client:visible lang={locale} />
 		</Section>
 	</main>
 	<Footer />

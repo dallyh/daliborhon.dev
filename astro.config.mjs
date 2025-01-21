@@ -1,7 +1,7 @@
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { astroI18nConfigPaths, defaultLocale, localeKeys } from "./i18n.config";
-import paraglideAstro  from "@inlang/paraglide-astro";
+import paraglideAstro from "@inlang/paraglide-astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
@@ -17,6 +17,8 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeFigure from "@microflash/rehype-figure";
 import runtimeLogger from "@inox-tools/runtime-logger";
 import db from "@astrojs/db";
+
+import tailwind from "@astrojs/tailwind";
 
 const envVars = {
 	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
@@ -124,6 +126,7 @@ export default defineConfig({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
 		}),
+		tailwind({ nesting: true }),
 	],
 	vite: {
 		server: {

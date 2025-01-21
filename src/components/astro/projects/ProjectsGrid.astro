@@ -33,19 +33,17 @@ const cols = () => {
 };
 ---
 
-<div class="projects">
-	<div class={`fixed-grid has-${cols()}-cols has-1-cols-mobile`}>
-		<ul class="grid">
-			{
-				projects.map((project) => {
-					return (
-						<li class="cell">
-							<ProjectCard {project} />
-						</li>
-					);
-				})
-			}
-		</ul>
-	</div>
+<div class="flex flex-col">
+	<ul class={`grid grid-cols-1 gap-3 md:grid-cols-3`}>
+		{
+			projects.map((project) => {
+				return (
+					<li class="cell">
+						<ProjectCard {project} />
+					</li>
+				);
+			})
+		}
+	</ul>
 	{showAllUrl && <AllEntriesUrl {...allEntriesProps} />}
 </div>

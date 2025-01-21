@@ -56,60 +56,34 @@ function getImage(name: string, ext: string): ImageMetadata {
 }
 ---
 
-<div class="card">
-	<div class="card-content">
-		<div class="media">
-			<div class="media-left">
-				{
-					file.ext !== "svg" && (
-						<div class="image is-48x48">
-							<Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />
-						</div>
-					)
-				}
-				{
-					file.ext === "svg" && (
-						<div class="svg-img-card">
-							<Fragment set:html={getSVG(file.name)} />
-						</div>
-					)
-				}
-			</div>
-			<div class="media-content">
-				<a class="title is-4" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<Icon name="bi:box-arrow-up-right" /></a>
-				<p class="subtitle is-6 mt-2">
-					<span>🚀</span>
-					{repository && <GithubDate date={new Date(repository.data.created_at)} />}
-					{!repository && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
-				</p>
-				<div class="tags are-small">
-					{
-						relatedTags.map((tag) => {
-							const { bgColor, title } = tag.data;
-							return (
-								<span class="tag has-text-black" style={`background: ${bgColor};`}>
-									{title}
-								</span>
-							);
-						})
-					}
-				</div>
-			</div>
+<div class="card card-side bg-base-100 max-w-full shadow-xl h-full">
+	<figure class="max-w-20 ml-8">
+		{file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />}
+		{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
+	</figure>
+	<div class="card-body">
+		<a class="card-title" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<Icon name="bi:box-arrow-up-right" /></a>
+		<p class="text-sm">
+			<span>🚀</span>
+			{repository && <GithubDate date={new Date(repository.data.created_at)} />}
+			{!repository && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
+		</p>
+		<div class="flex flex-wrap gap-2">
+			{
+				relatedTags.map((tag) => {
+					const { bgColor, title } = tag.data;
+					return (
+						<span class="badge text-black" style={`background: ${bgColor};`}>
+							{title}
+						</span>
+					);
+				})
+			}
 		</div>
-		<div class="content">
-			<div class="md-content">
-				<Content />
-			</div>
-		</div>
+		<p><Content /></p>
 		{repository && <GithubLanguages repository={repository.data} />}
 	</div>
 </div>
-
-<style>
-	.card {
-		height: 100%;
-	}
-</style>
 
 <style is:global>
 	.svg-img-card {

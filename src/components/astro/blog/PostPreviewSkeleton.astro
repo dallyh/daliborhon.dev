@@ -1,6 +1,6 @@
 <script>
 	function removeSkeletonOnIntersection() {
-		const images = document.querySelectorAll(".card-image.is-skeleton") as NodeListOf<HTMLElement>;
+		const images = document.querySelectorAll("figure.skeleton-disabled") as NodeListOf<HTMLElement>;
 
 		// Create an Intersection Observer
 		const observer = new IntersectionObserver((entries, observer) => {
@@ -10,12 +10,12 @@
 					const i = imgDiv.querySelector("img") as HTMLImageElement;
 					// Check if the image is already loaded
 					if (i.complete) {
-						imgDiv.classList.remove("is-skeleton");
+						imgDiv.classList.remove("skeleton");
 						observer.unobserve(imgDiv); // Stop observing this element
 					} else {
 						// Wait for the image to load
 						i.onload = () => {
-							imgDiv.classList.remove("is-skeleton");
+							imgDiv.classList.remove("skeleton");
 							observer.unobserve(imgDiv); // Stop observing this element
 						};
 

@@ -16,6 +16,109 @@ const { post } = Astro.props;
 const locale = Astro.currentLocale!;
 ---
 
+<div class="mx-auto navbar rounded-box bg-base-100 max-w-[1344px] mt-2 mb-2 shadow-xl z-50">
+	<div class="navbar-start">
+		<div class="dropdown">
+			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"></path>
+				</svg>
+			</div>
+			<ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+				<li>
+					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
+						{m.common__home()}
+					</a>
+				</li>
+				<li>
+					<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
+						{m.common__blog()}
+					</a>
+					<ul>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
+								{m.blog__all_posts_title()}
+							</a>
+						</li>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
+								{m.blog__featured_posts_title()}
+							</a>
+						</li>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
+								{m.blog__tags()}
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
+						{m.projects__projects()}
+					</a>
+				</li>
+				<li>
+					<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
+						{m.common__about()}
+					</a>
+					<ul>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
+								{m.common__resume()}
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<a class="btn btn-ghost text-xl" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
+			<Icon class="logo" name="dh-logo" size={40} />
+		</a>
+	</div>
+	<div class="navbar-center hidden lg:flex">
+		<ul class="menu menu-horizontal px-1 z-50">
+			<li>
+				<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
+					{m.common__home()}
+				</a>
+			</li>
+			<li>
+				<details>
+					<summary>{m.common__blog()}</summary>
+					<ul class="p-2 w-max">
+						<li>
+							<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
+								{m.common__blog()}
+							</a>
+						</li>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
+								{m.blog__all_posts_title()}
+							</a>
+						</li>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
+								{m.blog__featured_posts_title()}
+							</a>
+						</li>
+						<li>
+							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
+								{m.blog__tags()}
+							</a>
+						</li>
+					</ul>
+				</details>
+			</li>
+			<li><a>Item 3</a></li>
+		</ul>
+	</div>
+	<div class="navbar-end">
+		<Search />
+		<LanguageSelector post={post} />
+		<ThemeSelect />
+	</div>
+</div>
+<!-- 
 <header id="nav-menu" class="nav-menu" aria-label="navigation bar">
 	<site-navigation>
 		<nav class="navbar container" role="navigation" aria-label="main navigation">
@@ -85,7 +188,7 @@ const locale = Astro.currentLocale!;
 		</nav>
 	</site-navigation>
 </header>
-
+-->
 <script>
 	class Navigation extends HTMLElement {
 		connectedCallback() {
@@ -114,36 +217,3 @@ const locale = Astro.currentLocale!;
 
 	customElements.define("site-navigation", Navigation);
 </script>
-
-<style>
-	.nav-menu {
-		position: sticky;
-		top: 0;
-		z-index: 1000;
-		border-bottom: 1px solid hsl(0, 0%, 70%);
-
-		[data-theme="dark"] & {
-			border-bottom: 1px solid hsl(0, 0%, 20%);
-		}
-	}
-
-	.navbar-dropdown {
-		border: 1px solid hsl(0, 0%, 70%);
-
-		[data-theme="dark"] & {
-			border: 1px solid hsl(0, 0%, 20%);
-		}
-
-		@media (max-width: 1024px) {
-			border: unset;
-
-			[data-theme="dark"] & {
-				border: unset;
-			}
-		}
-	}
-
-	.navbar {
-		--bulma-navbar-burger-color: var(--bulma-text-strong);
-	}
-</style>

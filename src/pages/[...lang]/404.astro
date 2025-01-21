@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import { setLanguageTag } from "$paraglide-runtime";
+import { setLocale } from "$paraglide-runtime";
 import { type AllowedLocales, defaultLocale } from "@i18n-config";
 import MainLayout from "@layouts/MainLayout.astro";
 import { siteConfig } from "@site-config";
@@ -20,7 +20,7 @@ const localeCookie = Astro.cookies.get(configCookie.name);
 if (localeCookie) {
 	locale = localeCookie.value;
 }
-setLanguageTag(locale as AllowedLocales);
+setLocale(locale as AllowedLocales);
 ---
 
 <MainLayout {...layoutProps}>

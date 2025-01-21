@@ -1,6 +1,6 @@
 import { CONTACT_FORM_ACCESS_KEY } from "astro:env/server";
 import * as m from "$messages";
-import { setLanguageTag } from "$paraglide-runtime";
+import { setLocale } from "$paraglide-runtime";
 import type { AllowedLocales } from "@i18n-config";
 import type { APIRoute } from "astro";
 
@@ -28,7 +28,7 @@ export const POST: APIRoute = async ({ request }) => {
 		return new Response(JSON.stringify({ error: "INVALID_CONTENT", message: "Invalid content type" }), { status: 400 });
 	}
 
-	setLanguageTag(data.language);
+	setLocale(data.language);
 
 	const res = await fetch(API_URL, {
 		method: "POST",

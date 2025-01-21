@@ -1,7 +1,7 @@
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { astroI18nConfigPaths, defaultLocale, localeKeys } from "./i18n.config";
-import paraglide from "@inlang/paraglide-astro";
+import paraglideAstro  from "@inlang/paraglide-astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
@@ -120,8 +120,8 @@ export default defineConfig({
 		icon({
 			...iconConfig,
 		}),
-		paraglide({
-			project: "./src/project.inlang",
+		paraglideAstro({
+			project: "./project.inlang",
 			outdir: "./src/paraglide",
 		}),
 	],

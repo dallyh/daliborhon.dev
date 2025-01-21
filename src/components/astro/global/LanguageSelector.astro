@@ -4,7 +4,6 @@
 
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { languageTag } from "$paraglide-runtime";
 import { locales } from "@i18n-config";
 import { getPathFromUrl } from "@i18n/utils";
 import { getBlogPostUrl } from "@utils/content";
@@ -17,7 +16,7 @@ interface Props {
 
 const { post } = Astro.props;
 
-const currentLocale = languageTag();
+const currentLocale = Astro.currentLocale!;
 const capitalizeFirstLetter = (str: string) => {
 	const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
 	return capitalized;
@@ -74,7 +73,6 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 </lang-select>
 
 <script>
-	import { setLanguageTag } from "$paraglide-runtime";
 	import type { AllowedLocales } from "@i18n-config";
 	import { siteConfig } from "@site-config";
 	import { navigate } from "astro:transitions/client";
@@ -97,12 +95,13 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 			});
 
 			select.addEventListener("change", (e) => {
+				e.preventDefault();
+
 				if (e.currentTarget instanceof HTMLSelectElement) {
 					const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language! as AllowedLocales;
 					cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
-					setLanguageTag(lang); // Do not delete this, has to be done on the client also
-
 					const next = e.currentTarget.value + window.location.search;
+					console.log("Navigating to: " + next);
 					navigate(next);
 				}
 			});

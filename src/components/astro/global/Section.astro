@@ -13,18 +13,18 @@ export interface Props {
 const { sectionTitle, sectionDescription = null, id, isFirstSection = false, heading = "h2", isInsideSection = false } = Astro.props;
 ---
 
-<section class={`${isInsideSection === false ? "section" : "block"}`} id={id}>
+<section class={`mb-8 ${isInsideSection === false ? "section" : "block"}`} id={id}>
 	{
 		sectionTitle && (
 			<Fragment>
-				{isFirstSection && <h1 class={`title is-3 ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h1>}
-				{!isFirstSection && heading === "h2" && <h2 class={`title ${isInsideSection ? "is-4" : "is-3 "} ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h2>}
-				{!isFirstSection && heading === "h3" && <h3 class={`title is-4 ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h3>}
-				{!isFirstSection && heading === "h4" && <h4 class={`title is-5 ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h4>}
+				{isFirstSection && <h1 class={`font-bold text-4xl ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h1>}
+				{!isFirstSection && heading === "h2" && <h2 class={`font-bold ${isInsideSection ? "text-3xl" : "text-2xl "} ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h2>}
+				{!isFirstSection && heading === "h3" && <h3 class={`font-bold text-xl ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h3>}
+				{!isFirstSection && heading === "h4" && <h4 class={`font-bold text-lg ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h4>}
 			</Fragment>
 		)
 	}
-	{sectionDescription && <p class="subtitle is-6">{sectionDescription}</p>}
+	{sectionDescription && <p class="mb-5">{sectionDescription}</p>}
 	<slot name="subtitle" />
 	<div>
 		<slot />

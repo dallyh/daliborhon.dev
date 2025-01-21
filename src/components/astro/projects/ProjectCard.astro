@@ -56,7 +56,7 @@ function getImage(name: string, ext: string): ImageMetadata {
 }
 ---
 
-<div class="card card-side bg-base-100 max-w-full shadow-xl h-full">
+<div class="card md:card-side bg-base-100 max-w-full shadow-xl h-full">
 	<figure class="max-w-20 ml-8">
 		{file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />}
 		{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}

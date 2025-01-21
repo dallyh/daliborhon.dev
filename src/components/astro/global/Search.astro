@@ -2,24 +2,23 @@
 // https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
 // Really thanks folks!
 
+interface Props {
+	inDrawer?: boolean;
+}
+
+const { inDrawer = false } = Astro.props;
+
 import * as m from "$messages";
 import "@pagefind/default-ui/css/ui.css";
-import { Icon } from "astro-icon/components";
 ---
 
 <site-search>
-	<button data-open-modal disabled>
-		<div class="field">
-			<p class="control has-icons-left has-icons-right">
-				<input class="input is-small" type="email" placeholder={m.common__search()} />
-				<span class="icon is-small is-left">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</span>
-				<span class="icon is-small is-right">
-					<i class="slash-icon"><Icon name="forward-slash" size={18} title={m.common__search_label()} /></i>
-				</span>
-			</p>
-		</div>
+	<button data-open-modal disabled class={`${inDrawer ? "w-full" : ""}`}>
+		<label class={`input input-bordered ${inDrawer ? "" : "input-sm"} flex items-center gap-2`}>
+			<input type="text" class={`grow ${inDrawer ? "" : "max-w-28"}`} placeholder={m.common__search()} />
+			<kbd class="kbd kbd-xs hidden lg:block">ctrl</kbd>
+			<kbd class="kbd kbd-xs hidden lg:block">K</kbd>
+		</label>
 	</button>
 
 	<dialog aria-label={m.common__search()}>

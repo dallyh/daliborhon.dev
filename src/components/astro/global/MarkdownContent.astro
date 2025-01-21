@@ -11,7 +11,7 @@ const { tocPosition = "default", headings } = Astro.props;
 ---
 
 <markdown-content>
-	<article class=`prose lg:prose-xl md-content ${tocPosition}` id="article">
+	<article class=`prose lg:prose-xl md-content max-w-none ${tocPosition}` id="article">
 		{
 			headings && headings.length !== 0 && (
 				<div id="toc" class="box">

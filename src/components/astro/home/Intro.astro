@@ -6,47 +6,37 @@ import SocialLinks from "./SocialLinks.astro";
 ---
 
 <div class="hero">
-	<div class="hero-body">
-		<div class="media">
-			<div class="media-left">
-				<div class="hero-image">
-					<ProfilePicture img={profilePicture} imgClass="picture-bw" />
-				</div>
-			</div>
-			<div class="media-content">
-				<div class="content">
-					<h1 class="title">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
-					<p class="subtitle mb-2 mt-1 is-size-6">
-						{m.landing__intro()}
-					</p>
-					<p class="subtitle mb-1 is-size-6">
-						<span class="icon-text tag is-primary">
-							<span class="icon">
-								<i class="fa-solid fa-location-dot"></i>
-							</span>
-							<span>{m.common__country_czech_republic()}</span>
-						</span>
-						<span class="icon-text tag is-primary">
-							<span class="icon">
-								<i class="fa-solid fa-circle-dot"></i>
-							</span>
-							<span class="has-text-dark" id="time">00:00</span>
-						</span>
-					</p>
-					<p class="subtitle mb-1 is-size-6">
-						<span class="icon-text tag is-primary">
-							<span class="icon">
-								<i class="fa-solid fa-suitcase"></i>
-							</span>
-							<span>Business Consultant</span>
-						</span>
-					</p>
-					<p class="subtitle is-size-6"></p>
-				</div>
-				<div class="social">
-					<SocialLinks />
-				</div>
-			</div>
+	<div class="hero-content flex-col lg:flex-row">
+		<ProfilePicture img={profilePicture} imgClass="max-w-sm rounded-lg shadow-2xl" />
+		<div class="flex flex-col gap-3">
+			<h1 class="text-2xl">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
+			<p>
+				{m.landing__intro()}
+			</p>
+			<p class="text-sm flex gap-2">
+				<span class="badge bg-accent text-accent-content p-3 flex gap-2">
+					<span>
+						<i class="fa-solid fa-location-dot"></i>
+					</span>
+					<span>{m.common__country_czech_republic()}</span>
+				</span>
+				<span class="badge bg-accent text-accent-content p-3 flex gap-2">
+					<span>
+						<i class="fa-solid fa-circle-dot"></i>
+					</span>
+					<span class="has-text-dark" id="time">00:00</span>
+				</span>
+			</p>
+			<p class="text-sm">
+				<span class="badge bg-accent text-accent-content p-3 flex gap-2">
+					<span>
+						<i class="fa-solid fa-suitcase"></i>
+					</span>
+					<span>Business Consultant</span>
+				</span>
+			</p>
+			<p class="subtitle is-size-6"></p>
+			<SocialLinks />
 		</div>
 	</div>
 </div>

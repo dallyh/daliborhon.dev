@@ -20,7 +20,7 @@ const isPrint = Astro.locals.isPrint;
 
 {
 	!isPrint && (
-		<li class="cell">
+		<li>
 			<span class="sr-only">{label}</span>
 			<Tooltip text={label} placement="bottom">
 				<div>
@@ -30,11 +30,3 @@ const isPrint = Astro.locals.isPrint;
 		</li>
 	)
 }
-
-<style>
-	.cell {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-</style>

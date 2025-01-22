@@ -2,11 +2,11 @@
 import Indicator from "astro-loading-indicator/component";
 ---
 
-<Indicator color="var(--bulma-primary)" />
+<Indicator color="oklch(var(--p))" />
 
 <style is:global>
 	:root .astro-loading-indicator {
-		top: var(--bulma-navbar-height);
+		top: 0;
 		height: 2px;
 		z-index: 10000;
 	}

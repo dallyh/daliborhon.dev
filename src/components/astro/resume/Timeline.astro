@@ -6,7 +6,6 @@ export interface Props {
 	children: TimelineItem | TimelineItem[];
 }
 ---
-
 <div class="timeline content">
 	<div class="timeline-cards">
 		<div class="timeline-card">
@@ -61,6 +60,6 @@ export interface Props {
 		height: 100%;
 		left: 1px;
 		top: 0;
-		background: linear-gradient(to bottom, var(--bulma-primary) 65%, transparent);
+		background: linear-gradient(to bottom, oklch(var(--p)), transparent);
 	}
 </style>

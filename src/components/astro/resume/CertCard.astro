@@ -47,29 +47,23 @@ const isPrint = Astro.locals.isPrint;
 
 {
 	!isPrint && (
-		<li class="cell box">
-			<div class="image-normal">
-				<Image src={images[img]()} {...imgProps} />
+		<div class="card card-compact bg-base-200 shadow-xl h-full">
+			<div class="card-body flex items-center text-center">
+				<div>
+					<div class="image-normal">
+						<Image src={images[img]()} {...imgProps} />
+					</div>
+					<div class="image-inverted">
+						<Image src={images[imgInverted]()} {...imgProps} />
+					</div>
+				</div>
+				<slot />
 			</div>
-			<div class="image-inverted">
-				<Image src={images[imgInverted]()} {...imgProps} />
-			</div>
-			<slot />
-		</li>
+		</div>
 	)
 }
 
 <style>
-	.box {
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		text-align: center;
-		flex-direction: column;
-		height: 100%;
-		min-height: 150px;
-	}
-
 	.image-normal,
 	.image-inverted {
 		display: none;

@@ -2,23 +2,11 @@
 import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
 ---
 
-<div class="hero">
-	<ProfilePicture />
-	<div>
-		<slot />
-	</div>
+<div class="hero place-items-start">
+	<div class="hero-content flex-col lg:flex-row justify-start">
+		<ProfilePicture />
+		<div>
+			<slot />
+		</div>
+	  </div>
 </div>
-
-<style>
-	.hero {
-		display: flex;
-		gap: 1rem;
-		flex-direction: row;
-		width: 100%;
-		justify-content: start;
-
-		@media screen and (max-width: 768px) {
-			flex-direction: column;
-		}
-	}
-</style>

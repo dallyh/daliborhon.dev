@@ -6,15 +6,6 @@ export interface Props {
 }
 ---
 
-<div class={`fixed-grid has-${4}-cols has-${2}-cols-mobile`}>
-	<ul class="grid is-col-min-7">
-		<slot />
-	</ul>
-</div>
-
-<style>
-	ul {
-		list-style: none;
-		margin: 0;
-	}
-</style>
+<ul class="grid grid-cols-2 md:grid-cols-4 gap-4 p-0 m-0 list-none not-prose">
+	<slot />
+</ul>

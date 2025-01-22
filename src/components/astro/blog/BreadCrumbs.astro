@@ -7,12 +7,10 @@ interface Props {
 }
 ---
 
-<div class="breadcrumbs-section section">
-	<nav class="breadcrumb" aria-label="breadcrumbs">
-		<ul>
-			<slot />
-		</ul>
-	</nav>
+<div class="breadcrumbs text-sm p-2">
+	<ul aria-label="breadcrumbs">
+		<slot />
+	</ul>
 </div>
 
 <style>

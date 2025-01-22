@@ -20,7 +20,7 @@ const locale = Astro.currentLocale!;
 	<input id="drawerMenu" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col">
 		<!-- Navbar -->
-		<div class="mx-auto navbar lg:rounded-box bg-base-200 max-w-[1344px] lg:mt-2 lg:mb-2 shadow-lg">
+		<div class="mx-auto navbar lg:rounded-box bg-base-200 max-w-[1344px] lg:mt-2 lg:mb-2 shadow-md">
 			<div class="flex-none lg:hidden">
 				<label for="drawerMenu" aria-label="open sidebar" class="btn btn-square btn-ghost">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current">
@@ -148,77 +148,7 @@ const locale = Astro.currentLocale!;
 		</aside>
 	</div>
 </div>
-<!-- 
-<header id="nav-menu" class="nav-menu" aria-label="navigation bar">
-	<site-navigation>
-		<nav class="navbar container" role="navigation" aria-label="main navigation">
-			<div class="navbar-brand">
-				<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
-					<Icon class="logo" name="dh-logo" size={40} />
-				</a>
-				<a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarTop">
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-					<span aria-hidden="true"></span>
-				</a>
-			</div>
-			<div id="navbarTop" class="navbar-menu">
-				<div class="navbar-start">
-					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
-						{m.common__home()}
-					</a>
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
-							{m.common__blog()}
-						</a>
-						<div class="navbar-dropdown is-boxed">
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
-								{m.blog__all_posts_title()}
-							</a>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
-								{m.blog__featured_posts_title()}
-							</a>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
-								{m.blog__tags()}
-							</a>
-						</div>
-					</div>
-					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
-						{m.projects__projects()}
-					</a>
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
-							{m.common__about()}
-						</a>
-						<div class="navbar-dropdown is-boxed">
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
-								{m.common__resume()}
-							</a>
-						</div>
-					</div>
-				</div>
 
-				<div class="navbar-end">
-					<div class="level">
-						<div class="level-item">
-							<div class="navbar-item">
-								<Search />
-							</div>
-							<div class="navbar-item">
-								<LanguageSelector post={post} />
-							</div>
-							<div class="navbar-item">
-								<ThemeSelect />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</nav>
-	</site-navigation>
-</header>
--->
 <script>
 	class Navigation extends HTMLElement {
 		connectedCallback() {

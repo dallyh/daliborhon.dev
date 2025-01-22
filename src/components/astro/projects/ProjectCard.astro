@@ -56,18 +56,23 @@ function getImage(name: string, ext: string): ImageMetadata {
 }
 ---
 
-<div class="card md:card-side bg-base-100 max-w-full shadow-xl h-full">
-	<figure class="max-w-20 ml-8">
-		{file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />}
-		{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
-	</figure>
+<div class="card bg-base-100 max-w-full shadow-xl h-full">
 	<div class="card-body">
-		<a class="card-title" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<Icon name="bi:box-arrow-up-right" /></a>
-		<p class="text-sm">
-			<span>🚀</span>
-			{repository && <GithubDate date={new Date(repository.data.created_at)} />}
-			{!repository && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
-		</p>
+		<div class="flex mb-2">
+			<figure class="svg-img-card mr-2 p-1 flex-shrink-0 flex justify-center items-center">
+				{file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />}
+				{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
+			</figure>
+			<div>
+				<a class="card-title block" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<span class="external-link-icon"><i></i></span></a>
+				<p class="text-sm">
+					<span>🚀</span>
+					{repository && <GithubDate date={new Date(repository.data.created_at)} />}
+					{!repository && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
+				</p>
+			</div>
+		</div>
+
 		<div class="flex flex-wrap gap-2">
 			{
 				relatedTags.map((tag) => {
@@ -87,18 +92,13 @@ function getImage(name: string, ext: string): ImageMetadata {
 
 <style is:global>
 	.svg-img-card {
-		> svg {
+		width: 48px;
+		height: 48px;
+
+		svg,
+		img {
 			width: 48px;
 			height: 48px;
-		}
-	}
-
-	.title {
-		> svg {
-			margin: 0 0 0 10px;
-			height: 20px;
-			width: 20px;
-			bottom: 0px;
 		}
 	}
 </style>

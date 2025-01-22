@@ -10,4 +10,4 @@ interface Props {
 const { href, title, ...attrs} = Astro.props;
 ---
 
-<a class="link link-hover link-primary" href={href} title={title} {...attrs} rel="nofollow noopener noreferrer" target="_blank"><slot/><span class="external-link-icon"><i></i></span></a>
+<a href={href} title={title} {...attrs} rel="nofollow noopener noreferrer" target="_blank"><slot/><span class="external-link-icon"><i></i></span></a>

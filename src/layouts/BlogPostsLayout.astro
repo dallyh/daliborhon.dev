@@ -39,31 +39,24 @@ const layoutProps = {
 			{page.end === -1 && <p>{m.blog__no_posts()}</p>}
 			{
 				page.end !== -1 && (
-					<div class="paginated-posts">
+					<div class="flex flex-col">
 						<PostsGrid posts={page.data} />
-						<nav class="pagination is-small" role="navigation" aria-label="pagination">
-							{page.url.prev && (
-								<a href={page.url.prev} class="pagination-previous" title={m.common__prev_page()} aria-label={m.common__prev_page()}>
-									{m.common__prev_page()}
-								</a>
-							)}
-							{page.url.next && (
-								<a href={page.url.next} class="pagination-next" title={m.common__next_page()} aria-label={m.common__next_page()}>
-									{m.common__next_page()}
-								</a>
-							)}
-							<ul class="pagination-list">
+						<nav class="join mt-8 self-center" role="navigation" aria-label="pagination">
+							<a href={page.url.prev} class={`join-item btn btn-sm btn-outline btn-primary ${!page.url.prev && "btn-disabled"}`} title={m.common__prev_page()} aria-label={m.common__prev_page()}>
+								{m.common__prev_page()}
+							</a>
+							<ul class="join">
 								{Array.from({ length: page.lastPage }, (_, index) => {
 									const pageNumber = index + 1;
-									const pageUrl = pageNumber === page.currentPage ? page.url.current : getRelativeLocaleUrl(locale, pageNumber === 1 ? "blog/posts" : `/blog/posts/${pageNumber}`); // Adjust the URL generation logic based on your setup.
+									const pageUrl = pageNumber === page.currentPage ? page.url.current : getRelativeLocaleUrl(locale, pageNumber === 1 ? "blog/posts" : `/blog/posts/${pageNumber}`);
 									return (
 										<li>
 											{pageNumber === page.currentPage ? (
-												<a class="pagination-link is-current" aria-label={`Page ${pageNumber}`} aria-current="page">
+												<a class="join-item btn btn-sm btn-active btn-outline btn-primary" aria-label={`Page ${pageNumber}`} aria-current="page">
 													{pageNumber}
 												</a>
 											) : (
-												<a href={pageUrl} class="pagination-link" aria-label={`Goto page ${pageNumber}`}>
+												<a href={pageUrl} class="join-item btn btn-sm btn-outline btn-primary" aria-label={`Goto page ${pageNumber}`}>
 													{pageNumber}
 												</a>
 											)}
@@ -71,6 +64,9 @@ const layoutProps = {
 									);
 								})}
 							</ul>
+							<a href={page.url.next} class={`join-item btn btn-sm btn-outline btn-primary ${!page.url.next && "btn-disabled"}`} title={m.common__next_page()} aria-label={m.common__next_page()}>
+									{m.common__next_page()}
+								</a>
 						</nav>
 					</div>
 				)

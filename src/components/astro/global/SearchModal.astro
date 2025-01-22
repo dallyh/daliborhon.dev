@@ -4,14 +4,14 @@ import "@pagefind/default-ui/css/ui.css";
 ---
 
 <site-search>
-	<dialog class="modal" aria-label={m.common__search()}>
-		<div class="modal-box w-11/12 max-w-5xl">
+	<dialog class="modal modal-bottom sm:modal-middle" aria-label={m.common__search()}>
+		<div class="modal-box sm:w-11/12 sm:max-w-3xl overflow-hidden">
 			<form method="dialog">
 				<button data-close-modal aria-label={m.common__close_btn()} class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
 					<span class="sr-only">{m.common__close_btn()}</span>✕
 				</button>
 			</form>
-			<div id="pagefind" class="p-6"></div>
+			<div id="pagefind" class="p-4"></div>
 		</div>
 		<form method="dialog" class="modal-backdrop">
 			<button>close</button>
@@ -29,7 +29,6 @@ import "@pagefind/default-ui/css/ui.css";
 			const trailingSlash = import.meta.env.DEV ? "/" : "";
 
 			const openModal = (event?: Event) => {
-				console.log("Received");
 				dialog.showModal();
 				document.documentElement.toggleAttribute("data-search-modal-open", true);
 				this.querySelector("input")?.focus();
@@ -111,7 +110,6 @@ import "@pagefind/default-ui/css/ui.css";
 
 <style is:global>
 	[data-theme="light"] {
-		--pagefind-ui-scale: 1;
 		/* Use DaisyUI's "primary" for Pagefind primary color */
 		--pagefind-ui-primary: oklch(var(--p));
 		/* Use DaisyUI base-content for text color */
@@ -119,26 +117,57 @@ import "@pagefind/default-ui/css/ui.css";
 		/* Use DaisyUI base-100 for background */
 		--pagefind-ui-background: oklch(var(--b1));
 		/* Use DaisyUI base-200 or base-300 for borders */
-		--pagefind-ui-border: oklch(var(--b2));
+		--pagefind-ui-border: oklch(var(--p));
 		--pagefind-ui-tag: oklch(var(--b2));
 		--pagefind-ui-border-width: 2px;
 		--pagefind-ui-border-radius: 8px;
 		--pagefind-ui-image-border-radius: 8px;
-		--pagefind-ui-image-box-ratio: 3 / 2;
 		--pagefind-ui-font: sans-serif;
 	}
 
 	[data-theme="dark"] {
-		--pagefind-ui-scale: 1;
 		--pagefind-ui-primary: oklch(var(--p));
 		--pagefind-ui-text: oklch(var(--bc));
 		--pagefind-ui-background: oklch(var(--b1));
-		--pagefind-ui-border: oklch(var(--b2));
+		--pagefind-ui-border: oklch(var(--p));
 		--pagefind-ui-tag: oklch(var(--b2));
 		--pagefind-ui-border-width: 2px;
 		--pagefind-ui-border-radius: 8px;
 		--pagefind-ui-image-border-radius: 8px;
-		--pagefind-ui-image-box-ratio: 3 / 2;
 		--pagefind-ui-font: sans-serif;
+	}
+	#pagefind {
+		.pagefind-ui__search-input {
+			border-color: var(--fallback-bc, oklch(var(--bc) / 0.2));
+			border-radius: var(--rounded-btn, 0.5rem);
+			border-width: 1px;
+			
+			&:focus-within,
+			&:focus-visible,
+			&:focus {
+				outline: none;
+				border-color: oklch(var(--p)) !important;
+				box-shadow: none !important;
+			}
+		}
+
+		.pagefind-ui__drawer {
+			position: relative;
+			margin-top: 1rem;
+			gap: 1rem;
+			overflow-y: scroll;
+			max-height: calc(100vh - 15rem);
+		}
+
+		@media (min-width: 640px) {
+			.pagefind-ui__drawer {
+				flex-wrap: nowrap;
+			}
+
+			.pagefind-ui__filter-panel {
+				position: sticky;
+				top: 1rem;
+			}
+		}
 	}
 </style>

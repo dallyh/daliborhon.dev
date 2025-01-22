@@ -104,7 +104,7 @@ const basePath = import.meta.env.BASE_URL;
 	<body>
 		<SearchModal />
 		<slot name="header" />
-		<div class="container mx-auto max-w-[1344px] px-2 md:px-4" id="#pageContent" aria-hidden="false">
+		<div class="container mx-auto max-w-[1344px] px-2 md:px-4 mt-[var(--header-height)]" id="#pageContent" aria-hidden="false">
 			<slot />
 		</div>
 		<script>

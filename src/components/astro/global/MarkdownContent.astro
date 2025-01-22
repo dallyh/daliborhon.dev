@@ -96,9 +96,9 @@ const { tocPosition = "default", headings } = Astro.props;
 					grid-row: 1;
 					grid-column: 2;
 					position: sticky;
-					top: calc(68px + 1rem); /* Navbar */
+					top: var(--header-height); /* Navbar */
 					height: max-content;
-					max-height: calc(100vh - 68px - 2rem);
+					max-height: calc(100vh - var(--header-height) - 1rem);
 					width: 300px;
 					box-shadow: unset;
 					background-color: unset;
@@ -154,7 +154,7 @@ const { tocPosition = "default", headings } = Astro.props;
 	nav.toc {
 		display: none; /* This is generated */
 		height: max-content;
-		max-height: calc(100vh - 68px - 6rem);
+		max-height: calc(100vh - var(--header-height) - 5rem);
 		scrollbar-width: thin;
 		overflow-y: scroll;
 		padding: 0.725rem;

@@ -12,7 +12,7 @@ const locale = Astro.currentLocale!;
 ---
 
 <div class="text-center mt-8">
-	<a class="inline-flex link link-hover gap-1" href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}>
+	<a class="inline-flex gap-1" href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}>
 		<span>{urlDescription}</span><span class="mt-[2px]"><i class="fa-solid fa-arrow-right"></i></span>
 	</a>
 </div>

@@ -1,7 +1,7 @@
 <theme-select>
 	<label class="swap swap-rotate swap-sm">
 		<!-- this hidden checkbox controls the state -->
-		<input type="checkbox" class="theme-controller" value="synthwave" />
+		<input type="checkbox" class="theme-controller" aria-label="Theme change"/>
 
 		<!-- sun icon -->
 		<svg class="swap-off h-7 w-7 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -29,11 +29,6 @@
 		connectedCallback() {
 			this.#reflectPreference();
 			this.#themeToggle?.addEventListener("click", () => this.#onClick());
-
-			// TODO
-			this.#themeToggle?.addEventListener("mousedown", (e) => {
-				(e.target as HTMLInputElement).focus({ preventScroll: true });
-			});
 		}
 
 		#getColorPreference(): string {

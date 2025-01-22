@@ -101,52 +101,58 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 						<input type="hidden" value={locale} {...register("language")} />
 						<input type="hidden" {...register("subject")} />
 						<input type="hidden" value="Website submission" {...register("from_name")} />
-						<input type="checkbox" style={{ display: "none" }} {...register("botcheck")}></input>
+						<input type="checkbox" style={{ display: "none" }} {...register("botcheck")} />
 						{/*@ts-ignore types are broken*/}
 						<HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" ref={captchaRef} />
 
+						{/* FULL NAME FIELD */}
 						<div ref={animate}>
-							<div className="field">
-								<label className="label" htmlFor="full_name">
-									{m.contact__full_name_title()}
+							<div className="form-control">
+								<label htmlFor="full_name" className="label">
+									<span className="label-text">{m.contact__full_name_title()}</span>
 								</label>
-								<div className="control has-icons-left has-icons-right">
+
+								{/* Using DaisyUI's input group for the icon + input scenario */}
+								<label className={`input input-bordered flex items-center gap-2 ${isLoading ? "skeleton" : ""} ${errors.name ? "input-error" : ""}`}>
+									<span>
+										<i className="fas fa-user"></i>
+									</span>
 									<input
-										className={`input ${errors.name && "is-danger"} ${isLoading && "is-skeleton"}`}
 										id="full_name"
 										type="text"
 										placeholder={m.contact__full_name_placeholder()}
 										autoComplete="false"
+										className={`grow`}
 										{...register("name", {
 											required: m.contact__error_empty_field(),
 											maxLength: 80,
 										})}
 									/>
-									<span className="icon is-small is-left">
-										<i className="fas fa-user"></i>
-									</span>
-								</div>
-								<div className="control"></div>
+								</label>
 							</div>
 							{errors.name && (
-								<div className="help is-danger">
+								<p className="text-error mt-2">
 									<small>{String(errors.name.message)}</small>
-								</div>
+								</p>
 							)}
 						</div>
 
+						{/* EMAIL FIELD */}
 						<div ref={animate}>
-							<div className="field">
-								<label className="label" htmlFor="email_address">
-									{m.contact__email_title()}
+							<div className="form-control">
+								<label htmlFor="email_address" className="label">
+									<span className="label-text">{m.contact__email_title()}</span>
 								</label>
-								<div className="control has-icons-left has-icons-right">
+								<label className={`input input-bordered flex items-center gap-2 ${isLoading ? "skeleton" : ""} ${errors.email ? "input-error" : ""}`}>
+									<span>
+										<i className="fas fa-envelope"></i>
+									</span>
 									<input
 										id="email_address"
 										type="email"
 										placeholder={m.contact__email_placeholder()}
 										autoComplete="false"
-										className={`input ${errors.email && "is-danger"} ${isLoading && "is-skeleton"}`}
+										className={`grow`}
 										{...register("email", {
 											required: m.contact__error_empty_field(),
 											pattern: {
@@ -155,93 +161,84 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 											},
 										})}
 									/>
-									<span className="icon is-small is-left">
-										<i className="fas fa-envelope"></i>
-									</span>
-								</div>
-								<div className="control"></div>
+								</label>
 							</div>
-
 							{errors.email && (
-								<div className="help is-danger">
+								<p className="text-error mt-2">
 									<small>{String(errors.email.message)}</small>
-								</div>
+								</p>
 							)}
 						</div>
 
+						{/* MESSAGE FIELD */}
 						<div ref={animate}>
-							<div className="field">
-								<label className="label" htmlFor="message">
-									{m.contact__msg_title()}
+							<div className="form-control">
+								<label htmlFor="message" className="label">
+									<span className="label-text">{m.contact__msg_title()}</span>
 								</label>
-								<div className="control">
+								<div className={`${isLoading ? "skeleton" : ""}`}>
 									<textarea
-										className={`textarea ${errors.message && "is-danger"} ${isLoading && "is-skeleton"}`}
-										rows={8}
 										id="message"
+										rows={8}
 										placeholder={m.contact__msg_placeholder()}
-										{...register("message", { required: m.contact__error_empty_field() })}
+										className={`textarea textarea-bordered w-full ${errors.message ? "textarea-error" : ""}`}
+										{...register("message", {
+											required: m.contact__error_empty_field(),
+										})}
 									/>
 								</div>
 							</div>
-
 							{errors.message && (
-								<div className="help is-danger">
+								<p className="text-error mt-2">
 									<small>{String(errors.message.message)}</small>
-								</div>
+								</p>
 							)}
 						</div>
 
-						<div className="field is-grouped is-grouped-right mt-4">
-							<div className="field-label"></div>
-							<p className="control">
-								<button type="submit" className={`button is-primary ${isSubmitting && "is-loading"} ${isLoading && "is-skeleton"}`}>
-									{m.common__submit_btn()}
-								</button>
-							</p>
+						{/* SUBMIT BUTTON */}
+						<div className={`mt-4 flex justify-end`}>
+							<button disabled={isSubmitting} type="submit" className={`btn btn-primary self-end ${isLoading ? "skeleton" : ""}`}>
+								{isSubmitting && <span className="loading loading-spinner"></span>}
+								{!isSubmitting && m.common__submit_btn()}
+							</button>
 						</div>
 					</form>
 				)}
-				{isSubmitSuccessful && isSuccess && (
-					<>
-						<div className={styles["submit-status"]}>
-							<i className={["has-text-success", styles.success].join(" ")}>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-									<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-								</svg>
-							</i>
-							<div>
-								<p className="title is-4">{m.contact__success()}</p>
-								<p className="subtitle">{message}</p>
-							</div>
 
-							<button className="button is-primary" onClick={() => resetForm()}>
-								{m.contact__go_back()}
-							</button>
+				{/* SUCCESSFUL SUBMISSION */}
+				{isSubmitSuccessful && isSuccess && (
+					<div className={styles["submit-status"]}>
+						<div className="flex items-center text-success mb-3">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="h-6 w-6 mr-2">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+							</svg>
+							<p className="font-bold">{m.contact__success()}</p>
 						</div>
-					</>
+						<p className="text-sm mb-4">{message}</p>
+
+						<button className="btn btn-primary" onClick={() => resetForm()}>
+							{m.contact__go_back()}
+						</button>
+					</div>
 				)}
 
+				{/* FAILED SUBMISSION */}
 				{isSubmitSuccessful && !isSuccess && (
-					<>
-						<div className={styles["submit-status"]}>
-							<i className={["has-text-danger", styles.error].join(" ")}>
-								<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-									<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-									<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-								</svg>
-							</i>
-							<div>
-								<p className="title is-4">{m.contact__error()}</p>
-								<p className="subtitle">{message}</p>
-							</div>
-
-							<p>{m.contact__submit_error_try_again()}</p>
-							<button className="button is-primary" onClick={() => resetForm(true)}>
-								{m.contact__try_again()}
-							</button>
+					<div className={styles["submit-status"]}>
+						<div className="flex items-center text-error mb-3">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="h-6 w-6 mr-2">
+								<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+								<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+							</svg>
+							<p className="font-bold">{m.contact__error()}</p>
 						</div>
-					</>
+						<p className="text-sm mb-2">{message}</p>
+						<p className="text-sm mb-4">{m.contact__submit_error_try_again()}</p>
+
+						<button className="btn btn-primary" onClick={() => resetForm(true)}>
+							{m.contact__try_again()}
+						</button>
+					</div>
 				)}
 			</div>
 		</>

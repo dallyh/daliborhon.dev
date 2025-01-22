@@ -47,8 +47,8 @@ const isPrint = Astro.locals.isPrint;
 
 {
 	!isPrint && (
-		<div class="card card-compact bg-base-200 shadow-xl h-full">
-			<div class="card-body flex items-center text-center">
+		<div class="card card-compact bg-base-200 shadow-xl h-full min-h-32">
+			<div class="card-body grid place-items-center items-center text-center justify-center">
 				<div>
 					<div class="image-normal">
 						<Image src={images[img]()} {...imgProps} />

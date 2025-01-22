@@ -45,17 +45,15 @@ const searchProps = {
 		<download-button>
 			<a
 				id="download"
-				class="button is-primary is-anchor floating"
+				class="button btn btn-primary floating"
 				href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/about/resume/pdf"))}
 				download
 				title={m.resume__download_cv()}
 				aria-label={m.resume__download_cv()}
 				data-astro-prefetch="false"
 			>
-				<span class="icon-text">
-					<span class="icon is-medium">
-						<i class="fas fa-file-pdf fa-lg"></i>
-					</span>
+				<span class="inline-flex justify-center items-center">
+					<i class="icon fas fa-file-pdf fa-lg"></i>
 					<span class="text">{m.resume__download_cv()}</span>
 				</span>
 			</a>
@@ -90,13 +88,13 @@ const searchProps = {
 			this.downloadButton.classList.toggle("is-loading");
 
 			try {
-				window.toast({ message: m.resume__generating_pdf(), type: "is-info" });
+				window.showToast({ message: m.resume__generating_pdf(), type: "info" });
 
 				// Fetch the PDF file
 				const res = await fetch(this.downloadButton.href);
 
 				if (!res.ok) {
-					window.toast({ message: m.common__download_error(), type: "is-danger" });
+					window.showToast({ message: m.common__download_error(), type: "error" });
 					console.error(`Failed to fetch the file: ${res.statusText}`);
 					return;
 				}
@@ -105,9 +103,9 @@ const searchProps = {
 				const filename = res.headers.get("x-filename") || "download.pdf";
 				this.createAndDownloadBlob(blob, filename);
 
-				window.toast({ message: m.common__download_success(), type: "is-success" });
+				window.showToast({ message: m.common__download_success(), type: "success" });
 			} catch (error) {
-				window.toast({ message: m.common__download_error(), type: "is-danger" });
+				window.showToast({ message: m.common__download_error(), type: "error" });
 				console.error("Error downloading the file:", error);
 			} finally {
 				this.downloadButton.classList.toggle("is-loading");
@@ -149,7 +147,7 @@ const searchProps = {
 			left: 50%;
 			transform: translateX(-50%);
 			width: max-content;
-			border-radius: var(--bulma-control-radius);
+			border-radius: var(--rounded-box, 1rem);
 		}
 	}
 
@@ -163,7 +161,7 @@ const searchProps = {
 
 	@keyframes moveIcon {
 		to {
-			margin-left: 0;
+			margin-right: 0.25rem;
 		}
 	}
 
@@ -200,16 +198,11 @@ const searchProps = {
 			z-index: 1020;
 			width: 55px;
 			height: 55px;
-			border-radius: 50%;
-			/* min-width: unset; */
+			border-radius: 9999px;
 
 			> span {
 				display: inline-flex;
 				flex-wrap: nowrap;
-			}
-
-			.icon {
-				margin-left: 0.5rem;
 			}
 
 			.text {

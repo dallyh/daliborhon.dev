@@ -5,8 +5,8 @@ import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
 import SocialLinks from "./SocialLinks.astro";
 ---
 
-<div class="hero">
-	<div class="hero-content flex-col lg:flex-row">
+<div class="hero place-content-start mb-6">
+	<div class="hero-content flex-col lg:flex-row justify-start">
 		<ProfilePicture img={profilePicture} imgClass="max-w-sm rounded-lg shadow-2xl" />
 		<div class="flex flex-col gap-3">
 			<h1 class="text-2xl">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>

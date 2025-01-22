@@ -22,7 +22,7 @@ const image = getBlogPostImageUrl(locale, post, Astro.url);
 const { pubDate, modDate, title, description } = post.data;
 ---
 
-<article class="card bg-base-100 max-w-full h-full shadow-xl">
+<article class="card bg-base-200 max-w-full h-full shadow-xl">
 	<figure class="skeleton">
 		<a href={postUrl}>
 			<Image class="post-image" src={image} alt={title} width={1200} height={630} loading="lazy" />
@@ -30,7 +30,7 @@ const { pubDate, modDate, title, description } = post.data;
 	</figure>
 
 	<div class="card-body">
-		{post.data.hidden && <div class="post-hidden tag is-danger">Hidden</div>}
+		{post.data.hidden && <div class="absolute top-3 left-3 badge bg-error text-error-content">Hidden</div>}
 		<h2 class="card-title flex flex-col items-start">
 			<a href={postUrl}>{title}</a>
 		</h2>
@@ -41,34 +41,3 @@ const { pubDate, modDate, title, description } = post.data;
 		</div>
 	</div>
 </article>
-<!-- 
-<article class="card">
-	<div class="card-image is-skeleton">
-		<figure class="image is-5by3">
-			
-		</figure>
-	</div>
-	<div class="card-content">
-		{post.data.hidden && <div class="post-hidden tag is-danger">Hidden</div>}
-		<div class="media">
-			<div class="media-content">
-				
-				<p></p>
-			</div>
-		</div>
-		<div>
-			<p class="block"></p>
-			<div class="block">
-				
-			</div>
-		</div>
-	</div>
-</article>
--->
-<style>
-	.post-hidden {
-		position: absolute;
-		top: 10px;
-		left: 10px;
-	}
-</style>

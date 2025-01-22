@@ -44,25 +44,19 @@ const posts = await getPostsByTag(locale, search);
 		{
 			tags && tags.length !== 0 && (
 				<Fragment>
-					<div class="tabs is-toggle">
-						{tags && (
-							<ul class="tags">
-								{tags.map(async (tag) => {
-									return (
-										<li class={`${tag.id === search ? "is-active" : ""}`}>
-											<a class="has-text-weight-bold is-size-6 tag mb-2" href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
-												<span class="icon-text">
-													<span class="icon">
-														<i class="fas fa-tag" />
-													</span>
-													<span>{tag.id}</span>
-												</span>
-											</a>
-										</li>
-									);
-								})}
-							</ul>
-						)}
+					<div role="tablist" class="tabs tabs-boxed mb-4 max-w-max">
+						{tags &&
+							tags.map(async (tag) => {
+								return (
+									<a role="tab" class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active" : ""}`} href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
+										<span>
+											<i class="fas fa-tag" />
+										</span>
+										<span>{tag.id}</span>
+									</a>
+								);
+							})}
+
 					</div>
 					{posts && posts.length !== 0 && (
 						<div>
@@ -72,7 +66,7 @@ const posts = await getPostsByTag(locale, search);
 					{posts === undefined ||
 						(posts.length === 0 && (
 							<div>
-								<h2 class="title is-size-5"> {m.blog__no_posts()}</h2>
+								<h2 class="font-bold text-xl"> {m.blog__no_posts()}</h2>
 							</div>
 						))}
 				</Fragment>
@@ -80,15 +74,3 @@ const posts = await getPostsByTag(locale, search);
 		}
 	</Section>
 </PageLayout>
-
-<style>
-	.tabs {
-		overflow-x: auto;
-		flex-wrap: wrap;
-		.tags {
-			display: flex;
-			flex-wrap: wrap;
-			flex-shrink: 1;
-		}
-	}
-</style>

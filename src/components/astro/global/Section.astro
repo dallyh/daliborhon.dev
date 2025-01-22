@@ -17,10 +17,10 @@ const { sectionTitle, sectionDescription = null, id, isFirstSection = false, hea
 	{
 		sectionTitle && (
 			<Fragment>
-				{isFirstSection && <h1 class={`font-bold text-4xl ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h1>}
-				{!isFirstSection && heading === "h2" && <h2 class={`font-bold ${isInsideSection ? "text-3xl" : "text-2xl "} ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h2>}
-				{!isFirstSection && heading === "h3" && <h3 class={`font-bold text-xl ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h3>}
-				{!isFirstSection && heading === "h4" && <h4 class={`font-bold text-lg ${sectionDescription === null ? "mb-5" : ""}`}>{sectionTitle}</h4>}
+				{isFirstSection && <h1 class={`font-bold text-4xl ${sectionDescription === null ? "mb-5" : "mb-3"}`}>{sectionTitle}</h1>}
+				{!isFirstSection && heading === "h2" && <h2 class={`font-bold ${isInsideSection ? "text-3xl" : "text-2xl "} ${sectionDescription === null ? "mb-5" : "mb-3"}`}>{sectionTitle}</h2>}
+				{!isFirstSection && heading === "h3" && <h3 class={`font-bold text-xl ${sectionDescription === null ? "mb-5" : "mb-3"}`}>{sectionTitle}</h3>}
+				{!isFirstSection && heading === "h4" && <h4 class={`font-bold text-lg ${sectionDescription === null ? "mb-5" : "mb-3"}`}>{sectionTitle}</h4>}
 			</Fragment>
 		)
 	}

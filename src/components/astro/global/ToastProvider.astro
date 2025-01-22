@@ -1,26 +1,78 @@
 <script>
-	import * as bulmaToast from "bulma-toast";
+	/**
+	 * showToast creates an alert element (DaisyUI style)
+	 * and appends it to the #toastContainer.
+	 */
+	function showToast({ message, type = "info", duration = 30000, dismissible = true }: ToastOptions) {
+		const toastContainer = document.getElementById("toastContainer");
+		if (!toastContainer) return;
 
-	bulmaToast.setDefaults({
-		duration: 3000,
-		position: "top-right",
-		message: "This is a toast",
-		animate: { in: "fadeIn", out: "fadeOut" },
-		closeOnClick: false,
-		dismissible: true,
-	});
+		// Create the alert element
+		const alertEl = document.createElement("div");
 
-	window.toast = bulmaToast.toast;
-</script>
+		const variants = {
+			info: "alert-info",
+			success: "alert-success",
+			warning: "alert-warning",
+			error: "alert-error",
+		};
 
-<style is:global>
-	.notification {
-		width: max-content;
+		alertEl.className = `alert ${variants[type]} shadow-lg cursor-pointer transition-opacity`;
 
-		.delete {
-			top: 0.6rem;
-			right: 0.6rem;
-			--bulma-delete-dimensions: 1rem;
+		// Inner content for alert
+		alertEl.innerHTML = `
+			<span class="flex-1">${message}</span>
+			${
+				dismissible
+					? `
+				<button class="btn btn-sm btn-ghost ml-auto" aria-label="Close Toast">
+					✕
+				</button>`
+					: ""
+			}
+		`;
+
+		toastContainer.appendChild(alertEl);
+
+		// Close on click if dismissible
+		if (dismissible) {
+			const closeBtn = alertEl.querySelector("button");
+			if (closeBtn) {
+				closeBtn.addEventListener("click", () => {
+					fadeOutAndRemove(alertEl);
+				});
+			}
+		}
+
+		// Auto-remove after `duration` milliseconds (if > 0)
+		if (duration && duration > 0) {
+			setTimeout(() => {
+				fadeOutAndRemove(alertEl);
+			}, duration);
 		}
 	}
-</style>
+
+	/**
+	 * A helper to gracefully fade out and remove a toast element
+	 */
+	function fadeOutAndRemove(element: HTMLElement) {
+		element.classList.add("opacity-0");
+		// After transition, remove from DOM
+		setTimeout(() => {
+			element.remove();
+		}, 300); // enough time to let the CSS transition end (if any)
+	}
+
+	window.addEventListener("DOMContentLoaded", () => {
+		let toastContainer = document.getElementById("toastContainer");
+		if (!toastContainer) {
+			toastContainer = document.createElement("div");
+			toastContainer.id = "toastContainer";
+			toastContainer.className = "toast toast-top toast-end space-y-2";
+			toastContainer.style.zIndex = "9999";
+			document.body.appendChild(toastContainer);
+		}
+	});
+
+	window.showToast = showToast;
+</script>

@@ -11,12 +11,12 @@ const { tocPosition = "default", headings } = Astro.props;
 ---
 
 <markdown-content>
-	<article class=`prose lg:prose-xl md-content max-w-none ${tocPosition}` id="article">
+	<article class=`md-content prose max-w-none ${tocPosition}` id="article">
 		{
 			headings && headings.length !== 0 && (
 				<div id="toc" class="box">
-					<details id="tocDetails">
-						<summary class="title is-size-6">{m.blog__toc()}</summary>
+					<details id="tocDetails" class="collapse max-[1024px]:collapse-arrow  bg-base-200 shadow-lg rounded-xl">
+						<summary class="collapse-title bg-base-200 text-xl">{m.blog__toc()}</summary>
 					</details>
 				</div>
 			)
@@ -88,7 +88,7 @@ const { tocPosition = "default", headings } = Astro.props;
 
 				#content {
 					grid-row: 1;
-					grid-column: 1; /* 1 / 3 */
+					grid-column: 1;
 				}
 
 				#toc {
@@ -96,30 +96,13 @@ const { tocPosition = "default", headings } = Astro.props;
 					grid-row: 1;
 					grid-column: 2;
 					position: sticky;
-					top: calc(var(--bulma-navbar-height) + 0.5rem); /* Navbar */
-					max-height: max-content;
-
-					/* Remove Bulma Box styling */
-					padding: 0;
-					min-width: 250px;
+					top: calc(68px + 1rem); /* Navbar */
+					height: max-content;
+					max-height: calc(100vh - 68px - 2rem);
+					width: 300px;
 					box-shadow: unset;
 					background-color: unset;
 				}
-
-				/* Maybe for future enhancement */
-				/* Makes the content full width */
-				/*&:has(details[open]) {
-					#content {
-						grid-column: 1;
-					}
-
-					#toc {
-						padding: 0;
-						min-width: 250px;
-						box-shadow: none;
-						background-color: none;
-					}
-				}*/
 			}
 		}
 	}
@@ -141,7 +124,7 @@ const { tocPosition = "default", headings } = Astro.props;
 				font-size: 1rem;
 
 				.heading-link-icon {
-					background-color: var(--bulma-link-text);
+					background-color: var(--tw-prose-headings);
 					position: relative;
 					display: inline-block;
 					width: 16px;
@@ -159,13 +142,21 @@ const { tocPosition = "default", headings } = Astro.props;
 
 			img {
 				border: 1px solid transparent;
-				border-radius: var(--bulma-radius-large);
+				border-radius: 0.725rem;
+			}
+
+			figcaption {
+				text-align: center;
 			}
 		}
 	}
 
 	nav.toc {
 		display: none; /* This is generated */
+		height: max-content;
+		max-height: calc(100vh - 68px - 6rem);
+		scrollbar-width: thin;
+		overflow-y: scroll;
 	}
 
 	#toc {
@@ -187,24 +178,7 @@ const { tocPosition = "default", headings } = Astro.props;
 				display: none;
 			}
 
-			summary:before {
-				content: "";
-				border-width: 0.4rem;
-				border-style: solid;
-				border-color: transparent transparent transparent var(--bulma-text);
-				position: absolute;
-				top: 50%;
-				left: 0rem;
-				transform: translateY(-50%) rotate(0);
-				transform-origin: 0.2rem 50%;
-				transition: 0.25s transform ease;
-			}
-
-			details[open] > summary:before {
-				transform: translateY(-50%) rotate(90deg);
-			}
-
-			details[open] > summary {
+			details {
 				margin-bottom: 1rem;
 			}
 
@@ -214,12 +188,6 @@ const { tocPosition = "default", headings } = Astro.props;
 				margin-bottom: 0;
 				position: relative;
 				cursor: pointer;
-
-				&:focus {
-					outline: none;
-					border-color: hsl(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l)) !important;
-					box-shadow: var(--bulma-focus-shadow-size) hsla(var(--bulma-focus-h), var(--bulma-focus-s), var(--bulma-focus-l), var(--bulma-focus-shadow-alpha)) !important;
-				}
 			}
 		}
 	}

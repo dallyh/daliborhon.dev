@@ -29,6 +29,11 @@
 		connectedCallback() {
 			this.#reflectPreference();
 			this.#themeToggle?.addEventListener("click", () => this.#onClick());
+
+			// TODO
+			this.#themeToggle?.addEventListener("mousedown", (e) => {
+				(e.target as HTMLInputElement).focus({ preventScroll: true });
+			});
 		}
 
 		#getColorPreference(): string {

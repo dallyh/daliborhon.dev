@@ -16,8 +16,10 @@ import "@pagefind/default-ui/css/ui.css";
 	<button data-open-modal disabled class={`${inDrawer ? "w-full" : ""}`}>
 		<label class={`input input-bordered ${inDrawer ? "" : "input-sm"} flex items-center gap-2`}>
 			<input type="text" class={`grow ${inDrawer ? "" : "max-w-28"}`} placeholder={m.common__search()} />
-			<kbd class="kbd kbd-xs hidden lg:block">ctrl</kbd>
-			<kbd class="kbd kbd-xs hidden lg:block">K</kbd>
+			{!inDrawer && 
+				<kbd class="kbd kbd-xs hidden lg:block">ctrl</kbd>
+				<kbd class="kbd kbd-xs hidden lg:block">K</kbd>
+			}	
 		</label>
 	</button>
 
@@ -32,14 +34,22 @@ import "@pagefind/default-ui/css/ui.css";
 
 <script>
 	class SiteSearch extends HTMLElement {
+
+		#pageFindInstance: any = null;
+
+		disconnectedCallback() {
+			if (this.#pageFindInstance) {
+				this.#pageFindInstance.destroy()
+			}
+		}
+
 		connectedCallback() {
 			const openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
 			const closeBtns = this.querySelectorAll<HTMLButtonElement>("button[data-close-modal]")!;
 			const dialog = this.querySelector("dialog")!;
 			const dialogFrame = this.querySelector(".modal-content")!;
 			const trailingSlash = import.meta.env.DEV ? "/" : "";
-
-			let pageFindInstance: any = null;
+	
 
 			/** Close the modal if a user clicks on a link or outside of the modal. */
 			const onClick = (event: MouseEvent) => {
@@ -89,12 +99,12 @@ import "@pagefind/default-ui/css/ui.css";
 					// @ts-ignore - could not find types for this import
 					const { PagefindUI } = await import("@pagefind/default-ui");
 
-					if (pageFindInstance !== null) {
+					if (this.#pageFindInstance !== null) {
 						console.log("Pagefind instance is already initialized.");
 						return;
 					}
 
-					pageFindInstance = new PagefindUI({
+					this.#pageFindInstance = new PagefindUI({
 						element: "#pagefind",
 						baseUrl: import.meta.env.BASE_URL,
 						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",

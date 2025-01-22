@@ -4,8 +4,8 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import { Icon } from "astro-icon/components";
 import LanguageSelector from "./LanguageSelector.astro";
-import Search from "./Search.astro";
 import ThemeSelect from "./ThemeSelect.astro";
+import SearchInput from "./SearchInput.astro";
 
 interface Props {
 	post?: CollectionEntry<"posts">;
@@ -83,7 +83,7 @@ const locale = Astro.currentLocale!;
 				</div>
 			</div>
 			<div class="navbar-end gap-2 hidden lg:flex">
-				<Search />
+				<SearchInput />
 				<LanguageSelector post={post} />
 				<ThemeSelect />
 			</div>
@@ -92,7 +92,7 @@ const locale = Astro.currentLocale!;
 	<div class="drawer-side">
 		<label for="drawerMenu" aria-label="close sidebar" class="drawer-overlay"></label>
 		<aside class="bg-base-200 min-h-screen w-72 p-4">
-			<Search inDrawer />
+			<SearchInput inDrawer />
 			<div class="mb-4"></div>
 			<ul class="menu p-0">
 				<li>

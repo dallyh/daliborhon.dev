@@ -55,132 +55,119 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 	}, [isPending]);
 
 	return (
-		<>
-			<Fragment>
-				<p className="mb-2">
-					{m.analytics__total_views()}:{" "}
-					<b>
-						{isLoading && <span className="is-skeleton">0</span>}
-						{!isLoading && <span>{data.totalViews}</span>}
-					</b>
-				</p>
-				<div>
-					<button
-						className={`button mr-2 ${isLoading ? "is-skeleton" : mode === "page-views" ? "is-active" : ""}`}
-						onClick={() => {
-							setMode("page-views");
-							setSearch("");
-						}}
-					>
-						{m.common__page_views()}
-					</button>
-					<button className={`button ${isLoading ? "is-skeleton" : mode === "per-url" ? "is-active" : ""}`} onClick={() => setMode("per-url")}>
-						{m.common__per_url()}
-					</button>
-				</div>
-				<form
-					id="date-range-form"
-					onSubmit={(e) => {
-						e.preventDefault();
-						setSearch(searchLocalState);
+		<Fragment>
+			<p className="mb-2">
+				{m.analytics__total_views()}:{" "}
+				<b>
+					{isLoading && <span className="skeleton">0</span>}
+					{!isLoading && <span>{data.totalViews}</span>}
+				</b>
+			</p>
+
+			<div className="mb-2 join ">
+				<button
+					className={`join-item btn btn-outline btn-primary ${isLoading ? "skeleton" : mode === "page-views" ? "btn-active" : ""}`}
+					onClick={() => {
+						setMode("page-views");
+						setSearch("");
 					}}
 				>
-					{mode === "per-url" && (
-						<div className="field has-addons mt-2">
-							<div className="control">
-								<input
-									type="search"
-									id="search"
-									name="search"
-									className={`input ${isLoading && "is-skeleton"}`}
-									placeholder={m.analytics__search_url()}
-									value={searchLocalState}
-									onChange={(e) => setSearchLocalState(e.currentTarget.value)}
-								/>
-							</div>
-							<div className="control">
-								<button className={`button is-info ${isLoading && "is-skeleton"}`} type="submit">
-									{m.common__submit_btn()}
-								</button>
-							</div>
-						</div>
-					)}
+					{m.common__page_views()}
+				</button>
+				<button className={`join-item btn btn-outline btn-primary ${isLoading ? "skeleton" : mode === "per-url" ? "btn-active" : ""}`} onClick={() => setMode("per-url")}>
+					{m.common__per_url()}
+				</button>
+			</div>
 
-					<div className="field mb-2 mt-2">
-						<label className="label">{m.analytics__period()}</label>
-						<div className="control">
-							<div className="select">
-								<select name="date-range" id="date-range" value={dateRange} onChange={(e) => setDateRange(e.currentTarget.value as DateRange)}>
-									<option value="all-time">{m.common__all_time()}</option>
-									<option value="past-day">{m.common__past_day()}</option>
-									<option value="past-week">{m.common__past_week()}</option>
-									<option value="past-month">{m.common__past_month()}</option>
-									<option value="past-year">{m.common__past_year()}</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</form>
-
-				{isLoading && <div className="skeleton-block" style={{ height: 400 }}></div>}
-
-				{!isLoading && data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
-				{!isLoading && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
-
-				{data?.totalPages && data?.totalPages > 1 && (
-					<div className="field is-grouped is-grouped-multiline mt-2 buttons are-small">
-						{offset === 0 ? (
-							<>
-								<p className="control">
-									<span className={`button is-static`}>{m.common__first()}</span>
-								</p>
-								<p className="control">
-									<span className={`button is-static`}>{m.common__prev_page()}</span>
-								</p>
-							</>
-						) : (
-							<>
-								<p className="control">
-									<button className={`button`} onClick={() => setPage(1)}>
-										First
-									</button>
-								</p>
-								<p className="control">
-									<button className={`button`} onClick={() => setPage(page - 1)}>
-										{m.common__prev_page()}
-									</button>
-								</p>
-							</>
-						)}
-
-						<p className="control has-text-centered">{page}</p>
-
-						{page === data.totalPages ? (
-							<>
-								<p className="control">
-									<span className={`button is-static`}>{m.common__next_page()}</span>
-								</p>
-								<p className="control">
-									<span className={`button is-static`}>{m.common__last()}</span>
-								</p>
-							</>
-						) : (
-							<>
-								<p className="control">
-									<button className={`button`} onClick={() => setPage(page + 1)}>
-										{m.common__next_page()}
-									</button>
-								</p>
-								<p className="control">
-									<a className={`button`} onClick={() => setPage(data.totalPages)}>
-										{m.common__last()}
-									</a>
-								</p>
-							</>
-						)}
+			<form
+				className="flex flex-row flex-wrap gap-4 items-end mt-2 mb-2"
+				id="date-range-form"
+				onSubmit={(e) => {
+					e.preventDefault();
+					setSearch(searchLocalState);
+				}}
+			>
+				<div className={`form-control max-w-max ${isLoading ? "skeleton" : ""}`}>
+					<label className="label">{m.analytics__period()}</label>
+					<select name="date-range" id="date-range" value={dateRange} onChange={(e) => setDateRange(e.currentTarget.value as DateRange)} className="select select-bordered">
+						<option value="all-time">{m.common__all_time()}</option>
+						<option value="past-day">{m.common__past_day()}</option>
+						<option value="past-week">{m.common__past_week()}</option>
+						<option value="past-month">{m.common__past_month()}</option>
+						<option value="past-year">{m.common__past_year()}</option>
+					</select>
+				</div>
+				{mode === "per-url" && (
+					<div className="join max-w-max">
+						<input
+							type="search"
+							id="search"
+							name="search"
+							className={`input input-bordered join-item w-full ${isLoading ? "skeleton" : ""}`}
+							placeholder={m.analytics__search_url()}
+							value={searchLocalState}
+							onChange={(e) => setSearchLocalState(e.currentTarget.value)}
+						/>
+						<button className={`btn btn-primary btn-outline join-item ${isLoading ? "skeleton" : ""}`} type="submit">
+							{m.common__submit_btn()}
+						</button>
 					</div>
 				)}
-			</Fragment>
-		</>
+			</form>
+
+			{isLoading && (
+				// DaisyUI has a skeleton class, but you might also do your own styling
+				<div className="skeleton h-96"></div>
+			)}
+
+			{!isLoading && data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
+			{!isLoading && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
+
+			{data?.totalPages !== null && data?.totalPages > 0 && (
+				<div className="flex flex-wrap items-center join mt-4">
+					{offset === 0 ? (
+						<>
+							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__last()} aria-label={m.common__last()}>
+								<i className="fa-solid fa-backward"></i>
+							</button>
+							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__prev_page()} aria-label={m.common__prev_page()}>
+								<i className="fa-solid fa-arrow-left" />
+							</button>
+						</>
+					) : (
+						<>
+							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(1)} title={m.common__last()} aria-label={m.common__last()}>
+								<i className="fa-solid fa-backward"></i>
+							</button>
+							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(page - 1)} title={m.common__prev_page()} aria-label={m.common__prev_page()}>
+								<i className="fa-solid fa-arrow-left" />
+							</button>
+						</>
+					)}
+
+					<p className="join-item btn no-animation btn-sm btn-outline btn-primary btn-disabled">{page}</p>
+
+					{page === data.totalPages ? (
+						<>
+							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__next_page()} aria-label={m.common__next_page()}>
+								<i className="fa-solid fa-arrow-right" />
+							</button>
+							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__last()} aria-label={m.common__last()}>
+								<i className="fa-solid fa-forward"></i>
+							</button>
+						</>
+					) : (
+						<>
+							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(page + 1)} title={m.common__next_page()} aria-label={m.common__next_page()}>
+								<i className="fa-solid fa-arrow-right" />
+							</button>
+							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(data.totalPages)} title={m.common__last()} aria-label={m.common__last()}>
+								<i className="fa-solid fa-forward"></i>
+							</button>
+						</>
+					)}
+				</div>
+			)}
+		</Fragment>
 	);
 }

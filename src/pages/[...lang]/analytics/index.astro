@@ -4,6 +4,7 @@ import PageViewsComponent from "@components/react/PageViews/PageViews";
 import Section from "@components/astro/global/Section.astro";
 import type { AllowedLocales } from "@i18n-config";
 import * as m from "$messages";
+import ExternalLink from "@components/astro/global/ExternalLink.astro";
 
 export { getStaticPaths } from "@i18n/utils";
 
@@ -14,18 +15,12 @@ const locale = Astro.currentLocale as AllowedLocales;
 	<Section sectionTitle={m.common__page_views()} isFirstSection id="pageViews">
 		<PageViewsComponent locale={locale} client:load />
 	</Section>
-	<footer class="footer">
-		<div class="content has-text-centered">
-			<p class="subtitle is-size-7">
-				{m.analytics__credits()} <a href="https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro">Thomas Ledoux</a>!
+	<footer class="footer footer-center">
+		<div>
+			<p class="text-sm">
+				{m.analytics__credits()}
+				<ExternalLink title="Thomas Ledoux" href="https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro">Thomas Ledoux!</ExternalLink>
 			</p>
 		</div>
 	</footer>
 </PageLayout>
-
-<style>
-	.footer {
-		--bulma-footer-background-color: transparent;
-		--bulma-footer-padding: 0.25rem;
-	}
-</style>

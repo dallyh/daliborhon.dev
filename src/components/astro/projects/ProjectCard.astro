@@ -8,6 +8,7 @@ import Icon from "node_modules/astro-icon/components/Icon.astro";
 import { extractFileNameAndExtension } from "src/utils/extractFilenameAndExtension";
 import GithubDate from "./GithubDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
+import ExternalLink from "../global/ExternalLink.astro";
 
 interface Props {
 	project: CollectionEntry<"projects">;
@@ -64,7 +65,7 @@ function getImage(name: string, ext: string): ImageMetadata {
 				{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
 			</figure>
 			<div>
-				<a class="card-title block" href={sourceUrl} target="_blank" title={title} aria-label={title}>{title}<span class="external-link-icon"><i></i></span></a>
+				<ExternalLink title={title} href={sourceUrl} class="card-title block" target="_blank" aria-label={title}>{title}</ExternalLink>
 				<p class="text-sm">
 					<span>🚀</span>
 					{repository && <GithubDate date={new Date(repository.data.created_at)} />}

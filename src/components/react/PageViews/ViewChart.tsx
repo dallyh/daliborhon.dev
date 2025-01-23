@@ -30,7 +30,7 @@ export default function ViewChart({ data, locale }: ViewChartProps) {
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="day" />
 				<YAxis />
-				<Tooltip contentStyle={{ backgroundColor: "oklch(var(--B))" }} />
+				<Tooltip contentStyle={{ backgroundColor: "oklch(var(--b3))" }} />
 				<Area type="monotone" dataKey="page_views_count" stroke="oklch(var(--p))" fill="oklch(var(--p))" />
 			</AreaChart>
 		</ResponsiveContainer>

@@ -14,7 +14,7 @@
 		}
 	}
 
-	a:not(.navbar-item) {
+	a:not(.navbar-item, .btn) {
 		@apply link;
 		@apply link-hover;
 	}

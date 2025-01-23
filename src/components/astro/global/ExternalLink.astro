@@ -1,13 +1,11 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes, HTMLTag } from "astro/types";
 
-interface Props {
-    href: string,
-    title: string,
-    attrs?: HTMLAttributes<"a">
+interface Props extends HTMLAttributes<"a"> {
+
 }
 
-const { href, title, ...attrs} = Astro.props;
+const { ...rest } = Astro.props;
 ---
 
-<a href={href} title={title} {...attrs} rel="nofollow noopener noreferrer" target="_blank"><slot/><span class="external-link-icon"><i></i></span></a>
+<a {...rest} rel="nofollow noopener noreferrer" target="_blank"><slot /><span class="external-link-icon"><i></i></span></a>

@@ -43,7 +43,7 @@ const layoutProps = {
 						<PostsGrid posts={page.data} />
 						<nav class="join mt-8 self-center" role="navigation" aria-label="pagination">
 							<a href={page.url.prev} class={`join-item btn btn-sm btn-outline btn-primary ${!page.url.prev && "btn-disabled"}`} title={m.common__prev_page()} aria-label={m.common__prev_page()}>
-								{m.common__prev_page()}
+								<i class="fa-solid fa-arrow-left" />
 							</a>
 							<ul class="join">
 								{Array.from({ length: page.lastPage }, (_, index) => {
@@ -65,8 +65,8 @@ const layoutProps = {
 								})}
 							</ul>
 							<a href={page.url.next} class={`join-item btn btn-sm btn-outline btn-primary ${!page.url.next && "btn-disabled"}`} title={m.common__next_page()} aria-label={m.common__next_page()}>
-									{m.common__next_page()}
-								</a>
+								<i class="fa-solid fa-arrow-right" />
+							</a>
 						</nav>
 					</div>
 				)

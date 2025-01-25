@@ -7,7 +7,7 @@
 	align-items: center;
 	position: absolute;
 	z-index: 50;
-	background-color: var(--fallback-b1, oklch(var(--b1) / 1));
+	background-color: var(--fallback-b1, var(--color-base-100));
 }
 
 .error,

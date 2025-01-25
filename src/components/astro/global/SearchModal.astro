@@ -111,14 +111,14 @@ import "@pagefind/default-ui/css/ui.css";
 <style is:global>
 	[data-theme="light"] {
 		/* Use DaisyUI's "primary" for Pagefind primary color */
-		--pagefind-ui-primary: oklch(var(--p));
+		--pagefind-ui-primary: var(--color-primary);
 		/* Use DaisyUI base-content for text color */
-		--pagefind-ui-text: oklch(var(--bc));
+		--pagefind-ui-text: var(--color-base-content);
 		/* Use DaisyUI base-100 for background */
-		--pagefind-ui-background: oklch(var(--b1));
+		--pagefind-ui-background: var(--color-base-100);
 		/* Use DaisyUI base-200 or base-300 for borders */
-		--pagefind-ui-border: oklch(var(--p));
-		--pagefind-ui-tag: oklch(var(--b2));
+		--pagefind-ui-border: var(--color-primary);
+		--pagefind-ui-tag: var(--color-base-200);
 		--pagefind-ui-border-width: 2px;
 		--pagefind-ui-border-radius: 8px;
 		--pagefind-ui-image-border-radius: 8px;
@@ -126,19 +126,20 @@ import "@pagefind/default-ui/css/ui.css";
 	}
 
 	[data-theme="dark"] {
-		--pagefind-ui-primary: oklch(var(--p));
-		--pagefind-ui-text: oklch(var(--bc));
-		--pagefind-ui-background: oklch(var(--b1));
-		--pagefind-ui-border: oklch(var(--p));
-		--pagefind-ui-tag: oklch(var(--b2));
+		--pagefind-ui-primary: var(--color-primary);
+		--pagefind-ui-text: var(--color-base-content);
+		--pagefind-ui-background: var(--color-base-100);
+		--pagefind-ui-border: var(--color-primary);
+		--pagefind-ui-tag: var(--color-base-200);
 		--pagefind-ui-border-width: 2px;
 		--pagefind-ui-border-radius: 8px;
 		--pagefind-ui-image-border-radius: 8px;
 		--pagefind-ui-font: sans-serif;
 	}
+	
 	#pagefind {
 		.pagefind-ui__search-input {
-			border-color: var(--fallback-bc, oklch(var(--bc) / 0.2));
+			border-color: var(--color-base-content);
 			border-radius: var(--rounded-btn, 0.5rem);
 			border-width: 1px;
 			
@@ -146,7 +147,7 @@ import "@pagefind/default-ui/css/ui.css";
 			&:focus-visible,
 			&:focus {
 				outline: none;
-				border-color: oklch(var(--p)) !important;
+				border-color: var(--color-primary) !important;
 				box-shadow: none !important;
 			}
 		}

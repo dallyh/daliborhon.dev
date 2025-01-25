@@ -17,20 +17,20 @@
 }
 
 @layer base {
-	html {
-		font-family: "Nunito Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-		text-rendering: optimizeLegibility;
-		scroll-padding-top: calc(var(--header-height) + 1rem); /* Navbar */
-		overflow-anchor: none;
-
-		@media (prefers-reduced-motion: no-preference) {
-			scroll-behavior: smooth;
-		}
-	}
-
 	a:not(.navbar-item, .btn) {
 		@apply link;
 		@apply link-hover;
+	}
+}
+
+html {
+	font-family: "Nunito Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	text-rendering: optimizeLegibility;
+	scroll-padding-top: calc(var(--header-height) + 1rem); /* Navbar */
+	overflow-anchor: none;
+
+	@media (prefers-reduced-motion: no-preference) {
+		scroll-behavior: smooth;
 	}
 }
 
@@ -49,12 +49,6 @@
 
 	> * {
 		visibility: hidden;
-	}
-}
-
-@keyframes pulsate {
-	50% {
-		opacity: 0.5;
 	}
 }
 
@@ -95,19 +89,6 @@ a .external-link-icon {
 
 :root[data-theme="dark"] {
 	color-scheme: dark;
-}
-
-.skeleton {
-	&:has(img) {
-		border-radius: unset;
-		border-start-start-radius: inherit;
-		border-start-end-radius: inherit;
-		border-end-start-radius: unset;
-		border-end-end-radius: unset;
-	}
-	img {
-		visibility: hidden;
-	}
 }
 
 @keyframes pulsate {

@@ -54,38 +54,3 @@ import SocialLinks from "./SocialLinks.astro";
 
 	document.addEventListener("astro:page-load", displayClock);
 </script>
-
-<style>
-	@media (max-width: 768px) {
-		.media {
-			display: flex;
-			flex-direction: column;
-		}
-
-		.media-content {
-			margin-top: 0.75rem;
-		}
-	}
-
-	.media-left {
-		margin-right: 2rem;
-	}
-
-	.social {
-		margin-left: -0.5rem;
-	}
-
-	@keyframes blink {
-		0% {
-			opacity: 1;
-		}
-
-		50% {
-			opacity: 0;
-		}
-
-		100% {
-			opacity: 1;
-		}
-	}
-</style>

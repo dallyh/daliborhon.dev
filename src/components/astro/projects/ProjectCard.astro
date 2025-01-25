@@ -65,7 +65,7 @@ function getImage(name: string, ext: string): ImageMetadata {
 				{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
 			</figure>
 			<div>
-				<ExternalLink title={title} href={sourceUrl} class="card-title block" target="_blank" aria-label={title}>{title}</ExternalLink>
+				<ExternalLink title={title} href={sourceUrl} class="card-title" target="_blank" aria-label={title}>{title}</ExternalLink>
 				<p class="text-sm">
 					<span>🚀</span>
 					{repository && <GithubDate date={new Date(repository.data.created_at)} />}

@@ -23,7 +23,7 @@ const repoHref = "https://github.com/dallyh/daliborhon.dev";
 			<Icon name="zerops-logo-symbol" />
 		</a>
 		<div class="analytics">
-			<a class="link-primary inline-flex gap-1 justify-center items-center" href={getRelativeLocaleUrl(locale, "/analytics")}><span><i class="fas fa-chart-simple"></i></span><span>Analytics</span></a>
+			<a class="link-primary link-hover inline-flex gap-1 justify-center items-center" href={getRelativeLocaleUrl(locale, "/analytics")}><span><i class="fas fa-chart-simple"></i></span><span>Analytics</span></a>
 		</div>
 	</nav>
 	<aside class="flex flex-col items-center justify-center w-full md:w-auto">
@@ -50,24 +50,6 @@ const repoHref = "https://github.com/dallyh/daliborhon.dev";
 </footer>
 
 <style>
-	.footer-start {
-		> a {
-			display: inline-flex;
-			justify-content: center;
-			align-items: center;
-
-			&:hover {
-				text-decoration: none;
-			}
-		}
-
-		.analytics {
-			a {
-				font-size: 0.8rem;
-			}
-		}
-	}
-
 	.astro {
 		color: unset;
 

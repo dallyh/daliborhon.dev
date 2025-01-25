@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
+    <metadata>Icons made from https://www.onlinewebfonts.com/icon is licensed by CC BY 4.0</metadata>
+    <g>
+        <g>
+            <path fill="#000000" d="M83,66.2h22.5v33.7H83V66.2z"/>
+            <path fill="#000000" d="M105.5,156.1h45v22.5h-45V156.1z"/>
+            <path fill="#000000" d="M83,178.6h22.5V201H83V178.6z"/>
+            <path fill="#000000" d="M150.5,178.6H173V201h-22.5V178.6z"/>
+            <path fill="#000000" d="M201.1,55V32.5h-22.5V55H201.1v22.5h-45V32.5h22.5V10H32.5v22.5V246h22.5h168.6v-22.5l0,0V55H201.1z M201.1,223.5H54.9v-191h78.7v67.4h22.5H201L201.1,223.5L201.1,223.5z"/>
+        </g>
+    </g>
+</svg>

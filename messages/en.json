@@ -179,5 +179,7 @@
     "analytics__total_views": "Total views on all pages",
     "analytics__search_url": "Search for URL",
     "analytics__period": "Period",
-    "analytics__credits": "All credits for this page goes to"
+    "analytics__credits": "All credits for this page goes to",
+    "error__500": "An error occured",
+    "error__500_unknown": "Unknown error"
 }

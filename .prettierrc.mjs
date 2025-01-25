@@ -2,7 +2,7 @@
 export default {
     printWidth: 210,
     tabWidth: 4,
-    plugins: ["prettier-plugin-astro"],
+    plugins: ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
     useTabs: true,
     singleQuote: false,
     semi: true,

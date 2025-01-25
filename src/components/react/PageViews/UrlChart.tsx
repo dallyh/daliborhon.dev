@@ -47,12 +47,12 @@ export default function UrlChart({ data }: UrlChartProps) {
 						<YAxis type="category" dataKey="url" stroke="#FF0000" fontSize={12} tickLine={false} axisLine={false} tick={false} />
 						<XAxis type="number" hide />
 						<Tooltip
-							cursor={{ fill: "oklch(var(--b3))", strokeWidth: 1 }}
+							cursor={{ fill: "var(--color-base-300)", strokeWidth: 1 }}
 							wrapperStyle={{ maxWidth: "300px" }}
 							labelStyle={{ textWrap: "balance" }}
-							contentStyle={{ backgroundColor: "oklch(var(--b3))" }}
+							contentStyle={{ backgroundColor: "var(--color-base-300)" }}
 						/>
-						<Bar label={false} dataKey="pageviews" fill="oklch(var(--p))" radius={[4, 4, 4, 4]}>
+						<Bar label={false} dataKey="pageviews" fill="var(--color-primary)" radius={[4, 4, 4, 4]}>
 							<LabelList dataKey="url" position="insideLeft" content={({ x, y, value }: any) => <CustomLabel x={x} y={y} value={value} />} />
 						</Bar>
 					</BarChart>

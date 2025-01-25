@@ -13,16 +13,11 @@ interface Props {
 }
 
 const { href = "#", label = "Breadcrumb", currentPage = false } = Astro.props;
+const ariaProperties = {
+	...(currentPage && { "aria/current": "page" }),
+};
 ---
 
-<li class={`${currentPage && "is-active"}`}>
-	{
-		currentPage ? (
-			<span aria-current="page">
-				{label}
-			</span>
-		) : (
-			<a href={href}>{label}</a>
-		)
-	}
+<li {...ariaProperties}>
+	{currentPage ? label : <a href={href}>{label}</a>}
 </li>

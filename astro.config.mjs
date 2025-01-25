@@ -17,8 +17,7 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeFigure from "@microflash/rehype-figure";
 import runtimeLogger from "@inox-tools/runtime-logger";
 import db from "@astrojs/db";
-
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 
 const envVars = {
 	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
@@ -126,12 +125,12 @@ export default defineConfig({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
 		}),
-		tailwind({ nesting: true }),
 	],
 	vite: {
 		server: {
 			port: PORT,
 		},
+		plugins: [tailwindcss()],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},

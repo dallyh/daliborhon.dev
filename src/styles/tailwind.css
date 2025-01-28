@@ -1,0 +1,54 @@
+@import "tailwindcss" source("../../src/");
+
+@plugin "daisyui" {
+	themes:
+		light --default,
+		dark --color-primaryrefersdark;
+}
+@plugin "@tailwindcss/typography";
+
+:root {
+	--header-height: calc(68px + 1rem);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+}
+
+@layer base {
+	a:not(.navbar-item, .btn) {
+		@apply link;
+	}
+}
+
+@layer utilities {
+	h1 {
+		@apply text-4xl;
+		@apply font-bold;
+	}
+
+	h2 {
+		@apply text-3xl;
+		@apply font-bold;
+	}
+
+	h3 {
+		@apply text-2xl;
+		@apply font-bold;
+	}
+
+	h4 {
+		@apply text-xl;
+		@apply font-bold;
+	}
+
+	h5 {
+		@apply text-lg;
+		@apply font-bold;
+	}
+
+	h6 {
+		@apply font-bold;
+	}
+}

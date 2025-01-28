@@ -64,9 +64,9 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 				</b>
 			</p>
 
-			<div className="mb-2 join ">
+			<div className={`join mb-2 ${isLoading ? "skeleton" : ""}`}>
 				<button
-					className={`join-item btn btn-outline btn-primary ${isLoading ? "skeleton" : mode === "page-views" ? "btn-active" : ""}`}
+					className={`join-item btn btn-outline btn-primary ${mode === "page-views" ? "btn-active" : ""}`}
 					onClick={() => {
 						setMode("page-views");
 						setSearch("");
@@ -74,13 +74,13 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 				>
 					{m.common__page_views()}
 				</button>
-				<button className={`join-item btn btn-outline btn-primary ${isLoading ? "skeleton" : mode === "per-url" ? "btn-active" : ""}`} onClick={() => setMode("per-url")}>
+				<button className={`join-item btn btn-outline btn-primary ${mode === "per-url" ? "btn-active" : ""}`} onClick={() => setMode("per-url")}>
 					{m.common__per_url()}
 				</button>
 			</div>
 
 			<form
-				className="flex flex-row flex-wrap gap-4 items-end mt-2 mb-2"
+				className="mt-2 mb-2 flex flex-row flex-wrap items-end gap-4"
 				id="date-range-form"
 				onSubmit={(e) => {
 					e.preventDefault();
@@ -124,7 +124,7 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 			{!isLoading && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
 
 			{data?.totalPages !== null && data?.totalPages > 0 && (
-				<div className="flex flex-wrap items-center join mt-4">
+				<div className="join mt-4 flex flex-wrap items-center">
 					{offset === 0 ? (
 						<>
 							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__last()} aria-label={m.common__last()}>

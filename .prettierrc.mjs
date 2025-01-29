@@ -5,12 +5,19 @@ export default {
     plugins: ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
     useTabs: true,
     singleQuote: false,
+    trailingComma: "all",
     semi: true,
     overrides: [
         {
-            files: [".*", "*.json", "*.md", "*.toml", "*.yml"],
+            files: ["*.json", "*.jsonc", "*.md", "*.toml", "*.yml"],
             options: {
                 useTabs: false,
+            },
+        },
+        {
+            files: ["*.json", "*.jsonc"],
+            options: {
+                trailingComma: "none"
             },
         },
         {

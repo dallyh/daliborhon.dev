@@ -1,7 +1,7 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
 import { getDevOrProdContentPath } from "@utils";
-import { glob, type Loader, type LoaderContext } from "astro/loaders";
+import { type Loader, type LoaderContext, glob } from "astro/loaders";
 //import { logger as _logger } from "@it-astro:logger"; // Do not use here
 
 const path = getDevOrProdContentPath();
@@ -94,7 +94,7 @@ type LanguageColor = {
 function ghLanguagesLoader(): Loader {
 	return {
 		name: "gh-lang-loader",
-		load: async ({ store, logger, parseData, meta, generateDigest }: LoaderContext) => {
+		load: async ({ store, logger, parseData, generateDigest }: LoaderContext) => {
 			logger.info("Loading github language colors...");
 
 			const response = await fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");

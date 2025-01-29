@@ -69,10 +69,9 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 	import { navigate } from "astro:transitions/client";
 	import cookie from "js-cookie";
 
-	const configCookie = siteConfig.i18n.localeCookie;
-
 	class LanguageSelect extends HTMLElement {
 		connectedCallback() {
+			const configCookie = siteConfig.i18n.localeCookie;
 			const select = this.querySelector("select");
 
 			if (!select) {

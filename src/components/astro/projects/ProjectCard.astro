@@ -4,11 +4,10 @@ import type { CollectionEntry } from "astro:content";
 import { getEntries, render } from "astro:content";
 import { githubRestClient } from "@services/github/githubRestClient";
 import { formatDateTime } from "@utils";
-import Icon from "node_modules/astro-icon/components/Icon.astro";
-import { extractFileNameAndExtension } from "src/utils/extractFilenameAndExtension";
+import { extractFileNameAndExtension } from "@utils";
+import ExternalLink from "../global/ExternalLink.astro";
 import GithubDate from "./GithubDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
-import ExternalLink from "../global/ExternalLink.astro";
 
 interface Props {
 	project: CollectionEntry<"projects">;
@@ -57,10 +56,10 @@ function getImage(name: string, ext: string): ImageMetadata {
 }
 ---
 
-<div class="card bg-base-200 max-w-full shadow-xl h-full">
+<div class="card bg-base-200 h-full max-w-full shadow-xl">
 	<div class="card-body">
-		<div class="flex mb-2">
-			<figure class="svg-img-card mr-2 p-1 flex-shrink-0 flex justify-center items-center">
+		<div class="mb-2 flex">
+			<figure class="svg-img-card mr-2 flex flex-shrink-0 items-center justify-center p-1">
 				{file.ext !== "svg" && <Image src={getImage(file.name, file.ext)} alt={title} width={48} height={48} title={title} loading="lazy" format="webp" />}
 				{file.ext === "svg" && <Fragment set:html={getSVG(file.name)} />}
 			</figure>

@@ -3,10 +3,10 @@ import { getEntry, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
+import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { removeTrailingSlash } from "@utils";
-import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 
 export { getStaticPaths } from "@i18n/utils";
 

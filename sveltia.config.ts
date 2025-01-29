@@ -1,7 +1,7 @@
 import { removeTrailingSlash } from "@utils";
-import { locales, type AllowedLocales } from "./i18n.config";
-import { siteConfig } from "./site.config";
 import { getDevOrProdContentPath } from "@utils";
+import { type AllowedLocales, locales } from "./i18n.config";
+import { siteConfig } from "./site.config";
 
 const path = getDevOrProdContentPath();
 console.log(`Sveltia CMS config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);

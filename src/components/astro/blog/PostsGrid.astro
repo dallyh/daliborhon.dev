@@ -16,8 +16,9 @@ function isPage<T>(value: any): value is Page<T> {
 	return value && value.data && Array.isArray(value.data);
 }
 ---
+
 <div class="flex flex-col">
-	<ul class={`grid grid-cols-1 gap-3 md:grid-cols-3`}>
+	<ul class="grid grid-cols-1 gap-3 md:grid-cols-3">
 		{
 			Array.isArray(posts) &&
 				posts.map((post) => (

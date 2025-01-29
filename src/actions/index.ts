@@ -1,9 +1,8 @@
-import { ActionError, defineAction } from "astro:actions";
-import { z } from "astro:schema";
-import { PageView, db } from "astro:db";
-import { isbot } from "isbot";
 import { logger } from "@it-astro:logger";
-import { PREVIEW } from "astro:env/client";
+import { ActionError, defineAction } from "astro:actions";
+import { PageView, db } from "astro:db";
+import { z } from "astro:schema";
+import { isbot } from "isbot";
 
 const pageViewAction = defineAction({
 	input: z.object({

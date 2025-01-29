@@ -1,6 +1,5 @@
 <script is:inline>
 	// Itentionally inline to prevent FOUC
-
 	function setTheme(doc) {
 		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme-preference");
 		const theme = storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");

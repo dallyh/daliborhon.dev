@@ -1,9 +1,9 @@
-import { QueryClient, useQuery, keepPreviousData } from "@tanstack/react-query";
+import * as m from "$messages";
+import type { AllowedLocales } from "@i18n-config";
+import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";
 import UrlChart from "./UrlChart";
 import ViewChart from "./ViewChart";
-import * as m from "$messages";
-import type { AllowedLocales } from "@i18n-config";
 
 const type = ["page-views", "per-url"] as const;
 type Mode = (typeof type)[number];

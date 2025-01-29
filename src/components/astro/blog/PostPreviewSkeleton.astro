@@ -2,7 +2,6 @@
 	function removeSkeletonOnIntersection() {
 		const images = document.querySelectorAll("figure.skeleton") as NodeListOf<HTMLElement>;
 
-		// Create an Intersection Observer
 		const observer = new IntersectionObserver((entries, observer) => {
 			for (const entry of entries) {
 				if (entry.isIntersecting) {
@@ -11,12 +10,12 @@
 					// Check if the image is already loaded
 					if (i.complete) {
 						imgDiv.classList.remove("skeleton");
-						observer.unobserve(imgDiv); // Stop observing this element
+						observer.unobserve(imgDiv);
 					} else {
 						// Wait for the image to load
 						i.onload = () => {
 							imgDiv.classList.remove("skeleton");
-							observer.unobserve(imgDiv); // Stop observing this element
+							observer.unobserve(imgDiv);
 						};
 
 						i.onerror = () => {

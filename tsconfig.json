@@ -22,7 +22,7 @@
             "$messages": ["src/paraglide/messages.js"],
             "$paraglide-runtime": ["src/paraglide/runtime.js"],
             "$sanity-schema": ["../studio/src/index.d.ts"],
-            "@lib/*": ["src/lib/*"]
+            "@lib/*": ["src/lib/*"],
         }
     }
 }

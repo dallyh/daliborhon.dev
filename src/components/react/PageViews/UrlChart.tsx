@@ -1,6 +1,5 @@
-import { Fragment } from "react/jsx-runtime";
-import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import * as m from "$messages";
+import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type UrlChartProps = {
 	data: {

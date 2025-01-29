@@ -1,23 +1,26 @@
+import db from "@astrojs/db";
+import mdx from "@astrojs/mdx";
+import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import { astroI18nConfigPaths, defaultLocale, localeKeys } from "./i18n.config";
 import paraglideAstro from "@inlang/paraglide-astro";
+//@ts-ignore
+import rehypeFigure from "@microflash/rehype-figure";
+import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig, envField } from "astro/config";
-import { loadEnv } from "vite";
-import iconConfig from "./icons.config";
-import node from "@astrojs/node";
-import mdx from "@astrojs/mdx";
-import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeToc from "rehype-toc";
 import rehypeExtenalLinks from "rehype-external-links";
-import rehypeFigure from "@microflash/rehype-figure";
-import runtimeLogger from "@inox-tools/runtime-logger";
-import db from "@astrojs/db";
-import tailwindcss from "@tailwindcss/vite";
+import rehypeSlug from "rehype-slug";
+import rehypeToc from "rehype-toc";
+import { loadEnv } from "vite";
+import { astroI18nConfigPaths, defaultLocale, localeKeys } from "./i18n.config";
+import iconConfig from "./icons.config";
+import Logger from "./src/utils/logger";
+
+const logger = new Logger("astro-config");
 
 const envVars = {
 	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
@@ -28,19 +31,17 @@ const envVars = {
 	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
 	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
 	APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
-	//ASTRO_DB_REMOTE_URL: envField.string({ context: "server", access: "secret", optional: false }),
-	//ASTRO_DB_APP_TOKEN: envField.string({ context: "server", access: "secret", optional: true }),
 };
 
-const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV!, process.cwd(), "");
 const PORT = 4321;
 const DEV_ENV = NODE_ENV !== "production";
 const SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://daliborhon.dev";
 
-console.log(`CONFIG >> Using environment: '${NODE_ENV}'`);
-console.log(`CONFIG >> Using SITE_URL: '${SITE_URL}'`);
-console.log(`CONFIG >> Using PORT: '${PORT}'`);
-console.log(`CONFIG >> Using PREVIEW: '${PREVIEW}'`);
+logger.info(`Using environment: '${NODE_ENV}'`);
+logger.info(`Using SITE_URL: '${SITE_URL}'`);
+logger.info(`Using PORT: '${PORT}'`);
+logger.info(`Using PREVIEW: '${PREVIEW}'`);
 
 // https://astro.build/config
 // @ts-check
@@ -101,7 +102,6 @@ export default defineConfig({
 		routing: "manual",
 	},
 	integrations: [
-		runtimeLogger(),
 		db(),
 		react(),
 		expressiveCode(),
@@ -130,12 +130,8 @@ export default defineConfig({
 		server: {
 			port: PORT,
 			watch: {
-				ignored: [
-					"./src/paraglide/messages/**",
-					"./project.inlang/cache/**",
-					"./messages/**",
-				]
-			}
+				ignored: ["./src/paraglide/messages/**", "./project.inlang/cache/**", "./messages/**"],
+			},
 		},
 		plugins: [tailwindcss()],
 		optimizeDeps: {

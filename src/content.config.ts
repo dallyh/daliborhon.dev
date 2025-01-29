@@ -2,10 +2,11 @@ import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
 import { getDevOrProdContentPath } from "@utils";
 import { type Loader, type LoaderContext, glob } from "astro/loaders";
-//import { logger as _logger } from "@it-astro:logger"; // Do not use here
+import { Logger } from "@utils";
 
+const logger = new Logger("content-config");
 const path = getDevOrProdContentPath();
-console.info(`Content config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
+logger.info(`Using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({

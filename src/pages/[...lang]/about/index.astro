@@ -7,7 +7,7 @@ import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import Section from "@components/astro/global/Section.astro";
 import SocialLinks from "@components/astro/home/SocialLinks.astro";
-import ContactForm from "@components/react/ContactForm/ContactForm";
+import ContactForm from "@components/react/ContactForm";
 import type { AllowedLocales } from "@i18n-config";
 import type { getStaticPaths } from "@i18n/utils";
 import PageLayout from "@layouts/PageLayout.astro";
@@ -42,7 +42,7 @@ const searchProps = {
 			<SocialLinks />
 		</Section>
 		<Section heading="h3" isInsideSection sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
-			<ContactForm locale={locale} client:load />
+			<ContactForm locale={locale} client:load transition:persist />
 		</Section>
 	</Section>
 </PageLayout>

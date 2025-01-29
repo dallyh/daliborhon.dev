@@ -3,23 +3,24 @@ import type { AllowedLocales } from "@i18n-config";
 import { useEffect, useState } from "react";
 
 type Props = {
-	lang: AllowedLocales;
+	locale: AllowedLocales;
 };
 
 const id = "giscusComments";
 
-export default function Comments({ lang }: Props) {
+export default function Comments({ locale }: Props) {
 	const [mounted, setMounted] = useState(false);
 	const [theme, setTheme] = useState("light");
 
 	useEffect(() => {
 		const theme = document.documentElement.dataset.theme ?? "light";
 		setTheme(theme);
+	}, []);
 
+	useEffect(() => {
 		window.addEventListener("theme-changed", () => {
 			setTheme(document.documentElement.dataset.theme ?? "light");
 		});
-
 		setMounted(true);
 	}, []);
 
@@ -38,7 +39,7 @@ export default function Comments({ lang }: Props) {
 					emit-metadata="0"
 					input-position="top"
 					theme={theme}
-					lang={lang}
+					lang={locale}
 					loading="lazy"
 				/>
 			) : null}

@@ -5,7 +5,6 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import type { AllowedLocales } from "@i18n-config";
 import { useEffect, useRef, useState } from "react";
 import { type FieldValues, useForm, useWatch } from "react-hook-form";
-import styles from "./ContactForm.module.css";
 
 const API_URL = "/api/contact";
 
@@ -95,7 +94,7 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 
 	return (
 		<>
-			<div className={styles["contact-form-wrapper"]} ref={animate}>
+			<div ref={animate}>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<input type="hidden" value={locale} {...register("language")} />
 					<input type="hidden" {...register("subject")} />

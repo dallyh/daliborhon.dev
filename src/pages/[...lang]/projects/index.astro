@@ -7,11 +7,11 @@ import Section from "@components/astro/global/Section.astro";
 import ProjectsGrid from "@components/astro/projects/ProjectsGrid.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getProjectsByLocale } from "src/utils/content/getProjectsByLocale";
-import GithubCalendar from "@components/react/GithubCalendar";
+import type { AllowedLocales } from "@i18n-config";
 
 export { getStaticPaths } from "@i18n/utils";
 
-const locale = Astro.currentLocale!;
+const locale = Astro.currentLocale! as AllowedLocales;
 const projects = await getProjectsByLocale(locale);
 
 const layoutProps = {
@@ -31,13 +31,6 @@ const searchProps = {
 	</Fragment>
 	<SearchMeta {...searchProps} />
 	<Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
-		<div class="container mt-4 flex items-center justify-center">
-			<GithubCalendar client:load>
-				<div slot="fallback">
-					<div class="skeleton h-[175px] w-[960px]"></div>
-				</div>
-			</GithubCalendar>
-		</div>
 		<ProjectsGrid {projects} />
 	</Section>
 </PageLayout>

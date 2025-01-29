@@ -129,6 +129,13 @@ export default defineConfig({
 	vite: {
 		server: {
 			port: PORT,
+			watch: {
+				ignored: [
+					"./src/paraglide/messages/**",
+					"./project.inlang/cache/**",
+					"./messages/**",
+				]
+			}
 		},
 		plugins: [tailwindcss()],
 		optimizeDeps: {

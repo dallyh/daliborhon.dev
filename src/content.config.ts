@@ -104,8 +104,6 @@ function ghLanguagesLoader(): Loader {
 				color: data[key].color,
 			}));
 
-			store.clear();
-
 			for (const item of langs) {
 				const data = await parseData({
 					id: item.id,
@@ -114,9 +112,12 @@ function ghLanguagesLoader(): Loader {
 					},
 				});
 
+				const digest = generateDigest(data);
+
 				store.set({
 					id: item.id,
 					data: data,
+					digest: digest,
 				});
 			}
 		},

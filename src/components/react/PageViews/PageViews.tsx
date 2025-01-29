@@ -17,7 +17,6 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 	const [search, setSearch] = useState("");
 	const [page, setPage] = useState(1);
 	const [dateRange, setDateRange] = useState<DateRange>("all-time");
-	const [isLoading, setIsLoading] = useState(true);
 
 	const { data, isPending } = useQuery(
 		{
@@ -49,22 +48,17 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 		}
 	}, []);
 
-	// This is here to prevent client-side hydration errors, useQuery runs on the server.
-	useEffect(() => {
-		setIsLoading(isPending);
-	}, [isPending]);
-
 	return (
 		<Fragment>
 			<p className="mb-2">
 				{m.analytics__total_views()}:{" "}
 				<b>
-					{isLoading && <span className="skeleton">0</span>}
-					{!isLoading && <span>{data.totalViews}</span>}
+					{isPending && <span className="skeleton">0</span>}
+					{!isPending && <span>{data.totalViews}</span>}
 				</b>
 			</p>
 
-			<div className={`join mb-2 ${isLoading ? "skeleton" : ""}`}>
+			<div className={`join mb-2 ${isPending ? "skeleton" : ""}`}>
 				<button
 					className={`join-item btn btn-outline btn-primary ${mode === "page-views" ? "btn-active" : ""}`}
 					onClick={() => {
@@ -87,7 +81,7 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 					setSearch(searchLocalState);
 				}}
 			>
-				<div className={`form-control max-w-max ${isLoading ? "skeleton" : ""}`}>
+				<div className={`form-control max-w-max ${isPending ? "skeleton" : ""}`}>
 					<label className="label">{m.analytics__period()}</label>
 					<select name="date-range" id="date-range" value={dateRange} onChange={(e) => setDateRange(e.currentTarget.value as DateRange)} className="select select-bordered">
 						<option value="all-time">{m.common__all_time()}</option>
@@ -103,25 +97,25 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 							type="search"
 							id="search"
 							name="search"
-							className={`input input-bordered join-item w-full ${isLoading ? "skeleton" : ""}`}
+							className={`input input-bordered join-item w-full ${isPending ? "skeleton" : ""}`}
 							placeholder={m.analytics__search_url()}
 							value={searchLocalState}
 							onChange={(e) => setSearchLocalState(e.currentTarget.value)}
 						/>
-						<button className={`btn btn-primary btn-outline join-item ${isLoading ? "skeleton" : ""}`} type="submit">
+						<button className={`btn btn-primary btn-outline join-item ${isPending ? "skeleton" : ""}`} type="submit">
 							{m.common__submit_btn()}
 						</button>
 					</div>
 				)}
 			</form>
 
-			{isLoading && (
+			{isPending && (
 				// DaisyUI has a skeleton class, but you might also do your own styling
 				<div className="skeleton h-96"></div>
 			)}
 
-			{!isLoading && data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
-			{!isLoading && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
+			{!isPending && data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
+			{!isPending && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
 
 			{data?.totalPages !== null && data?.totalPages > 0 && (
 				<div className="join mt-4 flex flex-wrap items-center">

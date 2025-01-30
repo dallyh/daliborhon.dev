@@ -63,7 +63,7 @@
 		}, 300); // enough time to let the CSS transition end (if any)
 	}
 
-	window.addEventListener("DOMContentLoaded", () => {
+	function addToastContainer() {
 		let toastContainer = document.getElementById("toastContainer");
 		if (!toastContainer) {
 			toastContainer = document.createElement("div");
@@ -72,7 +72,17 @@
 			toastContainer.style.zIndex = "9999";
 			document.body.appendChild(toastContainer);
 		}
+
+		if (!window.showToast) {
+			window.showToast = showToast;
+		}
+	}
+
+	window.addEventListener("DOMContentLoaded", () => {
+		addToastContainer();
 	});
 
-	window.showToast = showToast;
+	document.addEventListener("astro:after-swap", () => {
+		addToastContainer();
+	});
 </script>

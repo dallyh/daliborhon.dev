@@ -1,6 +1,6 @@
-import slug from "slug";
 import * as m from "$messages";
 import type { AllowedLocales } from "@i18n-config";
+import slug from "slug";
 
 export function slugifyStr(locale: AllowedLocales | undefined, str: string) {
 	if (locale === undefined) {

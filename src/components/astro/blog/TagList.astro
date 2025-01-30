@@ -14,7 +14,7 @@ const { post, tags } = Astro.props;
 const locale = Astro.currentLocale as AllowedLocales;
 ---
 
-<ul class="flex flex-wrap gap-3 list-none">
+<ul class="flex list-none flex-wrap gap-3">
 	{
 		tags &&
 			tags.map((tag) => (

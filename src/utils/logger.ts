@@ -5,6 +5,7 @@ export type LoggerLevel = "debug" | "info" | "warn" | "error";
 
 class Logger {
 	name: string;
+	isDev = import.meta.env.DEV;
 
 	#dateTimeFormat = new Intl.DateTimeFormat([], {
 		hour: "2-digit",
@@ -21,18 +22,22 @@ class Logger {
 		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "info" }) + " " + message}`);
 	}
+	
 	warn(message: string) {
 		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "warn" }) + " " + message}`);
 	}
+
 	error(message: string) {
 		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "error" }) + " " + message}`);
 	}
 
 	debug(message: string) {
-		// biome-ignore lint: logger
-		console.log(`${this.#getEventPrefix({ level: "debug" }) + " " + message}`);
+		if (!this.isDev) {
+			// biome-ignore lint: logger
+			console.log(`${this.#getEventPrefix({ level: "debug" }) + " " + message}`);
+		}
 	}
 
 	#getEventPrefix({ level }: { level: LoggerLevel }) {
@@ -60,7 +65,7 @@ class Logger {
 		if (prefix.length === 1) {
 			return dim(prefix[0]);
 		}
-		
+
 		return dim(prefix[0]) + " " + blue(prefix.splice(1).join(" "));
 	}
 }

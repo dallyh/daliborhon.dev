@@ -44,16 +44,6 @@
                     }
                 }
             }
-        },
-        {
-            "include": ["astro.config.mjs", "sveltia.config.ts"],
-            "linter": {
-                "rules": {
-                    "suspicious": {
-                        "noConsoleLog": "off"
-                    }
-                }
-            }
         }
     ]
 }

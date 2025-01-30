@@ -12,15 +12,13 @@ export default function UrlChart({ data }: UrlChartProps) {
 	const CustomLabel = ({ x, y, value }: any) => {
 		return (
 			<text
-				x={x + 5} // Adjust text position
+				x={x + 5}
 				y={y + 22}
 				fontSize={17}
 				textAnchor="start"
 				style={{
-					mixBlendMode: "difference",
 					color: "transparent",
-					fontWeight: "lighter",
-					fill: "oklch(var(--nc))",
+					fill: "var(--color-base-content)",
 				}}
 			>
 				{value}

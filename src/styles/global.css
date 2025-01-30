@@ -1,3 +1,12 @@
+:root {
+	--header-height: calc(68px + 1rem);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	color-scheme: dark;
+}
+
 html {
 	font-family: "Nunito Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	text-rendering: optimizeLegibility;

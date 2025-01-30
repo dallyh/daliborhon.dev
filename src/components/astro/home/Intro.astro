@@ -5,22 +5,22 @@ import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
 import SocialLinks from "./SocialLinks.astro";
 ---
 
-<div class="hero place-content-start mb-6">
-	<div class="hero-content flex-col lg:flex-row justify-start">
+<div class="hero mb-6 place-content-start">
+	<div class="hero-content flex-col justify-start lg:flex-row">
 		<ProfilePicture img={profilePicture} imgClass="max-w-sm rounded-lg shadow-2xl" />
 		<div class="flex flex-col gap-3">
 			<h1 class="text-2xl">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
 			<p>
 				{m.landing__intro()}
 			</p>
-			<p class="text-sm flex gap-2">
-				<span class="badge bg-accent text-accent-content p-3 flex gap-2">
+			<p class="flex gap-2 text-sm">
+				<span class="badge bg-accent text-accent-content flex gap-2 p-3">
 					<span>
 						<i class="fa-solid fa-location-dot"></i>
 					</span>
 					<span>{m.common__country_czech_republic()}</span>
 				</span>
-				<span class="badge bg-accent text-accent-content p-3 flex gap-2">
+				<span class="badge bg-accent text-accent-content flex gap-2 p-3">
 					<span>
 						<i class="fa-solid fa-circle-dot"></i>
 					</span>
@@ -28,7 +28,7 @@ import SocialLinks from "./SocialLinks.astro";
 				</span>
 			</p>
 			<p class="text-sm">
-				<span class="badge bg-accent text-accent-content p-3 flex gap-2">
+				<span class="badge bg-accent text-accent-content flex gap-2 p-3">
 					<span>
 						<i class="fa-solid fa-suitcase"></i>
 					</span>

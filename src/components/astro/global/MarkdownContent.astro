@@ -15,7 +15,7 @@ const { tocPosition = "default", headings } = Astro.props;
 		{
 			headings && headings.length !== 0 && (
 				<div id="toc" class="box">
-					<details id="tocDetails" class="collapse max-[1024px]:collapse-arrow  bg-base-200 shadow-lg rounded-xl">
+					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 collapse rounded-xl shadow-lg">
 						<summary class="collapse-title bg-base-200 text-xl">{m.blog__toc()}</summary>
 					</details>
 				</div>

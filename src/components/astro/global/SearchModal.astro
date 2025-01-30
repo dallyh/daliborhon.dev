@@ -5,9 +5,9 @@ import "@pagefind/default-ui/css/ui.css";
 
 <site-search>
 	<dialog class="modal modal-bottom sm:modal-middle" aria-label={m.common__search()}>
-		<div class="modal-box sm:w-11/12 sm:max-w-3xl overflow-hidden">
+		<div class="modal-box overflow-hidden sm:w-11/12 sm:max-w-3xl">
 			<form method="dialog">
-				<button data-close-modal aria-label={m.common__close_btn()} class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+				<button data-close-modal aria-label={m.common__close_btn()} class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2">
 					<span class="sr-only">{m.common__close_btn()}</span>✕
 				</button>
 			</form>
@@ -20,7 +20,10 @@ import "@pagefind/default-ui/css/ui.css";
 </site-search>
 
 <script>
+	import { Logger } from "@utils";
+
 	class SiteSearch extends HTMLElement {
+		#logger = new Logger ("search-modal");
 		#pageFindInstance: any = null;
 
 		connectedCallback() {
@@ -69,7 +72,7 @@ import "@pagefind/default-ui/css/ui.css";
 					const { PagefindUI } = await import("@pagefind/default-ui");
 
 					if (this.#pageFindInstance !== null) {
-						console.log("Pagefind instance is already initialized.");
+						this.#logger.debug("Pagefind instance is already initialized.");
 						return;
 					}
 
@@ -136,13 +139,13 @@ import "@pagefind/default-ui/css/ui.css";
 		--pagefind-ui-image-border-radius: 8px;
 		--pagefind-ui-font: sans-serif;
 	}
-	
+
 	#pagefind {
 		.pagefind-ui__search-input {
 			border-color: var(--color-base-content);
 			border-radius: var(--rounded-btn, 0.5rem);
 			border-width: 1px;
-			
+
 			&:focus-within,
 			&:focus-visible,
 			&:focus {

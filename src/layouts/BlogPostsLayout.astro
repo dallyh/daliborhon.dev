@@ -57,11 +57,11 @@ const layoutProps = {
 										return (
 											<li>
 												{pageNumber === page.currentPage ? (
-													<a class="join-item btn btn-sm btn-active btn-outline btn-primary" aria-label={`Page ${pageNumber}`} aria-current="page">
+													<a class="join-item btn btn-sm btn-active btn-outline btn-primary rounded-none" aria-label={`Page ${pageNumber}`} aria-current="page">
 														{pageNumber}
 													</a>
 												) : (
-													<a href={pageUrl} class="join-item btn btn-sm btn-outline btn-primary" aria-label={`Goto page ${pageNumber}`}>
+													<a href={pageUrl} class="join-item btn btn-sm btn-outline btn-primary rounded-none" aria-label={`Goto page ${pageNumber}`}>
 														{pageNumber}
 													</a>
 												)}

@@ -1,8 +1,8 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
 import { getDevOrProdContentPath } from "@utils";
-import { type Loader, type LoaderContext, glob } from "astro/loaders";
 import { Logger } from "@utils";
+import { type Loader, type LoaderContext, glob } from "astro/loaders";
 
 const logger = new Logger("content-config");
 const path = getDevOrProdContentPath();

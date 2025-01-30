@@ -1,8 +1,9 @@
-import { Logger } from "@utils";
 import { loadRenderers } from "astro:container";
 import { getEntry, render } from "astro:content";
 import * as m from "$messages";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import type { AllowedLocales } from "@i18n-config";
+import { Logger } from "@utils";
 import { createResumePdfFilename } from "@utils";
 import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
@@ -11,7 +12,6 @@ import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
-import type { AllowedLocales } from "@i18n-config";
 
 const logger = new Logger("pdf.ts");
 

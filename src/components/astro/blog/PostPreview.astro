@@ -34,7 +34,7 @@ const { pubDate, modDate, title, description } = post.data;
 		<h2 class="card-title flex flex-col items-start">
 			<a href={postUrl}>{title}</a>
 		</h2>
-		<div class="badge badge-primary"><FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} /></div>
+		<div class="badge badge-outline badge-primary"><FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} /></div>
 		<p>{description}</p>
 		<div class="card-actions mt-4 justify-start">
 			<TagList tags={relatedTags!} />

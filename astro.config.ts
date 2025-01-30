@@ -31,6 +31,7 @@ const envVars = {
 	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
 	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
 	APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
+	UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
 };
 
 const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV!, process.cwd(), "");
@@ -46,6 +47,9 @@ logger.info(`Using PREVIEW: '${PREVIEW}'`);
 // https://astro.build/config
 // @ts-check
 export default defineConfig({
+	experimental: {
+		serializeConfig: true,
+	},
 	site: SITE_URL,
 	build: {
 		format: "directory",
@@ -97,7 +101,9 @@ export default defineConfig({
 		},
 	},
 	i18n: {
+		// @ts-ignore
 		defaultLocale: defaultLocale,
+		// @ts-ignore
 		locales: [...astroI18nConfigPaths],
 		routing: "manual",
 	},

@@ -1,8 +1,9 @@
-import type { APIRoute } from "astro";
-import { db, and, desc, gte, like, lte, sql, count, countDistinct } from "astro:db";
+import { and, count, countDistinct, db, desc, gte, like, lte, sql } from "astro:db";
 import { PageView } from "astro:db";
-import { logger } from "@it-astro:logger";
+import { Logger } from "@utils";
+import type { APIRoute } from "astro";
 
+const logger = new Logger("page-views.ts");
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {

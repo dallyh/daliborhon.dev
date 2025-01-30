@@ -1,0 +1,13 @@
+---
+import type { BreadCrumbsItem } from "./BreadCrumbsItem.astro";
+
+interface Props {
+	children: BreadCrumbsItem | BreadCrumbsItem[];
+}
+---
+
+<div class="breadcrumbs my-4 text-sm">
+	<ul aria-label="breadcrumbs">
+		<slot />
+	</ul>
+</div>

@@ -1,13 +1,14 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes } from "astro/types";
 
-interface Props {
-    href: string,
-    title: string,
-    attrs?: HTMLAttributes<"a">
-}
+interface Props extends HTMLAttributes<"a"> {}
 
-const { href, title, ...attrs} = Astro.props;
+const { class: restClass = "", ...rest } = Astro.props;
+
+const mergedClass = ["block", restClass].filter(Boolean).join(" ");
 ---
 
-<a href={href} title={title} {...attrs} rel="nofollow noopener noreferrer" target="_blank"><slot/><span class="external-link-icon"><i></i></span></a>
+<a {...rest} class={mergedClass} rel="nofollow noopener noreferrer" target="_blank">
+	<slot />
+	<span class="external-link-icon"><i></i></span>
+</a>

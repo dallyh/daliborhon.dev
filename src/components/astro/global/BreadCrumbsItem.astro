@@ -1,0 +1,22 @@
+---
+export type BreadCrumbsItem = {
+	href?: string;
+	label: string;
+	currentPage?: boolean;
+};
+
+interface Props {
+	href?: string;
+	label: string;
+	currentPage?: boolean;
+}
+
+const { href = "#", label = "Breadcrumb", currentPage = false } = Astro.props;
+const ariaProperties = {
+	...(currentPage && { "aria/current": "page" }),
+};
+---
+
+<li {...ariaProperties}>
+	{currentPage ? label : <a href={href}>{label}</a>}
+</li>

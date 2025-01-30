@@ -1,9 +1,10 @@
 import { ActionError, defineAction } from "astro:actions";
-import { z } from "astro:schema";
 import { PageView, db } from "astro:db";
+import { z } from "astro:schema";
+import { Logger } from "@utils";
 import { isbot } from "isbot";
-import { logger } from "@it-astro:logger";
-import { PREVIEW } from "astro:env/client";
+
+const logger = new Logger("actions\\index.ts");
 
 const pageViewAction = defineAction({
 	input: z.object({

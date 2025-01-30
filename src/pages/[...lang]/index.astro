@@ -13,7 +13,7 @@ export { getStaticPaths } from "@i18n/utils";
 
 const locale = Astro.currentLocale!;
 
-const projects = await getProjectsByLocale(locale);
+const projects = await getProjectsByLocale(locale, true, siteConfig.projects.recentProjectsSize);
 const recentPosts = await getFilteredPostsCollection({ sort: true, slice: siteConfig.blog.recentPostsSize, locale: locale });
 const featuredPosts = await getFilteredPostsCollection({ featured: true, sort: true, slice: siteConfig.blog.featuredPostsSize, locale: locale });
 

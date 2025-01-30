@@ -1,4 +1,4 @@
-import { db, PageView } from "astro:db";
+import { PageView, db } from "astro:db";
 
 export default async function () {
 	const urls = [

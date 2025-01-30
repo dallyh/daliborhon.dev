@@ -10,3 +10,4 @@ node_modules
 
 # Files
 pnpm-lock.yaml
+*.mdx

@@ -17,9 +17,9 @@ const isPrint = Astro.locals.isPrint;
 
 <div class="timeline-item">
 	<p class="date">{date}</p>
-	<p class="title"><strong>{title}</strong></p>
-	<p><i>{institute}</i></p>
-	<div class="box is-size-7">
+	<p class="title not-prose mb-2"><strong>{title}</strong></p>
+	<p class="not-prose mb-4">{institute}</p>
+	<div class="bg-base-300 rounded-lg p-4 [&>p]:m-0">
 		<slot />
 	</div>
 	{isPrint && <hr />}
@@ -45,19 +45,17 @@ const isPrint = Astro.locals.isPrint;
 				border-radius: 50%;
 				left: -30px;
 				top: 0;
-				border: 3px solid var(--bulma-primary);
-				background-color: var(--bulma-primary);
+				border: 3px solid var(--color-primary);
+				background-color: var(--color-primary);
 			}
 		}
 
 		.title {
-			line-height: 1.5;
-			margin-top: 0.2rem;
+			line-height: 1.2;
 			position: relative;
 			font-weight: normal;
 			max-width: 95%;
 			font-size: 1.2rem;
-			color: var(--bulma-primary);
 		}
 	}
 </style>

@@ -1,6 +1,8 @@
 import { GITHUB_API_AUTH_TOKEN } from "astro:env/server";
+import { Logger } from "@utils";
 import { Octokit } from "octokit";
-import { logger } from "@it-astro:logger";
+
+const logger = new Logger("github-rest-client");
 
 export const githubRestClient = (() => {
 	if (!GITHUB_API_AUTH_TOKEN) {

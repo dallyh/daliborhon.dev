@@ -1,0 +1,177 @@
+---
+import * as m from "$messages";
+import "@pagefind/default-ui/css/ui.css";
+---
+
+<site-search>
+	<dialog class="modal modal-bottom sm:modal-middle" aria-label={m.common__search()}>
+		<div class="modal-box overflow-hidden sm:w-11/12 sm:max-w-3xl">
+			<form method="dialog">
+				<button data-close-modal aria-label={m.common__close_btn()} class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2">
+					<span class="sr-only">{m.common__close_btn()}</span>✕
+				</button>
+			</form>
+			<div id="pagefind" class="p-4"></div>
+		</div>
+		<form method="dialog" class="modal-backdrop">
+			<button>close</button>
+		</form>
+	</dialog>
+</site-search>
+
+<script>
+	import { Logger } from "@utils";
+
+	class SiteSearch extends HTMLElement {
+		#logger = new Logger ("search-modal");
+		#pageFindInstance: any = null;
+
+		connectedCallback() {
+			const dialog = this.querySelector("dialog")!;
+			const closeBtn = this.querySelector("[data-close-modal]")!;
+			const trailingSlash = import.meta.env.DEV ? "/" : "";
+
+			const openModal = (event?: Event) => {
+				dialog.showModal();
+				document.documentElement.toggleAttribute("data-search-modal-open", true);
+				this.querySelector("input")?.focus();
+				event?.stopPropagation();
+			};
+
+			// Handle close
+			const closeModal = () => {
+				dialog.close();
+			};
+			closeBtn.addEventListener("click", closeModal);
+
+			// If you want to close on outside click, etc.:
+			dialog.addEventListener("close", () => {
+				document.documentElement.removeAttribute("data-search-modal-open");
+			});
+
+			// Listen for a custom event to open the modal:
+			window.addEventListener("openSearchModal", (e) => openModal(e));
+
+			window.addEventListener("keydown", (e) => {
+				const isInput =
+					document.activeElement instanceof HTMLElement && (["input", "select", "textarea"].includes(document.activeElement.tagName.toLowerCase()) || document.activeElement.isContentEditable);
+				if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
+					dialog.open ? closeModal() : openModal();
+					e.preventDefault();
+				} else if (e.key === "/" && !dialog.open && !isInput) {
+					openModal();
+					e.preventDefault();
+				}
+			});
+
+			// Lazy-init Pagefind
+			const initPagefind = () => {
+				const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+				onIdle(async () => {
+					// @ts-ignore - could not find types for this import
+					const { PagefindUI } = await import("@pagefind/default-ui");
+
+					if (this.#pageFindInstance !== null) {
+						this.#logger.debug("Pagefind instance is already initialized.");
+						return;
+					}
+
+					this.#pageFindInstance = new PagefindUI({
+						element: "#pagefind",
+						baseUrl: import.meta.env.BASE_URL,
+						bundlePath: import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
+						showImages: false,
+						showSubResults: false,
+						processResult: function (result: any) {
+							if (result?.meta?.image) {
+								let resultBase = new URL(result.url, String(window.location));
+								let remappedImage = new URL(result.meta.image, resultBase);
+
+								if (remappedImage.hostname !== window.location.hostname) {
+									result.meta.image = remappedImage.toString();
+								} else {
+									result.meta.image = remappedImage.pathname + trailingSlash;
+								}
+							}
+						},
+					});
+				});
+			};
+
+			initPagefind();
+		}
+
+		disconnectedCallback() {
+			if (this.#pageFindInstance) {
+				this.#pageFindInstance.destroy();
+			}
+		}
+	}
+
+	customElements.define("site-search", SiteSearch);
+</script>
+
+<style is:global>
+	[data-theme="light"] {
+		/* Use DaisyUI's "primary" for Pagefind primary color */
+		--pagefind-ui-primary: var(--color-primary);
+		/* Use DaisyUI base-content for text color */
+		--pagefind-ui-text: var(--color-base-content);
+		/* Use DaisyUI base-100 for background */
+		--pagefind-ui-background: var(--color-base-100);
+		/* Use DaisyUI base-200 or base-300 for borders */
+		--pagefind-ui-border: var(--color-primary);
+		--pagefind-ui-tag: var(--color-base-200);
+		--pagefind-ui-border-width: 2px;
+		--pagefind-ui-border-radius: 8px;
+		--pagefind-ui-image-border-radius: 8px;
+		--pagefind-ui-font: sans-serif;
+	}
+
+	[data-theme="dark"] {
+		--pagefind-ui-primary: var(--color-primary);
+		--pagefind-ui-text: var(--color-base-content);
+		--pagefind-ui-background: var(--color-base-100);
+		--pagefind-ui-border: var(--color-primary);
+		--pagefind-ui-tag: var(--color-base-200);
+		--pagefind-ui-border-width: 2px;
+		--pagefind-ui-border-radius: 8px;
+		--pagefind-ui-image-border-radius: 8px;
+		--pagefind-ui-font: sans-serif;
+	}
+
+	#pagefind {
+		.pagefind-ui__search-input {
+			border-color: var(--color-base-content);
+			border-radius: var(--rounded-btn, 0.5rem);
+			border-width: 1px;
+
+			&:focus-within,
+			&:focus-visible,
+			&:focus {
+				outline: none;
+				border-color: var(--color-primary) !important;
+				box-shadow: none !important;
+			}
+		}
+
+		.pagefind-ui__drawer {
+			position: relative;
+			margin-top: 1rem;
+			gap: 1rem;
+			overflow-y: scroll;
+			max-height: calc(100vh - 15rem);
+		}
+
+		@media (min-width: 640px) {
+			.pagefind-ui__drawer {
+				flex-wrap: nowrap;
+			}
+
+			.pagefind-ui__filter-panel {
+				position: sticky;
+				top: 1rem;
+			}
+		}
+	}
+</style>

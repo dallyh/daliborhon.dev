@@ -4,7 +4,7 @@ import "@pagefind/default-ui/css/ui.css";
 ---
 
 <site-search>
-	<dialog class="modal modal-bottom sm:modal-middle" aria-label={m.common__search()}>
+	<dialog id="searchDialog" class="modal modal-bottom sm:modal-middle" aria-label={m.common__search()}>
 		<div class="modal-box overflow-hidden sm:w-11/12 sm:max-w-3xl">
 			<form method="dialog">
 				<button data-close-modal aria-label={m.common__close_btn()} class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2">
@@ -23,16 +23,21 @@ import "@pagefind/default-ui/css/ui.css";
 	import { Logger } from "@utils";
 
 	class SiteSearch extends HTMLElement {
-		#logger = new Logger ("search-modal");
+		#logger = new Logger("search-modal");
 		#pageFindInstance: any = null;
+		#dialog = this.querySelector("dialog");
 
 		connectedCallback() {
-			const dialog = this.querySelector("dialog")!;
 			const closeBtn = this.querySelector("[data-close-modal]")!;
 			const trailingSlash = import.meta.env.DEV ? "/" : "";
 
+			if (!this.#dialog) {
+				this.#logger.error("Dialog element was not found.");
+				return;
+			}
+
 			const openModal = (event?: Event) => {
-				dialog.showModal();
+				this.#dialog?.showModal();
 				document.documentElement.toggleAttribute("data-search-modal-open", true);
 				this.querySelector("input")?.focus();
 				event?.stopPropagation();
@@ -40,25 +45,26 @@ import "@pagefind/default-ui/css/ui.css";
 
 			// Handle close
 			const closeModal = () => {
-				dialog.close();
+				this.#dialog?.close();
 			};
+
 			closeBtn.addEventListener("click", closeModal);
 
 			// If you want to close on outside click, etc.:
-			dialog.addEventListener("close", () => {
+			this.#dialog?.addEventListener("close", () => {
 				document.documentElement.removeAttribute("data-search-modal-open");
 			});
 
 			// Listen for a custom event to open the modal:
-			window.addEventListener("openSearchModal", (e) => openModal(e));
+			window.addEventListener("open-search-modal", (e) => openModal(e));
 
 			window.addEventListener("keydown", (e) => {
 				const isInput =
 					document.activeElement instanceof HTMLElement && (["input", "select", "textarea"].includes(document.activeElement.tagName.toLowerCase()) || document.activeElement.isContentEditable);
 				if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
-					dialog.open ? closeModal() : openModal();
+					this.#dialog?.open ? closeModal() : openModal();
 					e.preventDefault();
-				} else if (e.key === "/" && !dialog.open && !isInput) {
+				} else if (e.key === "/" && !this.#dialog?.open && !isInput) {
 					openModal();
 					e.preventDefault();
 				}
@@ -102,6 +108,9 @@ import "@pagefind/default-ui/css/ui.css";
 		}
 
 		disconnectedCallback() {
+			this.#dialog?.open ?? this.#dialog?.close();
+			this.#dialog = null;
+
 			if (this.#pageFindInstance) {
 				this.#pageFindInstance.destroy();
 			}

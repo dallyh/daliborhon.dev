@@ -1,0 +1,11 @@
+---
+import type { DevGridItem } from "./DevGridItem.astro";
+
+export interface Props {
+	children: DevGridItem | DevGridItem[];
+}
+---
+
+<ul class="not-prose m-0 grid list-none grid-cols-4 place-items-center gap-4 p-0">
+	<slot />
+</ul>

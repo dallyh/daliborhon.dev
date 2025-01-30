@@ -1,11 +1,12 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@i18n-config";
 import { getDevOrProdContentPath } from "@utils";
-import { glob, type Loader, type LoaderContext } from "astro/loaders";
-//import { logger as _logger } from "@it-astro:logger"; // Do not use here
+import { Logger } from "@utils";
+import { type Loader, type LoaderContext, glob } from "astro/loaders";
 
+const logger = new Logger("content-config");
 const path = getDevOrProdContentPath();
-console.info(`Content config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
+logger.info(`Using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({
@@ -94,7 +95,7 @@ type LanguageColor = {
 function ghLanguagesLoader(): Loader {
 	return {
 		name: "gh-lang-loader",
-		load: async ({ store, logger, parseData, meta, generateDigest }: LoaderContext) => {
+		load: async ({ store, logger, parseData, generateDigest }: LoaderContext) => {
 			logger.info("Loading github language colors...");
 
 			const response = await fetch("https://raw.githubusercontent.com/ozh/github-colors/master/colors.json");
@@ -104,8 +105,6 @@ function ghLanguagesLoader(): Loader {
 				color: data[key].color,
 			}));
 
-			store.clear();
-
 			for (const item of langs) {
 				const data = await parseData({
 					id: item.id,
@@ -114,9 +113,12 @@ function ghLanguagesLoader(): Loader {
 					},
 				});
 
+				const digest = generateDigest(data);
+
 				store.set({
 					id: item.id,
 					data: data,
+					digest: digest,
 				});
 			}
 		},

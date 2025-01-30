@@ -14,19 +14,14 @@ const { imgClass, img = profilePicture, ...attrs } = Astro.props;
 const isPrint = Astro.locals.isPrint;
 ---
 
-{!isPrint && <Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...attrs} />}
+{
+	!isPrint && (
+		<div class="avatar">
+			<div class="ring-primary ring-offset-base-100 not-prose w-40 rounded-full ring ring-offset-2">
+				<Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...attrs} />
+			</div>
+		</div>
+	)
+}
 
 {isPrint && <Image src={img} style="width: 10rem; height: 11rem;" alt={m.common__profile_picture()} {...attrs} />}
-
-<style>
-	.profile-picture {
-		position: relative;
-		display: block;
-		object-fit: cover;
-		height: 100%;
-		border-radius: 50%;
-		outline: 4px solid var(--bulma-primary);
-		max-width: 11rem;
-		border: 4px solid transparent;
-	}
-</style>

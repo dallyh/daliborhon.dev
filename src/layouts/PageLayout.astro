@@ -1,11 +1,11 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
-import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
+import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
+import Drawer from "@components/astro/global/Drawer.astro";
 import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
-import Navigation from "@components/astro/global/Navigation.astro";
 import MainLayout from "./MainLayout.astro";
 
 interface Props {
@@ -21,18 +21,19 @@ const locale = Astro.currentLocale!;
 
 <MainLayout title={title} description={description}>
 	<HeadHrefLangs slot="hreflangs" />
-	<Navigation slot="header" />
-	<main>
-		{
-			showCrumbs && (
-				<BreadCrumbs>
-					<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
-					<slot name="crumbs" />
-				</BreadCrumbs>
-			)
-		}
+	<Drawer>
+		<main>
+			{
+				showCrumbs && (
+					<BreadCrumbs>
+						<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+						<slot name="crumbs" />
+					</BreadCrumbs>
+				)
+			}
 
-		<slot />
-	</main>
-	<Footer />
+			<slot />
+		</main>
+		<Footer />
+	</Drawer>
 </MainLayout>

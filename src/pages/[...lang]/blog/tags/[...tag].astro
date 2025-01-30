@@ -2,9 +2,9 @@
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import BreadCrumbs from "@components/astro/blog/BreadCrumbs.astro";
-import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
+import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import Section from "@components/astro/global/Section.astro";
 import { locales } from "@i18n-config";
 import { getRoutingLocale } from "@i18n/utils";

@@ -1,1 +1,1 @@
-export * from "./generateOgImage";
+export * from "./generate-og-image";

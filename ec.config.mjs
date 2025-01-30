@@ -4,8 +4,5 @@ export default defineEcConfig({
 	themes: ["dracula-soft", "github-light"],
 	themeCssSelector: (theme) => {
 		return `[data-theme='${theme.type}']`;
-	},
-	styleOverrides: {
-		borderRadius: "var(--border-radius)",
-	},
+	}
 });

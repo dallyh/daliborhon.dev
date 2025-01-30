@@ -1,41 +1,17 @@
----
-import { Icon } from "astro-icon/components";
----
-
-<ul class="is-flex gap-1">
+<ul class="flex gap-4">
 	<li>
-		<a href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
-			<span class="icon is-large">
-				<i class="fa-brands fa-github fa-2x"></i>
-			</span>
+		<a class="link link-accent" href="https://github.com/dallyh" title="GitHub" aria-label="GitHub" target="_blank">
+			<i class="fa-brands fa-github fa-2x"></i>
 		</a>
 	</li>
 	<li>
-		<a href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
-			<span class="icon is-large">
-				<i class="fa-brands fa-linkedin fa-2x"></i>
-			</span>
+		<a class="link link-accent" href="https://www.linkedin.com/in/dalibor-hon/" title="LinkedIn" aria-label="LinkedIn" target="_blank">
+			<i class="fa-brands fa-linkedin fa-2x"></i>
 		</a>
 	</li>
 	<li>
-		<a href="mailto:contact@daliborhon.dev" title="Email" aria-label="email">
-			<span class="icon is-large">
-				<i class="fas fa-envelope fa-2x"></i>
-			</span>
+		<a class="link link-accent" href="mailto:contact@daliborhon.dev" title="Email" aria-label="email">
+			<i class="fas fa-envelope fa-2x"></i>
 		</a>
 	</li>
 </ul>
-
-<style>
-	a {
-		color: var(--bulma-content-heading-color);
-
-		&:hover {
-			color: var(--bulma-link-text);
-		}
-	}
-
-	ul {
-		list-style: none;
-	}
-</style>

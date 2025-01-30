@@ -14,7 +14,7 @@ zerops:
           deployFiles:
               - libsql/target/release/~sqld
           cache:
-              - target
+              - libsql/target
               - ~/.cargo
       run:
           os: alpine
@@ -41,8 +41,10 @@ zerops:
               ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
               PREVIEW: false
           buildCommands:
-              - pnpm install
+              - pnpm install --shamefully-hoist
               - pnpm build:remote
+          cache:
+              - node_modules
           deployFiles:
               - dist
               - node_modules
@@ -75,8 +77,10 @@ zerops:
               ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
               PREVIEW: true # Builds preview posts
           buildCommands:
-              - pnpm install
+              - pnpm install --shamefully-hoist
               - pnpm run build:remote # Building remote, but using local preseeded file
+          cache:
+              - node_modules
           deployFiles:
               - dist
               - node_modules

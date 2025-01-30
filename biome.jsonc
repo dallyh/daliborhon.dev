@@ -1,0 +1,49 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+    "files": {
+        "include": ["src/**", "messages/**", "biome.jsonc", "*.ts", "*.mjs", "*.yml"],
+        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css"]
+    },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
+    "organizeImports": {
+        "enabled": true
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": false,
+            "style": {
+                "useNodejsImportProtocol": "error",
+                "useImportType": "error"
+            },
+            "suspicious": {
+                "noConsoleLog": "warn"
+            },
+            "correctness": {
+                "noUnusedVariables": "info",
+                "noUnusedFunctionParameters": "info",
+                "noUnusedImports": "warn"
+            }
+        }
+    },
+    "formatter": {
+        "enabled": false
+    },
+    "overrides": [
+        {
+            "include": ["*.astro"],
+            "linter": {
+                "rules": {
+                    "correctness": {
+                        "noUnusedVariables": "off",
+                        "noUnusedImports": "off"
+                    }
+                }
+            }
+        }
+    ]
+}

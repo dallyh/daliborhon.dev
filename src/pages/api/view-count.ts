@@ -1,6 +1,6 @@
+import { PageView, count, db, eq } from "astro:db";
 import type { APIRoute } from "astro";
 import { isbot } from "isbot";
-import { PageView, eq, db, count } from "astro:db";
 
 export const prerender = false;
 

@@ -17,12 +17,12 @@ function isPage<T>(value: any): value is Page<T> {
 }
 ---
 
-<div class="fixed-grid has-3-cols has-1-cols-mobile">
-	<ul class="grid">
+<div class="flex flex-col">
+	<ul class="grid grid-cols-1 gap-3 md:grid-cols-3">
 		{
 			Array.isArray(posts) &&
 				posts.map((post) => (
-					<li class="cell">
+					<li>
 						<PostPreview post={post} />
 					</li>
 				))
@@ -30,7 +30,7 @@ function isPage<T>(value: any): value is Page<T> {
 		{
 			isPage(posts) &&
 				posts.data.map((post) => (
-					<li class="cell">
+					<li>
 						<PostPreview post={post} />
 					</li>
 				))

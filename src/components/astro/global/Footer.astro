@@ -5,95 +5,54 @@ import * as m from "$messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 import ExternalLink from "./ExternalLink.astro";
+import UptimeStatus from "@components/react/UptimeStatus";
 
 const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
-const repoHref = "https://github.com/dallyh/daliborhon.dev";
 ---
 
-<footer class="footer section">
-	<hr />
-	<div class="level">
-		<div class="is-flex">
-			<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
-				<span class="icon is-medium"><i class="fas fa-lg fa-solid fa-square-rss"></i></span>
-			</a>
-			<a class="astro" href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
-				<Icon name="astro-icon-dark" />
-			</a>
-			<a class="zerops" href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
-				<Icon name="zerops-logo-symbol" />
-			</a>
-			<div class="analytics">
-				<a href={getRelativeLocaleUrl(locale, "/analytics")}
-					><span class="icon-text">
-						<span class="icon">
-							<i class="fas fa-chart-simple"></i>
-						</span>
-						<span>Analytics</span>
-					</span></a
-				>
-			</div>
+<footer class="footer bg-base-200 mt-4 mb-4 flex flex-col items-center justify-center rounded-xl p-4 md:flex-row md:justify-between">
+	<nav class="footer-start flex flex-wrap items-center justify-center gap-4 md:place-self-center md:justify-self-end">
+		<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
+			<i class="fas fa-lg fa-solid fa-square-rss"></i>
+		</a>
+		<a class="astro" href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
+			<Icon name="astro-icon-dark" />
+		</a>
+		<a class="zerops" href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
+			<Icon name="zerops-logo-symbol" />
+		</a>
+		<div class="analytics">
+			<a class="link-primary link-hover inline-flex items-center justify-center gap-1" href={getRelativeLocaleUrl(locale, "/analytics")}
+				><span><i class="fas fa-chart-simple"></i></span><span>Analytics</span></a
+			>
 		</div>
-		<div>
-			<p>© {new Date().getFullYear()} - Dalibor Hon</p>
-			{
-				APP_VERSION_NAME && (
-					<p class="app">
-						<ExternalLink href={tagHref} title={APP_VERSION_NAME} attrs={{ "aria-label": APP_VERSION_NAME }}>
-							{APP_VERSION_NAME}
-						</ExternalLink>
-					</p>
-				)
-			}
-			{
-				!APP_VERSION_NAME && (
-					<p class="app">
-						<ExternalLink href={tagHref} title={m.common__repository()} attrs={{ "aria-label": m.common__repository() }}>
-							{m.common__repository()}
-						</ExternalLink>
-					</p>
-				)
-			}
-		</div>
-	</div>
+		<UptimeStatus client:visible />
+	</nav>
+	<aside class="flex w-full flex-col items-center justify-center md:w-auto">
+		<p>© {new Date().getFullYear()} - Dalibor Hon</p>
+		{
+			APP_VERSION_NAME && (
+				<p class="text-center text-sm">
+					<ExternalLink href={tagHref} title={APP_VERSION_NAME} aria-label={APP_VERSION_NAME}>
+						{APP_VERSION_NAME}
+					</ExternalLink>
+				</p>
+			)
+		}
+		{
+			!APP_VERSION_NAME && (
+				<p class="text-center text-sm">
+					<ExternalLink href={tagHref} title={m.common__repository()} aria-label={m.common__repository()}>
+						{m.common__repository()}
+					</ExternalLink>
+				</p>
+			)
+		}
+	</aside>
 </footer>
 
 <style>
-	.is-flex {
-		gap: 1rem;
-		justify-content: center;
-		align-items: center;
-
-		> a {
-			display: inline-flex;
-			justify-content: center;
-			align-items: center;
-
-			&:hover {
-				text-decoration: none;
-			}
-		}
-
-		.analytics {
-			a {
-				font-size: 0.8rem;
-			}
-		}
-	}
-
-	.app {
-		font-size: 0.75rem;
-		text-align: center;
-	}
-
-	footer {
-		--bulma-footer-padding: 1rem;
-		background-color: var(--bulma-scheme-main);
-		padding-top: 0rem;
-		padding-bottom: 1rem;
-	}
-
 	.astro {
 		color: unset;
 

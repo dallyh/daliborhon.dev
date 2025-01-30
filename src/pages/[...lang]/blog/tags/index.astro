@@ -3,8 +3,8 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "$messages";
-import BreadCrumbsItem from "@components/astro/blog/BreadCrumbsItem.astro";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import Section from "@components/astro/global/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getPostsByTag } from "@utils/content";
@@ -44,25 +44,18 @@ const posts = await getPostsByTag(locale, search);
 		{
 			tags && tags.length !== 0 && (
 				<Fragment>
-					<div class="tabs is-toggle">
-						{tags && (
-							<ul class="tags">
-								{tags.map(async (tag) => {
-									return (
-										<li class={`${tag.id === search ? "is-active" : ""}`}>
-											<a class="has-text-weight-bold is-size-6 tag mb-2" href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
-												<span class="icon-text">
-													<span class="icon">
-														<i class="fas fa-tag" />
-													</span>
-													<span>{tag.id}</span>
-												</span>
-											</a>
-										</li>
-									);
-								})}
-							</ul>
-						)}
+					<div role="tablist" class="tabs tabs-box mb-4 max-w-max">
+						{tags &&
+							tags.map(async (tag) => {
+								return (
+									<a role="tab" class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active" : ""}`} href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
+										<span>
+											<i class="fas fa-tag" />
+										</span>
+										<span>{tag.id}</span>
+									</a>
+								);
+							})}
 					</div>
 					{posts && posts.length !== 0 && (
 						<div>
@@ -72,7 +65,7 @@ const posts = await getPostsByTag(locale, search);
 					{posts === undefined ||
 						(posts.length === 0 && (
 							<div>
-								<h2 class="title is-size-5"> {m.blog__no_posts()}</h2>
+								<h2 class="text-xl font-bold"> {m.blog__no_posts()}</h2>
 							</div>
 						))}
 				</Fragment>
@@ -80,15 +73,3 @@ const posts = await getPostsByTag(locale, search);
 		}
 	</Section>
 </PageLayout>
-
-<style>
-	.tabs {
-		overflow-x: auto;
-		flex-wrap: wrap;
-		.tags {
-			display: flex;
-			flex-wrap: wrap;
-			flex-shrink: 1;
-		}
-	}
-</style>

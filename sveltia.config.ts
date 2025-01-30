@@ -1,10 +1,13 @@
 import { removeTrailingSlash } from "@utils";
-import { locales, type AllowedLocales } from "./i18n.config";
-import { siteConfig } from "./site.config";
 import { getDevOrProdContentPath } from "@utils";
+import { type AllowedLocales, locales } from "./i18n.config";
+import { siteConfig } from "./site.config";
+import { Logger } from "@utils";
+
+const logger = new Logger("sveltia-cms-config");
 
 const path = getDevOrProdContentPath();
-console.log(`Sveltia CMS config -> using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
+logger.info(`Using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, dev: ${import.meta.env.DEV}).`);
 
 const localeSettings = siteConfig.i18n.locales;
 
@@ -19,10 +22,10 @@ export function createCmsConfig() {
 	const branch = import.meta.env.DEV ? "dev" : "main";
 
 	if (import.meta.env.DEV) {
-		console.warn("[getCmsConfig] CMS running in development mode!");
-		console.log("[getCmsConfig] CMS config OAuth Endpoint: " + `${siteUrl}/cms/${authEndpoint}`);
-		console.log("[getCmsConfig] CMS config siteUrl: " + siteUrl);
-		console.log("[getCmsConfig] CMS config branch: " + branch);
+		logger.warn("[createCmsConfig] CMS running in development mode!");
+		logger.info("[createCmsConfig] CMS config OAuth Endpoint: " + `${siteUrl}/cms/${authEndpoint}`);
+		logger.info("[createCmsConfig] CMS config siteUrl: " + siteUrl);
+		logger.info("[createCmsConfig] CMS config branch: " + branch);
 	}
 
 	const tagTranslationsArray = Object.keys(localeSettings).map((key) => {

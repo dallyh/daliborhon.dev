@@ -39,6 +39,7 @@ zerops:
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
               ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
+              UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: false
           buildCommands:
               - pnpm install --shamefully-hoist
@@ -75,6 +76,7 @@ zerops:
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
               ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
+              UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: true # Builds preview posts
           buildCommands:
               - pnpm install --shamefully-hoist

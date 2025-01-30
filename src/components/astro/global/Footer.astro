@@ -5,13 +5,14 @@ import * as m from "$messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 import ExternalLink from "./ExternalLink.astro";
+import UptimeStatus from "@components/react/UptimeStatus";
 
 const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
 ---
 
-<footer class="footer bg-base-200 mt-4 mb-4 flex items-center justify-center rounded-xl p-4 md:justify-between">
-	<nav class="footer-start grid-flow-col items-center justify-center gap-4 md:place-self-center md:justify-self-end">
+<footer class="footer bg-base-200 mt-4 mb-4 flex flex-col items-center justify-center rounded-xl p-4 md:flex-row md:justify-between">
+	<nav class="footer-start flex flex-wrap items-center justify-center gap-4 md:place-self-center md:justify-self-end">
 		<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
 			<i class="fas fa-lg fa-solid fa-square-rss"></i>
 		</a>
@@ -26,6 +27,7 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 				><span><i class="fas fa-chart-simple"></i></span><span>Analytics</span></a
 			>
 		</div>
+		<UptimeStatus client:visible />
 	</nav>
 	<aside class="flex w-full flex-col items-center justify-center md:w-auto">
 		<p>© {new Date().getFullYear()} - Dalibor Hon</p>

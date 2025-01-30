@@ -6,6 +6,9 @@ import { removeTrailingSlash, slugifyStr } from "@utils";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
 import calculateReadingTime from "reading-time";
+import { Logger } from "@utils";
+
+const logger = new Logger("content-utils");
 
 // https://jahir.dev/blog/astro-reading-time
 export const getReadingTime = (text: string): string | undefined => {
@@ -128,7 +131,7 @@ export async function getPostsByTag(locale: string, tagId: string) {
 	});
 
 	if (posts === undefined || posts.length === 0) {
-		console.warn(`getPostsByTag posts was empty.`);
+		logger.warn(`getPostsByTag posts was empty.`);
 	}
 
 	return posts;
@@ -168,7 +171,7 @@ export async function getTagById(tagId: string | undefined) {
 	const tag = await getEntry("tags", tagId);
 
 	if (tag === undefined) {
-		console.warn(`getTagById: tag ${tagId} was undefined.`);
+		logger.warn(`getTagById: tag ${tagId} was undefined.`);
 	}
 
 	return tag;

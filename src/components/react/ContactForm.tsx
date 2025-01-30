@@ -41,7 +41,7 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 		setValue("subject", `${userName} sent a message from daliborhon.dev`);
 	}, [userName]);
 
-	const onSubmit = async (formData: FieldValues, e: any) => {
+	const onSubmit = async (formData: FieldValues) => {
 		const token = await captchaRef.current
 			?.execute({ async: true })
 			.then((res) => res.response)

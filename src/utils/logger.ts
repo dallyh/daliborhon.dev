@@ -22,7 +22,7 @@ class Logger {
 		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "info" }) + " " + message}`);
 	}
-	
+
 	warn(message: string) {
 		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "warn" }) + " " + message}`);
@@ -34,7 +34,7 @@ class Logger {
 	}
 
 	debug(message: string) {
-		if (!this.isDev) {
+		if (this.isDev) {
 			// biome-ignore lint: logger
 			console.log(`${this.#getEventPrefix({ level: "debug" }) + " " + message}`);
 		}

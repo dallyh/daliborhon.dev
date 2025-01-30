@@ -56,7 +56,6 @@ const posts = await getPostsByTag(locale, search);
 									</a>
 								);
 							})}
-
 					</div>
 					{posts && posts.length !== 0 && (
 						<div>
@@ -66,7 +65,7 @@ const posts = await getPostsByTag(locale, search);
 					{posts === undefined ||
 						(posts.length === 0 && (
 							<div>
-								<h2 class="font-bold text-xl"> {m.blog__no_posts()}</h2>
+								<h2 class="text-xl font-bold"> {m.blog__no_posts()}</h2>
 							</div>
 						))}
 				</Fragment>

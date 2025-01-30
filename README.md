@@ -21,6 +21,7 @@ I guess for experienced developers a lot of things in this repo will not make an
 Deployments are done on [Zerops](https://zerops.io) for all new tags containing `cms-*` (automatically by [Sveltia](https://github.com/sveltia/sveltia-cms)) or `deploy-*` (manually).
 
 ## Database
+
 Required env vars:
 
 LIBSQL_BOTTOMLESS_ENDPOINT=https://storage-prg1.zerops.io

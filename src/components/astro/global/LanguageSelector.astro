@@ -68,8 +68,11 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 	import { siteConfig } from "@site-config";
 	import { navigate } from "astro:transitions/client";
 	import cookie from "js-cookie";
+	import { Logger } from "@utils";
 
 	class LanguageSelect extends HTMLElement {
+		#logger = new Logger("language-select");
+
 		connectedCallback() {
 			const configCookie = siteConfig.i18n.localeCookie;
 			const select = this.querySelector("select");
@@ -91,7 +94,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 					const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language! as AllowedLocales;
 					cookie.set(configCookie.name, lang, { expires: configCookie.expDays });
 					const next = e.currentTarget.value + window.location.search;
-					console.log("Navigating to: " + next);
+					this.#logger.info("Navigating to: " + next);
 					navigate(next);
 				}
 			});

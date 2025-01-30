@@ -35,7 +35,7 @@ export default function ViewCount({ url }: ViewCountProps) {
 	return (
 		<Fragment>
 			<span className="mr-1">{m.common__view_count()}:</span>
-			{isLoading && <span className="ml-1 flex skeleton h-4 w-8"></span>}
+			{isLoading && <span className="skeleton ml-1 flex h-4 w-8"></span>}
 			{!isLoading && <span>{data.count}</span>}
 		</Fragment>
 	);

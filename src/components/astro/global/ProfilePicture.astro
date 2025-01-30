@@ -17,7 +17,7 @@ const isPrint = Astro.locals.isPrint;
 {
 	!isPrint && (
 		<div class="avatar">
-			<div class="ring-primary ring-offset-base-100 w-40 rounded-full ring ring-offset-2 not-prose">
+			<div class="ring-primary ring-offset-base-100 not-prose w-40 rounded-full ring ring-offset-2">
 				<Image class:list={["profile-picture", imgClass]} src={img} alt={m.common__profile_picture()} {...attrs} />
 			</div>
 		</div>

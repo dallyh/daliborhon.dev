@@ -53,7 +53,7 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 			<p className="mb-2">
 				{m.analytics__total_views()}:{" "}
 				<b>
-					{isPending && <span className="skeleton">0</span>}
+					{isPending && <span className="skeleton">0000</span>}
 					{!isPending && <span>{data.totalViews}</span>}
 				</b>
 			</p>

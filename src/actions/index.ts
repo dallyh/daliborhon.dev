@@ -1,7 +1,7 @@
-import { Logger } from "@utils";
 import { ActionError, defineAction } from "astro:actions";
 import { PageView, db } from "astro:db";
 import { z } from "astro:schema";
+import { Logger } from "@utils";
 import { isbot } from "isbot";
 
 const logger = new Logger("actions\\index.ts");

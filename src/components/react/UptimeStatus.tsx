@@ -1,5 +1,6 @@
 import { keepPreviousData, QueryClient, useQuery } from "@tanstack/react-query";
 import { Logger } from "@utils";
+import { useEffect, useState } from "react";
 
 type Status = "up" | "down" | undefined;
 
@@ -18,6 +19,8 @@ const fetchStatus = async (): Promise<Status> => {
 };
 
 export default function UptimeStatus() {
+	const [isLoading, setIsLoading] = useState(true);
+
 	const { isPending, data, isError, error } = useQuery(
 		{
 			queryKey: ["uptimeStatus"],
@@ -28,6 +31,11 @@ export default function UptimeStatus() {
 		queryClient,
 	);
 
+	// Prevent hydration errors
+	useEffect(()=> {
+		setIsLoading(isPending);
+	},[isPending])
+
 	if (isError || error) {
 		logger.error("Failed to fetch status: " + error);
 		return;
@@ -35,8 +43,8 @@ export default function UptimeStatus() {
 
 	return (
 		<a className="inline-grid *:[grid-area:1/1]" target="_blank" href="https://status.daliborhon.dev">
-			<div className={`status ${isPending? "" : cls[data ?? "down"]} animate-ping`}></div>
-			<div className={`status ${isPending? "" : cls[data ?? "down"]}`}></div>
+			<div className={`status ${isLoading ? "" : cls[data ?? "down"]} animate-ping`}></div>
+			<div className={`status ${isLoading ? "" : cls[data ?? "down"]}`}></div>
 		</a>
 	);
 }

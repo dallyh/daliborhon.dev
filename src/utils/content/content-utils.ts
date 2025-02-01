@@ -3,10 +3,10 @@ import { getCollection, getEntry } from "astro:content";
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from "astro:i18n";
 import type { AllowedLocales } from "@i18n-config";
 import { removeTrailingSlash, slugifyStr } from "@utils";
+import { Logger } from "@utils";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
 import calculateReadingTime from "reading-time";
-import { Logger } from "@utils";
 
 const logger = new Logger("content-utils");
 

@@ -1,4 +1,4 @@
-import { keepPreviousData, QueryClient, useQuery } from "@tanstack/react-query";
+import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Logger } from "@utils";
 
 type Status = "up" | "down" | undefined;
@@ -35,8 +35,8 @@ export default function UptimeStatus() {
 
 	return (
 		<a className="inline-grid *:[grid-area:1/1]" target="_blank" href="https://status.daliborhon.dev">
-			<div className={`status ${isPending? "" : cls[data ?? "down"]} animate-ping`}></div>
-			<div className={`status ${isPending? "" : cls[data ?? "down"]}`}></div>
+			<div className={`status ${isPending ? "" : cls[data ?? "down"]} animate-ping`}></div>
+			<div className={`status ${isPending ? "" : cls[data ?? "down"]}`}></div>
 		</a>
 	);
 }

@@ -121,6 +121,8 @@ export function createCmsConfig() {
 				i18n: true,
 				slug: "{{year}}-{{month}}-{{day}}-{{title | localize}}",
 				format: "yaml-frontmatter",
+				media_folder: "/public/assets/uploads/blog/",
+				public_folder: "/assets/uploads/blog/",
 				sortable_fields: ["title", "featured", "hidden", "pubDate"],
 				summary: "{{title}} ({{filename}})",
 				view_groups: [

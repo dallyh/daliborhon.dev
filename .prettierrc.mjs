@@ -6,6 +6,7 @@ export default {
 	useTabs: true,
 	singleQuote: false,
 	trailingComma: "all",
+	endOfLine: "auto",
 	semi: true,
 	overrides: [
 		{

@@ -1,8 +1,8 @@
 import { removeTrailingSlash } from "@utils";
 import { getDevOrProdContentPath } from "@utils";
+import { Logger } from "@utils";
 import { type AllowedLocales, locales } from "./i18n.config";
 import { siteConfig } from "./site.config";
-import { Logger } from "@utils";
 
 const logger = new Logger("sveltia-cms-config");
 

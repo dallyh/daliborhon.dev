@@ -15,7 +15,7 @@ import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import Section from "@components/astro/global/Section.astro";
 import Comments from "@components/react/Comments";
-import ViewCount from "@components/react/PageViews/ViewCount";
+import ViewCount from "@components/astro/blog/ViewCount.astro";
 import type { AllowedLocales } from "@i18n-config";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
@@ -32,7 +32,6 @@ const { pubDate, modDate, title, description } = post.data;
 const relatedTags = await getEntries(post.data.tags);
 const image = getBlogPostImageUrl(locale, post, Astro.url);
 const readingTime = getReadingTime(post.body ?? "");
-const url = Astro.url.pathname;
 
 const layoutProps = {
 	title: `${m.blog__post()}: ${title}`,
@@ -98,11 +97,16 @@ const searchProps = {
 								</span>
 								<span>{readingTime} {m.common__minutes()}</span>
 							</p>
-							<p class="inline-flex items-center">
+							<p>
 								<span class="mr-1">
 									<i class="fa-regular fa-eye"></i>
 								</span>
-								<ViewCount client:load url={url} />
+								<span class="inline-flex">
+									<span class="mr-1">{m.common__view_count()}:</span>
+									<ViewCount server:defer url={Astro.url.pathname}>
+										<span slot="fallback" class="skeleton flex h-5 w-9"></span>
+									</ViewCount>
+								</span>
 							</p>
 							<div class="mt-4"><TagList post={post} /></div>
 						</div>

@@ -1,0 +1,55 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "@daliborhon.dev/i18n/messages";
+import { type AllowedLocales, defaultLocale, config } from "@daliborhon.dev/i18n";
+import MainLayout from "@layouts/MainLayout.astro";
+import { siteConfig } from "@site-config";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	error: unknown;
+}
+
+const { error } = Astro.props;
+
+export const prerender = false;
+let locale = Astro.currentLocale ?? defaultLocale;
+
+const layoutProps = {
+	title: m.error__500(),
+	description: m.error__500(),
+};
+---
+
+<MainLayout {...layoutProps}>
+	<meta name="robots" content="noindex, nofollow" slot="head" />
+	<div class="fixed left-0 top-0 flex h-[100vh] w-[100vw] items-center justify-center p-4">
+		<div class="relative max-w-[560px] leading-[1.1]">
+			<div class="notfound-404 absolute left-[-15px] top-[-110px] z-[-1] flex h-[110px] w-[110px] items-center justify-center md:left-[-140px] md:top-0 md:h-[140px] md:w-[140px]">
+				<Icon class="text-primary h-[100px] w-[100px]" name="document-500" />
+			</div>
+			<h1>500</h1>
+			<h2 class="mb-4">{m.error__500()}</h2>
+			<p class="mb-4">{error instanceof Error ? error.message : m.error__500_unknown()}</p>
+			<div class="join">
+				<button class="join-item btn btn-outline btn-primary" id="backButton" onclick="history.back()"><Icon name="bi:arrow-left" />{m.common__back_btn()}</button>
+				<a class="join-item btn btn-outline btn-primary" href={getRelativeLocaleUrl(locale, "/")}><Icon name="bi:house" />{m.common__home()}</a>
+			</div>
+		</div>
+	</div>
+</MainLayout>
+
+<style>
+	.notfound-404 {
+		&:before {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			transform: scale(1.8);
+			border-radius: 50%;
+			background-color: color-mix(in oklch, var(--color-primary) 10%, transparent 90%);
+			z-index: -1;
+		}
+	}
+</style>

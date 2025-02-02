@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import type { AllowedLocales } from "@daliborhon.dev/i18n";
+
+interface Props {
+	post?: CollectionEntry<"posts">;
+	tags?: CollectionEntry<"tags">[];
+}
+
+const { post, tags } = Astro.props;
+
+const locale = Astro.currentLocale as AllowedLocales;
+---
+
+<ul class="flex list-none flex-wrap gap-3">
+	{
+		tags &&
+			tags.map((tag) => (
+				<li class="badge badge-primary badge-outline">
+					<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
+				</li>
+			))
+	}
+	{
+		post && (
+			<>
+				{(async () => {
+					const relatedTags = await getEntries(post.data.tags);
+					return (
+						<>
+							{relatedTags.map(async (tag) => {
+								return (
+									<li class="badge badge-primary badge-outline">
+										<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
+									</li>
+								);
+							})}
+						</>
+					);
+				})()}
+			</>
+		)
+	}
+</ul>

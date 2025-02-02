@@ -19,6 +19,8 @@ import { loadEnv } from "vite";
 import { astroI18nConfigPaths, defaultLocale, localeKeys } from "./i18n.config";
 import iconConfig from "./icons.config";
 import Logger from "./src/utils/logger";
+import remarkDirective from "remark-directive";
+import remarkAsides from "./src/plugins/remark-asides.mjs";
 
 const logger = new Logger("astro-config");
 
@@ -45,7 +47,6 @@ logger.info(`Using PORT: '${PORT}'`);
 logger.info(`Using PREVIEW: '${PREVIEW}'`);
 
 // https://astro.build/config
-// @ts-check
 export default defineConfig({
 	experimental: {
 		serializeConfig: true,
@@ -64,6 +65,7 @@ export default defineConfig({
 		schema: envVars,
 	},
 	markdown: {
+		remarkPlugins: [remarkDirective, remarkAsides],
 		rehypePlugins: [
 			rehypeSlug,
 			[

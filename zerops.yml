@@ -93,7 +93,6 @@ zerops:
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
               ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
-              ASTRO_DB_APP_TOKEN: ${RUNTIME_ASTRO_DB_APP_TOKEN}
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: true # Builds preview posts
           buildCommands:

@@ -1,0 +1,15 @@
+{
+    "include": ["./src/**/*"],
+    "exclude": ["./dist"],
+    "compilerOptions": {
+        "allowJs": true,
+        "declaration": true,
+        "outDir": "dist",
+        "declarationMap": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    }
+}

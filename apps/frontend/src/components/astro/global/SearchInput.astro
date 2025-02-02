@@ -1,0 +1,23 @@
+---
+import * as m from "@daliborhon.dev/i18n/messages";
+
+interface Props {
+	inDrawer?: boolean;
+}
+
+const { inDrawer = false } = Astro.props;
+---
+
+<button class={`${inDrawer ? "w-full" : ""}`} onclick="window.dispatchEvent(new CustomEvent('open-search-modal'));">
+	<label class={`input input-bordered ${inDrawer ? "" : "input-sm"} flex items-center gap-2`}>
+		<input type="text" class={`grow ${inDrawer ? "" : "max-w-28"}`} placeholder={m.common__search()} />
+		{
+			!inDrawer && (
+				<Fragment>
+					<kbd class="kbd kbd-xs hidden lg:block">ctrl</kbd>
+					<kbd class="kbd kbd-xs hidden lg:block">K</kbd>
+				</Fragment>
+			)
+		}
+	</label>
+</button>

@@ -30,6 +30,23 @@ zerops:
               - port: 8080
                 httpSupport: true
 
+    - setup: libsqld-ubuntu
+      run:
+          base: ubuntu@24.04
+          envVariables:
+              LIBSQL_BOTTOMLESS_ENDPOINT: ${dbstorage_apiUrl}
+              LIBSQL_BOTTOMLESS_BUCKET: ${dbstorage_bucketName}
+              LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION: eu-central-1
+              LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID: ${dbstorage_accessKeyId}
+              LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY: ${dbstorage_secretAccessKey}
+          prepareCommands:
+              - curl --proto '=https' --tlsv1.2 -LsSf https://github.com/tursodatabase/libsql/releases/download/libsql-server-v0.24.31/libsql-server-installer.sh | sh
+              - mv /root/.cargo/bin/sqld /usr/local/bin/sqld
+          start: sqld --enable-bottomless-replication --http-listen-addr 0.0.0.0:8080
+          ports:
+              - port: 8080
+                httpSupport: true
+
     - setup: frontend
       build:
           base: nodejs@22
@@ -76,19 +93,23 @@ zerops:
               OA_GITHUB_CLIENT_ID: ${RUNTIME_OA_GITHUB_CLIENT_ID}
               APP_VERSION_NAME: ${RUNTIME_appVersionName}
               ASTRO_DB_REMOTE_URL: ${RUNTIME_ASTRO_DB_REMOTE_URL}
+              ASTRO_DB_APP_TOKEN: ${RUNTIME_ASTRO_DB_APP_TOKEN}
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: true # Builds preview posts
           buildCommands:
               - pnpm install --shamefully-hoist
-              - pnpm run build:remote # Building remote, but using local preseeded file
+              - pnpm run build # Building remote, but using local preseeded file
           cache:
+              - .turbo
               - node_modules
+              - packages/*/node_modules
+              - apps/*/node_modules
           deployFiles:
-              - dist
-              - node_modules
-              - package.json
-              - src/assets/fonts
-              - db/dev.db
+              - apps/frontend/~dist
+              - apps/frontend/~node_modules
+              - apps/frontend/~package.json
+              - apps/frontend/~src/assets/fonts
+              - apps/frontend/~db/dev.db
       run:
           base: nodejs@22
           ports:

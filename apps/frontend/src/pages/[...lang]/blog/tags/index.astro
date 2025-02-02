@@ -1,0 +1,75 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import * as m from "@daliborhon.dev/i18n/messages";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
+import Section from "@components/astro/global/Section.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { getPostsByTag } from "@utils/content";
+
+export const prerender = false;
+let search = Astro.url.searchParams.get("tag");
+
+const locale = Astro.currentLocale!;
+
+const layoutProps = {
+	title: `Blog - ${m.blog__tags()}`,
+	description: m.blog__blog_site_description(),
+};
+
+const tags = await getCollection("tags");
+if (tags !== undefined) {
+	tags.sort((a, b) => {
+		if (a.id < b.id) return -1;
+		if (a.id > b.id) return 1;
+		return 0;
+	});
+}
+
+if (search === null) {
+	search = tags[0].id;
+}
+const posts = await getPostsByTag(locale, search);
+---
+
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+		<BreadCrumbsItem currentPage={true} label={m.blog__tags()} />
+	</Fragment>
+	<Section id="tags" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
+		{tags && tags.length === 0 && <p>{m.blog__no_tags()}</p>}
+		{
+			tags && tags.length !== 0 && (
+				<Fragment>
+					<div role="tablist" class="tabs tabs-box mb-4 max-w-max">
+						{tags &&
+							tags.map(async (tag) => {
+								return (
+									<a role="tab" class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active" : ""}`} href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
+										<span>
+											<i class="fas fa-tag" />
+										</span>
+										<span>{tag.id}</span>
+									</a>
+								);
+							})}
+					</div>
+					{posts && posts.length !== 0 && (
+						<div>
+							<PostsGrid posts={posts} />
+						</div>
+					)}
+					{posts === undefined ||
+						(posts.length === 0 && (
+							<div>
+								<h2 class="text-xl font-bold"> {m.blog__no_posts()}</h2>
+							</div>
+						))}
+				</Fragment>
+			)
+		}
+	</Section>
+</PageLayout>

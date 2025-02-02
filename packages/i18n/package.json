@@ -1,0 +1,32 @@
+{
+    "name": "@daliborhon.dev/i18n",
+    "version": "1.0.0",
+    "private": "true",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./messages": {
+            "types": "./dist/paraglide/messages.d.ts",
+            "import": "./dist/paraglide/messages.js"
+        },
+        "./runtime": {
+            "types": "./dist/paraglide/runtime.d.ts",
+            "import": "./dist/paraglide/runtime.js"
+        },
+        "./registry": {
+            "types": "./dist/paraglide/registry.d.ts",
+            "import": "./dist/paraglide/registry.js"
+        }
+    },
+    "scripts": {
+        "build": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && tsc --build && echo 'Build complete...'",
+        "watch": "tsc --watch"
+    },
+    "dependencies": {
+        "@inlang/paraglide-js": "2.0.0-beta.16",
+        "typescript": "*"
+    }
+}

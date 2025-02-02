@@ -1,0 +1,25 @@
+{
+    "name": "@daliborhon.dev/integrations",
+    "version": "1.0.0",
+    "private": "true",
+    "type": "module",
+    "exports": {
+        ".": "./dist/index.js",
+        "./astro-remark-asides": "./dist/astro-remark-asides/integration.js"
+    },
+    "scripts": {
+        "build": "tsc --build && echo 'Build complete...'",
+        "watch": "tsc --watch"
+    },
+    "dependencies": {
+        "@daliborhon.dev/i18n": "workspace:^",
+        "hastscript": "^9.0.0",
+        "kleur": "^4.1.5",
+        "remark-directive": "^3.0.1",
+        "typescript": "*",
+        "unist-util-visit": "^5.0.0"
+    },
+    "peerDependencies": {
+        "astro": "^5.0.0"
+    }
+}

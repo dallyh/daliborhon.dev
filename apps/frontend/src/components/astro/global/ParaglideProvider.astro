@@ -1,0 +1,5 @@
+<script>
+	import type { AllowedLocales } from "@daliborhon.dev/i18n";
+	import { defineGetLocale } from "@daliborhon.dev/i18n/runtime";
+	defineGetLocale(() => document.documentElement.lang as AllowedLocales);
+</script>

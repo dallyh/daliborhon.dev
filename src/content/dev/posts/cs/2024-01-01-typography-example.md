@@ -14,6 +14,13 @@ modDate: ""
 
 # H1 For example
 
+:::caution
+```js
+// Test
+
+```
+:::
+
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 
@@ -138,6 +145,7 @@ Inline-style:
 ## Syntax highlight
 
 ```javascript
+<!-- test.js -->
 var s = "JavaScript syntax highlighting";
 var s = "JavaScript syntax highlighting";
 alert(s);

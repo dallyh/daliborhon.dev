@@ -181,5 +181,10 @@
     "analytics__period": "Období",
     "analytics__credits": "Veškeré zásluhy za tuto stránku patří",
     "error__500": "Došlo k chybě na serveru",
-    "error__500_unknown": "Neznámá chyba"
+    "error__500_unknown": "Neznámá chyba",
+    "asides__note_title": "Poznámka",
+    "asides__success_title": "Úspěch",
+    "asides__caution_title": "Pozor",
+    "asides__danger_title": "Varování",
+    "asides__tip_title": "Tip"
 }

@@ -181,5 +181,10 @@
     "analytics__period": "Period",
     "analytics__credits": "All credits for this page goes to",
     "error__500": "An error occured",
-    "error__500_unknown": "Unknown error"
+    "error__500_unknown": "Unknown error",
+    "asides__note_title": "Note",
+    "asides__success_title": "Success",
+    "asides__caution_title": "Caution",
+    "asides__danger_title": "Danger",
+    "asides__tip_title": "Tip"
 }

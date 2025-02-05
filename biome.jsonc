@@ -1,7 +1,7 @@
 {
     "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
     "files": {
-        "include": ["src/**", "messages/**", "biome.jsonc", "*.ts", "*.mjs", "*.yml"],
+        "include": ["apps/**/src/**", "packages/i18n/messages/**", "packages/**", "biome.jsonc", "*.ts", "*.mjs", "*.yml"],
         "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css"]
     },
     "vcs": {

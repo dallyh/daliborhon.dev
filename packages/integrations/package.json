@@ -9,7 +9,7 @@
     },
     "scripts": {
         "build": "tsc --build && echo 'Build complete...'",
-        "watch": "tsc --watch"
+        "dev": "tsc --watch"
     },
     "dependencies": {
         "@daliborhon.dev/i18n": "workspace:^",

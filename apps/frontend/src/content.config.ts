@@ -10,7 +10,7 @@ logger.info(`Using ${path} as path (ENV -> preview: ${import.meta.env.PREVIEW}, 
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/posts` }),
+	loader: glob({ pattern: "**/[^_]*.md", base: `./apps/frontend/src/content/${path}/posts` }),
 	schema: () =>
 		z.object({
 			translationKey: z.string(),
@@ -20,7 +20,7 @@ const posts = defineCollection({
 			hidden: z.boolean().optional(),
 			description: z.string(),
 			featured: z.boolean().default(false).optional(),
-			language: z.enum(locales as [string, ...string[]], {
+			language: z.enum(locales, {
 				errorMap: () => ({
 					message: "Please select the correct locale!",
 				}),
@@ -39,7 +39,7 @@ const posts = defineCollection({
 
 // TO-DO: Find a way to do this automatically with locales.map...
 const tags = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.yaml", base: `./src/content/${path}/tags` }),
+	loader: glob({ pattern: "**/[^_]*.yaml", base: `./apps/frontend/src/content/${path}/tags` }),
 	schema: z.object({
 		id: z.string(),
 		languages: z.object({
@@ -50,11 +50,11 @@ const tags = defineCollection({
 });
 
 const projects = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/${path}/projects` }),
+	loader: glob({ pattern: "**/[^_]*.md", base: `./apps/frontend/src/content/${path}/projects` }),
 	schema: () =>
 		z.object({
 			title: z.string(),
-			language: z.enum(locales as [string, ...string[]], {
+			language: z.enum(locales, {
 				errorMap: () => ({
 					message: "Please select the correct locale!",
 				}),
@@ -68,7 +68,7 @@ const projects = defineCollection({
 });
 
 const projectTags = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.yaml", base: `./src/content/${path}/project-tags` }),
+	loader: glob({ pattern: "**/[^_]*.yaml", base: `./apps/frontend/src/content/${path}/project-tags` }),
 	schema: z.object({
 		id: z.string(),
 		title: z.string(),
@@ -77,7 +77,7 @@ const projectTags = defineCollection({
 });
 
 const resume = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.mdx", base: `./src/content/${path}/resume` }),
+	loader: glob({ pattern: "**/[^_]*.mdx", base: `./apps/frontend/src/content/${path}/resume` }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),

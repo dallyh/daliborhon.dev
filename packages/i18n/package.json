@@ -22,8 +22,9 @@
         }
     },
     "scripts": {
-        "build": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && tsc --build && echo 'Build complete...'",
-        "watch": "tsc --watch"
+        "build": "pnpm run compile:paraglide && tsc --build && echo 'Build complete...'",
+        "compile:paraglide": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
+        "dev": "tsc --watch"
     },
     "dependencies": {
         "@inlang/paraglide-js": "2.0.0-beta.16",

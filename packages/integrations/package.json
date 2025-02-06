@@ -4,22 +4,54 @@
     "private": "true",
     "type": "module",
     "exports": {
-        ".": "./dist/index.js",
-        "./astro-remark-asides": "./dist/astro-remark-asides/integration.js"
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./astro-remark-asides": {
+            "types": "./dist/astro-remark-asides/integration.d.ts",
+            "import": "./dist/astro-remark-asides/integration.js"
+        },
+        "./astro-i18n": {
+            "types": "./dist/astro-i18n/index.js",
+            "import": "./dist/astro-i18n/index.d.ts"
+        },
+        "./astro-i18n/messages": {
+            "types": "./dist/astro-i18n/paraglide/messages.d.ts",
+            "import": "./dist/astro-i18n/paraglide/messages.js"
+        },
+        "./astro-i18n/runtime": {
+            "types": "./dist/astro-i18n/paraglide/runtime.d.ts",
+            "import": "./dist/astro-i18n/paraglide/runtime.js"
+        },
+        "./astro-i18n/registry": {
+            "types": "./dist/astro-i18n/paraglide/registry.d.ts",
+            "import": "./dist/astro-i18n/paraglide/registry.js"
+        },
+        "./astro-i18n/paraglide-middleware": {
+            "import": "./dist/astro-i18n/middlewares/paraglide.js"
+        },
+        "./astro-i18n/i18n-middleware": {
+            "import": "./dist/astro-i18n/middlewares/i18n.js"
+        }
     },
     "scripts": {
-        "build": "tsc --build && echo 'Build complete...'",
+        "build": "pnpm run compile:paraglide && tsc --build && echo 'Build complete...'",
+        "compile:paraglide": "pnpm exec paraglide-js compile --project ./src/astro-i18n/project.inlang --outdir ./src/astro-i18n/paraglide",
         "dev": "tsc --watch"
     },
     "dependencies": {
-        "@daliborhon.dev/i18n": "workspace:^",
+        "@astrojs/sitemap": "^3.2.1",
+        "@inlang/paraglide-js": "2.0.0-beta.16",
         "hastscript": "^9.0.0",
         "kleur": "^4.1.5",
         "remark-directive": "^3.0.1",
+        "sitemap": "^8.0.0",
         "typescript": "*",
         "unist-util-visit": "^5.0.0"
     },
     "peerDependencies": {
-        "astro": "^5.0.0"
+        "astro": "^5.2.0",
+        "vite": "^6.1.0"
     }
 }

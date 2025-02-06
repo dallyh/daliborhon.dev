@@ -4,8 +4,8 @@
  */
 import { visit } from "unist-util-visit";
 import { h } from "hastscript";
-import { locales } from "@daliborhon.dev/i18n";
-import * as m from "@daliborhon.dev/i18n/messages";
+import { locales } from "../astro-i18n/config.js";
+import * as m from "../astro-i18n/paraglide/messages.js";
 
 /**
  * A remark plugin that transforms:

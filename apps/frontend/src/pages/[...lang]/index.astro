@@ -1,5 +1,5 @@
 ---
-import * as m from "@daliborhon.dev/i18n/messages";
+import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import RecentPosts from "@components/astro/blog/RecentPosts.astro";
 import Section from "@components/astro/global/Section.astro";
@@ -9,7 +9,7 @@ import PageLayout from "@layouts/PageLayout.astro";
 import { siteConfig } from "@site-config";
 import { getFilteredPostsCollection, getProjectsByLocale } from "@utils/content";
 
-export { getStaticPaths } from "@daliborhon.dev/i18n";
+export { getStaticPaths } from "@daliborhon.dev/integrations/astro-i18n";
 
 const locale = Astro.currentLocale!;
 

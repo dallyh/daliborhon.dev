@@ -1,15 +1,15 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import * as m from "@daliborhon.dev/i18n/messages";
+import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import Section from "@components/astro/global/Section.astro";
 import ProjectsGrid from "@components/astro/projects/ProjectsGrid.astro";
-import type { AllowedLocales } from "@daliborhon.dev/i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n"; //@daliborhon.dev/i18n
 import PageLayout from "@layouts/PageLayout.astro";
 import { getProjectsByLocale } from "@utils/content";
 
-export { getStaticPaths } from "@daliborhon.dev/i18n";
+export { getStaticPaths } from "@daliborhon.dev/integrations/astro-i18n";
 
 const locale = Astro.currentLocale! as AllowedLocales;
 const projects = await getProjectsByLocale(locale);

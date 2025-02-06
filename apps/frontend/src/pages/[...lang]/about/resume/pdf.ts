@@ -1,8 +1,8 @@
 import { loadRenderers } from "astro:container";
 import { getEntry, render } from "astro:content";
-import * as m from "@daliborhon.dev/i18n/messages";
+import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
-import type { AllowedLocales } from "@daliborhon.dev/i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
 import { Logger } from "@daliborhon.dev/integrations";
 import { createResumePdfFilename } from "@utils";
 import type { APIRoute } from "astro";

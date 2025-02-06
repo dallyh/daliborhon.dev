@@ -1,4 +1,4 @@
-import * as m from "@daliborhon.dev/i18n/messages";
+import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type UrlChartProps = {

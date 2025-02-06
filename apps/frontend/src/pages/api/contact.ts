@@ -1,6 +1,6 @@
 import { CONTACT_FORM_ACCESS_KEY } from "astro:env/server";
-import * as m from "@daliborhon.dev/i18n/messages";
-import type { AllowedLocales } from "@daliborhon.dev/i18n";
+import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
 import type { APIRoute } from "astro";
 
 export const prerender = false;

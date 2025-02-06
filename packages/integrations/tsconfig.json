@@ -1,6 +1,6 @@
 {
-    "include": ["./src/**/*"],
-    "exclude": ["./dist"],
+    "include": ["${configDir}/src/**/*"],
+    "exclude": ["${configDir}/dist/**/*"],
     "compilerOptions": {
         "allowJs": true,
         "declaration": true,

@@ -3,7 +3,6 @@ import db from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
-import sitemap from "@astrojs/sitemap";
 //@ts-ignore missing types
 import rehypeFigure from "@microflash/rehype-figure";
 import tailwindcss from "@tailwindcss/vite";
@@ -16,7 +15,7 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeToc from "rehype-toc";
 import { loadEnv } from "vite";
-import { astroI18nConfigPaths, defaultLocale, localeKeys } from "@daliborhon.dev/i18n";
+import { astroi18nIntegration } from "@daliborhon.dev/integrations/astro-i18n";
 import iconConfig from "./icons.config";
 import { Logger } from "@daliborhon.dev/integrations";
 import { remarkAsidesIntegration } from "@daliborhon.dev/integrations/astro-remark-asides";
@@ -100,42 +99,19 @@ export default defineConfig({
 			theme: "material-theme-palenight",
 		},
 	},
-	i18n: {
-		// @ts-ignore
-		defaultLocale: defaultLocale,
-		// @ts-ignore
-		locales: [...astroI18nConfigPaths],
-		routing: "manual",
-	},
 	integrations: [
+		astroi18nIntegration(),
 		db(),
 		react(),
 		remarkAsidesIntegration(),
 		expressiveCode(),
 		mdx(),
 		pagefind(),
-		sitemap({
-			i18n: {
-				defaultLocale: defaultLocale,
-				locales: {
-					...localeKeys,
-				},
-			},
-			filter: (page) => {
-				return !page.includes("404");
-			},
-		}),
 		icon({
 			...iconConfig,
 		}),
 	],
 	vite: {
-		server: {
-			port: PORT,
-			watch: {
-				ignored: ["./src/paraglide/messages/**", "./project.inlang/cache/**", "./messages/**"],
-			},
-		},
 		plugins: [tailwindcss()],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],

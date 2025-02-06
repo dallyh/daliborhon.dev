@@ -1,4 +1,4 @@
-import type { AllowedLocales } from "@daliborhon.dev/i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type ViewChartProps = {

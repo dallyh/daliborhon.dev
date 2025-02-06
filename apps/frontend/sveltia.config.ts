@@ -1,7 +1,7 @@
 import { removeTrailingSlash } from "@utils";
 import { getDevOrProdContentPath } from "@utils";
 import { Logger } from "@daliborhon.dev/integrations";
-import { type AllowedLocales, locales, config as i18nConfig } from "@daliborhon.dev/i18n";
+import { type AllowedLocales, locales, config as i18nConfig } from "@daliborhon.dev/integrations/astro-i18n";
 
 const logger = new Logger("sveltia-cms-config");
 

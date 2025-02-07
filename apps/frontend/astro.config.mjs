@@ -15,10 +15,11 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeToc from "rehype-toc";
 import { loadEnv } from "vite";
-import { astroi18nIntegration } from "@daliborhon.dev/integrations/astro-i18n";
+import { astroI18nIntegration, createI18nSitemapConfig } from "@daliborhon.dev/integrations/astro-i18n";
 import iconConfig from "./icons.config";
 import { Logger } from "@daliborhon.dev/integrations";
 import { remarkAsidesIntegration } from "@daliborhon.dev/integrations/astro-remark-asides";
+import sitemap from "@astrojs/sitemap";
 
 const logger = new Logger("astro-config");
 
@@ -100,7 +101,7 @@ export default defineConfig({
 		},
 	},
 	integrations: [
-		astroi18nIntegration(),
+		astroI18nIntegration(),
 		db(),
 		react(),
 		remarkAsidesIntegration(),
@@ -110,6 +111,7 @@ export default defineConfig({
 		icon({
 			...iconConfig,
 		}),
+		sitemap(createI18nSitemapConfig()),
 	],
 	vite: {
 		plugins: [tailwindcss()],

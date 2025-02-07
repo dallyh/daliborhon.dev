@@ -64,8 +64,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 </lang-select>
 
 <script>
-	import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
-	import { config } from "@daliborhon.dev/integrations/astro-i18n";
+	import { config, type AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
 	import { navigate } from "astro:transitions/client";
 	import cookie from "js-cookie";
 	import { Logger } from "@daliborhon.dev/integrations";

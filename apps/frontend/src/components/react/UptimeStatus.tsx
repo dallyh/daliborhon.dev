@@ -36,6 +36,7 @@ export default function UptimeStatus() {
 		return;
 	}
 
+	// Prevent hydration errors
 	useEffect(() => {
 		setIsLoading(isPending);
 	}, [isPending]);

@@ -75,7 +75,7 @@
         "@types/js-cookie": "^3.0.6",
         "@types/js-yaml": "^4.0.9",
         "@types/jsdom": "^21.1.7",
-        "@types/node": "^22.13.1",
+        "@types/node": "*",
         "@types/pdfmake": "^0.2.11",
         "@types/react": "^19.0.8",
         "@types/react-dom": "^19.0.3",

@@ -1,5 +1,0 @@
-{
-    "watch": ["src/astro-i18n/messages"],
-    "ext": "json",
-    "exec": "pnpm run compile:paraglide"
-}

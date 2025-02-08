@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { Resvg } from "@resvg/resvg-js";
 import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./templates/post";

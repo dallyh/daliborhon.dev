@@ -1,13 +1,13 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import Section from "@components/astro/global/Section.astro";
-import { locales } from "@daliborhon.dev/integrations/astro-i18n";
-import { getRoutingLocale } from "@daliborhon.dev/integrations/astro-i18n";
+import { locales } from "@daliborhon.dev/integrations/i18n";
+import { getRoutingLocale } from "@daliborhon.dev/integrations/i18n";
 import PageLayout from "@layouts/PageLayout.astro";
 import { getPostsByTag } from "@utils/content";
 

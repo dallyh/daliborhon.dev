@@ -1,5 +1,5 @@
-import { defaultLocale, locales } from "@daliborhon.dev/integrations/astro-i18n";
-import { getRoutingLocale } from "@daliborhon.dev/integrations/astro-i18n";
+import { defaultLocale, locales } from "@daliborhon.dev/integrations/i18n";
+import { getRoutingLocale } from "@daliborhon.dev/integrations/i18n";
 import { getBlogPostSlug, getFilteredPostsCollection } from "@utils/content";
 import { generateOgImageForPost } from "@utils/og";
 import type { APIContext } from "astro";

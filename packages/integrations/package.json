@@ -8,31 +8,27 @@
             "types": "./dist/index.d.ts",
             "import": "./dist/index.js"
         },
-        "./astro-remark-asides": {
-            "types": "./dist/astro-remark-asides/integration.d.ts",
-            "import": "./dist/astro-remark-asides/integration.js"
+        "./i18n": {
+            "types": "./dist/i18n/index.js",
+            "import": "./dist/i18n/index.d.ts"
         },
-        "./astro-i18n": {
-            "types": "./dist/astro-i18n/index.js",
-            "import": "./dist/astro-i18n/index.d.ts"
+        "./i18n/messages": {
+            "types": "./dist/i18n/paraglide/messages.d.ts",
+            "import": "./dist/i18n/paraglide/messages.js"
         },
-        "./astro-i18n/messages": {
-            "types": "./dist/astro-i18n/paraglide/messages.d.ts",
-            "import": "./dist/astro-i18n/paraglide/messages.js"
+        "./i18n/runtime": {
+            "types": "./dist/i18n/paraglide/runtime.d.ts",
+            "import": "./dist/i18n/paraglide/runtime.js"
         },
-        "./astro-i18n/runtime": {
-            "types": "./dist/astro-i18n/paraglide/runtime.d.ts",
-            "import": "./dist/astro-i18n/paraglide/runtime.js"
+        "./i18n/registry": {
+            "types": "./dist/i18n/paraglide/registry.d.ts",
+            "import": "./dist/i18n/paraglide/registry.js"
         },
-        "./astro-i18n/registry": {
-            "types": "./dist/astro-i18n/paraglide/registry.d.ts",
-            "import": "./dist/astro-i18n/paraglide/registry.js"
+        "./i18n/paraglide-middleware": {
+            "import": "./dist/i18n/middlewares/paraglide.js"
         },
-        "./astro-i18n/paraglide-middleware": {
-            "import": "./dist/astro-i18n/middlewares/paraglide.js"
-        },
-        "./astro-i18n/i18n-middleware": {
-            "import": "./dist/astro-i18n/middlewares/i18n.js"
+        "./i18n/i18n-middleware": {
+            "import": "./dist/i18n/middlewares/i18n.js"
         }
     },
     "files": [
@@ -40,9 +36,9 @@
     ],
     "scripts": {
         "build": "pnpm run compile:paraglide && tsc --build && echo 'Build complete...'",
-        "compile:paraglide": "pnpm exec paraglide-js compile --project ./src/astro-i18n/project.inlang --outdir ./src/astro-i18n/paraglide",
-        "dev:concurrently": "concurrently --prefix \"[{name}]\" --names \"tsc,chokidar\" --prefixColors \"blue,yellow\" --kill-others-on-fail \"tsc --watch\" \"node --experimental-strip-types watch-files.ts\"",
-        "dev": "pnpm run compile:paraglide && pnpm run dev:concurrently"
+        "compile:paraglide": "pnpm exec paraglide-js compile --project ./src/i18n/project.inlang --outdir ./src/i18n/paraglide",
+        "watch": "node --experimental-strip-types watch.ts",
+        "dev": "pnpm run compile:paraglide && pnpm run watch"
     },
     "dependencies": {
         "@inlang/paraglide-js": "2.0.0-beta.16",
@@ -64,8 +60,7 @@
         }
     },
     "devDependencies": {
-        "chokidar": "^4.0.3",
-        "concurrently": "^9.1.2",
-        "@types/node": "*"
+        "@types/node": "*",
+        "chokidar": "^4.0.3"
     }
 }

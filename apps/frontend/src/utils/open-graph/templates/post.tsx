@@ -1,6 +1,6 @@
 import { type CollectionEntry, getEntries } from "astro:content";
-import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 
 export default async (post: CollectionEntry<"posts">, locale: AllowedLocales) => {
 	const relatedtags = await getEntries(post.data.tags);

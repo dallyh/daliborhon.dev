@@ -1,5 +1,5 @@
-import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";
 import UrlChart from "./UrlChart";

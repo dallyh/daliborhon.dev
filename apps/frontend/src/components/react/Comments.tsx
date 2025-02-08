@@ -1,5 +1,5 @@
 import Giscus from "@giscus/react";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { useEffect, useState } from "react";
 
 type Props = {

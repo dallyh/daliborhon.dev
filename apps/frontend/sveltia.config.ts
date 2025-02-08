@@ -1,7 +1,7 @@
 import { removeTrailingSlash } from "@utils";
 import { getDevOrProdContentPath } from "@utils";
 import { Logger } from "@daliborhon.dev/integrations";
-import { type AllowedLocales, locales, config as i18nConfig } from "@daliborhon.dev/integrations/astro-i18n";
+import { type AllowedLocales, locales, config as i18nConfig } from "@daliborhon.dev/integrations/i18n";
 
 const logger = new Logger("sveltia-cms-config");
 
@@ -25,7 +25,7 @@ export function createCmsConfig() {
 		logger.info("[createCmsConfig] CMS config branch: " + branch);
 	}
 
-	const tagTranslationsArray = Object.keys(locales).map((key) => {
+	const tagTranslationsArray = locales.map((key) => {
 		const locale = key as AllowedLocales;
 		return {
 			name: key,
@@ -112,7 +112,7 @@ export function createCmsConfig() {
 				name: "posts",
 				label: "Posts",
 				label_singular: "Post",
-				folder: `apps/frontend/srccontent/${path}/posts`,
+				folder: `apps/frontend/src/content/${path}/posts`,
 				create: true,
 				delete: true,
 				i18n: true,
@@ -212,7 +212,7 @@ export function createCmsConfig() {
 				name: "tags",
 				label: "Tags",
 				label_singular: "Tag",
-				folder: `apps/frontend/srccontent/${path}/tags`,
+				folder: `apps/frontend/src/content/${path}/tags`,
 				identifier_field: "id",
 				create: true,
 				delete: true,
@@ -239,7 +239,7 @@ export function createCmsConfig() {
 				name: "projects",
 				label: "Projects",
 				label_singular: "Project",
-				folder: `apps/frontend/srccontent/${path}/projects`,
+				folder: `apps/frontend/src/content/${path}/projects`,
 				create: true,
 				delete: true,
 				i18n: true,
@@ -313,7 +313,7 @@ export function createCmsConfig() {
 				name: "projectTags",
 				label: "Project tags",
 				label_singular: "Project tag",
-				folder: `apps/frontend/srccontent/${path}/project-tags`,
+				folder: `apps/frontend/src/content/${path}/project-tags`,
 				identifier_field: "id",
 				create: true,
 				delete: true,
@@ -343,7 +343,7 @@ export function createCmsConfig() {
 				name: "resume",
 				label: "Resumes",
 				label_singular: "Resume",
-				folder: `apps/frontend/srccontent/${path}/resume`,
+				folder: `apps/frontend/src/content/${path}/resume`,
 				identifier_field: "id",
 				create: false,
 				delete: false,

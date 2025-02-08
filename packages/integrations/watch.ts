@@ -1,7 +1,7 @@
-import chokidar from "chokidar";
 import { exec } from "node:child_process";
-import { Logger } from "./src/logger.ts";
 import { glob } from "node:fs/promises";
+import chokidar from "chokidar";
+import { Logger } from "./src/logger.ts";
 
 var logger = new Logger("watch");
 

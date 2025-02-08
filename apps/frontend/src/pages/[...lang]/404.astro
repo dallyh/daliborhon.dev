@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { config, defaultLocale } from "@daliborhon.dev/integrations/i18n";
 import * as m from "@daliborhon.dev/integrations/i18n/messages";
-import { defaultLocale, config } from "@daliborhon.dev/integrations/i18n";
 import MainLayout from "@layouts/MainLayout.astro";
 import { Icon } from "astro-icon/components";
 
@@ -16,9 +16,9 @@ const layoutProps = {
 
 <MainLayout {...layoutProps}>
 	<meta name="robots" content="noindex, nofollow" slot="head" />
-	<div class="fixed top-0 left-0 flex h-[100vh] w-[100vw] items-center justify-center p-4">
+	<div class="fixed left-0 top-0 flex h-[100vh] w-[100vw] items-center justify-center p-4">
 		<div class="relative max-w-[560px] leading-[1.1]">
-			<div class="notfound-404 absolute top-[-110px] left-[-15px] z-[-1] inline-block h-[110px] w-[110px] md:top-0 md:left-[-140px] md:h-[140px] md:w-[140px]">
+			<div class="notfound-404 absolute left-[-15px] top-[-110px] z-[-1] inline-block h-[110px] w-[110px] md:left-[-140px] md:top-0 md:h-[140px] md:w-[140px]">
 				<Icon class="text-primary h-full w-full" name="document-404" />
 			</div>
 			<h1>404</h1>

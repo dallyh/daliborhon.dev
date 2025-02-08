@@ -1,8 +1,8 @@
 import { HCAPTCHA_KEY } from "astro:env/client";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { useEffect, useRef, useState } from "react";
 import { type FieldValues, useForm, useWatch } from "react-hook-form";
 
@@ -182,7 +182,7 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 
 				{/* SUCCESSFUL SUBMISSION */}
 				{isSubmitSuccessful && isSuccess && (
-					<div className="bg-base-100 absolute top-[-5px] left-[-5px] flex h-[calc(100%+5px+10px)] w-[calc(100%+5px+10px)] flex-col items-center justify-center gap-2">
+					<div className="bg-base-100 absolute left-[-5px] top-[-5px] flex h-[calc(100%+5px+10px)] w-[calc(100%+5px+10px)] flex-col items-center justify-center gap-2">
 						<div className="text-success mb-3 flex items-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="mr-2 h-6 w-6">
 								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
@@ -198,7 +198,7 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 
 				{/* FAILED SUBMISSION */}
 				{isSubmitSuccessful && !isSuccess && (
-					<div className="bg-base-100 absolute top-[-5px] left-[-5px] flex h-[calc(100%+5px+10px)] w-[calc(100%+5px+10px)] flex-col items-center justify-center gap-2">
+					<div className="bg-base-100 absolute left-[-5px] top-[-5px] flex h-[calc(100%+5px+10px)] w-[calc(100%+5px+10px)] flex-col items-center justify-center gap-2">
 						<div className="text-error flex items-center">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="mr-2 h-6 w-6">
 								<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />

@@ -30,7 +30,7 @@ const { pubDate, modDate, title, description } = post.data;
 	</figure>
 
 	<div class="card-body">
-		{post.data.hidden && <div class="badge bg-error text-error-content absolute top-3 left-3">Hidden</div>}
+		{post.data.hidden && <div class="badge bg-error text-error-content absolute left-3 top-3">Hidden</div>}
 		<h2 class="card-title flex flex-col items-start">
 			<a href={postUrl}>{title}</a>
 		</h2>

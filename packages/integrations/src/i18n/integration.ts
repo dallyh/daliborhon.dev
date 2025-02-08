@@ -1,5 +1,5 @@
 import type { AstroIntegration } from "astro";
-import { defaultLocale, config } from "./config.js";
+import { config, defaultLocale } from "./config.js";
 const astroI18nConfigPaths = Object.values(config.locales).map(({ path, codes }) => ({ path, codes }));
 
 const paraglideScript = `

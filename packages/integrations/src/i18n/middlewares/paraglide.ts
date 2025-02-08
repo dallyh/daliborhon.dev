@@ -1,8 +1,8 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import type { MiddlewareHandler } from "astro";
-import { defineGetLocale, defineSetLocale } from "../paraglide/runtime.js";
-import { defaultLocale, type AllowedLocales } from "../config.js";
 import { Logger } from "../../logger.js";
+import { type AllowedLocales, defaultLocale } from "../config.js";
+import { defineGetLocale, defineSetLocale } from "../paraglide/runtime.js";
 
 var logger = new Logger("paraglide-middleware");
 

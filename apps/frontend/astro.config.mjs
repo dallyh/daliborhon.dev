@@ -3,6 +3,11 @@ import db from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
+import { astroI18nIntegration } from "@daliborhon.dev/integrations";
+import { Logger } from "@daliborhon.dev/integrations";
+import { remarkAsidesIntegration } from "@daliborhon.dev/integrations";
+import { createI18nSitemapConfig } from "@daliborhon.dev/integrations/i18n";
 //@ts-ignore missing types
 import rehypeFigure from "@microflash/rehype-figure";
 import tailwindcss from "@tailwindcss/vite";
@@ -15,12 +20,7 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import rehypeToc from "rehype-toc";
 import { loadEnv } from "vite";
-import { astroI18nIntegration } from "@daliborhon.dev/integrations";
-import { createI18nSitemapConfig } from "@daliborhon.dev/integrations/i18n";
 import iconConfig from "./icons.config";
-import { Logger } from "@daliborhon.dev/integrations";
-import { remarkAsidesIntegration } from "@daliborhon.dev/integrations";
-import sitemap from "@astrojs/sitemap";
 
 const logger = new Logger("astro-config");
 

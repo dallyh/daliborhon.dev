@@ -1,5 +1,5 @@
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";
 import UrlChart from "./UrlChart";
@@ -74,7 +74,7 @@ export default function PageViews({ locale }: { locale: AllowedLocales }) {
 			</div>
 
 			<form
-				className="mt-2 mb-2 flex flex-row flex-wrap items-end gap-4"
+				className="mb-2 mt-2 flex flex-row flex-wrap items-end gap-4"
 				id="date-range-form"
 				onSubmit={(e) => {
 					e.preventDefault();

@@ -1,5 +1,5 @@
-import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Logger } from "@daliborhon.dev/integrations";
+import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 type Status = "up" | "down" | undefined;

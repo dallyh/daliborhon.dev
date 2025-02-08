@@ -1,7 +1,7 @@
+import { Logger } from "@daliborhon.dev/integrations";
+import { type AllowedLocales, config as i18nConfig, locales } from "@daliborhon.dev/integrations/i18n";
 import { removeTrailingSlash } from "@utils";
 import { getDevOrProdContentPath } from "@utils";
-import { Logger } from "@daliborhon.dev/integrations";
-import { type AllowedLocales, locales, config as i18nConfig } from "@daliborhon.dev/integrations/i18n";
 
 const logger = new Logger("sveltia-cms-config");
 

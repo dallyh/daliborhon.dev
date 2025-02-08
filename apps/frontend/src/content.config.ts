@@ -1,7 +1,7 @@
 import { defineCollection, reference, z } from "astro:content";
+import { Logger } from "@daliborhon.dev/integrations";
 import { locales } from "@daliborhon.dev/integrations/i18n";
 import { getDevOrProdContentPath } from "@utils";
-import { Logger } from "@daliborhon.dev/integrations";
 import { type Loader, type LoaderContext, glob } from "astro/loaders";
 
 const logger = new Logger("content-config");

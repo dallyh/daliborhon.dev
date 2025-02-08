@@ -1,9 +1,9 @@
+import { h } from "hastscript";
 /**
  * Based on https://github.com/Microflash/remark-callout-directives
  * Taken from https://github.com/OliverSpeir/astro-starlight-remark-asides
  */
 import { visit } from "unist-util-visit";
-import { h } from "hastscript";
 import { locales } from "../i18n/config.js";
 import * as m from "../i18n/paraglide/messages.js";
 

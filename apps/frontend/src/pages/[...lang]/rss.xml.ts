@@ -1,6 +1,6 @@
 import { render } from "astro:content";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import rss from "@astrojs/rss";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { getBlogPostUrl, getFilteredPostsCollection } from "@utils/content";
 import type { APIContext } from "astro";
 import { experimental_AstroContainer } from "astro/container";

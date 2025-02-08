@@ -2,9 +2,8 @@
 import "../styles/remark-asides.css";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { getEntries, render,  } from "astro:content";
+import { getEntries, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import TagList from "@components/astro/blog/TagList.astro";
 import ViewCount from "@components/astro/blog/ViewCount.astro";
@@ -18,6 +17,7 @@ import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import Section from "@components/astro/global/Section.astro";
 import Comments from "@components/react/Comments";
 import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
 import MainLayout from "./MainLayout.astro";

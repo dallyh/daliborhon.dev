@@ -1,5 +1,5 @@
-import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import slug from "slug";
 
 export function slugifyStr(locale: AllowedLocales | undefined, str: string) {

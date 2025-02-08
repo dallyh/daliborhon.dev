@@ -1,13 +1,10 @@
 {
     "$schema": "https://turbo.build/schema.json",
+    "envMode": "loose",
     "tasks": {
         "build": {
             "outputs": ["dist/**/*"],
             "dependsOn": ["^build"]
-        },
-        "dev": {
-            "persistent": true,
-            "cache": false
         }
     }
 }

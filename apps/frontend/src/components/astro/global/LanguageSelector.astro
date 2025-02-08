@@ -4,8 +4,8 @@
 
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { locales, type AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
-import { getPathFromUrl } from "@daliborhon.dev/integrations/astro-i18n";
+import { locales, type AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import { getPathFromUrl } from "@daliborhon.dev/integrations/i18n";
 import { getBlogPostUrl } from "@utils/content";
 import { getBlogPostTranslations } from "@utils/content";
 import ISO6991 from "iso-639-1";
@@ -64,7 +64,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 </lang-select>
 
 <script>
-	import { config, type AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+	import { config, type AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 	import { navigate } from "astro:transitions/client";
 	import cookie from "js-cookie";
 	import { Logger } from "@daliborhon.dev/integrations";

@@ -1,7 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection, getEntry } from "astro:content";
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from "astro:i18n";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { removeTrailingSlash, slugifyStr } from "@utils";
 import { Logger } from "@daliborhon.dev/integrations";
 import { fromMarkdown } from "mdast-util-from-markdown";

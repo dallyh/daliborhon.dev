@@ -1,8 +1,8 @@
 import { HCAPTCHA_KEY } from "astro:env/client";
-import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/astro-i18n";
+import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { useEffect, useRef, useState } from "react";
 import { type FieldValues, useForm, useWatch } from "react-hook-form";
 

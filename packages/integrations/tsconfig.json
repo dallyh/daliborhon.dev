@@ -1,6 +1,6 @@
 {
     "include": ["${configDir}/src/**/*"],
-    "exclude": ["${configDir}/dist/**/*", "${configDir}/src/astro-i18n/messages/*", "${configDir}/watch-files.ts"],
+    "exclude": ["${configDir}/dist/**/*", "${configDir}/src/astro-i18n/messages/*"],
     "compilerOptions": {
         "allowJs": true,
         "declaration": true,

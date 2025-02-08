@@ -1,4 +1,4 @@
-import * as m from "@daliborhon.dev/integrations/astro-i18n/messages";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
 
 export default async (locale: string) => {
 	/*const posts = await caisyClient.getArticlesCount();

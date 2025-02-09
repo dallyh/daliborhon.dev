@@ -10,6 +10,7 @@ featured: true
 image: https://astro.build/og/astro.jpg
 pubDate: 2024-01-01
 modDate: ""
+fmContentType: blog
 ---
 
 # H1 For example
@@ -21,6 +22,8 @@ modDate: ""
 ```
 
 :::
+
+![](../../../../../public/assets/uploads/astro.jpg)
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

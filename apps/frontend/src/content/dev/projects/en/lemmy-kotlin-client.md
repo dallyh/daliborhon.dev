@@ -7,6 +7,7 @@ language: en
 image: /assets/uploads/img/projects/lemmy-logo.svg
 startDate: 2023-08-20
 active: false
+fmContentType: project
 ---
 
 A Kotlin Multiplatform client for [Lemmy](https://join-lemmy.org/).

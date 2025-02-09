@@ -9,6 +9,7 @@ language: en
 image: /assets/uploads/img/projects/this-web.svg
 startDate: 2023-12-12
 active: true
+fmContentType: project
 ---
 
 Source code for this website

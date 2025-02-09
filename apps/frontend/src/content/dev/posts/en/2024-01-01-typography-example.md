@@ -10,6 +10,7 @@ featured: true
 image: https://astro.build/og/astro.jpg
 pubDate: 2024-01-01
 modDate: ""
+fmContentType: blog
 ---
 
 # H1 For example

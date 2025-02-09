@@ -1,0 +1,273 @@
+{
+    "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+    "frontMatter.framework.id": "other",
+    "frontMatter.preview.host": "http://localhost:4321",
+    "frontMatter.preview.trailingSlash": false,
+    "frontMatter.content.publicFolder": {
+        "relative": true
+    },
+    "frontMatter.media.contentTypes": [
+        {
+            "name": "default",
+            "fields": [
+                {
+                    "title": "Title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "Author",
+                    "name": "author",
+                    "type": "string"
+                },
+                {
+                    "title": "Alt text",
+                    "name": "alt",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "frontMatter.data.files": [
+        {
+            "id": "project-tags",
+            "labelField": "id",
+            "title": "Project tags",
+            "file": "[[workspace]]/apps/frontend/src/content/dev/project-tags.yml",
+            "fileType": "yaml",
+            "schema": {
+                "type": "object",
+                "title": "Tag",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "bgColor": {
+                        "type": "string",
+                        "title": "Background color"
+                    }
+                }
+            }
+        },
+        {
+            "id": "tags",
+            "labelField": "id",
+            "title": "Blog tags",
+            "file": "[[workspace]]/apps/frontend/src/content/dev/tags.yml",
+            "fileType": "yaml",
+            "schema": {
+                "type": "object",
+                "title": "Tag",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "languages": {
+                        "type": "object",
+                        "properties": {
+                            "cs": {
+                                "type": "string",
+                                "title": "Czech"
+                            },
+                            "en": {
+                                "type": "string",
+                                "title": "English"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "frontMatter.content.pageFolders": [
+        {
+            "title": "blog",
+            "path": "[[workspace]]/apps/frontend/src/content/dev/posts",
+            "contentTypes": ["blog"],
+            "filePrefix": "",
+            "previewPath": "{{locale}}/blog/posts",
+            "trailingSlash": false,
+            "defaultLocale": "en",
+            "locales": [
+                {
+                    "title": "English",
+                    "locale": "en",
+                    "path": "en"
+                },
+                {
+                    "title": "Czech",
+                    "locale": "cs",
+                    "path": "cs"
+                }
+            ]
+        },
+        {
+            "title": "projects",
+            "path": "[[workspace]]/apps/frontend/src/content/dev/projects",
+            "defaultLocale": "en",
+            "locales": [
+                {
+                    "title": "English",
+                    "locale": "en",
+                    "path": "en"
+                },
+                {
+                    "title": "Czech",
+                    "locale": "cs",
+                    "path": "cs"
+                }
+            ]
+        },
+        {
+            "title": "resume",
+            "path": "[[workspace]]/apps/frontend/src/content/dev/resume"
+        }
+    ],
+    "frontMatter.taxonomy.contentTypes": [
+        {
+            "name": "blog",
+            "pageBundle": false,
+            "fields": [
+                {
+                    "name": "translationKey",
+                    "title": "Translation key (slug)",
+                    "type": "slug",
+                    "editable": false,
+                    "default": "{{slug}}",
+                    "hidden": true
+                },
+                {
+                    "name": "title",
+                    "title": "Title",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "description",
+                    "title": "Description",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "tags",
+                    "title": "tags",
+                    "type": "dataFile",
+                    "dataFileId": "tags",
+                    "dataFileKey": "id",
+                    "multiple": true,
+                    "dataFileValue": "id",
+                    "required": true
+                },
+                {
+                    "name": "language",
+                    "title": "language",
+                    "type": "choice",
+                    "choices": ["cs", "en"],
+                    "required": true
+                },
+                {
+                    "name": "hidden",
+                    "title": "Hidden?",
+                    "type": "boolean",
+                    "default": false
+                },
+                {
+                    "name": "featured",
+                    "title": "Feautred?",
+                    "type": "boolean",
+                    "default": false
+                },
+                {
+                    "name": "image",
+                    "title": "Image",
+                    "type": "image",
+                    "required": true,
+                    "isPreviewImage": true
+                },
+                {
+                    "name": "pubDate",
+                    "title": "Published date",
+                    "type": "datetime",
+                    "required": true,
+                    "default": "{{now}}",
+                    "isPublishDate": true
+                },
+                {
+                    "name": "modDate",
+                    "title": "Modified date",
+                    "type": "datetime",
+                    "isModifiedDate": true
+                }
+            ]
+        },
+        {
+            "name": "resume",
+            "pageBundle": false,
+            "fields": [
+                {
+                    "title": "title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "description",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "title": "currentPosition",
+                    "name": "currentPosition",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "project",
+            "pageBundle": false,
+            "fields": [
+                {
+                    "title": "title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "sourceUrl",
+                    "name": "sourceUrl",
+                    "type": "string"
+                },
+                {
+                    "title": "tags",
+                    "name": "tags",
+                    "type": "tags"
+                },
+                {
+                    "title": "language",
+                    "name": "language",
+                    "type": "string"
+                },
+                {
+                    "title": "image",
+                    "name": "image",
+                    "type": "image"
+                },
+                {
+                    "title": "startDate",
+                    "name": "startDate",
+                    "type": "datetime"
+                },
+                {
+                    "title": "active",
+                    "name": "active",
+                    "type": "boolean"
+                }
+            ]
+        }
+    ],
+    "frontMatter.git.enabled": true
+}

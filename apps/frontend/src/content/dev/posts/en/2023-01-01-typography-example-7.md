@@ -10,6 +10,7 @@ featured: true
 image: https://astro.build/og/astro.jpg
 pubDate: 2022-07-01
 modDate: ""
+fmContentType: blog
 ---
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

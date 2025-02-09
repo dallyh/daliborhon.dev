@@ -1,0 +1,15 @@
+- id: astrojs
+  title: Astro.js
+  bgColor: "#eb6500"
+
+- id: kmp
+  title: Kotlin Multiplatform
+  bgColor: "linear-gradient(to right,#ef4857 0,#de4970 20%,#b44db0 50%,#7f52ff 100%)"
+
+- id: web
+  title: Web
+  bgColor: "#a3e635"
+
+- id: react
+  title: React
+  bgColor: "#24a3e3"

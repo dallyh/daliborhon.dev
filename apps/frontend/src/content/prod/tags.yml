@@ -1,0 +1,14 @@
+- id: astro
+  languages:
+      cs: astro
+      en: astro
+
+- id: development
+  languages:
+      cs: vyvoj
+      en: development
+
+- id: flexicapture
+  languages:
+      cs: flexicapture
+      en: flexicapture

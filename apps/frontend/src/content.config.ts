@@ -2,7 +2,7 @@ import { defineCollection, reference, z } from "astro:content";
 import { Logger } from "@daliborhon.dev/integrations";
 import { locales } from "@daliborhon.dev/integrations/i18n";
 import { getDevOrProdContentPath } from "@utils";
-import { type Loader, type LoaderContext, glob } from "astro/loaders";
+import { type Loader, type LoaderContext, glob, file } from "astro/loaders";
 
 const logger = new Logger("content-config");
 const path = getDevOrProdContentPath();
@@ -39,7 +39,7 @@ const posts = defineCollection({
 
 // TO-DO: Find a way to do this automatically with locales.map...
 const tags = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.yaml", base: `./src/content/${path}/tags` }),
+	loader: file(`./src/content/${path}/tags.yml`),
 	schema: z.object({
 		id: z.string(),
 		languages: z.object({
@@ -68,7 +68,7 @@ const projects = defineCollection({
 });
 
 const projectTags = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.yaml", base: `./src/content/${path}/project-tags` }),
+	loader: file(`./src/content/${path}/project-tags.yml`),
 	schema: z.object({
 		id: z.string(),
 		title: z.string(),

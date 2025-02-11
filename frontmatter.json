@@ -33,7 +33,7 @@
             "id": "project-tags",
             "labelField": "id",
             "title": "Project tags",
-            "file": "[[workspace]]/apps/frontend/src/content/dev/project-tags.yml",
+            "file": "[[workspace]]/www/web/src/content/project-tags.yml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -58,7 +58,7 @@
             "id": "tags",
             "labelField": "id",
             "title": "Blog tags",
-            "file": "[[workspace]]/apps/frontend/src/content/dev/tags.yml",
+            "file": "[[workspace]]/www/web/src/content/tags.yml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -88,9 +88,9 @@
     "frontMatter.content.pageFolders": [
         {
             "title": "blog",
-            "path": "[[workspace]]/apps/frontend/src/content/dev/posts",
+            "path": "[[workspace]]/www/web/src/content/posts",
             "contentTypes": ["blog"],
-            "filePrefix": "",
+            "filePrefix": "{{year}}-{{month}}-{{day}}",
             "previewPath": "{{locale}}/blog/posts",
             "trailingSlash": false,
             "defaultLocale": "en",
@@ -109,7 +109,7 @@
         },
         {
             "title": "projects",
-            "path": "[[workspace]]/apps/frontend/src/content/dev/projects",
+            "path": "[[workspace]]/www/web/src/content/projects",
             "defaultLocale": "en",
             "locales": [
                 {
@@ -126,22 +126,16 @@
         },
         {
             "title": "resume",
-            "path": "[[workspace]]/apps/frontend/src/content/dev/resume"
+            "path": "[[workspace]]/www/web/src/content/resume",
+            "disableCreation": true
         }
     ],
     "frontMatter.taxonomy.contentTypes": [
         {
             "name": "blog",
             "pageBundle": false,
+            "slugTemplate": "{{year}}-{{month}}-{{day}}-{{seoTitle}}",
             "fields": [
-                {
-                    "name": "translationKey",
-                    "title": "Translation key (slug)",
-                    "type": "slug",
-                    "editable": false,
-                    "default": "{{slug}}",
-                    "hidden": true
-                },
                 {
                     "name": "title",
                     "title": "Title",
@@ -156,7 +150,7 @@
                 },
                 {
                     "name": "tags",
-                    "title": "tags",
+                    "title": "Tags",
                     "type": "dataFile",
                     "dataFileId": "tags",
                     "dataFileKey": "id",
@@ -165,17 +159,17 @@
                     "required": true
                 },
                 {
-                    "name": "language",
-                    "title": "language",
+                    "name": "locale",
+                    "title": "Locale",
                     "type": "choice",
                     "choices": ["cs", "en"],
                     "required": true
                 },
                 {
-                    "name": "hidden",
-                    "title": "Hidden?",
-                    "type": "boolean",
-                    "default": false
+                    "name": "draft",
+                    "title": "Draft?",
+                    "type": "draft",
+                    "default": true
                 },
                 {
                     "name": "featured",
@@ -211,17 +205,17 @@
             "pageBundle": false,
             "fields": [
                 {
-                    "title": "title",
+                    "title": "Title",
                     "name": "title",
                     "type": "string"
                 },
                 {
-                    "title": "description",
+                    "title": "Description",
                     "name": "description",
                     "type": "string"
                 },
                 {
-                    "title": "currentPosition",
+                    "title": "Current position",
                     "name": "currentPosition",
                     "type": "string"
                 }
@@ -230,44 +224,58 @@
         {
             "name": "project",
             "pageBundle": false,
+            "slugTemplate": "{{seoTitle}}",
             "fields": [
                 {
-                    "title": "title",
+                    "title": "Title",
                     "name": "title",
                     "type": "string"
                 },
                 {
-                    "title": "sourceUrl",
+                    "title": "Source URL",
                     "name": "sourceUrl",
                     "type": "string"
                 },
                 {
-                    "title": "tags",
                     "name": "tags",
-                    "type": "tags"
+                    "title": "Tags",
+                    "type": "dataFile",
+                    "dataFileId": "project-tags",
+                    "dataFileKey": "id",
+                    "multiple": true,
+                    "dataFileValue": "id",
+                    "required": true
                 },
                 {
-                    "title": "language",
-                    "name": "language",
+                    "title": "Locale",
+                    "name": "locale",
                     "type": "string"
                 },
                 {
-                    "title": "image",
+                    "title": "Image",
                     "name": "image",
-                    "type": "image"
+                    "type": "image",
+                    "isPreviewImage": true
                 },
                 {
-                    "title": "startDate",
+                    "title": "Project start",
                     "name": "startDate",
                     "type": "datetime"
                 },
                 {
-                    "title": "active",
+                    "title": "Active?",
                     "name": "active",
                     "type": "boolean"
                 }
             ]
         }
     ],
-    "frontMatter.git.enabled": true
+    "frontMatter.git.enabled": true,
+    "frontMatter.content.snippets": {
+        "Insert blog image": {
+            "description": "",
+            "body": "![ALT TEXT](/assets/uploads/blog/[[filename]])",
+            "isMediaSnippet": true
+        }
+    }
 }

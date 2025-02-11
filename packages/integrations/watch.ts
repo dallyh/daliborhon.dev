@@ -58,7 +58,7 @@ chokidar
 
 // TS Watcher
 chokidar
-	.watch(await Array.fromAsync(glob("./src/**/*.{ts,mjs,js}")), { ignoreInitial: true })
+	.watch(await Array.fromAsync(glob("./**/*.{ts,mjs,js,json}")), { ignoreInitial: true, ignored: (f, stats) => stats?.isFile() && f.includes("/messages/") })
 	.on("change", (path) => compileTypescript("change", path))
 	.on("add", (path) => compileTypescript("add", path))
 	.on("unlink", (path) => compileTypescript("delete", path));

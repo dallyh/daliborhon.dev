@@ -16,7 +16,7 @@ zerops:
               - port: 8080
                 httpSupport: true
 
-    - setup: frontend
+    - setup: web
       build:
           base: nodejs@22
           envVariables:
@@ -29,14 +29,24 @@ zerops:
               PREVIEW: false
           buildCommands:
               - pnpm install --shamefully-hoist
-              - pnpm build:remote
+              - pnpm run build
           cache:
+              - .turbo
               - node_modules
+              - packages/*/node_modules
+              - www/*/node_modules
           deployFiles:
-              - dist
-              - node_modules
               - package.json
-              - src/assets/fonts
+              - pnpm-workspace.yaml
+              - node_modules
+              - www/web/dist
+              - www/web/node_modules
+              - www/web/package.json
+              - www/web/src/assets/fonts
+              - packages/integrations/dist
+              - packages/integrations/package.json
+              - packages/integrations/src/remark-asides/remark-asides.css
+              - packages/integrations/node_modules
       run:
           base: nodejs@22
           ports:
@@ -47,13 +57,13 @@ zerops:
               APP_VERSION_NAME: ${appVersionName}
               ASTRO_DB_REMOTE_URL: http://libsqld:8080
               PREVIEW: false
-          start: pnpm start
+          start: pnpm run start:web
           healthCheck:
               httpGet:
                   port: 4321
                   path: /api/status
 
-    - setup: fepreview
+    - setup: webpreview
       build:
           base: nodejs@22
           envVariables:
@@ -71,13 +81,20 @@ zerops:
               - .turbo
               - node_modules
               - packages/*/node_modules
-              - apps/*/node_modules
+              - www/*/node_modules
           deployFiles:
-              - apps/frontend/~dist
-              - apps/frontend/~node_modules
-              - apps/frontend/~package.json
-              - apps/frontend/~src/assets/fonts
-              - apps/frontend/~db/dev.db
+              - package.json
+              - pnpm-workspace.yaml
+              - node_modules
+              - www/web/dist
+              - www/web/node_modules
+              - www/web/package.json
+              - www/web/src/assets/fonts
+              - www/web/db/dev.db
+              - packages/integrations/dist
+              - packages/integrations/package.json
+              - packages/integrations/src/remark-asides/remark-asides.css
+              - packages/integrations/node_modules
       run:
           base: nodejs@22
           ports:
@@ -88,7 +105,7 @@ zerops:
               APP_VERSION_NAME: ${appVersionName}
               ASTRO_DB_REMOTE_URL: file:db/dev.db
               PREVIEW: true # Builds preview posts
-          start: pnpm start
+          start: pnpm run start:web
           healthCheck:
               httpGet:
                   port: 4321

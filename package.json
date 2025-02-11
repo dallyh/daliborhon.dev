@@ -11,7 +11,8 @@
         "lint": "biome lint --diagnostic-level=warn",
         "lint:all": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
-        "lint:fix:unsafe": "biome lint --write --unsafe"
+        "lint:fix:unsafe": "biome lint --write --unsafe",
+        "start:web": "node ./www/web/dist/server/entry.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",

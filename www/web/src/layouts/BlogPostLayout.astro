@@ -30,7 +30,7 @@ const { Content, headings } = await render(post);
 const locale = Astro.currentLocale as AllowedLocales;
 const { pubDate, modDate, title, description } = post.data;
 const relatedTags = await getEntries(post.data.tags);
-const image = getBlogPostImageUrl(locale, post, Astro.url);
+const image = getBlogPostImageUrl(locale, post);
 const readingTime = getReadingTime(post.body ?? "");
 
 const layoutProps = {
@@ -39,7 +39,7 @@ const layoutProps = {
 	description: description,
 	pubDate: pubDate,
 	modDate: typeof modDate === "string" ? undefined : modDate,
-	ogImage: getOgImageUrl(locale, post, Astro.url),
+	ogImage: getOgImageUrl(locale, post),
 };
 
 const tagFilter = relatedTags.map((tag) => {
@@ -112,6 +112,7 @@ const searchProps = {
 						</div>
 					</div>
 					<div class="max-w-[340px]">
+						{/*@ts-ignore this works*/}
 						<Image class="rounded-lg" src={image} width={600} height={315} title={title} alt={title} loading="eager" transition:animate="slide" />
 					</div>
 				</div>

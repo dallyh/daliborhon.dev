@@ -1,4 +1,4 @@
-import { defaultLocale, locales } from "@daliborhon.dev/integrations/i18n";
+import { locales } from "@daliborhon.dev/integrations/i18n";
 import { getRoutingLocale } from "@daliborhon.dev/integrations/i18n";
 import { getBlogPostSlug, getFilteredPostsCollection } from "@utils/content";
 import { generateOgImageForPost } from "@utils/og";
@@ -29,7 +29,10 @@ export async function getStaticPaths() {
 }
 
 export async function GET({ params, props }: APIContext) {
-	return new Response(await generateOgImageForPost(props.post, params.lang ?? defaultLocale), {
+	if (!params.lang) {
+		return new Response(null, { status: 404 });
+	}
+	return new Response(await generateOgImageForPost(props.post, params.lang), {
 		headers: { "Content-Type": "image/png" },
 	});
 }

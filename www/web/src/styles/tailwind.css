@@ -42,4 +42,17 @@
 	h6 {
 		@apply font-bold;
 	}
+
+	.prose p > code,
+	.prose a > code {
+		&::before {
+			content: unset;
+		}
+
+		&::after {
+			content: unset;
+		}
+
+		@apply badge bg-base-300;
+	}
 }

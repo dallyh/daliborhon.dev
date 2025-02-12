@@ -5,11 +5,11 @@ import { type Loader, type LoaderContext, glob, file } from "astro/loaders";
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({
 	loader: glob({ pattern: "**/[^_]*.md", base: `./src/content/posts` }),
-	schema: () =>
+	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
 			pubDate: z.coerce.date(),
-			modDate: z.coerce.date().or(z.string()).optional(),
+			modDate: z.coerce.date().or(z.string()).nullable(),
 			draft: z.boolean().optional().default(true),
 			description: z.string(),
 			featured: z.boolean().default(false).optional(),
@@ -18,13 +18,7 @@ const posts = defineCollection({
 					message: "Please select the correct locale!",
 				}),
 			}),
-			image: z
-				.object({
-					src: z.string(),
-					alt: z.string(),
-				})
-				.or(z.string())
-				.optional(),
+			image: image().or(z.string().url()).optional(),
 			tags: z.array(reference("tags")),
 		}),
 });

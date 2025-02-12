@@ -12,7 +12,6 @@
         "lint:all": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
         "lint:fix:unsafe": "biome lint --write --unsafe",
-        "web:start": "node ./www/web/dist/server/entry.mjs",
         "web:deploy": "pnpm deploy --filter \"@daliborhon.dev/web\" ./deploy"
     },
     "devDependencies": {

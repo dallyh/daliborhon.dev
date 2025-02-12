@@ -4,7 +4,8 @@
     "frontMatter.preview.host": "http://localhost:4321",
     "frontMatter.preview.trailingSlash": false,
     "frontMatter.content.publicFolder": {
-        "relative": true
+        "relative": true,
+        "path": "[[workspace]]/www/web/src/assets/content"
     },
     "frontMatter.media.contentTypes": [
         {

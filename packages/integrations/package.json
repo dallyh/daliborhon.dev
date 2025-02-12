@@ -35,7 +35,8 @@
         }
     },
     "files": [
-        "./src/*.css"
+        "./src/remark-asides/*.css",
+        "./dist"
     ],
     "scripts": {
         "build": "pnpm run compile:paraglide && tsc --build && echo 'Build complete...'",

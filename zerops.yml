@@ -57,7 +57,7 @@ zerops:
               APP_VERSION_NAME: ${appVersionName}
               ASTRO_DB_REMOTE_URL: http://libsqld:8080
               PREVIEW: false
-          start: pnpm run start:web
+          start: pnpm run web:start
           healthCheck:
               httpGet:
                   port: 4321
@@ -75,26 +75,18 @@ zerops:
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: true # Builds preview posts
           buildCommands:
-              - pnpm install --shamefully-hoist
-              - pnpm run build # Building remote, but using local preseeded file
+              - pnpm config set node-linker hoisted
+              - pnpm config set inject-workspace-packages true
+              - pnpm install
+              - pnpm run build
+              - pnpm run web:deploy
           cache:
               - .turbo
               - node_modules
               - packages/*/node_modules
               - www/*/node_modules
           deployFiles:
-              - package.json
-              - pnpm-workspace.yaml
-              - node_modules
-              - www/web/dist
-              - www/web/node_modules
-              - www/web/package.json
-              - www/web/src/assets/fonts
-              - www/web/db/dev.db
-              - packages/integrations/dist
-              - packages/integrations/package.json
-              - packages/integrations/src/remark-asides/remark-asides.css
-              - packages/integrations/node_modules
+              - deploy/~
       run:
           base: nodejs@22
           ports:
@@ -105,7 +97,7 @@ zerops:
               APP_VERSION_NAME: ${appVersionName}
               ASTRO_DB_REMOTE_URL: file:db/dev.db
               PREVIEW: true # Builds preview posts
-          start: pnpm run start:web
+          start: pnpm run start
           healthCheck:
               httpGet:
                   port: 4321

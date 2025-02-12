@@ -182,7 +182,7 @@
                     "name": "image",
                     "title": "Image",
                     "type": "image",
-                    "required": true,
+                    "required": false,
                     "isPreviewImage": true
                 },
                 {

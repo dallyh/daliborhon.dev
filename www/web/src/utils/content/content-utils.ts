@@ -24,14 +24,14 @@ export const getReadingTime = (text: string): string | undefined => {
 	}
 };
 
-export function getOgImageUrl(locale: AllowedLocales, post: CollectionEntry<"posts">, url: URL) {
+export function getOgImageUrl(locale: AllowedLocales, post: CollectionEntry<"posts">) {
 	// For automatically generated images
 	// In dev mode, the trailing slash has to be present when it is set in the config
 	if (import.meta.env.DEV) {
-		return getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}.png`);
+		return getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}/og.png`);
 	}
 
-	return removeTrailingSlash(getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}.png`));
+	return removeTrailingSlash(getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}/og.png`));
 }
 
 export function getBlogPostUrl(locale: AllowedLocales, post: CollectionEntry<"posts">) {
@@ -83,7 +83,7 @@ export function getAbsoluteBlogPostUrl(locale: AllowedLocales, post: CollectionE
 	return getAbsoluteLocaleUrl(locale, `blog/posts/${getBlogPostSlug(locale, post)}/`);
 }
 
-export function getBlogPostDate(locale: string, pubDate: string | Date, modDate: string | Date | undefined) {
+export function getBlogPostDate(locale: string, pubDate: string | Date, modDate: string | Date | null) {
 	const myDatetime = wasPostUpdated(pubDate, modDate) ? new Date(modDate!) : new Date(pubDate);
 
 	const date = myDatetime.toLocaleDateString(locale, {
@@ -106,28 +106,32 @@ export function getBlogPostDate(locale: string, pubDate: string | Date, modDate:
 	};
 }
 
-export function wasPostUpdated(pubDate: string | Date, modDate: string | Date | undefined) {
+export function wasPostUpdated(pubDate: string | Date, modDate: string | Date | null) {
+	if (modDate === null || modDate === "") {
+		return false;
+	}
+
 	if (modDate && pubDate) {
-		const updated = !(new Date(pubDate).getTime() === new Date(modDate).getTime());
+		const updated = new Date(modDate).getTime() > new Date(pubDate).getTime();
 		return updated;
 	}
 
 	return false;
 }
 
-export function getBlogPostImageUrl(locale: AllowedLocales, post: CollectionEntry<"posts">, url: URL) {
+export function getBlogPostImageUrl(locale: AllowedLocales, post: CollectionEntry<"posts">): string | ImageMetadata {
 	// Uploaded or external images
-	if (typeof post.data.image === "string") {
+	if (typeof post.data.image === "string" && post.data.image !== "") {
 		return post.data.image;
 	}
 
 	// Images with source and alt
-	if (post.data.image?.src) {
-		return post.data.image.src;
+	if (typeof post.data.image === "object" && post.data.image?.src) {
+		return post.data.image;
 	}
 
 	// if the post has no image, just return OG image
-	return getOgImageUrl(locale, post, url);
+	return getOgImageUrl(locale, post);
 }
 
 export async function getPostsByTag(locale: string, tagId: string) {

@@ -28,25 +28,18 @@ zerops:
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: false
           buildCommands:
-              - pnpm install --shamefully-hoist
+              - pnpm config set node-linker hoisted
+              - pnpm config set inject-workspace-packages true
+              - pnpm install
               - pnpm run build
+              - pnpm run web:deploy
           cache:
               - .turbo
               - node_modules
               - packages/*/node_modules
               - www/*/node_modules
           deployFiles:
-              - package.json
-              - pnpm-workspace.yaml
-              - node_modules
-              - www/web/dist
-              - www/web/node_modules
-              - www/web/package.json
-              - www/web/src/assets/fonts
-              - packages/integrations/dist
-              - packages/integrations/package.json
-              - packages/integrations/src/remark-asides/remark-asides.css
-              - packages/integrations/node_modules
+              - deploy/~
       run:
           base: nodejs@22
           ports:

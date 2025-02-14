@@ -45,8 +45,8 @@
 	color: inherit;
 	background-color: var(--callout-bg);
 	border-radius: 0.125rem;
-	margin-top: 0.5rem;
-	margin-bottom: 0.5rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 .callout-indicator {

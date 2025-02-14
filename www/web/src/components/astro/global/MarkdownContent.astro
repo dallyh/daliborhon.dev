@@ -82,7 +82,7 @@ const { tocPosition = "default", headings } = Astro.props;
 		.md-content {
 			&.inside {
 				display: grid;
-				grid-template-columns: 1fr min-content;
+				grid-template-columns: calc(100% - 300px - 2rem) min-content;
 				grid-template-rows: 1fr;
 				gap: 2rem;
 

@@ -170,7 +170,7 @@ Po dokončení služby push by se měl spustit démon serveru a měl by také au
 
 ### Posouvání schématu databáze
 
-Po nasazení služby `libsqld` přesuňte schéma databáze pomocí příkazu `push` služby Astro DB. 
+Po nasazení služby `libsqld` přesuňte schéma databáze pomocí příkazu `push` služby Astro DB.
 
 K tomu se nejprve musíme připojit k [VPN](https://docs.zerops.io/references/vpn) poskytované společností Zerops, abychom mohli přistupovat ke vzdálenému databázovému serveru. K VPN se můžete připojit pomocí příkazu `zcli vpn up`.
 
@@ -212,7 +212,6 @@ V tomto okamžiku jste úspěšně:
 - ✅ nasadili jste perzistentní databázi pomocí `libsql-server`
 - ✅ Vytvořili jste schéma databáze a nasadili do něj data
 - ✅ Nasadil frontend Astro, který bude sloužit vaší aplikaci
-
 
 Nezapomeňte se po dokončení odpojit od sítě VPN:
 

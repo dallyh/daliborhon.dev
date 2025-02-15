@@ -31,15 +31,15 @@ export default function UptimeStatus() {
 		queryClient,
 	);
 
-	if (isError || error) {
-		logger.error("Failed to fetch status: " + error);
-		return;
-	}
-
 	// Prevent hydration errors
 	useEffect(() => {
 		setIsLoading(isPending);
 	}, [isPending]);
+
+	if (isError || error) {
+		logger.error("Failed to fetch status: " + error);
+		return;
+	}
 
 	return (
 		<a className="inline-grid *:[grid-area:1/1]" target="_blank" href="https://status.daliborhon.dev">

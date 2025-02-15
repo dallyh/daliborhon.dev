@@ -2,6 +2,8 @@
 node_modules/
 .pnp/
 .pnp.js
+deploy/
+hoist/
 
 # logs
 npm-debug.log*
@@ -41,3 +43,5 @@ dist/
 # Paraglide JS
 paraglide/
 
+# turbo
+.turbo

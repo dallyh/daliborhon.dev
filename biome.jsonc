@@ -1,8 +1,8 @@
 {
     "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
     "files": {
-        "include": ["src/**", "messages/**", "biome.jsonc", "*.ts", "*.mjs", "*.yml"],
-        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css"]
+        "include": ["apps/**", "", "packages/**", "biome.jsonc", "*.ts", "*.mjs", "*.yml"],
+        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css", ".turbo/**", ".frontmatter/**"]
     },
     "vcs": {
         "enabled": true,

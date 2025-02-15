@@ -1,0 +1,60 @@
+@import "tailwindcss" source("../../src/");
+
+@plugin "daisyui" {
+	themes:
+		light --default,
+		dark --color-primaryrefersdark;
+}
+@plugin "@tailwindcss/typography";
+
+@layer base {
+	a:not(.navbar-item, .btn, .tab) {
+		@apply link;
+	}
+}
+
+@layer utilities {
+	h1 {
+		@apply text-4xl;
+		@apply font-bold;
+	}
+
+	h2 {
+		@apply text-3xl;
+		@apply font-bold;
+	}
+
+	h3 {
+		@apply text-2xl;
+		@apply font-bold;
+	}
+
+	h4 {
+		@apply text-xl;
+		@apply font-bold;
+	}
+
+	h5 {
+		@apply text-lg;
+		@apply font-bold;
+	}
+
+	h6 {
+		@apply font-bold;
+	}
+
+	.prose p > code,
+	.prose a > code,
+	.prose :is(h1, h2, h3, h4, h5, h6) > code {
+		font-size: inherit;
+		&::before {
+			content: unset;
+		}
+
+		&::after {
+			content: unset;
+		}
+
+		@apply badge bg-base-300;
+	}
+}

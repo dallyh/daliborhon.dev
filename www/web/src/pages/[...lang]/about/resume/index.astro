@@ -1,0 +1,230 @@
+---
+import { getEntry, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
+import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
+import SearchMeta from "@components/astro/global/SearchMeta.astro";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import PageLayout from "@layouts/PageLayout.astro";
+import { removeTrailingSlash } from "@utils";
+
+export { getStaticPaths } from "@daliborhon.dev/integrations/i18n";
+
+const locale = Astro.currentLocale!;
+
+const entry = await getEntry("resume", locale);
+
+if (!entry) {
+	console.error("Resume entry was not found.");
+	return new Response(null, { status: 404, statusText: "Resume entry was not found" });
+}
+
+const { Content, headings } = await render(entry);
+
+const layoutProps = {
+	title: m.common__resume(),
+	description: m.resume__resume_page_description(),
+};
+
+const searchProps = {
+	title: m.common__resume(),
+	description: layoutProps.description,
+};
+---
+
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/about")} label={m.common__about()} />
+		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/resume")} label={m.common__resume()} />
+	</Fragment>
+	<SearchMeta {...searchProps} />
+	<div class="section">
+		<MarkdownContent headings={headings} tocPosition="inside">
+			<Content />
+		</MarkdownContent>
+		<download-button>
+			<a
+				id="download"
+				class="button btn btn-primary floating"
+				href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/about/resume/pdf"))}
+				download
+				title={m.resume__download_cv()}
+				aria-label={m.resume__download_cv()}
+				data-astro-prefetch="false"
+			>
+				<span class="inline-flex items-center justify-center">
+					<i class="icon fas fa-file-pdf fa-lg"></i>
+					<span class="text">{m.resume__download_cv()}</span>
+				</span>
+			</a>
+		</download-button>
+	</div>
+</PageLayout>
+
+<script>
+	import * as m from "@daliborhon.dev/integrations/i18n/messages";
+
+	class DownloadButton extends HTMLElement {
+		private downloadButton!: HTMLAnchorElement;
+
+		connectedCallback(): void {
+			// Fetch the button when the element is added to the DOM
+			this.downloadButton = this.querySelector("#download") as HTMLAnchorElement;
+			if (!this.downloadButton) {
+				throw new Error("The element requires a child anchor with the ID 'download'.");
+			}
+
+			this.downloadButton.addEventListener("click", this.handleDownload.bind(this));
+		}
+
+		disconnectedCallback(): void {
+			if (this.downloadButton) {
+				this.downloadButton.removeEventListener("click", this.handleDownload);
+			}
+		}
+
+		private async handleDownload(e: MouseEvent): Promise<void> {
+			e.preventDefault();
+			this.downloadButton.classList.toggle("is-loading");
+
+			try {
+				window.showToast({ message: m.resume__generating_pdf(), type: "info" });
+
+				// Fetch the PDF file
+				const res = await fetch(this.downloadButton.href);
+
+				if (!res.ok) {
+					window.showToast({ message: m.common__download_error(), type: "error" });
+					console.error(`Failed to fetch the file: ${res.statusText}`);
+					return;
+				}
+
+				const blob = await res.blob();
+				const filename = res.headers.get("x-filename") || "download.pdf";
+				this.createAndDownloadBlob(blob, filename);
+
+				window.showToast({ message: m.common__download_success(), type: "success" });
+			} catch (error) {
+				window.showToast({ message: m.common__download_error(), type: "error" });
+				console.error("Error downloading the file:", error);
+			} finally {
+				this.downloadButton.classList.toggle("is-loading");
+			}
+		}
+
+		private createAndDownloadBlob(blob: Blob, name: string): void {
+			const link = document.createElement("a");
+			link.setAttribute("download", name);
+
+			const blobUrl = URL.createObjectURL(blob);
+			link.href = blobUrl;
+
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
+			URL.revokeObjectURL(blobUrl);
+		}
+	}
+
+	customElements.define("download-button", DownloadButton);
+</script>
+
+<style>
+	:root {
+		scroll-timeline: --scroll-timeline y; /* :state(scroll-timeline) -- error will be removed in chrome 133 */
+		/* Firefox supports the older "vertical" syntax */
+		scroll-timeline: --scroll-timeline vertical;
+	}
+
+	.section {
+		position: relative;
+		width: 100%;
+	}
+
+	@keyframes show {
+		to {
+			left: 50%;
+			transform: translateX(-50%);
+			width: max-content;
+			border-radius: var(--rounded-box, 1rem);
+		}
+	}
+
+	@keyframes showText {
+		to {
+			visibility: visible;
+			opacity: 1;
+			width: unset;
+		}
+	}
+
+	@keyframes moveIcon {
+		to {
+			margin-right: 0.25rem;
+		}
+	}
+
+	.button {
+		&.floating,
+		.text,
+		.icon {
+			animation-duration: 1ms; /* Firefox requires this to apply the animation */
+			animation-range-start: 96%;
+			animation-range-end: 100%;
+			animation-direction: alternate;
+			animation-timeline: scroll(y root);
+		}
+
+		&.floating {
+			animation-name: show;
+		}
+
+		.text {
+			animation-name: showText;
+		}
+
+		.icon {
+			animation-name: moveIcon;
+		}
+	}
+
+	.button {
+		&.floating {
+			overflow: hidden;
+			position: sticky;
+			left: calc(100% - 4rem);
+			bottom: 1rem;
+			z-index: 1020;
+			width: 55px;
+			height: 55px;
+			border-radius: 9999px;
+
+			> span {
+				display: inline-flex;
+				flex-wrap: nowrap;
+			}
+
+			.text {
+				opacity: 0;
+				visibility: hidden;
+				width: 0;
+			}
+		}
+
+		svg {
+			font-size: 1.25rem;
+			display: inline-block;
+		}
+	}
+
+	@keyframes showButton {
+		from {
+			transform: scale(0);
+		}
+
+		to {
+			transform: scale(1);
+		}
+	}
+</style>

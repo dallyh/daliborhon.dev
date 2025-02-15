@@ -1,0 +1,56 @@
+---
+import profilePicture from "@assets/img/profile/me.png";
+import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<div class="hero mb-6 place-content-start">
+	<div class="hero-content flex-col justify-start lg:flex-row">
+		<ProfilePicture img={profilePicture} imgClass="max-w-sm rounded-lg shadow-2xl" />
+		<div class="flex flex-col gap-3">
+			<h1 class="text-2xl">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
+			<p>
+				{m.landing__intro()}
+			</p>
+			<p class="flex gap-2 text-sm">
+				<span class="badge badge-soft badge-accent flex gap-2 p-3">
+					<span>
+						<i class="fa-solid fa-location-dot"></i>
+					</span>
+					<span>{m.common__country_czech_republic()}</span>
+				</span>
+				<span class="badge badge-soft badge-accent flex gap-2 p-3">
+					<span>
+						<i class="fa-solid fa-circle-dot"></i>
+					</span>
+					<span id="time">00:00</span>
+				</span>
+			</p>
+			<p class="text-sm">
+				<span class="badge badge-soft badge-accent flex gap-2 p-3">
+					<span>
+						<i class="fa-solid fa-suitcase"></i>
+					</span>
+					<span>Business Consultant</span>
+				</span>
+			</p>
+			<p class="subtitle is-size-6"></p>
+			<SocialLinks />
+		</div>
+	</div>
+</div>
+
+<script>
+	function displayClock() {
+		var ele = document.getElementById("time");
+		if (!ele) {
+			return;
+		}
+		var display = new Date().toLocaleTimeString("cs-CZ");
+		ele.innerHTML = `${display} CET`;
+		setTimeout(displayClock, 1000);
+	}
+
+	document.addEventListener("astro:page-load", displayClock);
+</script>

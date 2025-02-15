@@ -1,0 +1,153 @@
+---
+title: Resume
+description: Web version of my resume.
+currentPosition: Business Consultant
+fmContentType: resume
+---
+
+import CertGrid from "@components/astro/resume/CertGrid.astro";
+import CertCard from "@components/astro/resume/CertCard.astro";
+import Timeline from "@components/astro/resume/Timeline.astro";
+import TimelineItem from "@components/astro/resume/TimelineItem.astro";
+import DevGrid from "@components/astro/resume/DevGrid.astro";
+import DevGridItem from "@components/astro/resume/DevGridItem.astro";
+import Hero from "@components/astro/resume/Hero.astro";
+
+# Resume
+
+<Hero>
+
+## Dalibor Hon - Business Consultant, Ostrava
+
+- [LinkedIn](https://www.linkedin.com/in/dalibor-hon/)
+- Email: [contact@daliborhon.dev](mailto:contact@daliborhon.dev), [online form](https://www.daliborhon.dev/cs/about/#contact)
+- Web: [www.daliborhon.dev](https://www.daliborhon.dev)
+
+</Hero>
+
+## Intro
+
+### +55 Completed Projects
+
+During my years as a business consultant, I have already completed more than 50 projects. These include smaller projects, but also projects that take months or years to complete.
+Most of these projects mainly include the implementation of software for the extraction of data from documents and document management systems ( primarily M-Files or tailor-made solutions in MS SharePoint).
+
+#### Business Analysis
+
+- Business analysis is not an unfamiliar concept to me. This involves close cooperation with the customer, the development department, project managers and the like.
+  Analytical documents, process analyses, use-case diagrams and infrastructure designs are all part of my daily routine.
+
+#### Implementation
+
+- I also have experience in the actual implementation and installation of various software, primarily intended for the Windows Server OS.
+  As for example this software includes FlexiCapture and also MSSQL Server. This also includes configuration of such software and installation/configuration of other necessary components such as IIS.
+
+#### Programming
+
+- I consider development as icing on the cake, as i enjoy writing code. Over time, I have learned in my work positions to understand code, how things work in it and how everything fits together.
+  From the beginning, I mainly used the scripting interfaces of the implemented software, primarily in C# and also VBScript language.
+  Over time I also started to get involved in internal development, and I started helping with development of internal extension modules as well as various tools.
+
+## Skills
+
+Of course there's a lot to cover. As an business consultant I touched almost everything, from Windows Servers, through IIS configuration to pieces of code.
+Below are just the most noteworthy mentions.
+
+- Business Analysis (+ 3 years)
+    - Process mapping, UML, developer coordination...
+- Windows Servers (+ 3 years)
+    - Configuring servers, installing required software (on-premise, Azure, IIS, and such)...
+- Relational Databases (+ 6 years)
+    - SQL, PLSQL, T-SQL, reporting, database procedures...
+- Object Oriented Programming (+ 2 years)
+    - Integrations, C#, custom in-house applications...
+
+### Programming Languages & Tools
+
+<DevGrid>
+	<DevGridItem label="HTML5" iconName="html5" />
+	<DevGridItem label="CSS3" iconName="css3" />
+	<DevGridItem label="JavaScript" iconName="javascript" />
+	<DevGridItem label="TypeScript" iconName="typescript" />
+	<DevGridItem label="React" iconName="react" />
+	<DevGridItem label="Node JS" iconName="nodejs-wordmark" />
+	<DevGridItem label="C#" iconName="csharp" />
+	<DevGridItem label=".NET Framework" iconName="dot-net" />
+	<DevGridItem label=".NET Core" iconName="dotnetcore" />
+	<DevGridItem label="MSSQL" iconName="microsoftsqlserver" />
+	<DevGridItem label="GIT" iconName="git" />
+	<DevGridItem label="Azure" iconName="azure" />
+	<DevGridItem label="Azure DevOps" iconName="azuredevops" />
+</DevGrid>
+
+### Software and platform experience (implementation, customization)
+
+- [ABBYY FlexiCapture](https://www.abbyy.com/flexicapture/)
+- [ABBYY FineReader Server](https://www.abbyy.com/finereader-server/)
+- [ABBYY Vantage](https://www.abbyy.com/vantage/)
+- [Microsoft SharePoint](https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration)
+- [Microsoft PowerPlaftorm](https://powerplatform.microsoft.com/en-us/)
+- [M-Files](https://www.m-files.com/)
+- [K2 Five/K2 Cloud](https://www.nintex.com/process-automation/k2-software/)
+
+I have experience with these software and platforms both in implementation and in customization of solutions for our customers.
+Integration with other related systems is also a part of my experience. In my career, I have also encountered a wide range of ERP systems such as Dynamics 365 Business Central, Helios Green, Karat! etc.
+
+## Certifications
+
+You can find my up to date certifications on my [LinkedIn](https://www.linkedin.com/in/dalibor-hon/details/certifications/) profile.
+
+<CertGrid>
+	<CertCard img="../../assets/content/company-logos/msft-logo.png" alt="Microsoft logo">
+		Power Platform Fundamentals (PL-900)
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/msft-logo.png" alt="Microsoft logo">
+		Microsoft Dynamics 365 Fundamentals (PL-900)
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/abbyy.png" alt="ABBYY logo">
+		FlexiCapture 12 Basic
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/abbyy.png" alt="ABBYY logo">
+		Vantage Certified Business Analyst
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/nintex-logo-black.png" imgInverted="../../assets/content/company-logos/nintex-logo-white.png" alt="Nintex logo">
+		K2 IT Developer
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/nintex-logo-black.png" imgInverted="../../assets/content/company-logos/nintex-logo-white.png" alt="Nintex logo">
+		K2 Business Analyst
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/nintex-logo-black.png" imgInverted="../../assets/content/company-logos/nintex-logo-white.png" alt="Nintex logo">
+		K2 Citizen Developer
+	</CertCard>
+	<CertCard img="../../assets/content/company-logos/m-files.png" alt="M-Files Corporation logo">
+		M-Files Solution Engineer
+	</CertCard>
+</CertGrid>
+
+## Work experience and education
+
+<Timeline>
+    <TimelineItem slot="exp" date="April 2020 – Present" title="ECM Business Consultant" institute="Konica Minolta IT Solutions Czech s.r.o">
+        Consulting in the scope of office digitization and getting rid of paper processes in companies.
+        Digitization includes automatic extraction of data from documents, integration with internal systems customer and possibly also the
+        introduction of new systems, such as the document management systems (DMS). Use of agile methodologies, but also of waterfall.
+        Close cooperation with the customer and internal teams, such as the development department, when creating development assignments and business analyses.
+        Consulting also includes customer training for working with new implemented systems.
+    </TimelineItem>
+    <TimelineItem slot="exp" date="September 2018 – March 2020" title="Analyst, Shared Services" institute="MONETA Money Bank a.s.">
+        Creating reports using tools such as Microsoft Excel, SQL (Oracle), Microsoft Access, PowerBI and SAS BI.
+        Part of the job also was creating process analysis for commercial (SMB) backoffice, with a focus on the RWA (risk-weighted asset) commercial process.
+    </TimelineItem>
+    <TimelineItem slot="exp" date="July 2017 – August 2018" title="Administrator End User Services, IT" institute="MONETA Money Bank a.s.">
+         Support of internal end users by phone, email and other channels. Working with the ticketing system, escalating important issues and also a bit of programming.
+         Here I gradually started to learn mainly VBScript with macros in Microsoft Excel.
+    </TimelineItem>
+    <TimelineItem slot="exp" date="October 2014 – April 2017" title="Motherboard Technician" institute="ASUS Czech Service s.r.o.">
+        Repairing motherboards of all kinds on micro level. Soldering, measuring (with oscilloscope), and of course reading in motherboard schematics.
+    </TimelineItem>
+
+    <TimelineItem slot="edu" date="2010 - 2014" title="Graduated with diploma" institute="Střední škola Elektrotechnická Ostrava, Na Jízdárně">
+        Mechanical and electrical engineering - computer and security systems
+    </TimelineItem>
+
+</Timeline>

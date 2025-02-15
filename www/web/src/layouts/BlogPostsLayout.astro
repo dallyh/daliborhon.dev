@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
+import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
+import Drawer from "@components/astro/global/Drawer.astro";
+import Footer from "@components/astro/global/Footer.astro";
+import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
+import Section from "@components/astro/global/Section.astro";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import MainLayout from "@layouts/MainLayout.astro";
+import type { Page } from "astro";
+
+interface Props {
+	page: Page<CollectionEntry<"posts">>;
+}
+
+const { page } = Astro.props;
+
+const locale = Astro.currentLocale!;
+
+const layoutProps = {
+	title: `Blog - ${m.blog__all_posts_title()}`,
+	description: m.blog__blog_site_description(),
+};
+---
+
+<MainLayout {...layoutProps}>
+	<HeadHrefLangs slot="hreflangs" />
+	<Drawer>
+		<main>
+			<BreadCrumbs>
+				<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/")} label={m.common__home()} />
+				<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+				<BreadCrumbsItem currentPage={true} label={m.blog__posts()} />
+			</BreadCrumbs>
+			<Section isFirstSection id="blogs" sectionTitle={m.blog__all_posts_title()}>
+				{page.end === -1 && <p>{m.blog__no_posts()}</p>}
+				{
+					page.end !== -1 && (
+						<div class="flex flex-col">
+							<PostsGrid posts={page.data} />
+							<nav class="join mt-8 self-center" role="navigation" aria-label="pagination">
+								<a
+									href={page.url.prev}
+									class={`join-item btn btn-sm btn-outline btn-primary ${!page.url.prev && "btn-disabled"}`}
+									title={m.common__prev_page()}
+									aria-label={m.common__prev_page()}
+								>
+									<i class="fa-solid fa-arrow-left" />
+								</a>
+								<ul class="join">
+									{Array.from({ length: page.lastPage }, (_, index) => {
+										const pageNumber = index + 1;
+										const pageUrl = pageNumber === page.currentPage ? page.url.current : getRelativeLocaleUrl(locale, pageNumber === 1 ? "blog/posts" : `/blog/posts/${pageNumber}`);
+										return (
+											<li>
+												{pageNumber === page.currentPage ? (
+													<a class="join-item btn btn-sm btn-active btn-outline btn-primary rounded-none" aria-label={`Page ${pageNumber}`} aria-current="page">
+														{pageNumber}
+													</a>
+												) : (
+													<a href={pageUrl} class="join-item btn btn-sm btn-outline btn-primary rounded-none" aria-label={`Goto page ${pageNumber}`}>
+														{pageNumber}
+													</a>
+												)}
+											</li>
+										);
+									})}
+								</ul>
+								<a
+									href={page.url.next}
+									class={`join-item btn btn-sm btn-outline btn-primary ${!page.url.next && "btn-disabled"}`}
+									title={m.common__next_page()}
+									aria-label={m.common__next_page()}
+								>
+									<i class="fa-solid fa-arrow-right" />
+								</a>
+							</nav>
+						</div>
+					)
+				}
+			</Section>
+		</main>
+		<Footer />
+	</Drawer>
+</MainLayout>

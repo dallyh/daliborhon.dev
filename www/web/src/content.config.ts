@@ -1,6 +1,6 @@
 import { defineCollection, reference, z } from "astro:content";
 import { locales } from "@daliborhon.dev/integrations/i18n";
-import { type Loader, type LoaderContext, glob, file } from "astro/loaders";
+import { type Loader, type LoaderContext, file, glob } from "astro/loaders";
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({

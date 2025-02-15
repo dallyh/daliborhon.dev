@@ -9,7 +9,6 @@
         "format:code": "prettier -w \"**/*\" --ignore-unknown --cache",
         "format:imports": "biome check --formatter-enabled=false --linter-enabled=false --write",
         "lint": "biome lint --diagnostic-level=warn",
-        "lint:all": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
         "lint:fix:unsafe": "biome lint --write --unsafe",
         "web:deploy": "pnpm deploy --filter \"@daliborhon.dev/web\" ./deploy"

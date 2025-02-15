@@ -2,7 +2,7 @@
     "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
     "files": {
         "include": ["apps/**", "", "packages/**", "biome.jsonc", "*.ts", "*.mjs", "*.yml"],
-        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css", ".turbo/**"]
+        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css", ".turbo/**", ".frontmatter/**"]
     },
     "vcs": {
         "enabled": true,

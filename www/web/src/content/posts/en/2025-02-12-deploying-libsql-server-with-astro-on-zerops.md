@@ -170,7 +170,7 @@ After the service push is complete, the server daemon should start and it should
 
 ### Pushing the Database Schema
 
-After deployment of the `libsqld` service, push the database schema using Astro DB’s `push` command. 
+After deployment of the `libsqld` service, push the database schema using Astro DB’s `push` command.
 
 For this we first need to connect to the [VPN](https://docs.zerops.io/references/vpn) provided by Zerops, so we can access the remote database server. You can connect to the VPN using `zcli vpn up`.
 
@@ -213,7 +213,6 @@ At this point, you have successfully:
 - ✅ Pushed the database schema and seeded it with data
 - ✅ Deployed an Astro frontend to serve your application
 
-
 Don’t forget to disconnect from the VPN when you’re done:
 
 ```sh
@@ -221,5 +220,3 @@ zcli vpn down
 ```
 
 Happy coding! 🚀
-
-

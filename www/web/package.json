@@ -22,7 +22,6 @@
         "./db",
         "./src/assets/fonts"
     ],
-    "packageManager": "pnpm@10.3.0",
     "dependencies": {
         "@astrojs/db": "^0.14.6",
         "@astrojs/mdx": "^4.0.8",

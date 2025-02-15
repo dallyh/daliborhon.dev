@@ -28,16 +28,12 @@ zerops:
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: false
           buildCommands:
-              - pnpm config set node-linker hoisted
               - pnpm config set inject-workspace-packages true
               - pnpm install
               - pnpm run build
               - pnpm run web:deploy
           cache:
               - .turbo
-              - node_modules
-              - packages/*/node_modules
-              - www/*/node_modules
           deployFiles:
               - deploy/~
       run:
@@ -50,7 +46,7 @@ zerops:
               APP_VERSION_NAME: ${appVersionName}
               ASTRO_DB_REMOTE_URL: http://libsqld:8080
               PREVIEW: false
-          start: pnpm run web:start
+          start: npm run start
           healthCheck:
               httpGet:
                   port: 4321
@@ -68,16 +64,12 @@ zerops:
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: true # Builds preview posts
           buildCommands:
-              - pnpm config set node-linker hoisted
               - pnpm config set inject-workspace-packages true
               - pnpm install
               - pnpm run build
               - pnpm run web:deploy
           cache:
               - .turbo
-              - node_modules
-              - packages/*/node_modules
-              - www/*/node_modules
           deployFiles:
               - deploy/~
       run:
@@ -90,7 +82,7 @@ zerops:
               APP_VERSION_NAME: ${appVersionName}
               ASTRO_DB_REMOTE_URL: file:db/dev.db
               PREVIEW: true # Builds preview posts
-          start: pnpm run start
+          start: npm run start
           healthCheck:
               httpGet:
                   port: 4321

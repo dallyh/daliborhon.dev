@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from "astro:content";
+import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import Section, { type Props as SectionProps } from "../global/Section.astro";
+import ProjectsGrid from "./ProjectsGrid.astro";
+import AllEntriesUrl from "@components/astro/global/AllEntriesUrl.astro";
+
+interface Props {
+	projects: CollectionEntry<"projects">[];
+	filterFeatured?: boolean;
+	showSeeAllUrl?: boolean;
+	sectionProps?: SectionProps;
+}
+
+const { projects, filterFeatured = false, showSeeAllUrl = true, sectionProps } = Astro.props;
+
+const defaultSectionProps: SectionProps = {
+	isFirstSection: false,
+	id: "recentPosts",
+	sectionTitle: m.projects__projects_title(),
+	heading: "h2",
+};
+
+const mergedSectionProps = { ...defaultSectionProps, ...sectionProps };
+---
+
+<Section {...mergedSectionProps}>
+	<ProjectsGrid projects={projects} />
+	{
+		showSeeAllUrl && (
+			<>
+				<AllEntriesUrl url="/projects" urlDescription={m.projects__see_all()} />
+			</>
+		)
+	}
+</Section>

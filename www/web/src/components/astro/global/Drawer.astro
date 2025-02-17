@@ -6,6 +6,7 @@ import { Icon } from "astro-icon/components";
 import LanguageSelector from "./LanguageSelector.astro";
 import SearchInput from "./SearchInput.astro";
 import ThemeSelect from "./ThemeSelect.astro";
+import Footer from "./Footer.astro";
 
 interface Props {
 	post?: CollectionEntry<"posts">;
@@ -16,7 +17,7 @@ const { post } = Astro.props;
 const locale = Astro.currentLocale!;
 ---
 
-<div class="drawer">
+<div class="drawer min-h-[100svh]">
 	<input id="drawerMenu" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content mx-auto flex w-full max-w-[1344px] flex-col px-0 lg:px-4">
 		<!-- Navbar -->
@@ -89,8 +90,11 @@ const locale = Astro.currentLocale!;
 			</div>
 		</div>
 		<!-- Page content -->
-		<div class="px-4 lg:mx-2 lg:px-0">
+		<div class="flex h-full flex-col px-4 lg:mx-2 lg:px-0">
 			<slot />
+			<div class="mt-auto">
+				<Footer />
+			</div>
 		</div>
 	</div>
 	<div class="drawer-side z-20">

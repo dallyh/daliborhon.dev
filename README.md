@@ -5,7 +5,7 @@
 This is an [Astro](https://astro.build) project for my personal website, which I plan to use as a blog.
 The project is continually in development, as I also take it as an opportunity to learn something new.
 
-I guess for experienced developers a lot of things in this repo will not make any sense, however, everybody has to start somewhere.
+This project and site is mostly just for me to have some coding fun. I don't really consider myself a developer, I'm more of a hobbyist when it comes to writing code.
 
 ## Stack
 
@@ -14,42 +14,28 @@ I guess for experienced developers a lot of things in this repo will not make an
     - Some of the UI: [React](https://react.dev/)
     - Internationalization [Inlang - ParaglideJS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
 - Content management
-    - For content I do use plain markdown (Astro's content collections) and [Sveltia](https://github.com/sveltia/sveltia-cms) to manage it.
+    - [Frontmatter CMS](https://frontmatter.codes/)
+- Database
+    - Self hosted [Libsql](https://github.com/tursodatabase/libsql) server
 
 ## Deployment
 
-Deployments are done on [Zerops](https://zerops.io) for all new tags containing `cms-*` (automatically by [Sveltia](https://github.com/sveltia/sveltia-cms)) or `deploy-*` (manually).
+Deployments are done on [Zerops](https://zerops.io) for all new tags containing `deploy-*`.
 
 ## Database
 
 Required env vars:
 
+```
 LIBSQL_BOTTOMLESS_ENDPOINT=https://storage-prg1.zerops.io
 LIBSQL_BOTTOMLESS_BUCKET=bucket-name
 LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION=eu-central-1
 LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID=acces_key
 LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY=secret_key
+```
 
 `libsql-server` does run in bottomless replication mode, and it is replicated to Zerops object storage which is esentially an S3 bucket.
-The server is used as production, for local development i do use local files.
 
 ## Variables
 
-List of used variables can be found in the [astro.config.mjs](./astro.config.mjs) file.
-
-## Commands
-
-| Command             | Action                                                                  |
-| :------------------ | :---------------------------------------------------------------------- |
-| `dev`               | Starts local dev server at `localhost:4321`                             |
-| `dev:tunnel`        | Runs a localtunnel proxy to test endpoints                              |
-| `dev-host`          | Starts local dev server hosted at a network                             |
-| `build`             | Build production site to `./dist/`                                      |
-| `start`             | Starts the production server                                            |
-| `preview`           | Preview the build locally with Wrangler                                 |
-| `astro ...`         | Run CLI commands like `astro add`, `astro preview`                      |
-| `sync`              | Runs the `astro sync` command to generate content collection types      |
-| `format:code`       | Formattes code using Biome and Prettier                                 |
-| `format:imports`    | Formattes imports using Biome                                           |
-| `build:index`       | Generates indexes for Pagefind from `./dist/` (site mustbe built first) |
-| `compile:paraglide` | Compiles Paraglide project located at `./project.inlang`                |
+List of used variables can be found in the [astro.config.mjs](./www/web/astro.config.mjs) file.

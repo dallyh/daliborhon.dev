@@ -13,7 +13,7 @@ export interface Props {
 const { sectionTitle, sectionDescription = null, id, isFirstSection = false, heading = "h2", isInsideSection = false } = Astro.props;
 ---
 
-<section class={`mb-8 ${isInsideSection === false ? "section" : "block"}`} id={id}>
+<section class={`has-[+section]:mb-8 ${isInsideSection === false ? "section" : "block"}`} id={id}>
 	{
 		sectionTitle && (
 			<Fragment>

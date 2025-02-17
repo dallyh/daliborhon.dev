@@ -1,3 +1,4 @@
+// Adapted from: https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro
 import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";

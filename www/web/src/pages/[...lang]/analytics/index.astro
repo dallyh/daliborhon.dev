@@ -19,12 +19,4 @@ const locale = Astro.currentLocale as AllowedLocales;
 	<Section sectionTitle={m.common__page_views()} isFirstSection id="pageViews">
 		<PageViewsComponent locale={locale} client:load transition:persist />
 	</Section>
-	<footer class="footer footer-center">
-		<div>
-			<p class="text-sm">
-				{m.analytics__credits()}
-				<ExternalLink title="Thomas Ledoux" href="https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro">Thomas Ledoux!</ExternalLink>
-			</p>
-		</div>
-	</footer>
 </PageLayout>

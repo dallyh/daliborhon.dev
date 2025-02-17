@@ -1,3 +1,4 @@
+// Adapted from: https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro
 import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 

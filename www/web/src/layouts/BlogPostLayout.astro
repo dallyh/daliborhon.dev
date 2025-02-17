@@ -9,7 +9,6 @@ import ViewCount from "@components/astro/blog/ViewCount.astro";
 import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import Drawer from "@components/astro/global/Drawer.astro";
-import Footer from "@components/astro/global/Footer.astro";
 import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
@@ -111,9 +110,9 @@ const searchProps = {
 							<div class="mt-4"><TagList post={post} /></div>
 						</div>
 					</div>
-					<div class="max-w-[340px] self-center p-1 md:self-auto md:p-0">
+					<div class="max-w-[340px] self-center p-1 md:self-auto md:p-0" transition:animate="slide">
 						{/*@ts-ignore this works*/}
-						<Image class="rounded-lg" src={image} width={340} inferSize title={title} alt={title} loading="eager" transition:animate="slide" />
+						<Image class="rounded-lg" src={image} width={340} inferSize title={title} alt={title} loading="eager" />
 					</div>
 				</div>
 				<div class="divider"></div>
@@ -125,6 +124,5 @@ const searchProps = {
 				<Comments client:visible locale={locale} />
 			</Section>
 		</main>
-		<Footer />
 	</Drawer>
 </MainLayout>

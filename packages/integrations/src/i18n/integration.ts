@@ -16,18 +16,17 @@ export function astroI18nIntegration(): AstroIntegration {
 					i18n: {
 						defaultLocale: defaultLocale,
 						locales: [...astroI18nConfigPaths],
-						routing: "manual",
+						routing: {
+							prefixDefaultLocale: true,
+							redirectToDefaultLocale: false,
+							fallbackType: "redirect",
+						},
 					},
 				});
 
 				addMiddleware({
-					entrypoint: "@daliborhon.dev/integrations/i18n/paraglide-middleware",
+					entrypoint: new URL("./middleware.js", import.meta.url),
 					order: "pre",
-				});
-
-				addMiddleware({
-					entrypoint: "@daliborhon.dev/integrations/i18n/i18n-middleware",
-					order: "post",
 				});
 
 				injectScript("before-hydration", paraglideScript);

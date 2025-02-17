@@ -11,8 +11,8 @@
         "lint": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
         "lint:fix:unsafe": "biome lint --write --unsafe",
-        "web:deploy": "pnpm deploy --filter \"@daliborhon.dev/web\" ./deploy",
-        "web:deploy-legacy": "pnpm deploy --legacy --filter \"@daliborhon.dev/web\" ./deploy"
+        "web:deploy": "pnpm deploy --prod --filter \"@daliborhon.dev/web\" ./deploy",
+        "web:deploy-legacy": "pnpm deploy --legacy --prod --filter \"@daliborhon.dev/web\" ./deploy"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",

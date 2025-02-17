@@ -42,7 +42,9 @@ export default function Comments({ locale }: Props) {
 					lang={locale}
 					loading="lazy"
 				/>
-			) : null}
+			) : (
+				<div className="flex justify-center min-h-[240px]"><span className="loading loading-dots loading-xl"></span></div>
+			)}
 		</div>
 	);
 }

@@ -3,10 +3,10 @@ import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { Icon } from "astro-icon/components";
+import Footer from "./Footer.astro";
 import LanguageSelector from "./LanguageSelector.astro";
 import SearchInput from "./SearchInput.astro";
 import ThemeSelect from "./ThemeSelect.astro";
-import Footer from "./Footer.astro";
 
 interface Props {
 	post?: CollectionEntry<"posts">;

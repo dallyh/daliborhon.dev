@@ -1,7 +1,6 @@
-import { middleware } from "astro/virtual-modules/i18n.js";
-import { sequence } from "astro/virtual-modules/middleware.js";
 import { AsyncLocalStorage } from "node:async_hooks";
 import type { MiddlewareHandler } from "astro";
+import { sequence } from "astro/virtual-modules/middleware.js";
 import { type AllowedLocales, defaultLocale } from "./config.js";
 import { defineGetLocale, defineSetLocale } from "./paraglide/runtime.js";
 

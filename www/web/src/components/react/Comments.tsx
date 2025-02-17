@@ -43,7 +43,9 @@ export default function Comments({ locale }: Props) {
 					loading="lazy"
 				/>
 			) : (
-				<div className="flex justify-center min-h-[240px]"><span className="loading loading-dots loading-xl"></span></div>
+				<div className="flex min-h-[240px] justify-center">
+					<span className="loading loading-dots loading-xl"></span>
+				</div>
 			)}
 		</div>
 	);

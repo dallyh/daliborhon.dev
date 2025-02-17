@@ -19,7 +19,7 @@ const locale = Astro.currentLocale as AllowedLocales;
 		tags &&
 			tags.map((tag) => (
 				<li class="badge badge-primary badge-outline">
-					<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
+					<a class="no-underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
 				</li>
 			))
 	}
@@ -33,7 +33,7 @@ const locale = Astro.currentLocale as AllowedLocales;
 							{relatedTags.map(async (tag) => {
 								return (
 									<li class="badge badge-primary badge-outline">
-										<a href={getRelativeLocaleUrl(locale, `/blog/tags/${tag}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
+										<a class="no-underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>#{tag.data.languages[locale].toLowerCase()}</a>
 									</li>
 								);
 							})}

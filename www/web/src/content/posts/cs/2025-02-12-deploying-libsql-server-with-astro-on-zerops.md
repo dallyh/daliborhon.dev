@@ -1,6 +1,6 @@
 ---
-title: Nasazení libsql-server s Astro na Zerops
-description: Průvodce nasazením libsql-server s Astro a perzistentní databází na Zerops.
+title: Nasazení libsql-server s Astro projektem na Zerops
+description: Průvodce, jak nasadit libsql-server s Astro projektem a perzistentní databází na Zerops.
 tags:
     - development
     - astro
@@ -9,36 +9,36 @@ locale: cs
 draft: true
 featured: true
 image: ../../../assets/content/blog/deploying-libsql-server-with-astro-on-zerops.png
-pubDate: 2025-02-12T21:17:21.957Z
+pubDate: 2025-02-25T22:26:34.396Z
 modDate: null
 fmContentType: blog
 ---
 
-Nasazení perzistentní databáze pomocí [`libsql-server`](https://github.com/tursodatabase/libsql/blob/main/libsql-server/README.md) spolu s projektem [Astro](https://astro.build), který využívá [`@astrojs/db`](https://docs.astro.build/en/guides/astro-db/) na [Zerops](https://zerops.io), je překvapivě jednoduché.
+Nasazení perzistentní databáze pomocí [libsql-server](https://github.com/tursodatabase/libsql/blob/main/libsql-server/README.md) spolu s projektem [Astro](https://astro.build), který využívá [@astrojs/db](https://docs.astro.build/en/guides/astro-db/) na [Zerops](https://zerops.io), je překvapivě jednoduché.
 
-Pro tento průvodce můžete buď použít svůj vlastní projekt Astro, nebo si naklonovat [ukázkové úložiště na GitHubu](https://github.com/dallyh/astro-libsql-zerops-example) a postupovat podle něj.
+Pro tento účel můžete buď použít svůj vlastní projekt Astro s adaptérem `Node.js`, nebo si můžete naklonovat [ukázkový repozitář na GitHubu](https://github.com/dallyh/astro-libsql-zerops-example) a postupovat podle tohoto příspěvku.
 
 :::tip
 **Zerops** je cloudová platforma zaměřená na vývojáře, která poskytuje snadno použitelnou a plně spravovanou infrastrukturu pro vaše projekty. Více se dozvíte na [zerops.io](https://zerops.io).
 :::
 
 :::note
-Tento průvodce předpokládá, že jste již obeznámeni s [`@astrojs/db`](https://docs.astro.build/en/guides/astro-db/), Astro a Zerops. Pokud s těmito technologiemi nemáte zkušenosti, doporučuji se s nimi nejprve seznámit! Před začátkem se ujistěte, že máte nastavený projekt Astro s integrací Astro DB.
+Tento průvodce předpokládá, že již máte zkušenosti s [@astrojs/db](https://docs.astro.build/en/guides/astro-db/), Astro a Zerops. Pokud jste s některým z těchto nástrojů noví, důrazně doporučuji se s nimi seznámit před pokračováním – nebudete litovat! Než se do toho pustíte, ujistěte se, že máte nastavený Astro projekt s integrací Astro DB a adaptérem pro Node.js.
 :::
 
 ## Nastavení prostředí Zerops
 
-Pro spuštění funkčního projektu na Zerops budete potřebovat tři klíčové služby:
+Aby váš projekt na Zerops fungoval, budete potřebovat tři klíčové služby:
 
-1. **Node.js službu** pro frontend Astro
-2. **Object storage** pro perzistenci databáze
-3. **Službu založenou na Ubuntu** pro spuštění `libsql-server`
+1. **Node.js službu** pro Astro frontend  
+2. **Object-storage službu** pro perzistenci databáze  
+3. **Ubuntu službu** pro spuštění `libsql-server`
 
-V tomto tutoriálu použijeme [`zcli`](https://docs.zerops.io/references/cli), což je nástroj příkazového řádku pro vytváření Zerops projektů a všech potřebných služeb. Pokud jste `zcli` ještě nenainstalovali, nastavte jej podle [oficiální dokumentace](https://docs.zerops.io/references/cli).
+V tomto tutoriálu budeme používat [zcli](https://docs.zerops.io/references/cli), příkazový nástroj, který nám pomůže vytvořit Zerops projekt a všechny potřebné služby. Pokud ještě nemáte `zcli` nainstalovaný, nastavte si jej podle [oficiální dokumentace](https://docs.zerops.io/references/cli).
 
-### Vytvoření projektu Zerops a služeb
+### Vytvoření projektu a služeb na Zerops
 
-Projekt Zerops můžete vytvořit ručně nebo použít předem definovanou YAML konfiguraci. Pro zjednodušení použijeme soubor `zerops-project-import.yml` v kořenové složce našeho Astro projektu.
+Můžete buď vytvořit projekt Zerops manuálně, nebo použít předdefinovanou YAML konfiguraci. Pro efektivitu a jednoduchost budeme používat soubor `zerops-project-import.yml` v kořenovém adresáři našeho Astro projektu.
 
 ```yaml
 <!--zerops-project-import.yml-->
@@ -46,34 +46,19 @@ project:
     name: astro-libsql
     corePackage: LIGHT
 services:
+    # Služba založená na Ubuntu
     - hostname: libsqld
       type: ubuntu@24.04
-      verticalAutoscaling:
-          cpu: 1
-          cpuMode: SHARED
-          minRam: 0.25
-          maxRam: 1
-          minDisk: 1
-          maxDisk: 5
-      minContainers: 1
-      maxContainers: 1
+    # Node.js služba
     - hostname: frontend
       type: nodejs@22
-      verticalAutoscaling:
-          cpu: 1
-          cpuMode: SHARED
-          minRam: 0.25
-          maxRam: 1
-          minDisk: 1
-          maxDisk: 5
-      minContainers: 1
-      maxContainers: 1
+    # Object-storage služba
     - hostname: dbstorage
       type: object-storage
       objectStorageSize: 2
 ```
 
-Tento YAML soubor definuje projekt a potřebné služby, což zajišťuje hladké nastavení. Podrobný popis formátu naleznete v [dokumentaci Zerops](https://docs.zerops.io/references/import).
+Tento YAML soubor definuje projekt a potřebné služby, což zajišťuje vždy stejnou konfiguraci prostředí. Podrobný rozpis formátu souboru najdete v [dokumentaci Zerops](https://docs.zerops.io/references/import).
 
 Pro import projektu do Zerops spusťte následující příkaz v kořenovém adresáři Astro projektu.
 
@@ -81,7 +66,7 @@ Pro import projektu do Zerops spusťte následující příkaz v kořenovém adr
 zcli project project-import ./zerops-project-import.yml
 ```
 
-Po spuštění by měl očekávaný výstup vypadat takto:
+Po spuštění by výstup měl vypadat následovně:
 
 ```
 ➤  INFO  Import yaml found: C:\Repos\astro-libsql-zerops-example\zerops-project-import.yml
@@ -96,13 +81,13 @@ Po spuštění by měl očekávaný výstup vypadat takto:
 
 ## Konfigurace a nasazení služeb
 
-Dále musíme nakonfigurovat a nasadit služby `libsqld` a `frontend`. Služba `dbstorage` nevyžaduje žádné další nastavení, protože slouží pouze jako objektové úložiště.
+Dále je potřeba nakonfigurovat a nasadit služby `libsqld` a `frontend`. Služba `dbstorage` nevyžaduje další nastavení, jelikož se jedná pouze o instanci object storage.
 
-### Nastavení služeb pomocí zerops.yml
+### Nastavení služeb pomocí souboru zerops.yml
 
-Soubor `zerops.yml` určuje, jak mají být naše služby sestaveny a spuštěny. Tento soubor by měl být vytvořen v kořenovém adresáři projektu Astro. Specifikaci formátu najdete v [dokumentaci Zerops](https://docs.zerops.io/zerops-yml/specification).
+Soubor `zerops.yml` určuje, jak mají být naše služby sestaveny a spuštěny. Tento soubor by měl být vytvořen v kořenovém adresáři Astro projektu. Specifikaci formátu najdete v [dokumentaci Zerops](https://docs.zerops.io/zerops-yml/specification).
 
-Náš soubor obsahuje nastavení pro služby `libsqld` a `frontend` spolu s předdefinovanými proměnnými prostředí, příkazy pro sestavení a spuštění.
+Soubor obsahuje nastavení služeb `libsqld` a `frontend` spolu s předdefinovanými proměnnými prostředí (environment variables), příkazy pro sestavení a spuštění. Pokud váš Astro projekt vyžaduje jiné příkazy pro sestavení nebo jiné soubory, které mají být nasazeny, upravte službu `frontend` v následujícím příkladovém souboru.
 
 ```yaml
 <!--zerops.yml-->
@@ -150,11 +135,11 @@ zerops:
 
 ### Nasazení databázové služby
 
-Databázová služba je nastavena tak, aby používala objektové úložiště `dbstorage` pro bezednou replikaci. V souboru `zerops.yml` můžete vidět, že některé proměnné prostředí začínají předponou `LIBSQL_BOTTOMLESS-*`. Tyto proměnné odkazují na automaticky generované proměnné prostředí objektového úložiště `dbstorage` přístupné uvnitř projektu Zerops.
+Databázová služba je nastavena na využití `dbstorage` object storage pro bottomless replikaci. Tím je zajištěno, že databáze zůstane perzistentní i přes změny služby a opětovná nasazení. V souboru `zerops.yml` vidíte, že některé proměnné začínají předponou `LIBSQL_BOTTOMLESS-*`. Tyto proměnné odkazují na automaticky generované proměnné prostředí pro object storage službu `dbstorage`, které jsou přístupné uvnitř projektu Zerops.
 
-`libsql-server` se do běhového prostředí instaluje vyvoláním instalačního programu `libsql-server`. Po dokončení instalace je démon `sqld` serveru přesunut do posledního adresáře, kde může být přímo spuštěn.
+`libsql-server` je nainstalován v runtime fázi služby spuštěním instalátoru `libsql-server`. Po dokončení instalace je nainstalovný daemon serveru `sqld` přesunut do finálního adresáře, odkud je možné jej přímo spustit.
 
-Chcete-li službu `libsqld` přesunout do systému Zerops, spusťte následující příkaz:
+Pro nasazení služby `libsqld` na Zerops spusťte:
 
 ```sh
 zcli push
@@ -162,61 +147,71 @@ zcli push
 
 Vyberte projekt `astro-libsql` a poté službu `libsqld`.
 
-![zcli push - seznam projektů](../../../assets/content/blog/zcli-push-project.png)
+![zcli push - project list](../../../assets/content/blog/zcli-push-project.png)
 
-![zcli push - seznam služeb](../../../assets/content/blog/zcli-push-libsqld.png)
+![zcli push - service list](../../../assets/content/blog/zcli-push-libsqld.png)
 
-Po dokončení služby push by se měl spustit démon serveru a měl by také automaticky vytvořit databázi a začít ji replikovat. Replikace je aktivní, protože je povolena bezedná replikace zadáním příznaku `--enable-bottomless-replication`. Velmi dobře to můžete vidět na ovládacím panelu Zerops v části `libsqld` service runtime logs.
+Po úspěšném nasazení by měl být spuštěn serverový daemon a automaticky by se měla vytvořit databáze a začít její replikace. Replikace je aktivní, protože je povolena volbou `--enable-bottomless-replication`. Stav můžete ověřit v dashboardu Zerops pod logy běhu služby `libsqld`.
 
-### Posouvání schématu databáze
+### Nahrání schématu databáze
 
-Po nasazení služby `libsqld` přesuňte schéma databáze pomocí příkazu `push` služby Astro DB.
+Po nasazení služby `libsqld` musíme nahrát schéma databáze pomocí příkazu `push` který poskytuje `@astrojs/db`. Protože nahrávání schémat databáze ve fázi sestavovacího kroku služby nebo aplikace obecně není doporučeno z různých důvodů, měli bychom schéma databáze nahrát z lokálního počítače.
 
-K tomu se nejprve musíme připojit k [VPN](https://docs.zerops.io/references/vpn) poskytované společností Zerops, abychom mohli přistupovat ke vzdálenému databázovému serveru. K VPN se můžete připojit pomocí příkazu `zcli vpn up`.
+Nejdříve se proto musíme připojit k [VPN](https://docs.zerops.io/references/vpn) poskytované Zerops, abychom získali přístup k vzdálenému databázovému serveru. K VPN se připojíte pomocí `zcli vpn up`. Spusťte příkaz v terminálu a poté vyberte projekt `astro-libsql`.
+
+:::note
+Musíte mít nainstalovaný [Wireguard](https://www.wireguard.com/), aby bylo možné navázat VPN spojení.
+:::
+
+Po navázání VPN přeneste schéma databáze do vzdálené databáze:
 
 ```sh
-zcli vpn up && npx astro db push --remote
+npx astro db push --remote
 ```
 
 :::note
-Pro navázání připojení VPN je nutné mít nainstalovaný [Wireguard](https://www.wireguard.com/).
+Většina Astro projektů již má příkaz `astro` definován v souboru `package.json`. V [dokumentaci Astro DB](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) je uvedeno, že příkaz `push` spouštíme pomocí `npm` následovně: `npm run astro db push --remote`. Tento způsob však v některých případech nefunguje správně, protože `npm run` nepředává správně příznak `--remote`. Pokud nepoužíváte `npx` pro spuštění příkazů DB, měli byste příkaz spustit tímto způsobem: `npm run astro db push --- --remote`.
 :::
 
 #### Naplnění databáze
 
-Pro naplnění databáze počátečními daty spusťte příkaz:
+Někdy je třeba naplnit (seed) databázi počátečními daty, pokud začínáte s čistou databází. To lze provést spuštěním následujícího příkazu:
 
 ```sh
 npx astro db execute ./db/seed.ts --remote
 ```
 
-### Nasazení rozhraní
+Tento příkaz naplní databázi počátečními potřebnými daty spuštěním souboru `seed.ts`, který by měl obsahovat vámi definovaná data.
 
-Chcete-li nasadit projekt Astro, spusťte následující příkaz:
+Pokud již máte databázi s nějakými daty a potřebujete ji migrovat, můžete to provést pomocí nástrojů jako [Beekeeper Studio](https://www.beekeeperstudio.io/features/import-export). K databázi máte přístup, dokud jste připojeni k VPN. Můžete se k ní připojit jako k jakékoli jiné databázi.
+
+### Nasazení frontendu
+
+Pro nasazení Astro projektu spusťte:
 
 ```sh
 zcli push
 ```
 
-Vyberte projekt `astro-libsql` a poté službu `frontend`. Po nasazení by měl být web přístupný na adrese `http://frontend:4321/` (při současném připojení k síti VPN). Stav služby lze opět ověřit na panelu Zerops v části `frontend` service runtime logs.
+Vyberte projekt `astro-libsql`, poté službu `frontend`. Jakmile bude nasazeno, bude webová stránka dostupná na adrese `http://frontend:4321` (za předpokladu, že jste stále připojeni k VPN a váš Astro projekt používá výchozí port). Stav služby lze opět ověřit v dashboardu Zerops pod logy běhu služby `frontend`.
 
-Pokud používáte [příklad úložiště GitHub](https://github.com/dallyh/astro-libsql-zerops-example), pak po nasazení otevřete v prohlížeči stránku [http://frontend:4321](http://frontend:4321) a měli byste vidět komentáře z databáze!
+Pokud používáte [ukázkový repozitář na GitHubu](https://github.com/dallyh/astro-libsql-zerops-example), po nasazení služby otevřete stránku [http://frontend:4321](http://frontend:4321) ve vašem prohlížeči a měli byste vidět komentáře z databáze!
 
 ![Stránka s daty](../../../assets/content/blog/zerops-astro-libsql-pg-data.png)
 
 ## Závěr
 
-V tomto okamžiku jste úspěšně:
+V tuto chvíli jste úspěšně:
 
-- ✅ nastavit služby Zerops pro váš projekt Astro.
-- ✅ nasadili jste perzistentní databázi pomocí `libsql-server`
-- ✅ Vytvořili jste schéma databáze a nasadili do něj data
-- ✅ Nasadil frontend Astro, který bude sloužit vaší aplikaci
+- ✅ Nastavili služby Zerops pro váš Astro projekt  
+- ✅ Nasadili perzistentní databázi pomocí `libsql-server`  
+- ✅ Nahráli schéma databáze a naplnili ji daty  
+- ✅ Nasadili Astro frontend pro běh vaší aplikace
 
-Nezapomeňte se po dokončení odpojit od sítě VPN:
+Nezapomeňte se po dokončení odpojit od VPN:
 
 ```sh
 zcli vpn down
 ```
 
-Šťastné kódování! 🚀
+Happy coding! 🚀

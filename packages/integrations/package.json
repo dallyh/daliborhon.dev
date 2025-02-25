@@ -39,7 +39,7 @@
         "dev": "pnpm run compile:paraglide && pnpm run watch"
     },
     "dependencies": {
-        "hastscript": "^9.0.0",
+        "hastscript": "^9.0.1",
         "kleur": "^4.1.5",
         "remark-directive": "^3.0.1",
         "unist-util-visit": "^5.0.0"

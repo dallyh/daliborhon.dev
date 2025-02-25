@@ -70,7 +70,7 @@ export default defineConfig({
 			[
 				rehypeAutolinkHeadings,
 				{
-					behavior: "append",
+					behavior: "prepend",
 					content: {
 						type: "element",
 						tagName: "span",

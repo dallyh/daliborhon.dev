@@ -9,12 +9,12 @@ locale: en
 draft: true
 featured: true
 image: ../../../assets/content/blog/deploying-libsql-server-with-astro-on-zerops.png
-pubDate: 2025-02-12T21:17:21.957Z
+pubDate: 2025-02-25T22:26:40.947Z
 modDate: null
 fmContentType: blog
 ---
 
-Deploying a persistent database using [`libsql-server`](https://github.com/tursodatabase/libsql/blob/main/libsql-server/README.md) alongside an [Astro](https://astro.build) project that leverages [`@astrojs/db`](https://docs.astro.build/en/guides/astro-db/) on [Zerops](https://zerops.io) is surprisingly straightforward.
+Deploying a persistent database using [libsql-server](https://github.com/tursodatabase/libsql/blob/main/libsql-server/README.md) alongside an [Astro](https://astro.build) project that leverages [@astrojs/db](https://docs.astro.build/en/guides/astro-db/) on [Zerops](https://zerops.io) is surprisingly straightforward.
 
 For this guide you can either use your own existing Astro project with a `Node.js` adapter, or you can clone the [example GitHub repository](https://github.com/dallyh/astro-libsql-zerops-example) and follow along.
 
@@ -23,7 +23,7 @@ For this guide you can either use your own existing Astro project with a `Node.j
 :::
 
 :::note
-This guide assumes you’re already familiar with [`@astrojs/db`](https://docs.astro.build/en/guides/astro-db/), Astro, and Zerops. If you’re new to any of these, I highly recommend checking them out before proceeding—you won’t regret it! Before diving in, make sure you have an Astro project set up with Astro DB integration and a Node.js adapter.
+This guide assumes you’re already familiar with [@astrojs/db](https://docs.astro.build/en/guides/astro-db/), Astro, and Zerops. If you’re new to any of these, I highly recommend checking them out before proceeding—you won’t regret it! Before diving in, make sure you have an Astro project set up with Astro DB integration and a Node.js adapter.
 :::
 
 ## Setting Up the Zerops Environment
@@ -34,7 +34,7 @@ To get a functional project running on Zerops, you’ll need three key services:
 2. An **object-storage service** to persist the database
 3. An **Ubuntu-based service** to run `libsql-server`
 
-In this tutorial, we’ll be using [`zcli`](https://docs.zerops.io/references/cli), a command-line utility, to create our Zerops project and all required services. If you haven’t installed `zcli` yet, set it up by following the [official documentation](https://docs.zerops.io/references/cli).
+In this tutorial, we’ll be using [zcli](https://docs.zerops.io/references/cli), a command-line utility, to create our Zerops project and all required services. If you haven’t installed `zcli` yet, set it up by following the [official documentation](https://docs.zerops.io/references/cli).
 
 ### Creating a Zerops Project and Services
 
@@ -87,7 +87,7 @@ Next, we need to configure and deploy the `libsqld` and `frontend` services. The
 
 The `zerops.yml` file dictates how our services should be built and run. This file should be created in the root of the Astro project. You can find a specification of the format in the [Zerops documentation](https://docs.zerops.io/zerops-yml/specification).
 
-Our file contains setups for the `libsqld` and `frontend` services along with predefined environment variables, build and runtime commands. If your Astro project requires different build commands and or files to be deployed, then you have to edit the `frontend` service in the example file below.
+The file contains setups for the `libsqld` and `frontend` services along with predefined environment variables, build and runtime commands. If your Astro project requires different build commands and or files to be deployed, then you have to edit the `frontend` service in the example file below.
 
 ```yaml
 <!--zerops.yml-->
@@ -135,9 +135,9 @@ zerops:
 
 ### Deploying the Database Service
 
-The database service is set to use `dbstorage` object storage for bottomless replication, this ensures that the database is persisted accross service changes and redeploys. In the `zerops.yml` file you can see that some environment variables are beginning with a prefix `LIBSQL_BOTTOMLESS-*`. Those variables point to automatically generated `dbstorage` oject storage environment variables accessible inside a Zerops project.
+The database service is set to use the `dbstorage` object storage for bottomless replication. This ensures that the database is persisted accross service changes and redeploys. In the `zerops.yml` file you can see that some environment variables are beginning with a prefix `LIBSQL_BOTTOMLESS-*`. Those variables point to automatically generated `dbstorage` oject storage environment variables accessible inside a Zerops project.
 
-The `libsql-server` is installed in the runtime by invoking the `libsql-server` installer. After the installation is done, the `sqld` server daemon is moved the final directory, where it can be directly executed.
+The `libsql-server` is installed in the service runtime by invoking the `libsql-server` installer. After the installation is done, the `sqld` server daemon is moved the final directory, where it can be directly executed.
 
 To push the `libsqld` service to Zerops, run:
 
@@ -155,7 +155,7 @@ After the service push is complete, the server daemon should start and it should
 
 ### Pushing the Database Schema
 
-After deployment of the `libsqld` service, we need to push the database schema using Astro DB’s `push` command. Because pushing database schemas in a build step of the service and or application is generally not recommended to do for various reasons, we should push the database schema from our local computer.
+After deployment of the `libsqld` service, we need to push the database schema using `@astrojs/db`'s `push` command. Because pushing database schemas in a build step of the service and or application is generally not recommended to do for various reasons, we should push the database schema from our local computer.
 
 For this we first need to connect to the [VPN](https://docs.zerops.io/references/vpn) provided by Zerops, so we can access the remote database server. You can connect to the VPN using `zcli vpn up`. Run the command in the terminal and then select the `astro-libsql` project.
 
@@ -193,9 +193,9 @@ To deploy the Astro project, run:
 zcli push
 ```
 
-Select `astro-libsql`, then the `frontend` service. Once deployed, the site should be accessible at `http://frontend:4321/` (assuming you're still connected to the VPN and your Astro project is using the default port). Again the status of the service can be verified in the Zerops dashboard under `frontend` service runtime logs.
+Select `astro-libsql`, then the `frontend` service. Once deployed, the site should be accessible at `http://frontend:4321` (assuming you're still connected to the VPN and your Astro project is using the default port). Again the status of the service can be verified in the Zerops dashboard under `frontend` service runtime logs.
 
-If you're using the [example GitHub repository](https://github.com/dallyh/astro-libsql-zerops-example), then after seeding, open the page [http://frontend:4321](http://frontend:4321) in your browser, and you should see comments from the database!
+If you're using the [example GitHub repository](https://github.com/dallyh/astro-libsql-zerops-example), then after you push the service, open the page [http://frontend:4321](http://frontend:4321) in your browser, and you should see comments from the database!
 
 ![Page with data](../../../assets/content/blog/zerops-astro-libsql-pg-data.png)
 

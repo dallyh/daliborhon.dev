@@ -6,7 +6,7 @@ tags:
     - astro
     - zerops
 locale: en
-draft: true
+draft: false
 featured: true
 image: ../../../assets/content/blog/deploying-libsql-server-with-astro-on-zerops.png
 pubDate: 2025-02-25T22:26:40.947Z

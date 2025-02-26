@@ -3,6 +3,7 @@ lockfileVersion: '9.0'
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
+  injectWorkspacePackages: true
 
 importers:
 
@@ -80,7 +81,7 @@ importers:
         version: 4.2.0(@types/node@22.13.1)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(jiti@2.4.2)(lightningcss@1.29.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(yaml@2.7.0)
       '@daliborhon.dev/integrations':
         specifier: workspace:^
-        version: link:../../packages/integrations
+        version: file:packages/integrations(@astrojs/sitemap@3.2.1)(astro@5.3.1(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.4)(typescript@5.7.3)(yaml@2.7.0))
       '@fontsource-variable/nunito':
         specifier: ^5.1.1
         version: 5.1.1
@@ -512,6 +513,15 @@ packages:
   '@ctrl/tinycolor@4.1.0':
     resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
     engines: {node: '>=14'}
+
+  '@daliborhon.dev/integrations@file:packages/integrations':
+    resolution: {directory: packages/integrations, type: directory}
+    peerDependencies:
+      '@astrojs/sitemap': ^3.2.1
+      astro: ^5.3.0
+    peerDependenciesMeta:
+      '@astrojs/sitemap':
+        optional: true
 
   '@emmetio/abbreviation@2.3.3':
     resolution: {integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA==}
@@ -5086,6 +5096,18 @@ snapshots:
   '@csstools/css-tokenizer@3.0.3': {}
 
   '@ctrl/tinycolor@4.1.0': {}
+
+  '@daliborhon.dev/integrations@file:packages/integrations(@astrojs/sitemap@3.2.1)(astro@5.3.1(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.4)(typescript@5.7.3)(yaml@2.7.0))':
+    dependencies:
+      astro: 5.3.1(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.4)(typescript@5.7.3)(yaml@2.7.0)
+      hastscript: 9.0.1
+      kleur: 4.1.5
+      remark-directive: 3.0.1
+      unist-util-visit: 5.0.0
+    optionalDependencies:
+      '@astrojs/sitemap': 3.2.1
+    transitivePeerDependencies:
+      - supports-color
 
   '@emmetio/abbreviation@2.3.3':
     dependencies:

@@ -201,12 +201,12 @@ Astro se připojuje k databázi prostřednictvím proměnné `ASTRO_DB_REMOTE_UR
 
 ```yaml
 <!--zerops.yml-->
-# ... other defined settings
+# ... další položky nastavení
 - setup: frontend
-# ... other defined setting
+# ... další položky nastavení
   run:
       envVariables:
-         ASTRO_DB_REMOTE_URL: http://libsqld:8080 # Here
+         ASTRO_DB_REMOTE_URL: http://libsqld:8080 # Zde
 ```
 
 Pokud používáte [ukázkový repozitář na GitHubu](https://github.com/dallyh/astro-libsql-zerops-example), po nasazení služby otevřete stránku [http://frontend:4321](http://frontend:4321) ve vašem prohlížeči a měli byste vidět komentáře z databáze!

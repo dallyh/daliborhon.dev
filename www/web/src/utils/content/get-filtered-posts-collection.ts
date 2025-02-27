@@ -46,8 +46,8 @@ function buildCondition(data: InferEntrySchema<"posts">, options: BuildCondition
 	// Basic condition
 	let condition: boolean;
 
-	// In DEV/PREVIEW mode, show all posts
-	if (import.meta.env.DEV || PREVIEW) {
+	// In PREVIEW mode, show all posts
+	if (PREVIEW) {
 		condition = true;
 	} else {
 		condition = !data.draft;

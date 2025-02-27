@@ -7,6 +7,7 @@ import { removeTrailingSlash } from "@utils";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
 import calculateReadingTime from "reading-time";
+import { getFilteredPostsCollection } from "./get-filtered-posts-collection";
 
 const logger = new Logger("content-utils");
 
@@ -135,9 +136,7 @@ export function getBlogPostImageUrl(locale: AllowedLocales, post: CollectionEntr
 }
 
 export async function getPostsByTag(locale: string, tagId: string) {
-	const posts = await getCollection("posts", ({ data }) => {
-		return data.tags.some((t) => t.id === tagId) && data.locale === locale;
-	});
+	const posts = await getFilteredPostsCollection({ locale: locale, tagId: tagId });
 
 	if (posts === undefined || posts.length === 0) {
 		logger.warn(`getPostsByTag ${tagId}: posts were empty.`);

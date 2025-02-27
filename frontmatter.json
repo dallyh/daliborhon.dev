@@ -272,7 +272,7 @@
         }
     ],
     "frontMatter.git.enabled": true,
-    "frontMatter.git.commitMessage": "Synced {{slug}} at {{hour24}}:{{minute}}",
+    "frontMatter.git.commitMessage": "Synced content",
     "frontMatter.content.snippets": {
         "Insert blog image": {
             "description": "",

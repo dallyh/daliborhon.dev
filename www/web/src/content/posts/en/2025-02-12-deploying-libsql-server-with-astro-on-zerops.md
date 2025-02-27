@@ -204,7 +204,7 @@ Astro connects to the database via `ASTRO_DB_REMOTE_URL` environment variable, w
 <!--zerops.yml-->
 # ... other defined settings
 - setup: frontend
-# ... other defined setting
+# ... other defined settings
   run:
       envVariables:
          ASTRO_DB_REMOTE_URL: http://libsqld:8080 # Here

@@ -8,68 +8,82 @@ interface Props {
 }
 
 const { tocPosition = "default", headings } = Astro.props;
----
 
-<markdown-content>
-	<article class=`md-content prose max-w-none ${tocPosition}` id="article">
-		{
-			headings && headings.length !== 0 && (
-				<div id="toc" class="box">
-					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 collapse rounded-xl shadow-lg">
-						<summary class="collapse-title bg-base-200 text-xl">{m.blog__toc()}</summary>
-					</details>
-				</div>
-			)
-		}
-		<div id="content">
-			<slot />
-		</div>
-	</article>
-</markdown-content>
+function generateTOCHTML(headings: MarkdownHeading[]): string {
+	if (!headings.length) return "";
 
-<script>
-	class MarkdownContent extends HTMLElement {
-		private details: HTMLDetailsElement | null = null;
+	// Determine the base (minimum) depth
+	const baseDepth = Math.min(...headings.map((h) => h.depth));
+	let currentDepth = baseDepth;
+	let html = "<ol>";
 
-		connectedCallback() {
-			this.details = this.querySelector<HTMLDetailsElement>("#tocDetails");
+	const first = headings[0];
+	html += `<li><a class="link link-hover" href="#${first.slug}">${first.text}</a>`;
 
-			if (!this.details) {
-				return;
+	for (let i = 1; i < headings.length; i++) {
+		const heading = headings[i];
+		const level = heading.depth;
+
+		if (level > currentDepth) {
+			// Open new nested lists until we reach the desired depth
+			while (currentDepth < level) {
+				html += "<ol><li>";
+				currentDepth++;
 			}
-
-			this.initToc();
-
-			document.addEventListener("astro:after-swap", () => this.initToc());
-		}
-
-		private initToc() {
-			if (!this.details) {
-				// Check again in case the element is removed
-				return;
+			html += `<a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+		} else if (level === currentDepth) {
+			// Same level: close previous item and start a new one
+			html += `</li><li><a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+		} else {
+			// Higher-level heading (lower depth): close nested lists
+			while (currentDepth > level) {
+				html += "</li></ol>";
+				currentDepth--;
 			}
-
-			const toc = this.querySelector<HTMLElement>(".toc")!;
-			this.details.appendChild(toc);
-
-			toc.style.display = "block";
-
-			this.openToc(this.details);
-			window.addEventListener("resize", () => this.openToc(this.details!));
-		}
-
-		private openToc(details: HTMLDetailsElement) {
-			const width = window.innerWidth;
-
-			if (width < 1024) {
-				details.open = false;
-			} else {
-				details.open = true;
-			}
+			// Close the previous item and add a new one at the proper level
+			html += `</li><li><a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
 		}
 	}
 
-	customElements.define("markdown-content", MarkdownContent);
+	// Close any open tags. We need to close the last <li> then each opened <ol>.
+	while (currentDepth-- >= baseDepth) {
+		html += "</li></ol>";
+	}
+
+	return html;
+}
+---
+
+<article class=`md-content prose max-w-none ${tocPosition}` id="article">
+	{
+		headings && headings.length !== 0 && (
+			<div id="toc">
+				<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 collapse rounded-xl shadow-lg">
+					<summary class="collapse-title bg-base-200 text-xl">{m.blog__toc()}</summary>
+					<nav class="toc">
+						<Fragment set:html={generateTOCHTML(headings)} />
+					</nav>
+				</details>
+			</div>
+		)
+	}
+	<div id="content">
+		<slot />
+	</div>
+</article>
+
+<script is:inline data-astro-rerun>
+	// Itentionally inlined to prevent FOUC
+	function openToc() {
+		const details = document.querySelector("#tocDetails");
+		if (!details) return;
+
+		const width = window.innerWidth;
+		details.open = width >= 1024;
+	}
+
+	openToc();
+	window.addEventListener("resize", openToc);
 </script>
 
 <style>
@@ -128,12 +142,18 @@ const { tocPosition = "default", headings } = Astro.props;
 	}
 
 	nav.toc {
-		display: none; /* This is generated */
+		/* display: none;This is generated */
 		height: max-content;
 		max-height: calc(100vh - var(--header-height) - 5rem);
 		scrollbar-width: thin;
 		overflow-y: scroll;
-		padding: 0.725rem;
+		padding-inline: 0.725rem;
+
+		ol {
+			margin-top: 0;
+			font-size: 0.875rem;
+			font-weight: 400;
+		}
 	}
 
 	#toc {

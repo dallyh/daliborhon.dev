@@ -18,7 +18,6 @@ import { defineConfig, envField } from "astro/config";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
-import rehypeToc from "rehype-toc";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
 
@@ -79,7 +78,6 @@ export default defineConfig({
 					},
 				},
 			],
-			[rehypeToc, { headings: ["h2", "h3", "h4", "h5", "h6"] }],
 			[
 				rehypeExtenalLinks,
 				{
@@ -95,11 +93,6 @@ export default defineConfig({
 			],
 			rehypeFigure,
 		],
-		shikiConfig: {
-			// Choose from Shiki's built-in themes (or add your own)
-			// https://github.com/shikijs/shiki/blob/main/docs/themes.md
-			theme: "material-theme-palenight",
-		},
 	},
 	integrations: [
 		astroI18nIntegration(),

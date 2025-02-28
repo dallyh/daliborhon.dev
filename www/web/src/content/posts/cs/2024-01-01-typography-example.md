@@ -14,13 +14,25 @@ fmContentType: blog
 
 # H1 For example
 
+:::danger
+Danger
+:::
+
 :::caution
+Caution
+:::
 
-```js
-// Test
-![ALT TEXT](/assets/uploads/astro.jpg)
-```
+:::note
+Note
+:::
 
+:::success
+Success
+:::
+
+
+:::tip
+Tip
 :::
 
 ![](../../../assets/content/blog/zcli-push-libsqld.png)

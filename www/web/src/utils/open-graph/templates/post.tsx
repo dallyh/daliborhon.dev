@@ -79,9 +79,9 @@ export default async (post: CollectionEntry<"posts">, locale: AllowedLocales) =>
 						</p>
 						<div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 							{relatedtags.map((tag) => (
-								<p key={tag.data.languages[locale].toLowerCase()} style={{ padding: 0, margin: 0 }}>
+								<p key={tag.id} style={{ padding: 0, margin: 0 }}>
 									<strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
-									{tag.data.languages[locale].toLowerCase()}
+									{tag.id}
 								</p>
 							))}
 						</div>

@@ -51,14 +51,14 @@ function compileTypescript(operation: string, path: string) {
 
 // Paraglide watcher
 chokidar
-	.watch("./src/astro-i18n/messages", { ignoreInitial: true })
+	.watch("./src/i18n/messages", { ignoreInitial: true })
 	.on("change", (path) => compileParaglide("change", path))
 	.on("add", (path) => compileParaglide("add", path))
 	.on("unlink", (path) => compileParaglide("delete", path));
 
 // TS Watcher
 chokidar
-	.watch(await Array.fromAsync(glob("./src/**/*.{ts,mjs,js,json}")), { ignoreInitial: true, ignored: (f, stats) => stats?.isFile() && f.includes("/messages/") })
+	.watch(await Array.fromAsync(glob("./src/**/*.{ts,mjs,js,json}")), { ignoreInitial: true, ignored: (f, stats) => stats?.isFile() && (f.includes("/messages/") || f.includes("/paraglide/")) })
 	.on("change", (path) => compileTypescript("change", path))
 	.on("add", (path) => compileTypescript("add", path))
 	.on("unlink", (path) => compileTypescript("delete", path));

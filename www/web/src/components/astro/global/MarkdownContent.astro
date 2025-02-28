@@ -80,18 +80,23 @@ const { tocPosition = "default", headings } = Astro.props;
 </style>
 
 <style is:global>
+	a.link {
+		&.active {
+			color: red;
+		}
+	}
 	.md-content {
+		img {
+			justify-self: center;
+			border: 1px solid transparent;
+			border-radius: 0.5rem;
+		}
+
 		figure:not([class]) {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-
-			img {
-				border: 1px solid transparent;
-				border-radius: 0.5rem;
-			}
-
 			figcaption {
 				text-align: center;
 			}
@@ -99,7 +104,6 @@ const { tocPosition = "default", headings } = Astro.props;
 	}
 
 	nav.toc {
-		/* display: none;This is generated */
 		height: max-content;
 		max-height: calc(100vh - var(--header-height) - 5rem);
 		scrollbar-width: thin;

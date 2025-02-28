@@ -23,15 +23,10 @@ const posts = defineCollection({
 		}),
 });
 
-// TO-DO: Find a way to do this automatically with locales.map...
 const tags = defineCollection({
 	loader: file(`./src/content/tags.yml`),
 	schema: z.object({
 		id: z.string(),
-		languages: z.object({
-			cs: z.string(),
-			en: z.string(),
-		}),
 	}),
 });
 

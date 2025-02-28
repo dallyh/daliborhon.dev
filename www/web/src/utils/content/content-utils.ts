@@ -193,7 +193,7 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 	let html = "<ol>";
 
 	const first = headings[0];
-	html += `<li><a class="link link-hover" href="#${first.slug}">${first.text}</a>`;
+	html += `<li><a class="toc-link" href="#${first.slug}">${first.text}</a>`;
 
 	for (let i = 1; i < headings.length; i++) {
 		const heading = headings[i];
@@ -205,10 +205,10 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 				html += "<ol><li>";
 				currentDepth++;
 			}
-			html += `<a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+			html += `<a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
 		} else if (level === currentDepth) {
 			// Same level: close previous item and start a new one
-			html += `</li><li><a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+			html += `</li><li><a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
 		} else {
 			// Higher-level heading (lower depth): close nested lists
 			while (currentDepth > level) {
@@ -216,7 +216,7 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 				currentDepth--;
 			}
 			// Close the previous item and add a new one at the proper level
-			html += `</li><li><a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+			html += `</li><li><a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
 		}
 	}
 

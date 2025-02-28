@@ -1,6 +1,26 @@
 :root {
-	--header-height: calc(68px + 1rem);
 	color-scheme: light;
+	--header-height: calc(68px + 1rem);
+	
+	--callout-headingFontColor-note: var(--color-info);
+	--callout-bg-note: color-mix(in oklab, var(--color-info) 30%, transparent);
+	--callout-border-note: var(--color-info);
+
+	--callout-headingFontColor-success: var(--color-success);
+	--callout-bg-success: color-mix(in oklab, var(--color-success) 30%, transparent);
+	--callout-border-success: var(--color-success);
+
+	--callout-headingFontColor-tip: var(--color-secondary);
+	--callout-bg-tip: color-mix(in oklab, var(--color-secondary) 30%, transparent);
+	--callout-border-tip: var(--color-secondary);
+
+	--callout-headingFontColor-caution: var(--color-warning);
+	--callout-bg-caution: color-mix(in oklab, var(--color-warning) 30%, transparent);
+	--callout-border-caution: var(--color-warning);
+
+	--callout-headingFontColor-danger: var(--color-error);
+	--callout-bg-danger: color-mix(in oklab, var(--color-error) 30%, transparent);
+	--callout-border-danger: var(--color-error);
 }
 
 :root[data-theme="dark"] {
@@ -19,6 +39,36 @@ html {
 
 :target {
 	scroll-margin-top: calc(var(--header-height) + 1rem); /* Navbar */
+}
+
+a:not(.navbar-item, .btn, .tab, .card-title, .toc-link, .no-underline, .link, .link-primary, .link-accent) {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+	text-decoration-color: var(--color-primary);
+	font-weight: 400;
+	color: inherit;
+
+	&:hover {
+		text-decoration-color: var(--color-base-content);
+	}
+}
+
+.card-title:has(a) a,
+.breadcrumbs a,
+.prose .toc-link,
+a.card-title {
+	text-decoration: none;
+	text-decoration-color: unset;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+	font-weight: 400;
+	color: inherit;
+
+	&:hover {
+		text-decoration: underline;
+		text-decoration-color: var(--color-primary);
+	}
 }
 
 .skeleton {
@@ -69,6 +119,7 @@ a .external-link-icon {
 	white-space: nowrap;
 	border-width: 0;
 }
+
 .print-only {
 	display: none;
 }

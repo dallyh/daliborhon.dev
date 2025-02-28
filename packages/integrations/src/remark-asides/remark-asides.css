@@ -18,24 +18,6 @@
 	--callout-border-danger: hsl(341, 72%, 60%);
 }
 
-:root[data-theme="dark"] {
-	--callout-headingFontColor-note: hsl(235, 86%, 86%);
-	--callout-bg-note: hsl(235, 50%, 20%);
-	--callout-border-note: hsl(235, 90%, 59%);
-	--callout-headingFontColor-success: hsl(96, 77%, 81%);
-	--callout-bg-success: hsl(95, 33%, 23%);
-	--callout-border-success: hsl(96, 77%, 81%);
-	--callout-headingFontColor-tip: hsl(276, 72%, 89%);
-	--callout-bg-tip: hsl(276, 36%, 22%);
-	--callout-border-tip: hsl(277, 81%, 60%);
-	--callout-headingFontColor-caution: hsl(42, 72%, 87%);
-	--callout-bg-caution: hsl(43, 33%, 22%);
-	--callout-border-caution: hsl(42, 72%, 65%);
-	--callout-headingFontColor-danger: hsl(338, 61%, 86%);
-	--callout-bg-danger: hsl(339, 32%, 21%);
-	--callout-border-danger: hsl(340, 64%, 62%);
-}
-
 .callout {
 	--calloutheadingFontColor: var(--callout-headingFontColor);
 	--callout-bg: var(--callout-bg);

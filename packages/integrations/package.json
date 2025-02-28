@@ -41,7 +41,7 @@
     "dependencies": {
         "hastscript": "^9.0.1",
         "kleur": "^4.1.5",
-        "remark-directive": "^3.0.1",
+        "remark-directive": "^4.0.0",
         "unist-util-visit": "^5.0.0"
     },
     "peerDependencies": {

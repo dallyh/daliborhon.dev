@@ -1,8 +1,8 @@
-import { h } from "hastscript";
 /**
  * Based on https://github.com/Microflash/remark-callout-directives
  * Taken from https://github.com/OliverSpeir/astro-starlight-remark-asides
  */
+import { h } from "hastscript";
 import { visit } from "unist-util-visit";
 import { locales } from "../i18n/config.js";
 import * as m from "../i18n/paraglide/messages.js";
@@ -22,7 +22,7 @@ import * as m from "../i18n/paraglide/messages.js";
 export default function remarkAsides() {
 	return (tree, file) => {
 		// The original file path is in file.history[0]
-		const locale = file.data.astro.frontmatter.language ?? extractLocaleFromFilePath(file.history[0]) ?? "en";
+		const locale = file.data.astro.frontmatter.locale ?? extractLocaleFromFilePath(file.history[0]) ?? "en";
 
 		visit(tree, (node) => {
 			if (node.type === "containerDirective") {

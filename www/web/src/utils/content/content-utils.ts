@@ -8,6 +8,7 @@ import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
 import calculateReadingTime from "reading-time";
 import { getFilteredPostsCollection } from "./get-filtered-posts-collection";
+import type { MarkdownHeading } from "astro";
 
 const logger = new Logger("content-utils");
 
@@ -181,4 +182,48 @@ export async function getTagById(tagId: string | undefined) {
 	}
 
 	return tag;
+}
+
+export function generateTOCHTML(headings: MarkdownHeading[]): string {
+	if (!headings.length) return "";
+
+	// Determine the base (minimum) depth
+	const baseDepth = Math.min(...headings.map((h) => h.depth));
+	let currentDepth = baseDepth;
+	let html = "<ol>";
+
+	const first = headings[0];
+	html += `<li><a class="link link-hover" href="#${first.slug}">${first.text}</a>`;
+
+	for (let i = 1; i < headings.length; i++) {
+		const heading = headings[i];
+		const level = heading.depth;
+
+		if (level > currentDepth) {
+			// Open new nested lists until we reach the desired depth
+			while (currentDepth < level) {
+				html += "<ol><li>";
+				currentDepth++;
+			}
+			html += `<a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+		} else if (level === currentDepth) {
+			// Same level: close previous item and start a new one
+			html += `</li><li><a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+		} else {
+			// Higher-level heading (lower depth): close nested lists
+			while (currentDepth > level) {
+				html += "</li></ol>";
+				currentDepth--;
+			}
+			// Close the previous item and add a new one at the proper level
+			html += `</li><li><a class="link link-hover" href="#${heading.slug}">${heading.text}</a>`;
+		}
+	}
+
+	// Close any open tags. We need to close the last <li> then each opened <ol>.
+	while (currentDepth-- >= baseDepth) {
+		html += "</li></ol>";
+	}
+
+	return html;
 }

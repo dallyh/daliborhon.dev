@@ -12,6 +12,7 @@ import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
+import { generateTOCHTML } from "@utils/content";
 
 const logger = new Logger("pdf.ts");
 
@@ -108,7 +109,8 @@ export const GET: APIRoute = async ({ params }) => {
 		return new Response(null, { status: 404 });
 	}
 
-	const { Content } = await render(entry);
+	const { Content, headings } = await render(entry);
+	const toc = generateTOCHTML(headings);
 
 	const content = await container.renderToString(Content, {
 		partial: true,
@@ -129,7 +131,7 @@ export const GET: APIRoute = async ({ params }) => {
 		},
 	};
 
-	const html = htmlToPdfMake(content, {
+	const html = htmlToPdfMake(toc + content, {
 		window,
 		removeExtraBlanks: true,
 	});

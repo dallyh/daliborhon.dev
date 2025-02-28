@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import PostsGrid from "@components/astro/blog/PostsGrid.astro";
+import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
+import Section from "@components/astro/global/Section.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { m } from "@paraglide/messages";
+import { locales } from "@paraglide/runtime";
+import { getPostsByTag } from "@utils/content";
+import { getRoutingLocale } from "@utils/i18n";
+
+export async function getStaticPaths() {
+	const paths = await Promise.all(
+		locales.map(async (locale) => {
+			const tags = await getCollection("tags");
+
+			return await Promise.all(
+				tags.map(async (tag) => {
+					const posts = await getPostsByTag(locale, tag.id);
+
+					if (posts === undefined || posts.length === 0) {
+						return {
+							params: { lang: getRoutingLocale(locale), tag: tag.id },
+							props: { posts: undefined, tag: tag, locale: locale },
+						};
+					}
+
+					return {
+						params: { lang: getRoutingLocale(locale), tag: tag.id },
+						props: { posts: posts, tag: tag, locale: locale },
+					};
+				}),
+			);
+		}),
+	);
+
+	return paths.flat();
+}
+
+const { posts, tag, locale } = Astro.props;
+
+const tagTitle = tag.id!;
+const tagDescription = `${m.blog__posts_tagged()} #${tagTitle}`;
+const layoutProps = {
+	title: `${m.blog__tag()}: #${tagTitle}`,
+	description: tagDescription,
+};
+---
+
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
+		<BreadCrumbsItem currentPage={true} label={tagTitle} />
+	</Fragment>
+	<Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
+		{!posts && <p>{m.blog__no_tagged_posts()}</p>}
+		{posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}
+		{posts && posts.length !== 0 && <PostsGrid posts={posts} />}
+	</Section>
+</PageLayout>

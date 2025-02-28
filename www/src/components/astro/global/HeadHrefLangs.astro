@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getAbsoluteLocaleUrl } from "astro:i18n";
+import { type Locale, locales } from "@paraglide/runtime";
+import { getAbsoluteBlogPostUrl, getBlogPostTranslations } from "@utils/content";
+import { getPathFromUrl } from "@utils/i18n";
+
+interface Props {
+	post?: CollectionEntry<"posts">;
+}
+const { post } = Astro.props;
+---
+
+<Fragment>
+	{!post && locales.map((locale) => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, getPathFromUrl(Astro.url, import.meta.env.BASE_URL))} />)}
+	{
+		post &&
+			(async () => {
+				const posts = await getBlogPostTranslations(post);
+				return posts.map(async (post) => {
+					const value = getAbsoluteBlogPostUrl(post.data.locale as Locale, post);
+					return <link rel="alternate" hreflang={post.data.locale} href={value} />;
+				});
+			})
+	}
+</Fragment>

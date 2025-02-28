@@ -4,16 +4,15 @@
     "private": true,
     "scripts": {
         "build": "turbo build",
-        "build:web": "turbo build --filter @daliborhon.dev/web",
-        "build:packages": "turbo build --filter \"./packages/**\"",
+        "build:web": "turbo build --filter @daliborhon.dev/www",
         "format": "pnpm run format:code && pnpm run format:imports",
         "format:code": "prettier -w \"**/*\" --ignore-unknown --cache",
         "format:imports": "biome check --formatter-enabled=false --linter-enabled=false --write",
         "lint": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
         "lint:fix:unsafe": "biome lint --write --unsafe",
-        "deploy:web": "pnpm deploy --prod --filter \"@daliborhon.dev/web\" ./deploy",
-        "deploy:web:deploy-legacy": "pnpm deploy --legacy --prod --filter \"@daliborhon.dev/web\" ./deploy"
+        "deploy:web": "pnpm deploy --prod --filter \"@daliborhon.dev/www\" ./deploy",
+        "deploy:web:deploy-legacy": "pnpm deploy --legacy --prod --filter \"@daliborhon.dev/www\" ./deploy"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",

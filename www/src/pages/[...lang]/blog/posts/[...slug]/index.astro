@@ -1,0 +1,34 @@
+---
+import BlogPostLayout from "@layouts/BlogPostLayout.astro";
+import { locales } from "@paraglide/runtime";
+import { getBlogPostSlug, getFilteredPostsCollection } from "@utils/content";
+import { getRoutingLocale } from "@utils/i18n";
+
+export async function getStaticPaths() {
+	const paths = await Promise.all(
+		locales.map(async (locale) => {
+			const posts = (await getFilteredPostsCollection({ sort: true, locale: locale })) ?? [];
+
+			if (posts.length === 0) {
+				return [];
+			}
+
+			return posts.map((post) => ({
+				params: {
+					lang: getRoutingLocale(locale),
+					slug: getBlogPostSlug(locale, post),
+				},
+				props: {
+					post: post,
+				},
+			}));
+		}),
+	);
+
+	return paths.flat();
+}
+
+const { post } = Astro.props;
+---
+
+<BlogPostLayout post={post} />

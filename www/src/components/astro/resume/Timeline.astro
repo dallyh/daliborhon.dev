@@ -1,0 +1,70 @@
+---
+import type { TimelineItem } from "./TimelineItem.astro";
+
+export interface Props {
+	children: TimelineItem | TimelineItem[];
+	experienceTitle: string;
+	educationTitle: string;
+}
+
+const { experienceTitle, educationTitle } = Astro.props;
+---
+
+<div class="timeline">
+	<div class="timeline-cards">
+		<div class="timeline-card">
+			<h3>{experienceTitle}</h3>
+			<div class="timeline-content">
+				<slot name="exp" />
+			</div>
+		</div>
+		<div class="timeline-card">
+			<h3>{educationTitle}</h3>
+			<div class="timeline-content">
+				<div>
+					<slot name="edu" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.timeline {
+		position: relative;
+		display: grid;
+		grid-template-rows: min-content 1fr;
+	}
+
+	.timeline-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+
+		@media (max-width: 800px) {
+			grid-template-columns: unset;
+		}
+	}
+
+	.timeline-card {
+		h3 {
+			margin-bottom: 1rem;
+			margin-top: 0;
+		}
+	}
+
+	.timeline-content {
+		position: relative;
+		margin-left: 5px; /* Just so the dots align with headings */
+	}
+
+	.timeline-content::before {
+		content: "";
+		position: absolute;
+		width: 2px;
+		height: 100%;
+		left: 1px;
+		top: 0;
+		background: linear-gradient(to bottom, var(--color-primary), transparent);
+	}
+</style>

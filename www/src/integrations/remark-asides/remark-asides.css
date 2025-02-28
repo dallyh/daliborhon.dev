@@ -1,0 +1,91 @@
+/* This is taken from @microflash/remark-callout-directives/themes/github/index.css and modified. Modified to work with tailwind darkMode, and match starlights <Asides/> */
+
+:root {
+	--callout-headingFontColor-note: var(--color-info);
+	--callout-bg-note: color-mix(in oklab, var(--color-info) 30%, transparent);
+	--callout-border-note: var(--color-info);
+
+	--callout-headingFontColor-success: var(--color-success);
+	--callout-bg-success: color-mix(in oklab, var(--color-success) 30%, transparent);
+	--callout-border-success: var(--color-success);
+
+	--callout-headingFontColor-tip: var(--color-secondary);
+	--callout-bg-tip: color-mix(in oklab, var(--color-secondary) 30%, transparent);
+	--callout-border-tip: var(--color-secondary);
+
+	--callout-headingFontColor-caution: var(--color-warning);
+	--callout-bg-caution: color-mix(in oklab, var(--color-warning) 30%, transparent);
+	--callout-border-caution: var(--color-warning);
+
+	--callout-headingFontColor-danger: var(--color-error);
+	--callout-bg-danger: color-mix(in oklab, var(--color-error) 30%, transparent);
+	--callout-border-danger: var(--color-error);
+}
+
+.callout {
+	--calloutheadingFontColor: var(--callout-headingFontColor);
+	--callout-bg: var(--callout-bg);
+	--callout-border: var(--callout-border);
+	border-left: 0.25em solid var(--callout-border);
+	padding: 0.5rem 1rem;
+	color: inherit;
+	background-color: var(--callout-bg);
+	border-radius: 0.125rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.callout-indicator {
+	display: flex;
+	align-items: center;
+	line-height: 1;
+	margin-bottom: 16px;
+	color: var(--calloutheadingFontColor);
+}
+
+.callout-title {
+	font-weight: 600;
+	font-size: 1.25rem;
+	letter-spacing: 0.025em;
+}
+
+.callout-indicator > svg:first-of-type {
+	margin-right: 0.5rem;
+}
+
+.callout-content:first-child,
+.callout-content:only-child {
+	margin-block-start: 0;
+}
+
+.callout-content:last-child,
+.callout-content:only-child {
+	margin-block-end: 0;
+}
+
+.callout-note {
+	--callout-headingFontColor: var(--callout-headingFontColor-note);
+	--callout-bg: var(--callout-bg-note);
+	--callout-border: var(--callout-border-note);
+}
+
+.callout-success {
+	--callout-headingFontColor: var(--callout-headingFontColor-success);
+	--callout-bg: var(--callout-bg-success);
+	--callout-border: var(--callout-border-success);
+}
+.callout-caution {
+	--callout-headingFontColor: var(--callout-headingFontColor-caution);
+	--callout-bg: var(--callout-bg-caution);
+	--callout-border: var(--callout-border-caution);
+}
+.callout-danger {
+	--callout-headingFontColor: var(--callout-headingFontColor-danger);
+	--callout-bg: var(--callout-bg-danger);
+	--callout-border: var(--callout-border-danger);
+}
+.callout-tip {
+	--callout-headingFontColor: var(--callout-headingFontColor-tip);
+	--callout-bg: var(--callout-bg-tip);
+	--callout-border: var(--callout-border-tip);
+}

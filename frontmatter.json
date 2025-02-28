@@ -1,315 +1,290 @@
 {
-  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
-  "frontMatter.framework.id": "other",
-  "frontMatter.preview.host": "http://localhost:4321",
-  "frontMatter.preview.trailingSlash": false,
-  "frontMatter.content.publicFolder": {
-    "relative": true,
-    "path": "[[workspace]]/www/web/src/assets/content"
-  },
-  "frontMatter.media.contentTypes": [
-    {
-      "name": "default",
-      "fields": [
+    "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+    "frontMatter.framework.id": "other",
+    "frontMatter.preview.host": "http://localhost:4321",
+    "frontMatter.preview.trailingSlash": false,
+    "frontMatter.content.publicFolder": {
+        "relative": true,
+        "path": "[[workspace]]/www/src/assets/content"
+    },
+    "frontMatter.media.contentTypes": [
         {
-          "title": "Title",
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "title": "Author",
-          "name": "author",
-          "type": "string"
-        },
-        {
-          "title": "Alt text",
-          "name": "alt",
-          "type": "string"
+            "name": "default",
+            "fields": [
+                {
+                    "title": "Title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "Author",
+                    "name": "author",
+                    "type": "string"
+                },
+                {
+                    "title": "Alt text",
+                    "name": "alt",
+                    "type": "string"
+                }
+            ]
         }
-      ]
+    ],
+    "frontMatter.data.files": [
+        {
+            "id": "project-tags",
+            "labelField": "id",
+            "title": "Project tags",
+            "file": "[[workspace]]/www/src/content/project-tags.yml",
+            "fileType": "yaml",
+            "schema": {
+                "type": "object",
+                "title": "Tag",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "bgColor": {
+                        "type": "string",
+                        "title": "Background color"
+                    }
+                }
+            }
+        },
+        {
+            "id": "tags",
+            "labelField": "id",
+            "title": "Blog tags",
+            "file": "[[workspace]]/www/src/content/tags.yml",
+            "fileType": "yaml",
+            "schema": {
+                "type": "object",
+                "title": "Tag",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    }
+                }
+            }
+        }
+    ],
+    "frontMatter.content.pageFolders": [
+        {
+            "title": "blog",
+            "path": "[[workspace]]/www/src/content/posts",
+            "contentTypes": ["blog"],
+            "filePrefix": "{{year}}-{{month}}-{{day}}",
+            "previewPath": "{{locale}}/blog/posts",
+            "trailingSlash": false,
+            "defaultLocale": "en",
+            "locales": [
+                {
+                    "title": "English",
+                    "locale": "en",
+                    "path": "en"
+                },
+                {
+                    "title": "Czech",
+                    "locale": "cs",
+                    "path": "cs"
+                }
+            ]
+        },
+        {
+            "title": "projects",
+            "path": "[[workspace]]/www/src/content/projects",
+            "defaultLocale": "en",
+            "locales": [
+                {
+                    "title": "English",
+                    "locale": "en",
+                    "path": "en"
+                },
+                {
+                    "title": "Czech",
+                    "locale": "cs",
+                    "path": "cs"
+                }
+            ]
+        },
+        {
+            "title": "resume",
+            "path": "[[workspace]]/www/src/content/resume",
+            "disableCreation": true
+        }
+    ],
+    "frontMatter.taxonomy.contentTypes": [
+        {
+            "name": "blog",
+            "pageBundle": false,
+            "slugTemplate": "{{year}}-{{month}}-{{day}}-{{seoTitle}}",
+            "fields": [
+                {
+                    "name": "title",
+                    "title": "Title",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "description",
+                    "title": "Description",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "tags",
+                    "title": "Tags",
+                    "type": "dataFile",
+                    "dataFileId": "tags",
+                    "dataFileKey": "id",
+                    "multiple": true,
+                    "dataFileValue": "id",
+                    "required": true
+                },
+                {
+                    "name": "locale",
+                    "title": "Locale",
+                    "type": "choice",
+                    "choices": ["cs", "en"],
+                    "required": true
+                },
+                {
+                    "name": "draft",
+                    "title": "Draft?",
+                    "type": "draft",
+                    "default": true
+                },
+                {
+                    "name": "featured",
+                    "title": "Feautred?",
+                    "type": "boolean",
+                    "default": false
+                },
+                {
+                    "name": "image",
+                    "title": "Image",
+                    "type": "image",
+                    "required": false,
+                    "isPreviewImage": true
+                },
+                {
+                    "name": "pubDate",
+                    "title": "Published date",
+                    "type": "datetime",
+                    "required": true,
+                    "default": "{{now}}",
+                    "isPublishDate": true
+                },
+                {
+                    "name": "modDate",
+                    "title": "Modified date",
+                    "type": "datetime",
+                    "isModifiedDate": true
+                }
+            ]
+        },
+        {
+            "name": "resume",
+            "pageBundle": false,
+            "fields": [
+                {
+                    "title": "Title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "Description",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "title": "Current position",
+                    "name": "currentPosition",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "project",
+            "pageBundle": false,
+            "slugTemplate": "{{seoTitle}}",
+            "fields": [
+                {
+                    "title": "Title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "Source URL",
+                    "name": "sourceUrl",
+                    "type": "string"
+                },
+                {
+                    "name": "tags",
+                    "title": "Tags",
+                    "type": "dataFile",
+                    "dataFileId": "project-tags",
+                    "dataFileKey": "id",
+                    "multiple": true,
+                    "dataFileValue": "id",
+                    "required": true
+                },
+                {
+                    "title": "Locale",
+                    "name": "locale",
+                    "type": "string"
+                },
+                {
+                    "title": "Image",
+                    "name": "image",
+                    "type": "image",
+                    "isPreviewImage": true
+                },
+                {
+                    "title": "Project start",
+                    "name": "startDate",
+                    "type": "datetime"
+                },
+                {
+                    "title": "Active?",
+                    "name": "active",
+                    "type": "boolean"
+                }
+            ]
+        }
+    ],
+    "frontMatter.git.enabled": true,
+    "frontMatter.git.commitMessage": "Synced content",
+    "frontMatter.content.snippets": {
+        "Note callout": {
+            "description": "",
+            "body": [":::note", "", ":::"],
+            "fields": []
+        },
+        "Success callout": {
+            "description": "",
+            "body": [":::success", "", ":::"],
+            "fields": []
+        },
+        "Caution callout": {
+            "description": "",
+            "body": [":::caution", "", ":::"],
+            "fields": []
+        },
+        "Danger callout": {
+            "description": "",
+            "body": [":::danger", "", ":::"],
+            "fields": []
+        },
+        "Tip callout": {
+            "description": "",
+            "body": [":::tip", "", ":::"],
+            "fields": []
+        }
     }
-  ],
-  "frontMatter.data.files": [
-    {
-      "id": "project-tags",
-      "labelField": "id",
-      "title": "Project tags",
-      "file": "[[workspace]]/www/web/src/content/project-tags.yml",
-      "fileType": "yaml",
-      "schema": {
-        "type": "object",
-        "title": "Tag",
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "title": {
-            "type": "string",
-            "title": "Title"
-          },
-          "bgColor": {
-            "type": "string",
-            "title": "Background color"
-          }
-        }
-      }
-    },
-    {
-      "id": "tags",
-      "labelField": "id",
-      "title": "Blog tags",
-      "file": "[[workspace]]/www/web/src/content/tags.yml",
-      "fileType": "yaml",
-      "schema": {
-        "type": "object",
-        "title": "Tag",
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          }
-        }
-      }
-    }
-  ],
-  "frontMatter.content.pageFolders": [
-    {
-      "title": "blog",
-      "path": "[[workspace]]/www/web/src/content/posts",
-      "contentTypes": [
-        "blog"
-      ],
-      "filePrefix": "{{year}}-{{month}}-{{day}}",
-      "previewPath": "{{locale}}/blog/posts",
-      "trailingSlash": false,
-      "defaultLocale": "en",
-      "locales": [
-        {
-          "title": "English",
-          "locale": "en",
-          "path": "en"
-        },
-        {
-          "title": "Czech",
-          "locale": "cs",
-          "path": "cs"
-        }
-      ]
-    },
-    {
-      "title": "projects",
-      "path": "[[workspace]]/www/web/src/content/projects",
-      "defaultLocale": "en",
-      "locales": [
-        {
-          "title": "English",
-          "locale": "en",
-          "path": "en"
-        },
-        {
-          "title": "Czech",
-          "locale": "cs",
-          "path": "cs"
-        }
-      ]
-    },
-    {
-      "title": "resume",
-      "path": "[[workspace]]/www/web/src/content/resume",
-      "disableCreation": true
-    }
-  ],
-  "frontMatter.taxonomy.contentTypes": [
-    {
-      "name": "blog",
-      "pageBundle": false,
-      "slugTemplate": "{{year}}-{{month}}-{{day}}-{{seoTitle}}",
-      "fields": [
-        {
-          "name": "title",
-          "title": "Title",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "description",
-          "title": "Description",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "tags",
-          "title": "Tags",
-          "type": "dataFile",
-          "dataFileId": "tags",
-          "dataFileKey": "id",
-          "multiple": true,
-          "dataFileValue": "id",
-          "required": true
-        },
-        {
-          "name": "locale",
-          "title": "Locale",
-          "type": "choice",
-          "choices": [
-            "cs",
-            "en"
-          ],
-          "required": true
-        },
-        {
-          "name": "draft",
-          "title": "Draft?",
-          "type": "draft",
-          "default": true
-        },
-        {
-          "name": "featured",
-          "title": "Feautred?",
-          "type": "boolean",
-          "default": false
-        },
-        {
-          "name": "image",
-          "title": "Image",
-          "type": "image",
-          "required": false,
-          "isPreviewImage": true
-        },
-        {
-          "name": "pubDate",
-          "title": "Published date",
-          "type": "datetime",
-          "required": true,
-          "default": "{{now}}",
-          "isPublishDate": true
-        },
-        {
-          "name": "modDate",
-          "title": "Modified date",
-          "type": "datetime",
-          "isModifiedDate": true
-        }
-      ]
-    },
-    {
-      "name": "resume",
-      "pageBundle": false,
-      "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "title": "Description",
-          "name": "description",
-          "type": "string"
-        },
-        {
-          "title": "Current position",
-          "name": "currentPosition",
-          "type": "string"
-        }
-      ]
-    },
-    {
-      "name": "project",
-      "pageBundle": false,
-      "slugTemplate": "{{seoTitle}}",
-      "fields": [
-        {
-          "title": "Title",
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "title": "Source URL",
-          "name": "sourceUrl",
-          "type": "string"
-        },
-        {
-          "name": "tags",
-          "title": "Tags",
-          "type": "dataFile",
-          "dataFileId": "project-tags",
-          "dataFileKey": "id",
-          "multiple": true,
-          "dataFileValue": "id",
-          "required": true
-        },
-        {
-          "title": "Locale",
-          "name": "locale",
-          "type": "string"
-        },
-        {
-          "title": "Image",
-          "name": "image",
-          "type": "image",
-          "isPreviewImage": true
-        },
-        {
-          "title": "Project start",
-          "name": "startDate",
-          "type": "datetime"
-        },
-        {
-          "title": "Active?",
-          "name": "active",
-          "type": "boolean"
-        }
-      ]
-    }
-  ],
-  "frontMatter.git.enabled": true,
-  "frontMatter.git.commitMessage": "Synced content",
-  "frontMatter.content.snippets": {
-    "Note callout": {
-      "description": "",
-      "body": [
-        ":::note",
-        "",
-        ":::"
-      ],
-      "fields": []
-    },
-    "Success callout": {
-      "description": "",
-      "body": [
-        ":::success",
-        "",
-        ":::"
-      ],
-      "fields": []
-    },
-    "Caution callout": {
-      "description": "",
-      "body": [
-        ":::caution",
-        "",
-        ":::"
-      ],
-      "fields": []
-    },
-    "Danger callout": {
-      "description": "",
-      "body": [
-        ":::danger",
-        "",
-        ":::"
-      ],
-      "fields": []
-    },
-    "Tip callout": {
-      "description": "",
-      "body": [
-        ":::tip",
-        "",
-        ":::"
-      ],
-      "fields": []
-    }
-  }
 }

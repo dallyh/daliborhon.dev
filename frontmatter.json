@@ -5,7 +5,7 @@
     "frontMatter.preview.trailingSlash": false,
     "frontMatter.content.publicFolder": {
         "relative": true,
-        "path": "[[workspace]]/www/src/assets/content"
+        "path": "[[workspace]]/www/web/src/assets/content"
     },
     "frontMatter.media.contentTypes": [
         {
@@ -34,7 +34,7 @@
             "id": "project-tags",
             "labelField": "id",
             "title": "Project tags",
-            "file": "[[workspace]]/www/src/content/project-tags.yml",
+            "file": "[[workspace]]/www/web/src/content/project-tags.yml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -59,7 +59,7 @@
             "id": "tags",
             "labelField": "id",
             "title": "Blog tags",
-            "file": "[[workspace]]/www/src/content/tags.yml",
+            "file": "[[workspace]]/www/web/src/content/tags.yml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -76,7 +76,7 @@
     "frontMatter.content.pageFolders": [
         {
             "title": "blog",
-            "path": "[[workspace]]/www/src/content/posts",
+            "path": "[[workspace]]/www/web/src/content/posts",
             "contentTypes": ["blog"],
             "filePrefix": "{{year}}-{{month}}-{{day}}",
             "previewPath": "{{locale}}/blog/posts",
@@ -97,7 +97,7 @@
         },
         {
             "title": "projects",
-            "path": "[[workspace]]/www/src/content/projects",
+            "path": "[[workspace]]/www/web/src/content/projects",
             "defaultLocale": "en",
             "locales": [
                 {
@@ -114,7 +114,7 @@
         },
         {
             "title": "resume",
-            "path": "[[workspace]]/www/src/content/resume",
+            "path": "[[workspace]]/www/web/src/content/resume",
             "disableCreation": true
         }
     ],

@@ -133,10 +133,5 @@
     "analytics__search_url": "Search for URL",
     "analytics__period": "Period",
     "error__500": "An error occured",
-    "error__500_unknown": "Unknown error",
-    "asides__note_title": "Note",
-    "asides__success_title": "Success",
-    "asides__caution_title": "Caution",
-    "asides__danger_title": "Danger",
-    "asides__tip_title": "Tip"
+    "error__500_unknown": "Unknown error"
 }

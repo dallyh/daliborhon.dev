@@ -133,10 +133,5 @@
     "analytics__search_url": "Hledat URL",
     "analytics__period": "Období",
     "error__500": "Došlo k chybě na serveru",
-    "error__500_unknown": "Neznámá chyba",
-    "asides__note_title": "Poznámka",
-    "asides__success_title": "Úspěch",
-    "asides__caution_title": "Pozor",
-    "asides__danger_title": "Varování",
-    "asides__tip_title": "Tip"
+    "error__500_unknown": "Neznámá chyba"
 }

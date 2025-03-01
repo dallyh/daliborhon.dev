@@ -1,5 +1,5 @@
 ---
-title: Nasazení libsql-server s Astro projektem na Zerops
+title: Jak nasadit libsql-server s Astro na Zerops
 description: Návod, jak nasadit libsql-server s Astro a perzistentní databází na Zerops.
 tags:
     - development

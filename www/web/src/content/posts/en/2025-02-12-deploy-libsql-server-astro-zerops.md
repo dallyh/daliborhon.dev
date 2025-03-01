@@ -1,5 +1,5 @@
 ---
-title: Deploying libsql-server with Astro on Zerops
+title: How to deploy libsql-server with Astro on Zerops
 description: A guide on how to deploy libsql-server with Astro and a persistent database on Zerops.
 tags:
     - development

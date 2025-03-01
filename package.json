@@ -4,15 +4,16 @@
     "private": true,
     "scripts": {
         "build": "turbo build",
-        "build:web": "turbo build --filter @daliborhon.dev/www",
+        "build:web": "turbo build --filter \"@daliborhon.dev/web\"",
+        "dev:web": "pnpm --filter \"@daliborhon.dev/web\" run dev",
         "format": "pnpm run format:code && pnpm run format:imports",
         "format:code": "prettier -w \"**/*\" --ignore-unknown --cache",
         "format:imports": "biome check --formatter-enabled=false --linter-enabled=false --write",
         "lint": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
         "lint:fix:unsafe": "biome lint --write --unsafe",
-        "deploy:web": "pnpm deploy --prod --filter \"@daliborhon.dev/www\" ./deploy",
-        "deploy:web:deploy-legacy": "pnpm deploy --legacy --prod --filter \"@daliborhon.dev/www\" ./deploy"
+        "deploy:web": "pnpm deploy --prod --filter \"@daliborhon.dev/web\" ./deploy",
+        "deploy:web:legacy": "pnpm deploy --legacy --prod --filter \"@daliborhon.dev/web\" ./deploy"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
@@ -20,8 +21,8 @@
         "prettier-plugin-astro": "^0.14.1",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "turbo": "^2.4.4",
-        "typescript": "^5.7.3",
-        "@types/node": "^22.13.5"
+        "typescript": "^5.8.2",
+        "@types/node": "^22.13.8"
     },
     "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b",
     "engines": {

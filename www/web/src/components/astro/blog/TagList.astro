@@ -18,7 +18,7 @@ const locale = Astro.currentLocale as Locale;
 	{
 		tags &&
 			tags.map((tag) => (
-				<li class="badge badge-primary badge-outline hover:bg-primary hover:text-primary-content transition-colors duration-300">
+				<li class="badge badge-primary badge-soft hover:bg-primary hover:text-primary-content transition-colors duration-300">
 					<a class="no-underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
 						#{tag.id}
 					</a>
@@ -34,7 +34,7 @@ const locale = Astro.currentLocale as Locale;
 						<>
 							{relatedTags.map(async (tag) => {
 								return (
-									<li class="badge badge-primary badge-outline hover:bg-primary hover:text-primary-content transition-colors duration-300">
+									<li class="badge badge-primary badge-soft hover:bg-primary hover:text-primary-content transition-colors duration-300">
 										<a class="no-underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
 											#{tag.id}
 										</a>

@@ -8,12 +8,19 @@
 }
 
 html {
-	font-family: "Nunito Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	text-rendering: optimizeLegibility;
 	overflow-anchor: none;
-
 	@media (prefers-reduced-motion: no-preference) {
 		scroll-behavior: smooth;
+	}
+}
+
+body {
+	&:after {
+		content: "";
+		position: fixed;
+		top: 20%;
+		width: 100%;
+		border-top: 1px solid red;
 	}
 }
 
@@ -36,7 +43,6 @@ a:not(.navbar-item, .btn, .tab, .card-title, .toc-link, .no-underline, .link, .l
 
 .card-title:has(a) a,
 .breadcrumbs a,
-.prose .toc-link,
 a.card-title {
 	text-decoration: none;
 	text-decoration-color: unset;

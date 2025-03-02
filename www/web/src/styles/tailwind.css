@@ -4,6 +4,13 @@
 }
 @plugin "@tailwindcss/typography";
 
+@theme {
+	--default-font-family: "Nunito Variable";
+	--default-mono-font-family: "Fira Code Variable", var(--font-mono);
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @layer utilities {
 	h1 {
 		@apply text-4xl;

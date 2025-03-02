@@ -47,7 +47,12 @@ const posts = await getPostsByTag(locale, search);
 						{tags &&
 							tags.map(async (tag) => {
 								return (
-									<a role="tab" class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active" : ""}`} href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
+									<a
+										role="tab"
+										class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
+										href={`?tag=${tag.id}`}
+										aria-label={tag.id + m.blog__tag()}
+									>
 										<span>
 											<i class="fas fa-tag" />
 										</span>

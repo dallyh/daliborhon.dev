@@ -190,7 +190,7 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 	// Determine the base (minimum) depth
 	const baseDepth = Math.min(...headings.map((h) => h.depth));
 	let currentDepth = baseDepth;
-	let html = "<ol>";
+	let html = `<ul class="menu not-prose">`;
 
 	const first = headings[0];
 	html += `<li><a class="toc-link" href="#${first.slug}">${first.text}</a>`;
@@ -202,7 +202,7 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 		if (level > currentDepth) {
 			// Open new nested lists until we reach the desired depth
 			while (currentDepth < level) {
-				html += "<ol><li>";
+				html += "<ul><li>";
 				currentDepth++;
 			}
 			html += `<a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
@@ -212,7 +212,7 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 		} else {
 			// Higher-level heading (lower depth): close nested lists
 			while (currentDepth > level) {
-				html += "</li></ol>";
+				html += "</li></ul>";
 				currentDepth--;
 			}
 			// Close the previous item and add a new one at the proper level
@@ -220,9 +220,9 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 		}
 	}
 
-	// Close any open tags. We need to close the last <li> then each opened <ol>.
+	// Close any open tags. We need to close the last <li> then each opened <ul>.
 	while (currentDepth-- >= baseDepth) {
-		html += "</li></ol>";
+		html += "</li></ul>";
 	}
 
 	return html;

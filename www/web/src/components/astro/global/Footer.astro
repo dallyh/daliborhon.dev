@@ -11,7 +11,7 @@ const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
 ---
 
-<footer class="footer bg-base-200 mb-4 mt-4 flex flex-col items-center justify-center rounded-xl p-4 md:flex-row md:justify-between">
+<footer class="footer bg-base-200 mb-4 mt-4 flex flex-col items-center justify-center rounded-xl border border-slate-300/5 p-4 md:flex-row md:justify-between">
 	<nav class="footer-start flex flex-wrap items-center justify-center gap-4 md:place-self-center md:justify-self-end">
 		<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
 			<i class="fas fa-lg fa-solid fa-square-rss"></i>

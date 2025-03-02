@@ -14,14 +14,16 @@ const { tocPosition = "default", headings } = Astro.props;
 <article class=`md-content prose max-w-none ${tocPosition}` id="article">
 	{
 		headings && headings.length !== 0 && (
-			<div id="toc" class="bg-base-200 rounded-xl border border-slate-300/5">
-				<details id="tocDetails" class="max-[1024px]:collapse-arrow collapse">
-					<summary class="collapse-title text-xl">{m.blog__toc()}</summary>
-					<nav class="toc">
-						<Fragment set:html={generateTOCHTML(headings)} />
-					</nav>
-				</details>
-			</div>
+			<toc-root>
+				<div id="toc">
+					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 collapse rounded-xl border border-slate-300/5">
+						<summary class="collapse-title text-xl">{m.blog__toc()}</summary>
+						<nav class="toc">
+							<Fragment set:html={generateTOCHTML(headings)} />
+						</nav>
+					</details>
+				</div>
+			</toc-root>
 		)
 	}
 	<div id="content">
@@ -29,120 +31,129 @@ const { tocPosition = "default", headings } = Astro.props;
 	</div>
 </article>
 
-<script is:inline>
-	//import "https://unpkg.com/intersection-observer-debugger";
-	// Itentionally inlined to prevent FOUC
-	function openToc() {
-		const details = document.querySelector("#tocDetails");
-		if (!details) return;
+<script>
+	// https://github.com/miaobuao/astro-theme-meo/blob/main/src/theme/components/ArticleToc.astro
 
-		const width = window.innerWidth;
-		details.open = width >= 1024;
+	class TableOfContents extends HTMLElement {
+		get details() {
+			return this.querySelector("#tocDetails") as HTMLDetailsElement | null;
+		}
+
+		openToc() {
+			console.log(this.details);
+			if (!this.details) return;
+			const width = window.innerWidth;
+			this.details.open = width >= 1024;
+		}
+
+		connectedCallback() {
+			this.openToc();
+			window.addEventListener("resize", this.openToc);
+		}
+
+		disconnectedCallback() {
+			window.removeEventListener("resize", this.openToc);
+		}
 	}
 
-	openToc();
-	window.addEventListener("resize", openToc);
-
-	window.addEventListener("DOMContentLoaded", () => {
-		const $toc = document.querySelector(".toc > ul");
-		// Our functionality revolves around this selector, it has the built in assumptions mentioned above
-		const $anchorLinks = $toc.querySelectorAll('a[href^="#"]');
-
-		// tocMap is our data and state
-		// Structure is:
-		// [sectionId] = {
-		//   'link': {HTMLElement} <Reference to ToC Link element>,
-		//   'section': {HTMLElement} <Reference to element toc Link is pointed at>,
-		//   'isIntersecting': {boolean} <Whether or not the element is visible/intersecting>
-		// }
-		const tocMap = {};
-
-		/**
-		 * Highlight a section in the ToC based on ID
-		 * @param {string} sectionId Id of section/href of anchor without #
-		 */
-		const isIntersectingCallback = (sectionId) => {
-			// Check for a previously highlighted toc item and remove it's highlight
-			if ($toc.scrolledToElement && tocMap[$toc.scrolledToElement]) {
-				// Since we have a reference in our tocMap we don't need to query
-				tocMap[$toc.scrolledToElement].link.classList.remove("menu-active");
-			}
-			// Highlight the new toc item
-			tocMap[sectionId].link.classList.add("menu-active");
-			// Add the new item as a property of the toc, so we can unhighlight it later
-			$toc.scrolledToElement = sectionId;
-		};
-
-		/**
-		 * Callback for intersection observer to fire our behavior.
-		 * This will fire if something has entered or left our observed area
-		 * @param entries {array} Array of IntersectionObserverEntry
-		 */
-
-		let previousY = 0;
-		let previousRatio = 0;
-		let lastSectionId = "";
-		let currentSectionId = "";
-
-		const intersectionObserverCallback = (entries) => {
-			// Iterate over entries and figure out which one is intersecting
-			for (let i = 0; i < entries.length; i++) {
-				const sectionId = entries[i].target.id;
-				const isIntersecting = entries[i].isIntersecting;
-
-				currentSectionId = sectionId;
-
-				const currentY = entries[i].boundingClientRect.y;
-				const currentRatio = entries[i].intersectionRatio;
-
-				// Scrolling down/up
-				if (currentY < previousY && currentRatio > previousRatio && isIntersecting) {
-					console.log(sectionId + " entered down");
-					isIntersectingCallback(sectionId);
-					lastSectionId = sectionId;
-				}
-
-				if (currentY > previousY && isIntersecting) {
-					let keys = Object.keys(tocMap); // Get all keys
-					let previousKeyIndex = keys.indexOf(sectionId) - 1; // Find the index of the current key and get the previous index
-
-					if (previousKeyIndex >= 0) {
-						let previousKey = keys[previousKeyIndex]; // Get the previous key
-						let previousSection = tocMap[previousKey]; // Get the previous section
-
-						isIntersectingCallback(previousSection.id);
-					}
-				}
-
-				previousY = currentY;
-				previousRatio = currentRatio;
-			}
-		};
-
-		const observer = new IntersectionObserver(intersectionObserverCallback, {
-			root: null,
-			rootMargin: "-18% 0px -78% 0px",
-			threshold: 0,
-		});
-
-		// Iterate over anchor links to build our data and fire intersectionObserver
-		for (let i = 0; i < $anchorLinks.length; i++) {
-			const $anchorLink = $anchorLinks[i];
-			// Get the hash, which will be used as a key and a way of selecting the section element
-			const hashId = $anchorLink.getAttribute("href").substring(1);
-			const $section = document.getElementById(hashId);
-			if ($section) {
-				// Fill out our data for the sections we care about
-				tocMap[hashId] = {
-					id: hashId,
-					link: $anchorLink,
-					section: $section,
-				};
-				// Kick off intersectionObserver
-				observer.observe($section);
-			}
+	class TocItem extends HTMLElement {
+		get anchor() {
+			return this.querySelector("a");
 		}
-	});
+
+		get relativeHeading() {
+			return document.getElementById(this.dataset.slug!);
+		}
+
+		activate = () => {
+			this.classList.add("active");
+		};
+
+		deactivate = () => {
+			this.classList.remove("active");
+		};
+	}
+
+	class ArticleToc extends HTMLElement {
+		get items() {
+			return Array.from(this.querySelectorAll<TocItem>("toc-item"));
+		}
+
+		get mainScroll() {
+			return document;
+		}
+
+		connectedCallback() {
+			this.handleUpdate();
+			this.mainScroll.addEventListener("scroll", this.handleUpdate);
+		}
+
+		disconnectedCallback() {
+			this.mainScroll.removeEventListener("scroll", this.handleUpdate);
+		}
+
+		handleUpdate = () => {
+			if (this.items.length === 0) return;
+
+			if (this.items.length === 1) {
+				this.items[0].activate();
+				return;
+			}
+
+			const header = document.querySelector(".navbar");
+			const headerHeight = header?.getBoundingClientRect().height ?? 0;
+			const distance = headerHeight * 3;
+
+			const itemsWithBbox = this.items
+				.map((item) => ({
+					bbox: item.relativeHeading?.getBoundingClientRect(),
+					item,
+				}))
+				.filter(({ bbox }) => !!bbox)
+				.map(({ bbox, item }) => ({
+					bbox: bbox!,
+					item,
+				}));
+
+			if (itemsWithBbox.length === 0) {
+				return;
+			}
+
+			const firstPositiveIdx = itemsWithBbox.findIndex(({ bbox }) => bbox.top >= 0);
+			let target: TocItem;
+			if (firstPositiveIdx === -1) {
+				target = itemsWithBbox.at(-1)!.item;
+			} else if (firstPositiveIdx === 0) {
+				target = itemsWithBbox[0].item;
+			} else {
+				const firstPositiveItem = itemsWithBbox[firstPositiveIdx];
+				const nextPositiveItem = itemsWithBbox.at(firstPositiveIdx + 1);
+				if (firstPositiveItem.bbox.bottom < headerHeight) {
+					if (nextPositiveItem && nextPositiveItem.bbox.top <= distance) {
+						target = nextPositiveItem.item;
+					} else {
+						target = firstPositiveItem.item;
+					}
+				} else if (firstPositiveItem.bbox.top <= distance) {
+					target = firstPositiveItem.item;
+				} else {
+					target = itemsWithBbox[firstPositiveIdx - 1].item;
+				}
+			}
+
+			itemsWithBbox.forEach(({ item }) => {
+				if (item === target) {
+					item.activate();
+				} else {
+					item.deactivate();
+				}
+			});
+		};
+	}
+
+	customElements.define("toc-root", TableOfContents);
+	customElements.define("toc-item", TocItem);
+	customElements.define("article-toc", ArticleToc);
 </script>
 
 <style>

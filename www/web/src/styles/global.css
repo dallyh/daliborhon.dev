@@ -14,16 +14,6 @@ html {
 	}
 }
 
-body {
-	&:after {
-		content: "";
-		position: fixed;
-		top: 20%;
-		width: 100%;
-		border-top: 1px solid red;
-	}
-}
-
 :target {
 	scroll-margin-top: calc(var(--header-height) + 1rem); /* Navbar */
 }

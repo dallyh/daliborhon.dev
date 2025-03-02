@@ -11,6 +11,18 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@layer components {
+	article-toc {
+		toc-item.active {
+			box-shadow: 0 2px calc(var(--depth) * 3px) -2px var(--menu-active-bg);
+			color: var(--menu-active-fg);
+			background-color: var(--menu-active-bg);
+			background-size: auto, calc(var(--noise) * 100%);
+			background-image: none, var(--fx-noise);
+		}
+	}
+}
+
 @layer utilities {
 	h1 {
 		@apply text-4xl;

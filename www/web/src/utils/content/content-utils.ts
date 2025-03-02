@@ -190,10 +190,10 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 	// Determine the base (minimum) depth
 	const baseDepth = Math.min(...headings.map((h) => h.depth));
 	let currentDepth = baseDepth;
-	let html = `<ul class="menu not-prose">`;
+	let html = `<article-toc><ul class="menu not-prose">`;
 
 	const first = headings[0];
-	html += `<li><a class="toc-link" href="#${first.slug}">${first.text}</a>`;
+	html += `<li><toc-item data-slug="${first.slug}"><a class="toc-link" href="#${first.slug}">${first.text}</a></toc-item>`;
 
 	for (let i = 1; i < headings.length; i++) {
 		const heading = headings[i];
@@ -205,10 +205,10 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 				html += "<ul><li>";
 				currentDepth++;
 			}
-			html += `<a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
+			html += `<toc-item data-slug="${heading.slug}" ><a class="toc-link" href="#${heading.slug}">${heading.text}</a></toc-item>`;
 		} else if (level === currentDepth) {
 			// Same level: close previous item and start a new one
-			html += `</li><li><a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
+			html += `</li><li><toc-item data-slug="${heading.slug}"><a class="toc-link" href="#${heading.slug}">${heading.text}</a></toc-item>`;
 		} else {
 			// Higher-level heading (lower depth): close nested lists
 			while (currentDepth > level) {
@@ -216,13 +216,13 @@ export function generateTOCHTML(headings: MarkdownHeading[]): string {
 				currentDepth--;
 			}
 			// Close the previous item and add a new one at the proper level
-			html += `</li><li><a class="toc-link" href="#${heading.slug}">${heading.text}</a>`;
+			html += `</li><li><toc-item data-slug="${heading.slug}"><a class="toc-link" href="#${heading.slug}">${heading.text}</a></toc-item>`;
 		}
 	}
 
 	// Close any open tags. We need to close the last <li> then each opened <ul>.
 	while (currentDepth-- >= baseDepth) {
-		html += "</li></ul>";
+		html += "</li></ul></article-toc>";
 	}
 
 	return html;

@@ -15,13 +15,32 @@ interface Props {
 const { post } = Astro.props;
 
 const locale = Astro.currentLocale!;
+
+const menuItems = [
+	{ title: m.common__home(), href: getRelativeLocaleUrl(locale, "/") },
+	{
+		title: m.common__blog(),
+		href: getRelativeLocaleUrl(locale, "/blog"),
+		items: [
+			{ title: m.blog__all_posts_title(), href: getRelativeLocaleUrl(locale, "/blog/posts/") },
+			{ title: m.blog__featured_posts_title(), href: getRelativeLocaleUrl(locale, "/blog/posts/featured") },
+			{ title: m.blog__tags(), href: getRelativeLocaleUrl(locale, "/blog/tags") },
+		],
+	},
+	{ title: m.projects__projects(), href: getRelativeLocaleUrl(locale, "/projects") },
+	{
+		title: m.common__about(),
+		href: getRelativeLocaleUrl(locale, "/about"),
+		items: [{ title: m.common__resume(), href: getRelativeLocaleUrl(locale, "/about/resume") }],
+	},
+];
 ---
 
 <div class="drawer min-h-[100svh]">
 	<input id="drawerMenu" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content mx-auto flex w-full max-w-[1344px] flex-col px-0 lg:px-4">
 		<!-- Navbar -->
-		<div class="navbar lg:rounded-box bg-base-200 border border-slate-300/5 sticky top-0 z-10 mx-auto shadow-lg lg:top-2 lg:mb-2 lg:mt-2">
+		<nav class="navbar lg:rounded-box bg-base-200 sticky top-0 z-10 mx-auto border border-slate-300/5 shadow-md lg:top-2 lg:mb-2 lg:mt-2">
 			<div class="flex-none lg:hidden">
 				<label for="drawerMenu" aria-label="open sidebar" class="btn btn-square btn-ghost">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current">
@@ -35,51 +54,40 @@ const locale = Astro.currentLocale!;
 				</a>
 				<div class="hidden lg:flex">
 					<ul class="menu menu-horizontal z-50 px-1">
-						<li>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
-								{m.common__home()}
-							</a>
-						</li>
-						<li class="dropdown dropdown-hover">
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
-								{m.common__blog()}
-							</a>
-							<ul class="dropdown-content menu bg-base-300 rounded-box ml-0 w-52 p-2 shadow before:hidden">
-								<li>
-									<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
-										{m.blog__all_posts_title()}
-									</a>
-								</li>
-								<li>
-									<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
-										{m.blog__featured_posts_title()}
-									</a>
-								</li>
-								<li>
-									<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
-										{m.blog__tags()}
-									</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
-								{m.projects__projects()}
-							</a>
-						</li>
+						{
+							menuItems.map((i) => {
+								if (!i.items) {
+									return (
+										<li>
+											<a class="navbar-item" href={i.href} aria-label={i.title}>
+												{i.title}
+											</a>
+										</li>
+									);
+								}
 
-						<li class="dropdown dropdown-hover">
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
-								{m.common__about()}
-							</a>
-							<ul class="dropdown-content menu bg-base-300 rounded-box ml-0 w-52 p-2 shadow before:hidden">
-								<li>
-									<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
-										{m.common__resume()}
-									</a>
-								</li>
-							</ul>
-						</li>
+								if (i.items) {
+									return (
+										<li class="dropdown dropdown-hover">
+											<a class="navbar-item" href={i.href} aria-label={i.title}>
+												{i.title}
+											</a>
+											<ul class="dropdown-content menu bg-base-300 rounded-box ml-0 w-52 p-2 shadow before:hidden">
+												{i.items.map((d) => {
+													return (
+														<li>
+															<a class="navbar-item" href={d.href} aria-label={d.title}>
+																{d.title}
+															</a>
+														</li>
+													);
+												})}
+											</ul>
+										</li>
+									);
+								}
+							})
+						}
 					</ul>
 				</div>
 			</div>
@@ -88,7 +96,7 @@ const locale = Astro.currentLocale!;
 				<LanguageSelector post={post} />
 				<ThemeSelect />
 			</div>
-		</div>
+		</nav>
 		<!-- Page content -->
 		<div class="flex h-full flex-col px-4 lg:mx-2 lg:px-0">
 			<slot />
@@ -103,50 +111,40 @@ const locale = Astro.currentLocale!;
 			<SearchInput inDrawer />
 			<div class="mb-4"></div>
 			<ul class="menu p-0">
-				<li>
-					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/")} aria-label={m.common__home()}>
-						{m.common__home()}
-					</a>
-				</li>
-				<li>
-					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog")} aria-label={m.common__blog()}>
-						{m.common__blog()}
-					</a>
-					<ul>
-						<li>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/")} aria-label={m.blog__all_posts_title()}>
-								{m.blog__all_posts_title()}
-							</a>
-						</li>
-						<li>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/posts/featured")} aria-label={m.blog__featured_posts_title()}>
-								{m.blog__featured_posts_title()}
-							</a>
-						</li>
-						<li>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/blog/tags")} aria-label={m.blog__tags()}>
-								{m.blog__tags()}
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/projects")} aria-label={m.projects__projects()}>
-						{m.projects__projects()}
-					</a>
-				</li>
-				<li>
-					<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about")} aria-label={m.common__about()}>
-						{m.common__about()}
-					</a>
-					<ul>
-						<li>
-							<a class="navbar-item" href={getRelativeLocaleUrl(locale, "/about/resume")} aria-label={m.common__resume()}>
-								{m.common__resume()}
-							</a>
-						</li>
-					</ul>
-				</li>
+				{
+					menuItems.map((i) => {
+						if (!i.items) {
+							return (
+								<li>
+									<a class="navbar-item" href={i.href} aria-label={i.title}>
+										{i.title}
+									</a>
+								</li>
+							);
+						}
+
+						if (i.items) {
+							return (
+								<li>
+									<a class="navbar-item" href={i.href} aria-label={i.title}>
+										{i.title}
+									</a>
+									<ul>
+										{i.items.map((d) => {
+											return (
+												<li>
+													<a class="navbar-item" href={d.href} aria-label={d.title}>
+														{d.title}
+													</a>
+												</li>
+											);
+										})}
+									</ul>
+								</li>
+							);
+						}
+					})
+				}
 			</ul>
 			<div class="divider"></div>
 			<div class="flex flex-col items-center gap-4">

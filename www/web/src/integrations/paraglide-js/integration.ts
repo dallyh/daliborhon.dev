@@ -20,6 +20,9 @@ export function paraglideIntegration(options: IntegrationOptions): AstroIntegrat
 		name: "paraglide-integration",
 		hooks: {
 			"astro:config:setup": async ({ updateConfig, command, logger }) => {
+				await compile(paraglideOptions);
+				logger.info("Compiled paraglide project");
+
 				if (command === "dev") {
 					updateConfig({
 						vite: {
@@ -29,10 +32,6 @@ export function paraglideIntegration(options: IntegrationOptions): AstroIntegrat
 				}
 
 				logger.info("Setup done");
-			},
-			"astro:build:setup": async ({ logger }) => {
-				await compile(paraglideOptions);
-				logger.info("Compiled paraglide project");
 			},
 		},
 	};

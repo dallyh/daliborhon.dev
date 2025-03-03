@@ -16,7 +16,7 @@ const { tocPosition = "default", headings } = Astro.props;
 		headings && headings.length !== 0 && (
 			<toc-root>
 				<div id="toc">
-					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 collapse rounded-xl border border-slate-300/5">
+					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 lg:bg-base-100 collapse rounded-xl lg:shadow-none border border-slate-300/5 lg:border-none">
 						<summary class="collapse-title text-xl">{m.blog__toc()}</summary>
 						<nav class="toc">
 							<Fragment set:html={generateTOCHTML(headings)} />

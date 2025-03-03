@@ -14,11 +14,11 @@
 @layer components {
 	article-toc {
 		toc-item.active {
-			box-shadow: 0 2px calc(var(--depth) * 3px) -2px var(--menu-active-bg);
-			color: var(--menu-active-fg);
-			background-color: var(--menu-active-bg);
-			background-size: auto, calc(var(--noise) * 100%);
-			background-image: none, var(--fx-noise);
+			background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+			outline-style: none;
+			box-shadow:
+				0 1px oklch(0% 0 0 / 0.01) inset,
+				0 -1px oklch(100% 0 0 / 0.01) inset;
 		}
 	}
 }

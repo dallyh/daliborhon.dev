@@ -16,6 +16,7 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 		<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
 			<i class="fas fa-lg fa-solid fa-square-rss"></i>
 		</a>
+		<UptimeStatus client:visible transition:persist />
 		<a class="astro" href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
 			<Icon name="astro-icon-dark" />
 		</a>
@@ -25,7 +26,6 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 		<div class="analytics">
 			<a class="link-primary link-hover inline-flex items-center justify-center gap-1" href={getRelativeLocaleUrl(locale, "/analytics")}><span><i class="fas fa-chart-simple"></i></span></a>
 		</div>
-		<UptimeStatus client:visible transition:persist />
 	</nav>
 	<aside class="flex w-full flex-col items-center justify-center md:w-auto">
 		<p>© {new Date().getFullYear()} - Dalibor Hon</p>

@@ -1,0 +1,101 @@
+---
+import type { Locale } from "@paraglide/runtime";
+
+type Props = {
+	locale?: Locale;
+};
+const { locale } = Astro.props;
+---
+
+<giscus-comments>
+	<div class="relative">
+		<button id="show-comments" class="p-2 text-sm text-primary-content cursor-pointer bg-primary rounded-field absolute bottom-0 left-[50%] z-[5] translate-y-[-50%]" disabled>Show comments</button>
+		<div id="comments-wrapper" class="fade-b-96 bg-base-100 pointer-events-none h-[180px] p-4 text-white">
+			<div id="giscuss-container" data-locale={locale} class="pt-2"></div>
+		</div>
+	</div>
+</giscus-comments>
+
+<script>
+	class Comments extends HTMLElement {
+		get iframe() {
+			return this.querySelector<HTMLIFrameElement>(".giscus-frame")!;
+		}
+
+		get commentsBtn() {
+			return this.querySelector<HTMLButtonElement>("#show-comments")!;
+		}
+
+		get container() {
+			return this.querySelector<HTMLDivElement>("#giscuss-container")!;
+		}
+
+		get wrapper() {
+			return this.querySelector<HTMLDivElement>("#comments-wrapper")!;
+		}
+
+		createScript() {
+			const script = document.createElement("script");
+			const locale = this.container.dataset.locale;
+
+			Object.entries({
+				src: "https://giscus.app/client.js",
+				"data-repo": "dallyh/daliborhon.dev",
+				"data-repoId": "R_kgDOH42J2g",
+				"data-category": "Comments",
+				"data-categoryId": "DIC_kwDOH42J2s4Cl4Zg",
+				"data-mapping": "pathname",
+				"data-strict": "0",
+				"data-reactions-enabled": "0",
+				"data-emit-metadata": "0",
+				"data-theme": document.documentElement.getAttribute("data-theme")!,
+				"data-lang": locale!,
+				"data-loading": "lazy",
+				crossorigin: "anonymous",
+			}).forEach(([key, value]) => {
+				script.setAttribute(key, value);
+			});
+			script.setAttribute("async", "true");
+			this.container?.appendChild(script);
+		}
+
+		connectedCallback() {
+			this.createScript();
+
+			// Wait for the iframe to be added to the DOM
+			const iframeObserver = new MutationObserver((mutations, obs) => {
+				const iframe = this.iframe;
+				if (iframe) {
+					iframe.onload = () => {
+						this.commentsBtn.disabled = false;
+					};
+                    // Does not work with transitions
+					obs.disconnect();
+				}
+			});
+			iframeObserver.observe(this.container, { childList: true, subtree: true });
+
+			window.addEventListener("theme-changed", () => {
+				let newTheme = document.documentElement.getAttribute("data-theme");
+				if (this.iframe instanceof HTMLIFrameElement && this.iframe.contentWindow) {
+					this.iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: newTheme || "light" } } }, "https://giscus.app");
+					this.iframe.contentDocument?.appendChild;
+				}
+			});
+
+			this.commentsBtn.addEventListener("click", () => {
+				this.wrapper.classList.remove("fade-b-96");
+				this.wrapper.style.height = "auto";
+				this.commentsBtn.style.display = "none";
+			});
+		}
+	}
+
+	customElements.define("giscus-comments", Comments);
+</script>
+
+<style is:global>
+	#__next main .gsc-main {
+		flex-direction: column-reverse;
+	}
+</style>

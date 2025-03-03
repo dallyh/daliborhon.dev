@@ -44,6 +44,9 @@ importers:
       '@astrojs/react':
         specifier: ^4.2.1
         version: 4.2.1(@types/node@22.13.5)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(jiti@2.4.2)(lightningcss@1.29.1)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(yaml@2.7.0)
+      '@eioluseyi/tailwind-fade':
+        specifier: ^1.0.1
+        version: 1.0.1
       '@fontsource-variable/nunito':
         specifier: 5.1.1
         version: 5.1.1
@@ -499,6 +502,9 @@ packages:
   '@ctrl/tinycolor@4.1.0':
     resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
     engines: {node: '>=14'}
+
+  '@eioluseyi/tailwind-fade@1.0.1':
+    resolution: {integrity: sha512-AIlteeRA3Wdf9xmeXF1b8vAQM+A8XH8XPKEMN0dzjiHffGebMHVC8kDYP1tAP5qYZdSIYYBdQf7zDzlZeBuaEg==}
 
   '@emmetio/abbreviation@2.3.3':
     resolution: {integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA==}
@@ -4815,6 +4821,8 @@ snapshots:
   '@csstools/css-tokenizer@3.0.3': {}
 
   '@ctrl/tinycolor@4.1.0': {}
+
+  '@eioluseyi/tailwind-fade@1.0.1': {}
 
   '@emmetio/abbreviation@2.3.3':
     dependencies:

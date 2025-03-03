@@ -37,7 +37,7 @@ export default function Comments({ locale }: Props) {
 					strict="0"
 					reactions-enabled="1"
 					emit-metadata="0"
-					input-position="top"
+					//input-position="top"
 					theme={theme}
 					lang={locale}
 					loading="lazy"

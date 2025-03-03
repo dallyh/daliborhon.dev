@@ -16,7 +16,7 @@ const { tocPosition = "default", headings } = Astro.props;
 		headings && headings.length !== 0 && (
 			<toc-root>
 				<div id="toc">
-					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 lg:bg-base-100 collapse rounded-xl lg:shadow-none border border-slate-300/5 lg:border-none">
+					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 lg:bg-base-100 collapse rounded-xl border border-slate-300/5 lg:border-none lg:shadow-none">
 						<summary class="collapse-title text-xl">{m.blog__toc()}</summary>
 						<nav class="toc">
 							<Fragment set:html={generateTOCHTML(headings)} />
@@ -40,7 +40,6 @@ const { tocPosition = "default", headings } = Astro.props;
 		}
 
 		openToc() {
-			console.log(this.details);
 			if (!this.details) return;
 			const width = window.innerWidth;
 			this.details.open = width >= 1024;

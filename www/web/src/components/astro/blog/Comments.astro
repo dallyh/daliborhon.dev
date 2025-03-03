@@ -9,9 +9,11 @@ const { locale } = Astro.props;
 
 <giscus-comments>
 	<div class="relative">
-		<button id="show-comments" class="p-2 text-sm text-primary-content cursor-pointer bg-primary rounded-field absolute bottom-0 left-[50%] z-[5] translate-y-[-50%]" disabled>Show comments</button>
-		<div id="comments-wrapper" class="fade-b-96 bg-base-100 pointer-events-none h-[180px] p-4 text-white">
-			<div id="giscuss-container" data-locale={locale} class="pt-2"></div>
+		<button id="show-comments" class="btn btn-primary absolute bottom-0 left-[50%] z-[5] translate-y-[-50%] cursor-pointer active:!translate-y-[-50%]" disabled>Show comments</button>
+		<div id="comments-wrapper" class="fade bg-base-100 pointer-events-none h-[180px] p-4 text-white">
+			<div id="giscuss-container" data-locale={locale} class="pt-2">
+				<!-- Script goes here -->
+			</div>
 		</div>
 	</div>
 </giscus-comments>
@@ -33,6 +35,8 @@ const { locale } = Astro.props;
 		get wrapper() {
 			return this.querySelector<HTMLDivElement>("#comments-wrapper")!;
 		}
+
+		script: HTMLScriptElement | undefined = undefined;
 
 		createScript() {
 			const script = document.createElement("script");
@@ -57,45 +61,60 @@ const { locale } = Astro.props;
 			});
 			script.setAttribute("async", "true");
 			this.container?.appendChild(script);
+			this.script = script;
 		}
 
-		connectedCallback() {
-			this.createScript();
+		onloadCallback() {
+			const btn = this.commentsBtn;
+			btn.disabled = false;
+		}
 
-			// Wait for the iframe to be added to the DOM
+		createObserver() {
 			const iframeObserver = new MutationObserver((mutations, obs) => {
 				const iframe = this.iframe;
 				if (iframe) {
-					iframe.onload = () => {
-						this.commentsBtn.disabled = false;
-					};
-                    // Does not work with transitions
+					iframe.onload = this.onloadCallback.bind(this);
 					obs.disconnect();
 				}
 			});
 			iframeObserver.observe(this.container, { childList: true, subtree: true });
+		}
 
-			window.addEventListener("theme-changed", () => {
-				let newTheme = document.documentElement.getAttribute("data-theme");
-				if (this.iframe instanceof HTMLIFrameElement && this.iframe.contentWindow) {
-					this.iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: newTheme || "light" } } }, "https://giscus.app");
-					this.iframe.contentDocument?.appendChild;
-				}
-			});
+		themeChangedCallback() {
+			let newTheme = document.documentElement.getAttribute("data-theme");
+			if (this.iframe instanceof HTMLIFrameElement && this.iframe.contentWindow) {
+				this.iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: newTheme || "light" } } }, "https://giscus.app");
+				this.iframe.contentDocument?.appendChild;
+			}
+		}
 
-			this.commentsBtn.addEventListener("click", () => {
-				this.wrapper.classList.remove("fade-b-96");
-				this.wrapper.style.height = "auto";
-				this.commentsBtn.style.display = "none";
-			});
+		showCommentsCallback() {
+			this.commentsBtn.style.display = "none";
+			this.wrapper.classList.remove("fade");
+			this.wrapper.classList.remove("pointer-events-none");
+			this.wrapper.style.height = "auto";
+		}
+
+		connectedCallback() {
+			this.createScript();
+			this.createObserver();
+			window.addEventListener("theme-changed", this.themeChangedCallback.bind(this));
+			this.commentsBtn.addEventListener("click", this.showCommentsCallback.bind(this));
+		}
+
+		disconnectedCallback() {
+			this.iframe.onload = null;
+			window.removeEventListener("theme-changed", this.themeChangedCallback.bind(this));
+			this.commentsBtn.removeEventListener("click", this.showCommentsCallback.bind(this));
 		}
 	}
 
 	customElements.define("giscus-comments", Comments);
 </script>
 
-<style is:global>
-	#__next main .gsc-main {
-		flex-direction: column-reverse;
+<style>
+	.fade {
+		-webkit-mask-image: linear-gradient(to top, transparent 35%, var(--color-base-100));
+		mask-image: linear-gradient(to top, transparent 35%, var(--color-base-100));
 	}
 </style>

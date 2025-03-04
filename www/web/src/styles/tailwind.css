@@ -3,7 +3,6 @@
 	themes: light, dark;
 }
 @plugin "@tailwindcss/typography";
-@plugin "@eioluseyi/tailwind-fade";
 
 @theme {
 	--default-font-family: "Nunito Variable";

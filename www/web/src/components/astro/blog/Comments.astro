@@ -73,11 +73,18 @@ const { locale } = Astro.props;
 			const iframeObserver = new MutationObserver((mutations, obs) => {
 				const iframe = this.iframe;
 				if (iframe) {
-					iframe.onload = this.onloadCallback.bind(this);
+					loadedObserver.observe(this.iframe, { attributes: true, attributeFilter: ["class"] });
 					obs.disconnect();
 				}
 			});
-			iframeObserver.observe(this.container, { childList: true, subtree: true });
+			iframeObserver.observe(this.container, { childList: true, subtree: true, attributes: true });
+
+			const loadedObserver = new MutationObserver((mutations, obs) => {
+				if (!this.iframe.classList.contains("giscus-frame--loading")) {
+					this.onloadCallback();
+					obs.disconnect();
+				}
+			});
 		}
 
 		themeChangedCallback() {
@@ -103,7 +110,6 @@ const { locale } = Astro.props;
 		}
 
 		disconnectedCallback() {
-			this.iframe.onload = null;
 			window.removeEventListener("theme-changed", this.themeChangedCallback.bind(this));
 			this.commentsBtn.removeEventListener("click", this.showCommentsCallback.bind(this));
 		}
@@ -114,7 +120,6 @@ const { locale } = Astro.props;
 
 <style>
 	.fade {
-		-webkit-mask-image: linear-gradient(to top, transparent 35%, var(--color-base-100));
 		mask-image: linear-gradient(to top, transparent 35%, var(--color-base-100));
 	}
 </style>

@@ -11,10 +11,6 @@
 	flex-direction: column-reverse !important;
 }
 
-.fade {
-	mask-image: linear-gradient(to top, transparent 35%, var(--color-base-100));
-}
-
 html {
 	overflow-anchor: none;
 	@media (prefers-reduced-motion: no-preference) {

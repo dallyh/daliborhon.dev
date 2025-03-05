@@ -133,5 +133,6 @@
     "analytics__search_url": "Search for URL",
     "analytics__period": "Period",
     "error__500": "An error occured",
-    "error__500_unknown": "Unknown error"
+    "error__500_unknown": "Unknown error",
+    "comments__show_comments": "Show comments"
 }

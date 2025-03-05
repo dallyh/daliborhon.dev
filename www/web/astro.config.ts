@@ -16,8 +16,8 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
-import { remarkAsidesIntegration } from "./src/integrations/remark-asides/integration";
 import { paraglideIntegration } from "./src/integrations/paraglide-js/integration";
+import { remarkAsidesIntegration } from "./src/integrations/remark-asides/integration";
 import { Logger } from "./src/utils/logger";
 
 const logger = new Logger("astro-config");

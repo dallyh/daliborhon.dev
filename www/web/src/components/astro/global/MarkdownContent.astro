@@ -17,7 +17,12 @@ const { tocPosition = "default", headings } = Astro.props;
 			<toc-root>
 				<div id="toc">
 					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 lg:bg-base-100 collapse rounded-xl border border-slate-300/5 lg:border-none lg:shadow-none">
-						<summary class="collapse-title text-xl">{m.blog__toc()}</summary>
+						<summary class="collapse-title text-xl">
+							<div class="flex items-center">
+								<span>{m.blog__toc()}</span>
+								<span id="loading" class="loading loading-spinner loading-md ml-3" />
+							</div>
+						</summary>
 						<nav class="toc">
 							<Fragment set:html={generateTOCHTML(headings)} />
 						</nav>
@@ -39,6 +44,10 @@ const { tocPosition = "default", headings } = Astro.props;
 			return this.querySelector("#tocDetails") as HTMLDetailsElement | null;
 		}
 
+		get loading() {
+			return this.querySelector("#loading") as HTMLSpanElement | null;
+		}
+
 		openToc() {
 			if (!this.details) return;
 			const width = window.innerWidth;
@@ -47,11 +56,14 @@ const { tocPosition = "default", headings } = Astro.props;
 
 		connectedCallback() {
 			this.openToc();
-			window.addEventListener("resize", this.openToc);
+			window.addEventListener("resize", this.openToc.bind(this));
+			if (this.loading) {
+				this.loading.remove();
+			}
 		}
 
 		disconnectedCallback() {
-			window.removeEventListener("resize", this.openToc);
+			window.removeEventListener("resize", this.openToc.bind(this));
 		}
 	}
 

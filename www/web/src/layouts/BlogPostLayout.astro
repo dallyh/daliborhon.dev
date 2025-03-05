@@ -13,8 +13,7 @@ import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
 import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import Section from "@components/astro/global/Section.astro";
-//import Comments from "@components/react/Comments";
-import Comments from "@components/astro/blog/Comments.astro"
+import Comments from "@components/react/Comments";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
@@ -122,7 +121,7 @@ const searchProps = {
 				</MarkdownContent>
 			</Section>
 			<Section id="comments" isInsideSection>
-				<Comments locale={locale} />
+				<Comments locale={locale} client:visible transition:persist />
 			</Section>
 		</main>
 	</Drawer>

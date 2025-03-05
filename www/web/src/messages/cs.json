@@ -133,5 +133,6 @@
     "analytics__search_url": "Hledat URL",
     "analytics__period": "Období",
     "error__500": "Došlo k chybě na serveru",
-    "error__500_unknown": "Neznámá chyba"
+    "error__500_unknown": "Neznámá chyba",
+    "comments__show_comments": "Zobrazit komentáře"
 }

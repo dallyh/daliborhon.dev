@@ -1,15 +1,25 @@
 @import "tailwindcss" source("../../src/");
-
 @plugin "daisyui" {
-	themes:
-		light --default,
-		dark --color-primaryrefersdark;
+	themes: light, dark;
 }
 @plugin "@tailwindcss/typography";
 
-@layer base {
-	a:not(.navbar-item, .btn, .tab) {
-		@apply link;
+@theme {
+	--default-font-family: "Nunito Variable";
+	--default-mono-font-family: "Fira Code Variable", var(--font-mono);
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@layer components {
+	article-toc {
+		toc-item.active {
+			background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+			outline-style: none;
+			box-shadow:
+				0 1px oklch(0% 0 0 / 0.01) inset,
+				0 -1px oklch(100% 0 0 / 0.01) inset;
+		}
 	}
 }
 
@@ -43,11 +53,17 @@
 		@apply font-bold;
 	}
 
+	.menu {
+		.dropdown-content {
+			margin-top: 0; /* Fixes hoverable dropdowns, introduced somewhere between daisyUI betas */
+		}
+	}
+
 	.md-content :is(h1, h2, h3, h4, h5, h6):has(.heading-link-icon) {
-		@apply flex items-center gap-2;
+		@apply flex gap-2;
 
 		a {
-			@apply flex justify-center;
+			@apply mt-1 flex justify-center;
 
 			.heading-link-icon {
 				position: relative;
@@ -55,7 +71,8 @@
 				&::before {
 					content: "#";
 					position: absolute;
-					font-size: 0.75rem;
+					font-size: 0.9rem;
+					font-weight: 500;
 					left: 50%;
 					top: 50%;
 					transform: translateX(-50%) translateY(-50%);

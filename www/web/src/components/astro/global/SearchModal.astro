@@ -1,5 +1,5 @@
 ---
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
 import "@pagefind/default-ui/css/ui.css";
 ---
 
@@ -20,7 +20,7 @@ import "@pagefind/default-ui/css/ui.css";
 </site-search>
 
 <script>
-	import { Logger } from "@daliborhon.dev/integrations";
+	import { Logger } from "@logger";
 
 	class SiteSearch extends HTMLElement {
 		#logger = new Logger("search-modal");

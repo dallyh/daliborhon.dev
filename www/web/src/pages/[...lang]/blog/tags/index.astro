@@ -1,12 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import Section from "@components/astro/global/Section.astro";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import PageLayout from "@layouts/PageLayout.astro";
+import { m } from "@paraglide/messages";
 import { getPostsByTag } from "@utils/content";
 
 export const prerender = false;
@@ -48,7 +47,12 @@ const posts = await getPostsByTag(locale, search);
 						{tags &&
 							tags.map(async (tag) => {
 								return (
-									<a role="tab" class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active" : ""}`} href={`?tag=${tag.id}`} aria-label={tag.id + m.blog__tag()}>
+									<a
+										role="tab"
+										class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
+										href={`?tag=${tag.id}`}
+										aria-label={tag.id + m.blog__tag()}
+									>
 										<span>
 											<i class="fas fa-tag" />
 										</span>

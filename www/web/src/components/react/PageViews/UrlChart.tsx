@@ -1,5 +1,5 @@
 // Adapted from: https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type UrlChartProps = {

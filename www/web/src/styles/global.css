@@ -1,17 +1,18 @@
 :root {
-	--header-height: calc(68px + 1rem);
 	color-scheme: light;
+	--header-height: calc(68px + 1rem);
 }
 
 :root[data-theme="dark"] {
 	color-scheme: dark;
 }
 
-html {
-	font-family: "Nunito Variable", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	text-rendering: optimizeLegibility;
-	overflow-anchor: none;
+.gsc-main {
+	flex-direction: column-reverse !important;
+}
 
+html {
+	overflow-anchor: none;
 	@media (prefers-reduced-motion: no-preference) {
 		scroll-behavior: smooth;
 	}
@@ -19,6 +20,35 @@ html {
 
 :target {
 	scroll-margin-top: calc(var(--header-height) + 1rem); /* Navbar */
+}
+
+a:not(.navbar-item, .btn, .tab, .card-title, .toc-link, .no-underline, .link, .link-primary, .link-accent) {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+	text-decoration-color: var(--color-primary);
+	font-weight: 400;
+	color: inherit;
+
+	&:hover {
+		text-decoration-color: var(--color-base-content);
+	}
+}
+
+.card-title:has(a) a,
+.breadcrumbs a,
+a.card-title {
+	text-decoration: none;
+	text-decoration-color: unset;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+	font-weight: 400;
+	color: inherit;
+
+	&:hover {
+		text-decoration: underline;
+		text-decoration-color: var(--color-primary);
+	}
 }
 
 .skeleton {
@@ -69,6 +99,7 @@ a .external-link-icon {
 	white-space: nowrap;
 	border-width: 0;
 }
+
 .print-only {
 	display: none;
 }

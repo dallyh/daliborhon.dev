@@ -1,6 +1,6 @@
+import { m } from "@paraglide/messages";
 // Adapted from: https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import type { Locale } from "@paraglide/runtime";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";
 import UrlChart from "./UrlChart";
@@ -12,7 +12,7 @@ const isValidMode = (x: any): x is Mode => type.includes(x);
 
 const queryClient = new QueryClient();
 
-export default function PageViews({ locale }: { locale: AllowedLocales }) {
+export default function PageViews({ locale }: { locale: Locale }) {
 	const [mode, setModeState] = useState<Mode>("page-views");
 	const [searchLocalState, setSearchLocalState] = useState("");
 	const [search, setSearch] = useState("");

@@ -68,19 +68,6 @@
                     "id": {
                         "type": "string",
                         "title": "Id"
-                    },
-                    "languages": {
-                        "type": "object",
-                        "properties": {
-                            "cs": {
-                                "type": "string",
-                                "title": "Czech"
-                            },
-                            "en": {
-                                "type": "string",
-                                "title": "English"
-                            }
-                        }
                     }
                 }
             }
@@ -274,10 +261,30 @@
     "frontMatter.git.enabled": true,
     "frontMatter.git.commitMessage": "Synced content",
     "frontMatter.content.snippets": {
-        "Insert blog image": {
+        "Note callout": {
             "description": "",
-            "body": "![ALT TEXT](/assets/uploads/blog/[[filename]])",
-            "isMediaSnippet": true
+            "body": [":::note", "", ":::"],
+            "fields": []
+        },
+        "Success callout": {
+            "description": "",
+            "body": [":::success", "", ":::"],
+            "fields": []
+        },
+        "Caution callout": {
+            "description": "",
+            "body": [":::caution", "", ":::"],
+            "fields": []
+        },
+        "Danger callout": {
+            "description": "",
+            "body": [":::danger", "", ":::"],
+            "fields": []
+        },
+        "Tip callout": {
+            "description": "",
+            "body": [":::tip", "", ":::"],
+            "fields": []
         }
     }
 }

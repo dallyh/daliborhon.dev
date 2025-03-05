@@ -4,11 +4,11 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
 import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import PageLayout from "@layouts/PageLayout.astro";
+import { m } from "@paraglide/messages";
 import { removeTrailingSlash } from "@utils";
 
-export { getStaticPaths } from "@daliborhon.dev/integrations/i18n";
+export { getStaticPaths } from "@utils/i18n";
 
 const locale = Astro.currentLocale!;
 
@@ -62,7 +62,7 @@ const searchProps = {
 </PageLayout>
 
 <script>
-	import * as m from "@daliborhon.dev/integrations/i18n/messages";
+	import { m } from "@paraglide/messages";
 
 	class DownloadButton extends HTMLElement {
 		private downloadButton!: HTMLAnchorElement;

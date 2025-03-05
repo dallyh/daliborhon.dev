@@ -14,8 +14,8 @@ import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
 import SearchMeta from "@components/astro/global/SearchMeta.astro";
 import Section from "@components/astro/global/Section.astro";
 import Comments from "@components/react/Comments";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
 import MainLayout from "./MainLayout.astro";
@@ -26,7 +26,7 @@ interface Props {
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const locale = Astro.currentLocale as AllowedLocales;
+const locale = Astro.currentLocale as Locale;
 const { pubDate, modDate, title, description } = post.data;
 const relatedTags = await getEntries(post.data.tags);
 const image = getBlogPostImageUrl(locale, post);
@@ -44,13 +44,13 @@ const layoutProps = {
 const tagFilter = relatedTags.map((tag) => {
 	return {
 		name: m.blog__tags(),
-		value: "#" + tag.data.languages[locale],
+		value: "#" + tag.id,
 	};
 });
 
 const tags = relatedTags
 	?.map((tag) => {
-		return "#" + tag.data.languages[locale];
+		return "#" + tag.id;
 	})
 	.join(" ");
 
@@ -120,8 +120,8 @@ const searchProps = {
 					<Content />
 				</MarkdownContent>
 			</Section>
-			<Section id="comments">
-				<Comments client:visible locale={locale} />
+			<Section id="comments" isInsideSection>
+				<Comments locale={locale} client:visible transition:persist />
 			</Section>
 		</main>
 	</Drawer>

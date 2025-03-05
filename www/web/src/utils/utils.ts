@@ -1,8 +1,8 @@
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
 import slug from "slug";
 
-export function slugifyStr(locale: AllowedLocales | undefined, str: string) {
+export function slugifyStr(locale: Locale | undefined, str: string) {
 	if (locale === undefined) {
 		return slug(str);
 	}
@@ -48,7 +48,7 @@ export function extractFileNameAndExtension(filePath: string) {
 	};
 }
 
-export function createResumePdfFilename(locale: AllowedLocales, extension: boolean = false) {
+export function createResumePdfFilename(locale: Locale, extension: boolean = false) {
 	const filename = slugifyStr(locale, m.common__resume({}, { locale: locale })) + "-dalibor-hon";
 
 	if (extension) {

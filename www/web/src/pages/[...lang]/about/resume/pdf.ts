@@ -1,10 +1,11 @@
 import { loadRenderers } from "astro:container";
 import { getEntry, render } from "astro:content";
 import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
-import { Logger } from "@daliborhon.dev/integrations";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { Logger } from "@logger";
+import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
 import { createResumePdfFilename } from "@utils";
+import { generateTOCHTML } from "@utils/content";
 import type { APIRoute } from "astro";
 import { experimental_AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
@@ -108,7 +109,8 @@ export const GET: APIRoute = async ({ params }) => {
 		return new Response(null, { status: 404 });
 	}
 
-	const { Content } = await render(entry);
+	const { Content, headings } = await render(entry);
+	const toc = generateTOCHTML(headings);
 
 	const content = await container.renderToString(Content, {
 		partial: true,
@@ -129,7 +131,7 @@ export const GET: APIRoute = async ({ params }) => {
 		},
 	};
 
-	const html = htmlToPdfMake(content, {
+	const html = htmlToPdfMake(toc + content, {
 		window,
 		removeExtraBlanks: true,
 	});
@@ -177,8 +179,8 @@ export const GET: APIRoute = async ({ params }) => {
 
 	let headers = {
 		"Content-Type": "application/pdf",
-		"Content-Disposition": `attachment; filename="${createResumePdfFilename(params.lang as AllowedLocales)}.pdf"`,
-		"x-filename": `${createResumePdfFilename(params.lang as AllowedLocales)}.pdf`,
+		"Content-Disposition": `attachment; filename="${createResumePdfFilename(params.lang as Locale)}.pdf"`,
+		"x-filename": `${createResumePdfFilename(params.lang as Locale)}.pdf`,
 	};
 
 	const printer = new PdfPrinter(fonts);

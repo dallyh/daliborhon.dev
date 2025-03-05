@@ -1,8 +1,8 @@
 import { type CollectionEntry, getEntries } from "astro:content";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
 
-export default async (post: CollectionEntry<"posts">, locale: AllowedLocales) => {
+export default async (post: CollectionEntry<"posts">, locale: Locale) => {
 	const relatedtags = await getEntries(post.data.tags);
 
 	return (
@@ -79,9 +79,9 @@ export default async (post: CollectionEntry<"posts">, locale: AllowedLocales) =>
 						</p>
 						<div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 							{relatedtags.map((tag) => (
-								<p key={tag.data.languages[locale].toLowerCase()} style={{ padding: 0, margin: 0 }}>
+								<p key={tag.id} style={{ padding: 0, margin: 0 }}>
 									<strong style={{ fontWeight: 700, color: "rgb(34, 211, 238)" }}>#</strong>
-									{tag.data.languages[locale].toLowerCase()}
+									{tag.id}
 								</p>
 							))}
 						</div>

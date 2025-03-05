@@ -1,5 +1,5 @@
 ---
-title: Nasazení libsql-server s Astro projektem na Zerops
+title: Jak nasadit libsql-server s Astro na Zerops
 description: Návod, jak nasadit libsql-server s Astro a perzistentní databází na Zerops.
 tags:
     - development
@@ -17,6 +17,7 @@ fmContentType: blog
 Nasazení perzistentní databáze pomocí [libsql-server](https://github.com/tursodatabase/libsql/blob/main/libsql-server/README.md) spolu s projektem [Astro](https://astro.build), který využívá [@astrojs/db](https://docs.astro.build/en/guides/astro-db/) na [Zerops](https://zerops.io), je překvapivě jednoduché. V tomto článku si ukážeme, jak při nasazení postupovat.
 
 **Předpoklady pro tento návod:**
+
 - Předchozí znalost [Astro](https://astro.build) a [@astrojs/db](https://docs.astro.build/en/guides/astro-db/).
 - Základní povědomí o Zeropsu. Více se dozvíte na [zerops.io](https://zerops.io).
 - CLI nástroj s názvem [zcli](https://docs.zerops.io/references/cli). Pokud jste jej si ještě nenainstalovali, nainstalujte a nastavte jej podle [oficiální dokumentace](https://docs.zerops.io/references/cli).
@@ -28,13 +29,13 @@ Pokud ještě nemáte vlastní projekt Astro, můžete si naklonovat [příkladn
 
 Aby váš projekt na Zerops fungoval, budete potřebovat tři klíčové služby:
 
-1. **Node.js službu** pro Astro frontend  
-2. **Object-storage službu** pro perzistenci databáze  
+1. **Node.js službu** pro Astro frontend
+2. **Object-storage službu** pro perzistenci databáze
 3. **Ubuntu službu** pro spuštění `libsql-server`
 
 ### Vytvoření projektu a služeb na Zerops
 
-[Projekt Zerops](https://docs.zerops.io/features/infrastructure#project) je ve své podstatě kontejner vzájemně propojených služeb, který obsahuje všechny vaše ručně definované služby a také *core* službu projektu (spravovanou Zerops), která zajišťuje vzájemnou komunikaci mezi službami projektu, zpracovává logy atd.
+[Projekt Zerops](https://docs.zerops.io/features/infrastructure#project) je ve své podstatě kontejner vzájemně propojených služeb, který obsahuje všechny vaše ručně definované služby a také _core_ službu projektu (spravovanou Zerops), která zajišťuje vzájemnou komunikaci mezi službami projektu, zpracovává logy atd.
 
 Můžete buď vytvořit projekt Zerops manuálně, nebo použít předdefinovanou YAML konfiguraci. Pro efektivitu a jednoduchost budeme používat soubor `zerops-project-import.yml` v kořenovém adresáři našeho Astro projektu.
 
@@ -162,7 +163,7 @@ Po nasazení služby `libsqld` musíme nahrát schéma databáze pomocí příka
 Nejdříve se proto musíme připojit k [VPN](https://docs.zerops.io/references/vpn) poskytované Zerops, abychom získali přístup k vzdálenému databázovému serveru. K VPN se připojíte pomocí `zcli vpn up`. Spusťte příkaz v terminálu a poté vyberte projekt `astro-libsql`. Pokud připojení selže, ujistěte se, zda jste správně nainstalovali [Wireguard](https://www.wireguard.com/), který je nutný pro navázání připojení do VPN.
 
 :::caution
-Před spuštěním příkazu se ujistěte, že mááte v projektu Astro nastavenou proměnnou  `ASTRO_DB_REMOTE_URL`. Měla by být nastavena na adresu URL služby `libsqld`, která je v tomto případě `http://libsqld:8080`.
+Před spuštěním příkazu se ujistěte, že mááte v projektu Astro nastavenou proměnnou `ASTRO_DB_REMOTE_URL`. Měla by být nastavena na adresu URL služby `libsqld`, která je v tomto případě `http://libsqld:8080`.
 :::
 
 Po připojení do VPN přeneste schéma databáze do vzdálené databáze:
@@ -217,9 +218,9 @@ Pokud používáte [ukázkový repozitář na GitHubu](https://github.com/dallyh
 
 V tuto chvíli jste úspěšně:
 
-- ✅ Nastavili služby Zerops pro váš Astro projekt  
-- ✅ Nasadili perzistentní databázi pomocí `libsql-server`  
-- ✅ Nahráli schéma databáze a naplnili ji daty  
+- ✅ Nastavili služby Zerops pro váš Astro projekt
+- ✅ Nasadili perzistentní databázi pomocí `libsql-server`
+- ✅ Nahráli schéma databáze a naplnili ji daty
 - ✅ Nasadili Astro frontend pro běh vaší aplikace
 
 Nezapomeňte se po dokončení odpojit od VPN:

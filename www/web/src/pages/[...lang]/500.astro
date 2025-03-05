@@ -1,9 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { type AllowedLocales, config, defaultLocale } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import MainLayout from "@layouts/MainLayout.astro";
-import { siteConfig } from "@site-config";
+import { m } from "@paraglide/messages";
+import { baseLocale } from "@paraglide/runtime";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 const { error } = Astro.props;
 
 export const prerender = false;
-let locale = Astro.currentLocale ?? defaultLocale;
+let locale = Astro.currentLocale ?? baseLocale;
 
 const layoutProps = {
 	title: m.error__500(),

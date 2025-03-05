@@ -1,5 +1,5 @@
 import type { CollectionEntry } from "astro:content";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import type { Locale } from "@paraglide/runtime";
 import { Resvg } from "@resvg/resvg-js";
 import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./templates/post";
@@ -46,7 +46,7 @@ function svgBufferToPngBuffer(svg: string) {
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"posts">, locale: string) {
-	const svg = await satori(await postOgImage(post, locale as AllowedLocales), options);
+	const svg = await satori(await postOgImage(post, locale as Locale), options);
 	return svgBufferToPngBuffer(svg);
 }
 

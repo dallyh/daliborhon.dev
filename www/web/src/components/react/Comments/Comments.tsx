@@ -10,6 +10,7 @@ type Props = {
 
 export default function Comments({ locale }: Props) {
 	const [mounted, setMounted] = useState(false);
+	const [commentsHidden, setCommentsHidden] = useState(true);
 	const [theme, setTheme] = useState("light");
 	const [iframeLoaded, setIframeLoaded] = useState(false);
 	const buttonRef = useRef<HTMLButtonElement>(null);
@@ -18,15 +19,14 @@ export default function Comments({ locale }: Props) {
 
 	useEffect(() => {
 		// Set initial theme
-		setTheme(document.documentElement.dataset.theme ?? "light");
-	}, []);
 
-	useEffect(() => {
+		setTheme(document.documentElement.dataset.theme ?? "light");
+		setMounted(true);
+
 		const handleThemeChanged = () => {
 			setTheme(document.documentElement.dataset.theme ?? "light");
 		};
 		window.addEventListener("theme-changed", handleThemeChanged);
-		setMounted(true);
 
 		const wrapperObserver = new MutationObserver(() => {
 			const widgetEl = wrapperRef.current?.querySelector("giscus-widget");
@@ -38,7 +38,6 @@ export default function Comments({ locale }: Props) {
 				if (iframe && !iframe.classList.contains("loading")) {
 					setIframeLoaded(true);
 				} else {
-					// If not, observe the shadow root for changes.
 					const shadowObserver = new MutationObserver(() => {
 						const iframe = shadowRoot.querySelector("iframe");
 						if (iframe && !iframe.classList.contains("loading")) {
@@ -61,34 +60,23 @@ export default function Comments({ locale }: Props) {
 			subtree: true,
 			attributes: true,
 		});
-
-		return () => {
-			wrapperObserver.disconnect();
-			window.removeEventListener("theme-changed", handleThemeChanged);
-		};
 	}, []);
-
-	function showCommentsCallback() {
-		const wrapper = wrapperRef.current!;
-		buttonRef.current!.style.display = "none";
-		wrapper.classList.remove(styles.fade);
-		wrapper.classList.remove("pointer-events-none");
-		wrapper.style.height = "auto";
-	}
 
 	return (
 		<div className="relative overflow-hidden">
-			<button
-				id="show-comments"
-				className="btn btn-primary absolute bottom-0 left-[50%] z-[5] translate-x-[-50%] cursor-pointer active:!translate-y-[0]"
-				disabled={!iframeLoaded}
-				ref={buttonRef}
-				onClick={showCommentsCallback}
-			>
-				{!iframeLoaded && <span className="loading loading-spinner loading-sm"></span>}
-				{m.comments__show_comments()}
-			</button>
-			<div id="comments-wrapper" className={`${styles.fade} bg-base-100 pointer-events-none h-[160px] p-4 text-white`} ref={wrapperRef}>
+			{commentsHidden && (
+				<button
+					id="show-comments"
+					className="btn btn-primary absolute bottom-0 left-[50%] z-[5] translate-x-[-50%] cursor-pointer active:!translate-y-[0]"
+					disabled={!iframeLoaded}
+					ref={buttonRef}
+					onClick={() => setCommentsHidden(false)}
+				>
+					{!iframeLoaded && <span className="loading loading-spinner loading-sm"></span>}
+					{m.comments__show_comments()}
+				</button>
+			)}
+			<div id="comments-wrapper" className={`bg-base-100 ${commentsHidden ? `${styles.fade} pointer-events-none h-[160px]` : ""} p-4 text-white`} ref={wrapperRef}>
 				<div id="giscuss-container" data-locale={locale} ref={containerRef}>
 					{mounted ? (
 						<Giscus

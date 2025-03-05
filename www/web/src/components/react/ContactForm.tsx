@@ -83,7 +83,6 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 	};
 
 	const resetForm = (preserveValues: boolean = false) => {
-		// reset other form state but keep defaultValues and form values
 		reset(undefined, { keepValues: preserveValues });
 		captchaRef.current?.resetCaptcha();
 	};

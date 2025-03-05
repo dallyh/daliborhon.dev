@@ -49,9 +49,13 @@ const menuItems = [
 				</label>
 			</div>
 			<div class="navbar-start">
-				<a class="btn btn-ghost text-xl" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
-					<Icon class="logo" name="dh-logo" size={28} />
-				</a>
+				<ul class="menu p-0">
+					<li>
+						<a class="p-2 text-xl" href={getRelativeLocaleUrl(locale, "/")} title={m.common__home()} aria-label={m.common__home()}>
+							<Icon class="logo" name="dh-logo" size={28} />
+						</a>
+					</li>
+				</ul>
 				<div class="hidden lg:flex">
 					<ul class="menu menu-horizontal z-50 px-1">
 						{
@@ -94,7 +98,14 @@ const menuItems = [
 			<div class="navbar-end hidden gap-2 lg:flex">
 				<SearchInput />
 				<LanguageSelector post={post} />
-				<ThemeSelect />
+				<!-- This is for styling purposes -->
+				<ul class="menu p-0">
+					<li>
+						<div>
+							<ThemeSelect />
+						</div>
+					</li>
+				</ul>
 			</div>
 		</nav>
 		<!-- Page content -->

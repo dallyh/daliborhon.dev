@@ -1,6 +1,6 @@
 import { and, count, countDistinct, db, desc, gte, like, lte, sql } from "astro:db";
 import { PageView } from "astro:db";
-import { Logger } from "@daliborhon.dev/integrations";
+import { Logger } from "@logger";
 import type { APIRoute } from "astro";
 
 const logger = new Logger("page-views.ts");

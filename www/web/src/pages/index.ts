@@ -1,6 +1,5 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { defaultLocale, locales } from "@daliborhon.dev/integrations/i18n";
-import { config } from "@daliborhon.dev/integrations/i18n";
+import { baseLocale, cookieName, locales } from "@paraglide/runtime";
 import type { APIRoute, AstroCookieSetOptions } from "astro";
 
 export const prerender = false;
@@ -11,10 +10,10 @@ function addDays(date: Date, days: number) {
 	return result;
 }
 
-const configCookie = config.localeCookie;
+const configCookie = cookieName;
 
 export const GET: APIRoute = ({ preferredLocale, redirect, cookies }) => {
-	const localeCookie = cookies.get(configCookie.name);
+	const localeCookie = cookies.get(configCookie);
 
 	if (localeCookie) {
 		return redirect(getRelativeLocaleUrl(localeCookie.value, "/"));
@@ -24,18 +23,18 @@ export const GET: APIRoute = ({ preferredLocale, redirect, cookies }) => {
 		return locale === preferredLocale;
 	});
 
-	const cookieOptions: AstroCookieSetOptions = { expires: addDays(new Date(), configCookie.expDays) };
+	const cookieOptions: AstroCookieSetOptions = { expires: addDays(new Date(), 30) };
 
 	if (localeSupported) {
-		if (preferredLocale === defaultLocale) {
-			cookies.set(configCookie.name, defaultLocale, cookieOptions);
-			return redirect(getRelativeLocaleUrl(defaultLocale, "/"));
+		if (preferredLocale === baseLocale) {
+			cookies.set(configCookie, baseLocale, cookieOptions);
+			return redirect(getRelativeLocaleUrl(baseLocale, "/"));
 		}
 
-		cookies.set(configCookie.name, preferredLocale!, cookieOptions);
+		cookies.set(configCookie, preferredLocale!, cookieOptions);
 		return redirect(getRelativeLocaleUrl(preferredLocale!, "/"));
 	}
 
-	cookies.set(configCookie.name, defaultLocale, cookieOptions);
-	return redirect(getRelativeLocaleUrl(defaultLocale, "/"));
+	cookies.set(configCookie, baseLocale, cookieOptions);
+	return redirect(getRelativeLocaleUrl(baseLocale, "/"));
 };

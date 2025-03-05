@@ -1,4 +1,4 @@
-import { type AllowedLocales, defaultLocale, locales } from "./config.js";
+import { type Locale, baseLocale, locales } from "@paraglide/runtime";
 
 export function removeTrailingSlash(url: string) {
 	return url.replace(/\/$/, "");
@@ -17,7 +17,7 @@ export function getRoutingLocale(locale: string | undefined) {
 
 export function getDefaultLocale(locale: string | undefined) {
 	if (locale === undefined) {
-		return defaultLocale;
+		return baseLocale;
 	}
 
 	return locale;
@@ -29,7 +29,7 @@ export function getPathFromUrl(url: URL, baseUrl: string) {
 	let pathNameWithoutBaseUrl = baseUrl === "/" ? pathname : pathname.replace(baseUrlWithoutTrailingSlash, "");
 
 	const segments = pathname?.split("/");
-	const possibleLocale = segments.find((segment: AllowedLocales | undefined) => locales.includes(segment)) as AllowedLocales | undefined;
+	const possibleLocale = segments.find((segment) => locales.includes(segment as Locale)) as Locale | undefined;
 
 	// First check if we are on default locale
 	if (possibleLocale && locales.includes(possibleLocale)) {

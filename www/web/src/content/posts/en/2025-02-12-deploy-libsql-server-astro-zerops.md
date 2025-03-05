@@ -1,5 +1,5 @@
 ---
-title: Deploying libsql-server with Astro on Zerops
+title: How to deploy libsql-server with Astro on Zerops
 description: A guide on how to deploy libsql-server with Astro and a persistent database on Zerops.
 tags:
     - development
@@ -17,6 +17,7 @@ fmContentType: blog
 Deploying a persistent database using [libsql-server](https://github.com/tursodatabase/libsql/blob/main/libsql-server/README.md) alongside an [Astro](https://astro.build) project that leverages [@astrojs/db](https://docs.astro.build/en/guides/astro-db/) on [Zerops](https://zerops.io) is surprisingly straightforward. This article will show you how to proceed with the deployment.
 
 **Prerequisites before you start reading:**
+
 - Prior [Astro](https://astro.build) and [@astrojs/db](https://docs.astro.build/en/guides/astro-db/) knowledge
 - A little bit of Zerops knowledge. You can learn more at [zerops.io](https://zerops.io).
 - A command line utility called [zcli](https://docs.zerops.io/references/cli). If you haven’t installed `zcli` yet, set it up by following the [official documentation](https://docs.zerops.io/references/cli).
@@ -164,7 +165,6 @@ For this we first need to connect to the [VPN](https://docs.zerops.io/references
 :::caution
 Before the push, make sure that the `ASTRO_DB_REMOTE_URL` is set in your Astro project. It should be set to the URL of the `libsqld` service, which in this case is `http://libsqld:8080`.
 :::
-
 
 After the VPN is connected, push the database schema to the remote database:
 

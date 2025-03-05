@@ -1,11 +1,3 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "allowImportingTsExtensions": true,
-        "noEmit": true
-    }
+    // Itentionally empty
 }

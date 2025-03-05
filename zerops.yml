@@ -28,14 +28,13 @@ zerops:
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: false
           buildCommands:
-              - pnpm install
-              - pnpm run build:packages
               - pnpm config set inject-workspace-packages true
-              - pnpm install # Required for inject-workspace-packages to take effect
+              - pnpm install
               - pnpm run build:web
               - pnpm run deploy:web
           cache:
               - .turbo
+              - www/web/node_modules/.astro
           deployFiles:
               - deploy/~
       run:
@@ -66,14 +65,13 @@ zerops:
               UPTIME_API_TOKEN: ${RUNTIME_UPTIME_API_TOKEN}
               PREVIEW: true # Builds preview posts
           buildCommands:
-              - pnpm install
-              - pnpm run build:packages
               - pnpm config set inject-workspace-packages true
-              - pnpm install # Required for inject-workspace-packages to take effect
+              - pnpm install
               - pnpm run build:web
               - pnpm run deploy:web
           cache:
               - .turbo
+              - www/web/node_modules/.astro
           deployFiles:
               - deploy/~
       run:

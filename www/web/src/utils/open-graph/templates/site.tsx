@@ -1,4 +1,4 @@
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
 
 export default async (locale: string) => {
 	/*const posts = await caisyClient.getArticlesCount();

@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import type { Locale } from "@paraglide/runtime";
 
 interface Props {
 	post?: CollectionEntry<"posts">;
@@ -11,16 +11,16 @@ interface Props {
 
 const { post, tags } = Astro.props;
 
-const locale = Astro.currentLocale as AllowedLocales;
+const locale = Astro.currentLocale as Locale;
 ---
 
 <ul class="flex list-none flex-wrap gap-3">
 	{
 		tags &&
 			tags.map((tag) => (
-				<li class="badge badge-primary badge-outline hover:bg-primary hover:text-primary-content transition-colors duration-300">
+				<li class="badge badge-primary badge-soft hover:bg-primary hover:text-primary-content transition-colors duration-300">
 					<a class="no-underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
-						#{tag.data.languages[locale].toLowerCase()}
+						#{tag.id}
 					</a>
 				</li>
 			))
@@ -34,9 +34,9 @@ const locale = Astro.currentLocale as AllowedLocales;
 						<>
 							{relatedTags.map(async (tag) => {
 								return (
-									<li class="badge badge-primary badge-outline hover:bg-primary hover:text-primary-content transition-colors duration-300">
+									<li class="badge badge-primary badge-soft hover:bg-primary hover:text-primary-content transition-colors duration-300">
 										<a class="no-underline" href={getRelativeLocaleUrl(locale, `/blog/tags/${tag.id}/`)}>
-											#{tag.data.languages[locale].toLowerCase()}
+											#{tag.id}
 										</a>
 									</li>
 								);

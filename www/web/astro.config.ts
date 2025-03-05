@@ -4,10 +4,6 @@ import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import { astroI18nIntegration } from "@daliborhon.dev/integrations";
-import { Logger } from "@daliborhon.dev/integrations";
-import { remarkAsidesIntegration } from "@daliborhon.dev/integrations";
-import { createI18nSitemapConfig } from "@daliborhon.dev/integrations/i18n";
 //@ts-ignore missing types
 import rehypeFigure from "@microflash/rehype-figure";
 import tailwindcss from "@tailwindcss/vite";
@@ -20,6 +16,9 @@ import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
+import { paraglideIntegration } from "./src/integrations/paraglide-js/integration";
+import { remarkAsidesIntegration } from "./src/integrations/remark-asides/integration";
+import { Logger } from "./src/utils/logger";
 
 const logger = new Logger("astro-config");
 
@@ -57,6 +56,18 @@ export default defineConfig({
 	adapter: node({
 		mode: "standalone",
 	}),
+	i18n: {
+		defaultLocale: "cs",
+		locales: [
+			{ path: "cs", codes: ["cs", "cs-CZ", "sk", "sk-SK"] },
+			{ path: "en", codes: ["en", "en-GB", "en-US", "en-CA"] },
+		],
+		routing: {
+			prefixDefaultLocale: true,
+			redirectToDefaultLocale: false,
+			fallbackType: "redirect",
+		},
+	},
 	prefetch: {
 		defaultStrategy: "hover",
 	},
@@ -95,7 +106,10 @@ export default defineConfig({
 		],
 	},
 	integrations: [
-		astroI18nIntegration(),
+		paraglideIntegration({
+			project: "./project.inlang",
+			outdir: "./src/paraglide",
+		}),
 		db(),
 		react(),
 		remarkAsidesIntegration(),
@@ -105,7 +119,15 @@ export default defineConfig({
 		icon({
 			...iconConfig,
 		}),
-		sitemap(createI18nSitemapConfig()),
+		sitemap({
+			i18n: {
+				defaultLocale: "cs",
+				locales: {
+					cs: "cs",
+					en: "en",
+				},
+			},
+		}),
 	],
 	vite: {
 		plugins: [tailwindcss()],

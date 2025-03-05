@@ -1,14 +1,27 @@
 import { HCAPTCHA_KEY } from "astro:env/client";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
 import { useEffect, useRef, useState } from "react";
 import { type FieldValues, useForm, useWatch } from "react-hook-form";
+import { actions } from "astro:actions";
+import { Logger } from "@utils";
 
-const API_URL = "/api/contact";
+const logger = new Logger("contact-form");
 
-export default function ContactForm({ locale }: { locale: AllowedLocales }) {
+interface FormData {
+	subject: string;
+	from_name: string;
+	botcheck: boolean;
+	name: string;
+	email: string;
+	message: string;
+	language: Locale;
+	"h-captcha-response": string;
+}
+
+export default function ContactForm({ locale }: { locale: Locale }) {
 	const {
 		register,
 		handleSubmit,
@@ -56,39 +69,22 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 			return;
 		}
 
-		const postData = { ...formData, "h-captcha-response": token };
-		const res = await fetch(API_URL, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json",
-			},
-			body: JSON.stringify(postData),
-		});
+		const data = { ...formData, "h-captcha-response": token } as FormData;
+		const { error } = await actions.contactForm(data);
 
-		if (!res.ok) {
+		if (error) {
+			logger.error(`${error.code}: ${error.message}`);
 			setIsSuccess(false);
-			setMessage(`${m.contact__submit_error()} (${res.status})`);
+			setMessage(`${m.contact__submit_error()}`);
 			return;
 		}
 
-		const json = await res.json();
-
-		if ("success" in json) {
-			setIsSuccess(true);
-			setMessage(m.contact__submit_success());
-			resetForm();
-		}
-
-		if ("error" in json) {
-			setIsSuccess(false);
-			setMessage(`[${json.error}]: ${json.message}`);
-		}
+		setIsSuccess(true);
 	};
 
 	const resetForm = (preserveValues: boolean = false) => {
 		// reset other form state but keep defaultValues and form values
-		reset(undefined, { keepDirtyValues: preserveValues });
+		reset(undefined, { keepValues: preserveValues });
 		captchaRef.current?.resetCaptcha();
 	};
 
@@ -189,7 +185,8 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 							</svg>
 							<p className="font-bold">{m.contact__success()}</p>
 						</div>
-						<p className="mb-4 text-sm">{message}</p>
+						{message && <p className="mb-2 text-sm">{message}</p>}
+						<p className="mb-4 text-sm">{m.contact__submit_success()}</p>
 						<button className="btn btn-primary btn-outline" onClick={() => resetForm()}>
 							{m.contact__go_back()}
 						</button>
@@ -208,7 +205,6 @@ export default function ContactForm({ locale }: { locale: AllowedLocales }) {
 						</div>
 						<p className="mb-2 text-sm">{message}</p>
 						<p className="mb-4 text-sm">{m.contact__submit_error_try_again()}</p>
-
 						<button className="btn btn-primary btn-outline" onClick={() => resetForm(true)}>
 							{m.contact__try_again()}
 						</button>

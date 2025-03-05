@@ -1,9 +1,10 @@
 import type { CollectionEntry } from "astro:content";
 import { getCollection, getEntry } from "astro:content";
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from "astro:i18n";
-import { Logger } from "@daliborhon.dev/integrations";
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import { Logger } from "@logger";
+import type { Locale } from "@paraglide/runtime";
 import { removeTrailingSlash } from "@utils";
+import type { MarkdownHeading } from "astro";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
 import calculateReadingTime from "reading-time";
@@ -25,7 +26,7 @@ export const getReadingTime = (text: string): string | undefined => {
 	}
 };
 
-export function getOgImageUrl(locale: AllowedLocales, post: CollectionEntry<"posts">) {
+export function getOgImageUrl(locale: Locale, post: CollectionEntry<"posts">) {
 	// For automatically generated images
 	// In dev mode, the trailing slash has to be present when it is set in the config
 	if (import.meta.env.DEV) {
@@ -35,7 +36,7 @@ export function getOgImageUrl(locale: AllowedLocales, post: CollectionEntry<"pos
 	return removeTrailingSlash(getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}/og.png`));
 }
 
-export function getBlogPostUrl(locale: AllowedLocales, post: CollectionEntry<"posts">) {
+export function getBlogPostUrl(locale: Locale, post: CollectionEntry<"posts">) {
 	return getRelativeLocaleUrl(locale, `blog/posts/${getBlogPostSlug(locale, post)}/`);
 }
 
@@ -54,7 +55,7 @@ export async function getBlogPostTranslations(post: CollectionEntry<"posts">) {
 	return posts;
 }
 
-export function getBlogPostSlug(locale: AllowedLocales, post: CollectionEntry<"posts">) {
+export function getBlogPostSlug(locale: Locale, post: CollectionEntry<"posts">) {
 	return getSlugWithoutLocale(post.id); // example cs/2024-01-01-title-already-slugified
 
 	/*
@@ -80,7 +81,7 @@ export function getBlogPostSlug(locale: AllowedLocales, post: CollectionEntry<"p
 	*/
 }
 
-export function getAbsoluteBlogPostUrl(locale: AllowedLocales, post: CollectionEntry<"posts">) {
+export function getAbsoluteBlogPostUrl(locale: Locale, post: CollectionEntry<"posts">) {
 	return getAbsoluteLocaleUrl(locale, `blog/posts/${getBlogPostSlug(locale, post)}/`);
 }
 
@@ -120,7 +121,7 @@ export function wasPostUpdated(pubDate: string | Date, modDate: string | Date | 
 	return false;
 }
 
-export function getBlogPostImageUrl(locale: AllowedLocales, post: CollectionEntry<"posts">): string | ImageMetadata {
+export function getBlogPostImageUrl(locale: Locale, post: CollectionEntry<"posts">): string | ImageMetadata {
 	// Uploaded or external images
 	if (typeof post.data.image === "string" && post.data.image !== "") {
 		return post.data.image;
@@ -181,4 +182,48 @@ export async function getTagById(tagId: string | undefined) {
 	}
 
 	return tag;
+}
+
+export function generateTOCHTML(headings: MarkdownHeading[]): string {
+	if (!headings.length) return "";
+
+	// Determine the base (minimum) depth
+	const baseDepth = Math.min(...headings.map((h) => h.depth));
+	let currentDepth = baseDepth;
+	let html = `<article-toc><ul class="menu not-prose">`;
+
+	const first = headings[0];
+	html += `<li><toc-item data-slug="${first.slug}"><a class="toc-link" href="#${first.slug}">${first.text}</a></toc-item>`;
+
+	for (let i = 1; i < headings.length; i++) {
+		const heading = headings[i];
+		const level = heading.depth;
+
+		if (level > currentDepth) {
+			// Open new nested lists until we reach the desired depth
+			while (currentDepth < level) {
+				html += "<ul><li>";
+				currentDepth++;
+			}
+			html += `<toc-item data-slug="${heading.slug}" ><a class="toc-link" href="#${heading.slug}">${heading.text}</a></toc-item>`;
+		} else if (level === currentDepth) {
+			// Same level: close previous item and start a new one
+			html += `</li><li><toc-item data-slug="${heading.slug}"><a class="toc-link" href="#${heading.slug}">${heading.text}</a></toc-item>`;
+		} else {
+			// Higher-level heading (lower depth): close nested lists
+			while (currentDepth > level) {
+				html += "</li></ul>";
+				currentDepth--;
+			}
+			// Close the previous item and add a new one at the proper level
+			html += `</li><li><toc-item data-slug="${heading.slug}"><a class="toc-link" href="#${heading.slug}">${heading.text}</a></toc-item>`;
+		}
+	}
+
+	// Close any open tags. We need to close the last <li> then each opened <ul>.
+	while (currentDepth-- >= baseDepth) {
+		html += "</li></ul></article-toc>";
+	}
+
+	return html;
 }

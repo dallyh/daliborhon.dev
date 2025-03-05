@@ -1,5 +1,5 @@
 import { GITHUB_API_AUTH_TOKEN } from "astro:env/server";
-import { Logger } from "@daliborhon.dev/integrations";
+import { Logger } from "@logger";
 import { Octokit } from "octokit";
 
 const logger = new Logger("github-rest-client");

@@ -1,4 +1,4 @@
-import { Logger } from "@daliborhon.dev/integrations";
+import { Logger } from "@logger";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 

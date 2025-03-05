@@ -14,10 +14,15 @@
             "@utils": ["${configDir}/src/utils/index.ts"],
             "@utils/content": ["${configDir}/src/utils/content/index.ts"],
             "@utils/og": ["${configDir}/src/utils/open-graph/index.ts"],
+            "@utils/i18n": ["${configDir}/src/utils/i18n.ts"],
             "@services/*": ["${configDir}/src/services/*"],
             "@site-config": ["${configDir}/site.config.ts"],
             "@content/*": ["${configDir}/src/content/*"],
-            "@lib/*": ["${configDir}/src/lib/*"]
+            "@lib/*": ["${configDir}/src/lib/*"],
+            "@integrations/*": ["${configDir}/src/integrations/*"],
+            "@paraglide/*": ["${configDir}/src/paraglide/*"],
+            "@i18n-config": ["${configDir}/i18n.config.ts"],
+            "@logger": ["${configDir}/src/utils/logger.ts"]
         }
     }
 }

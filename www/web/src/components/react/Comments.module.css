@@ -1,0 +1,3 @@
+.fade {
+	mask-image: linear-gradient(to top, transparent 50%, var(--color-base-100));
+}

@@ -1,6 +1,6 @@
-import { locales } from "@daliborhon.dev/integrations/i18n";
-import { getRoutingLocale } from "@daliborhon.dev/integrations/i18n";
+import { locales } from "@paraglide/runtime";
 import { getBlogPostSlug, getFilteredPostsCollection } from "@utils/content";
+import { getRoutingLocale } from "@utils/i18n";
 import { generateOgImageForPost } from "@utils/og";
 import type { APIContext } from "astro";
 

@@ -1,7 +1,7 @@
 ---
 import profilePicture from "@assets/img/profile/me.png";
 import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
+import { m } from "@paraglide/messages";
 import SocialLinks from "./SocialLinks.astro";
 ---
 
@@ -20,7 +20,7 @@ import SocialLinks from "./SocialLinks.astro";
 					</span>
 					<span>{m.common__country_czech_republic()}</span>
 				</span>
-				<span class="badge badge-soft badge-accent flex gap-2 p-3">
+				<span class="badge badge-soft badge-accent flex gap-2 p-3 shadow">
 					<span>
 						<i class="fa-solid fa-circle-dot"></i>
 					</span>
@@ -28,7 +28,7 @@ import SocialLinks from "./SocialLinks.astro";
 				</span>
 			</p>
 			<p class="text-sm">
-				<span class="badge badge-soft badge-accent flex gap-2 p-3">
+				<span class="badge badge-soft badge-accent flex gap-2 p-3 shadow">
 					<span>
 						<i class="fa-solid fa-suitcase"></i>
 					</span>

@@ -1,5 +1,5 @@
 import { defineCollection, reference, z } from "astro:content";
-import { locales } from "@daliborhon.dev/integrations/i18n";
+import { locales } from "@paraglide/runtime";
 import { type Loader, type LoaderContext, file, glob } from "astro/loaders";
 
 // Define a `type` and `schema` for each collection
@@ -23,15 +23,10 @@ const posts = defineCollection({
 		}),
 });
 
-// TO-DO: Find a way to do this automatically with locales.map...
 const tags = defineCollection({
 	loader: file(`./src/content/tags.yml`),
 	schema: z.object({
 		id: z.string(),
-		languages: z.object({
-			cs: z.string(),
-			en: z.string(),
-		}),
 	}),
 });
 

@@ -1,10 +1,10 @@
 // Adapted from: https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro
-import type { AllowedLocales } from "@daliborhon.dev/integrations/i18n";
+import type { Locale } from "@paraglide/runtime";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 type ViewChartProps = {
 	data: [date: string, pageViewNumber: number][];
-	locale: AllowedLocales;
+	locale: Locale;
 };
 
 export default function ViewChart({ data, locale }: ViewChartProps) {

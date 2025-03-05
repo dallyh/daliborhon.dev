@@ -3,11 +3,11 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import FeaturedPosts from "@components/astro/blog/FeaturedPosts.astro";
 import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
 import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
-import * as m from "@daliborhon.dev/integrations/i18n/messages";
 import PageLayout from "@layouts/PageLayout.astro";
+import { m } from "@paraglide/messages";
 import { getFilteredPostsCollection } from "@utils/content";
 
-export { getStaticPaths } from "@daliborhon.dev/integrations/i18n";
+export { getStaticPaths } from "@utils/i18n";
 
 const locale = Astro.currentLocale!;
 const posts = await getFilteredPostsCollection({ sort: true, featured: true, locale: locale });

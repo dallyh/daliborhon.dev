@@ -1,39 +1,25 @@
 /* This is taken from @microflash/remark-callout-directives/themes/github/index.css and modified. Modified to work with tailwind darkMode, and match starlights <Asides/> */
 
 :root {
-	--callout-headingFontColor-note: hsl(235, 76%, 29%);
-	--callout-bg-note: hsl(236, 77%, 90%);
-	--callout-border-note: hsl(235, 82%, 59%);
-	--callout-headingFontColor-success: hsl(137, 72%, 24%);
-	--callout-bg-success: hsl(96, 79%, 91%);
-	--callout-border-success: hsl(137, 66%, 30%);
-	--callout-headingFontColor-tip: hsl(277, 76%, 31%);
-	--callout-bg-tip: hsl(276, 70%, 90%);
-	--callout-border-tip: hsl(277, 81%, 60%);
-	--callout-headingFontColor-caution: hsl(41, 57%, 27%);
-	--callout-bg-caution: hsl(43, 80%, 88%);
-	--callout-border-caution: hsl(41, 80%, 63%);
-	--callout-headingFontColor-danger: hsl(342, 62%, 31%);
-	--callout-bg-danger: hsl(338, 57%, 89%);
-	--callout-border-danger: hsl(341, 72%, 60%);
-}
+	--callout-headingFontColor-note: var(--color-info);
+	--callout-bg-note: color-mix(in oklab, var(--color-info) 30%, transparent);
+	--callout-border-note: var(--color-info);
 
-:root[data-theme="dark"] {
-	--callout-headingFontColor-note: hsl(235, 86%, 86%);
-	--callout-bg-note: hsl(235, 50%, 20%);
-	--callout-border-note: hsl(235, 90%, 59%);
-	--callout-headingFontColor-success: hsl(96, 77%, 81%);
-	--callout-bg-success: hsl(95, 33%, 23%);
-	--callout-border-success: hsl(96, 77%, 81%);
-	--callout-headingFontColor-tip: hsl(276, 72%, 89%);
-	--callout-bg-tip: hsl(276, 36%, 22%);
-	--callout-border-tip: hsl(277, 81%, 60%);
-	--callout-headingFontColor-caution: hsl(42, 72%, 87%);
-	--callout-bg-caution: hsl(43, 33%, 22%);
-	--callout-border-caution: hsl(42, 72%, 65%);
-	--callout-headingFontColor-danger: hsl(338, 61%, 86%);
-	--callout-bg-danger: hsl(339, 32%, 21%);
-	--callout-border-danger: hsl(340, 64%, 62%);
+	--callout-headingFontColor-success: var(--color-success);
+	--callout-bg-success: color-mix(in oklab, var(--color-success) 30%, transparent);
+	--callout-border-success: var(--color-success);
+
+	--callout-headingFontColor-tip: var(--color-secondary);
+	--callout-bg-tip: color-mix(in oklab, var(--color-secondary) 30%, transparent);
+	--callout-border-tip: var(--color-secondary);
+
+	--callout-headingFontColor-caution: var(--color-warning);
+	--callout-bg-caution: color-mix(in oklab, var(--color-warning) 30%, transparent);
+	--callout-border-caution: var(--color-warning);
+
+	--callout-headingFontColor-danger: var(--color-error);
+	--callout-bg-danger: color-mix(in oklab, var(--color-error) 30%, transparent);
+	--callout-border-danger: var(--color-error);
 }
 
 .callout {

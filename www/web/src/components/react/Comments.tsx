@@ -72,6 +72,7 @@ export default function Comments({ locale }: Props) {
 		const wrapper = wrapperRef.current!;
 		buttonRef.current!.style.display = "none";
 		wrapper.classList.remove(styles.fade);
+		wrapper.classList.remove("pointer-events-none");
 		wrapper.style.height = "auto";
 	}
 

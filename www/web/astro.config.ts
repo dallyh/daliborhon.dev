@@ -85,7 +85,14 @@ export default defineConfig({
 						type: "element",
 						tagName: "span",
 						properties: { className: ["heading-link-icon"] },
-						children: [],
+						children: [
+							{
+								type: "element",
+								tagName: "i",
+								properties: { className: ["fa-solid", "fa-hashtag"] },
+								children: [],
+							},
+						],
 					},
 				},
 			],
@@ -95,6 +102,7 @@ export default defineConfig({
 					content: {
 						type: "element",
 						tagName: "i",
+						properties: { className: ["fa-solid", "fa-arrow-up-right-from-square"] },
 						children: [],
 					},
 					contentProperties: { className: ["external-link-icon"] },

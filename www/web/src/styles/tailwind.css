@@ -59,26 +59,38 @@
 		}
 	}
 
+	.md-content :is(h1, h2, h3, h4, h5, h6) {
+		width: max-content;
+	}
+
 	.md-content :is(h1, h2, h3, h4, h5, h6):has(.heading-link-icon) {
 		@apply flex gap-2;
+		transform: translateX(-2rem);
+		transition: transform ease 300ms;
 
 		a {
 			@apply mt-1 flex justify-center;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity ease 300ms;
 
 			.heading-link-icon {
-				position: relative;
-
-				&::before {
-					content: "#";
-					position: absolute;
-					font-size: 0.9rem;
-					font-weight: 500;
-					left: 50%;
-					top: 50%;
-					transform: translateX(-50%) translateY(-50%);
-				}
-
 				@apply btn btn-soft btn-primary btn-xs;
+
+				i {
+					float: left;
+					text-decoration: none;
+					position: relative;
+					font-size: 0.5rem;
+				}
+			}
+		}
+
+		&:hover {
+			transform: translateX(0rem);
+			a {
+				opacity: 1;
+				visibility: visible;
 			}
 		}
 	}

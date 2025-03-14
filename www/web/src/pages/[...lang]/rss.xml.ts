@@ -4,6 +4,7 @@ import { m } from "@paraglide/messages";
 import { getBlogPostUrl, getFilteredPostsCollection } from "@utils/content";
 import type { APIContext } from "astro";
 import { experimental_AstroContainer } from "astro/container";
+import type { Locale } from "@paraglide/runtime";
 
 export { getStaticPaths } from "@utils/i18n";
 
@@ -24,7 +25,7 @@ export async function GET({ site, currentLocale }: APIContext) {
 				title: title,
 				pubDate: pubDate,
 				description: description,
-				link: getBlogPostUrl(currentLocale!, post),
+				link: getBlogPostUrl(currentLocale as Locale, post),
 				content: await container.renderToString(Content),
 			};
 		}),

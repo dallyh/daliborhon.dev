@@ -65,21 +65,20 @@ const searchProps = {
 	import { m } from "@paraglide/messages";
 
 	class DownloadButton extends HTMLElement {
-		private downloadButton!: HTMLAnchorElement;
+		get downloadButton() {
+			return this.querySelector("#download") as HTMLAnchorElement;
+		}
 
 		connectedCallback(): void {
-			// Fetch the button when the element is added to the DOM
-			this.downloadButton = this.querySelector("#download") as HTMLAnchorElement;
 			if (!this.downloadButton) {
 				throw new Error("The element requires a child anchor with the ID 'download'.");
 			}
-
 			this.downloadButton.addEventListener("click", this.handleDownload.bind(this));
 		}
 
 		disconnectedCallback(): void {
 			if (this.downloadButton) {
-				this.downloadButton.removeEventListener("click", this.handleDownload);
+				this.downloadButton.removeEventListener("click", this.handleDownload.bind(this));
 			}
 		}
 

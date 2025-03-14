@@ -1,4 +1,17 @@
 <script>
+	declare global {
+		interface ToastOptions {
+			message: string;
+			type?: "info" | "success" | "warning" | "error";
+			duration?: number; // in ms; 0 or negative to keep open
+			dismissible?: boolean; // show close button or not
+		}
+
+		interface Window {
+			showToast: (options: ToastOptions) => void;
+		}
+	}
+
 	/**
 	 * showToast creates an alert element (DaisyUI style)
 	 * and appends it to the #toastContainer.
@@ -78,11 +91,11 @@
 		}
 	}
 
-	window.addEventListener("DOMContentLoaded", () => {
-		addToastContainer();
-	});
+	document.addEventListener("astro:after-swap", addToastContainer);
 
-	document.addEventListener("astro:after-swap", () => {
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", addToastContainer);
+	} else {
 		addToastContainer();
-	});
+	}
 </script>

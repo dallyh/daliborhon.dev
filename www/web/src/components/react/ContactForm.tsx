@@ -96,7 +96,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 					<input type="hidden" value="Website submission" {...register("from_name")} />
 					<input type="checkbox" className="hidden" {...register("botcheck")} />
 					{/*@ts-ignore types are broken*/}
-					<HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" ref={captchaRef} />
+					<HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" ref={captchaRef} languageOverride={locale} />
 
 					<fieldset className="fieldset" ref={animate}>
 						{/* FULL NAME FIELD */}

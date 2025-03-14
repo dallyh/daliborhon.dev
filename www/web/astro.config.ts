@@ -1,4 +1,3 @@
-//@ts-check
 import db from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
@@ -48,6 +47,7 @@ logger.info(`Using PREVIEW: '${PREVIEW}'`);
 export default defineConfig({
 	experimental: {
 		serializeConfig: true,
+		preserveScriptOrder: true,
 	},
 	site: SITE_URL,
 	build: {

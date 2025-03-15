@@ -10,7 +10,7 @@ draft: false
 featured: true
 image: ../../../assets/content/blog/deploying-libsql-server-with-astro-on-zerops.png
 pubDate: 2025-02-25T22:26:40.947Z
-modDate: null
+modDate: 2025-03-15T20:00:06.101Z
 fmContentType: blog
 ---
 
@@ -169,11 +169,11 @@ Before the push, make sure that the `ASTRO_DB_REMOTE_URL` is set in your Astro p
 After the VPN is connected, push the database schema to the remote database:
 
 ```sh
-npx astro db push --remote
+npm run astro db push --remote
 ```
 
-:::note
-Most Astro projects already have the `astro` command defined in `package.json`. In the Astro DB's [documentation](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) we are guided to run the `push` command using `npm` as follows: `npm run astro db push --remote`. This does not work properly in some cases, because `npm run` does not correctly pass the `--remote` flag. If you're not using `npx` to execute the push or any other DB commands, then you should run the command like this: `npm run astro db push --- --remote`.
+:::note[Running commands with Powershell]
+Most Astro projects already have the `astro` command defined in `package.json`. In the Astro DB's [documentation](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) we are guided to run the `push` command using `npm` as follows: `npm run astro db push --remote`. This does not work properly with Powershell, because the `--remote` flag is silently dropped. If you're executing commands from `package.json` with Powershell, you should escape them like so `npm run astro db push -- --remote` See [this](https://www.lloydatkinson.net/posts/2022/powershell-npm-scripts-and-silently-dropped-arguments/) article for more info.
 :::
 
 #### Seeding the Database
@@ -181,7 +181,7 @@ Most Astro projects already have the `astro` command defined in `package.json`. 
 Sometimes it is needed to populate (seed) the database with initial data if you are starting with a fresh database. This can be done by executing the following command:
 
 ```sh
-npx astro db execute ./db/seed.ts --remote
+npm run astro db execute ./db/seed.ts --remote
 ```
 
 This will seed the database with initial required data by executing the `seed.ts` file, which should contain your predefined data.

@@ -1,15 +1,16 @@
 import { render } from "astro:content";
 import rss from "@astrojs/rss";
 import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
 import { getBlogPostUrl, getFilteredPostsCollection } from "@utils/content";
 import type { APIContext } from "astro";
-import { experimental_AstroContainer } from "astro/container";
-import type { Locale } from "@paraglide/runtime";
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import sanitize from "sanitize-html";
 
 export { getStaticPaths } from "@utils/i18n";
 
 export async function GET({ site, currentLocale }: APIContext) {
-	const container = await experimental_AstroContainer.create();
+	const container = await AstroContainer.create();
 	const allBlogArticles = await getFilteredPostsCollection({ locale: currentLocale, sort: true });
 
 	if (allBlogArticles === undefined) {
@@ -20,13 +21,16 @@ export async function GET({ site, currentLocale }: APIContext) {
 		allBlogArticles.map(async (post) => {
 			const { Content } = await render(post);
 			const { title, pubDate, description } = post.data;
+			const html = await container.renderToString(Content);
 
 			return {
 				title: title,
 				pubDate: pubDate,
 				description: description,
 				link: getBlogPostUrl(currentLocale as Locale, post),
-				content: await container.renderToString(Content),
+				content: sanitize(html, {
+					allowedTags: sanitize.defaults.allowedTags.concat(["img"]),
+				}),
 			};
 		}),
 	);

@@ -39,17 +39,9 @@ const { locale } = Astro.props;
 
 <script>
 	class Comments extends HTMLElement {
-		get iframe() {
-			return this.querySelector<HTMLIFrameElement>(".giscus-frame")!;
-		}
-
-		get commentsBtn() {
-			return this.querySelector<HTMLButtonElement>("#show-comments")!;
-		}
-
-		get container() {
-			return this.querySelector<HTMLDivElement>("#giscus-container")!;
-		}
+		commentsBtn = this.querySelector<HTMLButtonElement>("#show-comments")!;
+		container = this.querySelector<HTMLDivElement>("#giscus-container")!;
+		iframe: HTMLIFrameElement | undefined;
 
 		onloadCallback() {
 			this.commentsBtn.disabled = false;
@@ -58,8 +50,9 @@ const { locale } = Astro.props;
 
 		createObserver() {
 			const iframeObserver = new MutationObserver(() => {
-				const iframe = this.iframe;
+				const iframe = this.querySelector<HTMLIFrameElement>(".giscus-frame")!;
 				if (iframe) {
+					this.iframe = iframe;
 					this.onloadCallback();
 					iframeObserver.disconnect();
 				}

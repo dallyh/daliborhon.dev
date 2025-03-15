@@ -24,15 +24,15 @@ import "@pagefind/default-ui/css/ui.css";
 	import { trailingSlash, base } from "astro:config/client";
 
 	class SiteSearch extends HTMLElement {
-		#logger = new Logger("search-modal");
-		#pageFindInstance: any = null;
-		#dialog = this.querySelector("dialog");
+		logger = new Logger("search-modal");
+		pageFindInstance: any = null;
+		dialog = this.querySelector("dialog");
 
 		connectedCallback() {
 			const closeBtn = this.querySelector("[data-close-modal]")!;
 
-			if (!this.#dialog) {
-				this.#logger.error("Dialog element was not found.");
+			if (!this.dialog) {
+				this.logger.error("Dialog element was not found.");
 				return;
 			}
 
@@ -44,9 +44,9 @@ import "@pagefind/default-ui/css/ui.css";
 				const isInput =
 					document.activeElement instanceof HTMLElement && (["input", "select", "textarea"].includes(document.activeElement.tagName.toLowerCase()) || document.activeElement.isContentEditable);
 				if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
-					this.#dialog?.open ? this.closeModal() : this.openModal(e);
+					this.dialog?.open ? this.closeModal() : this.openModal(e);
 					e.preventDefault();
-				} else if (e.key === "/" && !this.#dialog?.open && !isInput) {
+				} else if (e.key === "/" && !this.dialog?.open && !isInput) {
 					this.openModal(e);
 					e.preventDefault();
 				}
@@ -55,7 +55,7 @@ import "@pagefind/default-ui/css/ui.css";
 			// Close modal button
 			closeBtn.addEventListener("click", this.closeModal);
 
-			this.#dialog?.addEventListener("close", () => {
+			this.dialog?.addEventListener("close", () => {
 				document.documentElement.removeAttribute("data-search-modal-open");
 			});
 
@@ -63,23 +63,23 @@ import "@pagefind/default-ui/css/ui.css";
 		}
 
 		disconnectedCallback() {
-			this.#dialog?.open ?? this.#dialog?.close();
-			this.#dialog = null;
+			this.dialog?.open ?? this.dialog?.close();
+			this.dialog = null;
 
-			if (this.#pageFindInstance) {
-				this.#pageFindInstance.destroy();
+			if (this.pageFindInstance) {
+				this.pageFindInstance.destroy();
 			}
 		}
 
 		openModal(event?: Event) {
-			this.#dialog?.showModal();
+			this.dialog?.showModal();
 			document.documentElement.toggleAttribute("data-search-modal-open", true);
 			this.querySelector("input")?.focus();
 			event?.stopPropagation();
 		}
 
 		closeModal() {
-			this.#dialog?.close();
+			this.dialog?.close();
 		}
 
 		initPagefind() {
@@ -90,12 +90,12 @@ import "@pagefind/default-ui/css/ui.css";
 				// @ts-ignore - could not find types for this import
 				const { PagefindUI } = await import("@pagefind/default-ui");
 
-				if (this.#pageFindInstance !== null) {
-					this.#logger.debug("Pagefind instance is already initialized.");
+				if (this.pageFindInstance !== null) {
+					this.logger.debug("Pagefind instance is already initialized.");
 					return;
 				}
 
-				this.#pageFindInstance = new PagefindUI({
+				this.pageFindInstance = new PagefindUI({
 					element: "#pagefind",
 					baseUrl: base,
 					bundlePath: `${base}pagefind/`,

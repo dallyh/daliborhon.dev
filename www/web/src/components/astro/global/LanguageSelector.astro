@@ -70,30 +70,23 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 	import { Logger } from "@logger";
 
 	class LanguageSelect extends HTMLElement {
-		#logger = new Logger("language-select");
+		select = this.querySelector("select")!;
+		logger = new Logger("language-select");
 
 		connectedCallback() {
-			const configCookie = cookieName;
-			const select = this.querySelector("select");
-
-			if (!select) {
-				this.#logger.error("Could not initialize LanguageSelect");
-				return;
-			}
-
 			// Why does this happen?
-			select.addEventListener("mousedown", (e) => {
+			this.select.addEventListener("mousedown", (e) => {
 				(e.target as HTMLSelectElement).focus({ preventScroll: true });
 			});
 
-			select.addEventListener("change", (e) => {
+			this.select.addEventListener("change", (e) => {
 				e.preventDefault();
 
 				if (e.currentTarget instanceof HTMLSelectElement) {
 					const lang = e.currentTarget.options[e.currentTarget.selectedIndex].dataset.language! as Locale;
-					cookie.set(configCookie, lang, { expires: 30 });
+					cookie.set(cookieName, lang, { expires: 30 });
 					const next = e.currentTarget.value + window.location.search;
-					this.#logger.info("Navigating to: " + next);
+					this.logger.info("Navigating to: " + next);
 					navigate(next);
 				}
 			});

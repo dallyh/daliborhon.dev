@@ -1,7 +1,7 @@
 import { ActionError, defineAction } from "astro:actions";
+import { CONTACT_FORM_ACCESS_KEY } from "astro:env/server";
 import { z } from "astro:schema";
 import type { Locale } from "@paraglide/runtime";
-import { CONTACT_FORM_ACCESS_KEY } from "astro:env/server";
 
 export const contactFormAction = defineAction({
 	input: z.object({

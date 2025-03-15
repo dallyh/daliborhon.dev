@@ -1,11 +1,11 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import type { Locale } from "@paraglide/runtime";
 import { Resvg } from "@resvg/resvg-js";
 import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./templates/post";
 import siteOgImage from "./templates/site";
-import path from "node:path";
-import fs from "node:fs";
 
 const getFonts = async () => {
 	const fontsFolder = "./src/assets/fonts";

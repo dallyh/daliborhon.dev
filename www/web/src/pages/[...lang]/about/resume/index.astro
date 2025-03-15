@@ -65,24 +65,17 @@ const searchProps = {
 	import { m } from "@paraglide/messages";
 
 	class DownloadButton extends HTMLElement {
-		get downloadButton() {
-			return this.querySelector("#download") as HTMLAnchorElement;
-		}
+		downloadButton = this.querySelector<HTMLAnchorElement>("#download")!;
 
 		connectedCallback(): void {
-			if (!this.downloadButton) {
-				throw new Error("The element requires a child anchor with the ID 'download'.");
-			}
 			this.downloadButton.addEventListener("click", this.handleDownload.bind(this));
 		}
 
 		disconnectedCallback(): void {
-			if (this.downloadButton) {
-				this.downloadButton.removeEventListener("click", this.handleDownload.bind(this));
-			}
+			this.downloadButton.removeEventListener("click", this.handleDownload.bind(this));
 		}
 
-		private async handleDownload(e: MouseEvent): Promise<void> {
+		async handleDownload(e: MouseEvent): Promise<void> {
 			e.preventDefault();
 			this.downloadButton.classList.toggle("is-loading");
 
@@ -111,7 +104,7 @@ const searchProps = {
 			}
 		}
 
-		private createAndDownloadBlob(blob: Blob, name: string): void {
+		createAndDownloadBlob(blob: Blob, name: string): void {
 			const link = document.createElement("a");
 			link.setAttribute("download", name);
 

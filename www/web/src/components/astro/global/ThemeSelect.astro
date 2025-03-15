@@ -20,39 +20,24 @@
 </theme-select>
 
 <script>
-	// https://github.com/withastro/starlight/blob/main/packages/starlight/components/ThemeSelect.astro
-	// Thanks!
 	class ThemeSelect extends HTMLElement {
-		#storageKey = "theme-preference";
-		#themeToggle = this.querySelector("input") as HTMLInputElement;
+		storageKey = window.themeStorageKey;
+		themeToggle = this.querySelector("input") as HTMLInputElement;
 
 		connectedCallback() {
-			this.#reflectPreference();
-			this.#themeToggle?.addEventListener("click", () => this.#onClick());
+			this.themeToggle?.addEventListener("click", this.onClick.bind(this));
 		}
 
-		#getColorPreference(): string {
-			if (localStorage.getItem(this.#storageKey)) {
-				return localStorage.getItem(this.#storageKey)!;
-			} else {
-				return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-			}
-		}
-
-		#reflectPreference() {
-			document.documentElement.dataset.theme = this.#getColorPreference();
-			this.#themeToggle?.setAttribute("aria-label", this.#getColorPreference());
-		}
-
-		#setPreference(theme: string) {
-			localStorage.setItem(this.#storageKey, theme);
-			this.#reflectPreference();
+		setTheme(theme: string) {
+			document.documentElement.dataset.theme = theme;
+			this.themeToggle?.setAttribute("aria-label", theme);
+			localStorage.setItem(this.storageKey, theme);
 			window.dispatchEvent(new Event("theme-changed"));
 		}
 
-		#onClick() {
+		onClick() {
 			const theme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
-			this.#setPreference(theme);
+			this.setTheme(theme);
 		}
 	}
 

@@ -1,12 +1,12 @@
+import { actions } from "astro:actions";
 import { HCAPTCHA_KEY } from "astro:env/client";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
+import { Logger } from "@utils";
 import { useEffect, useRef, useState } from "react";
 import { type FieldValues, useForm, useWatch } from "react-hook-form";
-import { actions } from "astro:actions";
-import { Logger } from "@utils";
 
 const logger = new Logger("contact-form");
 
@@ -96,7 +96,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 					<input type="hidden" value="Website submission" {...register("from_name")} />
 					<input type="checkbox" className="hidden" {...register("botcheck")} />
 					{/*@ts-ignore types are broken*/}
-					<HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" ref={captchaRef} />
+					<HCaptcha sitekey={HCAPTCHA_KEY} size="invisible" ref={captchaRef} languageOverride={locale} />
 
 					<fieldset className="fieldset" ref={animate}>
 						{/* FULL NAME FIELD */}

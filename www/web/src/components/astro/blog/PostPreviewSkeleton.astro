@@ -31,11 +31,11 @@
 		}
 	}
 
-	document.addEventListener("astro:after-swap", () => {
-		removeSkeletonOnIntersection();
-	});
+	document.addEventListener("astro:after-swap", removeSkeletonOnIntersection);
 
-	document.addEventListener("DOMContentLoaded", () => {
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", removeSkeletonOnIntersection);
+	} else {
 		removeSkeletonOnIntersection();
-	});
+	}
 </script>

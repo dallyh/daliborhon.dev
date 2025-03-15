@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import type { Locale } from "@paraglide/runtime";
 import { Resvg } from "@resvg/resvg-js";
@@ -5,19 +7,18 @@ import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./templates/post";
 import siteOgImage from "./templates/site";
 
-const fetchFonts = async () => {
-	// Regular Font
-	const fontFileRegular = await fetch("https://www.1001fonts.com/download/font/ibm-plex-mono.regular.ttf");
-	const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
+const getFonts = async () => {
+	const fontsFolder = "./src/assets/fonts";
+	const root = process.cwd();
+	const fontsPath = path.join(root, fontsFolder);
 
-	// Bold Font
-	const fontFileBold = await fetch("https://www.1001fonts.com/download/font/ibm-plex-mono.bold.ttf");
-	const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
+	const fontFileRegular = fs.readFileSync(path.join(fontsPath, "IBMPlexMono-Regular.ttf"));
+	const fontFileBold = fs.readFileSync(path.join(fontsPath, "IBMPlexMono-Medium.ttf"));
 
-	return { fontRegular, fontBold };
+	return { fontFileRegular, fontFileBold };
 };
 
-const { fontRegular, fontBold } = await fetchFonts();
+const { fontFileRegular, fontFileBold } = await getFonts();
 
 const options: SatoriOptions = {
 	width: 1200,
@@ -26,13 +27,13 @@ const options: SatoriOptions = {
 	fonts: [
 		{
 			name: "IBM Plex Mono",
-			data: fontRegular,
+			data: fontFileRegular,
 			weight: 400,
 			style: "normal",
 		},
 		{
 			name: "IBM Plex Mono",
-			data: fontBold,
+			data: fontFileBold,
 			weight: 600,
 			style: "normal",
 		},
@@ -50,7 +51,7 @@ export async function generateOgImageForPost(post: CollectionEntry<"posts">, loc
 	return svgBufferToPngBuffer(svg);
 }
 
-export async function generateOgImageForSite(locale: string) {
-	const svg = await satori(await siteOgImage(locale), options);
+export async function generateOgImageForSite() {
+	const svg = await satori(siteOgImage(), options);
 	return svgBufferToPngBuffer(svg);
 }

@@ -1,9 +1,6 @@
 import { m } from "@paraglide/messages";
 
-export default async (locale: string) => {
-	/*const posts = await caisyClient.getArticlesCount();
-    const projects = await caisyClient.getProjectsCount();*/
-
+export default () => {
 	return (
 		<div
 			style={{
@@ -14,7 +11,6 @@ export default async (locale: string) => {
 				alignItems: "center",
 				background: "transparent",
 				justifyContent: "center",
-				fontFamily: 'Inter, "Material Icons"',
 				color: "white",
 				padding: "0px",
 			}}
@@ -46,7 +42,7 @@ export default async (locale: string) => {
 							<path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0m6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0" />
 						</svg>
 					</div>
-					<div style={{ position: "absolute", textAlign: "center", left: "600px", top: "50%", transform: "translateX(-50%)", fontSize: 28, fontWeight: 700, letterSpacing: "1px" }}>
+					<div style={{ position: "absolute", textAlign: "center", left: "600px", top: "50%", transform: "translateX(-50%)", fontSize: 28, fontWeight: 600, letterSpacing: "1px" }}>
 						https://daliborhon.dev
 					</div>
 					<div style={{ display: "flex" }}>
@@ -69,16 +65,10 @@ export default async (locale: string) => {
 						overflow: "hidden",
 					}}
 				>
-					<p style={{ fontSize: "60px", fontWeight: "700" }}>Dalibor Hon</p>
+					<p style={{ fontSize: "60px", fontWeight: 600 }}>Dalibor Hon</p>
 					<p style={{ fontSize: "40px" }}>{m.common__site_description()}</p>
 				</div>
-				<div style={{ display: "flex", alignItems: "center", gap: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}>
-					{/*<div style={{ display: "flex", fontSize: 24, fontWeight: "700" }}>
-                        {m.blog__posts()}: {posts?.allBlogArticle?.totalCount === 0 ? "None :(" : posts?.allBlogArticle?.totalCount}
-                        {"|"}
-                        {m.projects__projects()}: {projects.allProject?.totalCount === 0 ? "None :(" : projects.allProject?.totalCount}
-                </div>*/}
-				</div>
+				<div style={{ display: "flex", alignItems: "center", gap: "10px", borderTop: "1px solid rgba(255, 255, 255, 0.4)", padding: "10px 20px 10px 20px", width: "100%", marginTop: "auto" }}></div>
 			</div>
 		</div>
 	);

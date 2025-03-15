@@ -3,15 +3,17 @@ import { PageView } from "astro:db";
 import { Logger } from "@logger";
 import type { APIRoute } from "astro";
 
-const logger = new Logger("page-views.ts");
 export const prerender = false;
+
+const logger = new Logger("page-views.ts");
 
 export const GET: APIRoute = async ({ request }) => {
 	const searchParams = new URL(request.url).searchParams;
-	const dateRange = searchParams.get("date-range") ?? ("all-time" as DateRange);
+	const dateRange: DateRange = (searchParams.get("date-range") as DateRange) ?? "all-time";
 	const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-	let dateGreaterThan: Date | undefined;
 	const dateLessThan = new Date(Date.now());
+
+	let dateGreaterThan: Date | undefined;
 	switch (dateRange) {
 		case "past-day":
 			dateGreaterThan = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -113,14 +115,14 @@ export const GET: APIRoute = async ({ request }) => {
 	const perf = end - start;
 	logger.info(`Query took ${perf}ms`);
 
-	const res = JSON.stringify({
+	const res = {
 		totalViews,
 		totalUniqueURLs,
 		totalPages,
 		pageViews,
 		viewsPerUrl,
 		perf: perf,
-	});
+	};
 
-	return new Response(res);
+	return new Response(JSON.stringify(res));
 };

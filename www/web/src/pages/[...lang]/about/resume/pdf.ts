@@ -7,7 +7,7 @@ import type { Locale } from "@paraglide/runtime";
 import { createResumePdfFilename } from "@utils";
 import { generateTOCHTML } from "@utils/content";
 import type { APIRoute } from "astro";
-import { experimental_AstroContainer } from "astro/container";
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
 import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
@@ -99,7 +99,7 @@ export const GET: APIRoute = async ({ params }) => {
 		return new Response(null, { status: 401 });
 	}
 	const renderers = await loadRenderers([mdxContainerRenderer()]);
-	const container = await experimental_AstroContainer.create({
+	const container = await AstroContainer.create({
 		renderers,
 	});
 

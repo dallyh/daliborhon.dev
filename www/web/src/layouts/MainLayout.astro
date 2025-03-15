@@ -11,6 +11,8 @@ import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astr
 import LoadingIndicator from "@components/astro/global/LoadingIndicator.astro";
 import SearchModal from "@components/astro/global/SearchModal.astro";
 import ToastProvider from "@components/astro/global/ToastProvider.astro";
+import firaLatinExt from "@fontsource-variable/fira-code/files/fira-code-latin-ext-wght-normal.woff2";
+import firaLatin from "@fontsource-variable/fira-code/files/fira-code-latin-wght-normal.woff2";
 import nunitoLatinExt from "@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2";
 import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2";
 
@@ -42,7 +44,7 @@ const basePath = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} dir="ltr">
 	<head>
 		<!-- Base head -->
 		<ClientRouter fallback="swap" />
@@ -54,19 +56,20 @@ const basePath = import.meta.env.BASE_URL;
 		<meta name="generator" content={Astro.generator} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/x-icon" href={`${basePath}favicon.ico`} />
-
+		
 		<!-- hreflang from other pages -->
 		<slot name="hreflangs" />
-
+		
 		<!-- Additional head from other pages -->
 		<slot name="head" />
-
+		
 		<!-- General Meta Tags -->
 		<title>{siteTitle}</title>
 		<meta name="title" content={siteTitle} />
 		<meta name="description" content={description} />
 		<meta name="author" content={author} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link rel="alternate" type="application/rss+xml" title={siteTitle} href={getAbsoluteLocaleUrl(locale, "rss.xml")} />
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:title" content={siteTitle} />
@@ -86,8 +89,7 @@ const basePath = import.meta.env.BASE_URL;
 		<meta property="twitter:image" content={ogImage} />
 
 		<!-- Fonts, icons and external scripts -->
-		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+		<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="anonymous" />
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -97,7 +99,8 @@ const basePath = import.meta.env.BASE_URL;
 		/>
 		<link rel="preload" href={nunitoLatinExt} as="font" type="font/woff" crossorigin />
 		<link rel="preload" href={nunitoLatin} as="font" type="font/woff" crossorigin />
-
+		<link rel="preload" href={firaLatinExt} as="font" type="font/woff" crossorigin />
+		<link rel="preload" href={firaLatin} as="font" type="font/woff" crossorigin />
 		<script is:inline>
 			document.addEventListener("astro:before-swap", (e) => e.newDocument.head.querySelectorAll('link[as="font"]').forEach((link) => link.remove()), { once: false });
 		</script>

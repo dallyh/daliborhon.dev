@@ -40,16 +40,10 @@ const { tocPosition = "default", headings } = Astro.props;
 	// https://github.com/miaobuao/astro-theme-meo/blob/main/src/theme/components/ArticleToc.astro
 
 	class TableOfContents extends HTMLElement {
-		get details() {
-			return this.querySelector("#tocDetails") as HTMLDetailsElement | null;
-		}
-
-		get loading() {
-			return this.querySelector("#loading") as HTMLSpanElement | null;
-		}
+		details = this.querySelector<HTMLDetailsElement>("#tocDetails")!;
+		loading = this.querySelector<HTMLSpanElement>("#loading")!;
 
 		openToc() {
-			if (!this.details) return;
 			const width = window.innerWidth;
 			this.details.open = width >= 1024;
 		}
@@ -68,13 +62,8 @@ const { tocPosition = "default", headings } = Astro.props;
 	}
 
 	class TocItem extends HTMLElement {
-		get anchor() {
-			return this.querySelector("a");
-		}
-
-		get relativeHeading() {
-			return document.getElementById(this.dataset.slug!);
-		}
+		anchor = this.querySelector<HTMLAnchorElement>("a");
+		relativeHeading = document.getElementById(this.dataset.slug!);
 
 		activate = () => {
 			this.classList.add("active");
@@ -86,13 +75,8 @@ const { tocPosition = "default", headings } = Astro.props;
 	}
 
 	class ArticleToc extends HTMLElement {
-		get items() {
-			return Array.from(this.querySelectorAll<TocItem>("toc-item"));
-		}
-
-		get mainScroll() {
-			return document;
-		}
+		items = Array.from(this.querySelectorAll<TocItem>("toc-item"));
+		mainScroll = document;
 
 		connectedCallback() {
 			this.handleUpdate();
@@ -246,7 +230,7 @@ const { tocPosition = "default", headings } = Astro.props;
 
 <style is:global>
 	.md-content {
-		img {
+		img:not(.not-md-image) {
 			justify-self: center;
 			border: 1px solid transparent;
 			border-radius: 0.5rem;

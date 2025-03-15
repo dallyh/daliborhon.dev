@@ -11,67 +11,45 @@ const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
 ---
 
-<div id="page-footer">
+<div id="page-footer" class="text-base-content/80">
 	<div class="divider"></div>
 	<footer class="footer mb-4 flex w-full flex-col items-center justify-center rounded-xl p-4 md:flex-row md:justify-between">
 		<nav class="footer-start flex flex-wrap items-center justify-center gap-4 md:place-self-center md:justify-self-end">
-			<a class="rss" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
-				<i class="fas fa-lg fa-solid fa-square-rss"></i>
-			</a>
 			<UptimeStatus client:visible transition:persist />
+			<a class="link text-amber-500 no-underline hover:no-underline" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
+				<i class="fas fa-lg fa-square-rss"></i>
+			</a>
+			<a class="link text-primary/80 no-underline hover:no-underline" href={getRelativeLocaleUrl(locale, "/analytics")}>
+				<i class="fas fa-lg fa-square-poll-vertical"></i>
+			</a>
 			<a class="astro" href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
-				<Icon name="astro-icon-dark" />
+				<Icon name="astro-icon-dark" width="55px" height="20px" />
 			</a>
 			<a class="zerops" href="https://zerops.io" title="zerops.io" class="zerops" target="_blank">
-				<Icon name="zerops-logo-symbol" />
+				<Icon name="zerops-logo-symbol" width="64px" height="25px" />
 			</a>
-			<div class="analytics">
-				<a class="link-primary link-hover inline-flex items-center justify-center gap-1" href={getRelativeLocaleUrl(locale, "/analytics")}><span><i class="fas fa-chart-simple"></i></span></a>
-			</div>
 		</nav>
-		<aside class="flex w-full flex-col items-center justify-center md:w-auto">
-			<p>© {new Date().getFullYear()} - Dalibor Hon</p>
+		<aside class="flex w-full items-center justify-center md:w-auto">
+			<span>© {new Date().getFullYear()} - Dalibor Hon</span>
+			<span> - </span>
 			{
 				APP_VERSION_NAME && (
-					<p class="text-center text-sm">
+					<span class="text-center text-sm">
 						<ExternalLink href={tagHref} title={APP_VERSION_NAME} aria-label={APP_VERSION_NAME}>
 							{APP_VERSION_NAME}
 						</ExternalLink>
-					</p>
+					</span>
 				)
 			}
 			{
 				!APP_VERSION_NAME && (
-					<p class="text-center text-sm">
+					<span class="text-center text-sm">
 						<ExternalLink href={tagHref} title={m.common__repository()} aria-label={m.common__repository()}>
 							{m.common__repository()}
 						</ExternalLink>
-					</p>
+					</span>
 				)
 			}
 		</aside>
 	</footer>
 </div>
-
-<style>
-	.astro {
-		color: unset;
-
-		svg {
-			height: auto;
-			width: 3.8rem;
-		}
-	}
-
-	.zerops {
-		svg {
-			height: auto;
-			width: 4rem;
-		}
-	}
-
-	.rss,
-	.rss:visited {
-		color: #ee802f;
-	}
-</style>

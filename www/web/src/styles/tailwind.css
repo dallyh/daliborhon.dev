@@ -5,7 +5,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-	--default-font-family: "Nunito Variable";
+	--default-font-family: "Nunito Variable", var(--font-sans);
 	--default-mono-font-family: "Fira Code Variable", var(--font-mono);
 }
 

@@ -51,6 +51,7 @@ import SocialLinks from "./SocialLinks.astro";
 		ele.innerHTML = `${display} CET`;
 		setTimeout(displayClock, 1000);
 	}
+	displayClock();
 
 	document.addEventListener("astro:page-load", displayClock);
 </script>

@@ -1,14 +1,25 @@
+<script>
+	declare global {
+		interface Window {
+			themeStorageKey: string;
+		}
+	}
+</script>
+
 <script is:inline>
 	// Itentionally inline to prevent FOUC
+	const storageKey = "theme-preference";
+	window.themeStorageKey = storageKey;
+
 	function setTheme(doc) {
-		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("theme-preference");
+		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem(storageKey);
 		const theme = storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
 		doc.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
 	}
 
 	setTheme(document);
 
-	document.addEventListener("astro:before-swap", (ev) => {
-		setTheme(ev.newDocument);
+	document.addEventListener("astro:before-swap", (e) => {
+		setTheme(e.newDocument);
 	});
 </script>

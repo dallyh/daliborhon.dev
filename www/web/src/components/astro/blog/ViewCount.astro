@@ -1,8 +1,6 @@
 ---
 /* Credits: https://www.thomasledoux.be/blog/using-server-islands-actions-view-counter */
-// Borked, see: https://github.com/withastro/astro/issues/12817
 import { PageView, count, db, eq } from "astro:db";
-import { m } from "@paraglide/messages";
 
 interface Props {
 	url: string;

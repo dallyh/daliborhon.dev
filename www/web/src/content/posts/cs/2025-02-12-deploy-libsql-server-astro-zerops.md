@@ -10,7 +10,7 @@ draft: false
 featured: true
 image: ../../../assets/content/blog/deploying-libsql-server-with-astro-on-zerops.png
 pubDate: 2025-02-25T22:26:34.396Z
-modDate: null
+modDate: 2025-03-15T20:00:13.059Z
 fmContentType: blog
 ---
 
@@ -169,11 +169,11 @@ Před spuštěním příkazu se ujistěte, že mááte v projektu Astro nastaven
 Po připojení do VPN přeneste schéma databáze do vzdálené databáze:
 
 ```sh
-npx astro db push --remote
+npm run astro db push --remote
 ```
 
-:::note
-Většina Astro projektů již má příkaz `astro` definován v souboru `package.json`. V [dokumentaci Astro DB](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) je uvedeno, že příkaz `push` spouštíme pomocí `npm` následovně: `npm run astro db push --remote`. Tento způsob však v některých případech nefunguje správně, protože `npm run` nepředává správně příznak `--remote`. Pokud nepoužíváte `npx` pro spuštění příkazů DB, měli byste příkaz spustit tímto způsobem: `npm run astro db push --- --remote`.
+:::note[Spouštění příkazů přes Powershell]
+Většina Astro projektů již má příkaz `astro` definován v souboru `package.json`. V [dokumentaci Astro DB](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) je uvedeno, že příkaz `push` spouštíme pomocí `npm` následovně: `npm run astro db push --remote`. V prostředí Powershellu to nefunguje správně, jelikož příznak `--remote` je tiše ignorován. Pokud spouštíte příkazy ze souboru `package.json` pomocí Powershellu, měli byste je spouštět takto: `npm run astro db push -- --remote` Více informací najdete v článku [this](https://www.lloydatkinson.net/posts/2022/powershell-npm-scripts-and-silently-dropped-arguments/).
 :::
 
 #### Naplnění databáze
@@ -181,7 +181,7 @@ Většina Astro projektů již má příkaz `astro` definován v souboru `packag
 Někdy je třeba naplnit (seed) databázi počátečními daty, pokud začínáte s čistou databází. To lze provést spuštěním následujícího příkazu:
 
 ```sh
-npx astro db execute ./db/seed.ts --remote
+npm run astro db execute ./db/seed.ts --remote
 ```
 
 Tento příkaz naplní databázi počátečními potřebnými daty spuštěním souboru `seed.ts`, který by měl obsahovat vámi definovaná data.

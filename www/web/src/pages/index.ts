@@ -10,10 +10,8 @@ function addDays(date: Date, days: number) {
 	return result;
 }
 
-const configCookie = cookieName;
-
 export const GET: APIRoute = ({ preferredLocale, redirect, cookies }) => {
-	const localeCookie = cookies.get(configCookie);
+	const localeCookie = cookies.get(cookieName);
 
 	if (localeCookie) {
 		return redirect(getRelativeLocaleUrl(localeCookie.value, "/"));
@@ -26,15 +24,10 @@ export const GET: APIRoute = ({ preferredLocale, redirect, cookies }) => {
 	const cookieOptions: AstroCookieSetOptions = { expires: addDays(new Date(), 30) };
 
 	if (localeSupported) {
-		if (preferredLocale === baseLocale) {
-			cookies.set(configCookie, baseLocale, cookieOptions);
-			return redirect(getRelativeLocaleUrl(baseLocale, "/"));
-		}
-
-		cookies.set(configCookie, preferredLocale!, cookieOptions);
+		cookies.set(cookieName, preferredLocale!, cookieOptions);
 		return redirect(getRelativeLocaleUrl(preferredLocale!, "/"));
 	}
 
-	cookies.set(configCookie, baseLocale, cookieOptions);
+	cookies.set(cookieName, baseLocale, cookieOptions);
 	return redirect(getRelativeLocaleUrl(baseLocale, "/"));
 };

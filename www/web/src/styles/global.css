@@ -1,3 +1,7 @@
+/*@view-transition {
+	navigation: auto;
+}*/
+
 :root {
 	color-scheme: light;
 	--header-height: calc(68px + 1rem);

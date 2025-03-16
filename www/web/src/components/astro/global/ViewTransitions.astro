@@ -1,110 +1,131 @@
 ---
-const { color = "var(--color-primary)", height = "2px", class: className = "loading-indicator", animationDuration = 300 } = Astro.props;
-
-const styles = `.${className} {
-  pointer-events: none;
-  background-color: ${color};
-  position: fixed;
-  z-index: 1031;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: ${height};
-  transition: transform ${animationDuration}ms ease-out, opacity ${animationDuration / 2}ms ${animationDuration / 2}ms ease-in;
-  transform: translate3d(0, 0, 0) scaleX(var(--progress, 0));
-  transform-origin: 0;
-}`;
+const settings = { color: "var(--color-primary)", className: "loading-indicator", animationDuration: 300 };
 ---
 
-<style set:html={styles}></style>
-<script is:inline define:vars={{ className, animationDuration }}>
+<style is:global>
+	.loading-indicator {
+		pointer-events: none;
+		background-color: var(--color-primary);
+		position: fixed;
+		z-index: 1031;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		transition:
+			transform var(--animation-duration) ease-out,
+			opacity var(--animation-duration) ease-in;
+		transform: translate3d(0, 0, 0) scaleX(var(--progress, 0));
+		transform-origin: 0;
+	}
+</style>
+
+<script>
+	declare global {
+		interface Window {
+			startTransition: () => void;
+		}
+	}
+	let isTransitioning = false;
+
+	function initTransitions() {
+		if (!document.startViewTransition) {
+			return;
+		}
+
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+		if (prefersReducedMotion.matches) {
+			return;
+		}
+
+		function startTransition() {
+			if (isTransitioning) return;
+			window.dispatchEvent(new CustomEvent("transition:start"));
+			isTransitioning = true;
+		}
+		window.startTransition = startTransition;
+
+		document.addEventListener("DOMContentLoaded", (e) => {
+			const links = document.querySelectorAll("a");
+
+			for (const link of links) {
+				if (link.dataset.disableTransition) return;
+				if (link.hash) continue;
+				if (link.hostname !== window.location.hostname) continue;
+
+				// Perform view transition if supported
+				link.addEventListener("click", (event) => {
+					startTransition();
+				});
+			}
+		});
+	}
+
+	initTransitions();
+</script>
+
+<script is:inline define:vars={{ className: settings.className, animationDuration: settings.animationDuration }}>
 	(() => {
-		let progress = 0.25;
-		let opacity = 0;
-		/** @type {number | undefined} */
+		if (!document.startViewTransition) {
+			return;
+		}
+
+		let defaultProgress = 0.25;
+		let progress = defaultProgress;
 		let trickleInterval = undefined;
-		/** @type {number | undefined} */
-		let isTransitioning = false;
 
 		const element = document.createElement("div");
 		element.classList.add(className);
 		element.ariaHidden = "true";
+		element.style.setProperty("--animation-duration", `${animationDuration}ms`);
 
-		/** @param {typeof progress} _progress */
 		const setProgress = (_progress) => {
-			console.log(_progress);
 			progress = _progress;
 			element.style.setProperty("--progress", String(progress));
 		};
-		/** @param {typeof opacity} _opacity */
+
 		const setOpacity = (_opacity) => {
-			opacity = _opacity;
-			element.style.setProperty("opacity", String(opacity));
+			element.style.setProperty("opacity", String(_opacity));
 		};
 		setOpacity(0);
 
 		document.addEventListener("DOMContentLoaded", () => {
 			document.body.prepend(element);
-			const links = document.querySelectorAll("a");
-
-			links.forEach((link) => {
-				link.addEventListener("click", (event) => {
-					// Skip if we're already transitioning
-					if (isTransitioning) return;
-
-					// Check if it's a same-origin navigation
-					if (link.hostname === window.location.hostname) {
-						// Prevent default navigation
-						event.preventDefault();
-
-						isTransitioning = true;
-						setOpacity(1);
-						trickleInterval = window.setInterval(() => {
-							setProgress(Math.min(progress + Math.random() * 0.03, 0.98));
-						}, animationDuration);
-
-						// Perform view transition if supported
-						if (document.startViewTransition) {
-							const transition = document.startViewTransition(() => {
-								// Navigate to the new page
-								window.location.href = link.href;
-							});
-
-							transition.finished.catch(() => {
-								setProgress(1);
-								setOpacity(0);
-								window.clearInterval(trickleInterval);
-								isTransitioning = false;
-
-								// Fallback navigation if transition fails
-								window.location.href = link.href;
-							});
-						} else {
-							// Fallback for browsers without View Transitions
-							window.location.href = link.href;
-						}
-					}
-				});
-			});
 		});
 
-		// Handle page events
-		window.addEventListener("pagereveal", (e) => {
-			if (e.viewTransition) {
-				document.body.prepend(element);
-				setOpacity(1);
-				setProgress(1);
-				document.addEventListener("DOMContentLoaded", () => {
-					window.setTimeout(() => {
-						setProgress(0.25);
-					}, animationDuration * 2);
+		window.addEventListener("transition:start", () => {
+			setOpacity(1);
+			trickleInterval = window.setInterval(() => {
+				setProgress(Math.min(progress + Math.random() * 0.03, 0.98));
+			}, animationDuration);
+		});
 
-					window.setTimeout(() => {
-						setOpacity(0);
-					}, animationDuration / 3);
-				});
-				isTransitioning = false;
+		window.addEventListener("pagereveal", (e) => {
+			if (!e.viewTransition) {
+				return;
 			}
+
+			document.body.prepend(element);
+			setOpacity(1);
+			setProgress(1);
+			document.addEventListener("DOMContentLoaded", () => {
+				window.setTimeout(() => {
+					setOpacity(0);
+				}, animationDuration / 2);
+
+				window.setTimeout(() => {
+					setProgress(defaultProgress);
+				}, animationDuration * 4);
+			});
 		});
 	})();
 </script>
+
+<!-- At bottom because code highlighting is broken after this block -->
+<style>
+	@media (prefers-reduced-motion: no-preference) {
+		@view-transition {
+			navigation: auto;
+		}
+	}
+</style>

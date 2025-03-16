@@ -9,8 +9,8 @@ import { m } from "@paraglide/messages";
 import { getPostsByTag } from "@utils/content";
 
 export const prerender = false;
-let search = Astro.url.searchParams.get("tag");
 
+let search = Astro.url.searchParams.get("tag");
 const locale = Astro.currentLocale!;
 
 const layoutProps = {

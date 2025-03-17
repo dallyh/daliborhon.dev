@@ -2,6 +2,8 @@
 const settings = { color: "var(--color-primary)", className: "loading-indicator", animationDuration: 300 };
 ---
 
+<meta name="transition-data" data-loading-anim-duration={settings.animationDuration} />
+
 <style is:global>
 	.loading-indicator {
 		pointer-events: none;
@@ -23,84 +25,131 @@ const settings = { color: "var(--color-primary)", className: "loading-indicator"
 <script>
 	declare global {
 		interface Window {
-			startTransition: () => void;
+			ViewTransitions: ViewTransitions;
 		}
 	}
-	let isTransitioning = false;
 
-	function initTransitions() {
-		if (!document.startViewTransition) {
-			return;
+	class ViewTransitions {
+		TRANSITIONS_START_EVENT = "transition:start";
+
+		supportsViewTransitions = this.supported();
+
+		private isTransitioning = false;
+
+		constructor() {
+			if (!document.startViewTransition) {
+				console.info("View transitions are not supported by the browser.");
+				return;
+			}
+			document.addEventListener("DOMContentLoaded", this.onLoad.bind(this));
 		}
 
-		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-		if (prefersReducedMotion.matches) {
-			return;
+		startTransition() {
+			if (this.isTransitioning) return;
+			window.dispatchEvent(new CustomEvent(this.TRANSITIONS_START_EVENT));
+			this.isTransitioning = true;
 		}
 
-		function startTransition() {
-			if (isTransitioning) return;
-			window.dispatchEvent(new CustomEvent("transition:start"));
-			isTransitioning = true;
-		}
-		window.startTransition = startTransition;
+		private supported() {
+			if (!document.startViewTransition) {
+				return false;
+			}
 
-		document.addEventListener("DOMContentLoaded", (e) => {
+			return true;
+		}
+
+		private shouldLinkTransition(link: HTMLAnchorElement) {
+			if (link.dataset.disableTransition) {
+				return false;
+			}
+
+			if (link.hash) {
+				return false;
+			}
+
+			if (link.hostname !== window.location.hostname) {
+				return false;
+			}
+		}
+
+		private async linkOnclickHandler() {
+			this.startTransition();
+		}
+
+		private onLoad() {
 			const links = document.querySelectorAll("a");
 
 			for (const link of links) {
-				if (link.dataset.disableTransition) return;
-				if (link.hash) continue;
-				if (link.hostname !== window.location.hostname) continue;
-
-				// Perform view transition if supported
-				link.addEventListener("click", (event) => {
-					startTransition();
-				});
+				if (this.shouldLinkTransition(link) === false) {
+					return;
+				}
+				link.addEventListener("click", this.linkOnclickHandler.bind(this));
 			}
-		});
+		}
 	}
-
-	initTransitions();
+	window.ViewTransitions = new ViewTransitions();
 </script>
 
-<script is:inline define:vars={{ className: settings.className, animationDuration: settings.animationDuration }}>
-	(() => {
+<script is:inline>
+	//@ts-check
+	function initLoadingIndicator() {
 		if (!document.startViewTransition) {
 			return;
 		}
 
-		let defaultProgress = 0.25;
+		const CLASSNAME_DATASET = "loadingClassname";
+		const ANIM_DURATION_DATASET = "loadingAnimDuration";
+		const defaultProgress = 0.25;
+
+		/** @type { HTMLMetaElement | null } */
+		const meta = document.head.querySelector("meta[name='transition-data']");
+		/** @type { string } */
+		const className = (meta && meta.dataset[CLASSNAME_DATASET]) ?? "loading-indicator";
+		/** @type { number } */
+		const animationDuration = Number((meta && meta.dataset[ANIM_DURATION_DATASET]) ?? 300);
+
 		let progress = defaultProgress;
-		let trickleInterval = undefined;
+		let element = document.createElement("div");
 
-		const element = document.createElement("div");
-		element.classList.add(className);
-		element.ariaHidden = "true";
-		element.style.setProperty("--animation-duration", `${animationDuration}ms`);
+		function setElementAttributes() {
+			element.classList.add(className);
+			element.ariaHidden = "true";
+			element.style.setProperty("--animation-duration", `${animationDuration}ms`);
+		}
+		setElementAttributes();
 
-		const setProgress = (_progress) => {
+		/** @param { number } _progress */
+		function setProgress(_progress) {
 			progress = _progress;
 			element.style.setProperty("--progress", String(progress));
-		};
+		}
 
-		const setOpacity = (_opacity) => {
+		/** @param { number } _opacity */
+		function setOpacity(_opacity) {
 			element.style.setProperty("opacity", String(_opacity));
-		};
+		}
 		setOpacity(0);
-
-		document.addEventListener("DOMContentLoaded", () => {
+		window.addEventListener("DOMContentLoaded", () => {
 			document.body.prepend(element);
 		});
 
 		window.addEventListener("transition:start", () => {
 			setOpacity(1);
-			trickleInterval = window.setInterval(() => {
+			window.setInterval(() => {
 				setProgress(Math.min(progress + Math.random() * 0.03, 0.98));
 			}, animationDuration);
 		});
 
-		window.addEventListener("pagereveal", (e) => {
+		/** @param {TransitionEvent} e */
+		function handleTransitionEnd(e) {
+			if (e.propertyName === "opacity") {
+				setProgress(defaultProgress);
+				element.removeEventListener("transitionend", handleTransitionEnd);
+			}
+		}
+
+		/** @param {PageRevealEvent} e */
+		async function pageRevealCallback(e) {
 			if (!e.viewTransition) {
 				return;
 			}
@@ -108,24 +157,32 @@ const settings = { color: "var(--color-primary)", className: "loading-indicator"
 			document.body.prepend(element);
 			setOpacity(1);
 			setProgress(1);
-			document.addEventListener("DOMContentLoaded", () => {
+
+			document.addEventListener("DOMContentLoaded", async () => {
 				window.setTimeout(() => {
 					setOpacity(0);
-				}, animationDuration / 2);
+				}, 50);
 
-				window.setTimeout(() => {
-					setProgress(defaultProgress);
-				}, animationDuration * 4);
+				element.addEventListener("transitionend", handleTransitionEnd);
 			});
-		});
-	})();
+		}
+
+		//@ts-ignore this is badly typed in TypeScript, it is "Event", shold be "PageRevealEvent"
+		window.addEventListener("pagereveal", pageRevealCallback);
+	}
+	initLoadingIndicator();
 </script>
 
-<!-- At bottom because code highlighting is broken after this block -->
-<style>
+<!-- Has to be at the end, because code highlighting does not work properly after this block -->
+<style is:inline>
 	@media (prefers-reduced-motion: no-preference) {
 		@view-transition {
 			navigation: auto;
+		}
+
+		:root::view-transition-old(#),
+		:root::view-transition-new(*) {
+			animation-duration: 400ms;
 		}
 	}
 </style>

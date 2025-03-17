@@ -87,7 +87,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 					cookie.set(cookieName, lang, { expires: 30 });
 					const next = e.currentTarget.value + window.location.search;
 					this.logger.info("Navigating to: " + next);
-					window.startTransition();
+					window.ViewTransitions.startTransition();
 					window.location.href = next;
 				}
 			});

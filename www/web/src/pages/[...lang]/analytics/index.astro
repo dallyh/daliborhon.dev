@@ -17,6 +17,6 @@ const locale = Astro.currentLocale as Locale;
 		<BreadCrumbsItem currentPage label="Analytics" />
 	</Fragment>
 	<Section sectionTitle={m.common__page_views()} isFirstSection id="pageViews">
-		<PageViewsComponent locale={locale} client:load transition:persist />
+		<PageViewsComponent locale={locale} client:load />
 	</Section>
 </PageLayout>

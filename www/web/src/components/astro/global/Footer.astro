@@ -1,7 +1,8 @@
 ---
 import { APP_VERSION_NAME } from "astro:env/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import UptimeStatus from "@components/react/UptimeStatus";
+import UptimeStatus from "@components/astro/global/UptimeStatus.astro";
+import UptimeStatusFallback from "@components/astro/global/UptimeStatusFallback.astro";
 import { m } from "@paraglide/messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
@@ -15,7 +16,9 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 	<div class="divider"></div>
 	<footer class="footer mb-4 flex w-full flex-col items-center justify-center rounded-xl p-4 md:flex-row md:justify-between">
 		<nav class="footer-start flex flex-wrap items-center justify-center gap-4 md:place-self-center md:justify-self-end">
-			<UptimeStatus client:visible />
+			<UptimeStatus server:defer>
+				<UptimeStatusFallback slot="fallback" />
+			</UptimeStatus>
 			<a class="link text-amber-500 no-underline hover:no-underline" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
 				<i class="fas fa-lg fa-square-rss"></i>
 			</a>

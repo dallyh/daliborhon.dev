@@ -74,6 +74,7 @@
         "@astrojs/markdown-remark": "^6.3.0",
         "@astrojs/rss": "^4.0.11",
         "@astrojs/sitemap": "^3.2.1",
+        "@hcaptcha/types": "^1.0.4",
         "@iconify-json/bi": "^1.2.2",
         "@iconify-json/devicon": "^1.2.20",
         "@octokit/types": "^13.8.0",

@@ -53,6 +53,31 @@
 		@apply font-bold;
 	}
 
+	.validator {
+		&.invalid,
+		&:has(.invalid) {
+			--input-color: var(--color-error);
+		}
+	}
+
+	.validator {
+		&.invalid,
+		&:has(.invalid) {
+			& ~ .validator-hint {
+				visibility: visible;
+				display: block;
+				color: var(--color-error);
+			}
+		}
+	}
+
+	.validator {
+		&.valid,
+		&:has(.valid) {
+			--input-color: var(--color-success);
+		}
+	}
+
 	.menu {
 		.dropdown-content {
 			margin-top: 0; /* Fixes hoverable dropdowns, introduced somewhere between daisyUI betas */

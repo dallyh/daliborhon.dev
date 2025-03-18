@@ -177,6 +177,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.2.1
         version: 3.2.1
+      '@hcaptcha/types':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@iconify-json/bi':
         specifier: ^1.2.2
         version: 1.2.2
@@ -733,6 +736,9 @@ packages:
     peerDependencies:
       react: '>= 16.3.0'
       react-dom: '>= 16.3.0'
+
+  '@hcaptcha/types@1.0.4':
+    resolution: {integrity: sha512-4CBrdr9DFC7sYZPRvLol82UVZVne8B2skBGfMDUqPC6q9vzHMwv/cNxXW44EIa6DaFDr+EWNSnKJpHxWr7Q42Q==}
 
   '@iconify-json/bi@1.2.2':
     resolution: {integrity: sha512-f/Wm+RTdBosw3cI/gmg5uSFmdumkw2thUk4qVFS56jTerdal6wqWnWAbRTSJJ/vhH9/y16pRKnvE8F2+M23dzw==}
@@ -5000,6 +5006,8 @@ snapshots:
       '@hcaptcha/loader': 2.0.0
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
+
+  '@hcaptcha/types@1.0.4': {}
 
   '@iconify-json/bi@1.2.2':
     dependencies:

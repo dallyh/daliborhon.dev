@@ -152,4 +152,34 @@
 			}
 		}
 	}
+
+	.has-icon {
+		svg {
+			@apply inline-block align-middle;
+		}
+
+		&.icon-inline {
+			svg {
+				@apply mb-1 h-5 w-5;
+			}
+		}
+
+		&.icon-no-fix {
+			svg {
+				margin-bottom: unset;
+			}
+		}
+
+		&.icon-left {
+			svg {
+				@apply mr-1;
+			}
+		}
+
+		&.icon-right {
+			svg {
+				@apply ml-1;
+			}
+		}
+	}
 }

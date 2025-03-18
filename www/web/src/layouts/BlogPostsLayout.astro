@@ -11,6 +11,7 @@ import Section from "@components/astro/common/Section.astro";
 import MainLayout from "@layouts/MainLayout.astro";
 import { m } from "@paraglide/messages";
 import type { Page } from "astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
 	page: Page<CollectionEntry<"posts">>;
@@ -48,7 +49,7 @@ const layoutProps = {
 									title={m.common__prev_page()}
 									aria-label={m.common__prev_page()}
 								>
-									<i class="fa-solid fa-arrow-left" />
+									<Icon name="heroicons:arrow-small-left-solid" size="18" />
 								</a>
 								<ul class="join">
 									{Array.from({ length: page.lastPage }, (_, index) => {
@@ -75,7 +76,7 @@ const layoutProps = {
 									title={m.common__next_page()}
 									aria-label={m.common__next_page()}
 								>
-									<i class="fa-solid fa-arrow-right" />
+									<Icon name="heroicons:arrow-small-right-solid" size="18" />
 								</a>
 							</nav>
 						</div>

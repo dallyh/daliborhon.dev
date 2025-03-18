@@ -6,6 +6,7 @@ import PageViewsComponent from "@components/react/PageViews/PageViews";
 import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
+import { Icon } from "astro-icon/components";
 
 export { getStaticPaths } from "@utils/i18n";
 
@@ -17,6 +18,11 @@ const locale = Astro.currentLocale as Locale;
 		<BreadCrumbsItem currentPage label="Analytics" />
 	</Fragment>
 	<Section sectionTitle={m.common__page_views()} isFirstSection id="pageViews">
-		<PageViewsComponent locale={locale} client:load />
+		<PageViewsComponent locale={locale} client:load>
+			<Icon name="heroicons:arrow-small-right-solid" size="18" slot="arrowRightIcon" />
+			<Icon name="heroicons:arrow-small-right-solid" size="18" slot="arrowLeftIcon" />
+			<Icon name="heroicons:chevron-double-right-solid" size="18" slot="forwardIcon"  />
+			<Icon name="heroicons:chevron-double-left-solid" size="18" slot="backwardIcon"  />
+		</PageViewsComponent>
 	</Section>
 </PageLayout>

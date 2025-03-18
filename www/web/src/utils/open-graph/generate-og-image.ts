@@ -2,10 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import type { Locale } from "@paraglide/runtime";
-import { Resvg } from "@resvg/resvg-js";
 import satori, { type SatoriOptions } from "satori";
 import postOgImage from "./templates/post";
 import siteOgImage from "./templates/site";
+import sharp from "sharp";
 
 const getFonts = async () => {
 	const fontsFolder = "./src/assets/fonts";
@@ -40,18 +40,17 @@ const options: SatoriOptions = {
 	],
 };
 
-function svgBufferToPngBuffer(svg: string) {
-	const resvg = new Resvg(svg);
-	const pngData = resvg.render();
-	return pngData.asPng();
+async function svgBufferToPngBuffer(svg: string) {
+	const buffer = await sharp(Buffer.from(svg, "utf-8")).png({ quality: 45 }).toBuffer();
+	return buffer;
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"posts">, locale: string) {
 	const svg = await satori(await postOgImage(post, locale as Locale), options);
-	return svgBufferToPngBuffer(svg);
+	return await svgBufferToPngBuffer(svg);
 }
 
 export async function generateOgImageForSite() {
 	const svg = await satori(siteOgImage(), options);
-	return svgBufferToPngBuffer(svg);
+	return await svgBufferToPngBuffer(svg);
 }

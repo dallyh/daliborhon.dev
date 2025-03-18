@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
 interface Props {
@@ -11,8 +12,6 @@ const { url, urlDescription } = Astro.props;
 const locale = Astro.currentLocale!;
 ---
 
-<div class="mt-8 text-center">
-	<a class="inline-flex gap-1" href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}>
-		<span>{urlDescription}</span><span class="mt-[2px]"><i class="fa-solid fa-arrow-right"></i></span>
-	</a>
+<div class="mt-8 text-center has-icon icon-left">
+	<a class="has-icon" href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}> <span>{urlDescription}</span><Icon class="ml-2" name="heroicons:arrow-long-right" /></a>
 </div>

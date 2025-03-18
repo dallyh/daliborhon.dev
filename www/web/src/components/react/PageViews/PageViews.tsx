@@ -2,9 +2,18 @@
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
 import UrlChart from "./UrlChart";
 import ViewChart from "./ViewChart";
+
+interface Props {
+	locale: Locale;
+	/* There needs to be a better way to type this */
+	backwardIcon?: ReactNode;
+	forwardIcon?: ReactNode;
+	arrowRightIcon?: ReactNode;
+	arrowLeftIcon?: ReactNode;
+}
 
 const type = ["page-views", "per-url"] as const;
 type Mode = (typeof type)[number];
@@ -12,7 +21,7 @@ const isValidMode = (x: any): x is Mode => type.includes(x);
 
 const queryClient = new QueryClient();
 
-export default function PageViews({ locale }: { locale: Locale }) {
+export default function PageViews(props: Props) {
 	const [mode, setModeState] = useState<Mode>("page-views");
 	const [searchLocalState, setSearchLocalState] = useState("");
 	const [search, setSearch] = useState("");
@@ -116,26 +125,26 @@ export default function PageViews({ locale }: { locale: Locale }) {
 			)}
 
 			{!isPending && data?.viewsPerUrl && <UrlChart data={data.viewsPerUrl} />}
-			{!isPending && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={locale} />}
+			{!isPending && data?.pageViews && <ViewChart data={data.pageViews.rows} locale={props.locale} />}
 
 			{data?.totalPages !== null && data?.totalPages > 0 && (
 				<div className="join mt-4 flex flex-wrap items-center">
 					{offset === 0 ? (
 						<>
 							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__last()} aria-label={m.common__last()}>
-								<i className="fa-solid fa-backward"></i>
+								{props.backwardIcon}
 							</button>
 							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__prev_page()} aria-label={m.common__prev_page()}>
-								<i className="fa-solid fa-arrow-left" />
+								{props.arrowLeftIcon}
 							</button>
 						</>
 					) : (
 						<>
 							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(1)} title={m.common__last()} aria-label={m.common__last()}>
-								<i className="fa-solid fa-backward"></i>
+								{props.backwardIcon}
 							</button>
 							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(page - 1)} title={m.common__prev_page()} aria-label={m.common__prev_page()}>
-								<i className="fa-solid fa-arrow-left" />
+								{props.arrowLeftIcon}
 							</button>
 						</>
 					)}
@@ -145,7 +154,7 @@ export default function PageViews({ locale }: { locale: Locale }) {
 					{page === data.totalPages ? (
 						<>
 							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__next_page()} aria-label={m.common__next_page()}>
-								<i className="fa-solid fa-arrow-right" />
+								{props.arrowRightIcon}
 							</button>
 							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__last()} aria-label={m.common__last()}>
 								<i className="fa-solid fa-forward"></i>
@@ -154,10 +163,10 @@ export default function PageViews({ locale }: { locale: Locale }) {
 					) : (
 						<>
 							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(page + 1)} title={m.common__next_page()} aria-label={m.common__next_page()}>
-								<i className="fa-solid fa-arrow-right" />
+								{props.arrowRightIcon}
 							</button>
 							<button className="join-item btn btn-sm btn-outline btn-primary" onClick={() => setPage(data.totalPages)} title={m.common__last()} aria-label={m.common__last()}>
-								<i className="fa-solid fa-forward"></i>
+								{props.forwardIcon}
 							</button>
 						</>
 					)}

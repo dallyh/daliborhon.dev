@@ -12,7 +12,7 @@ const locale = Astro.currentLocale!;
 const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
 ---
 
-<div id="page-footer" class="text-base-content/80">
+<div id="page-footer">
 	<div class="divider"></div>
 	<footer class="footer mb-4 flex w-full flex-col items-center justify-center rounded-xl p-4 md:flex-row md:justify-between">
 		<nav class="footer-start flex flex-wrap items-center justify-center gap-4 md:place-self-center md:justify-self-end">
@@ -20,10 +20,10 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 				<UptimeStatusFallback slot="fallback" />
 			</UptimeStatus>
 			<a class="link text-amber-500 no-underline hover:no-underline" href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/rss.xml"))} title="RSS" aria-label="rss" class="rss">
-				<i class="fas fa-lg fa-square-rss"></i>
+				<Icon name="heroicons:rss-solid" size="18" />
 			</a>
 			<a class="link text-primary/80 no-underline hover:no-underline" href={getRelativeLocaleUrl(locale, "/analytics")}>
-				<i class="fas fa-lg fa-square-poll-vertical"></i>
+				<Icon name="heroicons:chart-bar-solid" size="18" />
 			</a>
 			<a class="astro" href="https://astro.build" title={m.footer__astro_a_label()} class="astro" target="_blank">
 				<Icon name="astro-icon-dark" width="55px" height="20px" />

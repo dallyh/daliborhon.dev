@@ -101,12 +101,9 @@ export default defineConfig({
 				rehypeExtenalLinks,
 				{
 					content: {
-						type: "element",
-						tagName: "i",
-						properties: { className: ["fa-solid", "fa-arrow-up-right-from-square"] },
-						children: [],
+						type: "text",
+						value: " ↗",
 					},
-					contentProperties: { className: ["external-link-icon"] },
 					target: "_blank",
 					rel: "nofollow noopener noreferrer",
 				},

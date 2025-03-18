@@ -19,6 +19,8 @@ import type { Locale } from "@paraglide/runtime";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
 import MainLayout from "./MainLayout.astro";
+import { imageMetadata } from "astro/assets/utils";
+import { Icon } from "astro-icon/components";
 
 interface Props {
 	post: CollectionEntry<"posts">;
@@ -84,22 +86,16 @@ const searchProps = {
 					<div class="flex flex-col gap-1">
 						<h1 class="mb-3 text-3xl font-bold">{title}</h1>
 						<div class="ml-1 flex flex-col gap-4">
-							<p>
-								<span class="mr-1">
-									<i class="fa-regular fa-calendar"></i>
-								</span>
+							<p class="has-icon icon-left icon-inline">
+								<span><Icon name="heroicons:calendar-solid" /></span>
 								<span><FormattedDate {pubDate} {modDate} {locale} /></span>
 							</p>
-							<p>
-								<span class="mr-1">
-									<i class="fa-regular fa-clock"></i>
-								</span>
+							<p class="has-icon icon-left icon-inline">
+								<span><Icon name="heroicons:clock" /></span>
 								<span>{readingTime} {m.common__minutes()}</span>
 							</p>
-							<p>
-								<span class="mr-1">
-									<i class="fa-regular fa-eye"></i>
-								</span>
+							<p class="has-icon icon-left icon-inline">
+								<span><Icon name="heroicons:eye" /></span>
 								<span class="inline-flex">
 									<span class="mr-1">{m.common__view_count()}:</span>
 									<ViewCount server:defer url={Astro.url.pathname}>
@@ -111,8 +107,8 @@ const searchProps = {
 						</div>
 					</div>
 					<div class="max-w-[340px] self-center p-1 md:self-auto md:p-0">
-						{/*@ts-ignore this works*/}
-						<Image class="rounded-lg" src={image} width={340} inferSize title={title} alt={title} loading="eager" />
+						{typeof image === "string" && <Image class="rounded-lg" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
+						{typeof image === "object" && <Image class="rounded-lg" src={image} width={340} title={title} alt={title} loading="eager" />}
 					</div>
 				</div>
 				<div class="divider"></div>

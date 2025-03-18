@@ -5,11 +5,11 @@ tags:
     - astro
 locale: en
 featured: true
-image: https://astro.build/og/astro.jpg
 pubDate: 2025-02-11T18:16:51.242Z
 modDate: ""
 fmContentType: blog
 draft: true
+image: ../../../assets/content/blog/typography-example/og-example.png
 ---
 
 # H1 For example

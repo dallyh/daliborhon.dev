@@ -1,6 +1,5 @@
 ---
 import { m } from "@paraglide/messages";
-import "@pagefind/default-ui/css/ui.css";
 ---
 
 <site-search>
@@ -27,6 +26,18 @@ import "@pagefind/default-ui/css/ui.css";
 		logger = new Logger("search-modal");
 		pageFindInstance: any = null;
 		dialog = this.querySelector("dialog");
+		stylesheetAdded = false;
+
+		async addStylesheet() {
+			if (this.stylesheetAdded) {
+				return;
+			}
+
+			const styleEle = document.createElement("style");
+			const style = await import("@pagefind/default-ui/css/ui.css?raw");
+			styleEle.innerHTML = `${style.default}`;
+			document.head.prepend(styleEle);
+		}
 
 		connectedCallback() {
 			const closeBtn = this.querySelector("[data-close-modal]")!;
@@ -71,7 +82,8 @@ import "@pagefind/default-ui/css/ui.css";
 			}
 		}
 
-		openModal(event?: Event) {
+		async openModal(event?: Event) {
+			await this.addStylesheet();
 			this.dialog?.showModal();
 			document.documentElement.toggleAttribute("data-search-modal-open", true);
 			this.querySelector("input")?.focus();

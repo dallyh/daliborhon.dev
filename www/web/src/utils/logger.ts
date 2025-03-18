@@ -5,7 +5,7 @@ export type LoggerLevel = "debug" | "info" | "warn" | "error";
 
 export class Logger {
 	name: string;
-	isDev = false;
+	isDev = import.meta.env.DEV;
 
 	#dateTimeFormat = new Intl.DateTimeFormat([], {
 		hour: "2-digit",
@@ -14,9 +14,8 @@ export class Logger {
 		hour12: false,
 	});
 
-	constructor(name: string, isDev: boolean = false) {
+	constructor(name: string) {
 		this.name = name;
-		this.isDev = isDev;
 	}
 
 	info(message: string) {

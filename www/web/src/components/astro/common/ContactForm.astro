@@ -1,5 +1,6 @@
 ---
 import { m } from "@paraglide/messages";
+import { Icon } from "astro-icon/components";
 import { HCAPTCHA_KEY } from "astro:env/client";
 
 const locale = Astro.currentLocale;
@@ -18,7 +19,7 @@ const locale = Astro.currentLocale;
 					</label>
 					<label class="input validator skeleton w-full min-w-0">
 						<span>
-							<i class="fas fa-user"></i>
+							<Icon name="heroicons:user-solid" />
 						</span>
 						<input data-validate id="full_name" name="name" aria-describedby="nameError" type="text" placeholder={m.contact__full_name_placeholder()} autocomplete="false" required maxlength="80" />
 					</label>
@@ -32,7 +33,7 @@ const locale = Astro.currentLocale;
 					</label>
 					<label class="input validator skeleton w-full">
 						<span>
-							<i class="fas fa-envelope"></i>
+							<Icon name="heroicons:envelope-solid" />
 						</span>
 						<input
 							data-validate

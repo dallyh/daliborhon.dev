@@ -1,19 +1,19 @@
 ---
 import { getAbsoluteLocaleUrl } from "astro:i18n";
-import ThemeProvider from "@components/astro/global/ThemeProvider.astro";
+import ThemeProvider from "@components/astro/common/ThemeProvider.astro";
 import { m } from "@paraglide/messages";
 import { removeTrailingSlash } from "@utils";
 import "../styles/fonts.css";
 import "../styles/tailwind.css";
 import "../styles/global.css";
 import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astro";
-import SearchModal from "@components/astro/global/SearchModal.astro";
-import ToastProvider from "@components/astro/global/ToastProvider.astro";
+import SearchModal from "@components/astro/common/SearchModal.astro";
+import ToastProvider from "@components/astro/common/ToastProvider.astro";
 import firaLatinExt from "@fontsource-variable/fira-code/files/fira-code-latin-ext-wght-normal.woff2";
 import firaLatin from "@fontsource-variable/fira-code/files/fira-code-latin-wght-normal.woff2";
 import nunitoLatinExt from "@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2";
 import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2";
-import ViewTransitions from "@components/astro/global/ViewTransitions.astro";
+import ViewTransitions from "@components/astro/common/ViewTransitions.astro";
 
 export interface Props {
 	title?: string;

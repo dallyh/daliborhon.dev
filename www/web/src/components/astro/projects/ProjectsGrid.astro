@@ -1,9 +1,9 @@
 ---
-import { getEntries, type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getEntries } from "astro:content";
 import AllEntriesUrl from "@components/astro/common/AllEntriesUrl.astro";
 import { m } from "@paraglide/messages";
-import ProjectCard from "./ProjectCard.astro";
 import { githubRestClient } from "@services/github/githubRestClient";
+import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
 	projects: CollectionEntry<"projects">[];

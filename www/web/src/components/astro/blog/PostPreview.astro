@@ -6,8 +6,8 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostImageUrl, getBlogPostUrl } from "@utils/content";
-import TagList from "./TagList.astro";
 import { Icon } from "astro-icon/components";
+import TagList from "./TagList.astro";
 
 interface Props {
 	post: CollectionEntry<"posts">;

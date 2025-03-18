@@ -18,9 +18,9 @@ import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
-import MainLayout from "./MainLayout.astro";
-import { imageMetadata } from "astro/assets/utils";
 import { Icon } from "astro-icon/components";
+import { imageMetadata } from "astro/assets/utils";
+import MainLayout from "./MainLayout.astro";
 
 interface Props {
 	post: CollectionEntry<"posts">;

@@ -3,9 +3,9 @@ import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import type { Locale } from "@paraglide/runtime";
 import satori, { type SatoriOptions } from "satori";
+import sharp from "sharp";
 import postOgImage from "./templates/post";
 import siteOgImage from "./templates/site";
-import sharp from "sharp";
 
 const getFonts = async () => {
 	const fontsFolder = "./src/assets/fonts";

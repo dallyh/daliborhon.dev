@@ -2,7 +2,7 @@
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
-import { Fragment, useEffect, useState, type ReactNode } from "react";
+import { Fragment, type ReactNode, useEffect, useState } from "react";
 import UrlChart from "./UrlChart";
 import ViewChart from "./ViewChart";
 

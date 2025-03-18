@@ -79,7 +79,7 @@ const locale = Astro.currentLocale;
 					</div>
 					<p class="mb-4 text-sm">{m.contact__submit_success()}</p>
 				</div>
-				<div id="errorResult" style="display:none;" class="flex hidden flex-col items-center justify-center gap-2">
+				<div id="errorResult" class="flex hidden flex-col items-center justify-center gap-2">
 					<div class="text-error flex items-center">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" class="mr-2 h-6 w-6">
 							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
@@ -188,14 +188,20 @@ const locale = Astro.currentLocale;
 			this.submitButton.querySelector("span")?.classList.toggle("hidden");
 		}
 
-		error(log?: unknown) {
+		error(msg?: string, log?: unknown) {
 			logger.error("An error occured: " + JSON.stringify(log));
+
+			if (msg) {
+				this.showErrorMessage(msg);
+				return;
+			}
+
 			this.errorResult.classList.remove("hidden");
 			this.successResult.classList.add("hidden");
 			this.errorMessage.classList.add("hidden");
 		}
 
-		inputError(msg: string) {
+		showErrorMessage(msg: string) {
 			this.errorMessage.innerHTML = msg;
 			this.errorMessage.classList.remove("hidden");
 			this.successResult.classList.add("hidden");
@@ -204,6 +210,7 @@ const locale = Astro.currentLocale;
 		resetResults() {
 			this.successResult.classList.add("hidden");
 			this.errorResult.classList.add("hidden");
+			this.errorResult.innerHTML = "";
 			this.errorMessage.classList.add("hidden");
 		}
 
@@ -220,7 +227,7 @@ const locale = Astro.currentLocale;
 
 		async onClick() {
 			if (this.checkValidity() === false) {
-				this.inputError(m.contact__error_correct_fields());
+				this.showErrorMessage(m.contact__error_correct_fields());
 				return;
 			}
 
@@ -228,13 +235,15 @@ const locale = Astro.currentLocale;
 
 			try {
 				const res = await (hcaptcha.execute({ async: true }) as Promise<HCaptchaResponse>);
+				console.log(res);
+
 				if (res.response) {
 					await this.onSubmit(res);
 				} else {
-					this.error(res);
+					this.error(undefined, res);
 				}
 			} catch (err) {
-				this.error(err);
+				this.error(m.contact__error(), err);
 			} finally {
 				this.toggleButton();
 			}
@@ -251,7 +260,7 @@ const locale = Astro.currentLocale;
 			const { error } = await actions.contactForm(formData);
 
 			if (isInputError(error)) {
-				this.inputError(m.contact__error_correct_fields());
+				this.showErrorMessage(m.contact__error_correct_fields());
 				return;
 			}
 

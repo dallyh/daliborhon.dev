@@ -1,5 +1,5 @@
-import { m } from "@paraglide/messages";
 // Adapted from: https://www.thomasledoux.be/blog/basic-analytics-vercel-postgres-astro
+import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { QueryClient, keepPreviousData, useQuery } from "@tanstack/react-query";
 import { Fragment, useEffect, useState } from "react";

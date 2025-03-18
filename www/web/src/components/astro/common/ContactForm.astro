@@ -16,13 +16,13 @@ const locale = Astro.currentLocale;
 					<label for="full_name" class="fieldset-label">
 						{m.contact__full_name_title()}
 					</label>
-					<label class="input validator w-full min-w-0">
+					<label class="input validator skeleton w-full min-w-0">
 						<span>
 							<i class="fas fa-user"></i>
 						</span>
 						<input data-validate id="full_name" name="name" aria-describedby="nameError" type="text" placeholder={m.contact__full_name_placeholder()} autocomplete="false" required maxlength="80" />
 					</label>
-					<p id="nameError" class="validator-hint text-error hidden">{m.contact__error_empty_field()}</p>
+					<p id="nameError" class="validator-hint text-error">{m.contact__error_empty_field()}</p>
 				</div>
 
 				{/* Email field */}
@@ -30,7 +30,7 @@ const locale = Astro.currentLocale;
 					<label for="email_address" class="fieldset-label">
 						{m.contact__email_title()}
 					</label>
-					<label class="input validator w-full">
+					<label class="input validator skeleton w-full">
 						<span>
 							<i class="fas fa-envelope"></i>
 						</span>
@@ -46,7 +46,7 @@ const locale = Astro.currentLocale;
 							class="max-w-none"
 						/>
 					</label>
-					<p id="emailError" class="validator-hint text-error hidden">{m.contact__error_format_email()}</p>
+					<p id="emailError" class="validator-hint text-error">{m.contact__error_format_email()}</p>
 				</div>
 
 				{/* Message field */}
@@ -61,9 +61,9 @@ const locale = Astro.currentLocale;
 						aria-describedby="messageError"
 						rows={8}
 						placeholder={m.contact__msg_placeholder()}
-						class="textarea validator textarea-bordered w-full"
+						class="textarea validator textarea-bordered skeleton w-full"
 						required></textarea>
-					<p id="messageError" class="validator-hint text-error hidden">{m.contact__error_empty_field()}</p>
+					<p id="messageError" class="validator-hint text-error">{m.contact__error_empty_field()}</p>
 				</div>
 			</div>
 			<div id="result" class="mt-3 text-center">
@@ -92,9 +92,9 @@ const locale = Astro.currentLocale;
 					<p class="mb-4 text-sm">{m.contact__submit_error_try_again()}</p>
 				</div>
 			</div>
-			<div class="mt-4 flex justify-end">
-				<button id="btnSubmit" type="button" class="btn btn-primary btn-outline self-end" disabled>
-					<span class="loading loading-spinner"></span>
+			<div class="mt-4 flex justify-end gap-4">
+				<button id="btnSubmit" type="button" class="btn btn-primary btn-outline skeleton self-end">
+					<span class="loading loading-spinner hidden"></span>
 					{m.common__submit_btn()}
 				</button>
 			</div>
@@ -110,7 +110,7 @@ const locale = Astro.currentLocale;
 		}
 	};
 </script>
-<script is:inline src="https://js.hcaptcha.com/1/api.js?hl=en&onload=captchaInit&render=explicit&recaptchacompat=off" defer></script>
+<script is:inline src={`https://js.hcaptcha.com/1/api.js?hl=${locale}&onload=captchaInit&render=explicit&recaptchacompat=off`} defer></script>
 
 <script>
 	import { m } from "@paraglide/messages";
@@ -134,20 +134,30 @@ const locale = Astro.currentLocale;
 			});
 
 			this.inputs.forEach((i) => {
-				i.addEventListener("focusout", (e) => {
-					if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-						if (e.target.validity.valid === false) {
-							e.target.classList.add("invalid");
-							e.target.classList.remove("valid");
-						} else {
-							e.target.classList.remove("invalid");
-							e.target.classList.add("valid");
-						}
-					}
-				});
+				i.addEventListener("focusout", this.onInputLeave.bind(this));
 			});
 
-			this.toggleButton();
+			this.onLoad();
+		}
+
+		onInputLeave(e: Event) {
+			if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+				if (e.target.validity.valid === false) {
+					e.target.classList.add("invalid");
+					e.target.classList.remove("valid");
+				} else {
+					e.target.classList.remove("invalid");
+					e.target.classList.add("valid");
+				}
+			}
+		}
+
+		onLoad() {
+			const skeletons = this.querySelectorAll(".skeleton");
+
+			skeletons.forEach((e) => {
+				e.classList.remove("skeleton");
+			});
 		}
 
 		checkValidity() {
@@ -165,7 +175,7 @@ const locale = Astro.currentLocale;
 			return valid;
 		}
 
-		reset() {
+		resetForm() {
 			this.form.reset();
 			this.inputs.forEach((e) => {
 				e.classList.remove("invalid");
@@ -191,14 +201,20 @@ const locale = Astro.currentLocale;
 			this.successResult.classList.add("hidden");
 		}
 
+		resetResults() {
+			this.successResult.classList.add("hidden");
+			this.errorResult.classList.add("hidden");
+			this.errorMessage.classList.add("hidden");
+		}
+
 		success() {
 			this.successResult.classList.remove("hidden");
 			this.errorResult.classList.add("hidden");
 			this.errorMessage.classList.add("hidden");
-			this.reset();
+			this.resetForm();
 
 			window.setTimeout(() => {
-				this.successResult.classList.add("hidden");
+				this.resetResults();
 			}, 5000);
 		}
 
@@ -250,3 +266,36 @@ const locale = Astro.currentLocale;
 
 	customElements.define("contact-form", ContactForm);
 </script>
+
+<style>
+	.validator-hint {
+		margin-top: 0.25rem;
+		opacity: 0;
+		transition: opacity 300ms ease-in-out;
+	}
+
+	.validator {
+		&.invalid,
+		&:has(.invalid) {
+			& ~ .validator-hint {
+				opacity: 1;
+			}
+		}
+	}
+
+	#errorMessage,
+	#successResult,
+	#errorResult {
+		transition:
+			opacity 300ms ease-in-out,
+			display 300ms ease-in-out allow-discrete;
+	}
+
+	@starting-style {
+		#errorMessage,
+		#successResult,
+		#errorResult {
+			opacity: 0;
+		}
+	}
+</style>

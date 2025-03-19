@@ -12,8 +12,8 @@ const getFonts = async () => {
 	const root = process.cwd();
 	const fontsPath = path.join(root, fontsFolder);
 
-	const fontFileRegular = fs.readFileSync(path.join(fontsPath, "IBMPlexMono-Regular.ttf"));
-	const fontFileBold = fs.readFileSync(path.join(fontsPath, "IBMPlexMono-Medium.ttf"));
+	const fontFileRegular = fs.readFileSync(path.join(fontsPath, "Nunito-Regular.ttf"));
+	const fontFileBold = fs.readFileSync(path.join(fontsPath, "Nunito-Medium.ttf"));
 
 	return { fontFileRegular, fontFileBold };
 };
@@ -26,13 +26,13 @@ const options: SatoriOptions = {
 	embedFont: true,
 	fonts: [
 		{
-			name: "IBM Plex Mono",
+			name: "Nunito Regular",
 			data: fontFileRegular,
 			weight: 400,
 			style: "normal",
 		},
 		{
-			name: "IBM Plex Mono",
+			name: "Nunito Medium",
 			data: fontFileBold,
 			weight: 600,
 			style: "normal",

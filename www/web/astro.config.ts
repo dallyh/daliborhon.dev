@@ -100,9 +100,8 @@ export default defineConfig({
 			[
 				rehypeExtenalLinks,
 				{
-					content: {
-						type: "text",
-						value: " ↗",
+					properties: {
+						className: ["external"],
 					},
 					target: "_blank",
 					rel: "nofollow noopener noreferrer",

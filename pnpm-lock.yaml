@@ -44,9 +44,6 @@ importers:
       '@astrojs/react':
         specifier: ^4.2.1
         version: 4.2.1(@types/node@22.13.5)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(yaml@2.7.0)
-      '@fontsource-variable/fira-code':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@fontsource-variable/nunito':
         specifier: 5.2.5
         version: 5.2.5
@@ -709,9 +706,6 @@ packages:
 
   '@foliojs-fork/restructure@2.0.2':
     resolution: {integrity: sha512-59SgoZ3EXbkfSX7b63tsou/SDGzwUEK6MuB5sKqgVK1/XE0fxmpsOb9DQI8LXW3KfGnAjImCGhhEb7uPPAUVNA==}
-
-  '@fontsource-variable/fira-code@5.2.5':
-    resolution: {integrity: sha512-rw0z/D9Tsp7asvwK/XFHz+xMkgR7MPRCa6U9e77alsmJQFqniEWt/c+1xKCZR2omEw1hVP7ej48Z1O8c/YiSVg==}
 
   '@fontsource-variable/nunito@5.2.5':
     resolution: {integrity: sha512-XMrSfi1XrnM6HQA+MMdPVY/5tdnG4vamQScaesQRhaboP8g0dEjxbtUJY50KHFTh2MnQP5lHIyDFuMNM4Kb23A==}
@@ -4906,8 +4900,6 @@ snapshots:
       png-js: 1.0.0
 
   '@foliojs-fork/restructure@2.0.2': {}
-
-  '@fontsource-variable/fira-code@5.2.5': {}
 
   '@fontsource-variable/nunito@5.2.5': {}
 

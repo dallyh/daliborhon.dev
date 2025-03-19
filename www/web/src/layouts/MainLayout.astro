@@ -10,8 +10,6 @@ import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astr
 import SearchModal from "@components/astro/common/SearchModal.astro";
 import ToastProvider from "@components/astro/common/ToastProvider.astro";
 import ViewTransitions from "@components/astro/common/ViewTransitions.astro";
-import firaLatinExt from "@fontsource-variable/fira-code/files/fira-code-latin-ext-wght-normal.woff2";
-import firaLatin from "@fontsource-variable/fira-code/files/fira-code-latin-wght-normal.woff2";
 import nunitoLatinExt from "@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2";
 import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2";
 
@@ -89,15 +87,6 @@ const basePath = import.meta.env.BASE_URL;
 		<!-- Fonts, icons and external scripts -->
 		<link rel="preload" href={nunitoLatinExt} as="font" type="font/woff" crossorigin />
 		<link rel="preload" href={nunitoLatin} as="font" type="font/woff" crossorigin />
-		<link rel="preload" href={firaLatinExt} as="font" type="font/woff" crossorigin />
-		<link rel="preload" href={firaLatin} as="font" type="font/woff" crossorigin />
-		<script is:inline>
-			window.addEventListener("pagereveal", async (e) => {
-				if (e.viewTransition) {
-					document.head.querySelectorAll('link[as="font"]').forEach((link) => link.remove());
-				}
-			});
-		</script>
 		<script>
 			import { overwriteGetLocale, type Locale, baseLocale } from "@paraglide/runtime";
 			overwriteGetLocale(() => (document.documentElement.lang as Locale | undefined) ?? baseLocale);

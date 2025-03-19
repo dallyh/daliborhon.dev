@@ -3,6 +3,5 @@ export default {
 	include: {
 		devicon: ["*"],
 		heroicons: ["*"],
-		"devicon-plain": ["*"],
 	},
 };

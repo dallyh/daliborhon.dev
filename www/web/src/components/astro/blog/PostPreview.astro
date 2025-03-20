@@ -6,6 +6,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostImageUrl, getBlogPostUrl } from "@utils/content";
+import { Icon } from "astro-icon/components";
 import TagList from "./TagList.astro";
 
 interface Props {
@@ -34,7 +35,9 @@ const { pubDate, modDate, title, description } = post.data;
 		<h2 class="card-title flex flex-col items-start">
 			<a href={postUrl}>{title}</a>
 		</h2>
-		<div class="text-sm"><i class="fa-regular fa-calendar mr-1"></i><FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} /></div>
+		<div class="has-icon icon-left icon-inline text-sm">
+			<Icon name="heroicons:calendar-solid" /><FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} />
+		</div>
 		<p>{description}</p>
 		<div class="card-actions mt-4 justify-start">
 			<TagList tags={relatedTags!} />

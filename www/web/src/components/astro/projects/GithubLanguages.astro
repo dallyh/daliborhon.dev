@@ -1,23 +1,19 @@
 ---
 import { getCollection } from "astro:content";
-import type { Endpoints } from "@octokit/types";
-import { githubRestClient } from "@services/github/githubRestClient";
+import type { ProjectLanguages } from "./ProjectCard.astro";
 
 interface Props {
-	repository: Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"];
+	languages: ProjectLanguages;
 }
 
-const { repository } = Astro.props;
+const { languages } = Astro.props;
 
-const languagesData = await githubRestClient.repos.listLanguages({ repo: repository.name, owner: repository.owner.login });
-const projectLanguages = languagesData.data;
 const colors = await getCollection("githubLanguages");
-
-const total = Object.values(projectLanguages).reduce((acc, curr) => acc + curr, 0);
-const languages = Object.keys(projectLanguages).map((language) => {
+const total = Object.values(languages).reduce((acc, curr) => acc + curr, 0);
+const languagesData = Object.keys(languages).map((language) => {
 	return {
 		language: language,
-		percentage: (projectLanguages[language] / total) * 100,
+		percentage: (languages[language] / total) * 100,
 		color: colors.filter((c) => c.id === language)[0].data.color,
 	};
 });
@@ -26,7 +22,7 @@ const languages = Object.keys(projectLanguages).map((language) => {
 <div class="flex w-full flex-col gap-4">
 	<span class="flex h-2 w-full space-x-[2px] overflow-hidden rounded-md">
 		{
-			languages.map((lang) => (
+			languagesData.map((lang) => (
 				<span
 					style={{
 						backgroundColor: lang.color,
@@ -36,9 +32,9 @@ const languages = Object.keys(projectLanguages).map((language) => {
 			))
 		}
 	</span>
-	<ul class="flex flex-wrap gap-4 text-[0.825rem]">
+	<ul id="autoScrollList" class="flex max-w-full flex-wrap gap-4 pb-4 text-[0.825rem]">
 		{
-			languages.map((lang) => (
+			languagesData.map((lang) => (
 				<li class="flex items-center justify-center gap-1">
 					<span class="h-2 w-2 rounded-full" style={{ backgroundColor: lang.color }} />
 					{lang.language}

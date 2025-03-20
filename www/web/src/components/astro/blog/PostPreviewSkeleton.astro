@@ -30,12 +30,5 @@
 			observer.observe(img);
 		}
 	}
-
-	document.addEventListener("astro:after-swap", removeSkeletonOnIntersection);
-
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", removeSkeletonOnIntersection);
-	} else {
-		removeSkeletonOnIntersection();
-	}
+	removeSkeletonOnIntersection();
 </script>

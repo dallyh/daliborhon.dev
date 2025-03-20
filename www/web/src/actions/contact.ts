@@ -4,10 +4,9 @@ import { z } from "astro:schema";
 import type { Locale } from "@paraglide/runtime";
 
 export const contactFormAction = defineAction({
+	accept: "form",
 	input: z.object({
 		subject: z.string(),
-		from_name: z.string(),
-		botcheck: z.boolean(),
 		name: z.string(),
 		email: z.string(),
 		message: z.string(),

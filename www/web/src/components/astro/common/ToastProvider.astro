@@ -91,11 +91,5 @@
 		}
 	}
 
-	document.addEventListener("astro:after-swap", addToastContainer);
-
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", addToastContainer);
-	} else {
-		addToastContainer();
-	}
+	addToastContainer();
 </script>

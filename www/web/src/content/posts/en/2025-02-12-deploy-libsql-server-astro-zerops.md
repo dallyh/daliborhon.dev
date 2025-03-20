@@ -8,7 +8,7 @@ tags:
 locale: en
 draft: false
 featured: true
-image: ../../../assets/content/blog/deploying-libsql-server-with-astro-on-zerops.png
+image: ../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/deploying-libsql-server-with-astro-on-zerops.png
 pubDate: 2025-02-25T22:26:40.947Z
 modDate: 2025-03-15T20:00:06.101Z
 fmContentType: blog
@@ -80,7 +80,7 @@ After running the command, the expected output should look like:
 
 You can also verify successful creation of the project and all of the services in the Zerops dashboard. The `libsqld` and `frontend` services should be created as empty and waiting for deployment. The `dbstorage` should be ready for usage.
 
-![Zerops dashboard](../../../assets/content/blog/zerops-deployed-astro-example-project.png)
+![Zerops dashboard](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-deployed-astro-example-project.png)
 
 ## Configuring and Deploying Services
 
@@ -150,9 +150,9 @@ zcli push
 
 Select the `astro-libsql` project and then the `libsqld` service.
 
-![zcli push - project list](../../../assets/content/blog/zcli-push-project.png)
+![zcli push - project list](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-project.png)
 
-![zcli push - service list](../../../assets/content/blog/zcli-push-libsqld.png)
+![zcli push - service list](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-libsqld.png)
 
 After the service push is complete, the server daemon should start and it should also automatically create a database and start replicating it. The replication is active because bottomless replication is enabled by providing a `--enable-bottomless-replication` flag. You can verify this in the Zerops dashboard under `libsqld` service runtime logs.
 
@@ -212,7 +212,7 @@ Astro connects to the database via `ASTRO_DB_REMOTE_URL` environment variable, w
 
 If you're using the [example GitHub repository](https://github.com/dallyh/astro-libsql-zerops-example), then after you push the service, open the page [http://frontend:4321](http://frontend:4321) in your browser, and you should see comments from the database!
 
-![Page with data](../../../assets/content/blog/zerops-astro-libsql-pg-data.png)
+![Page with data](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-astro-libsql-pg-data.png)
 
 ## Wrapping Up
 

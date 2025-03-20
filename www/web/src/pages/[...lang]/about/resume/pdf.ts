@@ -11,7 +11,7 @@ import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
 import jsdom from "jsdom";
 import PdfPrinter from "pdfmake";
-import type { Content, ContentImage, TDocumentDefinitions } from "pdfmake/interfaces";
+import type { Content, ContentImage, TDocumentDefinitions, TFontDictionary } from "pdfmake/interfaces";
 import { WritableStreamBuffer } from "stream-buffers";
 
 const logger = new Logger("pdf.ts");
@@ -94,24 +94,23 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 	traverse(content);
 }
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ params, url }) => {
 	if (!params.lang) {
 		return new Response(null, { status: 401 });
 	}
+
 	const renderers = await loadRenderers([mdxContainerRenderer()]);
 	const container = await AstroContainer.create({
 		renderers,
 	});
 
 	const entry = await getEntry("resume", params.lang);
-
 	if (!entry) {
 		return new Response(null, { status: 404 });
 	}
 
 	const { Content, headings } = await render(entry);
 	const toc = generateTOCHTML(headings);
-
 	const content = await container.renderToString(Content, {
 		partial: true,
 		locals: {
@@ -122,22 +121,28 @@ export const GET: APIRoute = async ({ params }) => {
 	const { JSDOM } = jsdom;
 	const { window } = new JSDOM("");
 
-	var fonts = {
-		Roboto: {
-			normal: "./src/assets/fonts/Roboto-Regular.ttf",
-			bold: "./src/assets/fonts/Roboto-Medium.ttf",
-			italics: "./src/assets/fonts/Roboto-Italic.ttf",
-			bolditalics: "./src/assets/fonts/Roboto-MediumItalic.ttf",
+	var fonts: TFontDictionary = {
+		Nunito: {
+			normal: "./src/assets/fonts/Nunito-Regular.ttf",
+			bold: "./src/assets/fonts/Nunito-Medium.ttf",
+			italics: "./src/assets/fonts/Nunito-Italic.ttf",
+			bolditalics: "./src/assets/fonts/Nunito-MediumItalic.ttf",
+		},
+		Symbol: {
+			normal: "Symbol",
+		},
+		ZapfDingbats: {
+			normal: "ZapfDingbats",
 		},
 	};
 
-	const html = htmlToPdfMake(toc + content, {
+	const pdfmakeDocument = htmlToPdfMake(toc + content, {
 		window,
 		removeExtraBlanks: true,
 	});
+	updateAllIMGNodes(pdfmakeDocument);
 
 	const currentDate = new Date();
-
 	const docDefinition: TDocumentDefinitions = {
 		content: [
 			{
@@ -145,7 +150,7 @@ export const GET: APIRoute = async ({ params }) => {
 				style: "header",
 				marginBottom: 10,
 			},
-			html,
+			pdfmakeDocument,
 		],
 		footer: function (currentPage, pageCount) {
 			return {
@@ -171,11 +176,17 @@ export const GET: APIRoute = async ({ params }) => {
 		},
 		defaultStyle: {
 			fontSize: 11,
-			font: "Roboto",
+			font: "Nunito",
 		},
 	};
 
-	updateAllIMGNodes(html);
+	if (url.searchParams.has("json")) {
+		return new Response(JSON.stringify(docDefinition), {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+	}
 
 	let headers = {
 		"Content-Type": "application/pdf",

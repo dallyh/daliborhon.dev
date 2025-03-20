@@ -1,7 +1,7 @@
 export const siteConfig = {
 	monitorId: "2957920",
 	blog: {
-		pageSize: 6,
+		pageSize: 1,
 		recentPostsSize: 3,
 		featuredPostsSize: 3,
 		previewPostsSize: 6,

@@ -6,7 +6,7 @@
 
 @theme {
 	--default-font-family: "Nunito Variable", var(--font-sans);
-	--default-mono-font-family: "Fira Code Variable", var(--font-mono);
+	--default-mono-font-family: var(--font-mono);
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -51,6 +51,31 @@
 
 	h6 {
 		@apply font-bold;
+	}
+
+	.validator {
+		&.invalid,
+		&:has(.invalid) {
+			--input-color: var(--color-error);
+		}
+	}
+
+	.validator {
+		&.invalid,
+		&:has(.invalid) {
+			& ~ .validator-hint {
+				visibility: visible;
+				display: block;
+				color: var(--color-error);
+			}
+		}
+	}
+
+	.validator {
+		&.valid,
+		&:has(.valid) {
+			--input-color: var(--color-success);
+		}
 	}
 
 	.menu {
@@ -124,6 +149,36 @@
 
 			&::after {
 				content: unset;
+			}
+		}
+	}
+
+	.has-icon {
+		svg {
+			@apply inline-block align-middle;
+		}
+
+		&.icon-inline {
+			svg {
+				@apply mb-1 h-5 w-5;
+			}
+		}
+
+		&.icon-no-fix {
+			svg {
+				margin-bottom: unset;
+			}
+		}
+
+		&.icon-left {
+			svg {
+				@apply mr-1;
+			}
+		}
+
+		&.icon-right {
+			svg {
+				@apply ml-1;
 			}
 		}
 	}

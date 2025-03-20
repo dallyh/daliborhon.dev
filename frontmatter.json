@@ -240,12 +240,6 @@
                     "type": "string"
                 },
                 {
-                    "title": "Image",
-                    "name": "image",
-                    "type": "image",
-                    "isPreviewImage": true
-                },
-                {
                     "title": "Project start",
                     "name": "startDate",
                     "type": "datetime"

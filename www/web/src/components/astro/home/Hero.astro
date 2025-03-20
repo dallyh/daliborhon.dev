@@ -1,7 +1,8 @@
 ---
 import profilePicture from "@assets/img/profile/me.png";
-import ProfilePicture from "@components/astro/global/ProfilePicture.astro";
+import ProfilePicture from "@components/astro/common/ProfilePicture.astro";
 import { m } from "@paraglide/messages";
+import { Icon } from "astro-icon/components";
 import SocialLinks from "./SocialLinks.astro";
 ---
 
@@ -16,13 +17,13 @@ import SocialLinks from "./SocialLinks.astro";
 			<p class="flex gap-2 text-sm">
 				<span class="badge badge-soft badge-accent flex gap-2 p-3">
 					<span>
-						<i class="fa-solid fa-location-dot"></i>
+						<Icon name="heroicons:map-pin-solid" />
 					</span>
 					<span>{m.common__country_czech_republic()}</span>
 				</span>
 				<span class="badge badge-soft badge-accent flex gap-2 p-3 shadow">
 					<span>
-						<i class="fa-solid fa-circle-dot"></i>
+						<Icon name="heroicons:clock-solid" />
 					</span>
 					<span id="time">00:00</span>
 				</span>
@@ -30,7 +31,7 @@ import SocialLinks from "./SocialLinks.astro";
 			<p class="text-sm">
 				<span class="badge badge-soft badge-accent flex gap-2 p-3 shadow">
 					<span>
-						<i class="fa-solid fa-suitcase"></i>
+						<Icon name="heroicons:briefcase-solid" />
 					</span>
 					<span>Business Consultant</span>
 				</span>
@@ -52,6 +53,4 @@ import SocialLinks from "./SocialLinks.astro";
 		setTimeout(displayClock, 1000);
 	}
 	displayClock();
-
-	document.addEventListener("astro:page-load", displayClock);
 </script>

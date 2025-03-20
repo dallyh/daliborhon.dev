@@ -2,15 +2,16 @@
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
-import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
-import Section from "@components/astro/global/Section.astro";
+import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import Section from "@components/astro/common/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
 import { getPostsByTag } from "@utils/content";
+import { Icon } from "astro-icon/components";
 
 export const prerender = false;
-let search = Astro.url.searchParams.get("tag");
 
+let search = Astro.url.searchParams.get("tag");
 const locale = Astro.currentLocale!;
 
 const layoutProps = {
@@ -49,12 +50,12 @@ const posts = await getPostsByTag(locale, search);
 								return (
 									<a
 										role="tab"
-										class={`tab inline-flex gap-1 ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
+										class={`tab has-icon icon-left gap-1 ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
 										href={`?tag=${tag.id}`}
 										aria-label={tag.id + m.blog__tag()}
 									>
 										<span>
-											<i class="fas fa-tag" />
+											<Icon name="heroicons:tag-solid" size="18" />
 										</span>
 										<span>{tag.id}</span>
 									</a>

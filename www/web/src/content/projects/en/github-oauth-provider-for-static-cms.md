@@ -5,7 +5,6 @@ tags:
     - astrojs
     - web
 locale: en
-image: ../../../assets/content/projects/gh-oauth.svg
 startDate: 2024-01-01
 active: true
 fmContentType: project

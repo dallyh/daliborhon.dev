@@ -1,10 +1,10 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
-import SearchMeta from "@components/astro/global/SearchMeta.astro";
-import Section from "@components/astro/global/Section.astro";
+import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import ContactForm from "@components/astro/common/ContactForm.astro";
+import SearchMeta from "@components/astro/common/SearchMeta.astro";
+import Section from "@components/astro/common/Section.astro";
 import SocialLinks from "@components/astro/home/SocialLinks.astro";
-import ContactForm from "@components/react/ContactForm";
 import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
@@ -39,7 +39,7 @@ const searchProps = {
 			<SocialLinks />
 		</Section>
 		<Section heading="h3" isInsideSection sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
-			<ContactForm locale={locale} client:load transition:persist />
+			<ContactForm />
 		</Section>
 	</Section>
 </PageLayout>

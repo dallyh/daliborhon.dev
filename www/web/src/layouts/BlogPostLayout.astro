@@ -7,17 +7,19 @@ import Comments from "@components/astro/blog/Comments.astro";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
 import TagList from "@components/astro/blog/TagList.astro";
 import ViewCount from "@components/astro/blog/ViewCount.astro";
-import BreadCrumbs from "@components/astro/global/BreadCrumbs.astro";
-import BreadCrumbsItem from "@components/astro/global/BreadCrumbsItem.astro";
-import Drawer from "@components/astro/global/Drawer.astro";
-import HeadHrefLangs from "@components/astro/global/HeadHrefLangs.astro";
-import MarkdownContent from "@components/astro/global/MarkdownContent.astro";
-import SearchMeta from "@components/astro/global/SearchMeta.astro";
-import Section from "@components/astro/global/Section.astro";
+import BreadCrumbs from "@components/astro/common/BreadCrumbs.astro";
+import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import Drawer from "@components/astro/common/Drawer.astro";
+import HeadHrefLangs from "@components/astro/common/HeadHrefLangs.astro";
+import MarkdownContent from "@components/astro/common/MarkdownContent.astro";
+import SearchMeta from "@components/astro/common/SearchMeta.astro";
+import Section from "@components/astro/common/Section.astro";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
+import { Icon } from "astro-icon/components";
+import { imageMetadata } from "astro/assets/utils";
 import MainLayout from "./MainLayout.astro";
 
 interface Props {
@@ -84,22 +86,16 @@ const searchProps = {
 					<div class="flex flex-col gap-1">
 						<h1 class="mb-3 text-3xl font-bold">{title}</h1>
 						<div class="ml-1 flex flex-col gap-4">
-							<p>
-								<span class="mr-1">
-									<i class="fa-regular fa-calendar"></i>
-								</span>
+							<p class="has-icon icon-left icon-inline">
+								<span><Icon name="heroicons:calendar-solid" /></span>
 								<span><FormattedDate {pubDate} {modDate} {locale} /></span>
 							</p>
-							<p>
-								<span class="mr-1">
-									<i class="fa-regular fa-clock"></i>
-								</span>
+							<p class="has-icon icon-left icon-inline">
+								<span><Icon name="heroicons:clock" /></span>
 								<span>{readingTime} {m.common__minutes()}</span>
 							</p>
-							<p>
-								<span class="mr-1">
-									<i class="fa-regular fa-eye"></i>
-								</span>
+							<p class="has-icon icon-left icon-inline">
+								<span><Icon name="heroicons:eye" /></span>
 								<span class="inline-flex">
 									<span class="mr-1">{m.common__view_count()}:</span>
 									<ViewCount server:defer url={Astro.url.pathname}>
@@ -110,9 +106,9 @@ const searchProps = {
 							<div class="mt-4"><TagList post={post} /></div>
 						</div>
 					</div>
-					<div class="max-w-[340px] self-center p-1 md:self-auto md:p-0" transition:animate="slide">
-						{/*@ts-ignore this works*/}
-						<Image class="rounded-lg" src={image} width={340} inferSize title={title} alt={title} loading="eager" />
+					<div class="max-w-[340px] self-center p-1 md:self-auto md:p-0">
+						{typeof image === "string" && <Image class="rounded-lg" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
+						{typeof image === "object" && <Image class="rounded-lg" src={image} width={340} title={title} alt={title} loading="eager" />}
 					</div>
 				</div>
 				<div class="divider"></div>

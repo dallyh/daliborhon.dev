@@ -51,6 +51,18 @@ a.card-title {
 	}
 }
 
+a.external::after {
+	content: "";
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	margin-left: 0.15rem;
+	background: var(--color-primary);
+	mask: url("/assets/external-arrow.svg") no-repeat center;
+	mask-size: contain;
+	vertical-align: middle;
+}
+
 .skeleton {
 	border: unset;
 	color: transparent;

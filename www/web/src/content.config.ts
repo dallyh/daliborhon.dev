@@ -42,7 +42,6 @@ const projects = defineCollection({
 			}),
 			sourceUrl: z.string(),
 			startDate: z.coerce.date(),
-			image: z.string(),
 			tags: z.array(reference("projectTags")),
 			active: z.boolean().default(true),
 		}),

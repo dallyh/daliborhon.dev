@@ -1,6 +1,5 @@
 ---
 import { m } from "@paraglide/messages";
-import "@pagefind/default-ui/css/ui.css";
 ---
 
 <site-search>
@@ -11,7 +10,12 @@ import "@pagefind/default-ui/css/ui.css";
 					<span class="sr-only">{m.common__close_btn()}</span>✕
 				</button>
 			</form>
-			<div id="pagefind" class="p-4"></div>
+			<div id="pagefind" class="p-4">
+				<div id="loading" class="flex items-center justify-center gap-2">
+					<span class="loading loading-dots loading-xl"></span>
+					<span>{m.common__loading()}</span>
+				</div>
+			</div>
 		</div>
 		<form method="dialog" class="modal-backdrop">
 			<button>close</button>
@@ -26,7 +30,9 @@ import "@pagefind/default-ui/css/ui.css";
 	class SiteSearch extends HTMLElement {
 		logger = new Logger("search-modal");
 		pageFindInstance: any = null;
-		dialog = this.querySelector("dialog");
+		dialog = this.querySelector("dialog")!;
+		loading = this.querySelector("#loading")!;
+		stylesheetAdded = false;
 
 		connectedCallback() {
 			const closeBtn = this.querySelector("[data-close-modal]")!;
@@ -58,21 +64,21 @@ import "@pagefind/default-ui/css/ui.css";
 			this.dialog?.addEventListener("close", () => {
 				document.documentElement.removeAttribute("data-search-modal-open");
 			});
-
-			this.initPagefind();
 		}
 
 		disconnectedCallback() {
 			this.dialog?.open ?? this.dialog?.close();
-			this.dialog = null;
 
 			if (this.pageFindInstance) {
 				this.pageFindInstance.destroy();
 			}
 		}
 
-		openModal(event?: Event) {
+		async openModal(event?: Event) {
 			this.dialog?.showModal();
+			await this.addStylesheet();
+			await this.initPagefind();
+			this.loading.remove();
 			document.documentElement.toggleAttribute("data-search-modal-open", true);
 			this.querySelector("input")?.focus();
 			event?.stopPropagation();
@@ -82,38 +88,55 @@ import "@pagefind/default-ui/css/ui.css";
 			this.dialog?.close();
 		}
 
-		initPagefind() {
+		async addStylesheet() {
+			if (this.stylesheetAdded) {
+				this.logger.debug("Stylesheet is already present.");
+				return;
+			}
+
+			const styleEle = document.createElement("style");
+			const style = await import("@pagefind/default-ui/css/ui.css?raw");
+			styleEle.innerHTML = `${style.default}`;
+			document.head.prepend(styleEle);
+			this.stylesheetAdded = true;
+		}
+
+		async initPagefind() {
+			if (this.pageFindInstance !== null) {
+				this.logger.debug("Pagefind instance is already initialized.");
+				return;
+			}
+
 			const forwardSlash = trailingSlash === "always" ? "/" : "";
+			//@ts-ignore - no types
+			const { PagefindUI } = await import("@pagefind/default-ui");
+
+			this.pageFindInstance = new PagefindUI({
+				element: "#pagefind",
+				baseUrl: base,
+				bundlePath: `${base}pagefind/`,
+				showImages: false,
+				showSubResults: false,
+				processResult: function (result: any) {
+					if (result?.meta?.image) {
+						let resultBase = new URL(result.url, String(window.location));
+						let remappedImage = new URL(result.meta.image, resultBase);
+
+						if (remappedImage.hostname !== window.location.hostname) {
+							result.meta.image = remappedImage.toString();
+						} else {
+							result.meta.image = remappedImage.pathname + forwardSlash;
+						}
+					}
+				},
+			});
+		}
+
+		initOnIdle() {
 			const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 
 			onIdle(async () => {
-				// @ts-ignore - could not find types for this import
-				const { PagefindUI } = await import("@pagefind/default-ui");
-
-				if (this.pageFindInstance !== null) {
-					this.logger.debug("Pagefind instance is already initialized.");
-					return;
-				}
-
-				this.pageFindInstance = new PagefindUI({
-					element: "#pagefind",
-					baseUrl: base,
-					bundlePath: `${base}pagefind/`,
-					showImages: false,
-					showSubResults: false,
-					processResult: function (result: any) {
-						if (result?.meta?.image) {
-							let resultBase = new URL(result.url, String(window.location));
-							let remappedImage = new URL(result.meta.image, resultBase);
-
-							if (remappedImage.hostname !== window.location.hostname) {
-								result.meta.image = remappedImage.toString();
-							} else {
-								result.meta.image = remappedImage.pathname + forwardSlash;
-							}
-						}
-					},
-				});
+				await this.initOnIdle();
 			});
 		}
 	}

@@ -44,9 +44,6 @@ importers:
       '@astrojs/react':
         specifier: ^4.2.1
         version: 4.2.1(@types/node@22.13.5)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(yaml@2.7.0)
-      '@fontsource-variable/fira-code':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@fontsource-variable/nunito':
         specifier: 5.2.5
         version: 5.2.5
@@ -60,17 +57,14 @@ importers:
         specifier: ^1.12.0
         version: 1.12.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@inlang/paraglide-js':
-        specifier: 2.0.0-beta.30
-        version: 2.0.0-beta.30
+        specifier: 2.0.0
+        version: 2.0.0
       '@microflash/rehype-figure':
         specifier: ^2.1.3
         version: 2.1.3
       '@pagefind/default-ui':
         specifier: ^1.3.0
         version: 1.3.0
-      '@resvg/resvg-js':
-        specifier: ^2.6.2
-        version: 2.6.2
       '@tanstack/react-query':
         specifier: ^5.68.0
         version: 5.68.0(react@19.0.0)
@@ -177,12 +171,15 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.2.1
         version: 3.2.1
-      '@iconify-json/bi':
-        specifier: ^1.2.2
-        version: 1.2.2
+      '@hcaptcha/types':
+        specifier: ^1.0.4
+        version: 1.0.4
       '@iconify-json/devicon':
         specifier: ^1.2.20
         version: 1.2.20
+      '@iconify-json/heroicons':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@octokit/types':
         specifier: ^13.8.0
         version: 13.8.0
@@ -229,8 +226,8 @@ importers:
         specifier: ^3.0.7
         version: 3.0.7
       astro-pagefind:
-        specifier: 1.8.1
-        version: 1.8.1(astro@5.5.2(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(typescript@5.7.3)(yaml@2.7.0))
+        specifier: 1.8.3
+        version: 1.8.3(astro@5.5.2(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(typescript@5.7.3)(yaml@2.7.0))
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -710,9 +707,6 @@ packages:
   '@foliojs-fork/restructure@2.0.2':
     resolution: {integrity: sha512-59SgoZ3EXbkfSX7b63tsou/SDGzwUEK6MuB5sKqgVK1/XE0fxmpsOb9DQI8LXW3KfGnAjImCGhhEb7uPPAUVNA==}
 
-  '@fontsource-variable/fira-code@5.2.5':
-    resolution: {integrity: sha512-rw0z/D9Tsp7asvwK/XFHz+xMkgR7MPRCa6U9e77alsmJQFqniEWt/c+1xKCZR2omEw1hVP7ej48Z1O8c/YiSVg==}
-
   '@fontsource-variable/nunito@5.2.5':
     resolution: {integrity: sha512-XMrSfi1XrnM6HQA+MMdPVY/5tdnG4vamQScaesQRhaboP8g0dEjxbtUJY50KHFTh2MnQP5lHIyDFuMNM4Kb23A==}
 
@@ -734,11 +728,14 @@ packages:
       react: '>= 16.3.0'
       react-dom: '>= 16.3.0'
 
-  '@iconify-json/bi@1.2.2':
-    resolution: {integrity: sha512-f/Wm+RTdBosw3cI/gmg5uSFmdumkw2thUk4qVFS56jTerdal6wqWnWAbRTSJJ/vhH9/y16pRKnvE8F2+M23dzw==}
+  '@hcaptcha/types@1.0.4':
+    resolution: {integrity: sha512-4CBrdr9DFC7sYZPRvLol82UVZVne8B2skBGfMDUqPC6q9vzHMwv/cNxXW44EIa6DaFDr+EWNSnKJpHxWr7Q42Q==}
 
   '@iconify-json/devicon@1.2.20':
     resolution: {integrity: sha512-aUJLqSQB1O1d5La/YXhZaKV10OrMgCpG954gIo2X34nqhZml+/MOj3ILrggb1EozDiheZq5ISUC0SD96+pTAZw==}
+
+  '@iconify-json/heroicons@1.2.2':
+    resolution: {integrity: sha512-qoW4pXr5kTTL6juEjgTs83OJIwpePu7q1tdtKVEdj+i0zyyVHgg/dd9grsXJQnpTpBt6/VwNjrXBvFjRsKPENg==}
 
   '@iconify/tools@4.1.1':
     resolution: {integrity: sha512-Hybu/HGhv6T8nLQhiG9rKx+ekF7NNpPOEQAy7JRSKht3s3dcFSsPccYzk24Znc9MTxrR6Gak3cg6CPP5dyvS2Q==}
@@ -854,15 +851,15 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@inlang/paraglide-js@2.0.0-beta.30':
-    resolution: {integrity: sha512-Pr0JZBxexZXJbQc0xi06Dgyk9t14GQCZLQ9HoWaOv25d0sXtPv/BohVohZ4uIth12p/Dtt3Gd65y0M7iXcWTjw==}
+  '@inlang/paraglide-js@2.0.0':
+    resolution: {integrity: sha512-ufe/k4tfBIQrJf6X1L+KGtvHYRhvDPX53m7vVe+IOYs0DkyR7RkBgwPBQb3kbXKpr5atCD+D2BDh/I7EpK5Clg==}
     hasBin: true
 
   '@inlang/recommend-sherlock@0.2.1':
     resolution: {integrity: sha512-ckv8HvHy/iTqaVAEKrr+gnl+p3XFNwe5D2+6w6wJk2ORV2XkcRkKOJ/XsTUJbPSiyi4PI+p+T3bqbmNx/rDUlg==}
 
-  '@inlang/sdk@2.4.1':
-    resolution: {integrity: sha512-JKsbFs/z2rv/2vPR6ZWDC3PWLX9COQPRYADNlbFl2omqkM2Dl5g7X/jIPDkTV85NccOimSf6Y/d1zqK5p5K4zA==}
+  '@inlang/sdk@2.4.2':
+    resolution: {integrity: sha512-EqL32PcFHOlXWEg2o0nftSBZ376tSxuAhV8uTZoaq521AKSRMEvjTpVsJ9eS6ZJDCRiIXx7avtsdVNwkUntf8A==}
     engines: {node: '>=18.0.0'}
 
   '@jridgewell/gen-mapping@0.3.8':
@@ -940,8 +937,8 @@ packages:
   '@lit/reactive-element@2.0.4':
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
 
-  '@lix-js/sdk@0.4.1':
-    resolution: {integrity: sha512-8v9gkLuEa/VXLkDwuXLr+wjZY1D7dPXVhez97jJULYoKurLVuhh2SH/Sv4jF43biV0wee44PGADrFPuU00lnsQ==}
+  '@lix-js/sdk@0.4.2':
+    resolution: {integrity: sha512-wrQQMAZzOxQEAssxUnajn7Djua98MlIzs+V6GdX51VN6b7iA3qvZJY4L9xEEMh0nRFvpAO3wOt7uBth9580pog==}
     engines: {node: '>=21'}
 
   '@lix-js/server-api-schema@0.1.1':
@@ -1108,82 +1105,6 @@ packages:
 
   '@polka/url@1.0.0-next.28':
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
-
-  '@resvg/resvg-js-android-arm-eabi@2.6.2':
-    resolution: {integrity: sha512-FrJibrAk6v29eabIPgcTUMPXiEz8ssrAk7TXxsiZzww9UTQ1Z5KAbFJs+Z0Ez+VZTYgnE5IQJqBcoSiMebtPHA==}
-    engines: {node: '>= 10'}
-    cpu: [arm]
-    os: [android]
-
-  '@resvg/resvg-js-android-arm64@2.6.2':
-    resolution: {integrity: sha512-VcOKezEhm2VqzXpcIJoITuvUS/fcjIw5NA/w3tjzWyzmvoCdd+QXIqy3FBGulWdClvp4g+IfUemigrkLThSjAQ==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [android]
-
-  '@resvg/resvg-js-darwin-arm64@2.6.2':
-    resolution: {integrity: sha512-nmok2LnAd6nLUKI16aEB9ydMC6Lidiiq2m1nEBDR1LaaP7FGs4AJ90qDraxX+CWlVuRlvNjyYJTNv8qFjtL9+A==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@resvg/resvg-js-darwin-x64@2.6.2':
-    resolution: {integrity: sha512-GInyZLjgWDfsVT6+SHxQVRwNzV0AuA1uqGsOAW+0th56J7Nh6bHHKXHBWzUrihxMetcFDmQMAX1tZ1fZDYSRsw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@resvg/resvg-js-linux-arm-gnueabihf@2.6.2':
-    resolution: {integrity: sha512-YIV3u/R9zJbpqTTNwTZM5/ocWetDKGsro0SWp70eGEM9eV2MerWyBRZnQIgzU3YBnSBQ1RcxRZvY/UxwESfZIw==}
-    engines: {node: '>= 10'}
-    cpu: [arm]
-    os: [linux]
-
-  '@resvg/resvg-js-linux-arm64-gnu@2.6.2':
-    resolution: {integrity: sha512-zc2BlJSim7YR4FZDQ8OUoJg5holYzdiYMeobb9pJuGDidGL9KZUv7SbiD4E8oZogtYY42UZEap7dqkkYuA91pg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@resvg/resvg-js-linux-arm64-musl@2.6.2':
-    resolution: {integrity: sha512-3h3dLPWNgSsD4lQBJPb4f+kvdOSJHa5PjTYVsWHxLUzH4IFTJUAnmuWpw4KqyQ3NA5QCyhw4TWgxk3jRkQxEKg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@resvg/resvg-js-linux-x64-gnu@2.6.2':
-    resolution: {integrity: sha512-IVUe+ckIerA7xMZ50duAZzwf1U7khQe2E0QpUxu5MBJNao5RqC0zwV/Zm965vw6D3gGFUl7j4m+oJjubBVoftw==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@resvg/resvg-js-linux-x64-musl@2.6.2':
-    resolution: {integrity: sha512-UOf83vqTzoYQO9SZ0fPl2ZIFtNIz/Rr/y+7X8XRX1ZnBYsQ/tTb+cj9TE+KHOdmlTFBxhYzVkP2lRByCzqi4jQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@resvg/resvg-js-win32-arm64-msvc@2.6.2':
-    resolution: {integrity: sha512-7C/RSgCa+7vqZ7qAbItfiaAWhyRSoD4l4BQAbVDqRRsRgY+S+hgS3in0Rxr7IorKUpGE69X48q6/nOAuTJQxeQ==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@resvg/resvg-js-win32-ia32-msvc@2.6.2':
-    resolution: {integrity: sha512-har4aPAlvjnLcil40AC77YDIk6loMawuJwFINEM7n0pZviwMkMvjb2W5ZirsNOZY4aDbo5tLx0wNMREp5Brk+w==}
-    engines: {node: '>= 10'}
-    cpu: [ia32]
-    os: [win32]
-
-  '@resvg/resvg-js-win32-x64-msvc@2.6.2':
-    resolution: {integrity: sha512-ZXtYhtUr5SSaBrUDq7DiyjOFJqBVL/dOBN7N/qmi/pO0IgiWW/f/ue3nbvu9joWE5aAKDoIzy/CxsY0suwGosQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
-
-  '@resvg/resvg-js@2.6.2':
-    resolution: {integrity: sha512-xBaJish5OeGmniDj9cW5PRa/PtmuVU3ziqrbr5xJj901ZDN4TosrVaNZpEiLZAxdfnhAe7uQ7QFWfjPe9d9K2Q==}
-    engines: {node: '>= 10'}
 
   '@rollup/pluginutils@5.1.4':
     resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
@@ -1670,8 +1591,8 @@ packages:
     peerDependencies:
       astro: ^4.0.0 || ^5.0.0
 
-  astro-pagefind@1.8.1:
-    resolution: {integrity: sha512-pWQthi76aqdfGFifGNjzlMErZrnoSf5UGSuTWWdEaiDAt5VQCgQxoG4b1Dh5byi3Fr3fvbgHeWSzqEYPObgTEA==}
+  astro-pagefind@1.8.3:
+    resolution: {integrity: sha512-Nfo1TdlEHdkXTiI0KpimLqX6awK3qWTil7IOJvk5Q8x+0VBTpIEp9QvGgoAxXDe3upAHLVsg4y7U1uUPm7GC9w==}
     peerDependencies:
       astro: ^2.0.4 || ^3 || ^4 || ^5
 
@@ -4980,8 +4901,6 @@ snapshots:
 
   '@foliojs-fork/restructure@2.0.2': {}
 
-  '@fontsource-variable/fira-code@5.2.5': {}
-
   '@fontsource-variable/nunito@5.2.5': {}
 
   '@formkit/auto-animate@0.8.2': {}
@@ -5001,11 +4920,13 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@iconify-json/bi@1.2.2':
+  '@hcaptcha/types@1.0.4': {}
+
+  '@iconify-json/devicon@1.2.20':
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/devicon@1.2.20':
+  '@iconify-json/heroicons@1.2.2':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -5116,10 +5037,10 @@ snapshots:
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
-  '@inlang/paraglide-js@2.0.0-beta.30':
+  '@inlang/paraglide-js@2.0.0':
     dependencies:
       '@inlang/recommend-sherlock': 0.2.1
-      '@inlang/sdk': 2.4.1
+      '@inlang/sdk': 2.4.2
       commander: 11.1.0
       consola: 3.4.0
       json5: 2.2.3
@@ -5132,9 +5053,9 @@ snapshots:
     dependencies:
       comment-json: 4.2.5
 
-  '@inlang/sdk@2.4.1':
+  '@inlang/sdk@2.4.2':
     dependencies:
-      '@lix-js/sdk': 0.4.1
+      '@lix-js/sdk': 0.4.2
       '@sinclair/typebox': 0.31.28
       kysely: 0.27.5
       sqlite-wasm-kysely: 0.3.0(kysely@0.27.5)
@@ -5221,7 +5142,7 @@ snapshots:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.3.0
 
-  '@lix-js/sdk@0.4.1':
+  '@lix-js/sdk@0.4.2':
     dependencies:
       '@lix-js/server-api-schema': 0.1.1
       dedent: 1.5.1
@@ -5453,57 +5374,6 @@ snapshots:
     optional: true
 
   '@polka/url@1.0.0-next.28': {}
-
-  '@resvg/resvg-js-android-arm-eabi@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-android-arm64@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-darwin-arm64@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-darwin-x64@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-linux-arm-gnueabihf@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-linux-arm64-gnu@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-linux-arm64-musl@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-linux-x64-gnu@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-linux-x64-musl@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-win32-arm64-msvc@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-win32-ia32-msvc@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js-win32-x64-msvc@2.6.2':
-    optional: true
-
-  '@resvg/resvg-js@2.6.2':
-    optionalDependencies:
-      '@resvg/resvg-js-android-arm-eabi': 2.6.2
-      '@resvg/resvg-js-android-arm64': 2.6.2
-      '@resvg/resvg-js-darwin-arm64': 2.6.2
-      '@resvg/resvg-js-darwin-x64': 2.6.2
-      '@resvg/resvg-js-linux-arm-gnueabihf': 2.6.2
-      '@resvg/resvg-js-linux-arm64-gnu': 2.6.2
-      '@resvg/resvg-js-linux-arm64-musl': 2.6.2
-      '@resvg/resvg-js-linux-x64-gnu': 2.6.2
-      '@resvg/resvg-js-linux-x64-musl': 2.6.2
-      '@resvg/resvg-js-win32-arm64-msvc': 2.6.2
-      '@resvg/resvg-js-win32-ia32-msvc': 2.6.2
-      '@resvg/resvg-js-win32-x64-msvc': 2.6.2
 
   '@rollup/pluginutils@5.1.4(rollup@4.34.8)':
     dependencies:
@@ -5978,7 +5848,7 @@ snapshots:
     dependencies:
       astro: 5.5.2(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(typescript@5.7.3)(yaml@2.7.0)
 
-  astro-pagefind@1.8.1(astro@5.5.2(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(typescript@5.7.3)(yaml@2.7.0)):
+  astro-pagefind@1.8.3(astro@5.5.2(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(typescript@5.7.3)(yaml@2.7.0)):
     dependencies:
       '@pagefind/default-ui': 1.3.0
       astro: 5.5.2(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.34.8)(typescript@5.7.3)(yaml@2.7.0)
@@ -8748,7 +8618,7 @@ snapshots:
 
   unplugin@2.2.0:
     dependencies:
-      acorn: 8.14.0
+      acorn: 8.14.1
       webpack-virtual-modules: 0.6.2
 
   unstorage@1.15.0:

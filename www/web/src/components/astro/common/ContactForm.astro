@@ -1,0 +1,311 @@
+---
+import { HCAPTCHA_KEY } from "astro:env/client";
+import { m } from "@paraglide/messages";
+import { Icon } from "astro-icon/components";
+
+const locale = Astro.currentLocale;
+---
+
+<contact-form>
+	<div class="relative flex h-full w-full flex-col">
+		<form id="form">
+			<input type="hidden" name="subject" value="Website contact form submission" />
+			<input type="hidden" name="language" value={locale} />
+			<div class="fieldset flex flex-col gap-2">
+				{/* Name field */}
+				<div>
+					<label for="full_name" class="fieldset-label">
+						{m.contact__full_name_title()}
+					</label>
+					<label class="input validator skeleton w-full min-w-0">
+						<span>
+							<Icon name="heroicons:user-solid" />
+						</span>
+						<input data-validate id="full_name" name="name" aria-describedby="nameError" type="text" placeholder={m.contact__full_name_placeholder()} autocomplete="false" required maxlength="80" />
+					</label>
+					<p id="nameError" class="validator-hint text-error">{m.contact__error_empty_field()}</p>
+				</div>
+
+				{/* Email field */}
+				<div>
+					<label for="email_address" class="fieldset-label">
+						{m.contact__email_title()}
+					</label>
+					<label class="input validator skeleton w-full">
+						<span>
+							<Icon name="heroicons:envelope-solid" />
+						</span>
+						<input
+							data-validate
+							id="email_address"
+							name="email"
+							aria-describedby="emailError"
+							type="email"
+							placeholder={m.contact__email_placeholder()}
+							autocomplete="false"
+							required
+							class="max-w-none"
+						/>
+					</label>
+					<p id="emailError" class="validator-hint text-error">{m.contact__error_format_email()}</p>
+				</div>
+
+				{/* Message field */}
+				<div>
+					<label for="message" class="fieldset-label">
+						{m.contact__msg_title()}
+					</label>
+					<textarea
+						data-validate
+						name="message"
+						id="message"
+						aria-describedby="messageError"
+						rows={8}
+						placeholder={m.contact__msg_placeholder()}
+						class="textarea validator textarea-bordered skeleton w-full"
+						required></textarea>
+					<p id="messageError" class="validator-hint text-error">{m.contact__error_empty_field()}</p>
+				</div>
+			</div>
+			<div id="result" class="mt-3 text-center">
+				<p id="errorMessage" class="text-error hidden"></p>
+				<div id="successResult" class="flex hidden flex-col items-center justify-center gap-2">
+					<div class="text-success mb-3 flex items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" class="mr-2 h-6 w-6">
+							<path
+								d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+							></path>
+						</svg>
+						<p class="font-bold">{m.contact__success()}</p>
+					</div>
+					<p class="mb-4 text-sm">{m.contact__submit_success()}</p>
+				</div>
+				<div id="errorResult" class="flex hidden flex-col items-center justify-center gap-2">
+					<div class="text-error flex items-center">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" class="mr-2 h-6 w-6">
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+							<path
+								d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+							></path>
+						</svg>
+						<p class="font-bold">{m.contact__error()}</p>
+					</div>
+					<p class="mb-4 text-sm">{m.contact__submit_error_try_again()}</p>
+				</div>
+			</div>
+			<div class="mt-4 flex justify-end gap-4">
+				<button id="btnSubmit" type="button" class="btn btn-primary btn-outline skeleton self-end">
+					<span class="loading loading-spinner hidden"></span>
+					{m.common__submit_btn()}
+				</button>
+			</div>
+			<div id="hcaptcha"></div>
+		</form>
+	</div>
+</contact-form>
+<script is:inline define:vars={{ HCAPTCHA_KEY }}>
+	///<reference types="@hcaptcha/types"/>
+	window.captchaInit = function captchaInit() {
+		if (window.hcaptcha) {
+			hcaptcha.render("hcaptcha", { sitekey: HCAPTCHA_KEY, size: "invisible" });
+		}
+	};
+</script>
+<script is:inline src={`https://js.hcaptcha.com/1/api.js?hl=${locale}&onload=captchaInit&render=explicit&recaptchacompat=off`} defer></script>
+
+<script>
+	import { m } from "@paraglide/messages";
+	import { Logger } from "@utils";
+	import { actions, isInputError } from "astro:actions";
+
+	const logger = new Logger("contact-form");
+
+	class ContactForm extends HTMLElement {
+		submitButton = this.querySelector<HTMLButtonElement>("#btnSubmit")!;
+		form = this.querySelector<HTMLFormElement>("#form")!;
+		successResult = this.querySelector<HTMLDivElement>("#successResult")!;
+		errorResult = this.querySelector<HTMLDivElement>("#errorResult")!;
+		errorMessage = this.querySelector<HTMLDivElement>("#errorMessage")!;
+		inputs = this.form.querySelectorAll("[data-validate]");
+
+		connectedCallback() {
+			this.submitButton.addEventListener("click", async (e) => {
+				e.preventDefault();
+				await this.onClick();
+			});
+
+			this.inputs.forEach((i) => {
+				i.addEventListener("focusout", this.onInputLeave.bind(this));
+			});
+
+			this.onLoad();
+		}
+
+		onInputLeave(e: Event) {
+			if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+				if (e.target.validity.valid === false) {
+					e.target.classList.add("invalid");
+					e.target.classList.remove("valid");
+				} else {
+					e.target.classList.remove("invalid");
+					e.target.classList.add("valid");
+				}
+			}
+		}
+
+		onLoad() {
+			const skeletons = this.querySelectorAll(".skeleton");
+
+			skeletons.forEach((e) => {
+				e.classList.remove("skeleton");
+			});
+		}
+
+		checkValidity() {
+			const valid = this.form.reportValidity();
+
+			if (valid === false) {
+				const invalidElements = this.form.querySelectorAll<HTMLElement>(":invalid");
+				invalidElements.forEach((e) => {
+					e.classList.add("invalid");
+				});
+
+				invalidElements[0].focus();
+			}
+
+			return valid;
+		}
+
+		resetForm() {
+			this.form.reset();
+			this.inputs.forEach((e) => {
+				e.classList.remove("invalid");
+				e.classList.remove("valid");
+			});
+		}
+
+		toggleButton() {
+			this.submitButton.disabled = !this.submitButton.disabled;
+			this.submitButton.querySelector("span")?.classList.toggle("hidden");
+		}
+
+		error(msg?: string, log?: unknown) {
+			logger.error("An error occured: " + JSON.stringify(log));
+
+			if (msg) {
+				this.showErrorMessage(msg);
+				return;
+			}
+
+			this.errorResult.classList.remove("hidden");
+			this.successResult.classList.add("hidden");
+			this.errorMessage.classList.add("hidden");
+		}
+
+		showErrorMessage(msg: string) {
+			this.errorMessage.innerHTML = msg;
+			this.errorMessage.classList.remove("hidden");
+			this.successResult.classList.add("hidden");
+		}
+
+		resetResults() {
+			this.successResult.classList.add("hidden");
+			this.errorResult.classList.add("hidden");
+			this.errorResult.innerHTML = "";
+			this.errorMessage.classList.add("hidden");
+		}
+
+		success() {
+			this.successResult.classList.remove("hidden");
+			this.errorResult.classList.add("hidden");
+			this.errorMessage.classList.add("hidden");
+			this.resetForm();
+
+			window.setTimeout(() => {
+				this.resetResults();
+			}, 5000);
+		}
+
+		async onClick() {
+			if (this.checkValidity() === false) {
+				this.showErrorMessage(m.contact__error_correct_fields());
+				return;
+			}
+
+			this.toggleButton();
+
+			try {
+				const res = await (hcaptcha.execute({ async: true }) as Promise<HCaptchaResponse>);
+				console.log(res);
+
+				if (res.response) {
+					await this.onSubmit(res);
+				} else {
+					this.error(undefined, res);
+				}
+			} catch (err) {
+				this.error(m.contact__error(), err);
+			} finally {
+				this.toggleButton();
+			}
+		}
+
+		async onSubmit(hCaptchaResponse: HCaptchaResponse) {
+			if (!hCaptchaResponse) {
+				this.error("Please fill captcha");
+				return;
+			}
+
+			const formData = new FormData(this.form);
+			formData.append("h-captcha-response", hCaptchaResponse.response);
+			const { error } = await actions.contactForm(formData);
+
+			if (isInputError(error)) {
+				this.showErrorMessage(m.contact__error_correct_fields());
+				return;
+			}
+
+			if (error) {
+				this.error(`${error.code}: ${error.message}`);
+				return;
+			}
+
+			this.success();
+		}
+	}
+
+	customElements.define("contact-form", ContactForm);
+</script>
+
+<style>
+	.validator-hint {
+		margin-top: 0.25rem;
+		opacity: 0;
+		transition: opacity 300ms ease-in-out;
+	}
+
+	.validator {
+		&.invalid,
+		&:has(.invalid) {
+			& ~ .validator-hint {
+				opacity: 1;
+			}
+		}
+	}
+
+	#errorMessage,
+	#successResult,
+	#errorResult {
+		transition:
+			opacity 300ms ease-in-out,
+			display 300ms ease-in-out allow-discrete;
+	}
+
+	@starting-style {
+		#errorMessage,
+		#successResult,
+		#errorResult {
+			opacity: 0;
+		}
+	}
+</style>

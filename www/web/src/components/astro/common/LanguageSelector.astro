@@ -37,7 +37,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 
 					return (
 						<>
-							<option selected={current} data-language={locale} value={value}>
+							<option selected={current} data-transition-enable data-language={locale} value={value}>
 								{nativeName}
 							</option>
 						</>
@@ -53,7 +53,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 
 					return (
 						<>
-							<option selected={current} data-language={post.data.locale} value={value}>
+							<option selected={current} data-transition-enable data-language={post.data.locale} value={value}>
 								{nativeName}
 							</option>
 						</>
@@ -87,7 +87,8 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 					cookie.set(cookieName, lang, { expires: 30 });
 					const next = e.currentTarget.value + window.location.search;
 					this.logger.info("Navigating to: " + next);
-					navigate(next);
+					window.ViewTransitions.startTransition();
+					window.location.href = next;
 				}
 			});
 		}

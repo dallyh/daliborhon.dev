@@ -5,6 +5,9 @@ declare global {
 		}
 	}
 
+	interface Window {
+		themeStorageKey: string;
+	}
 	type DateRange = "all-time" | "past-day" | "past-week" | "past-month" | "past-year";
 }
 

@@ -1,0 +1,17 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	url: string;
+	urlDescription: string;
+}
+
+const { url, urlDescription } = Astro.props;
+
+const locale = Astro.currentLocale!;
+---
+
+<div class="has-icon icon-left mt-8 text-center">
+	<a class="has-icon" href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}> <span>{urlDescription}</span><Icon class="ml-2" name="heroicons:arrow-long-right" /></a>
+</div>

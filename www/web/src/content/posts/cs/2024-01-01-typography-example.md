@@ -5,11 +5,11 @@ tags:
     - astro
 locale: cs
 featured: true
-image: https://astro.build/og/astro.jpg
 pubDate: 2024-01-01
 modDate: ""
 draft: true
 fmContentType: blog
+image: ../../../assets/content/blog/typography-example/og-example.png
 ---
 
 # H1 For example
@@ -33,8 +33,6 @@ Success
 :::tip
 Tip
 :::
-
-![](../../../assets/content/blog/zcli-push-libsqld.png)
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.

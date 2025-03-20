@@ -13,7 +13,7 @@ const getFonts = async () => {
 	const fontsPath = path.join(root, fontsFolder);
 
 	const fontFileRegular = fs.readFileSync(path.join(fontsPath, "Nunito-Regular.ttf"));
-	const fontFileBold = fs.readFileSync(path.join(fontsPath, "Nunito-Medium.ttf"));
+	const fontFileBold = fs.readFileSync(path.join(fontsPath, "Nunito-Bold.ttf"));
 
 	return { fontFileRegular, fontFileBold };
 };
@@ -26,13 +26,13 @@ const options: SatoriOptions = {
 	embedFont: true,
 	fonts: [
 		{
-			name: "Nunito Regular",
+			name: "Nunito",
 			data: fontFileRegular,
 			weight: 400,
 			style: "normal",
 		},
 		{
-			name: "Nunito Medium",
+			name: "Nunito",
 			data: fontFileBold,
 			weight: 600,
 			style: "normal",

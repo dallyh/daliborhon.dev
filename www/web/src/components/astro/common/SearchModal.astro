@@ -77,8 +77,8 @@ import { m } from "@paraglide/messages";
 		async openModal(event?: Event) {
 			this.dialog?.showModal();
 			await this.addStylesheet();
-			//await this.initPagefind();
-			// this.loading.remove();
+			await this.initPagefind();
+			this.loading.remove();
 			document.documentElement.toggleAttribute("data-search-modal-open", true);
 			this.querySelector("input")?.focus();
 			event?.stopPropagation();

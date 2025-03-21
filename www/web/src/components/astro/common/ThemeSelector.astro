@@ -33,34 +33,55 @@ const themes = [
 	"nord",
 	"sunset",
 	"dracula-dark",
-	"dracula-light"
+	"dracula-light",
 ];
 ---
 
 <theme-selector>
-	<div class="flex gap-2">
-		<button id="prev" class="btn btn-primary btn-sm">Prev</button>
-		<select class="select select-sm select-bordered w-full max-w-xs">
-			{
-				themes.map((t) => {
-					return (
-						<option data-transition-disable value={t}>
-							{t}
-						</option>
-					);
-				})
-			}
-		</select>
-		<button id="next" class="btn btn-primary btn-sm">Next</button>
+	<div class="dropdown">
+		<div tabindex="0" role="button" class="input input-sm cursor-pointer" aria-haspopup="menu">
+			<div class="bg-base-100 border-base-content/10 grid shrink-0 grid-cols-2 gap-0.5 rounded-md border p-1">
+				<div class="bg-base-content size-1 rounded-full"></div>
+				<div class="bg-primary size-1 rounded-full"></div>
+				<div class="bg-secondary size-1 rounded-full"></div>
+				<div class="bg-accent size-1 rounded-full"></div>
+			</div>
+		</div>
+		<div
+			tabindex="0"
+			class="dropdown-content bg-base-200 text-base-content rounded-box top-[-8px] mt-14 h-[30.5rem] max-h-[calc(100vh-8.6rem)] overflow-y-auto border border-white/5 shadow-2xl outline-1 outline-black/5"
+		>
+			<ul class="menu w-56">
+				<li class="menu-title text-xs">Theme</li>
+				{
+					themes.map((t) => {
+						return (
+							<li>
+								<button class="gap-3 px-2" data-set-theme={t}>
+									<div data-theme={t} class="bg-base-100 grid shrink-0 grid-cols-2 gap-0.5 rounded-md p-1 shadow-sm">
+										<div class="bg-base-content size-1 rounded-full" />
+										<div class="bg-primary size-1 rounded-full" />
+										<div class="bg-secondary size-1 rounded-full" />
+										<div class="bg-accent size-1 rounded-full" />
+									</div>
+									<div class="w-32 truncate">{t}</div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="invisible h-3 w-3 shrink-0">
+										<path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+									</svg>
+								</button>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</div>
 	</div>
 </theme-selector>
 
 <script>
 	class ThemeSelector extends HTMLElement {
 		storageKey = window.themeStorageKey;
-		select = this.querySelector("select")!;
-		prev = this.querySelector("#prev")!;
-		next = this.querySelector("#next")!;
+		buttons = this.querySelectorAll<HTMLButtonElement>("ul >li > button")!;
 		themes = [
 			"light",
 			"dark",
@@ -95,57 +116,17 @@ const themes = [
 			"nord",
 			"sunset",
 			"dracula-dark",
-			"dracula-light"
+			"dracula-light",
 		];
 
 		connectedCallback() {
-			// Why does this happen?
-			this.select.addEventListener("mousedown", (e) => {
-				(e.target as HTMLSelectElement).focus({ preventScroll: true });
-			});
-
-			const currentTheme = localStorage.getItem(this.storageKey)!;
-			const index = this.themes.indexOf(currentTheme);
-			this.select.selectedIndex = index;
-
-			this.select.addEventListener("change", (e) => {
-				e.preventDefault();
-
-				if (e.currentTarget instanceof HTMLSelectElement) {
-					const theme = e.currentTarget.value;
+			this.buttons.forEach((btn) => {
+				btn.addEventListener("click", (e) => {
+					e.preventDefault();
+					const theme = btn.dataset.setTheme!;
 					document.documentElement.dataset.theme = theme;
 					localStorage.setItem(this.storageKey, theme);
-				}
-			});
-
-			this.next.addEventListener("click", (e) => {
-				e.preventDefault();
-				const theme = document.documentElement.dataset.theme!;
-				const index = this.themes.indexOf(theme);
-
-				if (index === this.themes.length - 1) {
-					alert("Last");
-					return;
-				}
-
-				document.documentElement.dataset.theme = this.themes[index + 1];
-				this.select.selectedIndex = index + 1;
-				localStorage.setItem(this.storageKey, this.themes[index + 1]);
-			});
-
-			this.prev.addEventListener("click", (e) => {
-				e.preventDefault();
-				const theme = document.documentElement.dataset.theme!;
-				const index = this.themes.indexOf(theme);
-
-				if (index === 0) {
-					alert("Last");
-					return;
-				}
-
-				document.documentElement.dataset.theme = this.themes[index - 1];
-				this.select.selectedIndex = index - 1;
-				localStorage.setItem(this.storageKey, this.themes[index - 1]);
+				});
 			});
 		}
 	}

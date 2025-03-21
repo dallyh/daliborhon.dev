@@ -1,5 +1,4 @@
 ---
-import { APP_VERSION_NAME } from "astro:env/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import UptimeStatus from "@components/astro/common/UptimeStatus.astro";
 import UptimeStatusFallback from "@components/astro/common/UptimeStatusFallback.astro";
@@ -9,7 +8,9 @@ import { Icon } from "astro-icon/components";
 import ExternalLink from "./ExternalLink.astro";
 
 const locale = Astro.currentLocale!;
-const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
+const res = await fetch("http://localhost:4321/api/version.json");
+const hash = (await res.json()).hash;
+const commitHref = `https://github.com/dallyh/daliborhon.dev/commit/${hash}`;
 ---
 
 <div id="page-footer">
@@ -32,27 +33,22 @@ const tagHref = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VER
 				<Icon name="zerops-logo-symbol" width="64px" height="25px" />
 			</a>
 		</nav>
-		<aside class="flex w-full items-center justify-center md:w-auto">
+		<aside class="flex w-full flex-col items-center justify-center gap-1 md:w-auto">
 			<span>© {new Date().getFullYear()} - Dalibor Hon</span>
-			<span> - </span>
-			{
-				APP_VERSION_NAME && (
-					<span class="text-center text-sm">
-						<ExternalLink href={tagHref} title={APP_VERSION_NAME} aria-label={APP_VERSION_NAME}>
-							{APP_VERSION_NAME}
-						</ExternalLink>
-					</span>
-				)
-			}
-			{
-				!APP_VERSION_NAME && (
-					<span class="text-center text-sm">
-						<ExternalLink href={tagHref} title={m.common__repository()} aria-label={m.common__repository()}>
-							{m.common__repository()}
-						</ExternalLink>
-					</span>
-				)
-			}
+			<div class="flex items-center justify-center gap-2">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+					><line x1="3" x2="9" y1="12" y2="12"></line><line x1="15" x2="21" y1="12" y2="12"></line><circle cx="12" cy="12" r="3"></circle></svg
+				>
+				{
+					commitHref && (
+						<span class="text-center text-sm">
+							<ExternalLink href={commitHref} title={m.common__repository()} aria-label={m.common__repository()}>
+								{hash}
+							</ExternalLink>
+						</span>
+					)
+				}
+			</div>
 		</aside>
 	</footer>
 </div>

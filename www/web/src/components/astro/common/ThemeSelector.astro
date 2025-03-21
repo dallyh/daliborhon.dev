@@ -1,0 +1,153 @@
+---
+const themes = [
+	"light",
+	"dark",
+	"cupcake",
+	"bumblebee",
+	"emerald",
+	"corporate",
+	"synthwave",
+	"retro",
+	"cyberpunk",
+	"valentine",
+	"halloween",
+	"garden",
+	"forest",
+	"aqua",
+	"lofi",
+	"pastel",
+	"fantasy",
+	"wireframe",
+	"black",
+	"luxury",
+	"dracula",
+	"cmyk",
+	"autumn",
+	"business",
+	"acid",
+	"lemonade",
+	"night",
+	"coffee",
+	"winter",
+	"dim",
+	"nord",
+	"sunset",
+	"dracula-dark",
+	"dracula-light"
+];
+---
+
+<theme-selector>
+	<div class="flex gap-2">
+		<button id="prev" class="btn btn-primary btn-sm">Prev</button>
+		<select class="select select-sm select-bordered w-full max-w-xs">
+			{
+				themes.map((t) => {
+					return (
+						<option data-transition-disable value={t}>
+							{t}
+						</option>
+					);
+				})
+			}
+		</select>
+		<button id="next" class="btn btn-primary btn-sm">Next</button>
+	</div>
+</theme-selector>
+
+<script>
+	class ThemeSelector extends HTMLElement {
+		storageKey = window.themeStorageKey;
+		select = this.querySelector("select")!;
+		prev = this.querySelector("#prev")!;
+		next = this.querySelector("#next")!;
+		themes = [
+			"light",
+			"dark",
+			"cupcake",
+			"bumblebee",
+			"emerald",
+			"corporate",
+			"synthwave",
+			"retro",
+			"cyberpunk",
+			"valentine",
+			"halloween",
+			"garden",
+			"forest",
+			"aqua",
+			"lofi",
+			"pastel",
+			"fantasy",
+			"wireframe",
+			"black",
+			"luxury",
+			"dracula",
+			"cmyk",
+			"autumn",
+			"business",
+			"acid",
+			"lemonade",
+			"night",
+			"coffee",
+			"winter",
+			"dim",
+			"nord",
+			"sunset",
+			"dracula-dark",
+			"dracula-light"
+		];
+
+		connectedCallback() {
+			// Why does this happen?
+			this.select.addEventListener("mousedown", (e) => {
+				(e.target as HTMLSelectElement).focus({ preventScroll: true });
+			});
+
+			const currentTheme = localStorage.getItem(this.storageKey)!;
+			const index = this.themes.indexOf(currentTheme);
+			this.select.selectedIndex = index;
+
+			this.select.addEventListener("change", (e) => {
+				e.preventDefault();
+
+				if (e.currentTarget instanceof HTMLSelectElement) {
+					const theme = e.currentTarget.value;
+					document.documentElement.dataset.theme = theme;
+					localStorage.setItem(this.storageKey, theme);
+				}
+			});
+
+			this.next.addEventListener("click", (e) => {
+				e.preventDefault();
+				const theme = document.documentElement.dataset.theme!;
+				const index = this.themes.indexOf(theme);
+
+				if (index === this.themes.length - 1) {
+					alert("Last");
+					return;
+				}
+
+				document.documentElement.dataset.theme = this.themes[index + 1];
+				this.select.selectedIndex = index + 1;
+				localStorage.setItem(this.storageKey, this.themes[index + 1]);
+			});
+
+			this.prev.addEventListener("click", (e) => {
+				e.preventDefault();
+				const theme = document.documentElement.dataset.theme!;
+				const index = this.themes.indexOf(theme);
+
+				if (index === 0) {
+					alert("Last");
+					return;
+				}
+
+				document.documentElement.dataset.theme = this.themes[index - 1];
+				this.select.selectedIndex = index - 1;
+				localStorage.setItem(this.storageKey, this.themes[index - 1]);
+			});
+		}
+	}
+	customElements.define("theme-selector", ThemeSelector);
+</script>

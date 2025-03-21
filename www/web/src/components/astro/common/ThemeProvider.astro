@@ -6,7 +6,7 @@
 	function setTheme(doc) {
 		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem(storageKey);
 		const theme = storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-		doc.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
+		doc.documentElement.dataset.theme = theme;
 	}
 
 	setTheme(document);

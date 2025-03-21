@@ -7,6 +7,7 @@ import Footer from "./Footer.astro";
 import LanguageSelector from "./LanguageSelector.astro";
 import SearchInput from "./SearchInput.astro";
 import ThemeSelect from "./ThemeSelect.astro";
+import ThemeSelector from "./ThemeSelector.astro";
 
 interface Props {
 	post?: CollectionEntry<"posts">;
@@ -98,6 +99,7 @@ const menuItems = [
 			<div class="navbar-end hidden gap-2 lg:flex">
 				<SearchInput />
 				<LanguageSelector post={post} />
+				<ThemeSelector />
 				<!-- This is for styling purposes -->
 				<ul class="menu p-0">
 					<li>
@@ -160,7 +162,8 @@ const menuItems = [
 			<div class="divider"></div>
 			<div class="flex flex-col items-center gap-4">
 				<LanguageSelector post={post} />
-				<ThemeSelect />
+				<!-- <ThemeSelect /> -->
+				<ThemeSelector />
 			</div>
 		</aside>
 	</div>

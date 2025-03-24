@@ -171,6 +171,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.2.1
         version: 3.2.1
+      '@fontsource-variable/jetbrains-mono':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@hcaptcha/types':
         specifier: ^1.0.4
         version: 1.0.4
@@ -706,6 +709,9 @@ packages:
 
   '@foliojs-fork/restructure@2.0.2':
     resolution: {integrity: sha512-59SgoZ3EXbkfSX7b63tsou/SDGzwUEK6MuB5sKqgVK1/XE0fxmpsOb9DQI8LXW3KfGnAjImCGhhEb7uPPAUVNA==}
+
+  '@fontsource-variable/jetbrains-mono@5.2.5':
+    resolution: {integrity: sha512-G3sN1xq1moZd0JL+hFaA4MEdsiQS+JXC/z7m+EqA5/Fzn5CQlXGUaaNKFGQdDsFuLTnCfW0KOOSWHjygNfjEPw==}
 
   '@fontsource-variable/nunito@5.2.5':
     resolution: {integrity: sha512-XMrSfi1XrnM6HQA+MMdPVY/5tdnG4vamQScaesQRhaboP8g0dEjxbtUJY50KHFTh2MnQP5lHIyDFuMNM4Kb23A==}
@@ -4900,6 +4906,8 @@ snapshots:
       png-js: 1.0.0
 
   '@foliojs-fork/restructure@2.0.2': {}
+
+  '@fontsource-variable/jetbrains-mono@5.2.5': {}
 
   '@fontsource-variable/nunito@5.2.5': {}
 

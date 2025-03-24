@@ -1,16 +1,15 @@
 ---
 import { type CollectionEntry, getEntries } from "astro:content";
-import AllEntriesUrl from "@components/astro/common/AllEntriesUrl.astro";
 import { m } from "@paraglide/messages";
 import { githubRestClient } from "@services/github/githubRestClient";
 import ProjectCard from "./ProjectCard.astro";
+import Grid, { type GridProps } from "@components/astro/common/Grid.astro";
 
-interface Props {
+interface Props extends GridProps {
 	projects: CollectionEntry<"projects">[];
-	showAllUrl?: boolean;
 }
 
-const { showAllUrl = false, projects } = Astro.props;
+const { showAllUrl = false, projects, small = false, autoCols = true } = Astro.props;
 
 const mapProjectsData = async () => {
 	if (!projects) return [];
@@ -42,42 +41,14 @@ const mapProjectsData = async () => {
 };
 
 const data = await mapProjectsData();
-
-const allEntriesProps = {
-	url: "/projects",
-	urlDescription: m.projects__see_all(),
-};
-
-const cols = () => {
-	if (projects.length % 3 === 0) {
-		return 3;
-	}
-
-	if (projects.length % 2 === 0) {
-		return 2;
-	}
-
-	return 1;
-};
-
-const grid = {
-	1: "md:grid-cols-1",
-	2: "md:grid-cols-2",
-	3: "md:grid-cols-3",
-};
+const url = "/projects";
+const urlDescription = m.projects__see_all();
 ---
 
-<div class="flex flex-col">
-	<ul class={`grid grid-cols-1 gap-3 ${grid[cols()]}`}>
-		{
-			data.map((dat) => {
-				return (
-					<li class="cell">
-						<ProjectCard {...dat} />
-					</li>
-				);
-			})
+<Grid items={data} {url} {urlDescription} {autoCols} {showAllUrl}>
+	{
+		(item) => {
+			return <ProjectCard project={item.project} githubData={item.githubData} relatedTags={item.relatedTags} />;
 		}
-	</ul>
-	{showAllUrl && <AllEntriesUrl {...allEntriesProps} />}
-</div>
+	}
+</Grid>

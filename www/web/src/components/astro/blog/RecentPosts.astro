@@ -9,9 +9,10 @@ interface Props {
 	filterFeatured?: boolean;
 	showSeeAllUrl?: boolean;
 	sectionProps?: SectionProps;
+	small?: boolean;
 }
 
-const { posts, filterFeatured = false, showSeeAllUrl = true, sectionProps } = Astro.props;
+const { posts, filterFeatured = false, showSeeAllUrl = true, sectionProps, small } = Astro.props;
 
 const defaultSectionProps: SectionProps = {
 	isFirstSection: false,
@@ -37,8 +38,8 @@ if (filterFeatured) {
 	{
 		filteredPosts && filteredPosts.length !== 0 && (
 			<>
-				{showSeeAllUrl && <PostsGrid posts={filteredPosts} url="/blog/posts/" urlDescription={m.blog__see_all_posts()} />}
-				{!showSeeAllUrl && <PostsGrid posts={filteredPosts} />}
+				{showSeeAllUrl && <PostsGrid {small} posts={filteredPosts} url="/blog/posts/" urlDescription={m.blog__see_all_posts()} />}
+				{!showSeeAllUrl && <PostsGrid {small} posts={filteredPosts} />}
 			</>
 		)
 	}

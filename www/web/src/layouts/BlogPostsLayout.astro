@@ -41,7 +41,7 @@ const layoutProps = {
 				{
 					page.end !== -1 && (
 						<div class="flex flex-col">
-							<PostsGrid posts={page.data} />
+							<PostsGrid posts={page.data} cols={3} />
 							<nav class="join mt-8 self-center" role="navigation" aria-label="pagination">
 								<a
 									href={page.url.prev}

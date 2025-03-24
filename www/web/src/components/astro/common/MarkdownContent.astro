@@ -194,6 +194,23 @@ const { tocPosition = "default", headings } = Astro.props;
 	customElements.define("article-toc", ArticleToc);
 </script>
 
+<style is:global>
+	article-toc {
+		toc-item.active {
+			/*background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+			outline-style: none;
+			box-shadow:
+				0 1px oklch(0% 0 0 / 0.01) inset,
+				0 -1px oklch(100% 0 0 / 0.01) inset;*/
+
+			text-decoration: underline;
+			text-underline-offset: 3px;
+			text-decoration-thickness: 1px;
+			text-decoration-color: var(--color-primary);
+		}
+	}
+</style>
+
 <style>
 	.md-content {
 		position: relative;

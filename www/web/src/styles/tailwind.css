@@ -81,6 +81,41 @@
 	--noise: 0;
 }
 
+@plugin "daisyui/theme" {
+	name: "hacker";
+	default: false;
+	prefersdark: false;
+	color-scheme: "dark";
+	--color-base-100: oklch(0% 0 0);
+	--color-base-200: oklch(19% 0 0);
+	--color-base-300: oklch(22% 0 0);
+	--color-base-content: oklch(87.609% 0 0);
+	--color-primary: oklch(87.29% 0.2515 147.43);
+	--color-primary-content: oklch(12% 0.042 264.695);
+	--color-secondary: oklch(35% 0 0);
+	--color-secondary-content: oklch(100% 0 0);
+	--color-accent: oklch(35% 0 0);
+	--color-accent-content: oklch(100% 0 0);
+	--color-neutral: oklch(35% 0 0);
+	--color-neutral-content: oklch(100% 0 0);
+	--color-info: oklch(54% 0.245 262.881);
+	--color-info-content: oklch(98% 0.003 247.858);
+	--color-success: oklch(79% 0.209 151.711);
+	--color-success-content: oklch(12% 0.042 264.695);
+	--color-warning: oklch(90% 0.182 98.111);
+	--color-warning-content: oklch(19.359% 0.042 109.769);
+	--color-error: oklch(80% 0.114 19.571);
+	--color-error-content: oklch(12% 0.042 264.695);
+	--radius-selector: 0rem;
+	--radius-field: 0rem;
+	--radius-box: 0rem;
+	--size-selector: 0.3125rem;
+	--size-field: 0.25rem;
+	--border: 1px;
+	--depth: 0;
+	--noise: 0;
+}
+
 @plugin "@tailwindcss/typography";
 
 @theme {
@@ -130,6 +165,22 @@
 
 	h6 {
 		@apply font-bold;
+	}
+
+	.btn.btn-outline {
+		position: relative;
+		background-color: var(--color-base-100);
+
+		&::after {
+			position: absolute;
+			bottom: -0.25rem;
+			right: -0.25rem;
+			z-index: -1;
+			content: "";
+			width: 100%;
+			height: 100%;
+			background-color: var(--btn-color);
+		}
 	}
 
 	.validator {

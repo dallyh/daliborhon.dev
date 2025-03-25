@@ -28,11 +28,11 @@ const { title, sourceUrl, startDate } = project.data;
 const { Content } = await render(project);
 ---
 
-<div class="card card-outline bg-base-200 card-md h-full max-w-full border border-neutral-600">
+<div class="card card-striped bg-base-100 card-md h-full max-w-full border border-neutral-600">
 	<div class="card-body">
 		<div class="mb-2 flex">
 			<div>
-				<ExternalLink title={title} href={sourceUrl} class="card-title" target="_blank" aria-label={title}>{title}</ExternalLink>
+				<ExternalLink title={title} href={sourceUrl} class="card-title link link-hover" target="_blank" aria-label={title}>{title}</ExternalLink>
 				<p class="text-sm">
 					<span>🚀</span>
 					{githubData && <GithubDate date={githubData.createdAt} />}
@@ -54,7 +54,9 @@ const { Content } = await render(project);
 				</div>
 			)
 		}
-		<p><Content /></p>
+		<div class="md-content">
+			<Content />
+		</div>
 		{githubData && <GithubLanguages languages={githubData.languages} />}
 	</div>
 </div>

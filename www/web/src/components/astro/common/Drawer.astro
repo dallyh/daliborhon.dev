@@ -6,7 +6,6 @@ import { Icon } from "astro-icon/components";
 import Footer from "./Footer.astro";
 import LanguageSelector from "./LanguageSelector.astro";
 import SearchInput from "./SearchInput.astro";
-import ThemeSelect from "./ThemeSelect.astro";
 import ThemeSelector from "./ThemeSelector.astro";
 
 interface Props {
@@ -77,7 +76,7 @@ const menuItems = [
 											<a class="navbar-item" href={i.href} aria-label={i.title}>
 												{i.title}
 											</a>
-											<ul class="dropdown-content menu bg-base-300 rounded-box ml-0 w-52 p-2 shadow before:hidden">
+											<ul class="dropdown-content menu bg-base-200 ml-0 w-52 p-2 border border-white/5 outline-1 outline-black/5">
 												{i.items.map((d) => {
 													return (
 														<li>
@@ -100,14 +99,6 @@ const menuItems = [
 				<SearchInput />
 				<LanguageSelector post={post} />
 				<ThemeSelector />
-				<!-- This is for styling purposes -->
-				<!--<ul class="menu p-0">
-					<li>
-						<div>
-							 <ThemeSelect /> 
-						</div>
-					</li>
-				</ul>-->
 			</div>
 		</nav>
 		<!-- Page content -->
@@ -163,7 +154,6 @@ const menuItems = [
 			<div class="flex flex-col items-center gap-4">
 				<LanguageSelector post={post} />
 				<ThemeSelector />
-				<!-- <ThemeSelect /> -->
 			</div>
 		</aside>
 	</div>

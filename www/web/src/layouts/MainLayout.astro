@@ -10,8 +10,8 @@ import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astr
 import SearchModal from "@components/astro/common/SearchModal.astro";
 import ToastProvider from "@components/astro/common/ToastProvider.astro";
 import ViewTransitions from "@components/astro/common/ViewTransitions.astro";
-import nunitoLatinExt from "@fontsource-variable/nunito/files/nunito-latin-ext-wght-normal.woff2";
-import nunitoLatin from "@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2";
+import jetBrainsMonoLatin from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2";
+import jetBrainsMonoLatinExt from "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-ext-wght-normal.woff2";
 
 export interface Props {
 	title?: string;
@@ -85,8 +85,8 @@ const basePath = import.meta.env.BASE_URL;
 		<meta property="twitter:image" content={ogImage} />
 
 		<!-- Fonts, icons and external scripts -->
-		<link rel="preload" href={nunitoLatinExt} as="font" type="font/woff" crossorigin />
-		<link rel="preload" href={nunitoLatin} as="font" type="font/woff" crossorigin />
+		<link rel="preload" href={jetBrainsMonoLatin} as="font" type="font/woff" crossorigin />
+		<link rel="preload" href={jetBrainsMonoLatinExt} as="font" type="font/woff" crossorigin />
 		<script>
 			import { overwriteGetLocale, type Locale, baseLocale } from "@paraglide/runtime";
 			overwriteGetLocale(() => (document.documentElement.lang as Locale | undefined) ?? baseLocale);

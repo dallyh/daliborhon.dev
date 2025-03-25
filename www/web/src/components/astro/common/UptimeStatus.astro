@@ -16,6 +16,6 @@ const status = await fetchStatus();
 ---
 
 <a class="inline-grid *:[grid-area:1/1]" target="_blank" href="https://status.daliborhon.dev">
-	<div class={`status ${cls[status ?? "down"]} animate-ping`}></div>
-	<div class={`status ${cls[status ?? "down"]}`}></div>
+	<div class={`status rounded-full ${cls[status ?? "down"]} animate-ping`}></div>
+	<div class={`status rounded-full ${cls[status ?? "down"]}`}></div>
 </a>

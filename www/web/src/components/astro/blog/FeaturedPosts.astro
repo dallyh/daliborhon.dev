@@ -3,16 +3,15 @@ import type { CollectionEntry } from "astro:content";
 import { m } from "@paraglide/messages";
 import Section, { type Props as SectionProps } from "../common/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
-import type { Page } from "astro";
+import type { GridProps } from "../common/Grid.astro";
 
-interface Props {
+interface Props extends GridProps {
 	posts: CollectionEntry<"posts">[] | undefined;
-	showSeeAllUrl?: boolean;
 	sectionProps?: SectionProps;
 	small?: boolean;
 }
 
-const { showSeeAllUrl = true, posts, sectionProps, small } = Astro.props;
+const { small = false, url = "/blog/posts/featured", urlDescription = m.blog__see_all_featured(), posts, sectionProps, ...rest } = Astro.props;
 
 const defaultSectionProps: SectionProps = {
 	id: "featuredPosts",
@@ -23,10 +22,6 @@ const defaultSectionProps: SectionProps = {
 };
 
 const mergedSectionProps = { ...defaultSectionProps, ...sectionProps };
-
-function isPage<T>(value: any): value is Page<T> {
-	return value && value.data && Array.isArray(value.data);
-}
 ---
 
 <Section {...mergedSectionProps}>
@@ -35,8 +30,7 @@ function isPage<T>(value: any): value is Page<T> {
 	{
 		posts && posts.length !== 0 && (
 			<>
-				{showSeeAllUrl && <PostsGrid {small} posts={posts} url="/blog/posts/featured" urlDescription={m.blog__see_all_featured()} />}
-				{!showSeeAllUrl && <PostsGrid {small} posts={posts} />}
+				<PostsGrid {...rest} posts={posts} {url} {urlDescription} {small} />
 			</>
 		)
 	}

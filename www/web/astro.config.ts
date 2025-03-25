@@ -18,6 +18,7 @@ import iconConfig from "./icons.config";
 import { paraglideIntegration } from "./src/integrations/paraglide-js/integration";
 import { remarkAsidesIntegration } from "./src/integrations/remark-asides/integration";
 import { Logger } from "./src/utils/logger";
+import type { children } from "node_modules/hastscript/lib/jsx-classic";
 
 const logger = new Logger("astro-config");
 
@@ -86,14 +87,6 @@ export default defineConfig({
 						type: "element",
 						tagName: "span",
 						properties: { className: ["heading-link-icon"] },
-						children: [
-							{
-								type: "element",
-								tagName: "i",
-								properties: { className: ["fa-solid", "fa-hashtag"] },
-								children: [],
-							},
-						],
 					},
 				},
 			],

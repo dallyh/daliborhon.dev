@@ -10,7 +10,7 @@ interface Props extends GridProps {
 	small?: boolean;
 }
 
-const { posts, url, urlDescription, autoCols, cols, small = false } = Astro.props;
+const { posts, cols, small = false, ...rest } = Astro.props;
 
 function isPage<T>(value: any): value is Page<T> {
 	return value && value.data && Array.isArray(value.data);
@@ -21,7 +21,7 @@ const gridCols = small ? 1 : 3;
 
 {
 	Array.isArray(posts) && (
-		<Grid items={posts} {url} {urlDescription} {autoCols} cols={gridCols}>
+		<Grid items={posts} {...rest} cols={gridCols}>
 			{(item) => {
 				if (small) {
 					return <SmallPostPreview post={item} />;
@@ -34,7 +34,7 @@ const gridCols = small ? 1 : 3;
 }
 {
 	isPage(posts) && (
-		<Grid items={posts.data} {url} {urlDescription} {autoCols} {cols}>
+		<Grid items={posts.data} {...rest} cols={gridCols}>
 			{(item) => {
 				if (small) {
 					return <SmallPostPreview post={item} />;

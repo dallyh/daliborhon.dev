@@ -9,7 +9,7 @@ interface Props extends GridProps {
 	projects: CollectionEntry<"projects">[];
 }
 
-const { showAllUrl = false, projects, small = false, autoCols = true } = Astro.props;
+const { url = "/projects", urlDescription = m.projects__see_all(), projects, ...rest } = Astro.props;
 
 const mapProjectsData = async () => {
 	if (!projects) return [];
@@ -41,11 +41,9 @@ const mapProjectsData = async () => {
 };
 
 const data = await mapProjectsData();
-const url = "/projects";
-const urlDescription = m.projects__see_all();
 ---
 
-<Grid items={data} {url} {urlDescription} {autoCols} {showAllUrl}>
+<Grid items={data} {url} {urlDescription} {...rest}>
 	{
 		(item) => {
 			return <ProjectCard project={item.project} githubData={item.githubData} relatedTags={item.relatedTags} />;

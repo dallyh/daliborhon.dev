@@ -1,45 +1,11 @@
 ---
-const themes = [
-	"light",
-	"dark",
-	"cupcake",
-	"bumblebee",
-	"emerald",
-	"corporate",
-	"synthwave",
-	"retro",
-	"cyberpunk",
-	"valentine",
-	"halloween",
-	"garden",
-	"forest",
-	"aqua",
-	"lofi",
-	"pastel",
-	"fantasy",
-	"wireframe",
-	"black",
-	"luxury",
-	"dracula",
-	"cmyk",
-	"autumn",
-	"business",
-	"acid",
-	"lemonade",
-	"night",
-	"coffee",
-	"winter",
-	"dim",
-	"nord",
-	"sunset",
-	"dracula-dark",
-	"dracula-light",
-	"hacker"
-];
+import { Icon } from "astro-icon/components";
+
+const themes = ["light", "dark"];
 ---
 
 <theme-selector>
-	<div class="dropdown">
+	<div class="dropdown dropdown-center">
 		<div tabindex="0" role="button" class="input input-sm cursor-pointer" aria-haspopup="menu">
 			<div class="bg-base-100 border-base-content/10 grid shrink-0 grid-cols-2 gap-0.5 rounded-md border p-1">
 				<div class="bg-base-content size-1 rounded-full"></div>
@@ -47,11 +13,9 @@ const themes = [
 				<div class="bg-secondary size-1 rounded-full"></div>
 				<div class="bg-accent size-1 rounded-full"></div>
 			</div>
+			Theme
 		</div>
-		<div
-			tabindex="0"
-			class="dropdown-content bg-base-200 text-base-content rounded-box top-[-8px] mt-14 h-[30.5rem] max-h-[calc(100vh-8.6rem)] overflow-y-auto border border-white/5 shadow-2xl outline-1 outline-black/5"
-		>
+		<div tabindex="0" class="dropdown-content bg-base-200 text-base-content rounded-box top-[-8px] mt-14 border border-white/5 outline-1 outline-black/5">
 			<ul class="menu w-56">
 				<li class="menu-title text-xs">Theme</li>
 				{
@@ -74,6 +38,17 @@ const themes = [
 						);
 					})
 				}
+				<li>
+					<button class="gap-3 px-2" data-set-theme="system">
+						<div class="rounded-md p-1 shadow-sm">
+							<Icon name="heroicons:computer-desktop-16-solid" size="0.75rem" />
+						</div>
+						<div class="w-32 truncate">system</div>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="invisible h-3 w-3 shrink-0">
+							<path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"></path>
+						</svg>
+					</button>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -82,52 +57,27 @@ const themes = [
 <script>
 	class ThemeSelector extends HTMLElement {
 		storageKey = window.themeStorageKey;
-		buttons = this.querySelectorAll<HTMLButtonElement>("ul >li > button")!;
-		themes = [
-			"light",
-			"dark",
-			"cupcake",
-			"bumblebee",
-			"emerald",
-			"corporate",
-			"synthwave",
-			"retro",
-			"cyberpunk",
-			"valentine",
-			"halloween",
-			"garden",
-			"forest",
-			"aqua",
-			"lofi",
-			"pastel",
-			"fantasy",
-			"wireframe",
-			"black",
-			"luxury",
-			"dracula",
-			"cmyk",
-			"autumn",
-			"business",
-			"acid",
-			"lemonade",
-			"night",
-			"coffee",
-			"winter",
-			"dim",
-			"nord",
-			"sunset",
-			"dracula-dark",
-			"dracula-light",
-			"hacker"
-		];
+		buttons = this.querySelectorAll<HTMLButtonElement>("ul > li > button")!;
+
+		useTheme(theme: string) {
+			if (theme === "system") {
+				theme = this.systemTheme();
+			}
+
+			document.documentElement.dataset.theme = theme;
+			localStorage.setItem(this.storageKey, theme);
+		}
+
+		systemTheme() {
+			return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+		}
 
 		connectedCallback() {
 			this.buttons.forEach((btn) => {
 				btn.addEventListener("click", (e) => {
 					e.preventDefault();
 					const theme = btn.dataset.setTheme!;
-					document.documentElement.dataset.theme = theme;
-					localStorage.setItem(this.storageKey, theme);
+					this.useTheme(theme);
 				});
 			});
 		}

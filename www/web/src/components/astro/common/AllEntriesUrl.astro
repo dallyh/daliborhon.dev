@@ -12,6 +12,6 @@ const { url, urlDescription } = Astro.props;
 const locale = Astro.currentLocale!;
 ---
 
-<div class="has-icon icon-left mt-8 text-center">
+<div class="link link-hover-reverse has-icon icon-left mt-8 text-center">
 	<a class="has-icon" href={getRelativeLocaleUrl(locale, url)} aria-label={urlDescription} title={urlDescription}> <span>{urlDescription}</span><Icon class="ml-2" name="heroicons:arrow-long-right" /></a>
 </div>

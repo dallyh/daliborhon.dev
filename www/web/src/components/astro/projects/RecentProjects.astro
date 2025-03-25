@@ -7,12 +7,11 @@ import ProjectsGrid from "./ProjectsGrid.astro";
 
 interface Props {
 	projects: CollectionEntry<"projects">[];
-	filterFeatured?: boolean;
-	showAllUrl?: boolean;
 	sectionProps?: SectionProps;
+	filterFeatured?: boolean;
 }
 
-const { projects, filterFeatured = false, showAllUrl = true, sectionProps } = Astro.props;
+const { projects, filterFeatured = false, sectionProps, ...rest } = Astro.props;
 
 const defaultSectionProps: SectionProps = {
 	isFirstSection: false,
@@ -25,5 +24,5 @@ const mergedSectionProps = { ...defaultSectionProps, ...sectionProps };
 ---
 
 <Section {...mergedSectionProps}>
-	<ProjectsGrid projects={projects} {showAllUrl} />
+	<ProjectsGrid projects={projects} {...rest} />
 </Section>

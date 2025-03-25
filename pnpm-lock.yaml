@@ -44,9 +44,6 @@ importers:
       '@astrojs/react':
         specifier: ^4.2.1
         version: 4.2.1(@types/node@22.13.5)(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(jiti@2.4.2)(lightningcss@1.29.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(yaml@2.7.0)
-      '@fontsource-variable/nunito':
-        specifier: 5.2.5
-        version: 5.2.5
       '@formkit/auto-animate':
         specifier: ^0.8.2
         version: 0.8.2
@@ -712,9 +709,6 @@ packages:
 
   '@fontsource-variable/jetbrains-mono@5.2.5':
     resolution: {integrity: sha512-G3sN1xq1moZd0JL+hFaA4MEdsiQS+JXC/z7m+EqA5/Fzn5CQlXGUaaNKFGQdDsFuLTnCfW0KOOSWHjygNfjEPw==}
-
-  '@fontsource-variable/nunito@5.2.5':
-    resolution: {integrity: sha512-XMrSfi1XrnM6HQA+MMdPVY/5tdnG4vamQScaesQRhaboP8g0dEjxbtUJY50KHFTh2MnQP5lHIyDFuMNM4Kb23A==}
 
   '@formkit/auto-animate@0.8.2':
     resolution: {integrity: sha512-SwPWfeRa5veb1hOIBMdzI+73te5puUBHmqqaF1Bu7FjvxlYSz/kJcZKSa9Cg60zL0uRNeJL2SbRxV6Jp6Q1nFQ==}
@@ -4908,8 +4902,6 @@ snapshots:
   '@foliojs-fork/restructure@2.0.2': {}
 
   '@fontsource-variable/jetbrains-mono@5.2.5': {}
-
-  '@fontsource-variable/nunito@5.2.5': {}
 
   '@formkit/auto-animate@0.8.2': {}
 

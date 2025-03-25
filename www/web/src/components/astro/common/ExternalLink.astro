@@ -5,10 +5,7 @@ interface Props extends HTMLAttributes<"a"> {}
 
 const { class: restClass = "", ...rest } = Astro.props;
 
-const mergedClass = ["block", restClass].filter(Boolean).join(" ");
+const mergedClass = ["external", restClass].filter(Boolean).join(" ");
 ---
 
-<a {...rest} class={mergedClass} rel="nofollow noopener noreferrer" target="_blank">
-	<slot />
-	<span class="external-link-icon"><i></i></span>
-</a>
+<a {...rest} class={mergedClass} rel="nofollow noopener noreferrer" target="_blank"><slot /></a>

@@ -1,13 +1,23 @@
 <script is:inline>
-	// Itentionally inline to prevent FOUC
+	// Intentionally inline to prevent FOUC
 	const storageKey = "theme-preference";
 	window.themeStorageKey = storageKey;
 
-	function setTheme(doc) {
-		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem(storageKey);
-		const theme = storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-		doc.documentElement.dataset.theme = theme;
+	function getPreferredTheme() {
+		const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+		const storedTheme = localStorage.getItem(storageKey);
+
+		if (!storedTheme || storedTheme === "system") {
+			return prefersLight ? "light" : "dark";
+		}
+
+		return storedTheme;
 	}
 
-	setTheme(document);
+	function setTheme() {
+		const theme = getPreferredTheme();
+		document.documentElement.dataset.theme = theme;
+	}
+
+	setTheme();
 </script>

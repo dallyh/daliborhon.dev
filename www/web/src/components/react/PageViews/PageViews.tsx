@@ -157,7 +157,7 @@ export default function PageViews(props: Props) {
 								{props.arrowRightIcon}
 							</button>
 							<button className="join-item btn btn-sm btn-outline btn-primary" disabled title={m.common__last()} aria-label={m.common__last()}>
-								<i className="fa-solid fa-forward"></i>
+								{props.forwardIcon}
 							</button>
 						</>
 					) : (

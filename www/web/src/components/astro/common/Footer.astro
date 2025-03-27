@@ -6,11 +6,26 @@ import { m } from "@paraglide/messages";
 import { removeTrailingSlash } from "@utils";
 import { Icon } from "astro-icon/components";
 import ExternalLink from "./ExternalLink.astro";
+import { APP_VERSION_NAME } from "astro:env/client";
 
 const locale = Astro.currentLocale!;
-const res = await fetch("http://localhost:4321/api/version.json");
-const hash = (await res.json()).hash;
-const commitHref = `https://github.com/dallyh/daliborhon.dev/commit/${hash}`;
+
+function getVersionData() {
+	if (APP_VERSION_NAME) {
+		const href = `https://github.com/dallyh/daliborhon.dev/releases/tag/${APP_VERSION_NAME}`;
+		return {
+			version: APP_VERSION_NAME,
+			url: href,
+		};
+	}
+
+	return {
+		version: m.common__repository(),
+		url: "https://github.com/dallyh/daliborhon.dev",
+	};
+}
+
+const data = getVersionData();
 ---
 
 <div id="page-footer">
@@ -39,15 +54,11 @@ const commitHref = `https://github.com/dallyh/daliborhon.dev/commit/${hash}`;
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 					><line x1="3" x2="9" y1="12" y2="12"></line><line x1="15" x2="21" y1="12" y2="12"></line><circle cx="12" cy="12" r="3"></circle></svg
 				>
-				{
-					commitHref && (
-						<span class="text-center text-sm">
-							<ExternalLink href={commitHref} title={m.common__repository()} class="link link-hover-reverse" aria-label={m.common__repository()}>
-								{hash}
-							</ExternalLink>
-						</span>
-					)
-				}
+				<span class="text-center text-sm">
+					<ExternalLink href={data.url} title={m.common__repository()} class="link link-hover-reverse" aria-label={m.common__repository()}>
+						{data.version}
+					</ExternalLink>
+				</span>
 			</div>
 		</aside>
 	</footer>

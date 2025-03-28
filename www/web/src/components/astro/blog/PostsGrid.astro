@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import PostPreview from "@components/astro/blog/PostPreview.astro";
+import Grid, { type GridProps } from "@components/astro/common/Grid.astro";
 import type { Page } from "astro";
 import SmallPostPreview from "./SmallPostPreview.astro";
-import Grid, { type GridProps } from "@components/astro/common/Grid.astro";
 
 interface Props extends GridProps {
 	posts: CollectionEntry<"posts">[] | Page<CollectionEntry<"posts">>;

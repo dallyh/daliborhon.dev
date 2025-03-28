@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { render } from "astro:content";
+import Card from "@components/astro/common/Card.astro";
 import { formatDateTime } from "@utils";
 import ExternalLink from "../common/ExternalLink.astro";
 import GithubDate from "./GithubDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
-import Card from "@components/astro/common/Card.astro";
 
 interface Props {
 	project: CollectionEntry<"projects">;

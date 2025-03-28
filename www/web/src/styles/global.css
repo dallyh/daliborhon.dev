@@ -2,10 +2,6 @@
 	--header-height: calc(68px + 1rem);
 }
 
-.gsc-main {
-	flex-direction: column-reverse !important;
-}
-
 html {
 	overflow-anchor: none;
 	@media (prefers-reduced-motion: no-preference) {

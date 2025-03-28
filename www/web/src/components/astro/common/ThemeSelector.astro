@@ -1,6 +1,6 @@
 ---
-import { Icon } from "astro-icon/components";
 import { m } from "@paraglide/messages";
+import { Icon } from "astro-icon/components";
 
 const themes = ["light", "dark"];
 ---
@@ -16,7 +16,7 @@ const themes = ["light", "dark"];
 			</div>
 			{m.common__theme()}
 		</div>
-		<div tabindex="0" class="dropdown-content bg-base-200 text-base-content w-38 mt-4 border border-white/5 outline-1 outline-black/20">
+		<div tabindex="0" class="dropdown-content bg-base-200 text-base-content w-38">
 			<ul class="menu w-38">
 				{
 					themes.map((t) => {
@@ -78,6 +78,7 @@ const themes = ["light", "dark"];
 
 			localStorage.setItem(this.storageKey, theme);
 			this.setActive(theme);
+			window.dispatchEvent(new CustomEvent("theme-changed"));
 		}
 
 		setHtmlTheme(theme: string) {

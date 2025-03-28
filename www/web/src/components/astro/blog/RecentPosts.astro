@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { m } from "@paraglide/messages";
+import type { GridProps } from "../common/Grid.astro";
 import Section, { type Props as SectionProps } from "../common/Section.astro";
 import PostsGrid from "./PostsGrid.astro";
-import type { GridProps } from "../common/Grid.astro";
 
 interface Props extends GridProps {
 	posts: CollectionEntry<"posts">[] | undefined;

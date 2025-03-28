@@ -33,12 +33,6 @@ function checkFilenameInKeys(filename: string, images: Record<string, () => Prom
 }
 
 const images = import.meta.glob<{ default: ImageMetadata }>("../../../assets/content/**/*.{jpeg,jpg,png,gif,svg}");
-let file = checkFilenameInKeys(extractFileNameAndExtension(img).fileNameAndExtension, images);
-
-if (imgInverted) {
-	file = checkFilenameInKeys(extractFileNameAndExtension(imgInverted).fileNameAndExtension, images);
-}
-
 const imgProps = {
 	alt,
 	title: alt,
@@ -60,15 +54,17 @@ const isPrint = Astro.locals.isPrint;
 
 {
 	!isPrint && (
-		<div class="card card-compact bg-base-200 h-full min-h-32 shadow-xl">
+		<div class="card card-compact bg-base-200 h-full min-h-32">
 			<div class="card-body grid place-items-center items-center justify-center text-center">
 				<div>
 					<div class="image-normal">
-						<Image src={file()} {...imgProps} />
+						<Image src={checkFilenameInKeys(extractFileNameAndExtension(img).fileNameAndExtension, images)()} {...imgProps} />
 					</div>
-					<div class="image-inverted">
-						<Image src={file()} {...imgProps} />
-					</div>
+					{imgInverted && (
+						<div class="image-inverted">
+							<Image src={checkFilenameInKeys(extractFileNameAndExtension(imgInverted).fileNameAndExtension, images)()} {...imgProps} />
+						</div>
+					)}
 				</div>
 				<slot />
 			</div>

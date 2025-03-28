@@ -1,4 +1,4 @@
-@import "tailwindcss" source("../../src/");
+@import "tailwindcss";
 @plugin "daisyui" {
 	themes: false;
 }
@@ -80,8 +80,6 @@
 	--default-mono-font-family: var(--default-font-family);
 }
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
 @utility link {
 	text-underline-offset: 3px;
 	text-decoration-thickness: 1px;
@@ -141,14 +139,13 @@
 	}
 }
 
-@utility shadow-primary {
-	box-shadow: 4px 4px 0 0 var(--color-primary);
+@utility shadow-offset {
+	box-shadow: 4px 4px 0 0 var(--tw-shadow-color);
 }
 
 @utility btn {
 	&.btn-outline-shadow {
-		@apply btn-outline;
-		@apply shadow-primary;
+		@apply shadow-primary shadow-offset btn-outline shadow;
 		transition: box-shadow 0.2s;
 
 		&:hover {
@@ -184,16 +181,25 @@
 }
 
 @utility dropdown {
+	/* Same as DaisyUI .menu.dropdown-content */
+	--margin-top: calc(0.25rem * 2);
+
 	&.dropdown-hover {
+		/* Fixes hover */
 		&::after {
 			content: "";
 			position: absolute;
 			top: 100%;
 			left: 0;
 			width: 100%;
-			height: 5rem;
+			height: var(--margin-top);
 			pointer-events: auto;
 		}
+	}
+
+	/* When the content is not under menu - normalize */
+	.dropdown-content {
+		margin-top: var(--margin-top);
 	}
 }
 

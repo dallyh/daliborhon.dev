@@ -3,11 +3,11 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getEntries } from "astro:content";
 import FormattedDate from "@components/astro/blog/FormattedDate.astro";
+import Card from "@components/astro/common/Card.astro";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostImageUrl, getBlogPostUrl } from "@utils/content";
 import { Icon } from "astro-icon/components";
 import TagList from "./TagList.astro";
-import Card from "@components/astro/common/Card.astro";
 
 interface Props {
 	post: CollectionEntry<"posts">;

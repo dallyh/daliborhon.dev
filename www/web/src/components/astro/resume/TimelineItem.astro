@@ -16,10 +16,10 @@ const isPrint = Astro.locals.isPrint;
 ---
 
 <div class="timeline-item">
-	<p class="date">{date}</p>
+	<p class="date text-primary">{date}</p>
 	<p class="title not-prose mb-2"><strong>{title}</strong></p>
 	<p class="not-prose mb-4">{institute}</p>
-	<div class="bg-base-300 rounded-lg p-4 [&>p]:m-0">
+	<div class="bg-base-200 border-base-300 border p-4 [&>p]:m-0">
 		<slot />
 	</div>
 	{isPrint && <hr />}

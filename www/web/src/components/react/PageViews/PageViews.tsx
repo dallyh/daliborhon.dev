@@ -112,7 +112,7 @@ export default function PageViews(props: Props) {
 							value={searchLocalState}
 							onChange={(e) => setSearchLocalState(e.currentTarget.value)}
 						/>
-						<button className={`btn btn-primary btn-outline join-item ${isPending ? "skeleton" : ""}`} type="submit">
+						<button className={`btn btn-primary btn-outline join-item ml-[1px] ${isPending ? "skeleton" : ""}`} type="submit">
 							{m.common__submit_btn()}
 						</button>
 					</div>
@@ -149,7 +149,7 @@ export default function PageViews(props: Props) {
 						</>
 					)}
 
-					<p className="join-item btn no-animation btn-sm btn-outline btn-primary btn-disabled">{page}</p>
+					<p className="join-item btn no-animation btn-sm btn-primary pointer-events-none">{page}</p>
 
 					{page === data.totalPages ? (
 						<>

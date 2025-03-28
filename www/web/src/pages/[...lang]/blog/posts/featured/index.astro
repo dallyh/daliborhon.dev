@@ -25,5 +25,5 @@ const layoutProps = {
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/posts")} label={m.blog__posts()} />
 		<BreadCrumbsItem currentPage={true} label={m.blog__featured_posts_title()} />
 	</BreadCrumbs>
-	<FeaturedPosts sectionProps={{ id: "featuredPosts", isFirstSection: true }} {posts} showSeeAllUrl={false} />
+	<FeaturedPosts sectionProps={{ id: "featuredPosts", isFirstSection: true }} {posts} showAllUrl={false} />
 </PageLayout>

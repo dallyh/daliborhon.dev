@@ -31,6 +31,6 @@ const searchProps = {
 	</Fragment>
 	<SearchMeta {...searchProps} />
 	<Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
-		<ProjectsGrid {projects} />
+		<ProjectsGrid {projects} showAllUrl={false} />
 	</Section>
 </PageLayout>

@@ -14,26 +14,7 @@ const { locale } = Astro.props;
 			<span class="loading loading-spinner loading-sm"></span>
 			{m.comments__show_comments()}
 		</button>
-		<div id="giscus-container" class="fade bg-base-100 pointer-events-none h-[160px] p-4 text-white">
-			<script
-				is:inline
-				src="https://giscus.app/client.js"
-				data-repo="dallyh/daliborhon.dev"
-				data-repoid="R_kgDOH42J2g"
-				data-category="Comments"
-				data-categoryid="DIC_kwDOH42J2s4Cl4Zg"
-				data-mapping="pathname"
-				data-strict="0"
-				data-reactions-enabled="0"
-				data-emit-metadata="0"
-				data-theme="dark"
-				data-lang={locale}
-				data-input-position="bottom"
-				data-loading="lazy"
-				crossorigin="anonymous"
-				async
-				data-astro-rerun></script>
-		</div>
+		<div id="giscus-container" data-locale={locale} class="fade pointer-events-none h-[160px] w-full p-4"></div>
 	</div>
 </giscus-comments>
 
@@ -48,20 +29,50 @@ const { locale } = Astro.props;
 			this.commentsBtn.querySelector("span")?.remove();
 		}
 
+		addScript() {
+			const locale = this.container.dataset.locale!;
+			const theme = document.documentElement.dataset.theme!;
+			const script = document.createElement("script");
+
+			const config = {
+				src: "https://giscus.app/client.js",
+				"data-repo": "dallyh/daliborhon.dev",
+				"data-repoid": "R_kgDOH42J2g",
+				"data-category": "Comments",
+				"data-categoryid": "DIC_kwDOH42J2s4Cl4Zg",
+				"data-mapping": "pathname",
+				"data-strict": "0",
+				"data-reactions-enabled": "0",
+				"data-emit-metadata": "0",
+				"data-theme": theme,
+				"data-lang": locale,
+				"data-input-position": "bottom",
+				"data-loading": "lazy",
+				crossorigin: "anonymous",
+			};
+
+			Object.entries(config).forEach(([key, value]) => {
+				script.setAttribute(key, value);
+			});
+
+			script.setAttribute("async", "true");
+			this.container.appendChild(script);
+		}
+
 		createObserver() {
-			const iframeObserver = new MutationObserver(() => {
+			const containerObserver = new MutationObserver(() => {
 				const iframe = this.querySelector<HTMLIFrameElement>(".giscus-frame")!;
 				if (iframe) {
 					this.iframe = iframe;
 					this.onloadCallback();
-					iframeObserver.disconnect();
+					containerObserver.disconnect();
 				}
 			});
-			iframeObserver.observe(this.container, { childList: true, subtree: true, attributes: true });
+			containerObserver.observe(this.container, { childList: true, subtree: true, attributes: true });
 		}
 
 		themeChangedCallback() {
-			let newTheme = document.documentElement.getAttribute("data-theme");
+			let newTheme = document.documentElement.dataset.theme!;
 			if (this.iframe instanceof HTMLIFrameElement && this.iframe.contentWindow) {
 				this.iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: newTheme || "light" } } }, "https://giscus.app");
 				this.iframe.contentDocument?.appendChild;
@@ -76,6 +87,7 @@ const { locale } = Astro.props;
 		}
 
 		connectedCallback() {
+			this.addScript();
 			this.createObserver();
 			window.addEventListener("theme-changed", this.themeChangedCallback.bind(this));
 			this.commentsBtn.addEventListener("click", this.showCommentsCallback.bind(this));
@@ -90,8 +102,14 @@ const { locale } = Astro.props;
 	customElements.define("giscus-comments", Comments);
 </script>
 
+<style is:global>
+	.gsc-main {
+		flex-direction: column-reverse !important;
+	}
+</style>
+
 <style>
 	.fade {
-		mask-image: linear-gradient(to top, transparent 35%, var(--color-base-100));
+		mask-image: linear-gradient(to top, transparent 45%, green);
 	}
 </style>

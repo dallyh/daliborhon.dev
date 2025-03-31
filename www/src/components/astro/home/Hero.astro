@@ -1,0 +1,54 @@
+---
+import profilePicture from "@assets/img/profile/me.png";
+import ProfilePicture from "@components/astro/common/ProfilePicture.astro";
+import { m } from "@paraglide/messages";
+import { Icon } from "astro-icon/components";
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<div class="flex w-full flex-col-reverse justify-between pb-16 pt-8 lg:flex-row">
+	<div class="mt-6 flex flex-col gap-3 lg:mt-0">
+		<h1 class="text-2xl">{m.landing__hi_there()} Dalibor<span class="shake">👋</span></h1>
+		<p>
+			{m.landing__intro()}
+		</p>
+		<p class="flex gap-4 text-sm">
+			<span class="text-primary flex items-center gap-2">
+				<span>
+					<Icon name="heroicons:map-pin-solid" />
+				</span>
+				<span>{m.common__country_czech_republic()}</span>
+			</span>
+			<span class="text-primary flex items-center gap-2">
+				<span>
+					<Icon name="heroicons:clock-solid" />
+				</span>
+				<span id="time">00:00</span>
+			</span>
+		</p>
+		<p class="text-sm">
+			<span class="text-primary flex items-center gap-2">
+				<span>
+					<Icon name="heroicons:briefcase-solid" />
+				</span>
+				<span>Business Consultant</span>
+			</span>
+		</p>
+		<p class="subtitle is-size-6"></p>
+		<SocialLinks />
+	</div>
+	<ProfilePicture img={profilePicture} imgClass="max-w-[sm] rounded-lg shadow-2xl" />
+</div>
+
+<script>
+	function displayClock() {
+		var ele = document.getElementById("time");
+		if (!ele) {
+			return;
+		}
+		var display = new Date().toLocaleTimeString("cs-CZ");
+		ele.innerHTML = `${display} CET`;
+		setTimeout(displayClock, 1000);
+	}
+	displayClock();
+</script>

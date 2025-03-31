@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
+import FormattedDate from "@components/astro/blog/FormattedDate.astro";
+import Card from "@components/astro/common/Card.astro";
+import type { Locale } from "@paraglide/runtime";
+import { getBlogPostImageUrl, getBlogPostUrl } from "@utils/content";
+import { Icon } from "astro-icon/components";
+import TagList from "./TagList.astro";
+
+interface Props {
+	post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const locale = Astro.currentLocale as Locale;
+const postUrl = getBlogPostUrl(locale, post);
+const relatedTags = await getEntries(post.data.tags);
+const image = getBlogPostImageUrl(locale, post);
+
+const { pubDate, modDate, title, description } = post.data;
+---
+
+<Card isArticle>
+	<figure class="skeleton">
+		<a href={postUrl}>
+			{/*@ts-ignore this works*/}
+			<Image src={image} alt={title} width={1200} height={630} loading="lazy" />
+		</a>
+	</figure>
+	<div class="card-body">
+		{post.data.draft && <div class="badge bg-error text-error-content absolute left-3 top-3">Draft</div>}
+		<h2 class="card-title flex flex-col items-start">
+			<a class="link link-hover" href={postUrl}>{title}</a>
+		</h2>
+		<div class="has-icon icon-left icon-inline text-sm">
+			<Icon name="heroicons:calendar-solid" /><FormattedDate pubDate={pubDate} modDate={modDate} locale={locale} />
+		</div>
+		<p>{description}</p>
+		<div class="card-actions mt-4 justify-start">
+			<TagList tags={relatedTags!} />
+		</div>
+	</div>
+</Card>

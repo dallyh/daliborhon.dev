@@ -1,0 +1,226 @@
+---
+import { getEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import SearchMeta from "@components/astro/common/SearchMeta.astro";
+import MarkdownContent from "@components/astro/content/MarkdownContent.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { m } from "@paraglide/messages";
+import { removeTrailingSlash } from "@utils";
+
+export { getStaticPaths } from "@utils/i18n";
+
+const locale = Astro.currentLocale!;
+
+const entry = await getEntry("resume", locale);
+
+if (!entry) {
+	console.error("Resume entry was not found.");
+	return new Response(null, { status: 404, statusText: "Resume entry was not found" });
+}
+
+const layoutProps = {
+	title: m.common__resume(),
+	description: m.resume__resume_page_description(),
+};
+
+const searchProps = {
+	title: m.common__resume(),
+	description: layoutProps.description,
+};
+---
+
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
+		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/about")} label={m.common__about()} />
+		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/resume")} label={m.common__resume()} />
+	</Fragment>
+	<SearchMeta {...searchProps} />
+	<div class="section">
+		<MarkdownContent {entry} toc="inside" />
+		<download-button>
+			<a
+				id="download"
+				class="button btn btn-primary floating"
+				href={removeTrailingSlash(getRelativeLocaleUrl(locale, "/about/resume/pdf"))}
+				download
+				data-disable-transition="true"
+				title={m.resume__download_cv()}
+				aria-label={m.resume__download_cv()}
+				data-astro-prefetch="false"
+			>
+				<span class="inline-flex items-center justify-center">
+					<span class="icon">
+						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 512 512">
+							<path
+								fill="currentColor"
+								d="M0 64C0 28.7 28.7 0 64 0h160v128c0 17.7 14.3 32 32 32h128v144H176c-35.3 0-64 28.7-64 64v144H64c-35.3 0-64-28.7-64-64zm384 64H256V0zM176 352h32c30.9 0 56 25.1 56 56s-25.1 56-56 56h-16v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V368c0-8.8 7.2-16 16-16m32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24h-16v48zm96-80h32c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48h-32c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16m32 128c8.8 0 16-7.2 16-16v-64c0-8.8-7.2-16-16-16h-16v96zm80-112c0-8.8 7.2-16 16-16h48c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16h-32v48c0 8.8-7.2 16-16 16s-16-7.2-16-16z"
+							></path>
+						</svg>
+					</span>
+					<span class="text">{m.resume__download_cv()}</span>
+				</span>
+			</a>
+		</download-button>
+	</div>
+</PageLayout>
+
+<script>
+	import { m } from "@paraglide/messages";
+
+	class DownloadButton extends HTMLElement {
+		downloadButton = this.querySelector<HTMLAnchorElement>("#download")!;
+
+		connectedCallback(): void {
+			this.downloadButton.addEventListener("click", this.handleDownload.bind(this));
+		}
+
+		disconnectedCallback(): void {
+			this.downloadButton.removeEventListener("click", this.handleDownload.bind(this));
+		}
+
+		async handleDownload(e: MouseEvent): Promise<void> {
+			e.preventDefault();
+			this.downloadButton.classList.toggle("is-loading");
+
+			try {
+				window.showToast({ message: m.resume__generating_pdf(), type: "info" });
+
+				// Fetch the PDF file
+				const res = await fetch(this.downloadButton.href);
+
+				if (!res.ok) {
+					window.showToast({ message: m.common__download_error(), type: "error" });
+					console.error(`Failed to fetch the file: ${res.statusText}`);
+					return;
+				}
+
+				const blob = await res.blob();
+				const filename = res.headers.get("x-filename") || "download.pdf";
+				this.createAndDownloadBlob(blob, filename);
+
+				window.showToast({ message: m.common__download_success(), type: "success" });
+			} catch (error) {
+				window.showToast({ message: m.common__download_error(), type: "error" });
+				console.error("Error downloading the file:", error);
+			} finally {
+				this.downloadButton.classList.toggle("is-loading");
+			}
+		}
+
+		createAndDownloadBlob(blob: Blob, name: string): void {
+			const link = document.createElement("a");
+			link.setAttribute("download", name);
+
+			const blobUrl = URL.createObjectURL(blob);
+			link.href = blobUrl;
+
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
+			URL.revokeObjectURL(blobUrl);
+		}
+	}
+
+	customElements.define("download-button", DownloadButton);
+</script>
+
+<style>
+	:root {
+		scroll-timeline: --scroll-timeline y; /* :state(scroll-timeline) -- error will be removed in chrome 133 */
+		/* Firefox supports the older "vertical" syntax */
+		scroll-timeline: --scroll-timeline vertical;
+	}
+
+	.section {
+		position: relative;
+		width: 100%;
+	}
+
+	@keyframes show {
+		to {
+			left: 50%;
+			transform: translateX(-50%);
+			width: max-content;
+			border-radius: var(--rounded-box);
+		}
+	}
+
+	@keyframes showText {
+		to {
+			visibility: visible;
+			opacity: 1;
+			width: unset;
+		}
+	}
+
+	@keyframes moveIcon {
+		to {
+			margin-right: 0.25rem;
+		}
+	}
+
+	.button {
+		&.floating,
+		.text,
+		.icon {
+			animation-duration: 1ms; /* Firefox requires this to apply the animation */
+			animation-range-start: 96%;
+			animation-range-end: 100%;
+			animation-direction: alternate;
+			animation-timeline: scroll(y root);
+		}
+
+		&.floating {
+			animation-name: show;
+		}
+
+		.text {
+			animation-name: showText;
+		}
+
+		.icon {
+			animation-name: moveIcon;
+		}
+	}
+
+	.button {
+		&.floating {
+			overflow: hidden;
+			position: sticky;
+			left: calc(100% - 4rem);
+			bottom: 1rem;
+			z-index: 1020;
+			width: 55px;
+			height: 55px;
+			border-radius: 9999px;
+
+			> span {
+				display: inline-flex;
+				flex-wrap: nowrap;
+			}
+
+			.text {
+				opacity: 0;
+				visibility: hidden;
+				width: 0;
+			}
+		}
+
+		svg {
+			font-size: 1.25rem;
+			display: inline-block;
+		}
+	}
+
+	@keyframes showButton {
+		from {
+			transform: scale(0);
+		}
+
+		to {
+			transform: scale(1);
+		}
+	}
+</style>

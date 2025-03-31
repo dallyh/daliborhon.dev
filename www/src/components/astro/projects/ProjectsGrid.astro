@@ -1,0 +1,52 @@
+---
+import { type CollectionEntry, getEntries } from "astro:content";
+import Grid, { type GridProps } from "@components/astro/common/Grid.astro";
+import { m } from "@paraglide/messages";
+import { githubRestClient } from "@services/github/github-rest-client";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props extends GridProps {
+	projects: CollectionEntry<"projects">[];
+}
+
+const { url = "/projects", urlDescription = m.projects__see_all(), projects, ...rest } = Astro.props;
+
+const mapProjectsData = async () => {
+	if (!projects) return [];
+
+	const results = await Promise.all(
+		projects.map(async (p) => {
+			const relatedTags = await getEntries(p.data.tags);
+
+			const projectUrl = new URL(p.data.sourceUrl);
+			const [owner, repo] = projectUrl.pathname.split("/").filter(Boolean);
+
+			const repository = (await githubRestClient.repos.get({ owner, repo })).data;
+			const languagesData = (await githubRestClient.repos.listLanguages({ repo: repository.name, owner: repository.owner.login })).data;
+
+			const data = {
+				project: p,
+				relatedTags: relatedTags,
+				githubData: {
+					createdAt: new Date(repository.created_at),
+					languages: languagesData,
+				},
+			};
+
+			return data;
+		}),
+	);
+
+	return results;
+};
+
+const data = await mapProjectsData();
+---
+
+<Grid items={data} {url} {urlDescription} {...rest}>
+	{
+		(item) => {
+			return <ProjectCard project={item.project} githubData={item.githubData} relatedTags={item.relatedTags} />;
+		}
+	}
+</Grid>

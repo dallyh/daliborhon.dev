@@ -1,0 +1,23 @@
+<script is:inline>
+	// Intentionally inline to prevent FOUC
+	const storageKey = "theme-preference";
+	window.themeStorageKey = storageKey;
+
+	function getPreferredTheme() {
+		const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+		const storedTheme = localStorage.getItem(storageKey);
+
+		if (!storedTheme || storedTheme === "system") {
+			return prefersLight ? "light" : "dark";
+		}
+
+		return storedTheme;
+	}
+
+	function setTheme() {
+		const theme = getPreferredTheme();
+		document.documentElement.dataset.theme = theme;
+	}
+
+	setTheme();
+</script>

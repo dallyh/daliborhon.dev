@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import PostPreview from "@components/astro/blog/PostPreview.astro";
+import Grid, { type GridProps } from "@components/astro/common/Grid.astro";
+import type { Page } from "astro";
+import SmallPostPreview from "./SmallPostPreview.astro";
+
+interface Props extends GridProps {
+	posts: CollectionEntry<"posts">[] | Page<CollectionEntry<"posts">>;
+	small?: boolean;
+}
+
+const { posts, cols, small = false, ...rest } = Astro.props;
+
+function isPage<T>(value: any): value is Page<T> {
+	return value && value.data && Array.isArray(value.data);
+}
+
+const gridCols = small ? 1 : 3;
+---
+
+{
+	Array.isArray(posts) && (
+		<Grid items={posts} {...rest} cols={gridCols}>
+			{(item) => {
+				if (small) {
+					return <SmallPostPreview post={item} />;
+				} else {
+					return <PostPreview post={item} />;
+				}
+			}}
+		</Grid>
+	)
+}
+{
+	isPage(posts) && (
+		<Grid items={posts.data} {...rest} cols={gridCols}>
+			{(item) => {
+				if (small) {
+					return <SmallPostPreview post={item} />;
+				} else {
+					return <PostPreview post={item} />;
+				}
+			}}
+		</Grid>
+	)
+}

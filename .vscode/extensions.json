@@ -1,4 +1,4 @@
 {
-    "recommendations": ["astro-build.astro-vscode", "biomejs.biome", "inlang.vs-code-extension", "bradlc.vscode-tailwindcss", "eliostruyf.vscode-front-matter-beta"],
+    "recommendations": ["astro-build.astro-vscode", "biomejs.biome", "inlang.vs-code-extension", "bradlc.vscode-tailwindcss", "eliostruyf.vscode-front-matter-beta", "stripe.markdoc-language-support"],
     "unwantedRecommendations": []
 }

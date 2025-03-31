@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { m } from "@paraglide/messages";
+import type { GridProps } from "../common/Grid.astro";
+import Section, { type Props as SectionProps } from "../common/Section.astro";
+import PostsGrid from "./PostsGrid.astro";
+
+interface Props extends GridProps {
+	posts: CollectionEntry<"posts">[] | undefined;
+	sectionProps?: SectionProps;
+	small?: boolean;
+}
+
+const { small = false, url = "/blog/posts/featured", urlDescription = m.blog__see_all_featured(), posts, sectionProps, ...rest } = Astro.props;
+
+const defaultSectionProps: SectionProps = {
+	id: "featuredPosts",
+	isFirstSection: false,
+	sectionTitle: m.blog__featured_posts_title(),
+	sectionDescription: m.blog__featured_posts_description(),
+	heading: "h2",
+};
+
+const mergedSectionProps = { ...defaultSectionProps, ...sectionProps };
+---
+
+<Section {...mergedSectionProps}>
+	{!posts && <p>{m.blog__no_featured_posts()} 😞</p>}
+	{posts && posts.length === 0 && <p>{m.blog__no_featured_posts()} 😞</p>}
+	{
+		posts && posts.length !== 0 && (
+			<>
+				<PostsGrid {...rest} posts={posts} {url} {urlDescription} {small} />
+			</>
+		)
+	}
+</Section>

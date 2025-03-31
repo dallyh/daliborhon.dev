@@ -1,0 +1,75 @@
+---
+import { render } from "astro:content";
+import type { CollectionEntry, DataEntryMap } from "astro:content";
+import { m } from "@paraglide/messages";
+import { generateTOCHTML } from "@utils/content";
+import Callout from "./Callout.astro";
+import Link from "./Link.astro";
+import MarkdownImage from "./MarkdownImage.astro";
+import TableOfContents from "./TableOfContents.astro";
+
+interface Props {
+	entry: CollectionEntry<keyof DataEntryMap>;
+	toc?: "disabled" | "inside" | "default";
+	prose?: boolean;
+}
+
+const { toc = "disabled", entry, prose = true } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const components = {
+	Callout,
+	a: Link,
+	img: MarkdownImage,
+};
+---
+
+<div class=`md-content ${prose ? "prose" : ""} max-w-none toc-${toc}` id="article">
+	{
+		toc !== "disabled" && (
+			<div class="toc not-md">
+				<TableOfContents {headings} />
+			</div>
+		)
+	}
+	<div id="content">
+		<Content {components} />
+	</div>
+</div>
+
+<style>
+	html[data-navbar-hidden="false"] .md-content.toc-inside .toc {
+		top: var(--header-height);
+	}
+
+	.md-content {
+		position: relative;
+		width: 100%;
+
+		@media screen and (min-width: 1024px) {
+			&.toc-inside {
+				display: grid;
+				grid-template-columns: calc(100% - 300px - 2rem) min-content;
+				grid-template-rows: 1fr;
+				gap: 2rem;
+
+				#content {
+					grid-row: 1;
+					grid-column: 1;
+				}
+
+				.toc {
+					z-index: 2;
+					grid-row: 1;
+					grid-column: 2;
+					position: sticky;
+					top: 0;
+					height: max-content;
+					max-height: calc(100vh - var(--header-height) - 1rem);
+					width: 300px;
+					transition: top 300ms ease;
+				}
+			}
+		}
+	}
+</style>

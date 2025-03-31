@@ -1,0 +1,14 @@
+:root {
+	--header-height: calc(65px);
+}
+
+html {
+	overflow-anchor: none;
+	@media (prefers-reduced-motion: no-preference) {
+		scroll-behavior: smooth;
+	}
+}
+
+:target {
+	scroll-margin-top: calc(var(--header-height) + 0.5rem); /* Navbar */
+}

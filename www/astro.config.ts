@@ -24,15 +24,15 @@ import markdoc from "@astrojs/markdoc";
 const logger = new Logger("astro-config");
 
 const envVars = {
-    OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
-    OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
-    OA_ALLOWED_DOMAINS: envField.string({ context: "server", access: "secret", optional: true }),
-    GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
-    HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
-    CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
-    PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
-    APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
-    UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
+	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
+	OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
+	OA_ALLOWED_DOMAINS: envField.string({ context: "server", access: "secret", optional: true }),
+	GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
+	HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
+	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
+	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
+	APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
+	UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
 };
 
 const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
@@ -47,81 +47,92 @@ logger.info(`Using PREVIEW: '${PREVIEW}'`);
 
 //https://astro.build/config
 export default defineConfig({
-    experimental: {
-        serializeConfig: true,
-        preserveScriptOrder: true,
-    },
-    site: SITE_URL,
-    build: {
-        format: "directory",
-    },
-    adapter: node({
-        mode: "standalone",
-    }),
-    i18n: {
-        defaultLocale: "cs",
-        locales: [
-            { path: "cs", codes: ["cs", "cs-CZ", "sk", "sk-SK"] },
-            { path: "en", codes: ["en", "en-GB", "en-US", "en-CA"] },
-        ],
-        routing: {
-            prefixDefaultLocale: true,
-            redirectToDefaultLocale: false,
-            fallbackType: "redirect",
-        },
-    },
-    prefetch: {
-        prefetchAll: true,
-        defaultStrategy: "hover",
-    },
-    env: {
-        schema: envVars,
-    },
-    markdown: {
-        rehypePlugins: [
-            rehypeSlug,
-            [
-                rehypeAutolinkHeadings,
-                {
-                    behavior: "prepend",
-                    content: {
-                        type: "element",
-                        tagName: "span",
-                        properties: { className: ["heading-link-icon"] },
-                    },
-                },
-            ],
-            [
-                rehypeExtenalLinks,
-                {
-                    properties: {
-                        className: ["external"],
-                    },
-                    target: "_blank",
-                    rel: "nofollow noopener noreferrer",
-                },
-            ],
-            rehypeFigure,
-        ],
-    },
-    integrations: [paraglideIntegration({
-        project: "./project.inlang",
-        outdir: "./src/paraglide",
-		}), db(), react(), remarkAsidesIntegration(), expressiveCode(), mdx(), pagefind(), icon({
-        ...iconConfig,
-		}), sitemap({
-        i18n: {
-            defaultLocale: "cs",
-            locales: {
-                cs: "cs",
-                en: "en",
-            },
-        },
-		}), markdoc()],
-    vite: {
-        plugins: [tailwindcss()],
-        optimizeDeps: {
-            exclude: ["@resvg/resvg-js"],
-        },
-    },
+	experimental: {
+		serializeConfig: true,
+		preserveScriptOrder: true,
+	},
+	site: SITE_URL,
+	build: {
+		format: "directory",
+	},
+	adapter: node({
+		mode: "standalone",
+	}),
+	i18n: {
+		defaultLocale: "cs",
+		locales: [
+			{ path: "cs", codes: ["cs", "cs-CZ", "sk", "sk-SK"] },
+			{ path: "en", codes: ["en", "en-GB", "en-US", "en-CA"] },
+		],
+		routing: {
+			prefixDefaultLocale: true,
+			redirectToDefaultLocale: false,
+			fallbackType: "redirect",
+		},
+	},
+	prefetch: {
+		prefetchAll: true,
+		defaultStrategy: "hover",
+	},
+	env: {
+		schema: envVars,
+	},
+	markdown: {
+		rehypePlugins: [
+			rehypeSlug,
+			[
+				rehypeAutolinkHeadings,
+				{
+					behavior: "prepend",
+					content: {
+						type: "element",
+						tagName: "span",
+						properties: { className: ["heading-link-icon"] },
+					},
+				},
+			],
+			[
+				rehypeExtenalLinks,
+				{
+					properties: {
+						className: ["external"],
+					},
+					target: "_blank",
+					rel: "nofollow noopener noreferrer",
+				},
+			],
+			rehypeFigure,
+		],
+	},
+	integrations: [
+		paraglideIntegration({
+			project: "./project.inlang",
+			outdir: "./src/paraglide",
+		}),
+		db(),
+		react(),
+		remarkAsidesIntegration(),
+		expressiveCode(),
+		mdx(),
+		pagefind(),
+		icon({
+			...iconConfig,
+		}),
+		sitemap({
+			i18n: {
+				defaultLocale: "cs",
+				locales: {
+					cs: "cs",
+					en: "en",
+				},
+			},
+		}),
+		markdoc(),
+	],
+	vite: {
+		plugins: [tailwindcss()],
+		optimizeDeps: {
+			exclude: ["@resvg/resvg-js"],
+		},
+	},
 });

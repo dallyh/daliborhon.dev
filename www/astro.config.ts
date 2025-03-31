@@ -4,6 +4,7 @@ import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
+import aiRobotsTxt from "astro-ai-robots-txt";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
@@ -109,6 +110,7 @@ export default defineConfig({
 				},
 			},
 		}),
+		aiRobotsTxt(),
 	],
 	vite: {
 		plugins: [tailwindcss()],

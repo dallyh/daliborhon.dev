@@ -2,7 +2,7 @@
 import { type CollectionEntry, getEntries } from "astro:content";
 import Grid, { type GridProps } from "@components/astro/common/Grid.astro";
 import { m } from "@paraglide/messages";
-import { githubRestClient } from "@services/github/githubRestClient";
+import { githubRestClient } from "@services/github/github-rest-client";
 import ProjectCard from "./ProjectCard.astro";
 
 interface Props extends GridProps {

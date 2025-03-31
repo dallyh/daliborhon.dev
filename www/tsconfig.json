@@ -12,6 +12,7 @@
             "@public/*": ["${configDir}/src/public/*"],
             "@layouts/*": ["${configDir}/src/layouts/*"],
             "@utils": ["${configDir}/src/utils/index.ts"],
+            "@utils/": ["${configDir}/src/utils/*"],
             "@utils/content": ["${configDir}/src/utils/content/index.ts"],
             "@utils/og": ["${configDir}/src/utils/open-graph/index.ts"],
             "@utils/i18n": ["${configDir}/src/utils/i18n.ts"],

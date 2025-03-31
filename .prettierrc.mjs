@@ -10,7 +10,7 @@ export default {
 	semi: true,
 	overrides: [
 		{
-			files: ["*.json", "*.jsonc", "*.md", "*.toml", "*.yml"],
+			files: ["*.json", "*.jsonc", "*.md", "*.toml", "*.yml", "*.yaml"],
 			options: {
 				useTabs: false,
 			},

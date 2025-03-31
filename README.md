@@ -38,4 +38,4 @@ LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY=secret_key
 
 ## Variables
 
-List of used variables can be found in the [astro.config.mjs](./www/web/astro.config.mjs) file.
+List of used variables can be found in the [astro.config.mjs](./www/astro.config.mjs) file.

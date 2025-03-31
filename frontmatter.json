@@ -5,8 +5,9 @@
     "frontMatter.preview.trailingSlash": false,
     "frontMatter.content.publicFolder": {
         "relative": true,
-        "path": "[[workspace]]/www/web/src/assets/content"
+        "path": "[[workspace]]/www/src/assets/content"
     },
+    "frontMatter.content.supportedFileTypes": ["md", "mdx", "markdown", "markdoc", "mdoc"],
     "frontMatter.media.contentTypes": [
         {
             "name": "default",
@@ -34,7 +35,7 @@
             "id": "project-tags",
             "labelField": "id",
             "title": "Project tags",
-            "file": "[[workspace]]/www/web/src/content/project-tags.yml",
+            "file": "[[workspace]]/www/content/project-tags.yml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -59,7 +60,7 @@
             "id": "tags",
             "labelField": "id",
             "title": "Blog tags",
-            "file": "[[workspace]]/www/web/src/content/tags.yml",
+            "file": "[[workspace]]/www/content/tags.yml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -76,7 +77,7 @@
     "frontMatter.content.pageFolders": [
         {
             "title": "blog",
-            "path": "[[workspace]]/www/web/src/content/posts",
+            "path": "[[workspace]]/www/content/posts",
             "contentTypes": ["blog"],
             "filePrefix": "{{year}}-{{month}}-{{day}}",
             "previewPath": "{{locale}}/blog/posts",
@@ -97,7 +98,7 @@
         },
         {
             "title": "projects",
-            "path": "[[workspace]]/www/web/src/content/projects",
+            "path": "[[workspace]]/www/content/projects",
             "defaultLocale": "en",
             "locales": [
                 {
@@ -114,7 +115,7 @@
         },
         {
             "title": "resume",
-            "path": "[[workspace]]/www/web/src/content/resume",
+            "path": "[[workspace]]/www/content/resume",
             "disableCreation": true
         }
     ],
@@ -122,6 +123,7 @@
         {
             "name": "blog",
             "pageBundle": false,
+            "fileType": "mdoc",
             "slugTemplate": "{{year}}-{{month}}-{{day}}-{{seoTitle}}",
             "fields": [
                 {

@@ -33,8 +33,7 @@ zerops:
               - pnpm run build:web
               - pnpm run deploy:web
           cache:
-              - .turbo
-              - www/web/node_modules/.astro
+              - www/node_modules/.astro
           deployFiles:
               - deploy/~
       run:
@@ -70,8 +69,7 @@ zerops:
               - pnpm run build:web
               - pnpm run deploy:web
           cache:
-              - .turbo
-              - www/web/node_modules/.astro
+              - www/node_modules/.astro
           deployFiles:
               - deploy/~
       run:

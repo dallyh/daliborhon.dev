@@ -8,7 +8,7 @@ tags:
 locale: cs
 draft: false
 featured: true
-image: ../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/deploying-libsql-server-with-astro-on-zerops.png
+image: ../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/deploying-libsql-server-with-astro-on-zerops.png
 pubDate: 2025-02-25T22:26:34.396Z
 modDate: 2025-03-15T20:00:13.059Z
 fmContentType: blog
@@ -80,7 +80,7 @@ Po spuštění by výstup měl vypadat následovně:
 
 Úspěšné vytvoření projektu a všech služeb si můžete ověřit také na dashboardu Zerops. Služby `libsqld` a `frontend` by měly být vytvořeny jako prázdné a čekat na nasazení. Služba `dbstorage` by měla být připravena k použití.
 
-![Zerops dashboard](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-deployed-astro-example-project.png)
+![Zerops dashboard](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-deployed-astro-example-project.png)
 
 ## Konfigurace a nasazení služeb
 
@@ -150,9 +150,9 @@ zcli push
 
 Vyberte projekt `astro-libsql` a poté službu `libsqld`.
 
-![zcli push - project list](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-project.png)
+![zcli push - project list](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-project.png)
 
-![zcli push - service list](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-libsqld.png)
+![zcli push - service list](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-libsqld.png)
 
 Po úspěšném nasazení by měl být spuštěn serverový daemon a automaticky by se měla vytvořit databáze a začít její replikace. Replikace je aktivní, protože je povolena volbou `--enable-bottomless-replication`. Stav můžete ověřit v dashboardu Zerops pod logy běhu služby `libsqld`.
 
@@ -212,7 +212,7 @@ Astro se připojuje k databázi prostřednictvím proměnné `ASTRO_DB_REMOTE_UR
 
 Pokud používáte [ukázkový repozitář na GitHubu](https://github.com/dallyh/astro-libsql-zerops-example), po nasazení služby otevřete stránku [http://frontend:4321](http://frontend:4321) ve vašem prohlížeči a měli byste vidět komentáře z databáze!
 
-![Stránka s daty](../../../assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-astro-libsql-pg-data.png)
+![Stránka s daty](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-astro-libsql-pg-data.png)
 
 ## Závěr
 

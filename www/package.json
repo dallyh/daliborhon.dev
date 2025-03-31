@@ -25,6 +25,7 @@
     ],
     "dependencies": {
         "@astrojs/db": "^0.14.9",
+        "@astrojs/markdoc": "^0.13.2",
         "@astrojs/mdx": "^4.2.2",
         "@astrojs/node": "^9.1.3",
         "@astrojs/react": "^4.2.2",
@@ -64,6 +65,7 @@
         "sharp": "^0.33.5",
         "slug": "^10.0.0",
         "stream-buffers": "^3.0.3",
+        "tiny-decode": "^0.1.3",
         "unist-util-visit": "^5.0.0"
     },
     "devDependencies": {

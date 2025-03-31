@@ -1,48 +1,38 @@
 ---
-title: Příklad typografie
-description: Tohle je můj první příspěvek.
+title: Typography example
+description: This is my first blog post.
 tags:
     - astro
-locale: cs
+locale: en
 featured: true
-pubDate: 2024-01-01
+pubDate: 2025-02-11T18:16:51.242Z
 modDate: ""
-draft: true
 fmContentType: blog
-image: ../../../src/assets/content/blog/typography-example/og-example.png
+draft: true
+image: ../assets/typography-example/og-example.png
 ---
 
 # H1 For example
 
-{% aside type="danger" %}
+<Callout type="danger" title="This is danger!" >
+Danger
+</Callout>
 
-Use tags like this fancy "aside" to add some _flair_ to your docs.
+<Callout type="caution" >
+Caution
+</Callout>
 
-{% /aside %}
+<Callout type="note" >
+Note
+</Callout>
 
-{% aside type="caution" %}
+<Callout type="success" >
+Success
+</Callout>
 
-Use tags like this fancy "aside" to add some _flair_ to your docs.
-
-{% /aside %}
-
-{% aside type="note" %}
-
-Use tags like this fancy "aside" to add some _flair_ to your docs.
-
-{% /aside %}
-
-{% aside type="success" %}
-
-Use tags like this fancy "aside" to add some _flair_ to your docs.
-
-{% /aside %}
-
-{% aside type="tip" %}
-
-Use tags like this fancy "aside" to add some _flair_ to your docs.
-
-{% /aside %}
+<Callout type="tip" >
+Tip
+</Callout>
 
 This is a paragraph. Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi, inventore atque cupiditate. Sed voluptatem quas omnis culpa, et odit.
@@ -151,8 +141,6 @@ Images included in _\_posts_ folder are lazy loaded.
 
 Inline-style:
 ![alt text](https://docs.astro.build/assets/arc.webp "Logo Title Text 1")
-
-![alt text2](../../../src/assets/content/blog/typography-example/og-example.png "Test");
 
 ## Table
 

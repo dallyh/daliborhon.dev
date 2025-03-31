@@ -135,5 +135,10 @@
     "analytics__period": "Period",
     "error__500": "An error occured",
     "error__500_unknown": "Unknown error",
-    "comments__show_comments": "Show comments"
+    "comments__show_comments": "Show comments",
+    "callout__note_title": "Note",
+    "callout__success_title": "Success",
+    "callout__caution_title": "Caution",
+    "callout__danger_title": "Danger",
+    "callout__tip_title": "Tip"
 }

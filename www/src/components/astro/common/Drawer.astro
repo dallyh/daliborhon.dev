@@ -175,8 +175,10 @@ const menuItems = [
 	window.addEventListener("scroll", function () {
 		const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 		if (currentScroll < lastScrollTop) {
+			document.documentElement.dataset.navbarHidden = false;
 			navbar.classList.remove("hide");
 		} else {
+			document.documentElement.dataset.navbarHidden = true;
 			navbar.classList.add("hide");
 		}
 		lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;

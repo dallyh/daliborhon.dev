@@ -5,7 +5,6 @@ export const siteConfig = {
 		recentPostsSize: 3,
 		featuredPostsSize: 3,
 		previewPostsSize: 6,
-		codeBlockTheme: "material-theme-palenight",
 		authorName: "Dalibor Hon",
 	},
 	projects: {

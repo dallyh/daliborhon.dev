@@ -37,18 +37,8 @@ const isPrint = Astro.locals.isPrint;
 		<div class="card card-compact bg-base-200 h-full min-h-32">
 			<div class="card-body grid place-items-center items-center justify-center text-center">
 				<div>
-					<div class="image-normal">
-						{
-							typeof img === "string" ? <img src={img} alt={alt} /> : <Image src={img as ImageMetadata} {...imgProps} />
-						}
-					</div>
-					{imgInverted && (
-						<div class="image-inverted">
-							{
-								typeof imgInverted === "string" ? <img src={imgInverted} alt={alt}/> : <Image src={imgInverted as ImageMetadata} {...imgProps} />
-							}
-						</div>
-					)}
+					<div class="image-normal">{typeof img === "string" ? <img src={img} alt={alt} /> : <Image src={img as ImageMetadata} {...imgProps} />}</div>
+					{imgInverted && <div class="image-inverted">{typeof imgInverted === "string" ? <img src={imgInverted} alt={alt} /> : <Image src={imgInverted as ImageMetadata} {...imgProps} />}</div>}
 				</div>
 				<slot />
 			</div>

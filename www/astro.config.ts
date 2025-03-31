@@ -3,23 +3,17 @@ import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-//@ts-ignore missing types
-import rehypeFigure from "@microflash/rehype-figure";
 import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
 import { defineConfig, envField } from "astro/config";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeExtenalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import { loadEnv } from "vite";
 import iconConfig from "./icons.config";
 import { paraglideIntegration } from "./src/integrations/paraglide-js/integration";
-import { remarkAsidesIntegration } from "./src/integrations/remark-asides/integration";
 import { Logger } from "./src/utils/logger";
-
-import markdoc from "@astrojs/markdoc";
 
 const logger = new Logger("astro-config");
 
@@ -91,17 +85,6 @@ export default defineConfig({
 					},
 				},
 			],
-			[
-				rehypeExtenalLinks,
-				{
-					properties: {
-						className: ["external"],
-					},
-					target: "_blank",
-					rel: "nofollow noopener noreferrer",
-				},
-			],
-			rehypeFigure,
 		],
 	},
 	integrations: [
@@ -111,7 +94,6 @@ export default defineConfig({
 		}),
 		db(),
 		react(),
-		remarkAsidesIntegration(),
 		expressiveCode(),
 		mdx(),
 		pagefind(),
@@ -127,7 +109,6 @@ export default defineConfig({
 				},
 			},
 		}),
-		markdoc(),
 	],
 	vite: {
 		plugins: [tailwindcss()],

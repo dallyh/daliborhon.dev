@@ -1,5 +1,5 @@
 :root {
-	--header-height: calc(68px + 1rem);
+	--header-height: calc(65px);
 }
 
 html {
@@ -10,5 +10,5 @@ html {
 }
 
 :target {
-	scroll-margin-top: calc(var(--header-height) + 1rem); /* Navbar */
+	scroll-margin-top: calc(var(--header-height) + 0.5rem); /* Navbar */
 }

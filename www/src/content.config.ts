@@ -4,7 +4,7 @@ import { type Loader, type LoaderContext, file, glob } from "astro/loaders";
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.(md|mdoc)", base: `./content/posts` }),
+	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./content/posts` }),
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
@@ -24,14 +24,14 @@ const posts = defineCollection({
 });
 
 const tags = defineCollection({
-	loader: file(`./content/tags.yml`),
+	loader: file(`./content/tags.yaml`),
 	schema: z.object({
 		id: z.string(),
 	}),
 });
 
 const projects = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.(md|mdoc)", base: `./content/projects` }),
+	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./content/projects` }),
 	schema: () =>
 		z.object({
 			title: z.string(),
@@ -48,7 +48,7 @@ const projects = defineCollection({
 });
 
 const projectTags = defineCollection({
-	loader: file(`./content/project-tags.yml`),
+	loader: file(`./content/project-tags.yaml`),
 	schema: z.object({
 		id: z.string(),
 		title: z.string(),
@@ -57,7 +57,7 @@ const projectTags = defineCollection({
 });
 
 const resume = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.mdx", base: `./content/resume` }),
+	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./content/resume` }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),

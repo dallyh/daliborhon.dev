@@ -1,5 +1,7 @@
-import { render } from "astro:content";
+import { loadRenderers } from "astro:container";
+import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
 import rss from "@astrojs/rss";
+import MarkdownContent from "@components/astro/content/MarkdownContent.astro";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { getBlogPostUrl, getFilteredPostsCollection } from "@utils/content";
@@ -10,7 +12,8 @@ import sanitize from "sanitize-html";
 export { getStaticPaths } from "@utils/i18n";
 
 export async function GET({ site, currentLocale }: APIContext) {
-	const container = await AstroContainer.create();
+	const renderers = await loadRenderers([mdxContainerRenderer()]);
+	const container = await AstroContainer.create({ renderers });
 	const allBlogArticles = await getFilteredPostsCollection({ locale: currentLocale, sort: true });
 
 	if (allBlogArticles === undefined) {
@@ -19,9 +22,14 @@ export async function GET({ site, currentLocale }: APIContext) {
 
 	const items = await Promise.all(
 		allBlogArticles.map(async (post) => {
-			const { Content } = await render(post);
 			const { title, pubDate, description } = post.data;
-			const html = await container.renderToString(Content);
+			const html = await container.renderToString(MarkdownContent, {
+				props: {
+					entry: post,
+					toc: "disabled",
+					prose: false,
+				},
+			});
 
 			return {
 				title: title,

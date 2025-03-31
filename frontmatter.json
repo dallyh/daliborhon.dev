@@ -5,7 +5,7 @@
     "frontMatter.preview.trailingSlash": false,
     "frontMatter.content.publicFolder": {
         "relative": true,
-        "path": "[[workspace]]/www/src/assets/content"
+        "path": "[[workspace]]/www/content"
     },
     "frontMatter.content.supportedFileTypes": ["md", "mdx", "markdown", "markdoc", "mdoc"],
     "frontMatter.media.contentTypes": [
@@ -123,7 +123,6 @@
         {
             "name": "blog",
             "pageBundle": false,
-            "fileType": "mdoc",
             "slugTemplate": "{{year}}-{{month}}-{{day}}-{{seoTitle}}",
             "fields": [
                 {
@@ -259,27 +258,27 @@
     "frontMatter.content.snippets": {
         "Note callout": {
             "description": "",
-            "body": [":::note", "", ":::"],
+            "body": ["<Callout type=\"note\" title=\"\"", "", "</Callout>"],
             "fields": []
         },
         "Success callout": {
             "description": "",
-            "body": [":::success", "", ":::"],
+            "body": ["<Callout type=\"success\" title=\"\"", "", "</Callout>"],
             "fields": []
         },
         "Caution callout": {
             "description": "",
-            "body": [":::caution", "", ":::"],
+            "body": ["<Callout type=\"caution\" title=\"\"", "", "</Callout>"],
             "fields": []
         },
         "Danger callout": {
             "description": "",
-            "body": [":::danger", "", ":::"],
+            "body": ["<Callout type=\"danger\" title=\"\"", "", "</Callout>"],
             "fields": []
         },
         "Tip callout": {
             "description": "",
-            "body": [":::tip", "", ":::"],
+            "body": ["<Callout type=\"tip\" title=\"\"", "", "</Callout>"],
             "fields": []
         }
     }

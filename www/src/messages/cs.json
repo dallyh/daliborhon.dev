@@ -135,5 +135,10 @@
     "analytics__period": "Období",
     "error__500": "Došlo k chybě na serveru",
     "error__500_unknown": "Neznámá chyba",
-    "comments__show_comments": "Zobrazit komentáře"
+    "comments__show_comments": "Zobrazit komentáře",
+    "callout__note_title": "Poznámka",
+    "callout__success_title": "Úspěch",
+    "callout__caution_title": "Pozor",
+    "callout__danger_title": "Varování",
+    "callout__tip_title": "Tip"
 }

@@ -8,7 +8,7 @@ tags:
 locale: cs
 draft: false
 featured: true
-image: ../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/deploying-libsql-server-with-astro-on-zerops.png
+image: ../assets/deploy-libsql-server-with-astro-on-zerops/deploying-libsql-server-with-astro-on-zerops.png
 pubDate: 2025-02-25T22:26:34.396Z
 modDate: 2025-03-15T20:00:13.059Z
 fmContentType: blog
@@ -80,7 +80,7 @@ Po spuštění by výstup měl vypadat následovně:
 
 Úspěšné vytvoření projektu a všech služeb si můžete ověřit také na dashboardu Zerops. Služby `libsqld` a `frontend` by měly být vytvořeny jako prázdné a čekat na nasazení. Služba `dbstorage` by měla být připravena k použití.
 
-![Zerops dashboard](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-deployed-astro-example-project.png)
+![Zerops dashboard](../assets/deploy-libsql-server-with-astro-on-zerops/zerops-deployed-astro-example-project.png)
 
 ## Konfigurace a nasazení služeb
 
@@ -150,9 +150,9 @@ zcli push
 
 Vyberte projekt `astro-libsql` a poté službu `libsqld`.
 
-![zcli push - project list](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-project.png)
+![zcli push - project list](../assets/deploy-libsql-server-with-astro-on-zerops/zcli-push-project.png)
 
-![zcli push - service list](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zcli-push-libsqld.png)
+![zcli push - service list](../assets/deploy-libsql-server-with-astro-on-zerops/zcli-push-libsqld.png)
 
 Po úspěšném nasazení by měl být spuštěn serverový daemon a automaticky by se měla vytvořit databáze a začít její replikace. Replikace je aktivní, protože je povolena volbou `--enable-bottomless-replication`. Stav můžete ověřit v dashboardu Zerops pod logy běhu služby `libsqld`.
 
@@ -162,9 +162,9 @@ Po nasazení služby `libsqld` musíme nahrát schéma databáze pomocí příka
 
 Nejdříve se proto musíme připojit k [VPN](https://docs.zerops.io/references/vpn) poskytované Zerops, abychom získali přístup k vzdálenému databázovému serveru. K VPN se připojíte pomocí `zcli vpn up`. Spusťte příkaz v terminálu a poté vyberte projekt `astro-libsql`. Pokud připojení selže, ujistěte se, zda jste správně nainstalovali [Wireguard](https://www.wireguard.com/), který je nutný pro navázání připojení do VPN.
 
-:::caution
+<Callout type="caution" >
 Před spuštěním příkazu se ujistěte, že mááte v projektu Astro nastavenou proměnnou `ASTRO_DB_REMOTE_URL`. Měla by být nastavena na adresu URL služby `libsqld`, která je v tomto případě `http://libsqld:8080`.
-:::
+</Callout>
 
 Po připojení do VPN přeneste schéma databáze do vzdálené databáze:
 
@@ -172,9 +172,9 @@ Po připojení do VPN přeneste schéma databáze do vzdálené databáze:
 npm run astro db push --remote
 ```
 
-:::note[Spouštění příkazů přes Powershell]
+<Callout type="note" title="Spouštění příkazů přes Powershell!" >
 Většina Astro projektů již má příkaz `astro` definován v souboru `package.json`. V [dokumentaci Astro DB](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) je uvedeno, že příkaz `push` spouštíme pomocí `npm` následovně: `npm run astro db push --remote`. V prostředí Powershellu to nefunguje správně, jelikož příznak `--remote` je tiše ignorován. Pokud spouštíte příkazy ze souboru `package.json` pomocí Powershellu, měli byste je spouštět takto: `npm run astro db push -- --remote` Více informací najdete v článku [this](https://www.lloydatkinson.net/posts/2022/powershell-npm-scripts-and-silently-dropped-arguments/).
-:::
+</Callout>
 
 #### Naplnění databáze
 
@@ -212,7 +212,7 @@ Astro se připojuje k databázi prostřednictvím proměnné `ASTRO_DB_REMOTE_UR
 
 Pokud používáte [ukázkový repozitář na GitHubu](https://github.com/dallyh/astro-libsql-zerops-example), po nasazení služby otevřete stránku [http://frontend:4321](http://frontend:4321) ve vašem prohlížeči a měli byste vidět komentáře z databáze!
 
-![Stránka s daty](../../../src/assets/content/blog/deploy-libsql-server-with-astro-on-zerops/zerops-astro-libsql-pg-data.png)
+![Stránka s daty](../assets/deploy-libsql-server-with-astro-on-zerops/zerops-astro-libsql-pg-data.png)
 
 ## Závěr
 

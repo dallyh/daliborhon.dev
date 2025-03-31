@@ -4,6 +4,7 @@ import { render } from "astro:content";
 import Card from "@components/astro/common/Card.astro";
 import { formatDateTime } from "@utils";
 import ExternalLink from "../common/ExternalLink.astro";
+import MarkdownContent from "../content/MarkdownContent.astro";
 import GithubDate from "./GithubDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
 
@@ -26,7 +27,6 @@ const { project, githubData, relatedTags } = Astro.props;
 
 const locale = Astro.currentLocale!;
 const { title, sourceUrl, startDate } = project.data;
-const { Content } = await render(project);
 ---
 
 <Card>
@@ -55,9 +55,7 @@ const { Content } = await render(project);
 				</div>
 			)
 		}
-		<div class="md-content">
-			<Content />
-		</div>
+		<MarkdownContent entry={project} toc="disabled" prose={false} />
 		{githubData && <GithubLanguages languages={githubData.languages} />}
 	</div>
 </Card>

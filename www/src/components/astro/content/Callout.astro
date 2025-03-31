@@ -1,4 +1,5 @@
 ---
+import { m } from "@paraglide/messages";
 import { Icon } from "astro-icon/components";
 
 interface Props {
@@ -11,19 +12,19 @@ const { type, title } = Astro.props;
 export const callouts = () => {
 	return {
 		note: {
-			title: "Note",
+			title: m.callout__note_title(),
 		},
 		success: {
-			title: "Success",
+			title: m.callout__success_title(),
 		},
 		caution: {
-			title: "Caution",
+			title: m.callout__caution_title(),
 		},
 		danger: {
-			title: "Danger",
+			title: m.callout__danger_title(),
 		},
 		tip: {
-			title: "Tip",
+			title: m.callout__tip_title(),
 		},
 	};
 };
@@ -71,9 +72,9 @@ export const callouts = () => {
 		--callout-bg-success: color-mix(in oklab, var(--color-success) 30%, transparent);
 		--callout-border-success: var(--color-success);
 
-		--callout-headingFontColor-tip: var(--color-primary);
-		--callout-bg-tip: color-mix(in oklab, var(--color-primary) 30%, transparent);
-		--callout-border-tip: var(--color-primary);
+		--callout-headingFontColor-tip: hsl(277, 76%, 31%);
+		--callout-bg-tip: hsl(276, 70%, 90%);
+		--callout-border-tip: hsl(277, 81%, 60%);
 
 		--callout-headingFontColor-caution: var(--color-warning);
 		--callout-bg-caution: color-mix(in oklab, var(--color-warning) 30%, transparent);
@@ -84,6 +85,12 @@ export const callouts = () => {
 		--callout-border-danger: var(--color-error);
 	}
 
+	:root[data-theme="dark"] {
+		--callout-headingFontColor-tip: hsl(276, 72%, 89%);
+		--callout-bg-tip: hsl(276, 36%, 22%);
+		--callout-border-tip: hsl(277, 81%, 60%);
+	}
+
 	.callout {
 		--calloutheadingFontColor: var(--callout-headingFontColor);
 		--callout-bg: var(--callout-bg);
@@ -92,7 +99,6 @@ export const callouts = () => {
 		padding: 0.5rem 1rem;
 		color: inherit;
 		background-color: var(--callout-bg);
-		border-radius: 0.125rem;
 		margin-top: 1rem;
 		margin-bottom: 1rem;
 	}

@@ -1,225 +1,53 @@
 ---
+import { render } from "astro:content";
+import type { CollectionEntry, DataEntryMap } from "astro:content";
 import { m } from "@paraglide/messages";
 import { generateTOCHTML } from "@utils/content";
-import type { MarkdownHeading } from "astro";
+import Callout from "./Callout.astro";
+import Link from "./Link.astro";
+import MarkdownImage from "./MarkdownImage.astro";
+import TableOfContents from "./TableOfContents.astro";
 
 interface Props {
-	tocPosition?: "inside" | "default";
-	headings?: MarkdownHeading[];
+	entry: CollectionEntry<keyof DataEntryMap>;
+	toc?: "disabled" | "inside" | "default";
+	prose?: boolean;
 }
 
-const { tocPosition = "default", headings } = Astro.props;
+const { toc = "disabled", entry, prose = true } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const components = {
+	Callout,
+	a: Link,
+	img: MarkdownImage,
+};
 ---
 
-<article class=`md-content prose max-w-none ${tocPosition}` id="article">
+<div class=`md-content ${prose ? "prose" : ""} max-w-none toc-${toc}` id="article">
 	{
-		headings && headings.length !== 0 && (
-			<toc-root>
-				<div id="toc" class="not-md">
-					<details id="tocDetails" class="max-[1024px]:collapse-arrow bg-base-200 lg:bg-base-100 collapse rounded-xl border border-slate-300/5 lg:border-none lg:shadow-none">
-						<summary class="collapse-title text-xl">
-							<div class="flex items-center">
-								<span>{m.blog__toc()}</span>
-								<span id="loading" class="loading loading-spinner loading-md ml-3" />
-							</div>
-						</summary>
-						<nav class="toc">
-							<Fragment set:html={generateTOCHTML(headings)} />
-						</nav>
-					</details>
-				</div>
-			</toc-root>
+		toc !== "disabled" && (
+			<div class="toc not-md">
+				<TableOfContents {headings} />
+			</div>
 		)
 	}
 	<div id="content">
-		<slot />
+		<Content {components} />
 	</div>
-</article>
-
-<script>
-	// https://github.com/miaobuao/astro-theme-meo/blob/main/src/theme/components/ArticleToc.astro
-
-	class TableOfContents extends HTMLElement {
-		details = this.querySelector<HTMLDetailsElement>("#tocDetails")!;
-		loading = this.querySelector<HTMLSpanElement>("#loading")!;
-
-		openToc() {
-			const width = window.innerWidth;
-			this.details.open = width >= 1024;
-		}
-
-		connectedCallback() {
-			this.openToc();
-			window.addEventListener("resize", this.openToc.bind(this));
-			if (this.loading) {
-				this.loading.remove();
-			}
-		}
-
-		disconnectedCallback() {
-			window.removeEventListener("resize", this.openToc.bind(this));
-		}
-	}
-
-	class TocItem extends HTMLElement {
-		anchor = this.querySelector<HTMLAnchorElement>("a");
-		relativeHeading = document.getElementById(this.dataset.slug!);
-
-		activate = () => {
-			this.classList.add("active");
-		};
-
-		deactivate = () => {
-			this.classList.remove("active");
-		};
-	}
-
-	class ArticleToc extends HTMLElement {
-		items = Array.from(this.querySelectorAll<TocItem>("toc-item"));
-		mainScroll = document;
-
-		connectedCallback() {
-			this.handleUpdate();
-			this.mainScroll.addEventListener("scroll", this.handleUpdate);
-		}
-
-		disconnectedCallback() {
-			this.mainScroll.removeEventListener("scroll", this.handleUpdate);
-		}
-
-		activateItem(itemsWithBbox: { bbox: DOMRect; item: TocItem }[], _index: number) {
-			itemsWithBbox.forEach(({ item }, index) => {
-				if (index === _index) {
-					item.activate();
-				} else {
-					item.deactivate();
-				}
-			});
-		}
-
-		activateTocItem(itemsWithBbox: { bbox: DOMRect; item: TocItem }[], _item: TocItem) {
-			itemsWithBbox.forEach(({ item }, index) => {
-				if (item === _item) {
-					item.activate();
-				} else {
-					item.deactivate();
-				}
-			});
-		}
-
-		handleUpdate = () => {
-			if (this.items.length === 0) return;
-
-			if (this.items.length === 1) {
-				this.items[0].activate();
-				return;
-			}
-
-			const itemsWithBbox = this.items
-				.map((item) => ({
-					bbox: item.relativeHeading?.getBoundingClientRect(),
-					item,
-				}))
-				.filter(({ bbox }) => !!bbox)
-				.map(({ bbox, item }) => ({
-					bbox: bbox!,
-					item,
-				}));
-
-			if (itemsWithBbox.length === 0) {
-				return;
-			}
-
-			const header = document.querySelector(".navbar");
-			const headerHeight = header?.getBoundingClientRect().height ?? 0;
-			const distance = headerHeight * 3;
-
-			const footer = document.getElementById("page-footer");
-			const comments = document.getElementById("comments");
-			const offsetHeight = (footer?.getBoundingClientRect().height ?? 0) + (comments?.getBoundingClientRect().height ?? 0);
-			const tolerance = offsetHeight + 10;
-
-			if (window.innerHeight + window.scrollY >= document.body.offsetHeight - tolerance) {
-				const intersectingIdx = itemsWithBbox
-					.map((entry, index) => ({ entry, index }))
-					.filter(({ entry: { bbox } }) => bbox.top < window.innerHeight && bbox.bottom > 0)
-					.map(({ index }) => index).length;
-
-				if (intersectingIdx !== -1) {
-					if (intersectingIdx > 1) {
-						// End of scrolling, fallback to last one
-						if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-							this.activateItem(itemsWithBbox, itemsWithBbox.length - 1);
-							return;
-						}
-
-						this.activateItem(itemsWithBbox, itemsWithBbox.length - 2);
-						return;
-					}
-
-					this.activateItem(itemsWithBbox, itemsWithBbox.length - 1);
-				}
-
-				return;
-			}
-
-			const firstPositiveIdx = itemsWithBbox.findIndex(({ bbox }) => bbox.top >= 0);
-			let target: TocItem;
-			if (firstPositiveIdx === -1) {
-				target = itemsWithBbox.at(-1)!.item;
-			} else if (firstPositiveIdx === 0) {
-				target = itemsWithBbox[0].item;
-			} else {
-				const firstPositiveItem = itemsWithBbox[firstPositiveIdx];
-				const nextPositiveItem = itemsWithBbox.at(firstPositiveIdx + 1);
-				if (firstPositiveItem.bbox.bottom < headerHeight) {
-					if (nextPositiveItem && nextPositiveItem.bbox.top <= distance) {
-						target = nextPositiveItem.item;
-					} else {
-						target = firstPositiveItem.item;
-					}
-				} else if (firstPositiveItem.bbox.top <= distance) {
-					target = firstPositiveItem.item;
-				} else {
-					target = itemsWithBbox[firstPositiveIdx - 1].item;
-				}
-			}
-
-			this.activateTocItem(itemsWithBbox, target);
-		};
-	}
-
-	customElements.define("toc-root", TableOfContents);
-	customElements.define("toc-item", TocItem);
-	customElements.define("article-toc", ArticleToc);
-</script>
-
-<style is:global>
-	article-toc {
-		toc-item.active {
-			/*background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-			outline-style: none;
-			box-shadow:
-				0 1px oklch(0% 0 0 / 0.01) inset,
-				0 -1px oklch(100% 0 0 / 0.01) inset;*/
-
-			text-decoration: underline;
-			text-underline-offset: 3px;
-			text-decoration-thickness: 1px;
-			text-decoration-color: var(--color-primary);
-		}
-	}
-</style>
+</div>
 
 <style>
+	html[data-navbar-hidden="false"] .md-content.toc-inside .toc {
+		top: var(--header-height);
+	}
+
 	.md-content {
 		position: relative;
 		width: 100%;
-	}
 
-	@media screen and (min-width: 1024px) {
-		.md-content {
-			&.inside {
+		@media screen and (min-width: 1024px) {
+			&.toc-inside {
 				display: grid;
 				grid-template-columns: calc(100% - 300px - 2rem) min-content;
 				grid-template-rows: 1fr;
@@ -230,83 +58,17 @@ const { tocPosition = "default", headings } = Astro.props;
 					grid-column: 1;
 				}
 
-				#toc {
+				.toc {
 					z-index: 2;
 					grid-row: 1;
 					grid-column: 2;
 					position: sticky;
-					top: var(--header-height); /* Navbar */
+					top: 0;
 					height: max-content;
 					max-height: calc(100vh - var(--header-height) - 1rem);
 					width: 300px;
+					transition: top 300ms ease;
 				}
-			}
-		}
-	}
-</style>
-
-<style is:global>
-	.md-content {
-		img:not(.not-md-image) {
-			justify-self: center;
-			border: 1px solid transparent;
-			border-radius: 0.5rem;
-		}
-
-		figure:not([class]) {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			figcaption {
-				text-align: center;
-			}
-		}
-	}
-
-	nav.toc {
-		height: max-content;
-		max-height: calc(100vh - var(--header-height) - 5rem);
-		scrollbar-width: thin;
-		overflow-y: auto;
-		padding-inline: 0.725rem;
-
-		ul {
-			margin-top: 0;
-			font-size: 0.875rem;
-			font-weight: 400;
-		}
-	}
-
-	#toc {
-		summary::marker,
-		summary::-webkit-details-marker {
-			display: none;
-		}
-
-		summary {
-			list-style: none;
-			pointer-events: none;
-		}
-	}
-
-	@media screen and (max-width: 1024px) {
-		#toc {
-			summary::marker,
-			summary::-webkit-details-marker {
-				display: none;
-			}
-
-			details {
-				margin-bottom: 1rem;
-			}
-
-			summary {
-				pointer-events: all;
-				padding-left: 1rem;
-				margin-bottom: 0;
-				position: relative;
-				cursor: pointer;
 			}
 		}
 	}

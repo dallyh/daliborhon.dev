@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @plugin "daisyui" {
 	themes: false;
 }
@@ -73,7 +74,36 @@
 	--noise: 0;
 }
 
-@plugin "@tailwindcss/typography";
+@layer utilities {
+	h1 {
+		@apply text-4xl;
+		@apply font-bold;
+	}
+
+	h2 {
+		@apply text-3xl;
+		@apply font-bold;
+	}
+
+	h3 {
+		@apply text-2xl;
+		@apply font-bold;
+	}
+
+	h4 {
+		@apply text-xl;
+		@apply font-bold;
+	}
+
+	h5 {
+		@apply text-lg;
+		@apply font-bold;
+	}
+
+	h6 {
+		@apply font-bold;
+	}
+}
 
 @theme {
 	--default-font-family: "JetBrains Mono Variable", var(--font-mono);
@@ -340,50 +370,4 @@
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
-}
-
-@layer utilities {
-	h1 {
-		@apply text-4xl;
-		@apply font-bold;
-	}
-
-	h2 {
-		@apply text-3xl;
-		@apply font-bold;
-	}
-
-	h3 {
-		@apply text-2xl;
-		@apply font-bold;
-	}
-
-	h4 {
-		@apply text-xl;
-		@apply font-bold;
-	}
-
-	h5 {
-		@apply text-lg;
-		@apply font-bold;
-	}
-
-	h6 {
-		@apply font-bold;
-	}
-
-	a.external {
-		display: inline-block;
-		&::after {
-			content: "";
-			display: inline-block;
-			width: 1rem;
-			height: 1rem;
-			margin-left: 0.2rem;
-			background: var(--color-primary);
-			mask: url("/assets/external-arrow.svg") no-repeat center;
-			mask-size: contain;
-			vertical-align: middle;
-		}
-	}
 }

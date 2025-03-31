@@ -1,0 +1,74 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import Card from "@components/astro/common/Card.astro";
+import { formatDateTime } from "@utils";
+import ExternalLink from "../common/ExternalLink.astro";
+import MarkdownContent from "../content/MarkdownContent.astro";
+import GithubDate from "./GithubDate.astro";
+import GithubLanguages from "./GithubLanguages.astro";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+	githubData?: GithubData;
+	relatedTags?: CollectionEntry<"projectTags">[];
+}
+
+export type GithubData = {
+	createdAt: Date;
+	languages: ProjectLanguages;
+};
+
+export type ProjectLanguages = {
+	[key: string]: number;
+};
+
+const { project, githubData, relatedTags } = Astro.props;
+
+const locale = Astro.currentLocale!;
+const { title, sourceUrl, startDate } = project.data;
+---
+
+<Card>
+	<div class="card-body">
+		<div class="mb-2 flex">
+			<div>
+				<ExternalLink title={title} href={sourceUrl} class="card-title link link-hover" target="_blank" aria-label={title}>{title}</ExternalLink>
+				<p class="text-sm">
+					<span>🚀</span>
+					{githubData && <GithubDate date={githubData.createdAt} />}
+					{!githubData && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
+				</p>
+			</div>
+		</div>
+		{
+			relatedTags && (
+				<div class="flex flex-wrap gap-2">
+					{relatedTags.map((tag) => {
+						const { bgColor, title } = tag.data;
+						return (
+							<span class="badge text-black" style={`background: ${bgColor};`}>
+								{title}
+							</span>
+						);
+					})}
+				</div>
+			)
+		}
+		<MarkdownContent entry={project} toc="disabled" prose={false} />
+		{githubData && <GithubLanguages languages={githubData.languages} />}
+	</div>
+</Card>
+
+<style is:global>
+	.svg-img-card {
+		width: 48px;
+		height: 48px;
+
+		svg,
+		img {
+			width: 48px;
+			height: 48px;
+		}
+	}
+</style>

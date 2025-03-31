@@ -1,0 +1,110 @@
+---
+import { m } from "@paraglide/messages";
+import { Icon } from "astro-icon/components";
+
+const themes = ["light", "dark"];
+---
+
+<theme-selector>
+	<div class="dropdown dropdown-center lg:dropdown-end dropdown-hover">
+		<div tabindex="0" role="button" class="input input-sm cursor-pointer" aria-haspopup="menu">
+			<div class="bg-base-100 border-base-content/10 grid shrink-0 grid-cols-2 gap-0.5 rounded-md border p-1">
+				<div class="bg-base-content size-1 rounded-full"></div>
+				<div class="bg-primary size-1 rounded-full"></div>
+				<div class="bg-secondary size-1 rounded-full"></div>
+				<div class="bg-accent size-1 rounded-full"></div>
+			</div>
+			{m.common__theme()}
+		</div>
+		<div tabindex="0" class="dropdown-content bg-base-200 text-base-content w-38">
+			<ul class="menu w-38">
+				{
+					themes.map((t) => {
+						return (
+							<li>
+								<button class="gap-3 px-2" data-set-theme={t}>
+									<div data-theme={t} class="bg-base-100 grid shrink-0 grid-cols-2 gap-0.5 rounded-md p-1 shadow-sm">
+										<div class="bg-base-content size-1 rounded-full" />
+										<div class="bg-primary size-1 rounded-full" />
+										<div class="bg-secondary size-1 rounded-full" />
+										<div class="bg-accent size-1 rounded-full" />
+									</div>
+									<div class="truncate">{t}</div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" id="checkmark" class="invisible h-3 w-3 shrink-0">
+										<path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+									</svg>
+								</button>
+							</li>
+						);
+					})
+				}
+				<li>
+					<button class="gap-3 px-2" data-set-theme="system">
+						<div class="rounded-md p-1 shadow-sm">
+							<Icon name="heroicons:computer-desktop-16-solid" size="0.75rem" />
+						</div>
+						<div class="truncate">system</div>
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" id="checkmark" class="invisible h-3 w-3 shrink-0">
+							<path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"></path>
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</theme-selector>
+
+<script>
+	class ThemeSelector extends HTMLElement {
+		storageKey = window.themeStorageKey;
+		buttons = this.querySelectorAll<HTMLButtonElement>("[data-set-theme]");
+
+		setActive(theme: string) {
+			this.buttons.forEach((btn) => {
+				const icon = btn.querySelector("#checkmark");
+				const isActive = btn.getAttribute("data-set-theme") === theme;
+				if (icon) {
+					icon.classList.toggle("invisible", !isActive);
+				}
+			});
+		}
+
+		useTheme(theme: string) {
+			if (theme === "system") {
+				this.setHtmlTheme(this.systemTheme());
+			} else {
+				this.setHtmlTheme(theme);
+			}
+
+			localStorage.setItem(this.storageKey, theme);
+			this.setActive(theme);
+			window.dispatchEvent(new CustomEvent("theme-changed"));
+		}
+
+		setHtmlTheme(theme: string) {
+			document.documentElement.dataset.theme = theme;
+		}
+
+		systemTheme() {
+			return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+		}
+
+		connectedCallback() {
+			const storedTheme = localStorage.getItem(this.storageKey) ?? "system";
+			const activeTheme = storedTheme === "system" || !storedTheme ? this.systemTheme() : storedTheme;
+
+			this.setActive(storedTheme);
+			this.setHtmlTheme(activeTheme);
+
+			this.buttons.forEach((btn) => {
+				btn.addEventListener("click", (e) => {
+					e.preventDefault();
+					const theme = btn.dataset.setTheme!;
+					this.useTheme(theme);
+				});
+			});
+		}
+	}
+
+	customElements.define("theme-selector", ThemeSelector);
+</script>

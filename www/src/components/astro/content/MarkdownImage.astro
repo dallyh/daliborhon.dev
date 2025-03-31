@@ -1,0 +1,20 @@
+---
+import Image from "astro/components/Image.astro";
+
+// https://github.com/withastro/astro/blob/fdd2b48eced71bb90eb393078201689bf312a7d3/.changeset/cyan-penguins-divide.md
+interface Props {
+	src: string | ImageMetadata;
+	alt: string;
+	title?: string;
+}
+const { src, alt, title } = Astro.props;
+const caption = title ? title : alt;
+---
+
+<figure class="flex flex-col items-center justify-center">
+	<div class="not-prose self-center">
+		{typeof src === "string" ? <img src={src} alt={alt} {title} /> : <Image {src} {alt} {title} />}
+	</div>
+
+	<figcaption class="text-center text-sm">{caption}</figcaption>
+</figure>

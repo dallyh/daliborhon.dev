@@ -1,0 +1,58 @@
+---
+import AllEntriesUrl from "@components/astro/common/AllEntriesUrl.astro";
+
+export interface GridProps {
+	url?: string;
+	urlDescription?: string;
+	showAllUrl?: boolean;
+	autoCols?: boolean;
+	cols?: 1 | 2 | 3;
+}
+
+interface Props extends GridProps {
+	children: (item: any) => unknown;
+	items: any[];
+}
+
+const { items, url, urlDescription, autoCols = false, showAllUrl = true, cols = 3 } = Astro.props;
+
+function calcAutoCols() {
+	if (items.length % 3 === 0) {
+		return 3;
+	}
+
+	if (items.length % 2 === 0) {
+		return 2;
+	}
+
+	return 1;
+}
+
+const colsMap = {
+	0: "",
+	1: "md:grid-cols-1",
+	2: "md:grid-cols-2",
+	3: "md:grid-cols-3",
+};
+
+const colsClass = {
+	default: "md:grid-cols-3",
+	auto: colsMap[calcAutoCols()],
+	manual: colsMap[cols ?? 0],
+};
+
+const colsType = autoCols ? "auto" : cols ? "manual" : "default";
+---
+
+<div class="flex flex-col">
+	<ul class={`grid grid-cols-1 gap-8 ${colsClass[colsType]}`}>
+		{items.map((item) => <li set:html={Astro.slots.render("default", [item])} />)}
+	</ul>
+	{showAllUrl && url && urlDescription && <AllEntriesUrl {url} {urlDescription} />}
+</div>
+
+<style>
+	ul {
+		list-style: none;
+	}
+</style>

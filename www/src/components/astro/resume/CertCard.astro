@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+export type CertCard = {
+	img: string | ImageMetadata;
+	imgInverted?: string | ImageMetadata;
+	alt: string;
+	width?: number;
+	height?: number;
+};
+
+export interface Props extends CertCard {}
+
+const { img, alt, width = 150, height = 150 / 4, imgInverted = img } = Astro.props;
+const imgProps = {
+	alt,
+	title: alt,
+	width,
+	height,
+	class: "not-md-image",
+};
+
+const isPrint = Astro.locals.isPrint;
+---
+
+{
+	isPrint && (
+		<li>
+			<slot />
+		</li>
+	)
+}
+
+{
+	!isPrint && (
+		<div class="card card-compact bg-base-200 h-full min-h-32">
+			<div class="card-body grid place-items-center items-center justify-center text-center">
+				<div>
+					<div class="image-normal">{typeof img === "string" ? <img src={img} alt={alt} /> : <Image src={img as ImageMetadata} {...imgProps} />}</div>
+					{imgInverted && <div class="image-inverted">{typeof imgInverted === "string" ? <img src={imgInverted} alt={alt} /> : <Image src={imgInverted as ImageMetadata} {...imgProps} />}</div>}
+				</div>
+				<slot />
+			</div>
+		</div>
+	)
+}
+
+<style>
+	.image-normal,
+	.image-inverted {
+		display: none;
+	}
+
+	:root[data-theme="dark"] {
+		.image-inverted {
+			display: block;
+		}
+	}
+
+	:root[data-theme="light"] {
+		.image-normal {
+			display: block;
+		}
+	}
+</style>

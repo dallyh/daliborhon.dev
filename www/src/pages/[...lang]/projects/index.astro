@@ -30,7 +30,7 @@ const searchProps = {
 		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/projects")} label={m.projects__projects()} />
 	</Fragment>
 	<SearchMeta {...searchProps} />
-	<Section id="projects" isFirstSection sectionTitle={m.projects__projects()} sectionDescription={m.projects__description()}>
+	<Section id="projects" isFirstSection title={m.projects__projects()} description={m.projects__description()}>
 		<ProjectsGrid {projects} showAllUrl={false} />
 	</Section>
 </PageLayout>

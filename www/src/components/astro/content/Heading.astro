@@ -1,0 +1,60 @@
+---
+import type { Locale } from "@paraglide/runtime";
+import { slugifyStr } from "@utils";
+
+interface Props {
+	id?: string;
+	level: 1 | 2 | 3 | 4 | 5 | 6;
+}
+
+const { id, level } = Astro.props;
+const locale = Astro.currentLocale as Locale;
+
+const HeadingTag = `h${level}` as keyof HTMLElementTagNameMap;
+const sluggedId = slugifyStr(undefined, id ?? "");
+---
+
+<HeadingTag id={sluggedId} class="flex items-center gap-2">
+	<a href={`#${sluggedId}`} aria-hidden="true" tabindex="-1">
+		<span class="heading-link-icon"></span>
+	</a>
+	<slot />
+</HeadingTag>
+
+<style>
+	:is(h1, h2, h3, h4, h5, h6) {
+		transform: translateX(-1.5rem);
+		transition: transform ease 300ms;
+
+		a {
+			opacity: 0;
+			visibility: hidden;
+			text-decoration: none;
+			transition: opacity ease 300ms;
+			position: relative;
+
+			&:hover {
+				color: var(--color-primary);
+			}
+
+			.heading-link-icon {
+				width: 1rem;
+				height: 1rem;
+
+				&::after {
+					content: "#";
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+
+		&:hover {
+			transform: translateX(0rem);
+			a {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+</style>

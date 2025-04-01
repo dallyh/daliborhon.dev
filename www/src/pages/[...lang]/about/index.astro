@@ -29,16 +29,16 @@ const searchProps = {
 		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/about")} label={m.common__about()} />
 	</Fragment>
 	<SearchMeta {...searchProps} />
-	<Section sectionTitle={m.common__about()} id="about" isFirstSection>
+	<Section title={m.common__about()} id="about" isFirstSection>
 		<p>
 			{m.about__about_me()}
 		</p>
 	</Section>
-	<Section sectionTitle={m.common__contact()} id="contact" heading="h2">
-		<Section heading="h3" isInsideSection sectionTitle={m.common__social_links_title()} sectionDescription={m.contact__contact_me_social()} id="contactSocial">
+	<Section title={m.common__contact()} id="contact" heading="h2">
+		<Section heading="h3" isInsideSection title={m.common__social_links_title()} description={m.contact__contact_me_social()} id="contactSocial">
 			<SocialLinks />
 		</Section>
-		<Section heading="h3" isInsideSection sectionTitle={m.contact__leave_message_title()} sectionDescription={m.contact__contact_me_form()} id="contact">
+		<Section heading="h3" isInsideSection title={m.contact__leave_message_title()} description={m.contact__contact_me_form()} id="contact">
 			<ContactForm />
 		</Section>
 	</Section>

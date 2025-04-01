@@ -263,50 +263,6 @@
 	}
 }
 
-@utility md-content {
-	:where(a):not(:where([class~="not-md"], [class~="not-md"] *)),
-	&.prose :where(a):not(:where([class~="not-md"], [class~="not-md"] *)) {
-		@apply link link-hover-reverse;
-	}
-
-	:is(h1, h2, h3, h4, h5, h6):has(.heading-link-icon) {
-		@apply flex items-center gap-2;
-		transform: translateX(-1.5rem);
-		transition: transform ease 300ms;
-
-		a {
-			opacity: 0;
-			visibility: hidden;
-			text-decoration: none;
-			transition: opacity ease 300ms;
-			position: relative;
-
-			&:hover {
-				color: var(--color-primary);
-			}
-
-			.heading-link-icon {
-				width: 1rem;
-				height: 1rem;
-
-				&::after {
-					content: "#";
-					width: 100%;
-					height: 100%;
-				}
-			}
-		}
-
-		&:hover {
-			transform: translateX(0rem);
-			a {
-				opacity: 1;
-				visibility: visible;
-			}
-		}
-	}
-}
-
 @utility prose {
 	:not(.expressive-code) code:not(a code),
 	a:has(> code) {

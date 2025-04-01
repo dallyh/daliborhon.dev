@@ -39,7 +39,7 @@ const posts = await getPostsByTag(locale, search);
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
 		<BreadCrumbsItem currentPage={true} label={m.blog__tags()} />
 	</Fragment>
-	<Section id="tags" isFirstSection sectionTitle={m.blog__tags()} sectionDescription={m.blog__tags_desctiption()}>
+	<Section id="tags" isFirstSection title={m.blog__tags()} description={m.blog__tags_desctiption()}>
 		{tags && tags.length === 0 && <p>{m.blog__no_tags()}</p>}
 		{
 			tags && tags.length !== 0 && (

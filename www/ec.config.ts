@@ -8,6 +8,7 @@ export default defineEcConfig({
 	styleOverrides: {
 		codeFontFamily: "var(--default-mono-font-family)",
 		uiFontFamily: "var(--default-font-family)",
+		borderRadius: "0",
 		frames: {
 			editorActiveTabIndicatorTopColor: "var(--color-primary)",
 		},

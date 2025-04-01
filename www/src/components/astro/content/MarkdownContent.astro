@@ -1,11 +1,15 @@
 ---
 import { render } from "astro:content";
 import type { CollectionEntry, DataEntryMap } from "astro:content";
-import { m } from "@paraglide/messages";
-import { generateTOCHTML } from "@utils/content";
 import Callout from "./Callout.astro";
+import Heading1 from "./Heading1.astro";
+import Heading2 from "./Heading2.astro";
+import Heading3 from "./Heading3.astro";
+import Heading4 from "./Heading4.astro";
+import Heading5 from "./Heading5.astro";
+import Heading6 from "./Heading6.astro";
+import Image from "./Image.astro";
 import Link from "./Link.astro";
-import MarkdownImage from "./MarkdownImage.astro";
 import TableOfContents from "./TableOfContents.astro";
 
 interface Props {
@@ -15,13 +19,20 @@ interface Props {
 }
 
 const { toc = "disabled", entry, prose = true } = Astro.props;
-const { Content, headings } = await render(entry);
 
 const components = {
 	Callout,
 	a: Link,
-	img: MarkdownImage,
+	img: Image,
+	h1: Heading1,
+	h2: Heading2,
+	h3: Heading3,
+	h4: Heading4,
+	h5: Heading5,
+	h6: Heading6,
 };
+
+const { Content, headings } = await render(entry);
 ---
 
 <div class=`md-content ${prose ? "prose" : ""} max-w-none toc-${toc}` id="article">

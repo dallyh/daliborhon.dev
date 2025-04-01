@@ -11,20 +11,21 @@ const mergedClass = ["external", restClass].filter(Boolean).join(" ");
 <a {...rest} class={mergedClass} rel="nofollow noopener noreferrer" target="_blank"><slot /></a>
 
 <style>
-	a {
-		&.external {
+	.external {
+		display: inline-block;
+		&::after {
+			content: "";
 			display: inline-block;
-			&::after {
-				content: "";
-				display: inline-block;
-				width: 1rem;
-				height: 1rem;
-				margin-left: 0.2rem;
-				background: var(--color-primary);
-				mask: url("/assets/external-arrow.svg") no-repeat center;
-				mask-size: contain;
-				vertical-align: middle;
-			}
+			width: 1rem;
+			height: 1rem;
+			margin-left: 0.2rem;
+			background: var(--color-primary);
+			mask: url("/assets/external-arrow.svg") no-repeat center;
+			mask-size: contain;
+			vertical-align: middle;
 		}
 	}
+
+	--ec-frm-edTabBarBg: var(--color-base-200);
+	--ec-frm-edBg: var(--color-base-300);
 </style>

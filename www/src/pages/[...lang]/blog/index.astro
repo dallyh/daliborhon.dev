@@ -26,7 +26,7 @@ const layoutProps = {
 	<Fragment slot="crumbs">
 		<BreadCrumbsItem currentPage={true} label="Blog" />
 	</Fragment>
-	<Section id="blogIntro" sectionTitle="Blog" sectionDescription={m.blog__blog_description()} isFirstSection>
+	<Section id="blogIntro" title="Blog" description={m.blog__blog_description()} isFirstSection>
 		<FeaturedPosts posts={featuredPosts} sectionProps={{ isInsideSection: true, id: "featuredPosts", heading: "h2" }} />
 		<RecentPosts posts={recentPosts} sectionProps={{ isInsideSection: true, id: "recentPosts", heading: "h2" }} />
 	</Section>

@@ -54,7 +54,7 @@ const layoutProps = {
 		<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog/tags/")} label={m.blog__tags()} />
 		<BreadCrumbsItem currentPage={true} label={tagTitle} />
 	</Fragment>
-	<Section isFirstSection id="taggedPosts" sectionTitle={tagDescription}>
+	<Section isFirstSection id="taggedPosts" title={tagDescription}>
 		{!posts && <p>{m.blog__no_tagged_posts()}</p>}
 		{posts && posts.length === 0 && <p>{m.blog__no_tagged_posts()}</p>}
 		{posts && posts.length !== 0 && <PostsGrid posts={posts} />}

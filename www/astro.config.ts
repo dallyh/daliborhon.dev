@@ -8,27 +8,15 @@ import aiRobotsTxt from "astro-ai-robots-txt";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
-import { defineConfig, envField } from "astro/config";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
+import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
+import ecConfig from "./ec.config";
+import envVars from "./env.config";
 import iconConfig from "./icons.config";
 import { paraglideIntegration } from "./src/integrations/paraglide-js/integration";
 import { Logger } from "./src/utils/logger";
 
 const logger = new Logger("astro-config");
-
-const envVars = {
-	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
-	OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
-	OA_ALLOWED_DOMAINS: envField.string({ context: "server", access: "secret", optional: true }),
-	GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
-	HCAPTCHA_KEY: envField.string({ context: "client", access: "public", default: "50b2fe65-b00b-4b9e-ad62-3ba471098be2" }),
-	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
-	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
-	APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
-	UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
-};
 
 const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
 const PORT = 4321;
@@ -45,6 +33,8 @@ export default defineConfig({
 	experimental: {
 		serializeConfig: true,
 		preserveScriptOrder: true,
+		headingIdCompat: true,
+		contentIntellisense: true,
 	},
 	site: SITE_URL,
 	build: {
@@ -72,22 +62,6 @@ export default defineConfig({
 	env: {
 		schema: envVars,
 	},
-	markdown: {
-		rehypePlugins: [
-			rehypeSlug,
-			[
-				rehypeAutolinkHeadings,
-				{
-					behavior: "prepend",
-					content: {
-						type: "element",
-						tagName: "span",
-						properties: { className: ["heading-link-icon"] },
-					},
-				},
-			],
-		],
-	},
 	integrations: [
 		paraglideIntegration({
 			project: "./project.inlang",
@@ -95,7 +69,7 @@ export default defineConfig({
 		}),
 		db(),
 		react(),
-		expressiveCode(),
+		expressiveCode(ecConfig),
 		mdx(),
 		pagefind(),
 		icon({

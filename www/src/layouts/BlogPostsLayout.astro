@@ -36,7 +36,7 @@ const layoutProps = {
 				<BreadCrumbsItem href={getRelativeLocaleUrl(locale, "/blog")} label="Blog" />
 				<BreadCrumbsItem currentPage={true} label={m.blog__posts()} />
 			</BreadCrumbs>
-			<Section isFirstSection id="blogs" sectionTitle={m.blog__all_posts_title()}>
+			<Section isFirstSection id="blogs" title={m.blog__all_posts_title()}>
 				{page.end === -1 && <p>{m.blog__no_posts()}</p>}
 				{
 					page.end !== -1 && (

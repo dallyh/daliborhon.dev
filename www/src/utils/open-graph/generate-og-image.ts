@@ -12,8 +12,8 @@ const getFonts = async () => {
 	const root = process.cwd();
 	const fontsPath = path.join(root, fontsFolder);
 
-	const fontFileRegular = fs.readFileSync(path.join(fontsPath, "Nunito-Regular.ttf"));
-	const fontFileBold = fs.readFileSync(path.join(fontsPath, "Nunito-Bold.ttf"));
+	const fontFileRegular = fs.readFileSync(path.join(fontsPath, "JetBrainsMono-Regular.ttf"));
+	const fontFileBold = fs.readFileSync(path.join(fontsPath, "JetBrainsMono-Bold.ttf"));
 
 	return { fontFileRegular, fontFileBold };
 };
@@ -26,13 +26,13 @@ const options: SatoriOptions = {
 	embedFont: true,
 	fonts: [
 		{
-			name: "Nunito",
+			name: "JetBrainsMono",
 			data: fontFileRegular,
 			weight: 400,
 			style: "normal",
 		},
 		{
-			name: "Nunito",
+			name: "JetBrainsMono",
 			data: fontFileBold,
 			weight: 600,
 			style: "normal",

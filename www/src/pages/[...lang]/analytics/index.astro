@@ -16,7 +16,7 @@ const locale = Astro.currentLocale as Locale;
 	<Fragment slot="crumbs">
 		<BreadCrumbsItem currentPage label="Analytics" />
 	</Fragment>
-	<Section sectionTitle={m.common__page_views()} isFirstSection id="pageViews">
+	<Section title={m.common__page_views()} isFirstSection id="pageViews">
 		<PageViewsComponent locale={locale} client:load>
 			<Icon name="heroicons:arrow-small-right-solid" size="18" slot="arrowRightIcon" />
 			<Icon name="heroicons:arrow-small-left-solid" size="18" slot="arrowLeftIcon" />

@@ -4,6 +4,7 @@ import ExternalLink from "../common/ExternalLink.astro";
 interface Props {
 	href: string;
 }
+
 const { href, ...rest } = Astro.props;
 
 function isExternal() {
@@ -13,17 +14,15 @@ function isExternal() {
 }
 ---
 
+<slot />
+
 {
 	isExternal() && (
-		<ExternalLink {href} {...rest}>
-			<slot />
-		</ExternalLink>
+		<ExternalLink {href} class="link link-hover-reverse" {...rest}><slot /></ExternalLink>
 	)
 }
 {
 	!isExternal() && (
-		<a {href} {...rest}>
-			<slot />
-		</a>
+		<a class="link link-hover-reverse" {href} {...rest}><slot /></a>
 	)
 }

@@ -28,6 +28,9 @@ FROM node:22-slim AS runtime
 # Set working dir
 WORKDIR /app
 
+# ✅ Enable corepack, which will install pnpm
+RUN corepack enable
+
 # Only copy the deploy folder from builder (lean image!)
 COPY --from=builder /app/deploy .
 

@@ -16,4 +16,4 @@ NODE_ENV = "production"
 NIXPACKS_NODE_VERSION = "22"
 
 [start]
-cmds = ["pnpm start"]
+cmd = "pnpm start"

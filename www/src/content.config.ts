@@ -65,6 +65,14 @@ const resume = defineCollection({
 	}),
 });
 
+const privacyPolicy = defineCollection({
+	loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./content/privacy-policy` }),
+	schema: z.object({
+		title: z.string(),
+		effectiveDate: z.coerce.date(),
+	}),
+});
+
 type LanguageColor = {
 	[key: string]: {
 		color: string; // A string representing a color (e.g., a hex code)
@@ -120,4 +128,5 @@ export const collections = {
 	projectTags,
 	resume,
 	githubLanguages,
+	privacyPolicy
 };

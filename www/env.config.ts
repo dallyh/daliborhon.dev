@@ -10,4 +10,6 @@ export default {
 	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
 	APP_VERSION_NAME: envField.string({ context: "client", access: "public", optional: true }),
 	UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
+	UMAMI_USERNAME: envField.string({ context: "server", access: "secret", optional: false }),
+	UMAMI_PASSWORD: envField.string({ context: "server", access: "secret", optional: false }),
 };

@@ -12,10 +12,8 @@ function isExternal() {
 	const linkUrl = new URL(href, currentUrl);
 	return linkUrl.hostname !== currentUrl.hostname;
 }
+
 ---
-
-<slot />
-
 {
 	isExternal() && (
 		<ExternalLink {href} class="link link-hover-reverse" {...rest}><slot /></ExternalLink>

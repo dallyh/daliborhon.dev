@@ -1,4 +1,3 @@
-import db from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
@@ -67,7 +66,6 @@ export default defineConfig({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
 		}),
-		db(),
 		react(),
 		expressiveCode(ecConfig),
 		mdx(),

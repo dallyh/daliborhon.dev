@@ -1,0 +1,19 @@
+[phases.install]
+cmds = ["pnpm config set inject-workspace-packages true", "pnpm install"]
+
+[phases.build]
+cmds = [
+    "pnpm --filter @daliborhon.dev/web build",
+    "pnpm deploy ./deploy --filter  \"@daliborhon.dev/web\"",
+]
+
+[phases.export]
+dependsOn = ["build"]
+cmds = ["cp -r deploy/* /app"]
+
+[variables]
+NODE_ENV = "production"
+NIXPACKS_NODE_VERSION = 22
+
+[start]
+cmds = ["pnpm start"]

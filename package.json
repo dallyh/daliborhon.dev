@@ -3,7 +3,6 @@
     "version": "8.0.0",
     "private": true,
     "scripts": {
-        "build": "turbo build",
         "dev:web": "pnpm --filter \"@daliborhon.dev/web\" run dev",
         "format": "pnpm run format:code && pnpm run format:imports",
         "format:code": "prettier -w \"**/*\" --ignore-unknown --cache",
@@ -18,7 +17,7 @@
         "prettier": "^3.5.3",
         "prettier-plugin-astro": "^0.14.1",
         "prettier-plugin-tailwindcss": "^0.6.11",
-        "turbo": "^2.5.0",
+        "prettier-plugin-toml": "^2.0.3",
         "typescript": "^5.8.2"
     },
     "packageManager": "pnpm@10.7.1",

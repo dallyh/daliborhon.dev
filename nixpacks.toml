@@ -13,7 +13,7 @@ cmds = ["cp -r deploy/* /app"]
 
 [variables]
 NODE_ENV = "production"
-NIXPACKS_NODE_VERSION = 22
+NIXPACKS_NODE_VERSION = "22"
 
 [start]
 cmds = ["pnpm start"]

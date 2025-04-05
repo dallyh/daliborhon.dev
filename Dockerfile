@@ -19,8 +19,9 @@ WORKDIR /app
 
 RUN pnpm config set inject-workspace-packages true
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
-RUN pnpm --filter @daliborhon.dev/web build
-RUN pnpm deploy ./deploy --filter "@daliborhon.dev/web"
+# Cache .astro build artifacts
+RUN --mount=type=cache,id=astro_cache,target=/app/node_modules/.astro pnpm run build:web
+RUN pnpm run deploy:web
     
 # --- Stage 2: Runtime ---
 FROM node:22-slim AS runtime
@@ -29,10 +30,6 @@ RUN corepack enable
 
 WORKDIR /app
 COPY --from=build /app/deploy .
-
-# Optional: switch to non-root user for security
-RUN useradd -m appuser && chown -R appuser /app
-USER appuser
 
 # Start the app
 CMD ["pnpm", "start"]

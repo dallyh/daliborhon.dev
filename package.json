@@ -3,16 +3,14 @@
     "version": "8.0.0",
     "private": true,
     "scripts": {
-        "build:web": "pnpm --filter \"@daliborhon.dev/web\" build",
+        "build": "turbo build",
         "dev:web": "pnpm --filter \"@daliborhon.dev/web\" run dev",
         "format": "pnpm run format:code && pnpm run format:imports",
         "format:code": "prettier -w \"**/*\" --ignore-unknown --cache",
         "format:imports": "biome check --formatter-enabled=false --linter-enabled=false --write",
         "lint": "biome lint --diagnostic-level=warn",
         "lint:fix": "biome lint --write",
-        "lint:fix:unsafe": "biome lint --write --unsafe",
-        "deploy:web": "pnpm deploy --prod --filter \"@daliborhon.dev/web\" ./deploy",
-        "deploy:web:legacy": "pnpm deploy --legacy --prod --filter \"@daliborhon.dev/web\" ./deploy"
+        "lint:fix:unsafe": "biome lint --write --unsafe"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.4",
@@ -20,6 +18,7 @@
         "prettier": "^3.5.3",
         "prettier-plugin-astro": "^0.14.1",
         "prettier-plugin-tailwindcss": "^0.6.11",
+        "turbo": "^2.5.0",
         "typescript": "^5.8.2"
     },
     "packageManager": "pnpm@10.7.1",

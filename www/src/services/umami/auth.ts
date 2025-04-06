@@ -1,5 +1,6 @@
 import { UMAMI_USERNAME, UMAMI_PASSWORD } from "astro:env/server";
 import { Logger } from "@logger";
+import { UMAMI_URL } from "astro:env/client";
 
 const logger = new Logger("umami-auth");
 
@@ -9,7 +10,7 @@ export async function getToken() {
 		password: UMAMI_PASSWORD,
 	};
 
-	const res = await fetch("https://analytics.daliborhon.dev/api/auth/login", {
+	const res = await fetch(`${UMAMI_URL}/api/auth/login`, {
 		method: "POST",
 		headers: {
 			Accept: "application/json",

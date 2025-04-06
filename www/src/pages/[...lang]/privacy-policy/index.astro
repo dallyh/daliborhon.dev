@@ -7,22 +7,20 @@ import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
 import { getEntry } from "astro:content";
-import FormattedDate from "@/src/components/astro/blog/FormattedDate.astro";
 import MarkdownContent from "@/src/components/astro/content/MarkdownContent.astro";
 import type { CollectionEntry } from "astro:content";
+import FormattedDate from "@components/astro/common/FormattedDate.astro";
 
 export { getStaticPaths } from "@utils/i18n";
 
 const locale = Astro.currentLocale as Locale;
 
 const layoutProps = {
-	title: "Privacy policy",
-	description: "Privacy policy",
+	title: m.common__privacy_policy_long(),
 };
 
 const searchProps = {
-	title: "Privacy policy",
-	description: "Privacy policy",
+	title: m.common__privacy_policy_long(),
 };
 
 const policy = (await getEntry("privacyPolicy", locale)) as CollectionEntry<"privacyPolicy">;
@@ -30,12 +28,12 @@ const policy = (await getEntry("privacyPolicy", locale)) as CollectionEntry<"pri
 
 <PageLayout {...layoutProps} showCrumbs>
 	<Fragment slot="crumbs">
-		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/about/privacy-policy")} label={layoutProps.title} />
+		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/privacy-policy")} label={layoutProps.title} />
 	</Fragment>
 	<SearchMeta {...searchProps} />
 	<Section title={policy?.data.title} id="about" isFirstSection>
 		<p>
-			Effective date: <FormattedDate locale={locale} pubDate={policy?.data.effectiveDate!} modDate={null} />
+			{m.common__privacy_effective()}: <FormattedDate date={policy?.data.effectiveDate!} />
 		</p>
 		<MarkdownContent entry={policy} />
 	</Section>

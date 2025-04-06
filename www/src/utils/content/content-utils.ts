@@ -3,7 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from "astro:i18n";
 import { Logger } from "@logger";
 import type { Locale } from "@paraglide/runtime";
-import { removeTrailingSlash, slugifyStr } from "@utils";
+import { formatDateTime, removeTrailingSlash, slugifyStr } from "@utils";
 import type { MarkdownHeading } from "astro";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { toString } from "mdast-util-to-string";
@@ -86,26 +86,9 @@ export function getAbsoluteBlogPostUrl(locale: Locale, post: CollectionEntry<"po
 }
 
 export function getBlogPostDate(locale: string, pubDate: string | Date, modDate: string | Date | null) {
-	const myDatetime = wasPostUpdated(pubDate, modDate) ? new Date(modDate!) : new Date(pubDate);
+	const datetime = wasPostUpdated(pubDate, modDate) ? new Date(modDate!) : new Date(pubDate);
 
-	const date = myDatetime.toLocaleDateString(locale, {
-		day: "numeric",
-		month: "long",
-		year: "numeric",
-	});
-
-	/*
-	const time = myDatetime.toLocaleTimeString(locale, {
-		hour: "2-digit",
-		minute: "2-digit",
-	});
-	*/
-
-	return {
-		iso: myDatetime.toISOString(),
-		date: date,
-		//time: time,
-	};
+	return formatDateTime(datetime, locale);
 }
 
 export function wasPostUpdated(pubDate: string | Date, modDate: string | Date | null) {

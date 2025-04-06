@@ -1,13 +1,12 @@
 import { getToken } from "./auth";
 import { Logger } from "@logger";
+import { UMAMI_URL, UMAMI_SITE_ID } from "astro:env/client";
 
 const logger = new Logger("umami-client");
-
 const token = await getToken();
-const websiteId = "7e04370d-ecba-4fd8-8d71-2d50880d0d59";
 
 export async function getPageViews(url: string) {
-	const endpoint = `https://analytics.daliborhon.dev/api/websites/${websiteId}/stats`;
+	const endpoint = `${UMAMI_URL}/api/websites/${UMAMI_SITE_ID}/stats`;
 	const query = {
 		url: url,
 		startAt: "0",

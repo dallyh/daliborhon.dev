@@ -17,10 +17,9 @@ import { Logger } from "./src/utils/logger";
 
 const logger = new Logger("astro-config");
 
-const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
-const PORT = 4321;
-const DEV_ENV = NODE_ENV !== "production";
-const SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://daliborhon.dev";
+const { NODE_ENV, PREVIEW, PORT, SITE, COOLIFY_URL } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
+const SERVER_PORT = PORT ?? 4321;
+const SITE_URL = NODE_ENV !== "production" ? `http://localhost:${SERVER_PORT}` : COOLIFY_URL ? COOLIFY_URL : SITE;
 
 logger.info(`Using ENVIRONMENT: '${NODE_ENV}'`);
 logger.info(`Using SITE_URL: '${SITE_URL}'`);

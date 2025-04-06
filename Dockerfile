@@ -10,6 +10,9 @@ ARG PREVIEW
 ARG UPTIME_API_TOKEN
 ARG UMAMI_USERNAME
 ARG UMAMI_PASSWORD
+ARG SITE
+ARG COOLIFY_BRANCH
+ARG SOURCE_COMMIT
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -24,7 +27,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 # Cache .astro build artifacts
 RUN --mount=type=cache,id=astro_cache,target=/app/node_modules/.astro pnpm run build:web
 RUN pnpm run deploy:web
-    
+
 # --- Stage 2: Runtime ---
 FROM node:22-slim AS runtime
 

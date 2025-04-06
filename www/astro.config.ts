@@ -17,13 +17,13 @@ import { Logger } from "./src/utils/logger";
 
 const logger = new Logger("astro-config");
 
-const { NODE_ENV, PREVIEW, PORT, SITE, COOLIFY_URL } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
+const { NODE_ENV, PREVIEW, PORT, SITE } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
 const SERVER_PORT = PORT ?? 4321;
-const SITE_URL = NODE_ENV !== "production" ? `http://localhost:${SERVER_PORT}` : COOLIFY_URL ? COOLIFY_URL : SITE;
+const SITE_URL = NODE_ENV !== "production" ? `http://localhost:${SERVER_PORT}` : SITE;
 
 logger.info(`Using ENVIRONMENT: '${NODE_ENV}'`);
 logger.info(`Using SITE_URL: '${SITE_URL}'`);
-logger.info(`Using PORT: '${PORT}'`);
+logger.info(`Using PORT: '${SERVER_PORT}'`);
 logger.info(`Using PREVIEW: '${PREVIEW}'`);
 
 //https://astro.build/config

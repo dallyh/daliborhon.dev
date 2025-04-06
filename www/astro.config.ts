@@ -26,6 +26,10 @@ logger.info(`Using SITE_URL: '${SITE_URL}'`);
 logger.info(`Using PORT: '${SERVER_PORT}'`);
 logger.info(`Using PREVIEW: '${PREVIEW}'`);
 
+if (!SITE_URL) {
+	throw Error("Please provide the correct SITE environment variable.");
+}
+
 //https://astro.build/config
 export default defineConfig({
 	experimental: {

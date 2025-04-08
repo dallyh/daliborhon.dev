@@ -2,6 +2,8 @@ import { UPTIME_API_TOKEN } from "astro:env/server";
 import { siteConfig } from "@site-config";
 import type { APIRoute } from "astro";
 
+export const prerender = false;
+
 type Status = "up" | "down";
 
 export const GET: APIRoute = async () => {

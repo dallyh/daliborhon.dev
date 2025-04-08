@@ -6,11 +6,17 @@ import { baseLocale } from "@paraglide/runtime";
 import { Icon } from "astro-icon/components";
 
 export const prerender = false;
-let locale = Astro.currentLocale ?? baseLocale;
+
+interface Props {
+	error: unknown;
+}
+
+const { error } = Astro.props;
+const locale = Astro.currentLocale ?? baseLocale;
 
 const layoutProps = {
-	title: m.error__not_found(),
-	description: m.error__not_found_description(),
+	title: m.error__500(),
+	description: m.error__500(),
 };
 ---
 
@@ -18,12 +24,12 @@ const layoutProps = {
 	<meta name="robots" content="noindex, nofollow" slot="head" />
 	<div class="fixed left-0 top-0 flex h-[100vh] w-[100vw] items-center justify-center p-4">
 		<div class="relative max-w-[560px] leading-[1.1]">
-			<div class="notfound-404 absolute left-[-15px] top-[-110px] z-[-1] inline-block h-[110px] w-[110px] md:left-[-140px] md:top-0 md:h-[140px] md:w-[140px]">
-				<Icon class="text-primary h-full w-full" name="document-404" />
+			<div class="notfound-404 absolute left-[-15px] top-[-110px] z-[-1] flex h-[110px] w-[110px] items-center justify-center md:left-[-140px] md:top-0 md:h-[140px] md:w-[140px]">
+				<Icon class="text-primary h-[100px] w-[100px]" name="document-500" />
 			</div>
-			<h1>404</h1>
-			<h2 class="mb-4">{m.error__not_found_description()}</h2>
-			<p class="mb-4">{m.error__not_found_detail()}</p>
+			<h1>500</h1>
+			<h2 class="mb-4">{m.error__500()}</h2>
+			<p class="mb-4">{error instanceof Error ? error.message : m.error__500_unknown()}</p>
 			<div class="join">
 				<button class="join-item btn btn-outline btn-primary" id="backButton" onclick="history.back()"><Icon name="heroicons:arrow-small-left-solid" size="18" />{m.common__back_btn()}</button>
 				<a class="join-item btn btn-outline btn-primary" href={getRelativeLocaleUrl(locale, "/")}><Icon name="heroicons:home-solid" />{m.common__home()}</a>

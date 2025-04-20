@@ -33,7 +33,6 @@ if (!SITE_URL) {
 //https://astro.build/config
 export default defineConfig({
 	experimental: {
-		serializeConfig: true,
 		preserveScriptOrder: true,
 		headingIdCompat: true,
 		contentIntellisense: true,

@@ -1,8 +1,6 @@
 # --- Stage 1: Builder ---
-FROM node:22-slim AS build
+FROM node:23-slim AS build
 
-ARG ASTRO_DB_APP_TOKEN
-ARG ASTRO_DB_REMOTE_URL
 ARG GITHUB_API_AUTH_TOKEN
 ARG OA_GITHUB_CLIENT_ID
 ARG OA_GITHUB_CLIENT_SECRET
@@ -29,7 +27,7 @@ RUN --mount=type=cache,id=astro_cache,target=/app/node_modules/.astro pnpm run b
 RUN pnpm run deploy:web
 
 # --- Stage 2: Runtime ---
-FROM node:22-slim AS runtime
+FROM node:23-slim AS runtime
 
 RUN corepack enable
 

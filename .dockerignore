@@ -29,5 +29,6 @@ dist
 
 # Deployment-related scripts/tools
 create-deploy-tag.sh
+build-from-env.sh
 
 README.md

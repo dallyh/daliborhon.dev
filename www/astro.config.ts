@@ -1,7 +1,5 @@
-import db from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
-import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import aiRobotsTxt from "astro-ai-robots-txt";
@@ -18,20 +16,22 @@ import { Logger } from "./src/utils/logger";
 
 const logger = new Logger("astro-config");
 
-const { NODE_ENV, PREVIEW } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
-const PORT = 4321;
-const DEV_ENV = NODE_ENV !== "production";
-const SITE_URL = DEV_ENV ? `http://localhost:${PORT}` : "https://daliborhon.dev";
+const { NODE_ENV, PREVIEW, PORT, SITE } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
+const SERVER_PORT = PORT ?? 4321;
+const SITE_URL = NODE_ENV !== "production" ? `http://localhost:${SERVER_PORT}` : SITE;
 
 logger.info(`Using ENVIRONMENT: '${NODE_ENV}'`);
 logger.info(`Using SITE_URL: '${SITE_URL}'`);
-logger.info(`Using PORT: '${PORT}'`);
+logger.info(`Using PORT: '${SERVER_PORT}'`);
 logger.info(`Using PREVIEW: '${PREVIEW}'`);
+
+if (!SITE_URL) {
+	throw Error("Please provide the correct SITE environment variable.");
+}
 
 //https://astro.build/config
 export default defineConfig({
 	experimental: {
-		serializeConfig: true,
 		preserveScriptOrder: true,
 		headingIdCompat: true,
 		contentIntellisense: true,
@@ -67,8 +67,6 @@ export default defineConfig({
 			project: "./project.inlang",
 			outdir: "./src/paraglide",
 		}),
-		db(),
-		react(),
 		expressiveCode(ecConfig),
 		mdx(),
 		pagefind(),

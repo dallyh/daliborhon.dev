@@ -16,5 +16,5 @@ const caption = title ? title : alt;
 		{typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />}
 	</div>
 
-	<figcaption class="text-center text-sm">{caption}</figcaption>
+	<figcaption class="text-center text-sm font-mono">{caption}</figcaption>
 </figure>

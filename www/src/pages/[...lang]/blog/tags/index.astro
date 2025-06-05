@@ -50,7 +50,7 @@ const posts = await getPostsByTag(locale, search);
 								return (
 									<a
 										role="tab"
-										class={`tab has-icon icon-left gap-1 ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
+										class={`tab has-icon icon-left gap-1 font-mono ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
 										href={`?tag=${tag.id}`}
 										aria-label={tag.id + m.blog__tag()}
 									>

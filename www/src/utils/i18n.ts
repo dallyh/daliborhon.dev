@@ -1,16 +1,16 @@
 import { type Locale, baseLocale, locales } from "@paraglide/runtime";
+import { i18n } from "astro:config/server";
 
 export function removeTrailingSlash(url: string) {
 	return url.replace(/\/$/, "");
 }
 
 export function getRoutingLocale(locale: string | undefined) {
-	/*
-    // Use in case of prefixDefaultLocale = false in config :)
-    if (locale === defaultLocale) {
-        return undefined;
-    }
-    */
+	if (typeof i18n?.routing === "object" && i18n.routing.prefixDefaultLocale === false) {
+		if (locale === baseLocale) {
+			return undefined;
+		}
+	}
 
 	return locale;
 }

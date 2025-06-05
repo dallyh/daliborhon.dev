@@ -1,7 +1,7 @@
 packages:
-    - "www/**"
-
+  - www
 onlyBuiltDependencies:
-    - "@biomejs/biome"
-    - "esbuild"
-    - "sharp"
+  - '@biomejs/biome'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - sharp

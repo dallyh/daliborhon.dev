@@ -1,6 +1,6 @@
 ---
 /* Credits: https://www.thomasledoux.be/blog/using-server-islands-actions-view-counter */
-import { PageView, count, db, eq } from "astro:db";
+import { getPageViews } from "@services/umami/client";
 
 interface Props {
 	url: string;
@@ -8,7 +8,7 @@ interface Props {
 
 const { url } = Astro.props;
 
-const viewCount = await db.select({ value: count() }).from(PageView).where(eq(PageView.url, url));
+const viewCount = await getPageViews(url);
 ---
 
-<span>{viewCount[0]?.value}</span>
+<span>{viewCount.pageviews.value}</span>

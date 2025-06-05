@@ -1,12 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { render } from "astro:content";
 import Card from "@components/astro/common/Card.astro";
-import { formatDateTime } from "@utils";
 import ExternalLink from "../common/ExternalLink.astro";
 import MarkdownContent from "../content/MarkdownContent.astro";
-import GithubDate from "./GithubDate.astro";
+import FormattedDate from "@components/astro/common/FormattedDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
 	project: CollectionEntry<"projects">;
@@ -24,8 +23,6 @@ export type ProjectLanguages = {
 };
 
 const { project, githubData, relatedTags } = Astro.props;
-
-const locale = Astro.currentLocale!;
 const { title, sourceUrl, startDate } = project.data;
 ---
 
@@ -33,11 +30,11 @@ const { title, sourceUrl, startDate } = project.data;
 	<div class="card-body">
 		<div class="mb-2 flex">
 			<div>
-				<ExternalLink title={title} href={sourceUrl} class="card-title link link-hover" target="_blank" aria-label={title}>{title}</ExternalLink>
+				<ExternalLink title={title} href={sourceUrl} class="card-title link link-hover font-mono" target="_blank" aria-label={title}>{title}</ExternalLink>
 				<p class="text-sm">
 					<span>🚀</span>
-					{githubData && <GithubDate date={githubData.createdAt} />}
-					{!githubData && <time datetime={formatDateTime(startDate, locale).iso}>{formatDateTime(startDate, locale).date}</time>}
+					{githubData && <FormattedDate date={githubData.createdAt} />}
+					{!githubData && <FormattedDate date={startDate} />}
 				</p>
 			</div>
 		</div>
@@ -55,7 +52,7 @@ const { title, sourceUrl, startDate } = project.data;
 				</div>
 			)
 		}
-		<MarkdownContent entry={project} toc="disabled" prose={false} />
+		<MarkdownContent entry={project} toc="disabled" prose={true} />
 		{githubData && <GithubLanguages languages={githubData.languages} />}
 	</div>
 </Card>

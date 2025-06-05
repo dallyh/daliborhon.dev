@@ -1,7 +1,7 @@
 import { defineEcConfig } from "astro-expressive-code";
 
 export default defineEcConfig({
-	themes: ["houston", "github-light"],
+	themes: ["github-dark-default", "github-light-default"],
 	themeCssSelector: (theme) => {
 		return `[data-theme='${theme.type}']`;
 	},

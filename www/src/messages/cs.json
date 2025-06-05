@@ -140,5 +140,8 @@
     "callout__success_title": "Úspěch",
     "callout__caution_title": "Pozor",
     "callout__danger_title": "Varování",
-    "callout__tip_title": "Tip"
+    "callout__tip_title": "Tip",
+    "common__privacy_policy": "Soukromí",
+    "common__privacy_policy_long": "Zásady ochrany osobních údajů",
+    "common__privacy_effective": "Datum účinnosti"
 }

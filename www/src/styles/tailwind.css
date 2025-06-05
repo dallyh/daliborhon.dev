@@ -78,36 +78,53 @@
 	h1 {
 		@apply text-4xl;
 		@apply font-bold;
+		@apply font-mono;
 	}
 
 	h2 {
 		@apply text-3xl;
 		@apply font-bold;
+		@apply font-mono;
 	}
 
 	h3 {
 		@apply text-2xl;
 		@apply font-bold;
+		@apply font-mono;
 	}
 
 	h4 {
 		@apply text-xl;
 		@apply font-bold;
+		@apply font-mono;
 	}
 
 	h5 {
 		@apply text-lg;
 		@apply font-bold;
+		@apply font-mono;
 	}
 
 	h6 {
 		@apply font-bold;
+		@apply font-mono;
 	}
 }
 
 @theme {
-	--default-font-family: "JetBrains Mono Variable", var(--font-mono);
-	--default-mono-font-family: var(--default-font-family);
+	--font-mono: "JetBrains Mono Variable", monospace;
+}
+
+@utility drawer-side {
+	@apply font-mono;
+}
+
+@utility badge {
+	@apply font-mono;
+}
+
+@utility navbar {
+	@apply font-mono;
 }
 
 @utility link {
@@ -174,6 +191,7 @@
 }
 
 @utility btn {
+	@apply font-mono;
 	&.btn-outline-shadow {
 		@apply shadow-primary shadow-offset btn-outline shadow;
 		transition: box-shadow 0.2s;

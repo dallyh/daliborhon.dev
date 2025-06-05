@@ -1,0 +1,34 @@
+# Node & package manager stuff
+node_modules
+**/node_modules
+.pnpm-store
+.pnpm-debug.log
+pnpm-lock.yaml
+
+# Build output
+dist
+**/dist
+.astro
+**/.astro
+
+# Dev + editor configs
+.vscode
+
+# Git & version control
+.git
+.gitignore
+
+# Environment variables & config
+.env
+*.env
+**/.env
+**/*.env
+
+# Static CMS/data editor
+.frontmatter
+
+# Deployment-related scripts/tools
+create-deploy-tag.sh
+build-from-env.sh
+
+README.md

@@ -15,27 +15,13 @@ This project and site is mostly just for me to have some coding fun. I don't rea
     - Internationalization [Inlang - ParaglideJS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs)
 - Content management
     - [Frontmatter CMS](https://frontmatter.codes/)
-- Database
-    - Self hosted [Libsql](https://github.com/tursodatabase/libsql) server
+- Analytics
+    - Self hosted [Umami](https://umami.is/) instance
 
 ## Deployment
 
-Deployments are done on [Zerops](https://zerops.io) for all new tags containing `deploy-*`.
-
-## Database
-
-Required env vars:
-
-```
-LIBSQL_BOTTOMLESS_ENDPOINT=https://storage-prg1.zerops.io
-LIBSQL_BOTTOMLESS_BUCKET=bucket-name
-LIBSQL_BOTTOMLESS_AWS_DEFAULT_REGION=eu-central-1
-LIBSQL_BOTTOMLESS_AWS_ACCESS_KEY_ID=acces_key
-LIBSQL_BOTTOMLESS_AWS_SECRET_ACCESS_KEY=secret_key
-```
-
-`libsql-server` does run in bottomless replication mode, and it is replicated to Zerops object storage which is esentially an S3 bucket.
+Deployments are done on my self hosted [Coolify](https://www.coolify.io/) instance.
 
 ## Variables
 
-List of used variables can be found in the [astro.config.mjs](./www/astro.config.mjs) file.
+List of used variables can be found in the [env.config.ts](./www/env.config.ts) file.

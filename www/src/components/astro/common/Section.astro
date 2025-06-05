@@ -11,20 +11,27 @@ export interface Props {
 }
 
 const { title, description = null, id, isFirstSection = false, heading = "h2", isInsideSection = false } = Astro.props;
+
+const Tag = isFirstSection ? "h1" : heading;
+const titleMarginClass = description === null ? "mb-5" : "mb-3";
+let headingSizeClass = "";
+if (!isFirstSection && heading === "h2") {
+	headingSizeClass = isInsideSection ? "text-2xl" : "text-3xl";
+}
+const titleClass = [headingSizeClass, titleMarginClass].filter(Boolean).join(" ");
+const sectionWrapperClass = isInsideSection ? "block" : "section";
+const sectionClasses = `has-[+section]:mb-8 ${sectionWrapperClass}`;
 ---
 
-<section class={`has-[+section]:mb-8 ${isInsideSection === false ? "section" : "block"}`} id={id}>
+<section class={sectionClasses} id={id}>
 	{
 		title && (
-			<Fragment>
-				{isFirstSection && <h1 class={`${description === null ? "mb-5" : "mb-3"}`}>{title}</h1>}
-				{!isFirstSection && heading === "h2" && <h2 class={`${isInsideSection ? "text-3xl" : "text-4xl"} ${description === null ? "mb-5" : "mb-3"}`}>{title}</h2>}
-				{!isFirstSection && heading === "h3" && <h3 class={`${description === null ? "mb-5" : "mb-3"}`}>{title}</h3>}
-				{!isFirstSection && heading === "h4" && <h4 class={`${description === null ? "mb-5" : "mb-3"}`}>{title}</h4>}
-			</Fragment>
+			<>
+				<Tag class={titleClass}>{title}</Tag>
+				{description && <p class="mb-5">{description}</p>}
+			</>
 		)
 	}
-	{description && <p class="mb-5">{description}</p>}
 	<slot name="subtitle" />
 	<div>
 		<slot />

@@ -85,6 +85,7 @@ const basePath = import.meta.env.BASE_URL;
 		<meta property="twitter:image" content={ogImage} />
 
 		<!-- Fonts, icons and external scripts -->
+		{!import.meta.env.DEV && <script defer src="https://analytics.daliborhon.dev/script.js" data-website-id="7e04370d-ecba-4fd8-8d71-2d50880d0d59" />}
 		<link rel="preload" href={jetBrainsMonoLatin} as="font" type="font/woff" crossorigin />
 		<link rel="preload" href={jetBrainsMonoLatinExt} as="font" type="font/woff" crossorigin />
 		<script>
@@ -97,9 +98,5 @@ const basePath = import.meta.env.BASE_URL;
 		<div id="#pageContent" aria-hidden="false">
 			<slot />
 		</div>
-		<script>
-			import { actions } from "astro:actions";
-			actions.pageView({ url: window.location.pathname });
-		</script>
 	</body>
 </html>

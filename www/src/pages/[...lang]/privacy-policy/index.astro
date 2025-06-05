@@ -1,0 +1,40 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import SearchMeta from "@components/astro/common/SearchMeta.astro";
+import Section from "@components/astro/common/Section.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { m } from "@paraglide/messages";
+import type { Locale } from "@paraglide/runtime";
+import { getEntry } from "astro:content";
+import MarkdownContent from "@/src/components/astro/content/MarkdownContent.astro";
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "@components/astro/common/FormattedDate.astro";
+
+export { getStaticPaths } from "@utils/i18n";
+
+const locale = Astro.currentLocale as Locale;
+
+const layoutProps = {
+	title: m.common__privacy_policy_long(),
+};
+
+const searchProps = {
+	title: m.common__privacy_policy_long(),
+};
+
+const policy = (await getEntry("privacyPolicy", locale)) as CollectionEntry<"privacyPolicy">;
+---
+
+<PageLayout {...layoutProps} showCrumbs>
+	<Fragment slot="crumbs">
+		<BreadCrumbsItem currentPage href={getRelativeLocaleUrl(locale, "/privacy-policy")} label={layoutProps.title} />
+	</Fragment>
+	<SearchMeta {...searchProps} />
+	<Section title={policy?.data.title} id="about" isFirstSection>
+		<p>
+			{m.common__privacy_effective()}: <FormattedDate date={policy?.data.effectiveDate!} />
+		</p>
+		<MarkdownContent entry={policy} />
+	</Section>
+</PageLayout>

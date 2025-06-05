@@ -1,0 +1,26 @@
+services:
+    web:
+        container_name: daliborhon.dev-web
+        build:
+            context: .
+            dockerfile: dockerfile
+            target: runtime
+            args:
+                SITE: ${SITE}
+                PREVIEW: ${PREVIEW}
+                UMAMI_USERNAME: ${UMAMI_USERNAME}
+                UMAMI_PASSWORD: ${UMAMI_PASSWORD}
+                OA_GITHUB_CLIENT_ID: ${OA_GITHUB_CLIENT_ID}
+                OA_GITHUB_CLIENT_SECRET: ${OA_GITHUB_CLIENT_SECRET}
+                GITHUB_API_AUTH_TOKEN: ${GITHUB_API_AUTH_TOKEN}
+                UPTIME_API_TOKEN: ${UPTIME_API_TOKEN}
+                COOLIFY_BRANCH: ${COOLIFY_BRANCH}
+                SOURCE_COMMIT: ${SOURCE_COMMIT}
+        env_file:
+            - ./www/.env
+        ports:
+            - "4321:4321"
+        environment:
+            - HOST=0.0.0.0
+            - PORT=4321
+        command: ["npm", "start"]

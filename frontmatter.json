@@ -32,7 +32,7 @@
     ],
     "frontMatter.data.files": [
         {
-            "id": "project-tags",
+            "id": "Project tags",
             "labelField": "id",
             "title": "Project tags",
             "file": "[[workspace]]/www/content/project-tags.yml",
@@ -57,7 +57,7 @@
             }
         },
         {
-            "id": "tags",
+            "id": "Tags",
             "labelField": "id",
             "title": "Blog tags",
             "file": "[[workspace]]/www/content/tags.yml",
@@ -76,7 +76,7 @@
     ],
     "frontMatter.content.pageFolders": [
         {
-            "title": "blog",
+            "title": "Blog posts",
             "path": "[[workspace]]/www/content/posts",
             "contentTypes": ["blog"],
             "filePrefix": "{{year}}-{{month}}-{{day}}",
@@ -97,7 +97,7 @@
             ]
         },
         {
-            "title": "projects",
+            "title": "Projects",
             "path": "[[workspace]]/www/content/projects",
             "defaultLocale": "en",
             "locales": [
@@ -114,8 +114,13 @@
             ]
         },
         {
-            "title": "resume",
+            "title": "Resume",
             "path": "[[workspace]]/www/content/resume",
+            "disableCreation": true
+        },
+        {
+            "title": "Privacy policy",
+            "path": "[[workspace]]/www/content/privacy-policy",
             "disableCreation": true
         }
     ],
@@ -207,6 +212,22 @@
                     "title": "Current position",
                     "name": "currentPosition",
                     "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "privacy-policy",
+            "pageBundle": false,
+            "fields": [
+                {
+                    "title": "Title",
+                    "name": "title",
+                    "type": "string"
+                },
+                {
+                    "title": "Effective date",
+                    "name": "effectiveDate",
+                    "type": "datetime"
                 }
             ]
         },

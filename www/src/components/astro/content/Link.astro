@@ -7,10 +7,15 @@ interface Props {
 
 const { href, ...rest } = Astro.props;
 
-function isExternal() {
+function isExternal(): boolean {
 	const currentUrl = new URL(Astro.url.href);
 	const linkUrl = new URL(href, currentUrl);
-	return linkUrl.hostname !== currentUrl.hostname;
+
+	if (linkUrl.protocol === "https:" || linkUrl.protocol === "http:") {
+		return linkUrl.hostname !== currentUrl.hostname;
+	}
+
+	return false;
 }
 ---
 
@@ -18,11 +23,25 @@ function isExternal() {
 
 {
 	isExternal() && (
-		<ExternalLink {href} class="link link-hover-reverse" {...rest}><slot /></ExternalLink>
+		<span>
+			<ExternalLink class="link link-hover-reverse" {href} {...rest}>
+				<slot />
+			</ExternalLink>
+		</span>
 	)
 }
 {
 	!isExternal() && (
-		<a class="link link-hover-reverse" {href} {...rest}><slot /></a>
+		<span>
+			<a class="link link-hover-reverse" {href} {...rest}>
+				<slot />
+			</a>
+		</span>
 	)
 }
+
+<style is:global>
+	span:has(.external) {
+		display: inline-block;
+	}
+</style>

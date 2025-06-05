@@ -140,5 +140,8 @@
     "callout__success_title": "Success",
     "callout__caution_title": "Caution",
     "callout__danger_title": "Danger",
-    "callout__tip_title": "Tip"
+    "callout__tip_title": "Tip",
+    "common__privacy_policy": "Privacy policy",
+    "common__privacy_policy_long": "Privacy policy",
+    "common__privacy_effective": "Effective date"
 }

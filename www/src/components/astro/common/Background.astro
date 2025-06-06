@@ -1,0 +1,290 @@
+<canvas id="bg-canvas"></canvas>
+
+<style>
+	canvas {
+		position: absolute;
+		top: 0;
+		left: 0;
+		pointer-events: none;
+		opacity: 1;
+		z-index: 0;
+	}
+</style>
+
+<style is:global>
+	.page-content.has-bg {
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			background-image: radial-gradient(var(--color-base-content) 3%, transparent 3%), radial-gradient(var(--color-base-content) 3%, transparent 3%);
+			background-color: var(--color-base-100);
+			background-position:
+				0 0,
+				50px 50px;
+			background-size: 50px 50px;
+			z-index: 0;
+			opacity: 0.2;
+		}
+	}
+
+	.page-content > * {
+		position: relative;
+		z-index: 1;
+	}
+</style>
+
+<script is:inline>
+  // Largely written by AI
+
+	(function () {
+		// ─── CONFIGURATION ────────────────────────────────────────────────────────────
+		const connectCount = 10; // how many adjacent‐dots to chain per line
+		const segmentDelay = 100; // ms between drawing each segment
+		const holdDelay = 400; // ms to wait after full chain is drawn before fading
+		const fadeDuration = 800; // ms duration of the fade‐out
+		const strokeStyle = "oklch(0.8729 0.252 147.43 / 0.5)";
+		const lineWidth = 1;
+		// ──────────────────────────────────────────────────────────────────────────────
+
+		// 1) Grab .page-content and create our <canvas> once
+		const container = document.querySelector(".page-content");
+		if (!container) return;
+
+		const canvas = document.getElementById("bg-canvas");
+		container.appendChild(canvas);
+		const ctx = canvas.getContext("2d");
+
+		// 2) We'll keep these as `let` so we can recalc on resize:
+		let width, height;
+		let tilesAcross, tilesDown;
+		let dots = [];
+
+		// An incrementing counter that changes on every resize.
+		// Each animateChain captures its own `thisRunId` and aborts if they mismatch.
+		let runId = 0;
+		let shouldRun = true;
+
+		function determineShouldRun() {
+			const saved = window.localStorage.getItem("bgToggle");
+			if (saved) {
+				shouldRun = saved === "on" ? true : false;
+
+				if (shouldRun === false) {
+					toggleBg();
+				}
+
+				return;
+			}
+		}
+
+		determineShouldRun();
+
+		// Constants for dot‐grid (unchanged):
+		const tileSize = 50;
+		const centerOffset = tileSize / 2; // =25
+		const directions = [
+			{ dx: 1, dy: 0 }, // East
+			{ dx: -1, dy: 0 }, // West
+			{ dx: 0, dy: 1 }, // South
+			{ dx: 0, dy: -1 }, // North
+			{ dx: 1, dy: 1 }, // SE
+			{ dx: 1, dy: -1 }, // NE
+			{ dx: -1, dy: 1 }, // SW
+			{ dx: -1, dy: -1 }, // NW
+		];
+
+		// Event from ThemeProvider
+		document.addEventListener("theme:toggle-bg", () => {
+			if (shouldRun) {
+				window.localStorage.setItem("bgToggle", "off");
+				shouldRun = false;
+			} else {
+				window.localStorage.setItem("bgToggle", "on");
+				shouldRun = true;
+				recalculateDimensions();
+			}
+			toggleBg();
+		});
+
+		function toggleBg() {
+			container.classList.toggle("has-bg");
+		}
+
+		function clearCanvas() {
+			// Clear any existing drawing & ensure full opacity before new chain:
+			ctx.clearRect(0, 0, width, height);
+			// Stroke styling (you can tweak the α channel by changing the color):
+			ctx.strokeStyle = strokeStyle;
+			ctx.lineWidth = lineWidth;
+			canvas.style.transition = "";
+			canvas.style.opacity = "1";
+		}
+
+		// Recalculate `width`, `height`, `tilesAcross`, `tilesDown`, and rebuild `dots[]`.
+		// Also increments runId and immediately starts a fresh animation.
+		function recalculateDimensions() {
+			runId += 1; // invalidate any in-flight animations
+			const thisRun = runId;
+
+			const rect = container.getBoundingClientRect();
+			width = rect.width;
+			height = rect.height;
+
+			// Resize the canvas to match:
+			canvas.width = width;
+			canvas.height = height;
+
+			// Recompute how many tiles fit:
+			tilesAcross = Math.ceil(width / tileSize);
+			tilesDown = Math.ceil(height / tileSize);
+
+			// Rebuild every tile‐center dot at (i*50+25, j*50+25):
+			const newDots = [];
+			for (let i = 0; i < tilesAcross; i++) {
+				for (let j = 0; j < tilesDown; j++) {
+					const gx = i * tileSize + centerOffset;
+					const gy = j * tileSize + centerOffset;
+					if (gx >= 0 && gx <= width && gy >= 0 && gy <= height) {
+						newDots.push({ x: gx, y: gy, ti: i, tj: j });
+					}
+				}
+			}
+			dots = newDots;
+
+			clearCanvas();
+			// Kick off the animation for *this* run:
+			requestAnimationFrame(() => animateChain(thisRun));
+		}
+
+		// Initial calculation:
+		recalculateDimensions();
+
+		// Debounce helper so we don't spam on resize events:
+		let resizeTimeout = null;
+		window.addEventListener("resize", () => {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(() => {
+				recalculateDimensions();
+			}, 150);
+		});
+
+		// Helper to get one step‐away neighbor in tile grid (or null if out of bounds):
+		function getAdjacentDot(dot, dir) {
+			const newTi = dot.ti + dir.dx;
+			const newTj = dot.tj + dir.dy;
+			if (newTi < 0 || newTj < 0 || newTi >= tilesAcross || newTj >= tilesDown) {
+				return null;
+			}
+			const newX = newTi * tileSize + centerOffset;
+			const newY = newTj * tileSize + centerOffset;
+			if (newX < 0 || newX > width || newY < 0 || newY > height) {
+				return null;
+			}
+			return { x: newX, y: newY, ti: newTi, tj: newTj };
+		}
+
+		function dotKey(dot) {
+			return `${dot.ti}-${dot.tj}`;
+		}
+
+		// Check if a given dot is currently visible in the viewport
+		function isDotVisible(dot) {
+			const canvasRect = canvas.getBoundingClientRect();
+			const screenX = canvasRect.left + dot.x;
+			const screenY = canvasRect.top + dot.y;
+			return screenX >= 0 && screenY >= 0 && screenX <= window.innerWidth && screenY <= window.innerHeight;
+		}
+
+		// ─── M A I N   A N I M A T I O N   L O O P ─────────────────────────────────
+		// Takes `thisRun` so it can abort if a resize happened in the meantime.
+		function animateChain(thisRun) {
+			// Abort on run end
+			if (shouldRun === false) return;
+
+			// If runId has changed, abort immediately:
+			if (thisRun !== runId) return;
+
+			// 1) Filter to only those dots the user can actually see right now:
+			const visibleDots = dots.filter(isDotVisible);
+			if (thisRun !== runId) return;
+
+			if (visibleDots.length === 0) {
+				// Nothing visible → retry next frame (still same runId):
+				return requestAnimationFrame(() => animateChain(thisRun));
+			}
+
+			// 2) Pick a random starting dot from visibleDots
+			const startDot = visibleDots[Math.floor(Math.random() * visibleDots.length)];
+			const visited = new Set([dotKey(startDot)]);
+			let currentDot = startDot;
+			const segments = [];
+
+			// 3) Build up to connectCount segments by picking random unvisited & visible neighbors
+			for (let step = 0; step < connectCount; step++) {
+				const neighbors = [];
+				for (const dir of directions) {
+					const nbr = getAdjacentDot(currentDot, dir);
+					if (nbr && !visited.has(dotKey(nbr)) && isDotVisible(nbr)) {
+						neighbors.push(nbr);
+					}
+				}
+				if (neighbors.length === 0) break;
+				const nextDot = neighbors[Math.floor(Math.random() * neighbors.length)];
+				visited.add(dotKey(nextDot));
+				segments.push({ from: currentDot, to: nextDot });
+				currentDot = nextDot;
+			}
+
+			// 4) If we got zero segments (isolated), restart
+			if (segments.length === 0) {
+				return requestAnimationFrame(() => animateChain(thisRun));
+			}
+
+			// 5) Draw each segment in turn, spaced by segmentDelay.
+			//    At each step, we check `thisRun` vs. `runId` to see if we should abort.
+			let idx = 0;
+			function drawNextSegment() {
+				if (thisRun !== runId) return; // a resize invalidated us
+				if (idx < segments.length) {
+					const seg = segments[idx];
+					ctx.beginPath();
+					ctx.moveTo(seg.from.x, seg.from.y);
+					ctx.lineTo(seg.to.x, seg.to.y);
+					ctx.stroke();
+					idx++;
+					setTimeout(drawNextSegment, segmentDelay);
+				} else {
+					// 6) All segments drawn → wait holdDelay, then fade out
+					setTimeout(() => {
+						if (thisRun !== runId) return;
+						startFadeOut(thisRun);
+					}, holdDelay);
+				}
+			}
+
+			clearCanvas();
+			drawNextSegment();
+		}
+
+		function startFadeOut(thisRun) {
+			if (thisRun !== runId) return; // aborted by resize
+
+			canvas.style.transition = `opacity ${fadeDuration}ms`;
+			canvas.style.opacity = "0";
+
+			const onTransitionEnd = () => {
+				canvas.removeEventListener("transitionend", onTransitionEnd);
+				if (thisRun !== runId) return;
+
+				clearCanvas();
+				// Finally start the next chain under the same runId
+				requestAnimationFrame(() => animateChain(thisRun));
+			};
+			canvas.addEventListener("transitionend", onTransitionEnd);
+		}
+	})();
+</script>

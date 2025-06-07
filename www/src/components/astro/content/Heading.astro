@@ -14,7 +14,7 @@ const HeadingTag = `h${level}` as keyof HTMLElementTagNameMap;
 const sluggedId = slugifyStr(undefined, id ?? "");
 ---
 
-<HeadingTag id={sluggedId} class="flex items-center gap-2">
+<HeadingTag id={sluggedId} class="flex items-center gap-x-2">
 	<a href={`#${sluggedId}`} aria-hidden="true" tabindex="-1">
 		<span class="heading-link-icon"></span>
 	</a>

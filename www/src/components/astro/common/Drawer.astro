@@ -174,8 +174,16 @@ const menuItems = [
 	const navbar = document.getElementById("navbar");
 	let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-	window.addEventListener("scroll", function () {
+	window.addEventListener("scroll", () => {
 		const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+		// if we're pinned at the top, always show the navbar and reset
+		if (currentScroll <= 0) {
+			document.documentElement.dataset.navbarHidden = false;
+			navbar.classList.remove("hide", "bg-base-100");
+			lastScrollTop = 0;
+			return;
+		}
 
 		if (currentScroll < lastScrollTop) {
 			document.documentElement.dataset.navbarHidden = false;
@@ -185,12 +193,8 @@ const menuItems = [
 			navbar.classList.add("hide");
 		}
 
-		if (currentScroll !== 0) {
-			navbar.classList.add("bg-base-100");
-		} else {
-			navbar.classList.remove("bg-base-100");
-		}
+		navbar.classList.toggle("bg-base-100", currentScroll !== 0);
 
-		lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+		lastScrollTop = currentScroll;
 	});
 </script>

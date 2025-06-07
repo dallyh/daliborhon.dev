@@ -7,13 +7,13 @@
 		left: 0;
 		pointer-events: none;
 		opacity: 1;
-		z-index: 1;
 	}
 </style>
 
 <style is:global>
 	.page-content.has-bg {
 		position: relative;
+		z-index: 1;
 
 		&::before {
 			content: "";
@@ -41,7 +41,7 @@
 		const segmentDelay = 100; // ms between drawing each segment
 		const holdDelay = 400; // ms to wait after full chain is drawn before fading
 		const fadeDuration = 800; // ms duration of the fade‐out
-		const strokeStyle = "oklch(0.8729 0.252 147.43 / 0.5)";
+		const strokeStyle = "oklch(0.8729 0.252 147.43 / 0.8)";
 		const lineWidth = 1;
 		// ──────────────────────────────────────────────────────────────────────────────
 
@@ -50,7 +50,6 @@
 		if (!container) return;
 
 		const canvas = document.getElementById("bg-canvas");
-		container.appendChild(canvas);
 		const ctx = canvas.getContext("2d");
 
 		// 2) We'll keep these as `let` so we can recalc on resize:

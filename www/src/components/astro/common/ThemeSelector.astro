@@ -80,6 +80,7 @@ const themes = ["light", "dark"];
 
 		toggleBg() {
 			document.dispatchEvent(new CustomEvent("theme:toggle-bg"));
+			window.showToast({ message: "Toggled background.", dismissible: true, type: "info" });
 		}
 
 		useTheme(theme: string) {

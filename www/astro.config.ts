@@ -11,8 +11,8 @@ import { loadEnv } from "vite";
 import ecConfig from "./ec.config";
 import envVars from "./env.config";
 import iconConfig from "./icons.config";
-import { paraglideIntegration } from "./src/integrations/paraglide-js/integration";
 import { Logger } from "./src/utils/logger";
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
 
 const logger = new Logger("astro-config");
 
@@ -63,10 +63,6 @@ export default defineConfig({
 		schema: envVars,
 	},
 	integrations: [
-		paraglideIntegration({
-			project: "./project.inlang",
-			outdir: "./src/paraglide",
-		}),
 		expressiveCode(ecConfig),
 		mdx(),
 		pagefind(),
@@ -85,7 +81,13 @@ export default defineConfig({
 		aiRobotsTxt(),
 	],
 	vite: {
-		plugins: [tailwindcss()],
+		plugins: [
+			tailwindcss(),
+			paraglideVitePlugin({
+				project: "./project.inlang",
+				outdir: "./src/paraglide",
+			}),
+		],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
 		},

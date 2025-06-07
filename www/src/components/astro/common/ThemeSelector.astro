@@ -16,8 +16,8 @@ const themes = ["light", "dark"];
 			</div>
 			{m.common__theme()}
 		</div>
-		<div tabindex="0" class="dropdown-content bg-base-200 text-base-content w-38">
-			<ul class="menu w-38">
+		<div tabindex="0" class="dropdown-content bg-base-200 text-base-content w-48">
+			<ul class="menu w-48">
 				{
 					themes.map((t) => {
 						return (
@@ -49,6 +49,14 @@ const themes = ["light", "dark"];
 						</svg>
 					</button>
 				</li>
+				<li>
+					<button class="gap-3 px-2" data-toggle-bg title="Toggle background">
+						<div class="rounded-md p-1 shadow-sm">
+							<Icon name="heroicons:play-pause-solid" />
+						</div>
+						<div class="truncate">toggle bg</div>
+					</button>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -58,6 +66,7 @@ const themes = ["light", "dark"];
 	class ThemeSelector extends HTMLElement {
 		storageKey = window.themeStorageKey;
 		buttons = this.querySelectorAll<HTMLButtonElement>("[data-set-theme]");
+		toggleBgButton = this.querySelector<HTMLButtonElement>("[data-toggle-bg]");
 
 		setActive(theme: string) {
 			this.buttons.forEach((btn) => {
@@ -67,6 +76,11 @@ const themes = ["light", "dark"];
 					icon.classList.toggle("invisible", !isActive);
 				}
 			});
+		}
+
+		toggleBg() {
+			document.dispatchEvent(new CustomEvent("theme:toggle-bg"));
+			window.showToast({ message: "Toggled background.", dismissible: true, type: "info" });
 		}
 
 		useTheme(theme: string) {
@@ -103,6 +117,8 @@ const themes = ["light", "dark"];
 					this.useTheme(theme);
 				});
 			});
+
+			this.toggleBgButton?.addEventListener("click", this.toggleBg);
 		}
 	}
 

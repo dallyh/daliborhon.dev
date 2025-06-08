@@ -128,5 +128,5 @@ export const collections = {
 	projectTags,
 	resume,
 	githubLanguages,
-	privacyPolicy
+	privacyPolicy,
 };

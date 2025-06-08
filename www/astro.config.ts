@@ -1,6 +1,7 @@
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import aiRobotsTxt from "astro-ai-robots-txt";
 import expressiveCode from "astro-expressive-code";
@@ -12,7 +13,6 @@ import ecConfig from "./ec.config";
 import envVars from "./env.config";
 import iconConfig from "./icons.config";
 import { Logger } from "./src/utils/logger";
-import { paraglideVitePlugin } from "@inlang/paraglide-js";
 
 const logger = new Logger("astro-config");
 

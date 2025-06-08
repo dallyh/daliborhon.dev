@@ -1,24 +1,24 @@
 name: Deploy to Coolify
 on:
-  push:
-    branches:
-      - coolify  # Add your target branches here
+    push:
+        branches:
+            - coolify # Add your target branches here
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+    deploy:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Call Coolify Webhook and check response
-        run: |
-          STATUS_CODE=$(curl --write-out "%{http_code}" --silent --output /dev/null \
-            --request GET "${{ secrets.COOLIFY_WEBHOOK }}" \
-            --header "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}")
+        steps:
+            - name: Call Coolify Webhook and check response
+              run: |
+                  STATUS_CODE=$(curl --write-out "%{http_code}" --silent --output /dev/null \
+                    --request GET "${{ secrets.COOLIFY_WEBHOOK }}" \
+                    --header "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}")
 
-          echo "HTTP status code: $STATUS_CODE"
+                  echo "HTTP status code: $STATUS_CODE"
 
-          if [ "$STATUS_CODE" -ne 200 ]; then
-            echo "❌ Deployment failed with status code $STATUS_CODE"
-            exit 1
-          else
-            echo "✅ Deployment webhook triggered successfully"
-          fi
+                  if [ "$STATUS_CODE" -ne 200 ]; then
+                    echo "❌ Deployment failed with status code $STATUS_CODE"
+                    exit 1
+                  else
+                    echo "✅ Deployment webhook triggered successfully"
+                  fi

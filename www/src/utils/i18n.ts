@@ -1,5 +1,5 @@
-import { type Locale, baseLocale, locales } from "@paraglide/runtime";
 import { i18n } from "astro:config/server";
+import { type Locale, baseLocale, locales } from "@paraglide/runtime";
 
 export function removeTrailingSlash(url: string) {
 	return url.replace(/\/$/, "");

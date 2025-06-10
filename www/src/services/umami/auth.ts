@@ -1,6 +1,6 @@
-import { UMAMI_USERNAME, UMAMI_PASSWORD } from "astro:env/server";
-import { Logger } from "@logger";
 import { UMAMI_URL } from "astro:env/client";
+import { UMAMI_PASSWORD, UMAMI_USERNAME } from "astro:env/server";
+import { Logger } from "@logger";
 
 const logger = new Logger("umami-auth");
 

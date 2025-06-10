@@ -1,15 +1,15 @@
 ---
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import MarkdownContent from "@/src/components/astro/content/MarkdownContent.astro";
 import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import FormattedDate from "@components/astro/common/FormattedDate.astro";
 import SearchMeta from "@components/astro/common/SearchMeta.astro";
 import Section from "@components/astro/common/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
 import type { Locale } from "@paraglide/runtime";
-import { getEntry } from "astro:content";
-import MarkdownContent from "@/src/components/astro/content/MarkdownContent.astro";
-import type { CollectionEntry } from "astro:content";
-import FormattedDate from "@components/astro/common/FormattedDate.astro";
 
 export { getStaticPaths } from "@utils/i18n";
 

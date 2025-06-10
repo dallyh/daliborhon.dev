@@ -334,6 +334,14 @@
 	}
 }
 
+@utility menu {
+	:where(li ul) {
+		&::before {
+			opacity: 0.4;
+		}
+	}
+}
+
 @utility sr-only {
 	position: absolute;
 	width: 1px;

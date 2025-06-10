@@ -80,7 +80,7 @@ const themes = ["light", "dark"];
 
 		toggleBg() {
 			document.dispatchEvent(new CustomEvent("theme:toggle-bg"));
-			window.showToast({ message: "Toggled background.", dismissible: true, type: "info" });
+			window.showToast({ message: "Toggled background.", dismissible: true, type: "info", duration: 1500 });
 		}
 
 		useTheme(theme: string) {
@@ -92,7 +92,7 @@ const themes = ["light", "dark"];
 
 			localStorage.setItem(this.storageKey, theme);
 			this.setActive(theme);
-			window.dispatchEvent(new CustomEvent("theme-changed"));
+			document.dispatchEvent(new CustomEvent("theme:changed"));
 		}
 
 		setHtmlTheme(theme: string) {

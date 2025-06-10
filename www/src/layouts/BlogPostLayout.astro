@@ -19,6 +19,7 @@ import type { Locale } from "@paraglide/runtime";
 import { getBlogPostDate, getBlogPostImageUrl, getOgImageUrl } from "@utils/content";
 import { getReadingTime } from "@utils/content";
 import { Icon } from "astro-icon/components";
+import PictureFrame from "../components/astro/common/PictureFrame.astro";
 import MainLayout from "./MainLayout.astro";
 
 interface Props {
@@ -104,10 +105,10 @@ const searchProps = {
 							<div class="mt-4"><TagList post={post} /></div>
 						</div>
 					</div>
-					<div class="max-w-[340px] self-center p-1 md:self-auto md:p-0">
-						{typeof image === "string" && <Image class="rounded-lg" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
-						{typeof image === "object" && <Image class="rounded-lg" src={image} width={340} title={title} alt={title} loading="eager" />}
-					</div>
+					<PictureFrame frameClass={["h-[180px] w-[340px] self-center overflow-visible m-4 md:self-auto"]} pictureContainerClass={["not-prose"]}>
+						{typeof image === "string" && <Image class="object-contain" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
+						{typeof image === "object" && <Image class="object-contain" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
+					</PictureFrame>
 				</div>
 				<div class="divider"></div>
 				<article>

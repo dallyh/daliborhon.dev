@@ -1,4 +1,5 @@
-<canvas id="bg-canvas"></canvas>
+<canvas id="dot-canvas"></canvas>
+<canvas id="line-canvas"></canvas>
 
 <style>
 	canvas {
@@ -7,278 +8,340 @@
 		left: 0;
 		pointer-events: none;
 		opacity: 1;
+		width: 100%;
+		height: 100%;
+
+		&.hidden {
+			display: none;
+		}
+	}
+
+	#dot-canvas {
+		opacity: 0.4;
+		z-index: -1;
+	}
+
+	#line-canvas {
+		z-index: 0;
 	}
 </style>
 
-<style is:global>
-	.page-content.has-bg {
-		position: relative;
-		z-index: 1;
+<script>
+	// ─── CONFIG ───────────────────────────────────────────────────────────────────
+	const CONNECT_COUNT = 15;
+	const SEGMENT_DELAY = 100;
+	const HOLD_DELAY = 400;
+	const FADE_DURATION = 800;
+	const TILE_SIZE = 50;
+	const CENTER_OFFSET = TILE_SIZE / 2; // 25px
+	const DOT_RADIUS = 1;
+	const LINE_COLOR = "oklch(0.8729 0.252 147.43 / 0.62)";
+	const LINE_WIDTH = 1.2;
 
-		&::before {
-			content: "";
-			position: absolute;
-			height: 100%;
-			width: 100%;
-			background-image: radial-gradient(var(--color-base-content) 3%, transparent 3%), radial-gradient(var(--color-base-content) 3%, transparent 3%);
-			background-color: var(--color-base-100);
-			background-position:
-				0 0,
-				50px 50px;
-			background-size: 50px 50px;
-			z-index: 0;
-			opacity: 0.2;
+	const directions = [
+		{ dx: 1, dy: 0 },
+		{ dx: -1, dy: 0 },
+		{ dx: 0, dy: 1 },
+		{ dx: 0, dy: -1 },
+		{ dx: 1, dy: 1 },
+		{ dx: 1, dy: -1 },
+		{ dx: -1, dy: 1 },
+		{ dx: -1, dy: -1 },
+	];
+	// ──────────────────────────────────────────────────────────────────────────────
+	interface Dot {
+		x: number;
+		y: number;
+		ti: number;
+		tj: number;
+	}
+
+	interface Segment {
+		from: Dot;
+		to: Dot;
+	}
+
+	const container = document.querySelector<HTMLDivElement>(".page-content")!;
+	const dotCanvas = document.querySelector<HTMLCanvasElement>("#dot-canvas")!;
+	const lineCanvas = document.querySelector<HTMLCanvasElement>("#line-canvas")!;
+	const dctx = dotCanvas.getContext("2d")!;
+	const lctx = lineCanvas.getContext("2d")!;
+
+	let width: number,
+		height: number,
+		gridCols: number,
+		gridRows: number,
+		gridStartX: number,
+		gridStartY: number,
+		dots: Dot[] = [],
+		runId = 0,
+		shouldRun = true;
+
+	function toggleCanvases(hide: boolean) {
+		if (hide) {
+			dotCanvas.classList.add("hidden");
+			lineCanvas.classList.add("hidden");
+			return;
+		}
+
+		dotCanvas.classList.remove("hidden");
+		lineCanvas.classList.remove("hidden");
+	}
+
+	function determineShouldRun() {
+		const saved = window.localStorage.getItem("bgToggle");
+		if (saved) {
+			shouldRun = saved === "on" ? true : false;
+
+			if (shouldRun === false) {
+				toggleCanvases(true);
+			}
+
+			return;
 		}
 	}
-</style>
 
-<script is:inline>
-  // Largely written by AI
+	determineShouldRun();
 
-	(function () {
-		// ─── CONFIGURATION ────────────────────────────────────────────────────────────
-		const connectCount = 10; // how many adjacent‐dots to chain per line
-		const segmentDelay = 100; // ms between drawing each segment
-		const holdDelay = 400; // ms to wait after full chain is drawn before fading
-		const fadeDuration = 800; // ms duration of the fade‐out
-		const strokeStyle = "oklch(0.8729 0.252 147.43 / 0.8)";
-		const lineWidth = 1;
-		// ──────────────────────────────────────────────────────────────────────────────
+	// Event from ThemeProvider
+	document.addEventListener("theme:toggle-bg", () => {
+		if (shouldRun) {
+			window.localStorage.setItem("bgToggle", "off");
+			toggleCanvases(true);
+			shouldRun = false;
+			console.log("off");
+		} else {
+			window.localStorage.setItem("bgToggle", "on");
+			shouldRun = true;
+			toggleCanvases(false);
+			console.log("on");
+			recalc();
+		}
+	});
 
-		// 1) Grab .page-content and create our <canvas> once
-		const container = document.querySelector(".page-content");
-		if (!container) return;
+	function resizeCanvases() {
+		// full document size, not merely viewport
+		const rect = container.getBoundingClientRect();
+		width = rect.width;
+		height = rect.height;
 
-		const canvas = document.getElementById("bg-canvas");
-		const ctx = canvas.getContext("2d");
+		// set internal pixel buffer
+		dotCanvas.width = lineCanvas.width = width;
+		dotCanvas.height = lineCanvas.height = height;
 
-		// 2) We'll keep these as `let` so we can recalc on resize:
-		let width, height;
-		let tilesAcross, tilesDown;
-		let dots = [];
+		// match CSS size to pixel buffer
+		dotCanvas.style.width = lineCanvas.style.width = width + "px";
+		dotCanvas.style.height = lineCanvas.style.height = height + "px";
+	}
 
-		// An incrementing counter that changes on every resize.
-		// Each animateChain captures its own `thisRunId` and aborts if they mismatch.
-		let runId = 0;
-		let shouldRun = true;
+	// Call this on resize/rebuild:
+	function rebuildDots() {
+		// how many fit
+		gridCols = Math.floor(width / TILE_SIZE);
+		gridRows = Math.floor(height / TILE_SIZE);
 
-		function determineShouldRun() {
-			const saved = window.localStorage.getItem("bgToggle");
-			if (saved) {
-				shouldRun = saved === "on" ? true : false;
+		// leftover space
+		const leftoverX = width - gridCols * TILE_SIZE;
+		const leftoverY = height - gridRows * TILE_SIZE;
 
-				if (shouldRun === false) {
-					toggleBg();
+		// grid origin
+		gridStartX = leftoverX / 2 + CENTER_OFFSET;
+		gridStartY = leftoverY / 2 + CENTER_OFFSET;
+
+		const arr = [];
+		for (let i = 0; i < gridCols; i++) {
+			for (let j = 0; j < gridRows; j++) {
+				arr.push({
+					x: gridStartX + i * TILE_SIZE,
+					y: gridStartY + j * TILE_SIZE,
+					ti: i,
+					tj: j,
+				});
+			}
+		}
+		dots = arr;
+
+		console.log(dots);
+	}
+
+	function drawStaticDots() {
+		dctx.clearRect(0, 0, width, height);
+		// pick your dot color (falls back to black)
+		dctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--color-base-content") || "#000";
+		for (const d of dots) {
+			dctx.beginPath();
+			dctx.arc(d.x, d.y, DOT_RADIUS, 0, Math.PI * 2);
+			dctx.fill();
+		}
+	}
+
+	function drawDot(x: number, y: number) {
+		dctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--color-base-content") || "#000";
+		dctx.beginPath();
+		dctx.arc(x, y, DOT_RADIUS, 0, Math.PI * 2);
+		dctx.fill();
+	}
+
+	document.addEventListener("theme:changed", () => {
+		//drawStaticDots();
+	});
+
+	// get one‐tile neighbor or null
+	function getNeighbor(dot: Dot, dir: { dx: number; dy: number }) {
+		const nti = dot.ti + dir.dx;
+		const ntj = dot.tj + dir.dy;
+		// out of grid?
+		if (nti < 0 || ntj < 0 || nti >= gridCols || ntj >= gridRows) {
+			return null;
+		}
+		// compute exactly the same way we did in rebuildDots:
+		const x = gridStartX + nti * TILE_SIZE;
+		const y = gridStartY + ntj * TILE_SIZE;
+
+		// you can drop the width/height check if you know the grid never exceeds bounds
+		if (x < 0 || x > width || y < 0 || y > height) {
+			return null;
+		}
+
+		return { x, y, ti: nti, tj: ntj };
+	}
+
+	function dotKey(d: Dot) {
+		return `${d.ti}-${d.tj}`;
+	}
+
+	function isVisible(dot: Dot) {
+		const canvasRect = dotCanvas.getBoundingClientRect();
+		const screenX = canvasRect.left + dot.x;
+		const screenY = canvasRect.top + dot.y;
+		return screenX >= 0 && screenY >= 0 && screenX <= window.innerWidth && screenY <= window.innerHeight;
+	}
+
+	function recalc() {
+		runId++;
+		resizeCanvases();
+		rebuildDots();
+		//drawStaticDots();
+
+		// clear & reset line canvas
+		lctx.clearRect(0, 0, width, height);
+		lineCanvas.style.transition = "";
+		lineCanvas.style.opacity = "1";
+		lctx.lineWidth = LINE_WIDTH;
+		lctx.strokeStyle = LINE_COLOR;
+
+		requestAnimationFrame(() => animateChain(runId));
+	}
+
+	window.addEventListener("resize", () => {
+		//@ts-ignore
+		clearTimeout(window._rcT);
+		//@ts-ignore
+		window._rcT = setTimeout(recalc, 150);
+	});
+
+	function animateChain(rid: number) {
+		if (!shouldRun) return;
+		if (rid !== runId) return;
+
+		const vis = dots.filter(isVisible);
+		if (!vis.length) {
+			return requestAnimationFrame(() => animateChain(rid));
+		}
+
+		// build a random chain
+		const start = dots[Math.floor(Math.random() * dots.length)];
+		const visited = new Set([dotKey(start)]);
+		let cur: Dot = start,
+			segs: Segment[] = [];
+		for (let i = 0; i < CONNECT_COUNT; i++) {
+			const nbrs = directions.map((d) => getNeighbor(cur, d)).filter((n) => n && !visited.has(dotKey(n)) && isVisible(n));
+			if (!nbrs.length) break;
+			const next = nbrs[Math.floor(Math.random() * nbrs.length)]!;
+			visited.add(dotKey(next));
+			segs.push({ from: cur, to: next });
+			cur = next;
+		}
+
+		if (!segs.length) {
+			return requestAnimationFrame(() => animateChain(rid));
+		}
+
+		function drawSegmentAnimated(seg: Segment, duration: number, prevCount: number, callback: () => void) {
+			const { from, to } = seg;
+			const dx = to.x - from.x;
+			const dy = to.y - from.y;
+			const start = performance.now();
+
+			function frame(now: number) {
+				drawDot(to.x - dx, to.y - dy);
+				drawDot(from.x + dx, from.y + dy);
+				const t = Math.min((now - start) / duration, 1);
+
+				// 1) clear entire canvas
+				lctx.clearRect(0, 0, width, height);
+
+				// 2) redraw all previous segments fully
+				for (let i = 0; i < prevCount; i++) {
+					const s = segs[i];
+					lctx.beginPath();
+					lctx.moveTo(s.from.x, s.from.y);
+					lctx.lineTo(s.to.x, s.to.y);
+					lctx.stroke();
 				}
 
-				return;
-			}
-		}
+				// 3) draw the current segment up to t
+				lctx.beginPath();
+				lctx.moveTo(from.x, from.y);
+				lctx.lineTo(from.x + dx * t, from.y + dy * t);
+				lctx.stroke();
 
-		determineShouldRun();
-
-		// Constants for dot‐grid (unchanged):
-		const tileSize = 50;
-		const centerOffset = tileSize / 2; // =25
-		const directions = [
-			{ dx: 1, dy: 0 }, // East
-			{ dx: -1, dy: 0 }, // West
-			{ dx: 0, dy: 1 }, // South
-			{ dx: 0, dy: -1 }, // North
-			{ dx: 1, dy: 1 }, // SE
-			{ dx: 1, dy: -1 }, // NE
-			{ dx: -1, dy: 1 }, // SW
-			{ dx: -1, dy: -1 }, // NW
-		];
-
-		// Event from ThemeProvider
-		document.addEventListener("theme:toggle-bg", () => {
-			if (shouldRun) {
-				window.localStorage.setItem("bgToggle", "off");
-				shouldRun = false;
-			} else {
-				window.localStorage.setItem("bgToggle", "on");
-				shouldRun = true;
-				recalculateDimensions();
-			}
-			toggleBg();
-		});
-
-		function toggleBg() {
-			container.classList.toggle("has-bg");
-		}
-
-		function clearCanvas() {
-			// Clear any existing drawing & ensure full opacity before new chain:
-			ctx.clearRect(0, 0, width, height);
-			// Stroke styling (you can tweak the α channel by changing the color):
-			ctx.strokeStyle = strokeStyle;
-			ctx.lineWidth = lineWidth;
-			canvas.style.transition = "";
-			canvas.style.opacity = "1";
-		}
-
-		// Recalculate `width`, `height`, `tilesAcross`, `tilesDown`, and rebuild `dots[]`.
-		// Also increments runId and immediately starts a fresh animation.
-		function recalculateDimensions() {
-			runId += 1; // invalidate any in-flight animations
-			const thisRun = runId;
-
-			const rect = container.getBoundingClientRect();
-			width = rect.width;
-			height = rect.height;
-
-			// Resize the canvas to match:
-			canvas.width = width;
-			canvas.height = height;
-
-			// Recompute how many tiles fit:
-			tilesAcross = Math.ceil(width / tileSize);
-			tilesDown = Math.ceil(height / tileSize);
-
-			// Rebuild every tile‐center dot at (i*50+25, j*50+25):
-			const newDots = [];
-			for (let i = 0; i < tilesAcross; i++) {
-				for (let j = 0; j < tilesDown; j++) {
-					const gx = i * tileSize + centerOffset;
-					const gy = j * tileSize + centerOffset;
-					if (gx >= 0 && gx <= width && gy >= 0 && gy <= height) {
-						newDots.push({ x: gx, y: gy, ti: i, tj: j });
-					}
-				}
-			}
-			dots = newDots;
-
-			clearCanvas();
-			// Kick off the animation for *this* run:
-			requestAnimationFrame(() => animateChain(thisRun));
-		}
-
-		// Initial calculation:
-		recalculateDimensions();
-
-		// Debounce helper so we don't spam on resize events:
-		let resizeTimeout = null;
-		window.addEventListener("resize", () => {
-			clearTimeout(resizeTimeout);
-			resizeTimeout = setTimeout(() => {
-				recalculateDimensions();
-			}, 150);
-		});
-
-		// Helper to get one step‐away neighbor in tile grid (or null if out of bounds):
-		function getAdjacentDot(dot, dir) {
-			const newTi = dot.ti + dir.dx;
-			const newTj = dot.tj + dir.dy;
-			if (newTi < 0 || newTj < 0 || newTi >= tilesAcross || newTj >= tilesDown) {
-				return null;
-			}
-			const newX = newTi * tileSize + centerOffset;
-			const newY = newTj * tileSize + centerOffset;
-			if (newX < 0 || newX > width || newY < 0 || newY > height) {
-				return null;
-			}
-			return { x: newX, y: newY, ti: newTi, tj: newTj };
-		}
-
-		function dotKey(dot) {
-			return `${dot.ti}-${dot.tj}`;
-		}
-
-		// Check if a given dot is currently visible in the viewport
-		function isDotVisible(dot) {
-			const canvasRect = canvas.getBoundingClientRect();
-			const screenX = canvasRect.left + dot.x;
-			const screenY = canvasRect.top + dot.y;
-			return screenX >= 0 && screenY >= 0 && screenX <= window.innerWidth && screenY <= window.innerHeight;
-		}
-
-		// ─── M A I N   A N I M A T I O N   L O O P ─────────────────────────────────
-		// Takes `thisRun` so it can abort if a resize happened in the meantime.
-		function animateChain(thisRun) {
-			// Abort on run end
-			if (shouldRun === false) return;
-
-			// If runId has changed, abort immediately:
-			if (thisRun !== runId) return;
-
-			// 1) Filter to only those dots the user can actually see right now:
-			const visibleDots = dots.filter(isDotVisible);
-			if (thisRun !== runId) return;
-
-			if (visibleDots.length === 0) {
-				// Nothing visible → retry next frame (still same runId):
-				return requestAnimationFrame(() => animateChain(thisRun));
-			}
-
-			// 2) Pick a random starting dot from visibleDots
-			const startDot = visibleDots[Math.floor(Math.random() * visibleDots.length)];
-			const visited = new Set([dotKey(startDot)]);
-			let currentDot = startDot;
-			const segments = [];
-
-			// 3) Build up to connectCount segments by picking random unvisited & visible neighbors
-			for (let step = 0; step < connectCount; step++) {
-				const neighbors = [];
-				for (const dir of directions) {
-					const nbr = getAdjacentDot(currentDot, dir);
-					if (nbr && !visited.has(dotKey(nbr)) && isDotVisible(nbr)) {
-						neighbors.push(nbr);
-					}
-				}
-				if (neighbors.length === 0) break;
-				const nextDot = neighbors[Math.floor(Math.random() * neighbors.length)];
-				visited.add(dotKey(nextDot));
-				segments.push({ from: currentDot, to: nextDot });
-				currentDot = nextDot;
-			}
-
-			// 4) If we got zero segments (isolated), restart
-			if (segments.length === 0) {
-				return requestAnimationFrame(() => animateChain(thisRun));
-			}
-
-			// 5) Draw each segment in turn, spaced by segmentDelay.
-			//    At each step, we check `thisRun` vs. `runId` to see if we should abort.
-			let idx = 0;
-			function drawNextSegment() {
-				if (thisRun !== runId) return; // a resize invalidated us
-				if (idx < segments.length) {
-					const seg = segments[idx];
-					ctx.beginPath();
-					ctx.moveTo(seg.from.x, seg.from.y);
-					ctx.lineTo(seg.to.x, seg.to.y);
-					ctx.stroke();
-					idx++;
-					setTimeout(drawNextSegment, segmentDelay);
+				if (t < 1) {
+					requestAnimationFrame(frame);
 				} else {
-					// 6) All segments drawn → wait holdDelay, then fade out
-					setTimeout(() => {
-						if (thisRun !== runId) return;
-						startFadeOut(thisRun);
-					}, holdDelay);
+					// when it’s done, commit and move on
+					callback();
 				}
 			}
-
-			clearCanvas();
-			drawNextSegment();
+			requestAnimationFrame(frame);
 		}
 
-		function startFadeOut(thisRun) {
-			if (thisRun !== runId) return; // aborted by resize
-
-			canvas.style.transition = `opacity ${fadeDuration}ms`;
-			canvas.style.opacity = "0";
-
-			const onTransitionEnd = () => {
-				canvas.removeEventListener("transitionend", onTransitionEnd);
-				if (thisRun !== runId) return;
-
-				clearCanvas();
-				// Finally start the next chain under the same runId
-				requestAnimationFrame(() => animateChain(thisRun));
-			};
-			canvas.addEventListener("transitionend", onTransitionEnd);
+		// draw segments one by one
+		let idx = 0;
+		function drawNext() {
+			if (rid !== runId) return;
+			if (idx < segs.length) {
+				drawSegmentAnimated(
+					segs[idx],
+					SEGMENT_DELAY,
+					idx, // number of fully drawn segments before this one
+					() => {
+						idx++;
+						drawNext();
+					},
+				);
+			} else {
+				setTimeout(() => startFade(rid), HOLD_DELAY);
+			}
 		}
-	})();
+		lctx.clearRect(0, 0, width, height);
+		drawNext();
+	}
+
+	function startFade(rid: number) {
+		if (rid !== runId) return;
+		lineCanvas.style.transition = `opacity ${FADE_DURATION}ms`;
+		lineCanvas.style.opacity = "0";
+		lineCanvas.addEventListener("transitionend", function onEnd() {
+			lineCanvas.removeEventListener("transitionend", onEnd);
+			if (rid !== runId) return;
+			lctx.clearRect(0, 0, width, height);
+			lineCanvas.style.transition = "";
+			lineCanvas.style.opacity = "1";
+			requestAnimationFrame(() => animateChain(rid));
+		});
+	}
+
+	// kick off on load
+	recalc();
 </script>

@@ -89,12 +89,12 @@ const { locale } = Astro.props;
 		connectedCallback() {
 			this.addScript();
 			this.createObserver();
-			window.addEventListener("theme-changed", this.themeChangedCallback.bind(this));
+			document.addEventListener("theme:changed", this.themeChangedCallback.bind(this));
 			this.commentsBtn.addEventListener("click", this.showCommentsCallback.bind(this));
 		}
 
 		disconnectedCallback() {
-			window.removeEventListener("theme-changed", this.themeChangedCallback.bind(this));
+			document.removeEventListener("theme:changed", this.themeChangedCallback.bind(this));
 			this.commentsBtn.removeEventListener("click", this.showCommentsCallback.bind(this));
 		}
 	}

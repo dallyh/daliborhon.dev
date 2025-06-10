@@ -1,6 +1,6 @@
-import { getToken } from "./auth";
+import { UMAMI_SITE_ID, UMAMI_URL } from "astro:env/client";
 import { Logger } from "@logger";
-import { UMAMI_URL, UMAMI_SITE_ID } from "astro:env/client";
+import { getToken } from "./auth";
 
 const logger = new Logger("umami-client");
 const token = await getToken();

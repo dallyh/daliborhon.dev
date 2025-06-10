@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Card from "@components/astro/common/Card.astro";
+import FormattedDate from "@components/astro/common/FormattedDate.astro";
+import { Icon } from "astro-icon/components";
 import ExternalLink from "../common/ExternalLink.astro";
 import MarkdownContent from "../content/MarkdownContent.astro";
-import FormattedDate from "@components/astro/common/FormattedDate.astro";
 import GithubLanguages from "./GithubLanguages.astro";
-import { Icon } from "astro-icon/components";
 
 interface Props {
 	project: CollectionEntry<"projects">;

@@ -105,8 +105,8 @@ const themes = [
 			const isSet = window.localStorage.getItem("bgToggle") ?? false;
 
 			if (!isSet) {
-				// Default
-				window.localStorage.setItem("bgToggle", "on");
+				// off from on - which is default. First toggle.
+				window.localStorage.setItem("bgToggle", "off");
 				return;
 			}
 

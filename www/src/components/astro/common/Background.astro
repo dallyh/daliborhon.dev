@@ -104,18 +104,16 @@
 	determineShouldRun();
 
 	// Event from ThemeProvider
-	document.addEventListener("theme:toggle-bg", () => {
-		if (shouldRun) {
-			window.localStorage.setItem("bgToggle", "off");
-			toggleCanvases(true);
-			shouldRun = false;
-			console.log("off");
-		} else {
-			window.localStorage.setItem("bgToggle", "on");
+	document.addEventListener("theme:toggle-bg", (e: CustomEventInit<{ isOn: boolean }>) => {
+		const isOn = e.detail?.isOn;
+
+		if (isOn) {
 			shouldRun = true;
 			toggleCanvases(false);
-			console.log("on");
 			recalc();
+		} else {
+			shouldRun = false;
+			toggleCanvases(true);
 		}
 	});
 

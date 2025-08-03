@@ -1,17 +1,28 @@
 {
-    "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
     "files": {
-        "include": ["www/**", "", "biome.jsonc", "*.ts", "*.mjs", "*.yml", "*.yaml"],
-        "ignore": ["dist/**", "node_modules/**", ".astro/**", "public/**", "*.css", ".turbo/**", ".frontmatter/**"]
+        "includes": [
+            "**/www/**",
+            "**/biome.jsonc",
+            "**/*.ts",
+            "**/*.mjs",
+            "**/*.yml",
+            "**/*.yaml",
+            "!**/dist/**",
+            "!**/node_modules/**",
+            "!**/.astro/**",
+            "!**/public/**",
+            "!**/*.css",
+            "!**/.turbo/**",
+            "!**/.frontmatter/**"
+        ]
     },
     "vcs": {
         "enabled": true,
         "clientKind": "git",
         "useIgnoreFile": true
     },
-    "organizeImports": {
-        "enabled": true
-    },
+    "assist": { "actions": { "source": { "organizeImports": "on" } } },
     "linter": {
         "enabled": true,
         "rules": {
@@ -21,7 +32,7 @@
                 "useImportType": "error"
             },
             "suspicious": {
-                "noConsoleLog": "warn"
+                "noConsole": { "level": "warn", "options": { "allow": ["log"] } }
             },
             "correctness": {
                 "noUnusedVariables": "info",
@@ -35,9 +46,13 @@
     },
     "overrides": [
         {
-            "include": ["*.astro"],
+            "includes": ["**/*.astro"],
             "linter": {
                 "rules": {
+                    "style": {
+                        "useConst": "off",
+                        "useImportType": "off"
+                    },
                     "correctness": {
                         "noUnusedVariables": "off",
                         "noUnusedImports": "off"

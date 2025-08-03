@@ -1,0 +1,37 @@
+{
+    "name": "Astro Dev",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bullseye",
+    "features": {
+        "ghcr.io/devcontainers-extra/features/pnpm:2": {
+            "version": "10.14.0"
+        }
+    },
+    "postCreateCommand": "pnpm install && pnpm add -g npm-check-updates",
+    "shutdownAction": "stopContainer",
+    "runArgs": ["--env-file", "${localWorkspaceFolder}/.env"],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "extensions.ignoreRecommendations": true
+            },
+            "extensions": [
+                "astro-build.astro-vscode",
+                "biomejs.biome",
+                "inlang.vs-code-extension",
+                "bradlc.vscode-tailwindcss",
+                "eliostruyf.vscode-front-matter-beta",
+                "stripe.markdoc-language-support",
+                "unifiedjs.vscode-mdx",
+                "esbenp.prettier-vscode"
+            ]
+        }
+    },
+    "forwardPorts": [4321],
+    "remoteUser": "node",
+    "remoteEnv": {
+        "PNPM_HOME": "/home/node/.local/share/pnpm",
+        "PNPM_STORE_DIR": "/home/node/.local/share/pnpm/store",
+        "PATH": "/home/node/.local/share/pnpm:${containerEnv:PATH}"
+    }
+}

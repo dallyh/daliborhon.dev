@@ -22,7 +22,8 @@
                 "eliostruyf.vscode-front-matter-beta",
                 "stripe.markdoc-language-support",
                 "unifiedjs.vscode-mdx",
-                "esbenp.prettier-vscode"
+                "esbenp.prettier-vscode",
+                "eamodio.gitlens"
             ]
         }
     },

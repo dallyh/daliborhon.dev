@@ -3,12 +3,11 @@
     "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bullseye",
     "features": {
         "ghcr.io/devcontainers-extra/features/pnpm:2": {
-            "version": "10.14.0"
+            "version": "10.15.0"
         }
     },
     "postCreateCommand": "pnpm install && pnpm add -g npm-check-updates",
     "shutdownAction": "stopContainer",
-    "runArgs": ["--env-file", "${localWorkspaceFolder}/.env"],
     "customizations": {
         "vscode": {
             "settings": {

@@ -42,7 +42,7 @@ const options: SatoriOptions = {
 
 async function svgBufferToPngBuffer(svg: string) {
 	const buffer = await sharp(Buffer.from(svg, "utf-8")).png({ quality: 45 }).toBuffer();
-	return buffer;
+	return new Uint8Array(buffer);
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"posts">, locale: string) {

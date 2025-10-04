@@ -1,7 +1,7 @@
 import { type CollectionEntry, getEntries } from "astro:content";
 import type { Locale } from "@paraglide/runtime";
 
-export default async (post: CollectionEntry<"posts">, locale: Locale) => {
+export default async (post: CollectionEntry<"posts">, _locale: Locale) => {
 	const relatedtags = await getEntries(post.data.tags);
 
 	// Template adapted from: https://github.com/pelleknaap

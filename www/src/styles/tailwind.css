@@ -112,7 +112,7 @@
 }
 
 @theme {
-	--font-mono: "JetBrains Mono Variable", monospace;
+	--font-mono: var(--font-jetbrains-mono);
 }
 
 @utility drawer-side {

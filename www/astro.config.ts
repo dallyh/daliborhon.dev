@@ -7,7 +7,7 @@ import aiRobotsTxt from "astro-ai-robots-txt";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import { loadEnv } from "vite";
 import ecConfig from "./ec.config";
 import envVars from "./env.config";
@@ -35,6 +35,15 @@ export default defineConfig({
 		preserveScriptOrder: true,
 		headingIdCompat: true,
 		contentIntellisense: true,
+		fonts: [{
+				provider: fontProviders.fontsource(),
+				name: "JetBrains Mono",
+				cssVariable: "--font-jetbrains-mono",
+				subsets: ["latin", "latin-ext"],
+				weights: ["100 800"],
+
+			}
+		]
 	},
 	site: SITE_URL,
 	build: {
@@ -82,7 +91,9 @@ export default defineConfig({
 	],
 	vite: {
 		plugins: [
+			//@ts-ignore what's up with the types?
 			tailwindcss(),
+			//@ts-ignore what's up with the types?
 			paraglideVitePlugin({
 				project: "./project.inlang",
 				outdir: "./src/paraglide",

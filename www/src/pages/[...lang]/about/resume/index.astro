@@ -15,7 +15,7 @@ const locale = Astro.currentLocale!;
 const entry = await getEntry("resume", locale);
 
 if (!entry) {
-	console.error("Resume entry was not found.");
+	console.log("Resume entry was not found.");
 	return new Response(null, { status: 404, statusText: "Resume entry was not found" });
 }
 

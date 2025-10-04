@@ -3,7 +3,7 @@
     "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bullseye",
     "features": {
         "ghcr.io/devcontainers-extra/features/pnpm:2": {
-            "version": "10.15.0"
+            "version": "10.18.0"
         }
     },
     "postCreateCommand": "pnpm install && pnpm add -g npm-check-updates",
@@ -19,11 +19,11 @@
                 "biomejs.biome",
                 "inlang.vs-code-extension",
                 "bradlc.vscode-tailwindcss",
-                "eliostruyf.vscode-front-matter-beta",
                 "stripe.markdoc-language-support",
                 "unifiedjs.vscode-mdx",
                 "esbenp.prettier-vscode",
-                "eamodio.gitlens"
+                "eamodio.gitlens",
+                "eliostruyf.vscode-front-matter"
             ]
         }
     },

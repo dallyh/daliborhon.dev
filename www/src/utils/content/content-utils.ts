@@ -55,7 +55,7 @@ export async function getBlogPostTranslations(post: CollectionEntry<"posts">) {
 	return posts;
 }
 
-export function getBlogPostSlug(locale: Locale, post: CollectionEntry<"posts">) {
+export function getBlogPostSlug(_locale: Locale, post: CollectionEntry<"posts">) {
 	return getSlugWithoutLocale(post.id); // example cs/2024-01-01-title-already-slugified
 
 	/*
@@ -123,7 +123,7 @@ export async function getPostsByTag(locale: string, tagId: string) {
 	const posts = await getFilteredPostsCollection({ locale: locale, tagId: tagId });
 
 	if (posts === undefined || posts.length === 0) {
-		logger.warn(`getPostsByTag ${tagId}: posts were empty.`);
+		logger.warn(`getPostsByTag - ${tagId}: posts were empty.`);
 	}
 
 	return posts;
@@ -167,7 +167,7 @@ export async function getTagById(tagId: string | undefined) {
 	return tag;
 }
 
-export function generateTOCHTML(headings: MarkdownHeading[]): string {
+export function generateTocHtml(headings: MarkdownHeading[]): string {
 	if (!headings.length) return "";
 
 	// Determine the base (minimum) depth

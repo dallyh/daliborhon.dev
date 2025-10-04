@@ -19,23 +19,19 @@ export class Logger {
 	}
 
 	info(message: string) {
-		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "info" }) + " " + message}`);
 	}
 
 	warn(message: string) {
-		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "warn" }) + " " + message}`);
 	}
 
 	error(message: string) {
-		// biome-ignore lint: logger
 		console.log(`${this.#getEventPrefix({ level: "error" }) + " " + message}`);
 	}
 
 	debug(message: string) {
 		if (this.isDev) {
-			// biome-ignore lint: logger
 			console.log(`${this.#getEventPrefix({ level: "debug" }) + " " + message}`);
 		}
 	}

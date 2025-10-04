@@ -1,6 +1,6 @@
 ---
 import { m } from "@paraglide/messages";
-import { generateTOCHTML } from "@utils/content";
+import { generateTocHtml } from "@utils/content";
 import type { MarkdownHeading } from "astro";
 
 interface Props {
@@ -21,7 +21,7 @@ const { headings } = Astro.props;
 					</div>
 				</summary>
 				<nav class="toc">
-					<Fragment set:html={generateTOCHTML(headings)} />
+					<Fragment set:html={generateTocHtml(headings)} />
 				</nav>
 			</details>
 		</toc-root>

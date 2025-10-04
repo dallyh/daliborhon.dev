@@ -1,5 +1,5 @@
 ---
-import { HCAPTCHA_KEY } from "astro:env/client";
+import { HCAPTCHA_SITE_KEY } from "astro:env/client";
 import { m } from "@paraglide/messages";
 import { Icon } from "astro-icon/components";
 
@@ -103,11 +103,11 @@ const locale = Astro.currentLocale;
 		</form>
 	</div>
 </contact-form>
-<script is:inline define:vars={{ HCAPTCHA_KEY }}>
+<script is:inline define:vars={{ HCAPTCHA_SITE_KEY }}>
 	///<reference types="@hcaptcha/types"/>
 	window.captchaInit = function captchaInit() {
 		if (window.hcaptcha) {
-			hcaptcha.render("hcaptcha", { sitekey: HCAPTCHA_KEY, size: "invisible" });
+			hcaptcha.render("hcaptcha", { sitekey: HCAPTCHA_SITE_KEY, size: "invisible" });
 		}
 	};
 </script>
@@ -236,7 +236,6 @@ const locale = Astro.currentLocale;
 
 			try {
 				const res = await (hcaptcha.execute({ async: true }) as Promise<HCaptchaResponse>);
-				console.log(res);
 
 				if (res.response) {
 					await this.onSubmit(res);

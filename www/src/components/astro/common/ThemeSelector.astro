@@ -3,10 +3,10 @@ import { m } from "@paraglide/messages";
 import { Icon } from "astro-icon/components";
 
 interface Props {
-	inDrawer?: boolean
+	inDrawer?: boolean;
 }
 
-const { inDrawer = false } = Astro.props; 
+const { inDrawer = false } = Astro.props;
 
 const themes = [
 	{ theme: "light", description: m.common__theme_light() },
@@ -49,7 +49,7 @@ const themes = [
 				}
 				<li>
 					<button class="gap-3 px-2" data-set-theme="system">
-						<div class="rounded-md bg-base-100 p-1 shadow-sm">
+						<div class="bg-base-100 rounded-md p-1 shadow-sm">
 							<Icon name="heroicons:computer-desktop-16-solid" size="0.75rem" />
 						</div>
 						<div class="truncate">{m.common__theme_system()}</div>
@@ -60,7 +60,7 @@ const themes = [
 				</li>
 				<li>
 					<button class="gap-3 px-2" data-toggle-bg title="Toggle background">
-						<div class="rounded-md bg-base-100 p-1 shadow-sm">
+						<div class="bg-base-100 rounded-md p-1 shadow-sm">
 							<Icon name="heroicons:play-pause-solid" />
 						</div>
 						<div class="truncate">{m.common__theme_bg()}</div>

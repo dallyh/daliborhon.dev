@@ -1,7 +1,6 @@
+import { defineMiddleware, sequence } from "astro:middleware";
 import { AsyncLocalStorage } from "node:async_hooks";
-import { sequence } from "astro:middleware";
-import { defineMiddleware } from "astro:middleware";
-import { type Locale, baseLocale, overwriteGetLocale, overwriteSetLocale } from "@paraglide/runtime";
+import { baseLocale, type Locale, overwriteGetLocale, overwriteSetLocale } from "@paraglide/runtime";
 
 const asyncStorage = new AsyncLocalStorage<Locale>();
 overwriteGetLocale(() => asyncStorage.getStore() ?? baseLocale);

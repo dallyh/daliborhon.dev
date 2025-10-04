@@ -14,7 +14,7 @@ export async function getFilteredPostsCollection(options: FilteredPostsOptions |
 		return await getCollection("posts");
 	}
 
-	const { featured, sort, locale, slice, tagId } = options;
+	const { featured, sort = true, locale, slice, tagId } = options;
 
 	let posts = await getCollection("posts", ({ data }) => {
 		return buildCondition(data, { featured, locale, tagId });

@@ -4,7 +4,8 @@ import path from "node:path";
 import type { Locale } from "@paraglide/runtime";
 import satori, { type SatoriOptions } from "satori";
 import sharp from "sharp";
-import postOgImage from "./templates/post";
+import postPreviewImage from "./templates/post-preview";
+import postOgImage from "./templates/post-og";
 import siteOgImage from "./templates/site";
 
 const getFonts = async () => {
@@ -43,6 +44,11 @@ const options: SatoriOptions = {
 async function svgBufferToPngBuffer(svg: string) {
 	const buffer = await sharp(Buffer.from(svg, "utf-8")).png({ quality: 45 }).toBuffer();
 	return new Uint8Array(buffer);
+}
+
+export async function generatePreviewImageForPost(post: CollectionEntry<"posts">, locale: string) {
+	const svg = await satori(await postPreviewImage(post, locale as Locale), options);
+	return await svgBufferToPngBuffer(svg);
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"posts">, locale: string) {

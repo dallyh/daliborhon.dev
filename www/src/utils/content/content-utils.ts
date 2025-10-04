@@ -26,6 +26,16 @@ export const getReadingTime = (text: string): string | undefined => {
 	}
 };
 
+export function getPreviewImageUrl(locale: Locale, post: CollectionEntry<"posts">) {
+	// For automatically generated images
+	// In dev mode, the trailing slash has to be present when it is set in the config
+	if (import.meta.env.DEV) {
+		return getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}/preview.png`);
+	}
+
+	return removeTrailingSlash(getRelativeLocaleUrl(locale, `/blog/posts/${getBlogPostSlug(locale, post)}/preview.png`));
+}
+
 export function getOgImageUrl(locale: Locale, post: CollectionEntry<"posts">) {
 	// For automatically generated images
 	// In dev mode, the trailing slash has to be present when it is set in the config
@@ -115,12 +125,12 @@ export function getBlogPostImageUrl(locale: Locale, post: CollectionEntry<"posts
 		return post.data.image;
 	}
 
-	// if the post has no image, just return OG image
-	return getOgImageUrl(locale, post);
+	// if the post has no image, return generated preview
+	return getPreviewImageUrl(locale, post);
 }
 
 export async function getPostsByTag(locale: string, tagId: string) {
-	const posts = await getFilteredPostsCollection({ locale: locale, tagId: tagId });
+	const posts = await getFilteredPostsCollection({ locale: locale, tagId: tagId, sort: true });
 
 	if (posts === undefined || posts.length === 0) {
 		logger.warn(`getPostsByTag - ${tagId}: posts were empty.`);

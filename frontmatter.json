@@ -32,10 +32,10 @@
     ],
     "frontMatter.data.files": [
         {
-            "id": "Project tags",
+            "id": "projectTags",
             "labelField": "id",
             "title": "Project tags",
-            "file": "[[workspace]]/www/content/project-tags.yml",
+            "file": "[[workspace]]/www/content/project-tags.yaml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -57,10 +57,10 @@
             }
         },
         {
-            "id": "Tags",
+            "id": "tags",
             "labelField": "id",
             "title": "Blog tags",
-            "file": "[[workspace]]/www/content/tags.yml",
+            "file": "[[workspace]]/www/content/tags.yaml",
             "fileType": "yaml",
             "schema": {
                 "type": "object",
@@ -250,7 +250,7 @@
                     "name": "tags",
                     "title": "Tags",
                     "type": "dataFile",
-                    "dataFileId": "project-tags",
+                    "dataFileId": "projectTags",
                     "dataFileKey": "id",
                     "multiple": true,
                     "dataFileValue": "id",

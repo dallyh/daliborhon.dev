@@ -1,6 +1,6 @@
+import type { CollectionEntry } from "astro:content";
 import fs from "node:fs";
 import path from "node:path";
-import type { CollectionEntry } from "astro:content";
 import type { Locale } from "@paraglide/runtime";
 import satori, { type SatoriOptions } from "satori";
 import sharp from "sharp";

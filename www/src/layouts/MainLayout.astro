@@ -5,13 +5,13 @@ import { m } from "@paraglide/messages";
 import { removeTrailingSlash } from "@utils";
 import "../styles/tailwind.css";
 import "../styles/global.css";
+import { Font } from "astro:assets";
+import { PREVIEW } from "astro:env/client";
 import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astro";
 import SearchModal from "@components/astro/common/SearchModal.astro";
 import ToastProvider from "@components/astro/common/ToastProvider.astro";
 import ViewTransitions from "@components/astro/common/ViewTransitions.astro";
 import Background from "../components/astro/common/Background.astro";
-import { PREVIEW } from "astro:env/client";
-import { Font } from "astro:assets";
 
 export interface Props {
 	title?: string;

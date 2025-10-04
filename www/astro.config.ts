@@ -3,11 +3,11 @@ import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, fontProviders } from "astro/config";
 import aiRobotsTxt from "astro-ai-robots-txt";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import pagefind from "astro-pagefind";
-import { defineConfig, fontProviders } from "astro/config";
 import { loadEnv } from "vite";
 import ecConfig from "./ec.config";
 import envVars from "./env.config";
@@ -35,15 +35,15 @@ export default defineConfig({
 		preserveScriptOrder: true,
 		headingIdCompat: true,
 		contentIntellisense: true,
-		fonts: [{
+		fonts: [
+			{
 				provider: fontProviders.fontsource(),
 				name: "JetBrains Mono",
 				cssVariable: "--font-jetbrains-mono",
 				subsets: ["latin", "latin-ext"],
 				weights: ["100 800"],
-
-			}
-		]
+			},
+		],
 	},
 	site: SITE_URL,
 	build: {

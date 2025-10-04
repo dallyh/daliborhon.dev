@@ -1,4 +1,4 @@
-import { type InferEntrySchema, getCollection } from "astro:content";
+import { getCollection, type InferEntrySchema } from "astro:content";
 import { PREVIEW } from "astro:env/client";
 
 interface FilteredPostsOptions {

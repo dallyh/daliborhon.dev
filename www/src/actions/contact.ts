@@ -1,9 +1,9 @@
 import { ActionError, defineAction } from "astro:actions";
+import { HCAPTCHA_SECRET_KEY, RESEND_API_KEY } from "astro:env/server";
 import { z } from "astro:schema";
-import { Resend } from "resend";
-import { RESEND_API_KEY, HCAPTCHA_SECRET_KEY } from "astro:env/server";
+import { Logger } from "@logger";
 import type { Locale } from "@paraglide/runtime";
-import { Logger } from "@logger"
+import { Resend } from "resend";
 
 const logger = new Logger("contact-form");
 const resend = new Resend(RESEND_API_KEY);
@@ -72,7 +72,6 @@ export const contactFormAction = defineAction({
 			verify = (await res.json()) as HCaptchaVerifyResponse;
 		} catch (e) {
 			internal(`Captcha verification failed: ${(e as Error).message}`);
-
 		}
 
 		// success must be true
@@ -82,8 +81,8 @@ export const contactFormAction = defineAction({
 				errors: verify?.["error-codes"],
 				hostname: verify?.hostname,
 				ts: verify?.challenge_ts,
-			}
-			logger.warn(`hCaptcha failed ${JSON.stringify(err)}`, );
+			};
+			logger.warn(`hCaptcha failed ${JSON.stringify(err)}`);
 			badRequest(hcaptchaUserMessage(verify?.["error-codes"]));
 		}
 

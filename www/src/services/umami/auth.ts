@@ -10,6 +10,8 @@ export async function getToken() {
 		password: UMAMI_PASSWORD,
 	};
 
+	console.log(request);
+
 	const res = await fetch(`${UMAMI_URL}/api/auth/login`, {
 		method: "POST",
 		headers: {

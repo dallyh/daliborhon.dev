@@ -7,7 +7,12 @@ const cls = {
 };
 
 const fetchStatus = async (): Promise<Status> => {
-	const res = await fetch(new URL("/api/bs-status", Astro.url));
+	const res = await fetch(new URL("/api/bs-status", Astro.url), {
+		headers: {
+			"User-Agent": "dalibor-runtime/1.0 (+https://daliborhon.dev)",
+			Accept: "application/json",
+		},
+	});
 	const data = await res.json();
 	return data.status;
 };

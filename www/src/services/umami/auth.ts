@@ -13,6 +13,8 @@ export async function getToken() {
 	const res = await fetch(`${UMAMI_URL}/api/auth/login`, {
 		method: "POST",
 		headers: {
+			"Content-Type": "application/json",
+			"User-Agent": "dalibor-build/1.0 (+https://daliborhon.dev)",
 			Accept: "application/json",
 		},
 		body: JSON.stringify(request),

@@ -127,18 +127,19 @@
 		shouldRun = true,
 		segmentDelay = SEGMENT_DELAY_DEFAULT;
 
+	let season: string | null = null;
 	function getSeasonPicture(now = new Date()): Step[] | null {
 		const m = now.getMonth() + 1;
 		const d = now.getDate();
 
 		// Christmas
-		if (m === 12 && d >= 1 && d <= 26) {
+		if ((m === 12 && d >= 1 && d <= 26) || (season === "christmas")) {
 			segmentDelay = 200;
 			return christmasTree;
 		}
 
 		// Just winter
-		if (m >= 12 || m <= 2) {
+		if ((m >= 12 || m <= 2) || (season === "winter")) {
 			segmentDelay = 100;
 			return snowflake;
 		}
@@ -427,4 +428,10 @@
 
 	// kick off on load
 	recalc();
+
+	// @ts-ignore
+	window.changeSeason = (_season: string) => {
+		season = _season;
+		recalc();
+	};
 </script>

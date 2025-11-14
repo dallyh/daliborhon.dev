@@ -4,8 +4,8 @@ import path from "node:path";
 import type { Locale } from "@paraglide/runtime";
 import satori, { type SatoriOptions } from "satori";
 import sharp from "sharp";
-import postPreviewImage from "./templates/post-preview";
 import postOgImage from "./templates/post-og";
+import postPreviewImage from "./templates/post-preview";
 import siteOgImage from "./templates/site";
 
 const getFonts = async () => {

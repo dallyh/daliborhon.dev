@@ -355,6 +355,6 @@
 
 @utility select {
 	&::picker(select) {
-		@apply bg-base-200 shadow-sm text-sm;
+		@apply bg-base-200 text-sm shadow-sm;
 	}
 }

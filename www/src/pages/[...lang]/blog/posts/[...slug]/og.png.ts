@@ -1,6 +1,6 @@
+import type { CollectionEntry } from "astro:content";
 import { generateOgImageForPost } from "@utils/og";
 import type { APIContext } from "astro";
-import type { CollectionEntry } from "astro:content";
 
 export { getStaticPaths } from "./index.astro";
 

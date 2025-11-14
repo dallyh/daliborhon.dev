@@ -22,6 +22,7 @@ export async function getToken() {
 	});
 
 	console.log(res);
+	
 	try {
 		console.log(await res.json());
 	} catch {}

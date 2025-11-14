@@ -133,13 +133,13 @@
 		const d = now.getDate();
 
 		// Christmas
-		if ((m === 12 && d >= 1 && d <= 26) || (season === "christmas")) {
+		if ((m === 12 && d >= 1 && d <= 26) || season === "christmas") {
 			segmentDelay = 200;
 			return christmasTree;
 		}
 
 		// Just winter
-		if ((m >= 12 || m <= 2) || (season === "winter")) {
+		if (m >= 12 || m <= 2 || season === "winter") {
 			segmentDelay = 100;
 			return snowflake;
 		}

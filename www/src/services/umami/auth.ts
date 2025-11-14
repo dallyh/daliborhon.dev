@@ -11,6 +11,7 @@ export async function getToken() {
 	};
 
 	console.log(request);
+	console.log(UMAMI_URL);
 
 	const res = await fetch(`${UMAMI_URL}/api/auth/login`, {
 		method: "POST",
@@ -19,6 +20,8 @@ export async function getToken() {
 		},
 		body: JSON.stringify(request),
 	});
+
+	console.log(res);
 
 	if (!res.ok) {
 		logger.error(`Invalid response: ${res.status} : ${res.statusText}`);

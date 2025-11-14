@@ -3,7 +3,7 @@ services:
         container_name: daliborhon.dev-web
         build:
             context: .
-            dockerfile: dockerfile
+            dockerfile: Dockerfile
             target: runtime
             args:
                 SITE: ${SITE}
@@ -16,6 +16,9 @@ services:
                 UPTIME_API_TOKEN: ${UPTIME_API_TOKEN}
                 COOLIFY_BRANCH: ${COOLIFY_BRANCH}
                 SOURCE_COMMIT: ${SOURCE_COMMIT}
+                HCAPTCHA_SECRET_KEY:  ${HCAPTCHA_SECRET_KEY}
+                HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY}
+                RESEND_API_KEY: ${RESEND_API_KEY}
         env_file:
             - ./www/.env
         ports:

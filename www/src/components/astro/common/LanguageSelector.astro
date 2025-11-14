@@ -24,7 +24,7 @@ const translations = post ? await getBlogPostTranslations(post) : [];
 ---
 
 <lang-select>
-	<select class="select select-sm select-bordered w-full max-w-xs cursor-pointer">
+	<select class="select select-sm w-full max-w-xs cursor-pointer shadow-md">
 		{
 			!post &&
 				locales.map((locale) => {

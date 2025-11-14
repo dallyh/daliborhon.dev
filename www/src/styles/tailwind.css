@@ -144,7 +144,6 @@
 
 @utility link-hover {
 	text-decoration-color: transparent;
-	text-decoration-line: none;
 
 	&:hover {
 		text-decoration-color: var(--color-primary);
@@ -352,4 +351,10 @@
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
+}
+
+@utility select {
+	&::picker(select) {
+		@apply bg-base-200 shadow-sm text-sm;
+	}
 }

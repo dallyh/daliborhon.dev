@@ -9,7 +9,7 @@ const { inDrawer = false } = Astro.props;
 ---
 
 <button class={`${inDrawer ? "w-full" : ""}`} onclick="window.dispatchEvent(new CustomEvent('open-search-modal'));">
-	<label class={`input ${inDrawer ? "" : "input-sm"} flex items-center gap-2`}>
+	<label class={`input ${inDrawer ? "" : "input-sm"} flex items-center gap-2 shadow-md`}>
 		<input type="text" class={`grow ${inDrawer ? "" : "max-w-28"}`} placeholder={m.common__search()} />
 		{
 			!inDrawer && (

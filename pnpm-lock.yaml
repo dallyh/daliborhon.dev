@@ -44,6 +44,9 @@ importers:
       astro:
         specifier: ^5.15.7
         version: 5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1)
+      astro-capo:
+        specifier: ^0.0.1
+        version: 0.0.1(astro@5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1))
       astro-expressive-code:
         specifier: ^0.41.3
         version: 0.41.3(astro@5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1))
@@ -1472,6 +1475,11 @@ packages:
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
       astro: ^5.4.3
+
+  astro-capo@0.0.1:
+    resolution: {integrity: sha512-KyQD1mzgEQnbqrKpYdoIZMAYejkOcIJocdGuQBH9Yzr4KqGzIR8P2DDNbV/FQXaSyq900lCZwWJH45tBIQCG8w==}
+    peerDependencies:
+      astro: '>= 2.8'
 
   astro-expressive-code@0.41.3:
     resolution: {integrity: sha512-u+zHMqo/QNLE2eqYRCrK3+XMlKakv33Bzuz+56V1gs8H0y6TZ0hIi3VNbIxeTn51NLn+mJfUV/A0kMNfE4rANw==}
@@ -5328,6 +5336,11 @@ snapshots:
     dependencies:
       astro: 5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1)
 
+  astro-capo@0.0.1(astro@5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1)):
+    dependencies:
+      astro: 5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1)
+      ultrahtml: 1.6.0
+
   astro-expressive-code@0.41.3(astro@5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1)):
     dependencies:
       astro: 5.15.7(@types/node@22.13.14)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.46.2)(typescript@5.8.2)(yaml@2.7.1)
@@ -7288,7 +7301,7 @@ snapshots:
 
   prettier-plugin-astro@0.14.1:
     dependencies:
-      '@astrojs/compiler': 2.12.2
+      '@astrojs/compiler': 2.13.0
       prettier: 3.6.2
       sass-formatter: 0.7.9
 

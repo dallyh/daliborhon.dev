@@ -43,7 +43,6 @@
         "stream-buffers": "^3.0.3"
     },
     "devDependencies": {
-        "@astrojs/check": "^0.9.5",
         "@astrojs/rss": "^4.0.13",
         "@astrojs/sitemap": "^3.6.0",
         "@hcaptcha/types": "^1.1.0",

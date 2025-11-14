@@ -16,7 +16,7 @@ const themes = [
 
 <theme-selector>
 	<div class="dropdown dropdown-center lg:dropdown-end dropdown-hover">
-		<div tabindex="0" role="button" class="input input-sm cursor-pointer" aria-haspopup="menu">
+		<div tabindex="0" role="button" class="input input-sm cursor-pointer shadow-md" aria-haspopup="menu">
 			<div class="bg-base-100 border-base-content/10 grid shrink-0 grid-cols-2 gap-0.5 rounded-md border p-1">
 				<div class="bg-base-content size-1 rounded-full"></div>
 				<div class="bg-primary size-1 rounded-full"></div>
@@ -25,7 +25,7 @@ const themes = [
 			</div>
 			{m.common__theme()}
 		</div>
-		<div tabindex="0" class={`dropdown-content ${inDrawer ? "bg-base-300" : "bg-base-200"} text-base-content w-48`}>
+		<div tabindex="0" class={`dropdown-content ${inDrawer ? "bg-base-300" : "bg-base-200"} text-base-content w-48 shadow-sm`}>
 			<ul class="menu w-48">
 				{
 					themes.map((t) => {

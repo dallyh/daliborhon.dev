@@ -36,7 +36,7 @@ const menuItems = [
 ];
 ---
 
-<div class="drawer min-h-[100svh]">
+<div class="drawer min-h-svh">
 	<input id="drawerMenu" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content mx-auto flex w-full max-w-[1344px] flex-col px-0 lg:px-4">
 		<!-- Navbar -->
@@ -76,7 +76,7 @@ const menuItems = [
 											<a href={i.href} aria-label={i.title}>
 												{i.title}
 											</a>
-											<ul class="dropdown-content menu bg-base-200 text-base-content ml-0 w-56">
+											<ul class="dropdown-content menu bg-base-200 text-base-content ml-0 w-56 shadow-md">
 												{i.items.map((d) => {
 													return (
 														<li>

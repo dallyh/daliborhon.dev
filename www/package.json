@@ -21,6 +21,7 @@
         "@astrojs/node": "^9.5.0",
         "@pagefind/default-ui": "^1.4.0",
         "astro": "^5.15.7",
+        "astro-capo": "^0.0.1",
         "astro-expressive-code": "^0.41.3",
         "astro-icon": "^1.1.5",
         "html-to-pdfmake": "^2.5.32",

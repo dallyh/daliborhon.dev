@@ -40,7 +40,7 @@ import SocialLinks from "./SocialLinks.astro";
 	<ProfilePicture img={profilePicture} />
 </div>
 
-<script>
+<script is:inline>
 	function displayClock() {
 		var ele = document.getElementById("time");
 		if (!ele) {

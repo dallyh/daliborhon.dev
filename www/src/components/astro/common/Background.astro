@@ -29,7 +29,7 @@
 <script>
 	// ─── CONFIG ───────────────────────────────────────────────────────────────────
 	const CONNECT_COUNT = 15;
-	const SEGMENT_DELAY = 100;
+	const SEGMENT_DELAY_DEFAULT = 120; // default, different for seasons
 	const HOLD_DELAY = 400;
 	const FADE_DURATION = 800;
 	const TILE_SIZE = 50;
@@ -48,6 +48,50 @@
 		{ dx: -1, dy: 1 },
 		{ dx: -1, dy: -1 },
 	];
+
+	const christmasTree = [
+		// small trunk up
+		{ dti: 0, dtj: -2 },
+
+		// tree up and reverse
+		{ dti: -2, dtj: 0 },
+		{ dti: 2, dtj: -2 },
+		{ dti: -2, dtj: 0 },
+		{ dti: 2, dtj: -2 },
+
+		{ dti: 2, dtj: 2 },
+		{ dti: -2, dtj: 0 },
+		{ dti: 2, dtj: 2 },
+		{ dti: -2, dtj: 0 },
+	];
+
+	const snowflake = [
+		{ dti: 0, dtj: -1 },
+
+		{ dti: -1, dtj: 1 },
+		{ dti: 1, dtj: -1 },
+
+		{ dti: 1, dtj: 1 },
+		{ dti: -1, dtj: -1 },
+
+		{ dti: 1, dtj: 0 },
+		{ dti: -1, dtj: 0 },
+
+		{ dti: 1, dtj: -1 },
+		{ dti: -1, dtj: 1 },
+
+		{ dti: 0, dtj: -1 },
+		{ dti: 0, dtj: 1 },
+
+		{ dti: -1, dtj: -1 },
+		{ dti: 1, dtj: 1 },
+
+		{ dti: -1, dtj: 0 },
+		{ dti: 1, dtj: 0 },
+
+		{ dti: 0, dtj: 1 },
+	];
+
 	// ──────────────────────────────────────────────────────────────────────────────
 	interface Dot {
 		x: number;
@@ -59,6 +103,11 @@
 	interface Segment {
 		from: Dot;
 		to: Dot;
+	}
+
+	interface Step {
+		dti: number;
+		dtj: number;
 	}
 
 	const container = document.querySelector<HTMLDivElement>(".page-content")!;
@@ -75,7 +124,27 @@
 		gridStartY: number,
 		dots: Dot[] = [],
 		runId = 0,
-		shouldRun = true;
+		shouldRun = true,
+		segmentDelay = SEGMENT_DELAY_DEFAULT;
+
+	function getSeasonPicture(now = new Date()): Step[] | null {
+		const m = now.getMonth() + 1;
+		const d = now.getDate();
+
+		// Christmas
+		if (m === 12 && d >= 1 && d <= 26) {
+			segmentDelay = 200;
+			return christmasTree;
+		}
+
+		// Just winter
+		if (m >= 12 || m <= 2) {
+			segmentDelay = 100;
+			return snowflake;
+		}
+
+		return null;
+	}
 
 	function toggleCanvases(hide: boolean) {
 		if (hide) {
@@ -236,6 +305,14 @@
 		window._rcT = setTimeout(recalc, 150);
 	});
 
+	// Itentionally draws offscreen
+	function getDotAt(ti: number, tj: number) {
+		const x = gridStartX + ti * TILE_SIZE;
+		const y = gridStartY + tj * TILE_SIZE;
+
+		return { x, y, ti, tj };
+	}
+
 	function animateChain(rid: number) {
 		if (!shouldRun) return;
 		if (rid !== runId) return;
@@ -245,18 +322,28 @@
 			return requestAnimationFrame(() => animateChain(rid));
 		}
 
-		// build a random chain
-		const start = dots[Math.floor(Math.random() * dots.length)];
+		const start = vis[Math.floor(Math.random() * vis.length)];
 		const visited = new Set([dotKey(start)]);
-		let cur: Dot = start,
-			segs: Segment[] = [];
-		for (let i = 0; i < CONNECT_COUNT; i++) {
-			const nbrs = directions.map((d) => getNeighbor(cur, d)).filter((n) => n && !visited.has(dotKey(n)) && isVisible(n));
-			if (!nbrs.length) break;
-			const next = nbrs[Math.floor(Math.random() * nbrs.length)]!;
-			visited.add(dotKey(next));
-			segs.push({ from: cur, to: next });
-			cur = next;
+		let cur: Dot = start;
+		let segs: Segment[] = [];
+		let seasonSteps = getSeasonPicture();
+		if (seasonSteps) {
+			for (const step of seasonSteps) {
+				const next = getDotAt(cur.ti + step.dti, cur.tj + step.dtj);
+				if (!next) continue;
+				segs.push({ from: cur, to: next });
+				cur = next;
+				if (segs.length >= CONNECT_COUNT) break;
+			}
+		} else {
+			for (let i = 0; i < CONNECT_COUNT; i++) {
+				const nbrs = directions.map((d) => getNeighbor(cur, d)).filter((n) => n && !visited.has(dotKey(n)) && isVisible(n));
+				if (!nbrs.length) break;
+				const next = nbrs[Math.floor(Math.random() * nbrs.length)]!;
+				visited.add(dotKey(next));
+				segs.push({ from: cur, to: next });
+				cur = next;
+			}
 		}
 
 		if (!segs.length) {
@@ -309,7 +396,7 @@
 			if (idx < segs.length) {
 				drawSegmentAnimated(
 					segs[idx],
-					SEGMENT_DELAY,
+					segmentDelay,
 					idx, // number of fully drawn segments before this one
 					() => {
 						idx++;

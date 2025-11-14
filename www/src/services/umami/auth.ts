@@ -22,6 +22,7 @@ export async function getToken() {
 	});
 
 	console.log(res);
+	console.log(await res.json());
 
 	if (!res.ok) {
 		logger.error(`Invalid response: ${res.status} : ${res.statusText}`);

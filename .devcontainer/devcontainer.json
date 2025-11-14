@@ -3,7 +3,7 @@
     "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bullseye",
     "features": {
         "ghcr.io/devcontainers-extra/features/pnpm:2": {
-            "version": "10.18.0"
+            "version": "10.22.0"
         }
     },
     "postCreateCommand": "pnpm install && pnpm add -g npm-check-updates",

@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Development server",
-            "command": "pnpm dev",
+            "command": "dev:web",
             "request": "launch",
             "type": "node-terminal"
         },
@@ -12,7 +12,7 @@
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:4321",
-            "webRoot": "${workspaceFolder}/src",
+            "webRoot": "${workspaceFolder}/www/src",
             "skipFiles": ["**/node_modules/**"]
         }
     ]

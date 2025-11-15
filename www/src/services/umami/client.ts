@@ -19,6 +19,7 @@ export async function getPageViews(url: string) {
 			"Content-Type": "application/json",
 			Accept: "application/json",
 			Authorization: `Bearer ${token}`,
+			"User-Agent": "dalibor-runtime/1.0 (+https://daliborhon.dev)",
 		},
 	});
 

@@ -8,7 +8,7 @@ interface Props {
 const { frameClass = [], pictureContainerClass = [], animated = true } = Astro.props;
 ---
 
-<div class:list={[`relative`, [...frameClass]]}>
+<div class:list={[`relative w-max h-max`, [...frameClass]]}>
 	<div class={`bg-primary absolute left-0 top-[-12px] z-[1] h-[calc(100%+24px)] w-[1px] ${animated ? "animate-pulse [animation-delay:0.3s] [animation-duration:2.5s]" : ""}`}></div>
 	<div class={`bg-primary absolute right-0 top-[-12px] z-[1] h-[calc(100%+24px)] w-[1px] ${animated ? "animate-pulse [animation-delay:1.1s] [animation-duration:1.8s]" : ""}`}></div>
 	<div class={`bg-primary absolute left-[-12px] top-0 z-[1] h-[1px] w-[calc(100%+24px)] ${animated ? "animate-pulse [animation-delay:0.7s] [animation-duration:2.2s]" : ""}`}></div>

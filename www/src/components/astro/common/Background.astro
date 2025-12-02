@@ -132,7 +132,17 @@
 		const m = now.getMonth() + 1;
 		const d = now.getDate();
 
-		// Christmas
+		if (season === "christmas") {
+			segmentDelay = 200;
+			return christmasTree;
+		}
+
+		if (season === "winter") {
+			segmentDelay = 100;
+			return snowflake;
+		}
+
+		// Christmas tree
 		if ((m === 12 && d >= 1 && d <= 26) || season === "christmas") {
 			segmentDelay = 200;
 			return christmasTree;

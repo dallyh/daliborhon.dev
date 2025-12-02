@@ -103,7 +103,9 @@ const menuItems = [
 		</nav>
 		<!-- Page content -->
 		<div class="flex h-full flex-col px-4 lg:mx-2 lg:px-0">
-			<slot />
+			<div id="swup">
+				<slot />
+			</div>
 			<div class="mt-auto">
 				<Footer />
 			</div>
@@ -171,30 +173,50 @@ const menuItems = [
 </style>
 
 <script is:inline>
-	const navbar = document.getElementById("navbar");
-	let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+	(function () {
+		function initNavbarScroll() {
+			const navbar = document.getElementById("navbar");
+			if (!navbar) return;
 
-	window.addEventListener("scroll", () => {
-		const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+			let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-		// if we're pinned at the top, always show the navbar and reset
-		if (currentScroll <= 0) {
-			document.documentElement.dataset.navbarHidden = false;
-			navbar.classList.remove("hide", "bg-base-100");
-			lastScrollTop = 0;
-			return;
+			function handleScroll() {
+				const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+				if (currentScroll <= 0) {
+					document.documentElement.dataset.navbarHidden = false;
+					navbar.classList.remove("hide", "bg-base-100");
+					lastScrollTop = 0;
+					return;
+				}
+
+				if (currentScroll < lastScrollTop) {
+					document.documentElement.dataset.navbarHidden = false;
+					navbar.classList.remove("hide");
+				} else {
+					document.documentElement.dataset.navbarHidden = true;
+					navbar.classList.add("hide");
+				}
+
+				navbar.classList.toggle("bg-base-100", currentScroll !== 0);
+				lastScrollTop = currentScroll;
+			}
+
+			window.removeEventListener("scroll", window.__navbarScrollHandler);
+			window.__navbarScrollHandler = handleScroll;
+			window.addEventListener("scroll", handleScroll);
 		}
 
-		if (currentScroll < lastScrollTop) {
-			document.documentElement.dataset.navbarHidden = false;
-			navbar.classList.remove("hide");
-		} else {
-			document.documentElement.dataset.navbarHidden = true;
-			navbar.classList.add("hide");
-		}
+		// Initial run
+		window.addEventListener("DOMContentLoaded", () => {
+			initNavbarScroll();
+		});
 
-		navbar.classList.toggle("bg-base-100", currentScroll !== 0);
-
-		lastScrollTop = currentScroll;
-	});
+		document.addEventListener("swup:enable", () => {
+			if (window.swup && !window.__navbarHookRegistered) {
+				window.swup.hooks.on("page:view", initNavbarScroll);
+				window.__navbarHookRegistered = true;
+			}
+		});
+	})();
 </script>

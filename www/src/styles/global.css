@@ -12,3 +12,8 @@ html {
 :target {
 	scroll-margin-top: calc(var(--header-height) + 0.5rem); /* Navbar */
 }
+
+.swup-progress-bar {
+	height: 2px;
+	background-color: var(--color-primary);
+}

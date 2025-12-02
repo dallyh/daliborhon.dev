@@ -13,6 +13,7 @@ import ecConfig from "./ec.config";
 import envVars from "./env.config";
 import iconConfig from "./icons.config";
 import { Logger } from "./src/utils/logger";
+import swup from '@swup/astro';
 
 const logger = new Logger("astro-config");
 
@@ -72,6 +73,14 @@ export default defineConfig({
 		schema: envVars,
 	},
 	integrations: [
+		swup({
+			native: true,
+			//@ts-ignore missing types in the lib
+			theme: "slide",
+			containers: ['#swup'],
+			progress: true,
+			globalInstance: true
+		}),
 		expressiveCode(ecConfig),
 		mdx(),
 		pagefind(),

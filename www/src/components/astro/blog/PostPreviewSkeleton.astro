@@ -1,23 +1,22 @@
-<script>
+<script is:inline>
 	function removeSkeletonOnIntersection() {
-		const images = document.querySelectorAll("figure.skeleton") as NodeListOf<HTMLElement>;
+		const images = document.querySelectorAll("figure.skeleton");
 
 		const observer = new IntersectionObserver((entries, observer) => {
 			for (const entry of entries) {
 				if (entry.isIntersecting) {
-					const imgDiv = entry.target as HTMLDivElement;
-					const i = imgDiv.querySelector("img") as HTMLImageElement;
-					// Check if the image is already loaded
+					const imgDiv = entry.target;
+					const i = imgDiv.querySelector("img");
+					if (!i) return;
+
 					if (i.complete) {
 						imgDiv.classList.remove("skeleton");
 						observer.unobserve(imgDiv);
 					} else {
-						// Wait for the image to load
 						i.onload = () => {
 							imgDiv.classList.remove("skeleton");
 							observer.unobserve(imgDiv);
 						};
-
 						i.onerror = () => {
 							console.error("Image failed to load:", i.src);
 						};
@@ -30,5 +29,13 @@
 			observer.observe(img);
 		}
 	}
-	removeSkeletonOnIntersection();
+
+	// first load
+	document.addEventListener("DOMContentLoaded", removeSkeletonOnIntersection);
+
+	document.addEventListener("swup:enable", () => {
+		swup.hooks.on("page:view", () => {
+			removeSkeletonOnIntersection();
+		});
+	});
 </script>

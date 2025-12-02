@@ -293,19 +293,24 @@
 		return screenX >= 0 && screenY >= 0 && screenX <= window.innerWidth && screenY <= window.innerHeight;
 	}
 
-	function recalc() {
-		runId++;
+	function recalc(restart = true) {
 		resizeCanvases();
 		rebuildDots();
-		//drawStaticDots();
 
-		// clear & reset line canvas
-		lctx.clearRect(0, 0, width, height);
-		lineCanvas.style.transition = "";
-		lineCanvas.style.opacity = "1";
+		// canvas resize reset these, so always restore them:
 		lctx.lineWidth = LINE_WIDTH;
 		lctx.strokeStyle = LINE_COLOR;
 
+		if (!restart) {
+			// Just update layout; let current animation keep going.
+			return;
+		}
+
+		// Full restart:
+		runId++;
+		lctx.clearRect(0, 0, width, height);
+		lineCanvas.style.transition = "";
+		lineCanvas.style.opacity = "1";
 		requestAnimationFrame(() => animateChain(runId));
 	}
 
@@ -437,7 +442,30 @@
 	}
 
 	// kick off on load
-	recalc();
+	window.addEventListener("DOMContentLoaded", () => {
+		recalc();
+	});
+
+	// Resize: only adjust layout, don’t restart animation
+	window.addEventListener("resize", () => {
+		// @ts-ignore
+		clearTimeout(window._rcT);
+		// @ts-ignore
+		window._rcT = setTimeout(() => recalc(false), 150);
+	});
+
+	// Swup: only adjust layout on page:view so animation doesn’t hard-reset
+	document.addEventListener("swup:enable", () => {
+		// avoid multiple registrations if script runs more than once
+		// @ts-ignore
+		if (window.__bgPageViewHookRegistered) return;
+		// @ts-ignore
+		window.__bgPageViewHookRegistered = true;
+
+		window.swup.hooks.on("page:view", () => {
+			recalc(false); // <- layout only
+		});
+	});
 
 	// @ts-ignore
 	window.changeSeason = (_season: string) => {

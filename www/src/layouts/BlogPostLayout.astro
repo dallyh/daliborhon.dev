@@ -104,7 +104,7 @@ const searchProps = {
 							<div class="mt-4"><TagList post={post} /></div>
 						</div>
 					</div>
-					<PictureFrame frameClass={["h-[180px] w-[340px] self-center overflow-visible m-4 md:self-auto"]} pictureContainerClass={["not-prose"]}>
+					<PictureFrame frameClass={["max-h-[180px] max-w-[340px] self-center overflow-visible m-4 md:self-auto"]} pictureContainerClass={["not-prose"]}>
 						{typeof image === "string" && <Image class="object-contain" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
 						{typeof image === "object" && <Image class="object-contain" src={image} width={340} height={180} title={title} alt={title} loading="eager" />}
 					</PictureFrame>

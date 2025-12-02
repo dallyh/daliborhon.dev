@@ -20,6 +20,7 @@
         "@astrojs/mdx": "^4.3.12",
         "@astrojs/node": "^9.5.1",
         "@pagefind/default-ui": "^1.4.0",
+        "@swup/astro": "^1.7.0",
         "astro": "^5.16.3",
         "astro-capo": "^0.0.1",
         "astro-expressive-code": "^0.41.3",
@@ -40,7 +41,8 @@
         "satori": "^0.18.3",
         "sharp": "^0.34.5",
         "slug": "^11.0.1",
-        "stream-buffers": "^3.0.3"
+        "stream-buffers": "^3.0.3",
+        "swup": "^4.8.2"
     },
     "devDependencies": {
         "@astrojs/rss": "^4.0.14",

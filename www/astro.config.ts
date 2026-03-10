@@ -32,18 +32,7 @@ if (!SITE_URL) {
 //https://astro.build/config
 export default defineConfig({
 	experimental: {
-		preserveScriptOrder: true,
-		headingIdCompat: true,
 		contentIntellisense: true,
-		fonts: [
-			{
-				provider: fontProviders.fontsource(),
-				name: "JetBrains Mono",
-				cssVariable: "--font-jetbrains-mono",
-				subsets: ["latin", "latin-ext"],
-				weights: ["100 800"],
-			},
-		],
 	},
 	site: SITE_URL,
 	build: {
@@ -64,6 +53,15 @@ export default defineConfig({
 			fallbackType: "redirect",
 		},
 	},
+	fonts: [
+		{
+			provider: fontProviders.fontsource(),
+			name: "JetBrains Mono",
+			cssVariable: "--font-jetbrains-mono",
+			subsets: ["latin", "latin-ext"],
+			weights: ["100 800"],
+		},
+	],
 	prefetch: {
 		prefetchAll: true,
 		defaultStrategy: "hover",
@@ -91,9 +89,7 @@ export default defineConfig({
 	],
 	vite: {
 		plugins: [
-			//@ts-ignore what's up with the types?
 			tailwindcss(),
-			//@ts-ignore what's up with the types?
 			paraglideVitePlugin({
 				project: "./project.inlang",
 				outdir: "./src/paraglide",

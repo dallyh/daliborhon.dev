@@ -1,5 +1,6 @@
-import { defineCollection, reference, z } from "astro:content";
+import { defineCollection, reference} from "astro:content";
 import { locales } from "@paraglide/runtime";
+import { z } from "astro/zod"
 import { file, glob, type Loader, type LoaderContext } from "astro/loaders";
 
 // Define a `type` and `schema` for each collection
@@ -14,7 +15,7 @@ const posts = defineCollection({
 			description: z.string(),
 			featured: z.boolean().default(false).optional(),
 			locale: z.enum(locales, {
-				errorMap: () => ({
+				error: () => ({
 					message: "Please select the correct locale!",
 				}),
 			}),
@@ -36,7 +37,7 @@ const projects = defineCollection({
 		z.object({
 			title: z.string(),
 			locale: z.enum(locales, {
-				errorMap: () => ({
+				error: () => ({
 					message: "Please select the correct locale!",
 				}),
 			}),

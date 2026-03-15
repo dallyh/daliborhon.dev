@@ -9,12 +9,16 @@ interface Props {
 }
 const { src, alt, title } = Astro.props;
 const caption = title ? title : alt;
+
 ---
+
 
 <figure class="flex flex-col items-center justify-center">
 	<div class="not-prose self-center">
-		{typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />}
+		<!-- Broken in v6 {typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />} -->
+		 {typeof src === "string" ? <img src={src} alt={alt} {title} /> : ""}
 	</div>
 
 	<figcaption class="text-center font-mono text-sm">{caption}</figcaption>
 </figure>
+

@@ -57,7 +57,7 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 
 			throw new Error(`Could not determine local image path for: ${imageUrl}`);
 		} else {
-			return `/dist/client${imageUrl}`; // Build output and asset path in config
+			return `dist/client${imageUrl}`; // Build output and asset path in config
 		}
 	}
 
@@ -93,6 +93,27 @@ function updateAllIMGNodes(content: Content[] | Content): void {
 	traverse(content);
 }
 
+// https://github.com/withastro/astro/issues/16003
+function decodeHtmlFully(input: string): string {
+	let current = input;
+	let previous = "";
+
+	const decodeOnce = (html: string) =>
+		html
+			.replace(/&lt;/g, "<")
+			.replace(/&gt;/g, ">")
+			.replace(/&quot;/g, '"')
+			.replace(/&#39;/g, "'")
+			.replace(/&amp;/g, "&");
+
+	while (current !== previous) {
+		previous = current;
+		current = decodeOnce(current);
+	}
+
+	return current;
+}
+
 export const GET: APIRoute = async ({ params, url }) => {
 	if (!params.lang) {
 		return new Response(null, { status: 401 });
@@ -110,12 +131,15 @@ export const GET: APIRoute = async ({ params, url }) => {
 
 	const { Content, headings } = await render(entry);
 	const toc = generateTocHtml(headings);
-	const content = await container.renderToString(Content, {
+	// Broken in v6 - https://github.com/withastro/astro/issues/16003
+	// Have to decode manually
+	const html = await container.renderToString(Content, {
 		partial: true,
 		locals: {
 			isPrint: true,
 		},
 	});
+	const content = decodeHtmlFully(html);
 
 	const { JSDOM } = jsdom;
 	const { window } = new JSDOM("");

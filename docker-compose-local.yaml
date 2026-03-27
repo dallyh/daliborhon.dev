@@ -20,6 +20,8 @@ services:
                 HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY}
                 RESEND_API_KEY: ${RESEND_API_KEY}
                 UMAMI_URL: ${UMAMI_URL}
+                CONTACT_FORM_ACCESS_KEY: ${CONTACT_FORM_ACCESS_KEY}
+                UMAMI_SITE_ID: ${UMAMI_SITE_ID}
         env_file:
             - ./www/.env
         ports:

@@ -10,7 +10,8 @@
         "build": "astro build",
         "build:index": "pagefind --site dist",
         "start": "node ./dist/server/entry.mjs",
-        "compile:paraglide": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/paraglide"
+        "compile:paraglide": "pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
+        "preview": "astro preview"
     },
     "files": [
         "./dist",
@@ -74,6 +75,6 @@
         "vite": "^7.3.1"
     },
     "overrides": {
-        "vite": "^7"
+        "vite": "^7.3.1"
     }
 }

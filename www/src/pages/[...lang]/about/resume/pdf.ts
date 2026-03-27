@@ -10,9 +10,8 @@ import type { APIRoute } from "astro";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import htmlToPdfMake from "html-to-pdfmake";
 import jsdom from "jsdom";
-import PdfPrinter from "pdfmake";
+import pdfmake from "pdfmake";
 import type { Content, ContentImage, TDocumentDefinitions, TFontDictionary } from "pdfmake/interfaces";
-import { WritableStreamBuffer } from "stream-buffers";
 
 const logger = new Logger("pdf.ts");
 
@@ -139,7 +138,7 @@ export const GET: APIRoute = async ({ params, url }) => {
 	const pdfmakeDocument = htmlToPdfMake(toc + content, {
 		window,
 		removeExtraBlanks: true,
-	});
+	}) as Content;
 	updateAllIMGNodes(pdfmakeDocument);
 
 	const currentDate = new Date();
@@ -194,43 +193,31 @@ export const GET: APIRoute = async ({ params, url }) => {
 		"x-filename": `${createResumePdfFilename(params.lang as Locale)}.pdf`,
 	};
 
-	const printer = new PdfPrinter(fonts);
+	pdfmake.addFonts(fonts);
 
-	async function generatePdfResponse(docDefinition: any): Promise<Buffer> {
-		const bufferStream = new WritableStreamBuffer();
+	async function generatePdfBytes(docDefinition: any): Promise<Uint8Array> {
+		try {
+			const pdf = pdfmake.createPdf(docDefinition);
+			const buffer = await pdf.getBuffer();
 
-		return new Promise<Buffer>((resolve, reject) => {
-			try {
-				const pdfMake = printer.createPdfKitDocument(docDefinition);
-				pdfMake.pipe(bufferStream);
-				pdfMake.end();
-
-				// Wait for the "finish" event to get the PDF buffer
-				bufferStream.on("finish", () => {
-					const pdfBuffer = bufferStream.getContents();
-
-					if (!pdfBuffer) {
-						return reject(new Error("Failed to generate PDF buffer"));
-					}
-
-					resolve(pdfBuffer as Buffer);
-				});
-
-				// Handle stream errors
-				bufferStream.on("error", (err: Error) => {
-					reject(new Error(`Buffer stream error: ${err.message}`));
-				});
-			} catch (error: any) {
-				reject(new Error(`Failed to generate PDF: ${error}`));
+			if (!buffer) {
+				throw new Error("Failed to generate PDF buffer");
 			}
-		});
+
+			return buffer;
+		} catch (error: any) {
+			throw new Error(`Failed to generate PDF: ${error?.message ?? error}`);
+		}
 	}
 
 	try {
-		const pdf = await generatePdfResponse(docDefinition);
-		return new Response(pdf, { status: 200, headers: headers });
+		const pdfBytes = await generatePdfBytes(docDefinition);
+		return new Response(Buffer.from(pdfBytes), {
+			status: 200,
+			headers: headers
+		});
 	} catch (error: any) {
-		logger.error(`Fatal error: ${error}`);
-		return new Response(null, { status: 500 });
+		logger.error(`Fatal error: ${error?.message ?? error}`);
+		return new Response("Failed to generate PDF", { status: 500 });
 	}
 };

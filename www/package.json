@@ -38,8 +38,7 @@
         "resend": "^6.9.4",
         "satori": "^0.26.0",
         "sharp": "^0.34.5",
-        "slug": "^11.0.1",
-        "stream-buffers": "^3.0.3"
+        "slug": "^11.0.1"
     },
     "devDependencies": {
         "@astrojs/rss": "^4.0.18",

@@ -25,10 +25,7 @@ import { m } from "@paraglide/messages";
 
 <script>
 	import { Logger } from "@logger";
-	// Broken in v6
-	//import { trailingSlash, base } from "astro:config/client";
-	const trailingSlash	= "always";
-	const base = "/";
+	import { trailingSlash, base } from "astro:config/client";
 
 	class SiteSearch extends HTMLElement {
 		logger = new Logger("search-modal");

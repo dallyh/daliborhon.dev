@@ -1,6 +1,6 @@
 services:
     web:
-        container_name: daliborhon.dev-web
+        container_name: daliborhon-web
         build:
             context: .
             dockerfile: Dockerfile
@@ -19,6 +19,7 @@ services:
                 HCAPTCHA_SECRET_KEY:  ${HCAPTCHA_SECRET_KEY}
                 HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY}
                 RESEND_API_KEY: ${RESEND_API_KEY}
+                UMAMI_URL: ${UMAMI_URL}
         env_file:
             - ./www/.env
         ports:

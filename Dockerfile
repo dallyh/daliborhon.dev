@@ -1,5 +1,5 @@
 # --- Stage 1: Builder ---
-FROM node:24-slim AS build
+FROM node:lts-slim AS build
 
 ARG GITHUB_API_AUTH_TOKEN
 ARG OA_GITHUB_CLIENT_ID
@@ -14,6 +14,7 @@ ARG SOURCE_COMMIT
 ARG HCAPTCHA_SECRET_KEY
 ARG HCAPTCHA_SITE_KEY
 ARG RESEND_API_KEY
+ARG UMAMI_URL
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -30,7 +31,7 @@ RUN --mount=type=cache,id=astro_cache,target=/app/node_modules/.astro pnpm run b
 RUN pnpm run deploy:web
 
 # --- Stage 2: Runtime ---
-FROM node:23-slim AS runtime
+FROM node:lts-slim AS runtime
 
 RUN corepack enable
 

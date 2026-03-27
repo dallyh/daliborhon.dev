@@ -3,12 +3,12 @@
 import { getPageViews } from "@services/umami/client";
 
 interface Props {
-	url: string;
+	pathname: string;
 }
 
-const { url } = Astro.props;
+const { pathname } = Astro.props;
 
-const viewCount = await getPageViews(url);
+const viewCount = await getPageViews(pathname);
 ---
 
-<span>{viewCount.pageviews.value}</span>
+<span>{viewCount}</span>

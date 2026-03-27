@@ -1,5 +1,5 @@
 ---
-import AstroImage from "astro/components/Image.astro";
+import { Image as AstroImage } from "astro:assets";
 
 // https://github.com/withastro/astro/blob/fdd2b48eced71bb90eb393078201689bf312a7d3/.changeset/cyan-penguins-divide.md
 interface Props {
@@ -9,16 +9,12 @@ interface Props {
 }
 const { src, alt, title } = Astro.props;
 const caption = title ? title : alt;
-
 ---
-
 
 <figure class="flex flex-col items-center justify-center">
 	<div class="not-prose self-center">
-		<!-- Broken in v6 {typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />} -->
-		 {typeof src === "string" ? <img src={src} alt={alt} {title} /> : ""}
+		{typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />}
 	</div>
 
 	<figcaption class="text-center font-mono text-sm">{caption}</figcaption>
 </figure>
-

@@ -11,7 +11,6 @@ import PostPreviewSkeleton from "@components/astro/blog/PostPreviewSkeleton.astr
 import SearchModal from "@components/astro/common/SearchModal.astro";
 import ToastProvider from "@components/astro/common/ToastProvider.astro";
 import ViewTransitions from "@components/astro/common/ViewTransitions.astro";
-import { Head } from "astro-capo";
 import Background from "../components/astro/common/Background.astro";
 
 export interface Props {
@@ -44,7 +43,7 @@ const basePath = import.meta.env.BASE_URL;
 
 <!doctype html>
 <html lang={locale} dir="ltr">
-	<Head>
+	<head>
 		<!-- Base head -->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -93,7 +92,7 @@ const basePath = import.meta.env.BASE_URL;
 			import { overwriteGetLocale, type Locale, baseLocale } from "@paraglide/runtime";
 			overwriteGetLocale(() => (document.documentElement.lang as Locale | undefined) ?? baseLocale);
 		</script>
-	</Head>
+	</head>
 	<body>
 		<SearchModal />
 		<div class="page-content relative z-10">

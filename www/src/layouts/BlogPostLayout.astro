@@ -96,7 +96,7 @@ const searchProps = {
 								<span><Icon name="heroicons:eye" /></span>
 								<span class="inline-flex">
 									<span class="mr-1">{m.common__view_count()}:</span>
-									<ViewCount server:defer url={Astro.url.pathname}>
+									<ViewCount server:defer pathname={Astro.url.pathname}>
 										<span slot="fallback" class="skeleton flex h-5 w-9"></span>
 									</ViewCount>
 								</span>

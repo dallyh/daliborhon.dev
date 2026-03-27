@@ -222,3 +222,17 @@ export function generateTocHtml(headings: MarkdownHeading[]): string {
 
 	return html;
 }
+
+export async function getSortedTags() {
+	const tags = await getCollection("tags");
+
+	if (tags !== undefined) {
+		tags.sort((a, b) => {
+			if (a.id < b.id) return -1;
+			if (a.id > b.id) return 1;
+			return 0;
+		});
+	}
+
+	return tags;
+}

@@ -21,7 +21,7 @@ const { pubDate, modDate, title, description } = post.data;
 ---
 
 <Card isArticle>
-	{post.data.draft && <div class="badge bg-error text-error-content absolute right-3 top-3">Draft</div>}
+	{post.data.draft && <div class="badge bg-error text-error-content absolute top-3 right-3">Draft</div>}
 	<div class="card-body flex flex-col">
 		<h2 class="card-title flex flex-col items-start">
 			<a class="link link-hover" href={postUrl}>{title}</a>

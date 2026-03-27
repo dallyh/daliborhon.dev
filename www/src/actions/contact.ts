@@ -1,6 +1,6 @@
 import { ActionError, defineAction } from "astro:actions";
 import { HCAPTCHA_SECRET_KEY, RESEND_API_KEY } from "astro:env/server";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { Logger } from "@logger";
 import type { Locale } from "@paraglide/runtime";
 import { Resend } from "resend";
@@ -52,7 +52,7 @@ export const contactFormAction = defineAction({
 	input: z.object({
 		subject: z.string().min(1).max(200),
 		name: z.string().min(1).max(120),
-		email: z.string().email(),
+		email: z.email(),
 		message: z.string().min(1).max(5000),
 		language: z.custom<Locale>(),
 		"h-captcha-response": z.string().min(1), // token from hCaptcha widget

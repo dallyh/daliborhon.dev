@@ -16,7 +16,7 @@ services:
                 UPTIME_API_TOKEN: ${UPTIME_API_TOKEN}
                 COOLIFY_BRANCH: ${COOLIFY_BRANCH}
                 SOURCE_COMMIT: ${SOURCE_COMMIT}
-                HCAPTCHA_SECRET_KEY:  ${HCAPTCHA_SECRET_KEY}
+                HCAPTCHA_SECRET_KEY: ${HCAPTCHA_SECRET_KEY}
                 HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY}
                 RESEND_API_KEY: ${RESEND_API_KEY}
                 UMAMI_URL: ${UMAMI_URL}

@@ -6,15 +6,15 @@ const logger = new Logger("umami-client");
 const token = await getToken();
 
 type AnalyticsMetrics = {
-  pageviews: number;
-  visitors: number;
-  visits: number;
-  bounces: number;
-  totaltime: number;
+	pageviews: number;
+	visitors: number;
+	visits: number;
+	bounces: number;
+	totaltime: number;
 };
 
 type AnalyticsData = AnalyticsMetrics & {
-  comparison: AnalyticsMetrics;
+	comparison: AnalyticsMetrics;
 };
 
 export async function getPageViews(url: string): Promise<Number> {

@@ -1,7 +1,7 @@
-import { defineCollection, reference} from "astro:content";
+import { defineCollection, reference } from "astro:content";
 import { locales } from "@paraglide/runtime";
-import { z } from "astro/zod"
 import { file, glob, type Loader, type LoaderContext } from "astro/loaders";
+import { z } from "astro/zod";
 
 // Define a `type` and `schema` for each collection
 const posts = defineCollection({

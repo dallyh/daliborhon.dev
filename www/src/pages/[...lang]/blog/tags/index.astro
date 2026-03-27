@@ -1,16 +1,16 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import Card from "@components/astro/common/Card.astro";
 import Section from "@components/astro/common/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
 import { getPostsByTag, getSortedTags } from "@utils/content";
 import { Icon } from "astro-icon/components";
 import Grid from "@/src/components/astro/common/Grid.astro";
-import type { CollectionEntry } from "astro:content";
-import Card from "@components/astro/common/Card.astro";
 
 export { getStaticPaths } from "@utils/i18n";
 
@@ -52,8 +52,12 @@ const maxCount = Math.max(...tagsWithPosts.map((t) => t.posts));
 			tags && tags.length !== 0 && (
 				<Fragment>
 					<div class="mb-2">
-						<div class="badge badge-primary">{m.blog__tags()}: {tags.length}</div>
-						<div class="badge badge-primary">{m.blog__posts()}: {posts.length}</div>
+						<div class="badge badge-primary">
+							{m.blog__tags()}: {tags.length}
+						</div>
+						<div class="badge badge-primary">
+							{m.blog__posts()}: {posts.length}
+						</div>
 					</div>
 					<Grid items={tagsWithPosts}>
 						{(item: TagsWithPosts) => (

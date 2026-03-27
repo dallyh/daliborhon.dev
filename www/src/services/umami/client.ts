@@ -5,10 +5,22 @@ import { getToken } from "./auth";
 const logger = new Logger("umami-client");
 const token = await getToken();
 
-export async function getPageViews(url: string) {
+type AnalyticsMetrics = {
+	pageviews: number;
+	visitors: number;
+	visits: number;
+	bounces: number;
+	totaltime: number;
+};
+
+type AnalyticsData = AnalyticsMetrics & {
+	comparison: AnalyticsMetrics;
+};
+
+export async function getPageViews(url: string): Promise<Number> {
 	const endpoint = `${UMAMI_URL}/api/websites/${UMAMI_SITE_ID}/stats`;
 	const query = {
-		url: url,
+		path: url,
 		startAt: "0",
 		endAt: Date.now().toString(),
 	};
@@ -28,6 +40,7 @@ export async function getPageViews(url: string) {
 		throw Error(`Invalid response: ${res.status} : ${res.statusText}`);
 	}
 
-	const data = await res.json();
-	return data;
+	const data: AnalyticsData = await res.json();
+
+	return data.pageviews;
 }

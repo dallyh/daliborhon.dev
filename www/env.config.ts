@@ -7,24 +7,24 @@ const coolifyEnv = {
 };
 
 const umamiEnv = {
-	UMAMI_URL: envField.string({ context: "client", access: "public", optional: false, default: "https://analytics.daliborhon.dev" }),
-	UMAMI_SITE_ID: envField.string({ context: "client", access: "public", optional: false, default: "7e04370d-ecba-4fd8-8d71-2d50880d0d59" }),
-	UMAMI_USERNAME: envField.string({ context: "server", access: "secret", optional: false }),
-	UMAMI_PASSWORD: envField.string({ context: "server", access: "secret", optional: false }),
+	UMAMI_URL: envField.string({ context: "client", access: "public" }),
+	UMAMI_SITE_ID: envField.string({ context: "client", access: "public" }),
+	UMAMI_USERNAME: envField.string({ context: "server", access: "secret" }),
+	UMAMI_PASSWORD: envField.string({ context: "server", access: "secret" }),
 };
 
 export default {
-	SITE: envField.string({ context: "client", access: "public", optional: false, default: "https://daliborhon.dev" }),
-	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret", optional: false }),
-	OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret", optional: false }),
+	SITE: envField.string({ context: "client", access: "public" }),
+	OA_GITHUB_CLIENT_ID: envField.string({ context: "server", access: "secret" }),
+	OA_GITHUB_CLIENT_SECRET: envField.string({ context: "server", access: "secret" }),
 	OA_ALLOWED_DOMAINS: envField.string({ context: "server", access: "secret", optional: true }),
-	GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
-	HCAPTCHA_SITE_KEY: envField.string({ context: "client", access: "public", default: "4870ce3e-103a-4d04-b8e2-a7ea19527b76" }),
-	HCAPTCHA_SECRET_KEY: envField.string({ context: "server", access: "secret", optional: false }),
-	RESEND_API_KEY: envField.string({ context: "server", access: "secret", optional: false }),
-	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public", default: "7d81d4b3-a54e-4341-9544-2553a5aa4daf" }),
+	GITHUB_API_AUTH_TOKEN: envField.string({ context: "server", access: "secret" }),
+	HCAPTCHA_SITE_KEY: envField.string({ context: "client", access: "public" }),
+	HCAPTCHA_SECRET_KEY: envField.string({ context: "server", access: "secret" }),
+	RESEND_API_KEY: envField.string({ context: "server", access: "secret" }),
+	CONTACT_FORM_ACCESS_KEY: envField.string({ context: "server", access: "public" }),
 	PREVIEW: envField.boolean({ context: "client", access: "public", default: false }),
-	UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret", optional: false }),
+	UPTIME_API_TOKEN: envField.string({ context: "server", access: "secret" }),
 	...umamiEnv,
 	...coolifyEnv,
 };

@@ -1,17 +1,19 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import PostsGrid from "@components/astro/blog/PostsGrid.astro";
 import BreadCrumbsItem from "@components/astro/common/BreadCrumbsItem.astro";
+import Card from "@components/astro/common/Card.astro";
 import Section from "@components/astro/common/Section.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { m } from "@paraglide/messages";
-import { getPostsByTag } from "@utils/content";
+import { getPostsByTag, getSortedTags } from "@utils/content";
 import { Icon } from "astro-icon/components";
+import Grid from "@/src/components/astro/common/Grid.astro";
 
-export const prerender = false;
+export { getStaticPaths } from "@utils/i18n";
 
-let search = Astro.url.searchParams.get("tag");
 const locale = Astro.currentLocale!;
 
 const layoutProps = {
@@ -19,19 +21,24 @@ const layoutProps = {
 	description: m.blog__blog_site_description(),
 };
 
-const tags = await getCollection("tags");
-if (tags !== undefined) {
-	tags.sort((a, b) => {
-		if (a.id < b.id) return -1;
-		if (a.id > b.id) return 1;
-		return 0;
-	});
-}
+const posts = await getCollection("posts");
+const tags = await getSortedTags();
 
-if (search === null) {
-	search = tags[0].id;
-}
-const posts = await getPostsByTag(locale, search);
+type TagsWithPosts = {
+	tag: CollectionEntry<"tags">;
+	posts: number;
+};
+const tagsWithPosts: TagsWithPosts[] = await Promise.all(
+	tags.map(async (tag) => {
+		const count = (await getPostsByTag(locale, tag.id))?.length ?? 0;
+		return {
+			tag,
+			posts: count,
+		};
+	}),
+);
+
+const maxCount = Math.max(...tagsWithPosts.map((t) => t.posts));
 ---
 
 <PageLayout {...layoutProps} showCrumbs>
@@ -44,35 +51,40 @@ const posts = await getPostsByTag(locale, search);
 		{
 			tags && tags.length !== 0 && (
 				<Fragment>
-					<div role="tablist" class="tabs tabs-box mb-4 max-w-max">
-						{tags &&
-							tags.map(async (tag) => {
-								return (
-									<a
-										role="tab"
-										class={`tab has-icon icon-left gap-1 font-mono ${tag.id === search ? "tab-active !bg-primary text-primary-content" : ""}`}
-										href={`?tag=${tag.id}`}
-										aria-label={tag.id + m.blog__tag()}
-									>
-										<span>
-											<Icon name="heroicons:tag-solid" size="18" />
-										</span>
-										<span>{tag.id}</span>
-									</a>
-								);
-							})}
-					</div>
-					{posts && posts.length !== 0 && (
-						<div>
-							<PostsGrid posts={posts} />
+					<div class="mb-2">
+						<div class="badge badge-primary">
+							{m.blog__tags()}: {tags.length}
 						</div>
-					)}
-					{posts === undefined ||
-						(posts.length === 0 && (
-							<div>
-								<h2 class="text-xl font-bold"> {m.blog__no_posts()}</h2>
-							</div>
-						))}
+						<div class="badge badge-primary">
+							{m.blog__posts()}: {posts.length}
+						</div>
+					</div>
+					<Grid items={tagsWithPosts}>
+						{(item: TagsWithPosts) => (
+							<Card>
+								<div class="card-body flex gap-2">
+									<div class="flex flex-row items-center justify-between">
+										<a
+											class={`link link-hover has-icon icon-left gap-1 font-mono text-xl`}
+											href={getRelativeLocaleUrl(locale, `/blog/tags/${item.tag.id}/`)}
+											aria-label={item.tag.id + m.blog__tag()}
+										>
+											<span>
+												<Icon name="heroicons:tag-solid" size="18" />
+											</span>
+											<span>{item.tag.id}</span>
+										</a>
+										<div class="flex flex-col text-center">
+											<span class="text-primary text-xl">{item.posts}</span>
+											<span>{m.blog__posts()}</span>
+										</div>
+									</div>
+
+									<progress class="progress progress-primary w-full" value={Math.max((item.posts / maxCount) * 100)} max="100" />
+								</div>
+							</Card>
+						)}
+					</Grid>
 				</Fragment>
 			)
 		}

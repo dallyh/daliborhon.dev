@@ -35,6 +35,18 @@ export default defineConfig({
 		contentIntellisense: true,
 	},
 	site: SITE_URL,
+	security: {
+		allowedDomains: [
+			{
+				hostname: "**.daliborhon.dev",
+				protocol: "https",
+			},
+			{
+				hostname: "daliborhon.dev",
+				protocol: "https",
+			},
+		],
+	},
 	build: {
 		format: "directory",
 	},

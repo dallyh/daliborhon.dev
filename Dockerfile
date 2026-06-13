@@ -26,7 +26,7 @@ RUN corepack enable
 COPY . /app
 WORKDIR /app
 
-RUN pnpm config set inject-workspace-packages true
+RUN pnpm config set --location=project inject-workspace-packages true
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 # Cache .astro build artifacts
 RUN --mount=type=cache,id=astro_cache,target=/app/node_modules/.astro pnpm run build:web

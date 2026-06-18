@@ -1,8 +1,7 @@
 ---
-import { Logger } from "@utils"
 import { UPTIME_API_TOKEN } from "astro:env/server";
 import { siteConfig } from "@site-config";
-
+import { Logger } from "@utils";
 
 type Status = "up" | "down" | "failed" | undefined;
 
@@ -14,15 +13,12 @@ const cls = {
 
 const fetchStatus = async (): Promise<Status> => {
 	try {
-		const res = await fetch(
-			`https://uptime.betterstack.com/api/v2/monitors/${siteConfig.monitorId}`,
-			{
-				headers: {
-					Authorization: `Bearer ${UPTIME_API_TOKEN}`,
-					Accept: "application/json",
-				},
+		const res = await fetch(`https://uptime.betterstack.com/api/v2/monitors/${siteConfig.monitorId}`, {
+			headers: {
+				Authorization: `Bearer ${UPTIME_API_TOKEN}`,
+				Accept: "application/json",
 			},
-		);
+		});
 
 		if (!res.ok) {
 			// biome-ignore lint: logs locally to server

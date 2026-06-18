@@ -44,4 +44,4 @@ COPY --from=build /app/deploy .
 ENV CI=true
 
 # Start the app
-CMD ["pnpm", "start"]
+CMD ["node", "./dist/server/entry.mjs"]

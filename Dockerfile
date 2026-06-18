@@ -40,7 +40,8 @@ RUN corepack enable
 WORKDIR /app
 COPY --from=build /app/deploy .
 
-RUN pnpm config set --location=project confirm-modules-purge true
+# confirmModulesPurge
+ENV CI=true
 
 # Start the app
 CMD ["pnpm", "start"]

@@ -1,3 +1,4 @@
+import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
@@ -33,6 +34,7 @@ if (!SITE_URL) {
 export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
+		rustCompiler: true,
 	},
 	site: SITE_URL,
 	security: {
@@ -46,6 +48,9 @@ export default defineConfig({
 				protocol: "https",
 			},
 		],
+	},
+	markdown: {
+		processor: unified(),
 	},
 	build: {
 		format: "directory",
@@ -83,7 +88,9 @@ export default defineConfig({
 	},
 	integrations: [
 		expressiveCode(ecConfig),
-		mdx(),
+		mdx({
+			processor: unified(),
+		}),
 		pagefind(),
 		icon({
 			...iconConfig,
@@ -101,7 +108,9 @@ export default defineConfig({
 	],
 	vite: {
 		plugins: [
+			//@ts-ignore correct plugin
 			tailwindcss(),
+			//@ts-ignore correct plugin
 			paraglideVitePlugin({
 				project: "./project.inlang",
 				outdir: "./src/paraglide",
@@ -109,6 +118,10 @@ export default defineConfig({
 		],
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
+		},
+		resolve: {
+			//@ts-ignore needed for tailwind: https://github.com/withastro/astro/issues/16542
+			tsconfigPaths: true,
 		},
 	},
 });

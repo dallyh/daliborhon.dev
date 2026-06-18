@@ -1,20 +1,44 @@
 ---
-type Status = "up" | "down" | undefined;
+import { UPTIME_API_TOKEN } from "astro:env/server";
+import { siteConfig } from "@site-config";
+import { Logger } from "@utils";
+
+type Status = "up" | "down" | "failed" | undefined;
 
 const cls = {
 	up: "status-success",
 	down: "status-error",
+	failed: "status-error",
 };
 
 const fetchStatus = async (): Promise<Status> => {
-	const res = await fetch(new URL("/api/bs-status", Astro.url), {
-		headers: {
-			"User-Agent": "dalibor-runtime/1.0 (+https://daliborhon.dev)",
-			Accept: "application/json",
-		},
-	});
-	const data = await res.json();
-	return data.status;
+	try {
+		const res = await fetch(`https://uptime.betterstack.com/api/v2/monitors/${siteConfig.monitorId}`, {
+			headers: {
+				Authorization: `Bearer ${UPTIME_API_TOKEN}`,
+				Accept: "application/json",
+			},
+		});
+
+		if (!res.ok) {
+			// biome-ignore lint: logs locally to server
+			console.error("[UptimeStatus] BetterStack request failed", {
+				status: res.status,
+				contentType: res.headers.get("content-type"),
+				body: (await res.text()).slice(0, 500),
+			});
+
+			return "down";
+		}
+
+		const data = await res.json();
+
+		return data?.data?.attributes?.status ?? "down";
+	} catch (error) {
+		// biome-ignore lint: logs locally to server
+		console.error("[UptimeStatus] BetterStack request error", error);
+		return "down";
+	}
 };
 
 const status = await fetchStatus();

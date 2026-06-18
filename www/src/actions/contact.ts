@@ -1,8 +1,8 @@
 import { ActionError, defineAction } from "astro:actions";
 import { HCAPTCHA_SECRET_KEY, RESEND_API_KEY } from "astro:env/server";
-import { z } from "astro/zod";
 import { Logger } from "@logger";
 import type { Locale } from "@paraglide/runtime";
+import { z } from "astro/zod";
 import { Resend } from "resend";
 
 const logger = new Logger("contact-form");

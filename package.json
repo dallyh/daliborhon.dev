@@ -22,7 +22,7 @@
         "prettier-plugin-toml": "^2.0.6",
         "typescript": "^6.0.3"
     },
-    "packageManager": "pnpm@11.6.0",
+    "packageManager": "pnpm@11.8.0",
     "engines": {
         "node": ">=22.0.0"
     }

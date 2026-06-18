@@ -1,3 +1,4 @@
+import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
@@ -13,7 +14,6 @@ import ecConfig from "./ec.config";
 import envVars from "./env.config";
 import iconConfig from "./icons.config";
 import { Logger } from "./src/utils/logger";
-import { unified } from "@astrojs/markdown-remark";
 
 const logger = new Logger("astro-config");
 

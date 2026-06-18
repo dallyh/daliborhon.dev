@@ -1,4 +1,8 @@
 ---
+import { Logger } from "@utils"
+
+const logger = new Logger("UptimeStatus");
+
 type Status = "up" | "down" | undefined;
 
 const cls = {
@@ -7,14 +11,28 @@ const cls = {
 };
 
 const fetchStatus = async (): Promise<Status> => {
-	const res = await fetch(new URL("/api/bs-status", Astro.url), {
+	const url = new URL("/api/bs-status", Astro.url);
+	logger.info(`Fetching status from: ${url.toString()}`);
+	const res = await fetch(url, {
 		headers: {
 			"User-Agent": "dalibor-runtime/1.0 (+https://daliborhon.dev)",
 			Accept: "application/json",
 		},
 	});
-	const data = await res.json();
-	return data.status;
+	const text = await res.text();
+
+	try {
+		const data = JSON.parse(text);
+		return data.status;
+	} catch {
+		const error = {
+			status: res.status,
+			contentType: res.headers.get("content-type"),
+			body: text.slice(0, 500),
+		};
+		logger.error(`Non-JSON response from bs-status: ${JSON.stringify(error, null, 4)}`);
+		return "down";
+	}
 };
 
 const status = await fetchStatus();

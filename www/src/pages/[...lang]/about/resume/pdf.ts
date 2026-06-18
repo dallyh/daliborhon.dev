@@ -238,7 +238,7 @@ export const GET: APIRoute = async ({ params, url }) => {
 		const pdfBytes = await generatePdfBytes(docDefinition);
 		return new Response(Buffer.from(pdfBytes), {
 			status: 200,
-			headers: headers
+			headers: headers,
 		});
 	} catch (error: any) {
 		logger.error(`Fatal error: ${error?.message ?? error}`);

@@ -1,4 +1,3 @@
-import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
@@ -49,9 +48,6 @@ export default defineConfig({
 			},
 		],
 	},
-	markdown: {
-		processor: unified(),
-	},
 	build: {
 		format: "directory",
 	},
@@ -88,9 +84,7 @@ export default defineConfig({
 	},
 	integrations: [
 		expressiveCode(ecConfig),
-		mdx({
-			processor: unified(),
-		}),
+		mdx(),
 		pagefind(),
 		icon({
 			...iconConfig,

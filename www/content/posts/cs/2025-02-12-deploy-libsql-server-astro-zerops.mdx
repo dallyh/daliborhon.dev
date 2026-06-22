@@ -172,7 +172,7 @@ Po připojení do VPN přeneste schéma databáze do vzdálené databáze:
 npm run astro db push --remote
 ```
 
-<Callout type="note" title="Spouštění příkazů přes Powershell!" >
+<Callout type="note" title="Spouštění příkazů přes Powershell" >
 Většina Astro projektů již má příkaz `astro` definován v souboru `package.json`. V [dokumentaci Astro DB](https://docs.astro.build/en/guides/astro-db/#pushing-table-schemas) je uvedeno, že příkaz `push` spouštíme pomocí `npm` následovně: `npm run astro db push --remote`. V prostředí Powershellu to nefunguje správně, jelikož příznak `--remote` je tiše ignorován. Pokud spouštíte příkazy ze souboru `package.json` pomocí Powershellu, měli byste je spouštět takto: `npm run astro db push -- --remote` Více informací najdete v článku [this](https://www.lloydatkinson.net/posts/2022/powershell-npm-scripts-and-silently-dropped-arguments/).
 </Callout>
 

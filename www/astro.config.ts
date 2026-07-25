@@ -32,7 +32,7 @@ if (!SITE_URL) {
 //https://astro.build/config
 export default defineConfig({
 	experimental: {
-		contentIntellisense: true
+		contentIntellisense: true,
 	},
 	site: SITE_URL,
 	security: {

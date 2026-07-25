@@ -176,6 +176,8 @@
 }
 
 @utility card {
+	backdrop-filter: blur(4px);
+
 	&.card-outline {
 		@apply shadow-primary;
 	}

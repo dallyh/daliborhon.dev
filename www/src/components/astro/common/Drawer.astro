@@ -36,11 +36,10 @@ const menuItems = [
 ];
 ---
 
-<div class="drawer min-h-svh">
+<div class="drawer flex min-h-svh flex-col">
 	<input id="drawerMenu" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content mx-auto flex w-full max-w-[1344px] flex-col px-0 lg:px-4">
-		<!-- Navbar -->
-		<nav class="navbar sticky top-0 z-10 mx-auto mb-2" id="navbar">
+	<nav class="navbar sticky top-0 z-10 mx-auto mb-2" id="navbar">
+		<div class="mx-auto flex w-full max-w-[1344px] flex-row px-0 lg:px-4">
 			<div class="flex-none lg:hidden">
 				<label for="drawerMenu" aria-label="open sidebar" class="btn btn-square btn-ghost">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-6 w-6 stroke-current">
@@ -100,7 +99,10 @@ const menuItems = [
 				<LanguageSelector post={post} />
 				<ThemeSelector />
 			</div>
-		</nav>
+		</div>
+	</nav>
+	<div class="drawer-content mx-auto flex w-full max-w-[1344px] flex-col px-0 lg:px-4">
+		<!-- Navbar -->
 		<!-- Page content -->
 		<div class="flex h-full flex-col px-4 lg:mx-2 lg:px-0">
 			<slot />
@@ -180,7 +182,7 @@ const menuItems = [
 		// if we're pinned at the top, always show the navbar and reset
 		if (currentScroll <= 0) {
 			document.documentElement.dataset.navbarHidden = false;
-			navbar.classList.remove("hide", "bg-base-100");
+			navbar.classList.remove("hide", "bg-base-100", "shadow-md");
 			lastScrollTop = 0;
 			return;
 		}
@@ -194,6 +196,7 @@ const menuItems = [
 		}
 
 		navbar.classList.toggle("bg-base-100", currentScroll !== 0);
+		navbar.classList.toggle("shadow-md", currentScroll !== 0);
 
 		lastScrollTop = currentScroll;
 	});

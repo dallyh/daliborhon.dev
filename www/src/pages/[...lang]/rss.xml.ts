@@ -1,5 +1,5 @@
 import { loadRenderers } from "astro:container";
-import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx";
+import { getContainerRenderer as mdxContainerRenderer } from "@astrojs/mdx/container-renderer";
 import rss from "@astrojs/rss";
 import MarkdownContent from "@components/astro/content/MarkdownContent.astro";
 import { m } from "@paraglide/messages";

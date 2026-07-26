@@ -231,17 +231,43 @@ const { headings } = Astro.props;
 		}
 	}
 
-	nav.toc {
+	<style > nav.toc {
 		height: max-content;
 		max-height: calc(100vh - var(--header-height) - 5rem);
 		scrollbar-width: thin;
 		overflow-y: auto;
+		overflow-x: hidden;
 		padding-inline: 0.725rem;
+	}
 
-		ul {
-			margin-top: 0;
-			font-size: 0.875rem;
-			font-weight: 400;
-		}
+	nav.toc :global(ul) {
+		margin-top: 0;
+		font-size: 0.875rem;
+		font-weight: 400;
+		max-width: 100%;
+	}
+
+	nav.toc :global(li) {
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	nav.toc :global(toc-item) {
+		display: block;
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	nav.toc :global(.toc-link) {
+		display: block;
+		min-width: 0;
+		max-width: 100%;
+
+		/* Override DaisyUI menu nowrap */
+		white-space: normal;
+
+		/* Wrap even very long words */
+		overflow-wrap: anywhere;
+		word-break: break-word;
 	}
 </style>

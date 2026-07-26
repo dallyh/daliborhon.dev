@@ -1,5 +1,6 @@
 ---
 import { Image as AstroImage } from "astro:assets";
+import { m } from "@paraglide/messages";
 
 // https://github.com/withastro/astro/blob/fdd2b48eced71bb90eb393078201689bf312a7d3/.changeset/cyan-penguins-divide.md
 interface Props {
@@ -11,10 +12,70 @@ const { src, alt, title } = Astro.props;
 const caption = title ? title : alt;
 ---
 
-<figure class="flex flex-col items-center justify-center">
-	<div class="not-prose self-center">
-		{typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />}
-	</div>
+<div>
+	<image-lightbox class="contents">
+		<figure class="flex flex-col items-center justify-center">
+			<div class="not-prose self-center">
+				<button type="button" class="zoom-trigger md:cursor-zoom-in" aria-label={m.blog__view_image_fullscreen()}>
+					{typeof src === "string" ? <img src={src} alt={alt} {title} /> : <AstroImage {src} {alt} {title} />}
+				</button>
+			</div>
 
-	<figcaption class="text-center font-mono text-sm">{caption}</figcaption>
-</figure>
+			<figcaption class="text-center font-mono text-sm">{caption}</figcaption>
+
+			<dialog class="image-dialog modal">
+				<div class="modal-box bg-base-200/40 flex h-dvh max-h-none w-dvw max-w-none items-center justify-center rounded-none p-4 backdrop-blur-md">
+					<form method="dialog">
+						<button type="submit" class="btn btn-circle btn-sm btn-primary btn-outline absolute top-2 right-2 z-10 p-2 text-xl" aria-label={m.blog__close_fullscreen_image()}>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</form>
+					<div class="not-prose">
+						{
+							typeof src === "string" ? (
+								<img class="max-h-[calc(100dvh-7rem)] max-w-full object-contain" src={src} alt={alt} {title} />
+							) : (
+								<AstroImage class="max-h-[calc(100dvh-7rem)] max-w-full object-contain" {src} {alt} {title} />
+							)
+						}
+					</div>
+				</div>
+			</dialog>
+		</figure>
+	</image-lightbox>
+</div>
+
+<script>
+	class ImageLightbox extends HTMLElement {
+		#abortController?: AbortController;
+
+		connectedCallback() {
+			this.#abortController?.abort();
+			this.#abortController = new AbortController();
+			const { signal } = this.#abortController;
+
+			const dialog = this.querySelector<HTMLDialogElement>(".image-dialog");
+			const trigger = this.querySelector<HTMLButtonElement>(".zoom-trigger");
+
+			if (!dialog || !trigger) return;
+
+			const desktopViewport = window.matchMedia("(min-width: 768px)");
+			const updateZoomAvailability = () => {
+				trigger.disabled = !desktopViewport.matches;
+				if (!desktopViewport.matches && dialog.open) dialog.close();
+			};
+
+			updateZoomAvailability();
+			desktopViewport.addEventListener("change", updateZoomAvailability, { signal });
+			trigger.addEventListener("click", () => dialog.showModal(), { signal });
+		}
+
+		disconnectedCallback() {
+			this.#abortController?.abort();
+		}
+	}
+
+	if (!customElements.get("image-lightbox")) {
+		customElements.define("image-lightbox", ImageLightbox);
+	}
+</script>

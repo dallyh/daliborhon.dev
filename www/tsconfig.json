@@ -5,7 +5,6 @@
         "jsx": "react-jsx",
         "jsxImportSource": "react",
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "./",
         "paths": {
             "@/*": ["${configDir}/*"],
             "@components/*": ["${configDir}/src/components/*"],

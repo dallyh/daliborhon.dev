@@ -354,8 +354,8 @@
 
 		private drawGrid() {
 			const ctx = this.context;
-			const parallaxX = this.hasPointer ? ((this.pointerX / this.width - 0.5) * 2) * 3 : 0;
-			const parallaxY = this.hasPointer ? ((this.pointerY / this.height - 0.5) * 2) * 3 : 0;
+			const parallaxX = this.hasPointer ? (this.pointerX / this.width - 0.5) * 2 * 3 : 0;
+			const parallaxY = this.hasPointer ? (this.pointerY / this.height - 0.5) * 2 * 3 : 0;
 			ctx.save();
 			ctx.fillStyle = this.contentColor;
 

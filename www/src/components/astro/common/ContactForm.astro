@@ -17,7 +17,7 @@ const locale = Astro.currentLocale;
 					<label for="full_name" class="fieldset-label">
 						{m.contact__full_name_title()}
 					</label>
-					<label class="input validator skeleton w-full min-w-0 bg-base-200/60 backdrop-blur-xs">
+					<label class="input validator skeleton bg-base-200/60 w-full min-w-0 backdrop-blur-xs">
 						<span>
 							<Icon name="heroicons:user-solid" />
 						</span>
@@ -31,7 +31,7 @@ const locale = Astro.currentLocale;
 					<label for="email_address" class="fieldset-label">
 						{m.contact__email_title()}
 					</label>
-					<label class="input validator skeleton w-full bg-base-200/60 backdrop-blur-xs">
+					<label class="input validator skeleton bg-base-200/60 w-full backdrop-blur-xs">
 						<span>
 							<Icon name="heroicons:envelope-solid" />
 						</span>
@@ -62,7 +62,7 @@ const locale = Astro.currentLocale;
 						aria-describedby="messageError"
 						rows={8}
 						placeholder={m.contact__msg_placeholder()}
-						class="textarea validator textarea-bordered skeleton w-full bg-base-200/60 backdrop-blur-xs"
+						class="textarea validator textarea-bordered skeleton bg-base-200/60 w-full backdrop-blur-xs"
 						required></textarea>
 					<p id="messageError" class="validator-hint text-error">{m.contact__error_empty_field()}</p>
 				</div>

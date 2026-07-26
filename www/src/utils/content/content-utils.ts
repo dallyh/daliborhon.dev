@@ -12,18 +12,31 @@ import { getFilteredPostsCollection } from "./get-filtered-posts-collection";
 
 const logger = new Logger("content-utils");
 
+export interface ReadingStats {
+	minutes: number;
+	words: number;
+}
+
 // https://jahir.dev/blog/astro-reading-time
-export const getReadingTime = (text: string): string | undefined => {
+export const getReadingStats = (text: string): ReadingStats | undefined => {
 	if (!text || !text.length) return undefined;
 	try {
-		const { minutes } = calculateReadingTime(toString(fromMarkdown(text)));
-		if (minutes && minutes > 0) {
-			return `${Math.ceil(minutes)}`;
+		const { minutes, words } = calculateReadingTime(toString(fromMarkdown(text)));
+		if (words > 0) {
+			return {
+				minutes: Math.max(1, Math.ceil(minutes)),
+				words,
+			};
 		}
 		return undefined;
 	} catch {
 		return undefined;
 	}
+};
+
+export const getReadingTime = (text: string): string | undefined => {
+	const stats = getReadingStats(text);
+	return stats ? `${stats.minutes}` : undefined;
 };
 
 export function getPreviewImageUrl(locale: Locale, post: CollectionEntry<"posts">) {

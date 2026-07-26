@@ -1,0 +1,558 @@
+<animated-background aria-hidden="true">
+	<canvas></canvas>
+</animated-background>
+
+<style>
+	animated-background {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		display: block;
+		overflow: hidden;
+		pointer-events: none;
+		contain: strict;
+	}
+
+	animated-background.hidden {
+		display: none;
+	}
+
+	canvas {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+</style>
+
+<script>
+	// DISCLAIMER: This code was fully written by ChatGPT 5.6
+	// ─── CONFIG ───────────────────────────────────────────────────────────────────
+	const POINTER_MOVEMENT_ENABLED = true;
+	const POINTER_CLICK_ENABLED = true;
+	const CONNECT_COUNT = 15;
+	const SEGMENT_DELAY_DEFAULT = 120;
+	const CHRISTMAS_SEGMENT_DELAY = 200;
+	const WINTER_SEGMENT_DELAY = 100;
+	const HOLD_DELAY = 400;
+	const FADE_DURATION = 800;
+	const DOT_RADIUS = 1;
+	const LINE_COLOR = "";
+	const LINE_WIDTH = 1.2;
+	const TRAIL_OPACITY = 0.4;
+	const SEASONAL_PATTERN_CHANCE = 1;
+	const RARE_PATTERN_CHANCE = 0.5;
+	const RARE_PATTERN_SEGMENT_DELAY = 110;
+	const SEASON_OVERRIDE: PatternName = null;
+
+	type PatternName = "christmas" | "winter" | "dh" | "lightning" | "space-invader" | null;
+
+	declare global {
+		interface Window {
+			changePattern: (pattern: PatternName) => void;
+		}
+	}
+
+	interface Point {
+		column: number;
+		row: number;
+		x: number;
+		y: number;
+	}
+
+	interface Trail {
+		points: Point[];
+		progress: number;
+		speed: number;
+		age: number;
+		lifetime: number;
+		fadeStart: number;
+	}
+
+	interface Pulse {
+		x: number;
+		y: number;
+		age: number;
+	}
+
+	interface Pattern {
+		steps: readonly (readonly [number, number])[];
+		segmentDelay: number;
+	}
+
+	const directions = [
+		[-1, -1],
+		[0, -1],
+		[1, -1],
+		[-1, 0],
+		[1, 0],
+		[-1, 1],
+		[0, 1],
+		[1, 1],
+	] as const;
+
+	const christmasTree = [
+		[0, -2],
+		[-2, 0],
+		[2, -2],
+		[-2, 0],
+		[2, -2],
+		[2, 2],
+		[-2, 0],
+		[2, 2],
+		[-2, 0],
+	] as const;
+
+	const snowflake = [
+		[0, -1],
+		[-1, 1],
+		[1, -1],
+		[1, 1],
+		[-1, -1],
+		[1, 0],
+		[-1, 0],
+		[1, -1],
+		[-1, 1],
+		[0, -1],
+		[0, 1],
+		[-1, -1],
+		[1, 1],
+		[-1, 0],
+		[1, 0],
+		[0, 1],
+	] as const;
+
+	const dh = [
+		[0, -4],
+		[1, 0],
+		[1, 1],
+		[0, 2],
+		[-1, 1],
+		[-1, 0],
+		[3, 0],
+		[0, -4],
+		[0, 2],
+		[2, 0],
+		[0, -2],
+		[0, 4],
+	] as const;
+
+	const lightning = [
+		[2, 0],
+		[-1, 2],
+		[2, 0],
+		[-4, 5],
+		[1, -3],
+		[-2, 0],
+	] as const;
+
+	const spaceInvader = [
+		[1, 0],
+		[0, 1],
+		[1, 0],
+		[0, 1],
+		[1, 0],
+		[0, 3],
+		[-1, 0],
+		[0, -1],
+		[-1, 0],
+		[0, 1],
+		[-2, 0],
+		[0, -1],
+		[-1, 0],
+		[0, 1],
+		[-1, 0],
+		[0, -3],
+		[1, 0],
+		[0, -1],
+		[1, 0],
+		[0, -1],
+		[1, 0],
+	] as const;
+
+	const rarePatternNames = ["dh", "lightning", "space-invader"] as const;
+
+	class AnimatedBackground extends HTMLElement {
+		private readonly tileSize = 56;
+		private readonly trailCount = 1;
+		private readonly maxDpr = 2;
+		private canvas = this.querySelector<HTMLCanvasElement>("canvas")!;
+		private context = this.canvas.getContext("2d")!;
+		private trails: Trail[] = [];
+		private width = 0;
+		private height = 0;
+		private columns = 0;
+		private rows = 0;
+		private offsetX = 0;
+		private offsetY = 0;
+		private frameId?: number;
+		private lastFrame = 0;
+		private enabled = true;
+		private pageVisible = !document.hidden;
+		private reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+		private primaryColor = "#33ff88";
+		private contentColor = "#ffffff";
+		private resizeObserver?: ResizeObserver;
+		private pointerX = window.innerWidth * 0.75;
+		private pointerY = window.innerHeight * 0.2;
+		private hasPointer = false;
+		private pulses: Pulse[] = [];
+		private patternOverride: PatternName = SEASON_OVERRIDE;
+
+		private point(column: number, row: number): Point {
+			return {
+				column,
+				row,
+				x: this.offsetX + column * this.tileSize,
+				y: this.offsetY + row * this.tileSize,
+			};
+		}
+
+		private randomPoint(): Point {
+			return this.point(Math.floor(Math.random() * this.columns), Math.floor(Math.random() * this.rows));
+		}
+
+		private nextPoint(current: Point, used: Set<string>): Point | undefined {
+			const candidates = directions
+				.map(([dc, dr]) => this.point(current.column + dc, current.row + dr))
+				.filter((point) => point.column >= 0 && point.row >= 0 && point.column < this.columns && point.row < this.rows && !used.has(`${point.column}:${point.row}`));
+
+			if (this.hasPointer && candidates.length > 1 && Math.random() < 0.68) {
+				return candidates.reduce((closest, candidate) => {
+					const candidateDistance = Math.hypot(candidate.x - this.pointerX, candidate.y - this.pointerY);
+					const closestDistance = Math.hypot(closest.x - this.pointerX, closest.y - this.pointerY);
+					return candidateDistance < closestDistance ? candidate : closest;
+				});
+			}
+
+			return candidates[Math.floor(Math.random() * candidates.length)];
+		}
+
+		private patternByName(name: Exclude<PatternName, null>): Pattern {
+			const patterns: Record<Exclude<PatternName, null>, Pattern> = {
+				christmas: { steps: christmasTree, segmentDelay: CHRISTMAS_SEGMENT_DELAY },
+				winter: { steps: snowflake, segmentDelay: WINTER_SEGMENT_DELAY },
+				dh: { steps: dh, segmentDelay: RARE_PATTERN_SEGMENT_DELAY },
+				lightning: { steps: lightning, segmentDelay: RARE_PATTERN_SEGMENT_DELAY },
+				"space-invader": { steps: spaceInvader, segmentDelay: RARE_PATTERN_SEGMENT_DELAY },
+			};
+			return patterns[name];
+		}
+
+		private selectPattern(): Pattern | undefined {
+			if (this.patternOverride) {
+				return this.patternByName(this.patternOverride);
+			}
+
+			const now = new Date();
+			const month = now.getMonth() + 1;
+			const day = now.getDate();
+
+			if (month === 12 && day <= 26 && Math.random() < SEASONAL_PATTERN_CHANCE) {
+				return this.patternByName("christmas");
+			}
+
+			if ((month === 12 || month <= 2) && Math.random() < SEASONAL_PATTERN_CHANCE) {
+				return this.patternByName("winter");
+			}
+
+			if (Math.random() < RARE_PATTERN_CHANCE) {
+				const name = rarePatternNames[Math.floor(Math.random() * rarePatternNames.length)];
+				return this.patternByName(name);
+			}
+
+			return undefined;
+		}
+
+		private createPatternTrail(pattern: Pattern): Trail {
+			let column = 0;
+			let row = 0;
+			const coordinates = [[column, row]];
+
+			for (const [dc, dr] of pattern.steps) {
+				column += dc;
+				row += dr;
+				coordinates.push([column, row]);
+			}
+
+			const columns = coordinates.map(([value]) => value);
+			const rows = coordinates.map(([, value]) => value);
+			const minColumn = Math.min(...columns);
+			const maxColumn = Math.max(...columns);
+			const minRow = Math.min(...rows);
+			const maxRow = Math.max(...rows);
+			const availableColumns = Math.max(1, this.columns - (maxColumn - minColumn));
+			const availableRows = Math.max(1, this.rows - (maxRow - minRow));
+			const startColumn = Math.floor(Math.random() * availableColumns) - minColumn;
+			const startRow = Math.floor(Math.random() * availableRows) - minRow;
+			const points = coordinates.map(([dc, dr]) => this.point(startColumn + dc, startRow + dr));
+			const speed = 1000 / pattern.segmentDelay;
+			const fadeStart = (points.length - 1) / speed + HOLD_DELAY / 1000;
+
+			return {
+				points,
+				progress: 0,
+				speed,
+				age: 0,
+				fadeStart,
+				lifetime: fadeStart + FADE_DURATION / 1000,
+			};
+		}
+
+		private createTrail(delay = 0): Trail {
+			const pattern = this.selectPattern();
+			if (delay === 0 && pattern) {
+				return this.createPatternTrail(pattern);
+			}
+
+			const points = [this.randomPoint()];
+			const used = new Set([`${points[0].column}:${points[0].row}`]);
+			const length = CONNECT_COUNT + 1;
+
+			for (let index = 1; index < length; index++) {
+				const next = this.nextPoint(points.at(-1)!, used);
+				if (!next) break;
+				points.push(next);
+				used.add(`${next.column}:${next.row}`);
+			}
+			const speed = 1000 / SEGMENT_DELAY_DEFAULT;
+			const fadeStart = (points.length - 1) / speed + HOLD_DELAY / 1000;
+
+			return {
+				points,
+				progress: 0,
+				speed,
+				age: -delay,
+				fadeStart,
+				lifetime: fadeStart + FADE_DURATION / 1000,
+			};
+		}
+
+		private readColors() {
+			const styles = getComputedStyle(document.documentElement);
+			this.primaryColor = styles.getPropertyValue("--color-primary").trim() || "#33ff88";
+			this.contentColor = styles.getPropertyValue("--color-base-content").trim() || "#ffffff";
+		}
+
+		private resize = () => {
+			const dpr = Math.min(window.devicePixelRatio || 1, this.maxDpr);
+			this.width = window.innerWidth;
+			this.height = window.innerHeight;
+			this.canvas.width = Math.round(this.width * dpr);
+			this.canvas.height = Math.round(this.height * dpr);
+			this.canvas.style.width = `${this.width}px`;
+			this.canvas.style.height = `${this.height}px`;
+			this.context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+			this.columns = Math.max(2, Math.floor(this.width / this.tileSize));
+			this.rows = Math.max(2, Math.floor(this.height / this.tileSize));
+			this.offsetX = (this.width - (this.columns - 1) * this.tileSize) / 2;
+			this.offsetY = (this.height - (this.rows - 1) * this.tileSize) / 2;
+			this.trails = Array.from({ length: this.trailCount }, (_, index) => this.createTrail(index * 0.8));
+			this.draw();
+		};
+
+		private drawGrid() {
+			const ctx = this.context;
+			const parallaxX = this.hasPointer ? ((this.pointerX / this.width - 0.5) * 2) * 3 : 0;
+			const parallaxY = this.hasPointer ? ((this.pointerY / this.height - 0.5) * 2) * 3 : 0;
+			ctx.save();
+			ctx.fillStyle = this.contentColor;
+
+			for (let column = 0; column < this.columns; column++) {
+				for (let row = 0; row < this.rows; row++) {
+					const point = this.point(column, row);
+					let x = point.x + parallaxX;
+					let y = point.y + parallaxY;
+					let radius = DOT_RADIUS;
+					let alpha = document.documentElement.dataset.theme === "light" ? 0.1 : 0.14;
+
+					if (this.hasPointer) {
+						const dx = x - this.pointerX;
+						const dy = y - this.pointerY;
+						const distance = Math.hypot(dx, dy);
+						const influence = Math.max(0, 1 - distance / 190);
+						const displacement = influence * influence * 6;
+
+						if (distance > 0) {
+							x += (dx / distance) * displacement;
+							y += (dy / distance) * displacement;
+						}
+
+						radius += influence * 0.75;
+						alpha += influence * 0.22;
+					}
+
+					for (const pulse of this.pulses) {
+						const distance = Math.hypot(x - pulse.x, y - pulse.y);
+						const ringRadius = pulse.age * 520;
+						const ringDistance = Math.abs(distance - ringRadius);
+						const pulseStrength = Math.max(0, 1 - ringDistance / 55) * Math.max(0, 1 - pulse.age / 0.9);
+						radius += pulseStrength * 1.6;
+						alpha += pulseStrength * 0.55;
+					}
+
+					ctx.globalAlpha = Math.min(alpha, 0.85);
+					ctx.beginPath();
+					ctx.arc(x, y, radius, 0, Math.PI * 2);
+					ctx.fill();
+				}
+			}
+			ctx.restore();
+		}
+
+		private traceTrail(trail: Trail) {
+			const visibleProgress = Math.max(0, trail.progress);
+			const completeSegments = Math.min(Math.floor(visibleProgress), trail.points.length - 1);
+			const segmentProgress = Math.min(1, visibleProgress - completeSegments);
+			const fadeProgress = Math.max(0, trail.age - trail.fadeStart) / Math.max(FADE_DURATION / 1000, Number.EPSILON);
+			const opacity = trail.age < 0 ? 0 : Math.max(0, 1 - fadeProgress);
+
+			if (opacity <= 0 || trail.points.length < 2) return;
+
+			const ctx = this.context;
+			ctx.save();
+			ctx.beginPath();
+			ctx.moveTo(trail.points[0].x, trail.points[0].y);
+
+			for (let index = 1; index <= completeSegments; index++) {
+				ctx.lineTo(trail.points[index].x, trail.points[index].y);
+			}
+
+			if (completeSegments < trail.points.length - 1) {
+				const from = trail.points[completeSegments];
+				const to = trail.points[completeSegments + 1];
+				ctx.lineTo(from.x + (to.x - from.x) * segmentProgress, from.y + (to.y - from.y) * segmentProgress);
+			}
+
+			ctx.strokeStyle = LINE_COLOR.trim() || this.primaryColor;
+			ctx.lineWidth = LINE_WIDTH;
+			ctx.lineCap = "round";
+			ctx.lineJoin = "round";
+			ctx.globalAlpha = opacity * TRAIL_OPACITY;
+			ctx.stroke();
+			ctx.restore();
+		}
+
+		private draw() {
+			this.context.clearRect(0, 0, this.width, this.height);
+			this.drawGrid();
+			for (const trail of this.trails) this.traceTrail(trail);
+		}
+
+		private animateElement = (time: number) => {
+			if (!this.enabled || !this.pageVisible || this.reducedMotion.matches) {
+				this.frameId = undefined;
+				this.draw();
+				return;
+			}
+
+			const delta = Math.min((time - this.lastFrame) / 1000 || 0, 0.05);
+			this.lastFrame = time;
+
+			this.trails = this.trails.map((trail) => {
+				trail.age += delta;
+				if (trail.age >= 0) trail.progress = Math.min(trail.points.length - 1, trail.progress + trail.speed * delta);
+				if (trail.age > trail.lifetime) return this.createTrail();
+				return trail;
+			});
+			this.pulses = this.pulses.map((pulse) => ({ ...pulse, age: pulse.age + delta })).filter((pulse) => pulse.age < 0.9);
+
+			this.draw();
+			this.frameId = window.requestAnimationFrame(this.animateElement);
+		};
+
+		private start() {
+			if (this.frameId !== undefined || !this.enabled || !this.pageVisible || this.reducedMotion.matches) return;
+			this.lastFrame = performance.now();
+			this.frameId = window.requestAnimationFrame(this.animateElement);
+		}
+
+		private stop() {
+			if (this.frameId !== undefined) window.cancelAnimationFrame(this.frameId);
+			this.frameId = undefined;
+		}
+
+		changePattern(pattern: PatternName) {
+			this.patternOverride = pattern;
+			this.trails = Array.from({ length: this.trailCount }, () => this.createTrail());
+			this.draw();
+			this.start();
+		}
+
+		private handlePointerMove = (event: PointerEvent) => {
+			if (!POINTER_MOVEMENT_ENABLED) return;
+			if (event.pointerType === "touch") return;
+			this.pointerX = event.clientX;
+			this.pointerY = event.clientY;
+			this.hasPointer = true;
+		};
+
+		private handleClick = (event: PointerEvent) => {
+			if (!POINTER_CLICK_ENABLED || !this.enabled || this.reducedMotion.matches) return;
+			this.pulses.push({ x: event.clientX, y: event.clientY, age: 0 });
+			this.start();
+		};
+
+		private handleThemeChange = () => {
+			this.readColors();
+			this.draw();
+		};
+
+		private handleToggle = (event: Event) => {
+			const isOn = (event as CustomEvent<{ isOn: boolean }>).detail?.isOn ?? true;
+			this.enabled = isOn;
+			this.classList.toggle("hidden", !isOn);
+			if (isOn) this.start();
+			else this.stop();
+		};
+
+		private handleVisibility = () => {
+			this.pageVisible = !document.hidden;
+			if (this.pageVisible) this.start();
+			else this.stop();
+		};
+
+		private handleMotionChange = () => {
+			if (this.reducedMotion.matches) {
+				this.stop();
+				this.draw();
+			} else {
+				this.start();
+			}
+		};
+
+		connectedCallback() {
+			this.enabled = localStorage.getItem("bgToggle") !== "off";
+			this.classList.toggle("hidden", !this.enabled);
+			this.readColors();
+
+			this.resizeObserver = new ResizeObserver(this.resize);
+			this.resizeObserver.observe(document.documentElement);
+			if (POINTER_MOVEMENT_ENABLED) window.addEventListener("pointermove", this.handlePointerMove, { passive: true });
+			if (POINTER_CLICK_ENABLED) window.addEventListener("click", this.handleClick, { passive: true });
+			document.addEventListener("theme:changed", this.handleThemeChange);
+			document.addEventListener("theme:toggle-bg", this.handleToggle);
+			document.addEventListener("visibilitychange", this.handleVisibility);
+			this.reducedMotion.addEventListener("change", this.handleMotionChange);
+			window.changePattern = (pattern) => this.changePattern(pattern);
+			this.resize();
+			this.start();
+		}
+
+		disconnectedCallback() {
+			this.stop();
+			this.resizeObserver?.disconnect();
+			if (POINTER_MOVEMENT_ENABLED) window.removeEventListener("pointermove", this.handlePointerMove);
+			if (POINTER_CLICK_ENABLED) window.removeEventListener("click", this.handleClick);
+			document.removeEventListener("theme:changed", this.handleThemeChange);
+			document.removeEventListener("theme:toggle-bg", this.handleToggle);
+			document.removeEventListener("visibilitychange", this.handleVisibility);
+			this.reducedMotion.removeEventListener("change", this.handleMotionChange);
+		}
+	}
+
+	if (!customElements.get("animated-background")) {
+		customElements.define("animated-background", AnimatedBackground);
+	}
+</script>

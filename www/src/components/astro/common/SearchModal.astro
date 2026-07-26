@@ -7,14 +7,14 @@ const pagefindPath = `${base}pagefind/`;
 <link rel="stylesheet" href={`${pagefindPath}pagefind-component-ui.css`} />
 <script type="module" src={`${pagefindPath}pagefind-component-ui.js`}></script>
 <pagefind-config bundle-path={pagefindPath} base-url={base}></pagefind-config>
-<pagefind-modal>
+<pagefind-modal reset-on-close="true">
 	<pagefind-modal-header>
 		<pagefind-input></pagefind-input>
 	</pagefind-modal-header>
 	<pagefind-modal-body>
 		<pagefind-summary></pagefind-summary>
-		<pagefind-filter-pane class="mb-2!" show-empty="true"></pagefind-filter-pane>
-		<pagefind-results></pagefind-results>
+		<pagefind-filter-pane show-empty="true" auto-open-threshold="0"></pagefind-filter-pane>
+		<pagefind-results class="mt-2!"></pagefind-results>
 	</pagefind-modal-body>
 	<pagefind-modal-footer>
 		<pagefind-keyboard-hints></pagefind-keyboard-hints>
@@ -148,10 +148,16 @@ const pagefindPath = `${base}pagefind/`;
 		--pf-outline-focus: var(--color-primary);
 		--pf-font: inherit;
 
-		--pf-border-radius: var(--rounded-btn, 0.5rem);
+		--pf-border-radius: var(--radius-box);
 		--pf-modal-max-width: 48rem;
 		--pf-modal-max-height: min(80dvh, 50rem);
 		--pf-modal-top: 10dvh;
 		--pf-modal-backdrop: rgb(0 0 0 / 0.55);
+	}
+
+	pagefind-modal {
+		dialog.pf-modal {
+			border-radius: 0px !important;
+		}
 	}
 </style>

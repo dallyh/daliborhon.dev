@@ -1,186 +1,191 @@
 ---
-const settings = { color: "var(--color-primary)", className: "loading-indicator", animationDuration: 300 };
+const settings = {
+	color: "var(--color-primary)",
+	className: "navigation-loading-bar",
+	animationDuration: 900,
+};
 ---
 
-<meta name="transition-data" data-loading-anim-duration={settings.animationDuration} />
+<meta name="loading-bar-data" data-animation-duration={settings.animationDuration} data-classname={settings.className} data-color={settings.color} />
 
 <style is:global>
-	.loading-indicator {
+	.navigation-loading-bar {
 		pointer-events: none;
-		background-color: var(--color-primary);
 		position: fixed;
 		z-index: 1031;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 2px;
-		transition:
-			transform var(--animation-duration) ease-out,
-			opacity var(--animation-duration) ease-in;
-		transform: translate3d(0, 0, 0) scaleX(var(--progress, 0));
-		transform-origin: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition: opacity 150ms ease-out;
+
+		&::after {
+			position: absolute;
+			inset: 0 auto 0 0;
+			width: 35%;
+			background-color: var(--loading-bar-color, var(--color-primary));
+			content: "";
+			transform: translateX(-110%);
+		}
+
+		&.is-active {
+			opacity: 1;
+
+			&::after {
+				animation: loading-bar-slide var(--loading-bar-duration) ease-in-out infinite;
+			}
+		}
+	}
+
+	@keyframes loading-bar-slide {
+		0% {
+			transform: translateX(-110%);
+		}
+
+		50% {
+			width: 45%;
+		}
+
+		100% {
+			transform: translateX(300%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.navigation-loading-bar::after {
+			width: 100%;
+			transform: none;
+		}
+
+		.navigation-loading-bar.is-active::after {
+			animation: none;
+		}
 	}
 </style>
 
 <script>
 	declare global {
 		interface Window {
-			ViewTransitions: ViewTransitions;
+			LoadingBar: NavigationLoadingBar;
+			ViewTransitions: NavigationLoadingBar;
 		}
 	}
 
-	class ViewTransitions {
-		TRANSITIONS_START_EVENT = "transition:start";
+	class NavigationLoadingBar {
+		readonly NAVIGATION_START_EVENT = "navigation-loading:start";
 
-		supportsViewTransitions = this.supported();
-
-		private isTransitioning = false;
+		private isNavigating = false;
 
 		constructor() {
-			if (!document.startViewTransition) {
-				console.info("View transitions are not supported by the browser.");
-				return;
-			}
-			document.addEventListener("DOMContentLoaded", this.onLoad.bind(this));
+			document.addEventListener("click", this.linkOnclickHandler.bind(this));
+			window.addEventListener("pageshow", () => {
+				this.isNavigating = false;
+			});
 		}
 
 		startTransition() {
-			if (this.isTransitioning) return;
-			window.dispatchEvent(new CustomEvent(this.TRANSITIONS_START_EVENT));
-			this.isTransitioning = true;
+			if (this.isNavigating) return;
+
+			this.isNavigating = true;
+			window.dispatchEvent(new CustomEvent(this.NAVIGATION_START_EVENT));
 		}
 
-		private supported() {
-			if (!document.startViewTransition) {
+		private shouldShowForLink(link: HTMLAnchorElement, event: MouseEvent) {
+			if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+				return false;
+			}
+
+			if (!link.hasAttribute("href") || link.hasAttribute("data-disable-transition")) {
+				return false;
+			}
+
+			if (link.hasAttribute("download") || (link.target && link.target !== "_self")) {
+				return false;
+			}
+
+			if (link.origin !== window.location.origin) {
+				return false;
+			}
+
+			if (link.pathname === window.location.pathname && link.search === window.location.search && link.hash) {
 				return false;
 			}
 
 			return true;
 		}
 
-		private shouldLinkTransition(link: HTMLAnchorElement) {
-			if (link.dataset.disableTransition) {
-				return false;
-			}
+		private linkOnclickHandler(event: MouseEvent) {
+			const target = event.target;
+			if (!(target instanceof Element)) return;
 
-			if (link.hash) {
-				return false;
-			}
+			const link = target.closest("a");
+			if (!(link instanceof HTMLAnchorElement) || !this.shouldShowForLink(link, event)) return;
 
-			if (link.hostname !== window.location.hostname) {
-				return false;
-			}
-		}
-
-		private async linkOnclickHandler() {
 			this.startTransition();
 		}
-
-		private onLoad() {
-			const links = document.querySelectorAll("a");
-
-			for (const link of links) {
-				if (this.shouldLinkTransition(link) === false) {
-					return;
-				}
-				link.addEventListener("click", this.linkOnclickHandler.bind(this));
-			}
-		}
 	}
-	window.ViewTransitions = new ViewTransitions();
+
+	window.LoadingBar = new NavigationLoadingBar();
+
+	// Preserve compatibility with components that already call
+	// window.ViewTransitions.startTransition() before programmatic navigation.
+	window.ViewTransitions = window.LoadingBar;
 </script>
 
 <script is:inline>
 	//@ts-check
-	function initLoadingIndicator() {
-		if (!document.startViewTransition) {
-			return;
-		}
+	function initLoadingBar() {
+		const ACTIVE_CLASS = "is-active";
 
-		const CLASSNAME_DATASET = "loadingClassname";
-		const ANIM_DURATION_DATASET = "loadingAnimDuration";
-		const defaultProgress = 0.25;
+		/** @type {HTMLMetaElement | null} */
+		const meta = document.head.querySelector("meta[name='loading-bar-data']");
+		const className = meta?.dataset.classname ?? "navigation-loading-bar";
+		const animationDuration = Number(meta?.dataset.animationDuration ?? 900);
+		const color = meta?.dataset.color ?? "var(--color-primary)";
+		const element = document.createElement("div");
 
-		/** @type { HTMLMetaElement | null } */
-		const meta = document.head.querySelector("meta[name='transition-data']");
-		/** @type { string } */
-		const className = (meta && meta.dataset[CLASSNAME_DATASET]) ?? "loading-indicator";
-		/** @type { number } */
-		const animationDuration = Number((meta && meta.dataset[ANIM_DURATION_DATASET]) ?? 300);
+		element.classList.add(className);
+		element.ariaHidden = "true";
+		element.style.setProperty("--loading-bar-duration", `${animationDuration}ms`);
+		element.style.setProperty("--loading-bar-color", color);
 
-		let progress = defaultProgress;
-		let element = document.createElement("div");
-
-		function setElementAttributes() {
-			element.classList.add(className);
-			element.ariaHidden = "true";
-			element.style.setProperty("--animation-duration", `${animationDuration}ms`);
-		}
-		setElementAttributes();
-
-		/** @param { number } _progress */
-		function setProgress(_progress) {
-			progress = _progress;
-			element.style.setProperty("--progress", String(progress));
-		}
-
-		/** @param { number } _opacity */
-		function setOpacity(_opacity) {
-			element.style.setProperty("opacity", String(_opacity));
-		}
-		setOpacity(0);
-		window.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("DOMContentLoaded", () => {
 			document.body.prepend(element);
 		});
 
-		window.addEventListener("transition:start", () => {
-			setOpacity(1);
-			window.setInterval(() => {
-				setProgress(Math.min(progress + Math.random() * 0.03, 0.98));
-			}, animationDuration);
+		window.addEventListener("navigation-loading:start", () => {
+			element.classList.add(ACTIVE_CLASS);
 		});
 
-		/** @param {TransitionEvent} e */
-		function handleTransitionEnd(e) {
-			if (e.propertyName === "opacity") {
-				setProgress(defaultProgress);
-				element.removeEventListener("transitionend", handleTransitionEnd);
-			}
-		}
-
-		/** @param {PageRevealEvent} e */
-		async function pageRevealCallback(e) {
-			if (!e.viewTransition) {
-				return;
-			}
+		/** @param {PageRevealEvent} event */
+		function pageRevealCallback(event) {
+			if (!event.viewTransition) return;
 
 			document.body.prepend(element);
-			setOpacity(1);
-			setProgress(1);
+			element.classList.add(ACTIVE_CLASS);
 
-			document.addEventListener("DOMContentLoaded", async () => {
+			document.addEventListener("DOMContentLoaded", () => {
 				window.setTimeout(() => {
-					setOpacity(0);
+					element.classList.remove(ACTIVE_CLASS);
 				}, 50);
-
-				element.addEventListener("transitionend", handleTransitionEnd);
 			});
 		}
 
-		//@ts-ignore this is badly typed in TypeScript, it is "Event", shold be "PageRevealEvent"
 		window.addEventListener("pagereveal", pageRevealCallback);
 	}
-	initLoadingIndicator();
+
+	initLoadingBar();
 </script>
 
-<!-- Has to be at the end, because code highlighting does not work properly after this block -->
 <style is:inline>
 	@media (prefers-reduced-motion: no-preference) {
 		@view-transition {
 			navigation: auto;
 		}
 
-		:root::view-transition-old(#),
+		:root::view-transition-old(*),
 		:root::view-transition-new(*) {
 			animation-duration: 400ms;
 		}

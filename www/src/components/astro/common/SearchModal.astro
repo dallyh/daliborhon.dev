@@ -4,6 +4,13 @@ import { base } from "astro:config/client";
 const pagefindPath = `${base}pagefind/`;
 ---
 
+<style is:inline>
+	/* Prevents FOUC */
+	pagefind-modal:not(:defined) {
+		display: none;
+	}
+</style>
+
 <link rel="stylesheet" href={`${pagefindPath}pagefind-component-ui.css`} />
 <script type="module" src={`${pagefindPath}pagefind-component-ui.js`}></script>
 <pagefind-config bundle-path={pagefindPath} base-url={base}></pagefind-config>

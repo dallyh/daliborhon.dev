@@ -1,16 +1,15 @@
 import { defineMiddleware, sequence } from "astro:middleware";
-import { AsyncLocalStorage } from "node:async_hooks";
-import { baseLocale, type Locale, overwriteGetLocale, overwriteSetLocale } from "@paraglide/runtime";
+import { assertIsLocale, baseLocale, setLocale } from "@paraglide/runtime";
+import { paraglideMiddleware } from "@paraglide/server";
 
-const asyncStorage = new AsyncLocalStorage<Locale>();
-overwriteGetLocale(() => asyncStorage.getStore() ?? baseLocale);
+const paraglidei18nMiddleware = defineMiddleware(async (context, next) => {
+	if (context.isPrerendered) {
+		setLocale(assertIsLocale(context.currentLocale ?? baseLocale));
 
-// do nothing on the server
-overwriteSetLocale(() => {});
+		return next();
+	}
 
-const paraglideMiddleware = defineMiddleware(async (context, next) => {
-	const locale = (context.currentLocale as Locale | undefined) ?? baseLocale;
-	return await asyncStorage.run(locale, next);
+	return paraglideMiddleware(context.request, ({ request }) => next(request));
 });
 
-export const onRequest = sequence(paraglideMiddleware);
+export const onRequest = sequence(paraglidei18nMiddleware);

@@ -53,4 +53,7 @@ ENV NODE_ENV=production \
 EXPOSE 4321
 USER node
 
+HEALTHCHECK --interval=10s --timeout=5s --start-period=15s --retries=3 \
+  CMD ["node", "-e", "fetch('http://localhost:4321/api/status').then(r => process.exit(r.status === 200 ? 0 : 1)).catch(() => process.exit(1))"]
+
 CMD ["node", "./dist/server/entry.mjs"]

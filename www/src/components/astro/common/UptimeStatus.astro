@@ -3,12 +3,13 @@ import { UPTIME_API_TOKEN } from "astro:env/server";
 import { siteConfig } from "@site-config";
 import { Logger } from "@utils";
 
-type Status = "up" | "down" | "failed" | undefined;
+type Status = "up" | "down" | "failed" | "maintenance" | undefined;
 
 const cls = {
 	up: "status-success",
 	down: "status-error",
 	failed: "status-error",
+	maintenance: "status-warning"
 };
 
 const fetchStatus = async (): Promise<Status> => {

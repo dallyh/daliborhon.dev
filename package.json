@@ -14,15 +14,15 @@
         "lint:fix:unsafe": "biome lint --write --unsafe"
     },
     "devDependencies": {
-        "@biomejs/biome": "2.5.8",
+        "@biomejs/biome": "2.5.14",
         "@types/node": "^26.2.0",
-        "prettier": "^3.9.6",
-        "prettier-plugin-astro": "^0.14.1",
+        "prettier": "^3.9.7",
+        "prettier-plugin-astro": "^1.0.0",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "prettier-plugin-toml": "^2.0.6",
         "typescript": "^7.0.2"
     },
-    "packageManager": "pnpm@11.21.0",
+    "packageManager": "pnpm@12.4.2",
     "engines": {
         "node": ">=22.0.0"
     }

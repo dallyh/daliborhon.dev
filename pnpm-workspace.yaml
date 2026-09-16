@@ -4,15 +4,15 @@ allowBuilds:
     esbuild: true
     sharp: true
 minimumReleaseAgeExclude:
-    - "@biomejs/biome@2.5.0"
-    - "@biomejs/cli-darwin-arm64@2.5.0"
-    - "@biomejs/cli-darwin-x64@2.5.0"
-    - "@biomejs/cli-linux-arm64-musl@2.5.0"
-    - "@biomejs/cli-linux-arm64@2.5.0"
-    - "@biomejs/cli-linux-x64-musl@2.5.0"
-    - "@biomejs/cli-linux-x64@2.5.0"
-    - "@biomejs/cli-win32-arm64@2.5.0"
-    - "@biomejs/cli-win32-x64@2.5.0"
+    - '@biomejs/biome@2.5.0 || 2.5.14'
+    - '@biomejs/cli-darwin-arm64@2.5.0 || 2.5.14'
+    - '@biomejs/cli-darwin-x64@2.5.0 || 2.5.14'
+    - '@biomejs/cli-linux-arm64-musl@2.5.0 || 2.5.14'
+    - '@biomejs/cli-linux-arm64@2.5.0 || 2.5.14'
+    - '@biomejs/cli-linux-x64-musl@2.5.0 || 2.5.14'
+    - '@biomejs/cli-linux-x64@2.5.0 || 2.5.14'
+    - '@biomejs/cli-win32-arm64@2.5.0 || 2.5.14'
+    - '@biomejs/cli-win32-x64@2.5.0 || 2.5.14'
     - "@tailwindcss/node@4.3.1"
     - "@tailwindcss/oxide-android-arm64@4.3.1"
     - "@tailwindcss/oxide-darwin-arm64@4.3.1"
@@ -32,6 +32,15 @@ minimumReleaseAgeExclude:
     - resend@6.14.0
     - daisyui@5.7.4
     - recharts@3.10.1
+    - '@iconify-json/devicon@1.2.64'
+    - '@inlang/paraglide-js@2.25.3'
+    - '@inlang/sdk@3.0.6'
+    - '@lix-js/sdk-darwin-arm64@0.17.0'
+    - '@lix-js/sdk-linux-arm64@0.17.0'
+    - '@lix-js/sdk-linux-x64@0.17.0'
+    - '@lix-js/sdk-win32-x64@0.17.0'
+    - '@lix-js/sdk@0.17.0'
+    - prettier@3.9.7
 onlyBuiltDependencies:
     - "@biomejs/biome"
     - "@tailwindcss/oxide"

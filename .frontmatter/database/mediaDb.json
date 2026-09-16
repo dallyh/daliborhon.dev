@@ -1,1 +1,63 @@
-{"users":{"honda":{"documents":{"repos":{"daliborhon.dev":{"assets":{},"www":{"web":{"src":{"integrations":{}}},"src":{"pages":{"api":{}},"actions":{}}}}}}}},"personal":{"daliborhon.dev":{"www":{"web":{"src":{"pages":{"api":{},"[...lang]":{"blog":{"posts":{"[...slug]":{}}}}}}},"project.inlang":{}}}},"www":{"web":{"src":{"assets":{"icons":{},"content":{}}}},"src":{"pages":{"[...lang]":{},"api":{}}}}}
+{
+  "personal": {
+    "daliborhon.dev": {
+      "www": {
+        "project.inlang": {},
+        "web": {
+          "src": {
+            "pages": {
+              "[...lang]": {
+                "blog": {
+                  "posts": {
+                    "[...slug]": {}
+                  }
+                }
+              },
+              "api": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "users": {
+    "honda": {
+      "documents": {
+        "repos": {
+          "daliborhon.dev": {
+            "assets": {},
+            "www": {
+              "src": {
+                "actions": {},
+                "pages": {
+                  "api": {}
+                }
+              },
+              "web": {
+                "src": {
+                  "integrations": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "www": {
+    "src": {
+      "pages": {
+        "[...lang]": {},
+        "api": {}
+      }
+    },
+    "web": {
+      "src": {
+        "assets": {
+          "content": {},
+          "icons": {}
+        }
+      }
+    }
+  }
+}
